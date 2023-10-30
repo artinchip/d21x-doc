@@ -1,0 +1,3853 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2. 原理图设计 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="3. 布线设计" href="layout.html" />
+    <link rel="prev" title="1. 概述" href="overview.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ic/index.html">芯片手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">硬件指南</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">1. 概述</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. 原理图设计</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.1. 管脚说明和功能复用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qfn88">2.1.1. QFN88 管脚和功能复用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qfn100">2.1.2. QFN100 管脚和功能复用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qfn128">2.1.3. QFN128 管脚和功能复用</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.2. 时钟和电源</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#power">2.2.1. POWER</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sys">2.2.2. SYS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pll">2.2.3. PLL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rtc">2.2.4. RTC</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.3. 存储</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dram">2.3.1. DRAM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flash">2.3.2. FLASH</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emmc">2.3.3. eMMC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#card">2.3.4. CARD</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2.4. 多媒体</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prgb">2.4.1. PRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lvds">2.4.2. LVDS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mipi-dsi">2.4.3. MIPI-DSI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tp">2.4.4. TP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pwm">2.4.5. PWM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dvp">2.4.6. DVP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#audio">2.4.7. AUDIO</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">2.5. 通用接口</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ethernet">2.5.1. ETHERNET</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spi">2.5.2. SPI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#uart">2.5.3. UART</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#i2c">2.5.4. I2C</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#can">2.5.5. CAN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cir">2.5.6. CIR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usb">2.5.7. USB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sdio">2.5.8. SDIO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="layout.html">3. 布线设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html">4. 设计自查</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">硬件指南</a> &raquo;</li>
+        
+      <li><span class="section-number">2. </span>原理图设计</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">2. </span>原理图设计<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">2.1. </span>管脚说明和功能复用<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="qfn88">
+<h3><span class="section-number">2.1.1. </span>QFN88 管脚和功能复用<a class="headerlink" href="#qfn88" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-center" id="id7">
+<caption><span class="caption-number">表 2.11 </span><span class="caption-text">D211BB (Sip DDR2) / D211BC (Sip DDR3) 管脚说明</span><a class="headerlink" href="#id7" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 11%" />
+<col style="width: 10%" />
+<col style="width: 17%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>管脚</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>功能</p></th>
+<th class="head"><p>备注说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="5"><p>RTC</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>RTC_IO</p></td>
+<td><p>OD</p></td>
+<td><div class="line-block">
+<div class="line">RTC唤醒</div>
+<div class="line">32K时钟输出</div>
+</div>
+</td>
+<td><p>OD输出，外部需上拉电阻，上拉电压不能超过5V</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>RTC_VCOIN</p></td>
+<td><p>POWER</p></td>
+<td><p>-</p></td>
+<td><p>若不考虑掉电保持可悬空，内部有二极管从3.3V取电</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>RTC_XO</p></td>
+<td><p>OUTPUT</p></td>
+<td><p>-</p></td>
+<td><p>接32.768kHz无源晶振，若不使用RTC功能可悬空</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>RTC_XI</p></td>
+<td><p>INPUT</p></td>
+<td><p>-</p></td>
+<td><p>接32.768kHz无源晶振，若不使用RTC功能可悬空</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>PLL</p></td>
+</tr>
+<tr class="row-even"><td><p>75</p></td>
+<td><p>RESET</p></td>
+<td><p>INPUT</p></td>
+<td><p>系统复位</p></td>
+<td><p>内部自带RC上拉，外挂电容不超过4.7uF</p></td>
+</tr>
+<tr class="row-odd"><td><p>76</p></td>
+<td><p>PLL_XO</p></td>
+<td><p>OUTPUT</p></td>
+<td><p>-</p></td>
+<td><p>接24MHz无源晶振</p></td>
+</tr>
+<tr class="row-even"><td><p>77</p></td>
+<td><p>PLL_XI</p></td>
+<td><p>INPUT</p></td>
+<td><p>-</p></td>
+<td><p>接24MHz无源晶振</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>Power</p></td>
+</tr>
+<tr class="row-even"><td><p>7,40,58,80</p></td>
+<td><p>VCC33_IO</p></td>
+<td><p>POWER</p></td>
+<td><p>CPU IO电压</p></td>
+<td><p>3.3V供电</p></td>
+</tr>
+<tr class="row-odd"><td><p>81</p></td>
+<td><p>VCC30_ANA</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><p>内部模拟模块使用，外部接1uf旁路电容</p></td>
+</tr>
+<tr class="row-even"><td><p>42</p></td>
+<td><p>LDO25_OUT</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><p>内部DRAM模块使用，外部接1uf旁路电容</p></td>
+</tr>
+<tr class="row-odd"><td><p>41</p></td>
+<td><p>LDO1X_OUT</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><div class="line-block">
+<div class="line">可供DRAM使用，存在发热，若使用需做好散热，</div>
+<div class="line">外部接1uf旁路电容</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>43,45,46</p></td>
+<td><p>VDDQ_DDR</p></td>
+<td><p>POWER</p></td>
+<td><p>DRAM电压</p></td>
+<td><p><a class="reference external" href="mailto:DDR2&#37;&#52;&#48;1&#46;8V">DDR2<span>&#64;</span>1<span>&#46;</span>8V</a>、<a class="reference external" href="mailto:DDR3&#37;&#52;&#48;1&#46;5V">DDR3<span>&#64;</span>1<span>&#46;</span>5V</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>20,44,53,73,74</p></td>
+<td><p>VDD11_SYS</p></td>
+<td><p>POWER</p></td>
+<td><p>CPU Core电压</p></td>
+<td><p><a class="reference external" href="mailto:1&#46;2V&#37;&#52;&#48;600Mhz">1<span>&#46;</span>2V<span>&#64;</span>600Mhz</a>，<a class="reference external" href="mailto:1&#46;1V&#37;&#52;&#48;504Mhz">1<span>&#46;</span>1V<span>&#64;</span>504Mhz</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-center" id="id8">
+<caption><span class="caption-number">表 2.12 </span><span class="caption-text">D211BB (Sip DDR2) / D211BC (Sip DDR3) 功能复用表</span><a class="headerlink" href="#id8" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 16%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>管脚</p></th>
+<th class="head"><p>功能1</p></th>
+<th class="head"><p>功能2</p></th>
+<th class="head"><p>功能3</p></th>
+<th class="head"><p>功能4</p></th>
+<th class="head"><p>功能5</p></th>
+<th class="head"><p>功能6</p></th>
+<th class="head"><p>功能7/8</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="8"><p>GPIO A</p></td>
+</tr>
+<tr class="row-odd"><td><p>82</p></td>
+<td><p>PA0</p></td>
+<td><p>GPAI0</p></td>
+<td><p>PSADC0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>AMIC_IN</p></td>
+<td><p>IR_TX</p></td>
+</tr>
+<tr class="row-even"><td><p>83</p></td>
+<td><p>PA1</p></td>
+<td><p>GPAI1</p></td>
+<td><p>PSADC1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>AMIC_BIAS</p></td>
+<td><p>IR_RX</p></td>
+</tr>
+<tr class="row-odd"><td><p>84</p></td>
+<td><p>PA7</p></td>
+<td><p>GPAI7</p></td>
+<td><p>PSADC7</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART1_CTS</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>85</p></td>
+<td><p>PA8</p></td>
+<td><p>RTP_XP</p></td>
+<td><p>PSADC8</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>86</p></td>
+<td><p>PA9</p></td>
+<td><p>RTP_YP</p></td>
+<td><p>PSADC9</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>UART2_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>87</p></td>
+<td><p>PA10</p></td>
+<td><p>RTP_XN</p></td>
+<td><p>PSADC10</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>JTAG_MS</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>88</p></td>
+<td><p>PA11</p></td>
+<td><p>RTP_YN</p></td>
+<td><p>PSADC11</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART2_CTS</p></td>
+<td><p>JTAG_CK</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td colspan="8"><p>GPIO B</p></td>
+</tr>
+<tr class="row-odd"><td><p>47</p></td>
+<td><p>PB0</p></td>
+<td><p>SDC0_CMD</p></td>
+<td><p>SPI0_HOLD</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>UART7_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>48</p></td>
+<td><p>PB1</p></td>
+<td><p>SDC0_CLK</p></td>
+<td><p>SPI0_WP</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART7_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>49</p></td>
+<td><p>PB2</p></td>
+<td><p>SDC0_D3</p></td>
+<td><p>SPI0_CS</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>50</p></td>
+<td><p>PB3</p></td>
+<td><p>SDC0_D0</p></td>
+<td><p>SPI0_MISO</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>51</p></td>
+<td><p>PB4</p></td>
+<td><p>SDC0_D1</p></td>
+<td><p>SPI0_MOSI</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>52</p></td>
+<td><p>PB5</p></td>
+<td><p>SDC0_D2</p></td>
+<td><p>SPI0_CLK</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="8"><p>GPIO C</p></td>
+</tr>
+<tr class="row-even"><td><p>33</p></td>
+<td><p>PC0</p></td>
+<td><p>SDC1_D1</p></td>
+<td><p>LCD_D5</p></td>
+<td><p>SPI2_CLK</p></td>
+<td><p>UART1_TX</p></td>
+<td><p>JTAG_MS</p></td>
+<td><p>PWM0_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>34</p></td>
+<td><p>PC1</p></td>
+<td><p>SDC1_D0</p></td>
+<td><p>LCD_D4</p></td>
+<td><p>SPI2_CS</p></td>
+<td><p>UART1_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td><p>PWM0_B</p></td>
+</tr>
+<tr class="row-even"><td><p>35</p></td>
+<td><p>PC2</p></td>
+<td><p>SDC1_CLK</p></td>
+<td><p>LCD_D3</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td><p>UART1_RTS</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>PWM1_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>36</p></td>
+<td><p>PC3</p></td>
+<td><p>SDC1_CMD</p></td>
+<td><p>LCD_D2</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td><p>PWM1_B</p></td>
+</tr>
+<tr class="row-even"><td><p>37</p></td>
+<td><p>PC4</p></td>
+<td><p>SDC1_D3</p></td>
+<td><p>LCD_D1</p></td>
+<td></td>
+<td><p>UART2_RX</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>PWM2_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>38</p></td>
+<td><p>PC5</p></td>
+<td><p>SDC1_D2</p></td>
+<td><p>LCD_D0</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>JTAG_CK</p></td>
+<td><p>PWM2_B</p></td>
+</tr>
+<tr class="row-even"><td><p>39</p></td>
+<td><p>PC6</p></td>
+<td><p>SDC1_DET</p></td>
+<td><p>CLK_OUT0</p></td>
+<td><p>DE_TE</p></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td><p>PWM3_A</p></td>
+</tr>
+<tr class="row-odd"><td colspan="8"><p>GPIO D</p></td>
+</tr>
+<tr class="row-even"><td><p>32</p></td>
+<td><p>PD6</p></td>
+<td><p>LCD_D6</p></td>
+<td><p>SPI3_MISO</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>PD7</p></td>
+<td><p>LCD_D7</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>PD8</p></td>
+<td><p>LCD_D8</p></td>
+<td><p>LVDS1_D0N</p></td>
+<td><p>SPI1_HOLD</p></td>
+<td><p>UART2_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>PD9</p></td>
+<td><p>LCD_D9</p></td>
+<td><p>LVDS1_D0P</p></td>
+<td><p>SPI1_WP</p></td>
+<td><p>UART2_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>PD10</p></td>
+<td><p>LCD_D10</p></td>
+<td><p>LVDS1_D1N</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>UART3_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>PD11</p></td>
+<td><p>LCD_D11</p></td>
+<td><p>LVDS1_D1P</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>PD12</p></td>
+<td><p>LCD_D12</p></td>
+<td><p>LVDS1_D2N</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td><p>UART4_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>PD13</p></td>
+<td><p>LCD_D13</p></td>
+<td><p>LVDS1_D2P</p></td>
+<td><p>SPI1_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>PD14</p></td>
+<td><p>LCD_D14</p></td>
+<td><p>LVDS1_CKN</p></td>
+<td><p>SPI3_CLK</p></td>
+<td><p>CAP0</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>PD15</p></td>
+<td><p>LCD_D15</p></td>
+<td><p>LVDS1_CKP</p></td>
+<td><p>SPI3_CS</p></td>
+<td><p>CAP1</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>PD16</p></td>
+<td><p>LCD_D16</p></td>
+<td><p>LVDS1_D3N</p></td>
+<td><p>SPI3_MOSI</p></td>
+<td><p>CAP2</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>PD17</p></td>
+<td><p>LCD_D17</p></td>
+<td><p>LVDS1_D3P</p></td>
+<td><p>SPI3_MISO</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>PD18</p></td>
+<td><p>LCD_D18</p></td>
+<td><p>LVDS0_D0N</p></td>
+<td><p>DSI_D0N</p></td>
+<td><p>I2C1_SCL</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>PD19</p></td>
+<td><p>LCD_D19</p></td>
+<td><p>LVDS0_D0P</p></td>
+<td><p>DSI_D0P</p></td>
+<td><p>I2C1_SDA</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>PD20</p></td>
+<td><p>LCD_D20</p></td>
+<td><p>LVDS0_D1N</p></td>
+<td><p>DSI_D1N</p></td>
+<td><p>UART7_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>PD21</p></td>
+<td><p>LCD_D21</p></td>
+<td><p>LVDS0_D1P</p></td>
+<td><p>DSI_D1P</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>CLK_OUT0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>PD22</p></td>
+<td><p>LCD_D22</p></td>
+<td><p>LVDS0_D2N</p></td>
+<td><p>DSI_CKN</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART6_TX</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>PD23</p></td>
+<td><p>LCD_D23</p></td>
+<td><p>LVDS0_D2P</p></td>
+<td><p>DSI_CKP</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART6_RX</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>PD24</p></td>
+<td><p>LCD_DCLK</p></td>
+<td><p>LVDS0_CKN</p></td>
+<td><p>DSI_D2N</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>SPI1_CLK</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>PD25</p></td>
+<td><p>LCD_HS</p></td>
+<td><p>LVDS0_CKP</p></td>
+<td><p>DSI_D2P</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>SPI1_CS</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>PD26</p></td>
+<td><p>LCD_VS</p></td>
+<td><p>LVDS0_D3N</p></td>
+<td><p>DSI_D3N</p></td>
+<td><p>PWM3_A</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>PD27</p></td>
+<td><p>LCD_DE</p></td>
+<td><p>LVDS0_D3P</p></td>
+<td><p>DSI_D3P</p></td>
+<td><p>PWM3_B</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>RTC_32K</p></td>
+</tr>
+<tr class="row-even"><td colspan="8"><p>GPIO E</p></td>
+</tr>
+<tr class="row-odd"><td><p>54</p></td>
+<td><p>PE0</p></td>
+<td></td>
+<td><p>DVP_D0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td></td>
+<td><p>MAC0_RXD1</p></td>
+<td><p>PWM0_A</p></td>
+</tr>
+<tr class="row-even"><td><p>55</p></td>
+<td><p>PE1</p></td>
+<td></td>
+<td><p>DVP_D1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td></td>
+<td><p>MAC0_RXD0</p></td>
+<td><p>PWM0_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>56</p></td>
+<td><p>PE2</p></td>
+<td></td>
+<td><p>DVP_D2</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>MAC0_CRS_DV</p></td>
+<td><p>PWM1_A</p></td>
+</tr>
+<tr class="row-even"><td><p>57</p></td>
+<td><p>PE3</p></td>
+<td></td>
+<td><p>DVP_D3</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>MAC0_REFCLK</p></td>
+<td><p>PWM1_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>59</p></td>
+<td><p>PE4</p></td>
+<td></td>
+<td><p>DVP_D4</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>MAC0_TXD1</p></td>
+<td><p>PWM2_A</p></td>
+</tr>
+<tr class="row-even"><td><p>60</p></td>
+<td><p>PE5</p></td>
+<td></td>
+<td><p>DVP_D5</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>MAC0_TXD0</p></td>
+<td><p>PWM2_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>61</p></td>
+<td><p>PE6</p></td>
+<td><p>DSPK0</p></td>
+<td><p>DVP_D6</p></td>
+<td><p>UART5_RTS</p></td>
+<td><p>UART6_TX</p></td>
+<td><p>MAC0_TXC</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>62</p></td>
+<td><p>PE7</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DVP_D7</p></td>
+<td><p>UART7_RTS</p></td>
+<td><p>UART6_RX</p></td>
+<td><p>MAC0_TXEN</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>63</p></td>
+<td><p>PE8</p></td>
+<td><p>I2S0_MCLK</p></td>
+<td><p>DVP_CK</p></td>
+<td><p>UART6_RTS</p></td>
+<td><p>UART7_TX</p></td>
+<td><p>MAC0_MDC</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>64</p></td>
+<td><p>PE9</p></td>
+<td><p>I2S0_BCLK</p></td>
+<td><p>DVP_HS</p></td>
+<td><p>UART6_CTS</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>MAC0_MDIO</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>65</p></td>
+<td><p>PE10</p></td>
+<td><p>I2S0_LRCK</p></td>
+<td><p>DVP_VS</p></td>
+<td><p>DSPK0</p></td>
+<td></td>
+<td><p>CLK_OUT2</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>66</p></td>
+<td><p>PE11</p></td>
+<td><p>I2S0_DOUT</p></td>
+<td><p>I2S0_DIN</p></td>
+<td><p>DSPK1</p></td>
+<td><p>CLK_OUT1</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>67</p></td>
+<td><p>PE14</p></td>
+<td></td>
+<td><p>SPI3_MOSI</p></td>
+<td></td>
+<td><p>UART3_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>68</p></td>
+<td><p>PE15</p></td>
+<td></td>
+<td><p>SPI3_MISO</p></td>
+<td></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>69</p></td>
+<td><p>PE16</p></td>
+<td></td>
+<td><p>SPI0_CLK</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>I2C3_SCL</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>70</p></td>
+<td><p>PE17</p></td>
+<td></td>
+<td><p>SPI0_CS</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>I2C3_SDA</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>71</p></td>
+<td><p>PE18</p></td>
+<td></td>
+<td><p>SPI0_MOSI</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>PWM3_A</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>72</p></td>
+<td><p>PE19</p></td>
+<td></td>
+<td><p>SPI0_MISO</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>PWM3_B</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="8"><p>GPIO F</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>PF0</p></td>
+<td></td>
+<td><p>SPI2_CLK</p></td>
+<td></td>
+<td><p>UART5_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>PF1</p></td>
+<td></td>
+<td><p>SPI2_CS</p></td>
+<td></td>
+<td><p>UART5_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>PF14</p></td>
+<td></td>
+<td><p>DSPK0</p></td>
+<td><p>DMIC_D0</p></td>
+<td><p>UART4_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>PF15</p></td>
+<td><p>DE_TE</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DMIC_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td colspan="8"><p>USB0</p></td>
+</tr>
+<tr class="row-odd"><td><p>78</p></td>
+<td><p>PU0</p></td>
+<td><p>USB0_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>79</p></td>
+<td><p>PU1</p></td>
+<td><p>USB0_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="qfn100">
+<h3><span class="section-number">2.1.2. </span>QFN100 管脚和功能复用<a class="headerlink" href="#qfn100" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-center" id="id9">
+<caption><span class="caption-number">表 2.13 </span><span class="caption-text">D211DB (Sip DDR2) / D211DC (Sip DDR3) 管脚说明</span><a class="headerlink" href="#id9" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 16%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>管脚</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>功能</p></th>
+<th class="head"><p>备注说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="5"><p>RTC</p></td>
+</tr>
+<tr class="row-odd"><td><p>74</p></td>
+<td><p>RTC_IO</p></td>
+<td><p>OD</p></td>
+<td><div class="line-block">
+<div class="line">RTC唤醒</div>
+<div class="line">32K时钟输出</div>
+</div>
+</td>
+<td><p>OD输出，外部需上拉电阻，上拉电压不能超过5V</p></td>
+</tr>
+<tr class="row-even"><td><p>75</p></td>
+<td><p>RTC_VCOIN</p></td>
+<td><p>POWER</p></td>
+<td><p>-</p></td>
+<td><p>若不考虑掉电保持可悬空，内部有二极管从3.3V取电</p></td>
+</tr>
+<tr class="row-odd"><td><p>76</p></td>
+<td><p>RTC_XO</p></td>
+<td><p>OUTPUT</p></td>
+<td><p>-</p></td>
+<td><p>接32.768kHz无源晶振，若不使用RTC功能可悬空</p></td>
+</tr>
+<tr class="row-even"><td><p>77</p></td>
+<td><p>RTC_XI</p></td>
+<td><p>INPUT</p></td>
+<td><p>-</p></td>
+<td><p>接32.768kHz无源晶振，若不使用RTC功能可悬空</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>PLL</p></td>
+</tr>
+<tr class="row-even"><td><p>58</p></td>
+<td><p>RESET</p></td>
+<td><p>INPUT</p></td>
+<td><p>系统复位</p></td>
+<td><p>内部自带RC上拉，外挂电容不超过4.7uF</p></td>
+</tr>
+<tr class="row-odd"><td><p>59</p></td>
+<td><p>PLL_XO</p></td>
+<td><p>OUTPUT</p></td>
+<td><p>-</p></td>
+<td><p>接24MHz无源晶振</p></td>
+</tr>
+<tr class="row-even"><td><p>60</p></td>
+<td><p>PLL_XI</p></td>
+<td><p>INPUT</p></td>
+<td><p>-</p></td>
+<td><p>接24MHz无源晶振</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>Power</p></td>
+</tr>
+<tr class="row-even"><td><p>21,88,41,65</p></td>
+<td><p>VCC33_IO</p></td>
+<td><p>POWER</p></td>
+<td><p>CPU IO电压</p></td>
+<td><p>3.3V供电</p></td>
+</tr>
+<tr class="row-odd"><td><p>66</p></td>
+<td><p>VCC30_ANA</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><p>内部模拟模块使用，外部接1uf旁路电容</p></td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>LDO25_OUT</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><p>内部DRAM模块使用，外部接1uf旁路电容</p></td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>LDO1X_OUT</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><div class="line-block">
+<div class="line">可供DRAM使用，存在发热，若使用需做好散热，</div>
+<div class="line">外部接1uf旁路电容</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24,26,27,29</p></td>
+<td><p>VDDQ_DDR</p></td>
+<td><p>POWER</p></td>
+<td><p>DRAM电压</p></td>
+<td><p><a class="reference external" href="mailto:DDR2&#37;&#52;&#48;1&#46;8V">DDR2<span>&#64;</span>1<span>&#46;</span>8V</a>、<a class="reference external" href="mailto:DDR3&#37;&#52;&#48;1&#46;5V">DDR3<span>&#64;</span>1<span>&#46;</span>5V</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>1,25,28,36,56,57</p></td>
+<td><p>VDD11_SYS</p></td>
+<td><p>POWER</p></td>
+<td><p>CPU Core电压</p></td>
+<td><p><a class="reference external" href="mailto:1&#46;2V&#37;&#52;&#48;600Mhz">1<span>&#46;</span>2V<span>&#64;</span>600Mhz</a>，<a class="reference external" href="mailto:1&#46;1V&#37;&#52;&#48;504Mhz">1<span>&#46;</span>1V<span>&#64;</span>504Mhz</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-center" id="id10">
+<caption><span class="caption-number">表 2.14 </span><span class="caption-text">D211DB (Sip DDR2) / D211DC (Sip DDR3) 功能复用表</span><a class="headerlink" href="#id10" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 16%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>管脚</p></th>
+<th class="head"><p>功能1</p></th>
+<th class="head"><p>功能2</p></th>
+<th class="head"><p>功能3</p></th>
+<th class="head"><p>功能4</p></th>
+<th class="head"><p>功能5</p></th>
+<th class="head"><p>功能6</p></th>
+<th class="head"><p>功能7/8</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="8"><p>GPIO A</p></td>
+</tr>
+<tr class="row-odd"><td><p>67</p></td>
+<td><p>PA0</p></td>
+<td><p>GPAI0</p></td>
+<td><p>PSADC0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>AMIC_IN</p></td>
+<td><p>IR_TX</p></td>
+</tr>
+<tr class="row-even"><td><p>68</p></td>
+<td><p>PA1</p></td>
+<td><p>GPAI1</p></td>
+<td><p>PSADC1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>AMIC_BIAS</p></td>
+<td><p>IR_RX</p></td>
+</tr>
+<tr class="row-odd"><td><p>69</p></td>
+<td><p>PA7</p></td>
+<td><p>GPAI7</p></td>
+<td><p>PSADC7</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART1_CTS</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>70</p></td>
+<td><p>PA8</p></td>
+<td><p>RTP_XP</p></td>
+<td><p>PSADC8</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>71</p></td>
+<td><p>PA9</p></td>
+<td><p>RTP_YP</p></td>
+<td><p>PSADC9</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>UART2_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>72</p></td>
+<td><p>PA10</p></td>
+<td><p>RTP_XN</p></td>
+<td><p>PSADC10</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>JTAG_MS</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>73</p></td>
+<td><p>PA11</p></td>
+<td><p>RTP_YN</p></td>
+<td><p>PSADC11</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART2_CTS</p></td>
+<td><p>JTAG_CK</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td colspan="8"><p>GPIO B</p></td>
+</tr>
+<tr class="row-odd"><td><p>30</p></td>
+<td><p>PB0</p></td>
+<td><p>SDC0_CMD</p></td>
+<td><p>SPI0_HOLD</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>UART7_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>31</p></td>
+<td><p>PB1</p></td>
+<td><p>SDC0_CLK</p></td>
+<td><p>SPI0_WP</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART7_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>32</p></td>
+<td><p>PB2</p></td>
+<td><p>SDC0_D3</p></td>
+<td><p>SPI0_CS</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>33</p></td>
+<td><p>PB3</p></td>
+<td><p>SDC0_D0</p></td>
+<td><p>SPI0_MISO</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>34</p></td>
+<td><p>PB4</p></td>
+<td><p>SDC0_D1</p></td>
+<td><p>SPI0_MOSI</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>35</p></td>
+<td><p>PB5</p></td>
+<td><p>SDC0_D2</p></td>
+<td><p>SPI0_CLK</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="8"><p>GPIO C</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>PC0</p></td>
+<td><p>SDC1_D1</p></td>
+<td><p>LCD_D5</p></td>
+<td><p>SPI2_CLK</p></td>
+<td><p>UART1_TX</p></td>
+<td><p>JTAG_MS</p></td>
+<td><p>PWM0_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>PC1</p></td>
+<td><p>SDC1_D0</p></td>
+<td><p>LCD_D4</p></td>
+<td><p>SPI2_CS</p></td>
+<td><p>UART1_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td><p>PWM0_B</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>PC2</p></td>
+<td><p>SDC1_CLK</p></td>
+<td><p>LCD_D3</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td><p>UART1_RTS</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>PWM1_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>PC3</p></td>
+<td><p>SDC1_CMD</p></td>
+<td><p>LCD_D2</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td><p>PWM1_B</p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>PC4</p></td>
+<td><p>SDC1_D3</p></td>
+<td><p>LCD_D1</p></td>
+<td></td>
+<td><p>UART2_RX</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>PWM2_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>PC5</p></td>
+<td><p>SDC1_D2</p></td>
+<td><p>LCD_D0</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>JTAG_CK</p></td>
+<td><p>PWM2_B</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>PC6</p></td>
+<td><p>SDC1_DET</p></td>
+<td><p>CLK_OUT0</p></td>
+<td><p>DE_TE</p></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td><p>PWM3_A</p></td>
+</tr>
+<tr class="row-odd"><td colspan="8"><p>GPIO D</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>PD6</p></td>
+<td><p>LCD_D6</p></td>
+<td><p>SPI3_MISO</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>PD7</p></td>
+<td><p>LCD_D7</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>PD8</p></td>
+<td><p>LCD_D8</p></td>
+<td><p>LVDS1_D0N</p></td>
+<td><p>SPI1_HOLD</p></td>
+<td><p>UART2_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>PD9</p></td>
+<td><p>LCD_D9</p></td>
+<td><p>LVDS1_D0P</p></td>
+<td><p>SPI1_WP</p></td>
+<td><p>UART2_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>PD10</p></td>
+<td><p>LCD_D10</p></td>
+<td><p>LVDS1_D1N</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>UART3_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>PD11</p></td>
+<td><p>LCD_D11</p></td>
+<td><p>LVDS1_D1P</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>PD12</p></td>
+<td><p>LCD_D12</p></td>
+<td><p>LVDS1_D2N</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td><p>UART4_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>PD13</p></td>
+<td><p>LCD_D13</p></td>
+<td><p>LVDS1_D2P</p></td>
+<td><p>SPI1_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>PD14</p></td>
+<td><p>LCD_D14</p></td>
+<td><p>LVDS1_CKN</p></td>
+<td><p>SPI3_CLK</p></td>
+<td><p>CAP0</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>PD15</p></td>
+<td><p>LCD_D15</p></td>
+<td><p>LVDS1_CKP</p></td>
+<td><p>SPI3_CS</p></td>
+<td><p>CAP1</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>PD16</p></td>
+<td><p>LCD_D16</p></td>
+<td><p>LVDS1_D3N</p></td>
+<td><p>SPI3_MOSI</p></td>
+<td><p>CAP2</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>PD17</p></td>
+<td><p>LCD_D17</p></td>
+<td><p>LVDS1_D3P</p></td>
+<td><p>SPI3_MISO</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>100</p></td>
+<td><p>PD18</p></td>
+<td><p>LCD_D18</p></td>
+<td><p>LVDS0_D0N</p></td>
+<td><p>DSI_D0N</p></td>
+<td><p>I2C1_SCL</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>99</p></td>
+<td><p>PD19</p></td>
+<td><p>LCD_D19</p></td>
+<td><p>LVDS0_D0P</p></td>
+<td><p>DSI_D0P</p></td>
+<td><p>I2C1_SDA</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>98</p></td>
+<td><p>PD20</p></td>
+<td><p>LCD_D20</p></td>
+<td><p>LVDS0_D1N</p></td>
+<td><p>DSI_D1N</p></td>
+<td><p>UART7_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>97</p></td>
+<td><p>PD21</p></td>
+<td><p>LCD_D21</p></td>
+<td><p>LVDS0_D1P</p></td>
+<td><p>DSI_D1P</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>CLK_OUT0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>96</p></td>
+<td><p>PD22</p></td>
+<td><p>LCD_D22</p></td>
+<td><p>LVDS0_D2N</p></td>
+<td><p>DSI_CKN</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART6_TX</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>95</p></td>
+<td><p>PD23</p></td>
+<td><p>LCD_D23</p></td>
+<td><p>LVDS0_D2P</p></td>
+<td><p>DSI_CKP</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART6_RX</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>94</p></td>
+<td><p>PD24</p></td>
+<td><p>LCD_DCLK</p></td>
+<td><p>LVDS0_CKN</p></td>
+<td><p>DSI_D2N</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>SPI1_CLK</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>93</p></td>
+<td><p>PD25</p></td>
+<td><p>LCD_HS</p></td>
+<td><p>LVDS0_CKP</p></td>
+<td><p>DSI_D2P</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>SPI1_CS</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>92</p></td>
+<td><p>PD26</p></td>
+<td><p>LCD_VS</p></td>
+<td><p>LVDS0_D3N</p></td>
+<td><p>DSI_D3N</p></td>
+<td><p>PWM3_A</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>91</p></td>
+<td><p>PD27</p></td>
+<td><p>LCD_DE</p></td>
+<td><p>LVDS0_D3P</p></td>
+<td><p>DSI_D3P</p></td>
+<td><p>PWM3_B</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>RTC_32K</p></td>
+</tr>
+<tr class="row-even"><td colspan="8"><p>GPIO E</p></td>
+</tr>
+<tr class="row-odd"><td><p>37</p></td>
+<td><p>PE0</p></td>
+<td></td>
+<td><p>DVP_D0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td></td>
+<td><p>MAC0_RXD1</p></td>
+<td><p>PWM0_A</p></td>
+</tr>
+<tr class="row-even"><td><p>38</p></td>
+<td><p>PE1</p></td>
+<td></td>
+<td><p>DVP_D1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td></td>
+<td><p>MAC0_RXD0</p></td>
+<td><p>PWM0_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>39</p></td>
+<td><p>PE2</p></td>
+<td></td>
+<td><p>DVP_D2</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>MAC0_CRS_DV</p></td>
+<td><p>PWM1_A</p></td>
+</tr>
+<tr class="row-even"><td><p>40</p></td>
+<td><p>PE3</p></td>
+<td></td>
+<td><p>DVP_D3</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>MAC0_REFCLK</p></td>
+<td><p>PWM1_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>42</p></td>
+<td><p>PE4</p></td>
+<td></td>
+<td><p>DVP_D4</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>MAC0_TXD1</p></td>
+<td><p>PWM2_A</p></td>
+</tr>
+<tr class="row-even"><td><p>43</p></td>
+<td><p>PE5</p></td>
+<td></td>
+<td><p>DVP_D5</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>MAC0_TXD0</p></td>
+<td><p>PWM2_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>44</p></td>
+<td><p>PE6</p></td>
+<td><p>DSPK0</p></td>
+<td><p>DVP_D6</p></td>
+<td><p>UART5_RTS</p></td>
+<td><p>UART6_TX</p></td>
+<td><p>MAC0_TXC</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>45</p></td>
+<td><p>PE7</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DVP_D7</p></td>
+<td><p>UART7_RTS</p></td>
+<td><p>UART6_RX</p></td>
+<td><p>MAC0_TXEN</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>46</p></td>
+<td><p>PE8</p></td>
+<td><p>I2S0_MCLK</p></td>
+<td><p>DVP_CK</p></td>
+<td><p>UART6_RTS</p></td>
+<td><p>UART7_TX</p></td>
+<td><p>MAC0_MDC</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>47</p></td>
+<td><p>PE9</p></td>
+<td><p>I2S0_BCLK</p></td>
+<td><p>DVP_HS</p></td>
+<td><p>UART6_CTS</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>MAC0_MDIO</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>48</p></td>
+<td><p>PE10</p></td>
+<td><p>I2S0_LRCK</p></td>
+<td><p>DVP_VS</p></td>
+<td><p>DSPK0</p></td>
+<td></td>
+<td><p>CLK_OUT2</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>49</p></td>
+<td><p>PE11</p></td>
+<td><p>I2S0_DOUT</p></td>
+<td><p>I2S0_DIN</p></td>
+<td><p>DSPK1</p></td>
+<td><p>CLK_OUT1</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>50</p></td>
+<td><p>PE14</p></td>
+<td></td>
+<td><p>SPI3_MOSI</p></td>
+<td></td>
+<td><p>UART3_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>51</p></td>
+<td><p>PE15</p></td>
+<td></td>
+<td><p>SPI3_MISO</p></td>
+<td></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>52</p></td>
+<td><p>PE16</p></td>
+<td></td>
+<td><p>SPI0_CLK</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>I2C3_SCL</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>53</p></td>
+<td><p>PE17</p></td>
+<td></td>
+<td><p>SPI0_CS</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>I2C3_SDA</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>54</p></td>
+<td><p>PE18</p></td>
+<td></td>
+<td><p>SPI0_MOSI</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>PWM3_A</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>55</p></td>
+<td><p>PE19</p></td>
+<td></td>
+<td><p>SPI0_MISO</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>PWM3_B</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="8"><p>GPIO F</p></td>
+</tr>
+<tr class="row-even"><td><p>78</p></td>
+<td><p>PF0</p></td>
+<td><p>SDC2_D1</p></td>
+<td><p>SPI2_CLK</p></td>
+<td></td>
+<td><p>UART5_TX</p></td>
+<td><p>MAC1_RXD1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>79</p></td>
+<td><p>PF1</p></td>
+<td><p>SDC2_D0</p></td>
+<td><p>SPI2_CS</p></td>
+<td></td>
+<td><p>UART5_RX</p></td>
+<td><p>MAC1_RXD0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>80</p></td>
+<td><p>PF2</p></td>
+<td><p>SDC2_CLK</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td></td>
+<td><p>UART5_RTS</p></td>
+<td><p>MAC1_CRS_DV</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>81</p></td>
+<td><p>PF3</p></td>
+<td><p>SDC2_CMD</p></td>
+<td><p>SPI2_MISO</p></td>
+<td></td>
+<td><p>UART5_CTS</p></td>
+<td><p>MAC1_REFCLK</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>82</p></td>
+<td><p>PF4</p></td>
+<td><p>SDC2_D3</p></td>
+<td></td>
+<td></td>
+<td><p>UART6_TX</p></td>
+<td><p>MAC1_TXD1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>83</p></td>
+<td><p>PF5</p></td>
+<td><p>SDC2_D2</p></td>
+<td></td>
+<td></td>
+<td><p>UART6_RX</p></td>
+<td><p>MAC1_TXD0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>84</p></td>
+<td><p>PF6</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_TX</p></td>
+<td><p>MAC1_TXC</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>85</p></td>
+<td><p>PF7</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_RX</p></td>
+<td><p>MAC1_TXEN</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>86</p></td>
+<td><p>PF8</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_RTS</p></td>
+<td><p>MAC1_MDC</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>87</p></td>
+<td><p>PF9</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_CTS</p></td>
+<td><p>MAC1_MDIO</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>89</p></td>
+<td><p>PF14</p></td>
+<td></td>
+<td><p>DSPK0</p></td>
+<td><p>DMIC_D0</p></td>
+<td><p>UART4_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>90</p></td>
+<td><p>PF15</p></td>
+<td><p>DE_TE</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DMIC_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td colspan="8"><p>USB0</p></td>
+</tr>
+<tr class="row-odd"><td><p>61</p></td>
+<td><p>PU0</p></td>
+<td><p>USB0_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>62</p></td>
+<td><p>PU1</p></td>
+<td><p>USB0_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>63</p></td>
+<td><p>PU2</p></td>
+<td><p>USB1_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART2_RX</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>64</p></td>
+<td><p>PU3</p></td>
+<td><p>USB1_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART2_TX</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="qfn128">
+<h3><span class="section-number">2.1.3. </span>QFN128 管脚和功能复用<a class="headerlink" href="#qfn128" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-center" id="id11">
+<caption><span class="caption-number">表 2.15 </span><span class="caption-text">D213EC (Sip DDR3) 管脚说明</span><a class="headerlink" href="#id11" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>管脚</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>功能</p></th>
+<th class="head"><p>备注说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="5"><p>RTC</p></td>
+</tr>
+<tr class="row-odd"><td><p>97</p></td>
+<td><p>RTC_IO</p></td>
+<td><p>OD</p></td>
+<td><div class="line-block">
+<div class="line">RTC唤醒</div>
+<div class="line">32K时钟输出</div>
+</div>
+</td>
+<td><p>OD输出，外部需上拉电阻，上拉电压不能超过5V</p></td>
+</tr>
+<tr class="row-even"><td><p>98</p></td>
+<td><p>RTC_VCOIN</p></td>
+<td><p>POWER</p></td>
+<td><p>-</p></td>
+<td><p>若不考虑掉电保持可悬空，内部有二极管从3.3V取电</p></td>
+</tr>
+<tr class="row-odd"><td><p>99</p></td>
+<td><p>RTC_XO</p></td>
+<td><p>OUTPUT</p></td>
+<td><p>-</p></td>
+<td><p>接32.768kHz无源晶振，若不使用RTC功能可悬空</p></td>
+</tr>
+<tr class="row-even"><td><p>100</p></td>
+<td><p>RTC_XI</p></td>
+<td><p>INPUT</p></td>
+<td><p>-</p></td>
+<td><p>接32.768kHz无源晶振，若不使用RTC功能可悬空</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>PLL</p></td>
+</tr>
+<tr class="row-even"><td><p>76</p></td>
+<td><p>RESET</p></td>
+<td><p>INPUT</p></td>
+<td><p>系统复位</p></td>
+<td><p>内部自带RC上拉，外挂电容不超过4.7uF</p></td>
+</tr>
+<tr class="row-odd"><td><p>77</p></td>
+<td><p>PLL_XO</p></td>
+<td><p>OUTPUT</p></td>
+<td><p>-</p></td>
+<td><p>接24MHz无源晶振</p></td>
+</tr>
+<tr class="row-even"><td><p>78</p></td>
+<td><p>PLL_XI</p></td>
+<td><p>INPUT</p></td>
+<td><p>-</p></td>
+<td><p>接24MHz无源晶振</p></td>
+</tr>
+<tr class="row-odd"><td colspan="5"><p>Power</p></td>
+</tr>
+<tr class="row-even"><td><p>41,57,83,27,114</p></td>
+<td><p>VCC33_IO</p></td>
+<td><p>POWER</p></td>
+<td><p>CPU IO电压</p></td>
+<td><p>3.3V供电</p></td>
+</tr>
+<tr class="row-odd"><td><p>84</p></td>
+<td><p>VCC30_ANA</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><p>内部模拟模块使用，外部接1uf旁路电容</p></td>
+</tr>
+<tr class="row-even"><td><p>29</p></td>
+<td><p>LDO25_OUT</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><p>内部DRAM模块使用，外部接1uf旁路电容</p></td>
+</tr>
+<tr class="row-odd"><td><p>28</p></td>
+<td><p>LDO1X_OUT</p></td>
+<td><p>POWER</p></td>
+<td><p>内置LDO输出</p></td>
+<td><div class="line-block">
+<div class="line">可供DRAM使用，存在发热，若使用需做好散热，</div>
+<div class="line">外部接1uf旁路电容</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30,32,33,35,36</p></td>
+<td><p>VDDQ_DDR</p></td>
+<td><p>POWER</p></td>
+<td><p>DRAM电压</p></td>
+<td><p><a class="reference external" href="mailto:DDR2&#37;&#52;&#48;1&#46;8V">DDR2<span>&#64;</span>1<span>&#46;</span>8V</a>、<a class="reference external" href="mailto:DDR3&#37;&#52;&#48;1&#46;5V">DDR3<span>&#64;</span>1<span>&#46;</span>5V</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>31,34,44,74,75,128</p></td>
+<td><p>VDD11_SYS</p></td>
+<td><p>POWER</p></td>
+<td><p>CPU Core电压</p></td>
+<td><p><a class="reference external" href="mailto:1&#46;2V&#37;&#52;&#48;600Mhz">1<span>&#46;</span>2V<span>&#64;</span>600Mhz</a>，<a class="reference external" href="mailto:1&#46;1V&#37;&#52;&#48;504Mhz">1<span>&#46;</span>1V<span>&#64;</span>504Mhz</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-center" id="id12">
+<caption><span class="caption-number">表 2.16 </span><span class="caption-text">D213EC (Sip DDR3) 功能复用表</span><a class="headerlink" href="#id12" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 14%" />
+<col style="width: 12%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>管脚</p></th>
+<th class="head"><p>功能1</p></th>
+<th class="head"><p>功能2</p></th>
+<th class="head"><p>功能3</p></th>
+<th class="head"><p>功能4</p></th>
+<th class="head"><p>功能5</p></th>
+<th class="head"><p>功能6</p></th>
+<th class="head"><p>功能7</p></th>
+<th class="head"><p>功能8</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="9"><p>GPIO A</p></td>
+</tr>
+<tr class="row-odd"><td><p>85</p></td>
+<td><p>PA0</p></td>
+<td><p>GPAI0</p></td>
+<td><p>PSADC0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>AMIC_IN</p></td>
+<td><p>IR_TX</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>86</p></td>
+<td><p>PA1</p></td>
+<td><p>GPAI1</p></td>
+<td><p>PSADC1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>AMIC_BIAS</p></td>
+<td><p>IR_RX</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>87</p></td>
+<td><p>PA2</p></td>
+<td><p>GPAI2</p></td>
+<td><p>PSADC2</p></td>
+<td></td>
+<td><p>UART0_RTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>88</p></td>
+<td><p>PA3</p></td>
+<td><p>GPAI3</p></td>
+<td><p>PSADC3</p></td>
+<td></td>
+<td><p>UART0_CTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>89</p></td>
+<td><p>PA4</p></td>
+<td><p>GPAI4</p></td>
+<td><p>PSADC4</p></td>
+<td></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>90</p></td>
+<td><p>PA5</p></td>
+<td><p>GPAI5</p></td>
+<td><p>PSADC5</p></td>
+<td></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>91</p></td>
+<td><p>PA6</p></td>
+<td><p>GPAI6</p></td>
+<td><p>PSADC6</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>UART1_RTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>92</p></td>
+<td><p>PA7</p></td>
+<td><p>GPAI7</p></td>
+<td><p>PSADC7</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART1_CTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>93</p></td>
+<td><p>PA8</p></td>
+<td><p>RTP_XP</p></td>
+<td><p>PSADC8</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>94</p></td>
+<td><p>PA9</p></td>
+<td><p>RTP_YP</p></td>
+<td><p>PSADC9</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>UART2_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>95</p></td>
+<td><p>PA10</p></td>
+<td><p>RTP_XN</p></td>
+<td><p>PSADC10</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>JTAG_MS</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>96</p></td>
+<td><p>PA11</p></td>
+<td><p>RTP_YN</p></td>
+<td><p>PSADC11</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART2_CTS</p></td>
+<td><p>JTAG_CK</p></td>
+<td><p>PSADC_TRIG</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="9"><p>GPIO B</p></td>
+</tr>
+<tr class="row-even"><td><p>37</p></td>
+<td><p>PB0</p></td>
+<td><p>SDC0_CMD</p></td>
+<td><p>SPI0_HOLD</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>UART7_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>38</p></td>
+<td><p>PB1</p></td>
+<td><p>SDC0_CLK</p></td>
+<td><p>SPI0_WP</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART7_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>39</p></td>
+<td><p>PB2</p></td>
+<td><p>SDC0_D3</p></td>
+<td><p>SPI0_CS</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>40</p></td>
+<td><p>PB3</p></td>
+<td><p>SDC0_D0</p></td>
+<td><p>SPI0_MISO</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>42</p></td>
+<td><p>PB4</p></td>
+<td><p>SDC0_D1</p></td>
+<td><p>SPI0_MOSI</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>43</p></td>
+<td><p>PB5</p></td>
+<td><p>SDC0_D2</p></td>
+<td><p>SPI0_CLK</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>45</p></td>
+<td><p>PB6</p></td>
+<td><p>SDC0_D4</p></td>
+<td><p>SPI1_HOLD</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>UART4_TX</p></td>
+<td></td>
+<td><p>CLK_OUT2</p></td>
+<td><p>CLK_OUT3</p></td>
+</tr>
+<tr class="row-odd"><td><p>46</p></td>
+<td><p>PB7</p></td>
+<td><p>SDC0_D5</p></td>
+<td><p>SPI1_WP</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>UART4_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>47</p></td>
+<td><p>PB8</p></td>
+<td><p>SDC0_D6</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>UART4_RTS</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>PSADC_TRIG</p></td>
+<td><p>IR_RX</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>48</p></td>
+<td><p>PB9</p></td>
+<td><p>SDC0_D7</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>UART6_RTS</p></td>
+<td><p>UART5_RX</p></td>
+<td></td>
+<td><p>IR_TX</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>49</p></td>
+<td><p>PB10</p></td>
+<td><p>SDC0_DS</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td></td>
+<td><p>UART6_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>51</p></td>
+<td><p>PB11</p></td>
+<td><p>SDC0_RST</p></td>
+<td><p>SPI1_CLK</p></td>
+<td></td>
+<td><p>UART6_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td colspan="9"><p>GPIO C</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>PC0</p></td>
+<td><p>SDC1_D1</p></td>
+<td><p>LCD_D5</p></td>
+<td><p>SPI2_CLK</p></td>
+<td><p>UART1_TX</p></td>
+<td><p>JTAG_MS</p></td>
+<td><p>PWM0_A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>PC1</p></td>
+<td><p>SDC1_D0</p></td>
+<td><p>LCD_D4</p></td>
+<td><p>SPI2_CS</p></td>
+<td><p>UART1_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td><p>PWM0_B</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>PC2</p></td>
+<td><p>SDC1_CLK</p></td>
+<td><p>LCD_D3</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td><p>UART1_RTS</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>PWM1_A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>PC3</p></td>
+<td><p>SDC1_CMD</p></td>
+<td><p>LCD_D2</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td><p>PWM1_B</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>PC4</p></td>
+<td><p>SDC1_D3</p></td>
+<td><p>LCD_D1</p></td>
+<td></td>
+<td><p>UART2_RX</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>PWM2_A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>PC5</p></td>
+<td><p>SDC1_D2</p></td>
+<td><p>LCD_D0</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>JTAG_CK</p></td>
+<td><p>PWM2_B</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>PC6</p></td>
+<td><p>SDC1_DET</p></td>
+<td><p>CLK_OUT0</p></td>
+<td><p>DE_TE</p></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td><p>PWM3_A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>PC7</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART3_RTS</p></td>
+<td></td>
+<td><p>PWM3_B</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="9"><p>GPIO D</p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>PD0</p></td>
+<td><p>LCD_D0</p></td>
+<td><p>SPI2_CLK</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD0</p></td>
+<td><p>PWM0_A</p></td>
+<td><p>GMAC1_MDIO</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>PD1</p></td>
+<td><p>LCD_D1</p></td>
+<td><p>SPI2_CS</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD1</p></td>
+<td><p>PWM0_B</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>PD2</p></td>
+<td><p>LCD_D2</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td><p>DE_TE</p></td>
+<td></td>
+<td><p>PBUS_AD2</p></td>
+<td><p>PWM1_A</p></td>
+<td><p>GMAC1_MDC</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>PD3</p></td>
+<td><p>LCD_D3</p></td>
+<td><p>SPI3_CLK</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD3</p></td>
+<td><p>PWM1_B</p></td>
+<td><p>GMAC1_TXCTL</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>PD4</p></td>
+<td><p>LCD_D4</p></td>
+<td><p>SPI3_CS</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD4</p></td>
+<td><p>PWM2_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>PD5</p></td>
+<td><p>LCD_D5</p></td>
+<td><p>SPI3_MOSI</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD5</p></td>
+<td><p>PWM2_B</p></td>
+<td><p>GMAC1_TXD1</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>PD6</p></td>
+<td><p>LCD_D6</p></td>
+<td><p>SPI3_MISO</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART1_TX</p></td>
+<td><p>PBUS_AD6</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>PD7</p></td>
+<td><p>LCD_D7</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART1_RX</p></td>
+<td><p>PBUS_AD7</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>PD8</p></td>
+<td><p>LCD_D8</p></td>
+<td><p>LVDS1_D0N</p></td>
+<td><p>SPI1_HOLD</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>PBUS_AD8</p></td>
+<td><p>APWM0_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>PD9</p></td>
+<td><p>LCD_D9</p></td>
+<td><p>LVDS1_D0P</p></td>
+<td><p>SPI1_WP</p></td>
+<td><p>UART2_RX</p></td>
+<td><p>PBUS_AD9</p></td>
+<td><p>APWM0_B</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>PD10</p></td>
+<td><p>LCD_D10</p></td>
+<td><p>LVDS1_D1N</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>PBUS_AD10</p></td>
+<td><p>APWM1_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>PD11</p></td>
+<td><p>LCD_D11</p></td>
+<td><p>LVDS1_D1P</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>UART3_RX</p></td>
+<td><p>PBUS_AD11</p></td>
+<td><p>APWM1_B</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>PD12</p></td>
+<td><p>LCD_D12</p></td>
+<td><p>LVDS1_D2N</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>PBUS_AD12</p></td>
+<td><p>APWM2_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>PD13</p></td>
+<td><p>LCD_D13</p></td>
+<td><p>LVDS1_D2P</p></td>
+<td><p>SPI1_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>PBUS_AD13</p></td>
+<td><p>APWM2_B</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>PD14</p></td>
+<td><p>LCD_D14</p></td>
+<td><p>LVDS1_CKN</p></td>
+<td><p>SPI3_CLK</p></td>
+<td><p>CAP0</p></td>
+<td><p>PBUS_AD14</p></td>
+<td><p>QEP0_H0</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>PD15</p></td>
+<td><p>LCD_D15</p></td>
+<td><p>LVDS1_CKP</p></td>
+<td><p>SPI3_CS</p></td>
+<td><p>CAP1</p></td>
+<td><p>PBUS_AD15</p></td>
+<td><p>QEP0_H1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>PD16</p></td>
+<td><p>LCD_D16</p></td>
+<td><p>LVDS1_D3N</p></td>
+<td><p>SPI3_MOSI</p></td>
+<td><p>CAP2</p></td>
+<td><p>PBUS_CLK</p></td>
+<td><p>QEP0_H2</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>PD17</p></td>
+<td><p>LCD_D17</p></td>
+<td><p>LVDS1_D3P</p></td>
+<td><p>SPI3_MISO</p></td>
+<td><p>APWM_FLT5</p></td>
+<td><p>PBUS_NCS</p></td>
+<td><p>QEP0_A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>127</p></td>
+<td><p>PD18</p></td>
+<td><p>LCD_D18</p></td>
+<td><p>LVDS0_D0N</p></td>
+<td><p>DSI_D0N</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>PBUS_NADV</p></td>
+<td><p>QEP0_B</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>126</p></td>
+<td><p>PD19</p></td>
+<td><p>LCD_D19</p></td>
+<td><p>LVDS0_D0P</p></td>
+<td><p>DSI_D0P</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>PBUS_NWE</p></td>
+<td><p>QEP0_I</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>125</p></td>
+<td><p>PD20</p></td>
+<td><p>LCD_D20</p></td>
+<td><p>LVDS0_D1N</p></td>
+<td><p>DSI_D1N</p></td>
+<td><p>UART7_TX</p></td>
+<td><p>PBUS_NOE</p></td>
+<td><p>QEP0_S</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>124</p></td>
+<td><p>PD21</p></td>
+<td><p>LCD_D21</p></td>
+<td><p>LVDS0_D1P</p></td>
+<td><p>DSI_D1P</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>CLK_OUT0</p></td>
+<td><p>APWM_FLT0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>123</p></td>
+<td><p>PD22</p></td>
+<td><p>LCD_D22</p></td>
+<td><p>LVDS0_D2N</p></td>
+<td><p>DSI_CKN</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART6_TX</p></td>
+<td><p>APWM_FLT1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>122</p></td>
+<td><p>PD23</p></td>
+<td><p>LCD_D23</p></td>
+<td><p>LVDS0_D2P</p></td>
+<td><p>DSI_CKP</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART6_RX</p></td>
+<td><p>APWM_FLT2</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>121</p></td>
+<td><p>PD24</p></td>
+<td><p>LCD_DCLK</p></td>
+<td><p>LVDS0_CKN</p></td>
+<td><p>DSI_D2N</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>SPI1_CLK</p></td>
+<td><p>APWM_FLT3</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>120</p></td>
+<td><p>PD25</p></td>
+<td><p>LCD_HS</p></td>
+<td><p>LVDS0_CKP</p></td>
+<td><p>DSI_D2P</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>APWM_FLT4</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>119</p></td>
+<td><p>PD26</p></td>
+<td><p>LCD_VS</p></td>
+<td><p>LVDS0_D3N</p></td>
+<td><p>DSI_D3N</p></td>
+<td><p>PWM3_A</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td><p>APWM0_SI</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>118</p></td>
+<td><p>PD27</p></td>
+<td><p>LCD_DE</p></td>
+<td><p>LVDS0_D3P</p></td>
+<td><p>DSI_D3P</p></td>
+<td><p>PWM3_B</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>APWM0_SO</p></td>
+<td><p>RTC_32K</p></td>
+</tr>
+<tr class="row-even"><td colspan="9"><p>GPIO E</p></td>
+</tr>
+<tr class="row-odd"><td><p>52</p></td>
+<td><p>PE0</p></td>
+<td></td>
+<td><p>DVP_D0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td></td>
+<td><p>GMAC0_RXD1</p></td>
+<td><p>APWM3_A</p></td>
+<td><p>PWM0_A</p></td>
+</tr>
+<tr class="row-even"><td><p>53</p></td>
+<td><p>PE1</p></td>
+<td></td>
+<td><p>DVP_D1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td></td>
+<td><p>GMAC0_RXD0</p></td>
+<td><p>APWM3_B</p></td>
+<td><p>PWM0_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>54</p></td>
+<td><p>PE2</p></td>
+<td></td>
+<td><p>DVP_D2</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>GMAC0_RXCTL</p></td>
+<td><p>APWM4_A</p></td>
+<td><p>PWM1_A</p></td>
+</tr>
+<tr class="row-even"><td><p>55</p></td>
+<td><p>PE3</p></td>
+<td></td>
+<td><p>DVP_D3</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>GMAC0_CLKIN</p></td>
+<td><p>APWM4_B</p></td>
+<td><p>PWM1_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>58</p></td>
+<td><p>PE4</p></td>
+<td></td>
+<td><p>DVP_D4</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>GMAC0_TXD1</p></td>
+<td><p>APWM5_A</p></td>
+<td><p>PWM2_A</p></td>
+</tr>
+<tr class="row-even"><td><p>59</p></td>
+<td><p>PE5</p></td>
+<td></td>
+<td><p>DVP_D5</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>GMAC0_TXD0</p></td>
+<td><p>APWM5_B</p></td>
+<td><p>PWM2_B</p></td>
+</tr>
+<tr class="row-odd"><td><p>60</p></td>
+<td><p>PE6</p></td>
+<td><p>DSPK0</p></td>
+<td><p>DVP_D6</p></td>
+<td><p>UART5_RTS</p></td>
+<td><p>UART6_TX</p></td>
+<td><p>GMAC0_TXCK</p></td>
+<td><p>QEP1_H0</p></td>
+<td><p>CAP0</p></td>
+</tr>
+<tr class="row-even"><td><p>61</p></td>
+<td><p>PE7</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DVP_D7</p></td>
+<td><p>UART7_RTS</p></td>
+<td><p>UART6_RX</p></td>
+<td><p>GMAC0_TXCTL</p></td>
+<td><p>QEP1_H1</p></td>
+<td><p>CAP1</p></td>
+</tr>
+<tr class="row-odd"><td><p>62</p></td>
+<td><p>PE8</p></td>
+<td><p>I2S0_MCLK</p></td>
+<td><p>DVP_CK</p></td>
+<td><p>UART6_RTS</p></td>
+<td><p>UART7_TX</p></td>
+<td><p>GMAC0_MDC</p></td>
+<td><p>QEP1_H2</p></td>
+<td><p>CAP2</p></td>
+</tr>
+<tr class="row-even"><td><p>63</p></td>
+<td><p>PE9</p></td>
+<td><p>I2S0_BCLK</p></td>
+<td><p>DVP_HS</p></td>
+<td><p>UART6_CTS</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>GMAC0_MDIO</p></td>
+<td><p>QEP1_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>64</p></td>
+<td><p>PE10</p></td>
+<td><p>I2S0_LRCK</p></td>
+<td><p>DVP_VS</p></td>
+<td><p>DSPK0</p></td>
+<td></td>
+<td><p>CLK_OUT2</p></td>
+<td><p>QEP1_B</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>65</p></td>
+<td><p>PE11</p></td>
+<td><p>I2S0_DOUT</p></td>
+<td><p>I2S0_DIN</p></td>
+<td><p>DSPK1</p></td>
+<td><p>CLK_OUT1</p></td>
+<td><p>GMAC0_RXD3</p></td>
+<td><p>QEP1_I</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>66</p></td>
+<td><p>PE12</p></td>
+<td><p>I2S0_DIN</p></td>
+<td><p>SPI3_CLK</p></td>
+<td><p>DMIC_CLK</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>GMAC0_RXD2</p></td>
+<td><p>QEP1_S</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>67</p></td>
+<td><p>PE13</p></td>
+<td></td>
+<td><p>SPI3_CS</p></td>
+<td><p>DMIC_D0</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>GMAC0_RXCK</p></td>
+<td><p>CAP0</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>68</p></td>
+<td><p>PE14</p></td>
+<td></td>
+<td><p>SPI3_MOSI</p></td>
+<td></td>
+<td><p>UART3_TX</p></td>
+<td><p>GMAC0_TXD3</p></td>
+<td><p>CAP1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>69</p></td>
+<td><p>PE15</p></td>
+<td></td>
+<td><p>SPI3_MISO</p></td>
+<td></td>
+<td><p>UART3_RX</p></td>
+<td><p>GMAC0_TXD2</p></td>
+<td><p>CAP2</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>70</p></td>
+<td><p>PE16</p></td>
+<td></td>
+<td><p>SPI0_CLK</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>GMAC0_TRIG</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>71</p></td>
+<td><p>PE17</p></td>
+<td></td>
+<td><p>SPI0_CS</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>GMAC0_PPSO</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>72</p></td>
+<td><p>PE18</p></td>
+<td></td>
+<td><p>SPI0_MOSI</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>PWM3_A</p></td>
+<td><p>GMAC1_TRIG</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>73</p></td>
+<td><p>PE19</p></td>
+<td></td>
+<td><p>SPI0_MISO</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>PWM3_B</p></td>
+<td><p>GMAC1_PPSO</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td colspan="9"><p>GPIO F</p></td>
+</tr>
+<tr class="row-even"><td><p>101</p></td>
+<td><p>PF0</p></td>
+<td><p>SDC2_D1</p></td>
+<td><p>SPI2_CLK</p></td>
+<td></td>
+<td><p>UART5_TX</p></td>
+<td><p>GMAC1_RXD1</p></td>
+<td><p>PBUS_AD0</p></td>
+<td><p>GMAC1_RXD0</p></td>
+</tr>
+<tr class="row-odd"><td><p>102</p></td>
+<td><p>PF1</p></td>
+<td><p>SDC2_D0</p></td>
+<td><p>SPI2_CS</p></td>
+<td></td>
+<td><p>UART5_RX</p></td>
+<td><p>GMAC1_RXD0</p></td>
+<td><p>PBUS_AD1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>103</p></td>
+<td><p>PF2</p></td>
+<td><p>SDC2_CLK</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td></td>
+<td><p>UART5_RTS</p></td>
+<td><p>GMAC1_RXCTL</p></td>
+<td><p>PBUS_AD2</p></td>
+<td><p>GMAC1_RXD1</p></td>
+</tr>
+<tr class="row-odd"><td><p>104</p></td>
+<td><p>PF3</p></td>
+<td><p>SDC2_CMD</p></td>
+<td><p>SPI2_MISO</p></td>
+<td></td>
+<td><p>UART5_CTS</p></td>
+<td><p>GMAC1_CLKIN</p></td>
+<td><p>PBUS_AD3</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>105</p></td>
+<td><p>PF4</p></td>
+<td><p>SDC2_D3</p></td>
+<td></td>
+<td></td>
+<td><p>UART6_TX</p></td>
+<td><p>GMAC1_TXD1</p></td>
+<td><p>PBUS_AD4</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>106</p></td>
+<td><p>PF5</p></td>
+<td><p>SDC2_D2</p></td>
+<td></td>
+<td></td>
+<td><p>UART6_RX</p></td>
+<td><p>GMAC1_TXD0</p></td>
+<td><p>PBUS_AD5</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>107</p></td>
+<td><p>PF6</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_TX</p></td>
+<td><p>GMAC1_TXCK</p></td>
+<td><p>PBUS_AD6</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>108</p></td>
+<td><p>PF7</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_RX</p></td>
+<td><p>GMAC1_TXCTL</p></td>
+<td><p>PBUS_AD7</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>109</p></td>
+<td><p>PF8</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_RTS</p></td>
+<td><p>GMAC1_MDC</p></td>
+<td><p>PBUS_AD8</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>110</p></td>
+<td><p>PF9</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_CTS</p></td>
+<td><p>GMAC1_MDIO</p></td>
+<td><p>PBUS_AD9</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>111</p></td>
+<td><p>PF10</p></td>
+<td><p>I2S1_MCLK</p></td>
+<td><p>I2S1_DIN</p></td>
+<td></td>
+<td><p>UART3_CTS</p></td>
+<td><p>CLK_OUT3</p></td>
+<td><p>PBUS_AD10</p></td>
+<td><p>GMAC1_CLKIN</p></td>
+</tr>
+<tr class="row-odd"><td><p>112</p></td>
+<td><p>PF11</p></td>
+<td><p>I2S1_BCLK</p></td>
+<td></td>
+<td><p>PBUS_AD11</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>GMAC1_RXD3</p></td>
+<td><p>PBUS_CLK</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>113</p></td>
+<td><p>PF12</p></td>
+<td><p>I2S1_LRCK</p></td>
+<td></td>
+<td><p>UART4_RTS</p></td>
+<td><p>UART3_RX</p></td>
+<td><p>GMAC1_RXD2</p></td>
+<td><p>PBUS_NCS</p></td>
+<td><p>GMAC1_TXD0</p></td>
+</tr>
+<tr class="row-odd"><td><p>115</p></td>
+<td><p>PF13</p></td>
+<td><p>I2S1_DOUT</p></td>
+<td><p>I2S1_DIN</p></td>
+<td><p>UART4_CTS</p></td>
+<td><p>UART3_RTS</p></td>
+<td><p>GMAC1_RXCK</p></td>
+<td><p>PBUS_NADV</p></td>
+<td><p>GMAC1_RXCTL</p></td>
+</tr>
+<tr class="row-even"><td><p>116</p></td>
+<td><p>PF14</p></td>
+<td><p>I2S1_DIN</p></td>
+<td><p>DSPK0</p></td>
+<td><p>DMIC_D0</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>GMAC1_TXD3</p></td>
+<td><p>PBUS_NWE</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>117</p></td>
+<td><p>PF15</p></td>
+<td><p>DE_TE</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DMIC_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>GMAC1_TXD2</p></td>
+<td><p>PBUS_NOE</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td colspan="9"><p>USB0</p></td>
+</tr>
+<tr class="row-odd"><td><p>79</p></td>
+<td><p>PU0</p></td>
+<td><p>USB0_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>80</p></td>
+<td><p>PU1</p></td>
+<td><p>USB0_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>81</p></td>
+<td><p>PU2</p></td>
+<td><p>USB1_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART2_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>82</p></td>
+<td><p>PU3</p></td>
+<td><p>USB1_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART2_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">2.2. </span>时钟和电源<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="power">
+<h3><span class="section-number">2.2.1. </span>POWER<a class="headerlink" href="#power" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>电源系统</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>芯片需提供 VDD11_SYS（CPU CORE 电源：<a class="reference external" href="mailto:1&#46;2V&#37;&#52;&#48;600Mhz">1<span>&#46;</span>2V<span>&#64;</span>600Mhz</a>，<a class="reference external" href="mailto:1&#46;1V&#37;&#52;&#48;504Mhz">1<span>&#46;</span>1V<span>&#64;</span>504Mhz</a>）。</p></li>
+</ul>
+<div class="figure align-center" id="id13">
+<img alt="../_images/vdd_sys.png" src="../_images/vdd_sys.png" />
+<p class="caption"><span class="caption-number">图 2.5 </span><span class="caption-text">CPU CORE 电源 VDD11_SYS原理图</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>芯片需提供 VCC33_IO（CPU IO 电源：典型3.3V）。</p></li>
+</ul>
+<div class="figure align-center" id="id14">
+<img alt="../_images/vcc_io.png" src="../_images/vcc_io.png" />
+<p class="caption"><span class="caption-number">图 2.6 </span><span class="caption-text">CPU IO 电源 VCC33_IO原理图</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>芯片需提供 VDDQ_DDR（DRAM 电源：<a class="reference external" href="mailto:DDR2&#37;&#52;&#48;1&#46;8V">DDR2<span>&#64;</span>1<span>&#46;</span>8V</a>，<a class="reference external" href="mailto:DDR3&#37;&#52;&#48;1&#46;5V">DDR3<span>&#64;</span>1<span>&#46;</span>5V</a>）。</p></li>
+</ul>
+<div class="figure align-center" id="id15">
+<img alt="../_images/vcc_ddr.png" src="../_images/vcc_ddr.png" />
+<p class="caption"><span class="caption-number">图 2.7 </span><span class="caption-text">CPU DRAM 电源VDDQ_DDR原理图</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>内置LDO1X_OUT，外部接1uF电容，可配置输出1.8V/1.5V供DRAM使用，存在转换效率和发热问题，若使用内置LDO，Layout需做好散热。</p></li>
+<li><p>LDO25_OUT、VCC30_ANA供内部模块使用，外部接1uf旁路电容即可。</p></li>
+</ul>
+<div class="figure align-center" id="id16">
+<img alt="../_images/power.png" src="../_images/power.png" />
+<p class="caption"><span class="caption-number">图 2.8 </span><span class="caption-text">Power 电路去耦电容</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+</div></blockquote>
+</li>
+<li><p>上下电时序要求</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>VDD11_SYS、VCC33_IO、VDDQ_DDR无上下电时序要求。</p></li>
+<li><p>复位信号内部自带RC上拉，上电完成后，复位自动释放，并且24MHz晶振起振。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="sys">
+<h3><span class="section-number">2.2.2. </span>SYS<a class="headerlink" href="#sys" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>系统功能脚说明</p></li>
+</ul>
+<table class="colwidths-given docutils align-center" id="id17">
+<caption><span class="caption-number">表 2.17 </span><span class="caption-text">系统功能脚说明</span><a class="headerlink" href="#id17" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 22%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>信号说明</p></th>
+<th class="head"><p>应用说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>UBOOT</p></td>
+<td><p>升级模式配置</p></td>
+<td><div class="line-block">
+<div class="line">默认使用PA0下拉检测，可在UBOOT或bootloader配置任意IO为</div>
+<div class="line">下拉检测或上拉检测进入升级模式，建议预留按键或跳线</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>RESET</p></td>
+<td><p>CPU复位脚</p></td>
+<td><p>内部RC上拉，低电平复位，可悬空，建议预留按键或跳线</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pll">
+<h3><span class="section-number">2.2.3. </span>PLL<a class="headerlink" href="#pll" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>PLL 需外接24MHz晶振</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>外部 24MHz 晶振精度要求小于 ±20ppm，匹配电容根据晶体负载电容选择。</p></li>
+<li><p>PLL_XO 建议串联0R电阻，便于调试振荡幅度。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id18">
+<img alt="../_images/pll.png" src="../_images/pll.png" />
+<p class="caption"><span class="caption-number">图 2.9 </span><span class="caption-text">PLL 24M晶振电路原理图</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="rtc">
+<h3><span class="section-number">2.2.4. </span>RTC<a class="headerlink" href="#rtc" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>内置RTC，使用RTC功能需外接32.768kHz晶振</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>外部32.768kHz晶振精度建议小于 ±10ppm，匹配电容根据晶体负载电容选择。</p></li>
+<li><p>RTC_XI和RTC_XO之间并接10M电阻建议保留，可用于频率微调。</p></li>
+<li><p>RTC_IO为OD输出，使用时需要外挂上拉电阻，上拉电平不超过5V，可用于RTC唤醒或输出32K时钟。</p></li>
+<li><p>若不考虑掉电保持，RTC_VCOIN可悬空，内部有二极管通路从VCC33_IO取电。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id19">
+<img alt="../_images/rtc.png" src="../_images/rtc.png" />
+<p class="caption"><span class="caption-number">图 2.10 </span><span class="caption-text">RTC 电路原理图</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">2.3. </span>存储<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="dram">
+<h3><span class="section-number">2.3.1. </span>DRAM<a class="headerlink" href="#dram" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>芯片内部 Sip 16bit DRAM，DDR3 1Gb 最高频率 672MHz 或 DDR2 512Mb 最高频率 504MHz。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>LDO1X_OUT为芯片内部LDO(1.8/1.5V 500mA)输出，可配置电压，为DRAM供电。</p></li>
+<li><p>若使用内部LDO1X为DRAM供电，芯片会发热比较大，Layout时需注意GND焊盘多加过孔散热，散热铜皮完整。</p></li>
+<li><p>若产品方案对发热敏感，建议DRAM采用外置DCDC供电。</p></li>
+<li><p>LDO25_OUT为芯片内部LDO(2.5V 50mA)输出，为DRAM模拟部分供电。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="flash">
+<h3><span class="section-number">2.3.2. </span>FLASH<a class="headerlink" href="#flash" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>SPI0/1 为QSPI控制器，最大支持4线数据传输，用于Flash类型设备的快速读写访问。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>默认使用SPI0为启动接口，烧eFuse可选配SPI1为启动接口。</p></li>
+<li><p>QSPI 支持 NAND Flash / Nor Flash，支持1/2/4线模式。</p></li>
+<li><p>IO最大速率 SDR 100MHz，仅支持3.3V IO电压，Flash容量不限制。</p></li>
+<li><p>SPI_CS、SPI_WP、SPI_HOLD必需保留10k上拉。</p></li>
+<li><p>QSPI Layout必需做等长约束，否则跑4线模式容易出现速度跑不高的情况。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id20">
+<img alt="../_images/nand.png" src="../_images/nand.png" />
+<p class="caption"><span class="caption-number">图 2.11 </span><span class="caption-text">SPI0 Nand Flash电路原理图</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id21">
+<img alt="../_images/nor.png" src="../_images/nor.png" />
+<p class="caption"><span class="caption-number">图 2.12 </span><span class="caption-text">SPI0 Nor Flash电路原理图</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="emmc">
+<h3><span class="section-number">2.3.3. </span>eMMC<a class="headerlink" href="#emmc" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>使用SDC0接口，1/4线模式，支持eMMC5.0协议，支持SDR25/SDR50/DDR50模式。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>IO最大速率 DDR 50MHz，仅支持3.3V IO电压。</p></li>
+<li><p>CLK信号不需上拉，最好在靠近主控端串联22欧电阻，若并联容值不超过22pF。</p></li>
+<li><p>D0、CMD和RST信号上拉到VCC-IO。</p></li>
+<li><p>SDC0_D0~SDC0_D3、SDC0_CLK、SDC0_CMD信号走线做等长约束。</p></li>
+<li><p>建议在原理图标注信号线走线要求如等长、阻抗；标注电源工作电压及最大工作电流，便于LAYOUT设计。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id22">
+<img alt="../_images/emmc.png" src="../_images/emmc.png" />
+<p class="caption"><span class="caption-number">图 2.13 </span><span class="caption-text">SDC0 eMMC电路原理图</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="card">
+<h3><span class="section-number">2.3.4. </span>CARD<a class="headerlink" href="#card" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>使用SDC1接口，支持1线、4线模式。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>IO最大速率 DDR 50MHz，仅支持3.3V IO电压。</p></li>
+<li><p>CLK信号不需上拉，最好在靠近主控端串联22欧电阻，若并联容值不超过22pF。</p></li>
+<li><p>CMD和DET信号上拉到VCC-IO。</p></li>
+<li><p>SD接口信号线TVS管结电容 &lt; 35pF，否则影响信号传输质量。</p></li>
+<li><p>SDC1_D0~SDC1_D3、SDC1_CLK、SDC1_CMD信号走线做等长约束。</p></li>
+<li><p>建议保留DET信号线上的1k串联电阻，避免在插入SD CARD时产生信号下冲，同时提高GPIO ESD性能。</p></li>
+<li><p>建议在原理图标注信号线走线要求如等长、阻抗；标注电源工作电压及最大工作电流，便于LAYOUT设计。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id23">
+<img alt="../_images/card.png" src="../_images/card.png" />
+<p class="caption"><span class="caption-number">图 2.14 </span><span class="caption-text">SDC1 CARD电路原理图</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">2.4. </span>多媒体<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="prgb">
+<h3><span class="section-number">2.4.1. </span>PRGB<a class="headerlink" href="#prgb" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>PRGB模式兼容5种MAPPING输出配置，默认为24bits，可配置为18bits、16bits，相应的低位不使用。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>配置0：RGB888建议使用，支持R/G/B 整组信号互换，支持组内信号高位到低位排序互换。</p></li>
+<li><p>配置1：RGB666建议使用，支持R/G/B 整组信号互换。</p></li>
+<li><p>配置2：RGB666，占用PC卡口，支持R/G/B 整组信号互换。</p></li>
+<li><p>配置3：RGB565建议使用，支持R/G/B 整组信号互换。</p></li>
+<li><p>配置4：RGB565，占用PC卡口，支持R/G/B 整组信号互换。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id24">
+<img alt="../_images/rgb-mode.png" src="../_images/rgb-mode.png" />
+<p class="caption"><span class="caption-number">图 2.15 </span><span class="caption-text">RGB 不同配置定义图</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id25">
+<img alt="../_images/rgb565-666.png" src="../_images/rgb565-666.png" />
+<p class="caption"><span class="caption-number">图 2.16 </span><span class="caption-text">RGB565 / RGB666 电路原理图</span><a class="headerlink" href="#id25" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id26">
+<img alt="../_images/rgb888.png" src="../_images/rgb888.png" />
+<p class="caption"><span class="caption-number">图 2.17 </span><span class="caption-text">RGB888 电路原理图</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id27">
+<img alt="../_images/lcd_bl_bias.png" src="../_images/lcd_bl_bias.png" />
+<p class="caption"><span class="caption-number">图 2.18 </span><span class="caption-text">LCD 背光和偏压电路原理图</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="lvds">
+<h3><span class="section-number">2.4.2. </span>LVDS<a class="headerlink" href="#lvds" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>LVDS支持 Single-Link和 Dual-Link两种接法，根据实际需要选择。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>速率240Mbps~800Mbps。</p></li>
+<li><p>支持LVDS_0与LVDS_1互换。</p></li>
+<li><p>支持LVDS_0与LVDS_1双屏同显。</p></li>
+<li><p>支持LVDS_D0-LVDS_D3、LVDS_CK五组差分对信号任意互换，比如LVDS_D2与LVDS_CK互换。</p></li>
+<li><p>支持LVDS信号极性选择模式，即差分对信号正负极性互换。</p></li>
+<li><p>LVDS信号是高速信号，需注意差分对约束、等长约束、差分100欧姆阻抗匹配。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id28">
+<img alt="../_images/lvds-single.png" src="../_images/lvds-single.png" />
+<p class="caption"><span class="caption-number">图 2.19 </span><span class="caption-text">LVDS Single-Link 电路原理图</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id29">
+<img alt="../_images/lvds-dual.png" src="../_images/lvds-dual.png" />
+<p class="caption"><span class="caption-number">图 2.20 </span><span class="caption-text">LVDS Dual-Link 电路原理图</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="mipi-dsi">
+<h3><span class="section-number">2.4.3. </span>MIPI-DSI<a class="headerlink" href="#mipi-dsi" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>MIPI DSI是应用于显示的串行接口，实现将DE送过来的并行图像数据高性能转化串行输出。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>可配置为1/2/3/4对数据通道。</p></li>
+<li><p>支持高速模式和低速模式。</p></li>
+<li><p>每对数据通道都支持高速单向通信。</p></li>
+<li><p>数据通道0可选支持低速模式下双向通信，即可读取屏的寄存器。</p></li>
+<li><p>支持 D0~D3 差分对信号任意互换。</p></li>
+<li><p>支持信号极性选择模式，即所有差分对信号支持正负极性互换。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id30">
+<img alt="../_images/mipi-dsi.png" src="../_images/mipi-dsi.png" />
+<p class="caption"><span class="caption-number">图 2.21 </span><span class="caption-text">MIPI-DSI 电路原理图</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="tp">
+<h3><span class="section-number">2.4.4. </span>TP<a class="headerlink" href="#tp" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>支持RTP电阻屏触摸和CTP电容屏触摸。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>RTP 仅支持4线，即X+/X-/Y+/Y-。</p></li>
+<li><p>RTP 支持最多2点触摸。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id31">
+<img alt="../_images/rtp.png" src="../_images/rtp.png" />
+<p class="caption"><span class="caption-number">图 2.22 </span><span class="caption-text">RTP 电阻屏触摸电路原理图</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id32">
+<img alt="../_images/ctp.png" src="../_images/ctp.png" />
+<p class="caption"><span class="caption-number">图 2.23 </span><span class="caption-text">CTP 电容屏触摸电路原理图</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="pwm">
+<h3><span class="section-number">2.4.5. </span>PWM<a class="headerlink" href="#pwm" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>支持PWM0~PWM3共4组PWM波形发生器</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PWMx_A和PWMx_B同属一组PWM，可配置成单独输出或同时输出，但频率相同，占空比可不相同。</p></li>
+<li><p>不同频率的应用不能使用同一组PWM。</p></li>
+<li><p>PWM通常用于背光控制，频率一般为20kHz~1MHz。</p></li>
+<li><p>PWM通常用于蜂鸣器，频率一般为3kHz~4kHz。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id33">
+<img alt="../_images/pwm.png" src="../_images/pwm.png" />
+<p class="caption"><span class="caption-number">图 2.24 </span><span class="caption-text">PWM 背光电路原理图</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id34">
+<img alt="../_images/buzzer.png" src="../_images/buzzer.png" />
+<p class="caption"><span class="caption-number">图 2.25 </span><span class="caption-text">蜂鸣器电路原理图</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="dvp">
+<h3><span class="section-number">2.4.6. </span>DVP<a class="headerlink" href="#dvp" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>支持 DVP 8位并行接口，最大支持500万像素拍照，最大支持1920x1080&#64;30fps 录像，支持YUV422、BT.656格式。</p></li>
+</ul>
+<div class="figure align-center" id="id35">
+<img alt="../_images/dvp.png" src="../_images/dvp.png" />
+<p class="caption"><span class="caption-number">图 2.26 </span><span class="caption-text">DVP CAMERA 原理图</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="audio">
+<h3><span class="section-number">2.4.7. </span>AUDIO<a class="headerlink" href="#audio" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>AMIC，支持一路模拟音频输入。</p></li>
+</ul>
+<div class="figure align-center" id="id36">
+<img alt="../_images/amic.png" src="../_images/amic.png" />
+<p class="caption"><span class="caption-number">图 2.27 </span><span class="caption-text">AMIC 电路原理图</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>DMIC，支持数字立体声音频输入。</p></li>
+</ul>
+<div class="figure align-center" id="id37">
+<img alt="../_images/dmic.png" src="../_images/dmic.png" />
+<p class="caption"><span class="caption-number">图 2.28 </span><span class="caption-text">DMIC 电路原理图</span><a class="headerlink" href="#id37" title="永久链接至图片">¶</a></p>
+</div>
+<ul>
+<li><p>Speaker</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>支持2路单端输出（双喇叭，左右声道输出）。</p></li>
+<li><p>支持1路差分输出（单喇叭，单声道输出）。</p></li>
+<li><p>支持DSPK0和DSPK1内部混音后，再通过任意单一通路输出。</p></li>
+<li><p>DSPK是数字信号，从CPU出来必需接RC（R=100R，C=470nF）转换成模拟信号才能给到音频功放。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id38">
+<img alt="../_images/speaker-d.png" src="../_images/speaker-d.png" />
+<p class="caption"><span class="caption-number">图 2.29 </span><span class="caption-text">Speaker 差分输出电路原理图</span><a class="headerlink" href="#id38" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id39">
+<img alt="../_images/speaker-s.png" src="../_images/speaker-s.png" />
+<p class="caption"><span class="caption-number">图 2.30 </span><span class="caption-text">Speaker 单端输出电路原理图</span><a class="headerlink" href="#id39" title="永久链接至图片">¶</a></p>
+</div>
+<ul>
+<li><p>I2S</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>I2S接口为数字音频接口，用于连接外部音频设备，实现音频数据的传输。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id40">
+<img alt="../_images/i2s-ac107.png" src="../_images/i2s-ac107.png" />
+<p class="caption"><span class="caption-number">图 2.31 </span><span class="caption-text">I2S 扩展麦克风电路原理图</span><a class="headerlink" href="#id40" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">2.5. </span>通用接口<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="ethernet">
+<h3><span class="section-number">2.5.1. </span>ETHERNET<a class="headerlink" href="#ethernet" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>RMII 内部参考时钟（外部PHY_TXC为Input情况）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MAC_REFCLK 时钟不使能，内部选通PLL_EMAC_50M作为RMII 50MHz参考时钟源</p></li>
+<li><p>MAC_TXC 输出时钟，提供给外部PHY使用</p></li>
+<li><p>MAC_TXC 输出时钟接外部PHY_TXC Input</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>RMII 外部参考时钟（外部PHY_TXC为Output情况或晶振提供50MHz）</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>MAC_REFCLK 时钟使能，并且选通作为RMII 50MHz参考时钟源</p></li>
+<li><p>MAC_TXC不使能，无需提供外部PHY时钟信号</p></li>
+<li><p>MAC_REFCLK 输入时钟接外部PHY_TXC Output</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<span id="rmii-8201"></span><table class="colwidths-given docutils align-center" id="id41">
+<caption><span class="caption-number">表 2.18 </span><span class="caption-text">百兆以太网 RMII 接口关系</span><a class="headerlink" href="#id41" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 14%" />
+<col style="width: 27%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>MAC端信号</p></th>
+<th class="head"><p>RMII接口</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>描述</p></th>
+<th class="head"><p>PHY端信号</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAC_RXD1</p></td>
+<td><p>RMII_RXD1</p></td>
+<td><p>I</p></td>
+<td><p>数据接收信号线1</p></td>
+<td><p>PHY_RXD1</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAC_RXD0</p></td>
+<td><p>RMII_RXD0</p></td>
+<td><p>I</p></td>
+<td><p>数据接收信号线0</p></td>
+<td><p>PHY_RXD0</p></td>
+</tr>
+<tr class="row-even"><td><p>MAC_CRS_DV</p></td>
+<td><p>RMII_CRS_DV</p></td>
+<td><p>I</p></td>
+<td><p>数据接收有效</p></td>
+<td><p>PHY_CRS_DV</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAC_REFCLK</p></td>
+<td><p>RMII_REF_CLK</p></td>
+<td><p>I</p></td>
+<td><p>参考时钟</p></td>
+<td><p>PHY_TXC（Output）</p></td>
+</tr>
+<tr class="row-even"><td><p>MAC_TXD1</p></td>
+<td><p>RMII_TXD1</p></td>
+<td><p>O</p></td>
+<td><p>数据发送信号线1</p></td>
+<td><p>PHY_TXD1</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAC_TXD0</p></td>
+<td><p>RMII_TXD0</p></td>
+<td><p>O</p></td>
+<td><p>数据发送信号线0</p></td>
+<td><p>PHY_TXD0</p></td>
+</tr>
+<tr class="row-even"><td><p>MAC_TXC</p></td>
+<td><p>RMII_TXC</p></td>
+<td><p>O</p></td>
+<td><p>数据发送时钟</p></td>
+<td><p>PHY_TXC（Input）</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAC_TXEN</p></td>
+<td><p>RMII_TXEN</p></td>
+<td><p>O</p></td>
+<td><p>数据发送使能</p></td>
+<td><p>PHY_TXEN</p></td>
+</tr>
+<tr class="row-even"><td><p>MAC_MDC</p></td>
+<td><p>RMII_MDC</p></td>
+<td><p>I/O</p></td>
+<td><p>串行管理接口时钟</p></td>
+<td><p>PHY_MDC</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAC_MDIO</p></td>
+<td><p>RMII_MDIO</p></td>
+<td><p>I/O</p></td>
+<td><p>串行管理接口数据</p></td>
+<td><p>PHY_MDIO</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_OUT</p></td>
+<td><p>CLK_OUT</p></td>
+<td><p>O</p></td>
+<td><p>25MHz时钟</p></td>
+<td><p>PHY_XTAL2</p></td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center" id="id42">
+<img alt="../_images/rmii-rtl8201.png" src="../_images/rmii-rtl8201.png" />
+<p class="caption"><span class="caption-number">图 2.32 </span><span class="caption-text">RTL8201 三种接法框图</span><a class="headerlink" href="#id42" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id43">
+<img alt="../_images/rmii-ip101.png" src="../_images/rmii-ip101.png" />
+<p class="caption"><span class="caption-number">图 2.33 </span><span class="caption-text">IP101G 三种接法框图</span><a class="headerlink" href="#id43" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id44">
+<img alt="../_images/rmii.png" src="../_images/rmii.png" />
+<p class="caption"><span class="caption-number">图 2.34 </span><span class="caption-text">RTL8201 RMII 电路原理图</span><a class="headerlink" href="#id44" title="永久链接至图片">¶</a></p>
+</div>
+<ul>
+<li><p>防护设计</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>可用 TVS 阵列来保护 TXP、TXN、RXP 和 RXN 信号。</p></li>
+<li><p>可用铁氧体磁珠和隔离变压器来分别隔离电源和信号线上的高频噪声。</p></li>
+<li><p>可用 RC 或铁氧体磁珠隔离网络接口屏蔽层和信号地，以提高 ESD 性能。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="spi">
+<h3><span class="section-number">2.5.2. </span>SPI<a class="headerlink" href="#spi" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>SPI0/1/2/3为标准SPI控制器，用于存储设备或其他SPI接口设备的访问。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>所有SPI接口只支持Master，不支持Slave。</p></li>
+<li><p>SPI0/1 支持 1/2/4线模式。</p></li>
+<li><p>SPI2/3 支持 1线模式。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="uart">
+<h3><span class="section-number">2.5.3. </span>UART<a class="headerlink" href="#uart" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>UART兼容工业16550标准，支持常用波特率，最大波特率支持3Mbps。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>支持UART 2线（TX、RX），通常应用于TTL、RS485、RS232、DEBUG打印。</p></li>
+<li><p>支持UART 3线（TX、RX、RTS），通常应用于RS485、某些模块比如RTL8723DS其蓝牙只需UART 3线。</p></li>
+<li><p>支持UART 4线自动流控（TX、RX、RTS、CTS），通常应用于RS232、蓝牙通信。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id45">
+<img alt="../_images/uart-debug.png" src="../_images/uart-debug.png" />
+<p class="caption"><span class="caption-number">图 2.35 </span><span class="caption-text">调试串口电路原理图</span><a class="headerlink" href="#id45" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id46">
+<img alt="../_images/uart-232.png" src="../_images/uart-232.png" />
+<p class="caption"><span class="caption-number">图 2.36 </span><span class="caption-text">RS232串口电路原理图</span><a class="headerlink" href="#id46" title="永久链接至图片">¶</a></p>
+</div>
+<ul>
+<li><p>RS485支持硬件自动控制收发方向，也支持软件控制收发方向</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>在IO资源紧张时，建议采用两线接法，通过UART_TX管脚进行半双工收发，UART_RX管脚进行自动方向控制。</p></li>
+<li><p>需要做光耦隔离时，可采用常规三线接法，UART_RTS管脚进行自动方向控制。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id47">
+<img alt="../_images/uart-485-2.png" src="../_images/uart-485-2.png" />
+<p class="caption"><span class="caption-number">图 2.37 </span><span class="caption-text">RS485 两线接法电路原理图</span><a class="headerlink" href="#id47" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id48">
+<img alt="../_images/uart-485-3.png" src="../_images/uart-485-3.png" />
+<p class="caption"><span class="caption-number">图 2.38 </span><span class="caption-text">RS485 三线接法电路原理图</span><a class="headerlink" href="#id48" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="i2c">
+<h3><span class="section-number">2.5.4. </span>I2C<a class="headerlink" href="#i2c" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>I2C速率最大支持400kbps，支持master 和 slave 模式。</p></li>
+</ul>
+<div class="figure align-center" id="id49">
+<img alt="../_images/twi-rtc.png" src="../_images/twi-rtc.png" />
+<p class="caption"><span class="caption-number">图 2.39 </span><span class="caption-text">I2C 外接RTC电路原理图</span><a class="headerlink" href="#id49" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="can">
+<h3><span class="section-number">2.5.5. </span>CAN<a class="headerlink" href="#can" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>支持CAN0和CAN1两套控制器</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>支持CAN2.0A和CAN2.0B协议，可编程通信速率最高1Mbps。</p></li>
+<li><p>外围电路需接收发器，才能组成CAN总线网络。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id50">
+<img alt="../_images/can.png" src="../_images/can.png" />
+<p class="caption"><span class="caption-number">图 2.40 </span><span class="caption-text">CAN 电路原理图</span><a class="headerlink" href="#id50" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="cir">
+<h3><span class="section-number">2.5.6. </span>CIR<a class="headerlink" href="#cir" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>支持市面常见红外协议，如NEC、RC5、RC6、RC-MM、Sony、Sanyo、JVC等。</p></li>
+</ul>
+<div class="figure align-center" id="id51">
+<img alt="../_images/cir.png" src="../_images/cir.png" />
+<p class="caption"><span class="caption-number">图 2.41 </span><span class="caption-text">CIR 红外收发电路原理图</span><a class="headerlink" href="#id51" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="usb">
+<h3><span class="section-number">2.5.7. </span>USB<a class="headerlink" href="#usb" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>USB0 可支持 Device 或 Host，烧录程序只能使用USB0。可通过软件指令动态切换 Device 或 Host。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>USB 插座ID脚用于检测外部设备类型，通过电阻上拉到VCC-IO，连接到GPIO。当ID脚为低则工作在Host模式，当ID脚为高则工作在Device模式。</p></li>
+<li><p>USB ID信号建议串联电阻，避免插入设备时产生信号下冲，同时提升GPIO口ESD性能。</p></li>
+<li><p>USB DP、DM信号为高速差分信号线，差分走线阻抗控制90 ohm，TVS管寄生电容建议小于5pF。</p></li>
+<li><p>USB 插座VBUS建议不要与板卡5V直连，中间串入二极管，避免VCC_5V和VBUS同时供电时影响。</p></li>
+<li><p>USB 电源建议增加限流开关，避免插入HOST设备瞬态电流过大。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id52">
+<img alt="../_images/usb0-otg.png" src="../_images/usb0-otg.png" />
+<p class="caption"><span class="caption-number">图 2.42 </span><span class="caption-text">USB0 OTG电路原理图</span><a class="headerlink" href="#id52" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id53">
+<img alt="../_images/usb0-host.png" src="../_images/usb0-host.png" />
+<p class="caption"><span class="caption-number">图 2.43 </span><span class="caption-text">USB0 HOST电路原理图</span><a class="headerlink" href="#id53" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>USB1 可支持 Host。</p></li>
+</ul>
+<div class="figure align-center" id="id54">
+<img alt="../_images/usb1.png" src="../_images/usb1.png" />
+<p class="caption"><span class="caption-number">图 2.44 </span><span class="caption-text">USB1 电路原理图</span><a class="headerlink" href="#id54" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id55">
+<img alt="../_images/usb1-hub.png" src="../_images/usb1-hub.png" />
+<p class="caption"><span class="caption-number">图 2.45 </span><span class="caption-text">USB1 HUB电路原理图</span><a class="headerlink" href="#id55" title="永久链接至图片">¶</a></p>
+</div>
+<ul>
+<li><p>防护设计</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>可用 TVS 阵列来保护 VBUS、D+、D-和 ID 信号。</p></li>
+<li><p>可在 USB 差分信号上串联共模扼流圈，改善 EMI 性能。</p></li>
+<li><p>可在 VBUS、GND 上串联铁氧体磁珠，隔离高频噪声。</p></li>
+<li><p>可用 RC 电路或铁氧体磁珠隔离 USB 外壳和信号地，提高 ESD 性能。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="sdio">
+<h3><span class="section-number">2.5.8. </span>SDIO<a class="headerlink" href="#sdio" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>SDC1/SDC2 可用于用于访问SDIO接口的设备，比如 CARD、WIFI 模组。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>SDIO 接口只支持 3.3V IO 电平，接口顺序关系需注意。</p></li>
+<li><p>SDIO 接口按等长约束走线，CLOCK 尽量包地处理。</p></li>
+<li><p>天线端增加 TVS 管，防止 ESD 静电打坏模块。</p></li>
+<li><p>所有电源滤波电容尽量靠近芯片电源输入脚放置。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id56">
+<img alt="../_images/wifi-bt.png" src="../_images/wifi-bt.png" />
+<p class="caption"><span class="caption-number">图 2.46 </span><span class="caption-text">SDC1 WIFI+BT 电路原理图</span><a class="headerlink" href="#id56" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id57">
+<img alt="../_images/wifi-bt-sdc2.png" src="../_images/wifi-bt-sdc2.png" />
+<p class="caption"><span class="caption-number">图 2.47 </span><span class="caption-text">SDC2 WIFI+BT 电路原理图</span><a class="headerlink" href="#id57" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="layout.html" class="btn btn-neutral float-right" title="3. 布线设计" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="overview.html" class="btn btn-neutral float-left" title="1. 概述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

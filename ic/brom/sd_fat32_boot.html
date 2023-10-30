@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.7. SD FAT32 启动 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7.8. SPI NAND 启动" href="spi_nand_boot.html" />
+    <link rel="prev" title="7.6. SD/eMMC 启动" href="mmc_boot.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">6. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. 启动</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">7.1. 模块概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_flow.html">7.2. 整体流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_cfg.html">7.3. 启动配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_image_format.html">7.4. 镜像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clock_cfg.html">7.5. 时钟配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmc_boot.html">7.6. SD/eMMC 启动</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.7. SD FAT32 启动</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fat32">7.7.1. FAT32 中的内容</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">7.7.2. 启动和升级流程</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nand_boot.html">7.8. SPI NAND 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nor_boot.html">7.9. SPI NOR 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secure_boot.html">7.10. 安全启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jtag_unlock.html">7.11. JTAG 解锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usb_mode.html">7.12. USB 升级模式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7. </span>启动</a> &raquo;</li>
+        
+      <li><span class="section-number">7.7. </span>SD FAT32 启动</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sd-fat32">
+<h1><span class="section-number">7.7. </span>SD FAT32 启动<a class="headerlink" href="#sd-fat32" title="永久链接至标题">¶</a></h1>
+<p>SD 卡 FAT32 文件系统启动的整体流程如下：</p>
+<div class="figure align-center">
+<img alt="../../_images/sdfat32_flow.png" src="../../_images/sdfat32_flow.png" />
+</div>
+<p>SD 卡启动流程中，首先尝试从分区读取第一级引导程序程序，如果从分区读取和验证失败，则尝试从 FAT32 文件系统启动。要求：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>SD 卡必须采用 MBR 分区的方式</p></li>
+<li><p>第一个分区必须是 FAT32</p></li>
+</ul>
+</div></blockquote>
+<p>简单而言，SD 卡使用 Windows 自带的格式化工具进行 FAT32 格式化。</p>
+<div class="section" id="fat32">
+<h2><span class="section-number">7.7.1. </span>FAT32 中的内容<a class="headerlink" href="#fat32" title="永久链接至标题">¶</a></h2>
+<p>对于执行升级的使用场景，文件系统中存放的文件如下。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 11%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>是否必要</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>bootcfg.txt</p></td>
+<td><p>必要</p></td>
+<td><p>启动镜像配置文件，名字固定</p></td>
+</tr>
+<tr class="row-odd"><td><p>u-boot-spl-updater.aic</p></td>
+<td><p>可选</p></td>
+<td><p>BROM 读取和执行的镜像，文件可根据实际情况命名，需配置到 bootcfg.txt</p></td>
+</tr>
+<tr class="row-even"><td><p>u-boot-updater.img</p></td>
+<td><p>可选</p></td>
+<td><p>SPL 程序读取和执行。根据具体项目的设计来决定是否出现。</p></td>
+</tr>
+<tr class="row-odd"><td><p>xxx_v1.0.0.img</p></td>
+<td><p>必要</p></td>
+<td><p>U-Boot 读取的升级镜像文件。</p></td>
+</tr>
+</tbody>
+</table>
+<p>其中 BROM 只关心 FAT32 文件系统根目录是否出现 bootcfg.txt 以及第一级引导程序，其他文件 BROM 不关心。</p>
+<p>使用 bootcfg.txt 配置而不是直接读取镜像文件的原因：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>固定名字的配置文件，简化 BROM 寻找启动镜像的逻辑</p></li>
+<li><p>统一配置入口，BROM 和后续的 SPL、U-Boot 可以方便的找到对应的镜像文件</p></li>
+<li><p>可以根据不同项目的需要，对具体镜像进行命名</p></li>
+</ul>
+</div></blockquote>
+<p>bootcfg.txt 内容示例：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Boot configuration file
+# Used in SD Card FAT32 boot and USB Disk upgrade.
+# Format:
+# boot0=size@offset
+#   boot0 size and location offset in &#39;image&#39; file, boot rom read it.
+# boot0=example.bin
+#   boot0 image is file example.bin, boot rom read it.
+# boot1=size@offset
+#   boot1 size and location offset in &#39;image&#39; file, boot0 read it.
+# boot1=example.bin
+#   boot1 image is file example.bin, boot0 read it.
+# image=example.img
+#   Packed image file is example.img, boot1 use it.
+
+# u-boot-spl-updater.aic
+boot0=0x7d80@0x1c00
+
+# u-boot-updater.aic
+boot1=0x81d80@0xdc00
+
+image=xxx_v1.0.0.img
+</pre></div>
+</div>
+<p>使用限制：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>文件名必须是 ASCII 字符，不能为 UNICODE 或者其他字符</p></li>
+<li><p>文件名长度必须是小于128字符</p></li>
+<li><p>删除所有分区后，对 SD 卡进行深度格式化</p></li>
+<li><p>SD 卡格式化时，注意簇大小要大于等于 8KB</p></li>
+<li><p>U-boot-spl.aic 放在 image 中的 offset 位置，必须是 512字节对齐</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">7.7.2. </span>启动和升级流程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/sdfat32_boot_in_brom.png" src="../../_images/sdfat32_boot_in_brom.png" />
+</div>
+<p>BROM 寻找和启动 FAT32 文件系统中的第一级引导程序的流程如上图所示。</p>
+<p>FAT32 启动的设计目的是进行裸机的系统升级，但是 BROM 阶段仅完成找到第一级引导程序并且运行的功能，
+后续的升级功能需要在 U-Boot 中进行实现。</p>
+<div class="figure align-center">
+<img alt="../../_images/sdfat32_boot_to_uboot.png" src="../../_images/sdfat32_boot_to_uboot.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="spi_nand_boot.html" class="btn btn-neutral float-right" title="7.8. SPI NAND 启动" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mmc_boot.html" class="btn btn-neutral float-left" title="7.6. SD/eMMC 启动" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

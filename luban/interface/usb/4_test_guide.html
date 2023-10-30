@@ -1,0 +1,1458 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.12.3. 测试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.12.4. 设计说明" href="5_design_guide.html" />
+    <link rel="prev" title="7.12.2. 调试指南" href="3_debug_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.12. USB 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.12.1. 配置指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.12.2. 调试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.12.3. 测试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.12.3.1. 测试方案介绍</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#device-gadget-zero">7.12.3.2. Device 侧 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">zero</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#device">7.12.3.2.1. Device 创建</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#sourcesink-function">7.12.3.2.2. SourceSink Function</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#loopback-function">7.12.3.2.3. Loopback Function</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#host-usbtest-ko">7.12.3.3. Host 侧 <code class="docutils literal notranslate"><span class="pre">usbtest.ko</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#testcase">7.12.3.3.1. TestCase</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioctl">7.12.3.3.2. Ioctl</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#host-testusb">7.12.3.4. Host 侧 <code class="docutils literal notranslate"><span class="pre">testusb</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">7.12.4. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_host_design_guide.html">7.12.5. USB Host 子系统代码架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_device_design_guide.html">7.12.6. USB Device 子系统代码架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.12.7. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.12. </span>USB 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.12.3. </span>测试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.12.3. </span>测试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.12.3.1. </span>测试方案介绍<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在测试 USB 时，普通的做法是找一些 U 盘、鼠标、键盘 等外设来做一些测试，但是这些测试还是偏上层偏功能的。相比较 HC (USB Host Controller) 和 UDC (USB Device Controller) 按照USB协议提供的完整功能来说，这种测试验证时不充分的。</p>
+<p>在 Linux Kernel 中对 HC/UDC 有一套专有的测试方案，在底层对 control/bulk/int/iso 几种 endpoint 进行针对性的功能和压力测试。</p>
+<p><img alt="image0" src="../../../_images/usb_test_diagram.png" /></p>
+<p>上图的测试方案由几部分组成：</p>
+<ul class="simple">
+<li><p>1、Device 侧的 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">zero</span></code> 测试设备，提供了测试通道。</p></li>
+<li><p>2、Host 侧的 <code class="docutils literal notranslate"><span class="pre">usbtest.ko</span></code> 测试驱动，封装了 30 个 endpoint 层级的测试用例。</p></li>
+<li><p>3、Host 侧的 <code class="docutils literal notranslate"><span class="pre">testusb</span></code> 用户程序，用来调用 <code class="docutils literal notranslate"><span class="pre">usbtest.ko</span></code> 提供的测试用例。</p></li>
+</ul>
+</div>
+<div class="section" id="device-gadget-zero">
+<h2><span class="section-number">7.12.3.2. </span>Device 侧 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">zero</span></code><a class="headerlink" href="#device-gadget-zero" title="永久链接至标题">¶</a></h2>
+<p>提供测试需要的Device设备有很多种方式，例如可用使用专门的测试 Device 里面烧录专有的测试 Firmware。节约成本的方式还是使用 Linux gadget 功能来动态模拟 USB Device 设备。针对 USB 测试，Linux 专门提供了 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">zero</span></code> 设备。</p>
+<div class="section" id="device">
+<h3><span class="section-number">7.12.3.2.1. </span>Device 创建<a class="headerlink" href="#device" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">zero</span></code> 的核心是创建一个 <code class="docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Device</span></code> ，其包含了两个 <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> ，其中一个 <code class="docutils literal notranslate"><span class="pre">Configuration</span> <span class="pre">0</span></code> 包含 <code class="docutils literal notranslate"><span class="pre">SourceSink</span> <span class="pre">Function/Interface</span></code> ，另一个 <code class="docutils literal notranslate"><span class="pre">Configuration</span> <span class="pre">1</span></code> 包含 <code class="docutils literal notranslate"><span class="pre">Loopback</span> <span class="pre">Function/Interface</span></code> 。某一时刻只能选择使用一个 <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> ，通常情况下使用 <code class="docutils literal notranslate"><span class="pre">Configuration</span> <span class="pre">0</span></code> 即 <code class="docutils literal notranslate"><span class="pre">SourceSink</span></code> 的功能。</p>
+<p><code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">zero</span></code> Device 由两种方式创建：</p>
+<ul class="simple">
+<li><p>1、通过 <code class="docutils literal notranslate"><span class="pre">zero_driver</span></code> 创建，只要把对应驱动文件 <code class="docutils literal notranslate"><span class="pre">drivers\usb\gadget\legacy\zero.c</span></code> 编译进内核即可。</p></li>
+<li><p>2、通过 <code class="docutils literal notranslate"><span class="pre">functionfs</span></code> 动态创建，这种方式更灵活，实例命令如下：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mount -t configfs none /sys/kernel/config
+cd /sys/kernel/config/usb_gadget
+
+mkdir g2
+cd g2
+
+echo &quot;0x04e8&quot; &gt; idVendor
+echo &quot;0x2d01&quot; &gt; idProduct
+
+mkdir configs/c.1
+mkdir configs/c.2
+mkdir functions/Loopback.0
+mkdir functions/SourceSink.0
+
+mkdir strings/0x409
+mkdir configs/c.1/strings/0x409
+mkdir configs/c.2/strings/0x409
+
+echo &quot;0x0525&quot; &gt; idVendor
+echo &quot;0xa4a0&quot; &gt; idProduct
+
+echo &quot;0123456789&quot; &gt; strings/0x409/serialnumber
+echo &quot;Samsung Inc.&quot; &gt; strings/0x409/manufacturer
+echo &quot;Bar Gadget&quot; &gt; strings/0x409/product
+
+echo &quot;Conf 1&quot; &gt; configs/c.1/strings/0x409/configuration
+echo &quot;Conf 2&quot; &gt; configs/c.2/strings/0x409/configuration
+echo 120 &gt; configs/c.1/MaxPower
+
+// SourceSink：驱动 set configuration 会选取 第一个 configuration
+ln -s functions/Loopback.0 configs/c.2
+ln -s functions/SourceSink.0 configs/c.1
+
+echo 4100000.udc-controller &gt; UDC
+</pre></div>
+</div>
+<p>整个过程就是创建了一个 <code class="docutils literal notranslate"><span class="pre">Vendor</span> <span class="pre">ID</span> <span class="pre">=</span> <span class="pre">0x0525</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Product</span> <span class="pre">ID</span> <span class="pre">=</span> <span class="pre">0xa4a0</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Device</span></code> ，在 Host 侧可以查看这个设备：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ lsusb -s 1:3
+Bus 001 Device 003: ID 0525:a4a0 Netchip Technology, Inc. Linux-USB &quot;Gadget Zero&quot;
+
+$ lsusb -v -s 1:3
+
+Bus 001 Device 003: ID 0525:a4a0 Netchip Technology, Inc. Linux-USB &quot;Gadget Zero&quot;
+Couldn&#39;t open device, some information will be missing
+Device Descriptor:
+bLength                18
+bDescriptorType         1
+bcdUSB               2.00
+bDeviceClass            0
+bDeviceSubClass         0
+bDeviceProtocol         0
+bMaxPacketSize0        64
+idVendor           0x0525 Netchip Technology, Inc.
+idProduct          0xa4a0 Linux-USB &quot;Gadget Zero&quot;
+bcdDevice            5.10
+iManufacturer           1
+iProduct                2
+iSerial                 3
+bNumConfigurations      2
+Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0045
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          4
+    bmAttributes         0x80
+    (Bus Powered)
+    MaxPower              120mA
+    Interface Descriptor:
+    bLength                 9
+    bDescriptorType         4
+    bInterfaceNumber        0
+    bAlternateSetting       0
+    bNumEndpoints           2
+    bInterfaceClass       255 Vendor Specific Class
+    bInterfaceSubClass      0
+    bInterfaceProtocol      0
+    iInterface              0
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+        Transfer Type            Bulk
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+        Transfer Type            Bulk
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+    Interface Descriptor:
+    bLength                 9
+    bDescriptorType         4
+    bInterfaceNumber        0
+    bAlternateSetting       1
+    bNumEndpoints           4
+    bInterfaceClass       255 Vendor Specific Class
+    bInterfaceSubClass      0
+    bInterfaceProtocol      0
+    iInterface              0
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+        Transfer Type            Bulk
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+        Transfer Type            Bulk
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x82  EP 2 IN
+        bmAttributes            1
+        Transfer Type            Isochronous
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               4
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x02  EP 2 OUT
+        bmAttributes            1
+        Transfer Type            Isochronous
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0400  1x 1024 bytes
+        bInterval               4
+Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0020
+    bNumInterfaces          1
+    bConfigurationValue     2
+    iConfiguration          5
+    bmAttributes         0x80
+    (Bus Powered)
+    MaxPower                2mA
+    Interface Descriptor:
+    bLength                 9
+    bDescriptorType         4
+    bInterfaceNumber        0
+    bAlternateSetting       0
+    bNumEndpoints           2
+    bInterfaceClass       255 Vendor Specific Class
+    bInterfaceSubClass      0
+    bInterfaceProtocol      0
+    iInterface              6
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            2
+        Transfer Type            Bulk
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+    Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+        Transfer Type            Bulk
+        Synch Type               None
+        Usage Type               Data
+        wMaxPacketSize     0x0200  1x 512 bytes
+        bInterval               0
+</pre></div>
+</div>
+</div>
+<div class="section" id="sourcesink-function">
+<h3><span class="section-number">7.12.3.2.2. </span>SourceSink Function<a class="headerlink" href="#sourcesink-function" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">SourceSink</span> <span class="pre">Function</span></code> 的主要功能是提供了一组 USB 测试 endpoint，其中:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Sink</span></code>。sinks bulk packets OUT to the peripheral。意思是把数据从 Host 引流到 Device，即 <code class="docutils literal notranslate"><span class="pre">OUT</span></code> 方向。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Source</span></code>。sources them IN to the host。意思是把从 Device 发送数据到 Device，即 <code class="docutils literal notranslate"><span class="pre">IN</span></code> 方向。</p></li>
+</ul>
+<p>具体提供了 4 组 测试 endpoint：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Endpoint</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Direction</p></th>
+<th class="head"><p>Descript|</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>in_ep</p></td>
+<td><p>bulk</p></td>
+<td><p>IN</p></td>
+<td><p>Source 发送数据到 Host，<br /> 注意这数据是 Device 主动生成的</p></td>
+</tr>
+<tr class="row-odd"><td><p>out_ep</p></td>
+<td><p>bulk</p></td>
+<td><p>OUT</p></td>
+<td><p>Sink 接收 Host 的数据</p></td>
+</tr>
+<tr class="row-even"><td><p>iso_in_ep</p></td>
+<td><p>iso</p></td>
+<td><p>IN</p></td>
+<td><p>Source 发送数据到 Host</p></td>
+</tr>
+<tr class="row-odd"><td><p>iso_out_ep</p></td>
+<td><p>iso</p></td>
+<td><p>OUT</p></td>
+<td><p>Sink 接收 Host 的数据</p></td>
+</tr>
+</tbody>
+</table>
+<p>主要流程如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>drivers\usb\gadget\function\f_sourcesink.c:
+
+sourcesink_bind()：
+
+static int
+sourcesink_bind(struct usb_configuration *c, struct usb_function *f)
+{
+
+    /* (1) 从 gadget 中分配 2 个 bulk endpoint */
+    /* allocate bulk endpoints */
+    ss-&gt;in_ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;fs_source_desc);
+
+    ss-&gt;out_ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;fs_sink_desc);
+
+    /* (2) 如果支持ISO，再从 gadget 中分配 2 个 iso endpoint */
+    /* allocate iso endpoints */
+    ss-&gt;iso_in_ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;fs_iso_source_desc);
+    if (!ss-&gt;iso_in_ep)
+        goto no_iso;
+
+    ss-&gt;iso_out_ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;fs_iso_sink_desc);
+    if (!ss-&gt;iso_out_ep) {
+
+}
+
+sourcesink_set_alt() → enable_source_sink() → usb_ep_enable()/source_sink_start_ep()：
+// 启动上述 endpoint
+
+→ source_sink_complete():
+// urb 的 complete() 函数，urb 发送/接收完成后，重新挂载 urb
+</pre></div>
+</div>
+<p>还支持一些参数调整：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ls functions/SourceSink.0/</span>
+<span class="n">bulk_buflen</span>     <span class="n">iso_qlen</span>        <span class="n">isoc_maxburst</span>   <span class="n">isoc_mult</span>
+<span class="n">bulk_qlen</span>       <span class="n">isoc_interval</span>   <span class="n">isoc_maxpacket</span>  <span class="n">pattern</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loopback-function">
+<h3><span class="section-number">7.12.3.2.3. </span>Loopback Function<a class="headerlink" href="#loopback-function" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Loopback</span> <span class="pre">Function</span></code> 提供的功能更为简单，它分配了两个 bulk endpoint，所做的就是把 <code class="docutils literal notranslate"><span class="pre">out_ep</span></code> 接收到的数据 转发到 <code class="docutils literal notranslate"><span class="pre">in_ep</span></code>。</p>
+<p>主要流程如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>drivers\usb\gadget\function\f_loopback.c:
+
+loopback_bind()：
+
+static int loopback_bind(struct usb_configuration *c, struct usb_function *f)
+{
+    /* (1) 从 gadget 中分配 2 个 bulk endpoint */
+    /* allocate endpoints */
+    loop-&gt;in_ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;fs_loop_source_desc);
+
+    loop-&gt;out_ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;fs_loop_sink_desc);
+}
+
+loopback_set_alt() → enable_loopback() → alloc_requests():
+
+static int alloc_requests(struct usb_composite_dev *cdev,
+            struct f_loopback *loop)
+{
+
+    for (i = 0; i &lt; loop-&gt;qlen &amp;&amp; result == 0; i++) {
+        result = -ENOMEM;
+
+        in_req = usb_ep_alloc_request(loop-&gt;in_ep, GFP_ATOMIC);
+        if (!in_req)
+            goto fail;
+
+        out_req = lb_alloc_ep_req(loop-&gt;out_ep, loop-&gt;buflen);
+        if (!out_req)
+            goto fail_in;
+
+        in_req-&gt;complete = loopback_complete;
+        out_req-&gt;complete = loopback_complete;
+
+        in_req-&gt;buf = out_req-&gt;buf;
+        /* length will be set in complete routine */
+        in_req-&gt;context = out_req;
+        out_req-&gt;context = in_req;
+
+        /* (2) 先启动 OUT endpoint */
+        result = usb_ep_queue(loop-&gt;out_ep, out_req, GFP_ATOMIC);
+        if (result) {
+            ERROR(cdev, &quot;%s queue req --&gt; %d\n&quot;,
+                    loop-&gt;out_ep-&gt;name, result);
+            goto fail_out;
+        }
+    }
+
+}
+
+static void loopback_complete(struct usb_ep *ep, struct usb_request *req)
+{
+    struct f_loopback       *loop = ep-&gt;driver_data;
+    struct usb_composite_dev *cdev = loop-&gt;function.config-&gt;cdev;
+    int                     status = req-&gt;status;
+
+    switch (status) {
+    case 0:                         /* normal completion? */
+        if (ep == loop-&gt;out_ep) {
+            /*
+            * We received some data from the host so let&#39;s
+            * queue it so host can read the from our in ep
+            */
+            struct usb_request *in_req = req-&gt;context;
+
+            in_req-&gt;zero = (req-&gt;actual &lt; req-&gt;length);
+            in_req-&gt;length = req-&gt;actual;
+            ep = loop-&gt;in_ep;
+            req = in_req;
+        } else {
+            /*
+            * We have just looped back a bunch of data
+            * to host. Now let&#39;s wait for some more data.
+            */
+            req = req-&gt;context;
+            ep = loop-&gt;out_ep;
+        }
+
+        /* (3) 环回的关键：
+                OUT endpoint 接收到的数据 转发到 IN endpoint
+                IN endpoint 数据发送完成后 req 重新挂载到 OUT endpoint
+        */
+        /* queue the buffer back to host or for next bunch of data */
+        status = usb_ep_queue(ep, req, GFP_ATOMIC);
+
+}
+</pre></div>
+</div>
+<p>也支持一些参数调整：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ls functions/Loopback.0/</span>
+<span class="n">bulk_buflen</span>  <span class="n">qlen</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="host-usbtest-ko">
+<h2><span class="section-number">7.12.3.3. </span>Host 侧 <code class="docutils literal notranslate"><span class="pre">usbtest.ko</span></code><a class="headerlink" href="#host-usbtest-ko" title="永久链接至标题">¶</a></h2>
+<p>在 Host 侧的 <code class="docutils literal notranslate"><span class="pre">usbtest.ko</span></code> 它就是一个标准的 <code class="docutils literal notranslate"><span class="pre">usb</span> <span class="pre">interface</span> <span class="pre">driver</span></code>。它根据 <code class="docutils literal notranslate"><span class="pre">Vendor</span> <span class="pre">ID</span> <span class="pre">=</span> <span class="pre">0x0525</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Product</span> <span class="pre">ID</span> <span class="pre">=</span> <span class="pre">0xa4a0</span></code> 适配上一节 <code class="docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Device</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">SourceSink</span> <span class="pre">Interface</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">Loopback</span> <span class="pre">Interface</span></code>。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">usb_device_id</span> <span class="n">id_table</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="o">/*</span> <span class="s2">&quot;Gadget Zero&quot;</span> <span class="n">firmware</span> <span class="n">runs</span> <span class="n">under</span> <span class="n">Linux</span> <span class="o">*/</span>
+    <span class="p">{</span> <span class="n">USB_DEVICE</span><span class="p">(</span><span class="mh">0x0525</span><span class="p">,</span> <span class="mh">0xa4a0</span><span class="p">),</span>
+        <span class="o">.</span><span class="n">driver_info</span> <span class="o">=</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">gz_info</span><span class="p">,</span>
+    <span class="p">},</span>
+
+<span class="p">}</span>
+<span class="n">MODULE_DEVICE_TABLE</span><span class="p">(</span><span class="n">usb</span><span class="p">,</span> <span class="n">id_table</span><span class="p">);</span>
+
+<span class="n">static</span> <span class="n">struct</span> <span class="n">usb_driver</span> <span class="n">usbtest_driver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">name</span> <span class="o">=</span>         <span class="s2">&quot;usbtest&quot;</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">id_table</span> <span class="o">=</span>     <span class="n">id_table</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">probe</span> <span class="o">=</span>        <span class="n">usbtest_probe</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">unlocked_ioctl</span> <span class="o">=</span> <span class="n">usbtest_ioctl</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">disconnect</span> <span class="o">=</span>   <span class="n">usbtest_disconnect</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">suspend</span> <span class="o">=</span>      <span class="n">usbtest_suspend</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">resume</span> <span class="o">=</span>       <span class="n">usbtest_resume</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="section" id="testcase">
+<h3><span class="section-number">7.12.3.3.1. </span>TestCase<a class="headerlink" href="#testcase" title="永久链接至标题">¶</a></h3>
+<p>其在 <code class="docutils literal notranslate"><span class="pre">SourceSink</span> <span class="pre">Interface</span></code> 提供的 4 个测试 endpoint、或者 <code class="docutils literal notranslate"><span class="pre">Loopback</span> <span class="pre">Interface</span></code> 提供的 2 个测试 endpoint + <code class="docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Device</span></code> 本身的 ep0 control endpoint 基础之上，提供了 30 个 testcase：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drivers</span>\<span class="n">usb</span>\<span class="n">misc</span>\<span class="n">usbtest</span><span class="o">.</span><span class="n">c</span><span class="p">:</span>
+
+<span class="n">usbtest_do_ioctl</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 2%" />
+<col style="width: 3%" />
+<col style="width: 4%" />
+<col style="width: 49%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>index</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>iterations</p></th>
+<th class="head"><p>vary</p></th>
+<th class="head"><p>sglen</p></th>
+<th class="head"><p>unaligned</p></th>
+<th class="head"><p>testcase</p></th>
+<th class="head"><p>descript</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>nop</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 0:  NOPn”</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 1:  write %d bytes %u timesn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><p>Simple non-queued bulk I/O tests</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 2:  read %d bytes %u timesn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 3:  write/%d 0..%d bytes %u timesn”, <br /> param-&gt;vary, param-&gt;length, param-&gt;iterations</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 4:  read/%d 0..%d bytes %u timesn”, <br /> param-&gt;vary, param-&gt;length, param-&gt;iterations</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 5:  write %d sglists %d entries of %d bytesn”, <br /> param-&gt;iterations,param-&gt;sglen, param-&gt;length</p></td>
+<td><p>Queued bulk I/O tests</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 6:  read %d sglists %d entries of %d bytesn”, <br /> param-&gt;iterations,param-&gt;sglen, param-&gt;length</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 7:  write/%d %d sglists %d entries 0..%d bytesn”, <br /> param-&gt;vary, param-&gt;iterations,param-&gt;sglen, param-&gt;length</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 8:  read/%d %d sglists %d entries 0..%d bytesn”, <br /> param-&gt;vary, param-&gt;iterations,param-&gt;sglen, param-&gt;length</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>control</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 9:  ch9 (subset) control tests, %d timesn”, <br /> param-&gt;iterations</p></td>
+<td><p>non-queued sanity tests for control (chapter 9 subset)</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>control</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 10:  queue %d control calls, %d timesn”, <br /> param-&gt;sglen, param-&gt;iterations)</p></td>
+<td><p>queued control messaging</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 11:  unlink %d reads of %dn”, <br /> param-&gt;iterations, param-&gt;length</p></td>
+<td><p>simple non-queued unlinks (ring with one urb)</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 12:  unlink %d writes of %dn”, <br /> param-&gt;iterations, param-&gt;length</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>control</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 13:  set/clear %d haltsn” <br /> param-&gt;iterations</p></td>
+<td><p>ep halt tests</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>control</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 14:  %d ep0out, %d..%d vary %dn”, <br /> param-&gt;iterations,realworld ? 1 : 0, param-&gt;length,param-&gt;vary</p></td>
+<td><p>control write tests</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>iso</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 15:  write %d iso, %d entries of %d bytesn”, <br /> param-&gt;iterations, param-&gt;sglen, param-&gt;length</p></td>
+<td><p>iso write tests</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>iso</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 16:  read %d iso, %d entries of %d bytesn”, <br /> param-&gt;iterations, param-&gt;sglen, param-&gt;length</p></td>
+<td><p>iso read tests</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>“TEST 17:  write odd addr %d bytes %u times core mapn” <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><p>Tests for bulk I/O using DMA mapping by core and odd address</p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>“TEST 18:  read odd addr %d bytes %u times core mapn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>“TEST 19:  write odd addr %d bytes %u times premappedn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><p>Tests for bulk I/O using premapped coherent buffer and odd address</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>“TEST 20:  read odd addr %d bytes %u times premappedn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>control</p></td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>“TEST 21:  %d ep0out odd addr, %d..%d vary %dn”, <br /> param-&gt;iterations,realworld ? 1 : 0, param-&gt;length, param-&gt;vary</p></td>
+<td><p>control write tests with unaligned buffer</p></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>iso</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>“TEST 22:  write %d iso odd, %d entries of %d bytesn”, <br /> param-&gt;iterations, param-&gt;sglen, param-&gt;length</p></td>
+<td><p>unaligned iso tests</p></td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>iso</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><p>Y</p></td>
+<td><p>“TEST 23:  read %d iso odd, %d entries of %d bytesn”, <br /> param-&gt;iterations, param-&gt;sglen, param-&gt;length</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 24:  unlink from %d queues of %d %d-byte writesn”, <br /> param-&gt;iterations, param-&gt;sglen, param-&gt;length</p></td>
+<td><p>unlink URBs from a bulk-OUT queue</p></td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>int</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 25: write %d bytes %u timesn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><p>Simple non-queued interrupt I/O tests</p></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>int</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 26: read %d bytes %u timesn”, <br /> param-&gt;length, param-&gt;iterations</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 27: bulk write %dMbytesn”, <br /> (param-&gt;iterations * param-&gt;sglen * param-&gt;length) / (1024 * 1024))</p></td>
+<td><p>Performance test</p></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 28: bulk read %dMbytesn”, <br /> (param-&gt;iterations * param-&gt;sglen * param-&gt;length) / (1024 * 1024))</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>bulk</p></td>
+<td><p>Y</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>“TEST 29: Clear toggle between bulk writes %d timesn”, <br /> param-&gt;iterations</p></td>
+<td><p>Test data Toggle/seq_nr clear between bulk out transfers</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioctl">
+<h3><span class="section-number">7.12.3.3.2. </span>Ioctl<a class="headerlink" href="#ioctl" title="永久链接至标题">¶</a></h3>
+<p><cite>usbtest.ko</cite> 以 ioctl 的形式向用户态提供对 testcase 的调用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usbdev_file_operations → usbdev_ioctl() → usbdev_do_ioctl() → proc_ioctl_default() → proc_ioctl()：
+
+static int proc_ioctl(struct usb_dev_state *ps, struct usbdevfs_ioctl *ctl)
+{
+
+    /*  (1) 找到对应的 usb interface device */
+    else if (!(intf = usb_ifnum_to_if(ps-&gt;dev, ctl-&gt;ifno)))
+        retval = -EINVAL;
+
+    /* talk directly to the interface&#39;s driver */
+    default:
+        if (intf-&gt;dev.driver)
+            /*  (2) 找到 usb interface device 对应的 driver  */
+            driver = to_usb_driver(intf-&gt;dev.driver);
+        if (driver == NULL || driver-&gt;unlocked_ioctl == NULL) {
+            retval = -ENOTTY;
+        } else {
+            /* (3) 调用 driver 的 ioctl 函数 */
+            retval = driver-&gt;unlocked_ioctl(intf, ctl-&gt;ioctl_code, buf);
+            if (retval == -ENOIOCTLCMD)
+                retval = -ENOTTY;
+        }
+
+}
+
+↓
+
+usbtest_ioctl() → usbtest_do_ioctl()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="host-testusb">
+<h2><span class="section-number">7.12.3.4. </span>Host 侧 <code class="docutils literal notranslate"><span class="pre">testusb</span></code><a class="headerlink" href="#host-testusb" title="永久链接至标题">¶</a></h2>
+<p>testusb 源码包含在 linux 内核当中， 路径为 <code class="docutils literal notranslate"><span class="pre">linux-5.10\tools\usb\testusb.c</span></code> 。可以通过 luban 编译，或者简单编译：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">lpthread</span> <span class="o">-</span><span class="n">o</span> <span class="n">testusb</span> <span class="n">testusb</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+<p>就可以启动测试了：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo ./testusb -a
+unknown speed       /dev/bus/usb/001/002
+/dev/bus/usb/001/002 test 0,    0.000011 secs
+/dev/bus/usb/001/002 test 1,    1.625031 secs
+/dev/bus/usb/001/002 test 2 --&gt; 110 (Connection timed out)
+/dev/bus/usb/001/002 test 3,    1.639717 secs
+/dev/bus/usb/001/002 test 4 --&gt; 110 (Connection timed out)
+/dev/bus/usb/001/002 test 5,    1.915198 secs
+/dev/bus/usb/001/002 test 6 --&gt; 110 (Connection timed out)
+/dev/bus/usb/001/002 test 7,    1.928419 secs
+/dev/bus/usb/001/002 test 8 --&gt; 110 (Connection timed out)
+/dev/bus/usb/001/002 test 9,   13.835084 secs
+
+sudo ./testusb -a
+
+sudo ./testusb -a -t1 -c1 -s512 -g32 -v32
+
+sudo ./testusb -a -t29 -c1 -s512 -g32 -v32
+
+// test 10 需要特别注意，容易挂死 host
+sudo ./testusb -a -t10 -c1 -s512 -g5 -v32
+// test 28 需要特别注意，容易挂死 host
+sudo ./testusb -a -t28 -c1 -s512 -g32 -v32
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="5_design_guide.html" class="btn btn-neutral float-right" title="7.12.4. 设计说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3_debug_guide.html" class="btn btn-neutral float-left" title="7.12.2. 调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

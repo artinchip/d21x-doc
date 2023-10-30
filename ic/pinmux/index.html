@@ -1,0 +1,1314 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>4. 引脚复用 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="5. 处理器和总线" href="../cpu_bus/index.html" />
+    <link rel="prev" title="3. 地址映射" href="../memory_maps/index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">芯片手册</a> &raquo;</li>
+        
+      <li><span class="section-number">4. </span>引脚复用</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">4. </span>引脚复用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>引脚</p></th>
+<th class="head"><p>功能2</p></th>
+<th class="head"><p>功能3</p></th>
+<th class="head"><p>功能4</p></th>
+<th class="head"><p>功能5</p></th>
+<th class="head"><p>功能6</p></th>
+<th class="head"><p>功能7</p></th>
+<th class="head"><p>功能8</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PA0</p></td>
+<td><p>GPAI0</p></td>
+<td><p>PSADC0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>AMIC_IN</p></td>
+<td><p>IR_TX</p></td>
+<td><p>EPHY_LED0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PA1</p></td>
+<td><p>GPAI1</p></td>
+<td><p>PSADC1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>AMIC_BIAS</p></td>
+<td><p>IR_RX</p></td>
+<td><p>EPHY_LED1</p></td>
+</tr>
+<tr class="row-even"><td><p>PA2</p></td>
+<td><p>GPAI2</p></td>
+<td><p>PSADC2</p></td>
+<td></td>
+<td><p>UART0_RTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PA3</p></td>
+<td><p>GPAI3</p></td>
+<td><p>PSADC3</p></td>
+<td></td>
+<td><p>UART0_CTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PA4</p></td>
+<td><p>GPAI4</p></td>
+<td><p>PSADC4</p></td>
+<td></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PA5</p></td>
+<td><p>GPAI5</p></td>
+<td><p>PSADC5</p></td>
+<td></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PA6</p></td>
+<td><p>GPAI6</p></td>
+<td><p>PSADC6</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>UART1_RTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PA7</p></td>
+<td><p>GPAI7</p></td>
+<td><p>PSADC7</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART1_CTS</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PA8</p></td>
+<td><p>RTP_XP</p></td>
+<td><p>PSADC8</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PA9</p></td>
+<td><p>RTP_YP</p></td>
+<td><p>PSADC9</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>UART2_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PA10</p></td>
+<td><p>RTP_XN</p></td>
+<td><p>PSADC10</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>JTAG_MS</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PA11</p></td>
+<td><p>RTP_YN</p></td>
+<td><p>PSADC11</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART2_CTS</p></td>
+<td><p>JTAG_CK</p></td>
+<td><p>PSADC_TRIG</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PB0</p></td>
+<td><p>SDC0_CMD</p></td>
+<td><p>SPI0_HOLD</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>UART7_TX</p></td>
+<td></td>
+<td></td>
+<td><p>EPHY_LED0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PB1</p></td>
+<td><p>SDC0_CLK</p></td>
+<td><p>SPI0_WP</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>UART7_RX</p></td>
+<td></td>
+<td></td>
+<td><p>EPHY_LED1</p></td>
+</tr>
+<tr class="row-even"><td><p>PB2</p></td>
+<td><p>SDC0_D3</p></td>
+<td><p>SPI0_CS</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PB3</p></td>
+<td><p>SDC0_D0</p></td>
+<td><p>SPI0_MISO</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PB4</p></td>
+<td><p>SDC0_D1</p></td>
+<td><p>SPI0_MOSI</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PB5</p></td>
+<td><p>SDC0_D2</p></td>
+<td><p>SPI0_CLK</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PB6</p></td>
+<td><p>SDC0_D4</p></td>
+<td><p>SPI1_HOLD</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>UART4_TX</p></td>
+<td></td>
+<td><p>CLK_OUT2</p></td>
+<td><p>CLK_OUT3</p></td>
+</tr>
+<tr class="row-odd"><td><p>PB7</p></td>
+<td><p>SDC0_D5</p></td>
+<td><p>SPI1_WP</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>UART4_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PB8</p></td>
+<td><p>SDC0_D6</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>UART4_RTS</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>PSADC_TRIG</p></td>
+<td><p>IR_RX</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PB9</p></td>
+<td><p>SDC0_D7</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>UART6_RTS</p></td>
+<td><p>UART5_RX</p></td>
+<td></td>
+<td><p>IR_TX</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PB10</p></td>
+<td><p>SDC0_DS</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td></td>
+<td><p>UART6_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PB11</p></td>
+<td><p>SDC0_RST</p></td>
+<td><p>SPI1_CLK</p></td>
+<td></td>
+<td><p>UART6_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PC0</p></td>
+<td><p>SDC1_D1</p></td>
+<td><p>LCD_D5</p></td>
+<td><p>SPI2_CLK</p></td>
+<td><p>UART1_TX</p></td>
+<td><p>JTAG_MS</p></td>
+<td><p>PWM0_A</p></td>
+<td><p>DBG_IO0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PC1</p></td>
+<td><p>SDC1_D0</p></td>
+<td><p>LCD_D4</p></td>
+<td><p>SPI2_CS</p></td>
+<td><p>UART1_RX</p></td>
+<td><p>JTAG_DI</p></td>
+<td><p>PWM0_B</p></td>
+<td><p>DBG_IO1</p></td>
+</tr>
+<tr class="row-even"><td><p>PC2</p></td>
+<td><p>SDC1_CLK</p></td>
+<td><p>LCD_D3</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td><p>UART1_RTS</p></td>
+<td><p>UART0_TX</p></td>
+<td><p>PWM1_A</p></td>
+<td><p>DBG_IO2</p></td>
+</tr>
+<tr class="row-odd"><td><p>PC3</p></td>
+<td><p>SDC1_CMD</p></td>
+<td><p>LCD_D2</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>JTAG_DO</p></td>
+<td><p>PWM1_B</p></td>
+<td><p>DBG_IO3</p></td>
+</tr>
+<tr class="row-even"><td><p>PC4</p></td>
+<td><p>SDC1_D3</p></td>
+<td><p>LCD_D1</p></td>
+<td></td>
+<td><p>UART2_RX</p></td>
+<td><p>UART0_RX</p></td>
+<td><p>PWM2_A</p></td>
+<td><p>DBG_IO4</p></td>
+</tr>
+<tr class="row-odd"><td><p>PC5</p></td>
+<td><p>SDC1_D2</p></td>
+<td><p>LCD_D0</p></td>
+<td><p>UART2_RTS</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>JTAG_CK</p></td>
+<td><p>PWM2_B</p></td>
+<td><p>DBG_IO5</p></td>
+</tr>
+<tr class="row-even"><td><p>PC6</p></td>
+<td><p>SDC1_DET</p></td>
+<td><p>CLK_OUT0</p></td>
+<td><p>DE_TE</p></td>
+<td><p>UART3_RX</p></td>
+<td></td>
+<td><p>PWM3_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PC7</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART3_RTS</p></td>
+<td></td>
+<td><p>PWM3_B</p></td>
+<td><p>EPHY_LEDIN1</p></td>
+</tr>
+<tr class="row-even"><td><p>PD0</p></td>
+<td><p>LCD_D0</p></td>
+<td><p>SPI2_CLK</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD0</p></td>
+<td><p>PWM0_A</p></td>
+<td><p>GMAC1_MDIO</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD1</p></td>
+<td><p>LCD_D1</p></td>
+<td><p>SPI2_CS</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD1</p></td>
+<td><p>PWM0_B</p></td>
+<td><p>EPHY_LEDIN0</p></td>
+</tr>
+<tr class="row-even"><td><p>PD2</p></td>
+<td><p>LCD_D2</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td><p>DE_TE</p></td>
+<td></td>
+<td><p>PBUS_AD2</p></td>
+<td><p>PWM1_A</p></td>
+<td><p>GMAC1_MDC</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD3</p></td>
+<td><p>LCD_D3</p></td>
+<td><p>SPI3_CLK</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD3</p></td>
+<td><p>PWM1_B</p></td>
+<td><p>GMAC1_TXCTL</p></td>
+</tr>
+<tr class="row-even"><td><p>PD4</p></td>
+<td><p>LCD_D4</p></td>
+<td><p>SPI3_CS</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD4</p></td>
+<td><p>PWM2_A</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PD5</p></td>
+<td><p>LCD_D5</p></td>
+<td><p>SPI3_MOSI</p></td>
+<td></td>
+<td></td>
+<td><p>PBUS_AD5</p></td>
+<td><p>PWM2_B</p></td>
+<td><p>GMAC1_TXD1</p></td>
+</tr>
+<tr class="row-even"><td><p>PD6</p></td>
+<td><p>LCD_D6</p></td>
+<td><p>SPI3_MISO</p></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>UART1_TX</p></td>
+<td><p>PBUS_AD6</p></td>
+<td></td>
+<td><p>DBG_IO6</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD7</p></td>
+<td><p>LCD_D7</p></td>
+<td><p>SPI2_MISO</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>UART1_RX</p></td>
+<td><p>PBUS_AD7</p></td>
+<td></td>
+<td><p>DBG_IO7</p></td>
+</tr>
+<tr class="row-even"><td><p>PD8</p></td>
+<td><p>LCD_D8</p></td>
+<td><p>LVDS1_D0N</p></td>
+<td><p>SPI1_HOLD</p></td>
+<td><p>UART2_TX</p></td>
+<td><p>PBUS_AD8</p></td>
+<td><p>APWM0_A</p></td>
+<td><p>DBG_IO8</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD9</p></td>
+<td><p>LCD_D9</p></td>
+<td><p>LVDS1_D0P</p></td>
+<td><p>SPI1_WP</p></td>
+<td><p>UART2_RX</p></td>
+<td><p>PBUS_AD9</p></td>
+<td><p>APWM0_B</p></td>
+<td><p>DBG_IO9</p></td>
+</tr>
+<tr class="row-even"><td><p>PD10</p></td>
+<td><p>LCD_D10</p></td>
+<td><p>LVDS1_D1N</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>PBUS_AD10</p></td>
+<td><p>APWM1_A</p></td>
+<td><p>DBG_IO10</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD11</p></td>
+<td><p>LCD_D11</p></td>
+<td><p>LVDS1_D1P</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>UART3_RX</p></td>
+<td><p>PBUS_AD11</p></td>
+<td><p>APWM1_B</p></td>
+<td><p>DBG_IO11</p></td>
+</tr>
+<tr class="row-even"><td><p>PD12</p></td>
+<td><p>LCD_D12</p></td>
+<td><p>LVDS1_D2N</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>PBUS_AD12</p></td>
+<td><p>APWM2_A</p></td>
+<td><p>DBG_IO12</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD13</p></td>
+<td><p>LCD_D13</p></td>
+<td><p>LVDS1_D2P</p></td>
+<td><p>SPI1_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>PBUS_AD13</p></td>
+<td><p>APWM2_B</p></td>
+<td><p>DBG_IO13</p></td>
+</tr>
+<tr class="row-even"><td><p>PD14</p></td>
+<td><p>LCD_D14</p></td>
+<td><p>LVDS1_CKN</p></td>
+<td><p>SPI3_CLK</p></td>
+<td><p>CAP0</p></td>
+<td><p>PBUS_AD14</p></td>
+<td><p>QEP0_H0</p></td>
+<td><p>DBG_IO14</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD15</p></td>
+<td><p>LCD_D15</p></td>
+<td><p>LVDS1_CKP</p></td>
+<td><p>SPI3_CS</p></td>
+<td><p>CAP1</p></td>
+<td><p>PBUS_AD15</p></td>
+<td><p>QEP0_H1</p></td>
+<td><p>DBG_IO15</p></td>
+</tr>
+<tr class="row-even"><td><p>PD16</p></td>
+<td><p>LCD_D16</p></td>
+<td><p>LVDS1_D3N</p></td>
+<td><p>SPI3_MOSI</p></td>
+<td><p>CAP2</p></td>
+<td><p>PBUS_CLK</p></td>
+<td><p>QEP0_H2</p></td>
+<td><p>DBG_IO16</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD17</p></td>
+<td><p>LCD_D17</p></td>
+<td><p>LVDS1_D3P</p></td>
+<td><p>SPI3_MISO</p></td>
+<td><p>APWM_FLT5</p></td>
+<td><p>PBUS_NCS</p></td>
+<td><p>QEP0_A</p></td>
+<td><p>DBG_IO17</p></td>
+</tr>
+<tr class="row-even"><td><p>PD18</p></td>
+<td><p>LCD_D18</p></td>
+<td><p>LVDS0_D0N</p></td>
+<td><p>DSI_D0N</p></td>
+<td><p>I2C1_SCL</p></td>
+<td><p>PBUS_NADV</p></td>
+<td><p>QEP0_B</p></td>
+<td><p>DBG_IO18</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD19</p></td>
+<td><p>LCD_D19</p></td>
+<td><p>LVDS0_D0P</p></td>
+<td><p>DSI_D0P</p></td>
+<td><p>I2C1_SDA</p></td>
+<td><p>PBUS_NWE</p></td>
+<td><p>QEP0_I</p></td>
+<td><p>DBG_IO19</p></td>
+</tr>
+<tr class="row-even"><td><p>PD20</p></td>
+<td><p>LCD_D20</p></td>
+<td><p>LVDS0_D1N</p></td>
+<td><p>DSI_D1N</p></td>
+<td><p>UART7_TX</p></td>
+<td><p>PBUS_NOE</p></td>
+<td><p>QEP0_S</p></td>
+<td><p>DBG_IO20</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD21</p></td>
+<td><p>LCD_D21</p></td>
+<td><p>LVDS0_D1P</p></td>
+<td><p>DSI_D1P</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>CLK_OUT0</p></td>
+<td><p>APWM_FLT0</p></td>
+<td><p>DBG_IO21</p></td>
+</tr>
+<tr class="row-even"><td><p>PD22</p></td>
+<td><p>LCD_D22</p></td>
+<td><p>LVDS0_D2N</p></td>
+<td><p>DSI_CKN</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>UART6_TX</p></td>
+<td><p>APWM_FLT1</p></td>
+<td><p>DBG_IO22</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD23</p></td>
+<td><p>LCD_D23</p></td>
+<td><p>LVDS0_D2P</p></td>
+<td><p>DSI_CKP</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>UART6_RX</p></td>
+<td><p>APWM_FLT2</p></td>
+<td><p>DBG_IO23</p></td>
+</tr>
+<tr class="row-even"><td><p>PD24</p></td>
+<td><p>LCD_DCLK</p></td>
+<td><p>LVDS0_CKN</p></td>
+<td><p>DSI_D2N</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>SPI1_CLK</p></td>
+<td><p>APWM_FLT3</p></td>
+<td><p>DBG_IO24</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD25</p></td>
+<td><p>LCD_HS</p></td>
+<td><p>LVDS0_CKP</p></td>
+<td><p>DSI_D2P</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>SPI1_CS</p></td>
+<td><p>APWM_FLT4</p></td>
+<td><p>DBG_IO25</p></td>
+</tr>
+<tr class="row-even"><td><p>PD26</p></td>
+<td><p>LCD_VS</p></td>
+<td><p>LVDS0_D3N</p></td>
+<td><p>DSI_D3N</p></td>
+<td><p>PWM3_A</p></td>
+<td><p>SPI1_MOSI</p></td>
+<td><p>APWM0_SI</p></td>
+<td><p>DBG_CLK</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD27</p></td>
+<td><p>LCD_DE</p></td>
+<td><p>LVDS0_D3P</p></td>
+<td><p>DSI_D3P</p></td>
+<td><p>PWM3_B</p></td>
+<td><p>SPI1_MISO</p></td>
+<td><p>APWM0_SO</p></td>
+<td><p>RTC_32K</p></td>
+</tr>
+<tr class="row-even"><td><p>PE0</p></td>
+<td></td>
+<td><p>DVP_D0</p></td>
+<td><p>I2C0_SCL</p></td>
+<td></td>
+<td><p>GMAC0_RXD1</p></td>
+<td><p>APWM3_A</p></td>
+<td><p>PWM0_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>PE1</p></td>
+<td></td>
+<td><p>DVP_D1</p></td>
+<td><p>I2C0_SDA</p></td>
+<td></td>
+<td><p>GMAC0_RXD0</p></td>
+<td><p>APWM3_B</p></td>
+<td><p>PWM0_B</p></td>
+</tr>
+<tr class="row-even"><td><p>PE2</p></td>
+<td></td>
+<td><p>DVP_D2</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>GMAC0_RXCTL</p></td>
+<td><p>APWM4_A</p></td>
+<td><p>PWM1_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>PE3</p></td>
+<td></td>
+<td><p>DVP_D3</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>GMAC0_CLKIN</p></td>
+<td><p>APWM4_B</p></td>
+<td><p>PWM1_B</p></td>
+</tr>
+<tr class="row-even"><td><p>PE4</p></td>
+<td></td>
+<td><p>DVP_D4</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>UART5_TX</p></td>
+<td><p>GMAC0_TXD1</p></td>
+<td><p>APWM5_A</p></td>
+<td><p>PWM2_A</p></td>
+</tr>
+<tr class="row-odd"><td><p>PE5</p></td>
+<td></td>
+<td><p>DVP_D5</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>UART5_RX</p></td>
+<td><p>GMAC0_TXD0</p></td>
+<td><p>APWM5_B</p></td>
+<td><p>PWM2_B</p></td>
+</tr>
+<tr class="row-even"><td><p>PE6</p></td>
+<td><p>DSPK0</p></td>
+<td><p>DVP_D6</p></td>
+<td><p>UART5_RTS</p></td>
+<td><p>UART6_TX</p></td>
+<td><p>GMAC0_TXCK</p></td>
+<td><p>QEP1_H0</p></td>
+<td><p>CAP0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PE7</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DVP_D7</p></td>
+<td><p>UART7_RTS</p></td>
+<td><p>UART6_RX</p></td>
+<td><p>GMAC0_TXCTL</p></td>
+<td><p>QEP1_H1</p></td>
+<td><p>CAP1</p></td>
+</tr>
+<tr class="row-even"><td><p>PE8</p></td>
+<td><p>I2S0_MCLK</p></td>
+<td><p>DVP_CK</p></td>
+<td><p>UART6_RTS</p></td>
+<td><p>UART7_TX</p></td>
+<td><p>GMAC0_MDC</p></td>
+<td><p>QEP1_H2</p></td>
+<td><p>CAP2</p></td>
+</tr>
+<tr class="row-odd"><td><p>PE9</p></td>
+<td><p>I2S0_BCLK</p></td>
+<td><p>DVP_HS</p></td>
+<td><p>UART6_CTS</p></td>
+<td><p>UART7_RX</p></td>
+<td><p>GMAC0_MDIO</p></td>
+<td><p>QEP1_A</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PE10</p></td>
+<td><p>I2S0_LRCK</p></td>
+<td><p>DVP_VS</p></td>
+<td><p>DSPK0</p></td>
+<td></td>
+<td><p>CLK_OUT2</p></td>
+<td><p>QEP1_B</p></td>
+<td><p>EPHY_LED0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PE11</p></td>
+<td><p>I2S0_DOUT</p></td>
+<td><p>I2S0_DIN</p></td>
+<td><p>DSPK1</p></td>
+<td><p>CLK_OUT1</p></td>
+<td><p>GMAC0_RXD3</p></td>
+<td><p>QEP1_I</p></td>
+<td><p>EPHY_LED1</p></td>
+</tr>
+<tr class="row-even"><td><p>PE12</p></td>
+<td><p>I2S0_DIN</p></td>
+<td><p>SPI3_CLK</p></td>
+<td><p>DMIC_CLK</p></td>
+<td><p>I2C2_SCL</p></td>
+<td><p>GMAC0_RXD2</p></td>
+<td><p>QEP1_S</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PE13</p></td>
+<td></td>
+<td><p>SPI3_CS</p></td>
+<td><p>DMIC_D0</p></td>
+<td><p>I2C2_SDA</p></td>
+<td><p>GMAC0_RXCK</p></td>
+<td><p>CAP0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PE14</p></td>
+<td></td>
+<td><p>SPI3_MOSI</p></td>
+<td></td>
+<td><p>UART3_TX</p></td>
+<td><p>GMAC0_TXD3</p></td>
+<td><p>CAP1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PE15</p></td>
+<td></td>
+<td><p>SPI3_MISO</p></td>
+<td></td>
+<td><p>UART3_RX</p></td>
+<td><p>GMAC0_TXD2</p></td>
+<td><p>CAP2</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PE16</p></td>
+<td></td>
+<td><p>SPI0_CLK</p></td>
+<td><p>CAN0_TX</p></td>
+<td><p>I2C3_SCL</p></td>
+<td><p>GMAC0_TRIG</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PE17</p></td>
+<td></td>
+<td><p>SPI0_CS</p></td>
+<td><p>CAN0_RX</p></td>
+<td><p>I2C3_SDA</p></td>
+<td><p>GMAC0_PPSO</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PE18</p></td>
+<td></td>
+<td><p>SPI0_MOSI</p></td>
+<td><p>CAN1_TX</p></td>
+<td><p>PWM3_A</p></td>
+<td><p>GMAC1_TRIG</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PE19</p></td>
+<td></td>
+<td><p>SPI0_MISO</p></td>
+<td><p>CAN1_RX</p></td>
+<td><p>PWM3_B</p></td>
+<td><p>GMAC1_PPSO</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PF0</p></td>
+<td><p>SDC2_D1</p></td>
+<td><p>SPI2_CLK</p></td>
+<td></td>
+<td><p>UART5_TX</p></td>
+<td><p>GMAC1_RXD1</p></td>
+<td><p>PBUS_AD0</p></td>
+<td><p>GMAC1_RXD0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF1</p></td>
+<td><p>SDC2_D0</p></td>
+<td><p>SPI2_CS</p></td>
+<td></td>
+<td><p>UART5_RX</p></td>
+<td><p>GMAC1_RXD0</p></td>
+<td><p>PBUS_AD1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PF2</p></td>
+<td><p>SDC2_CLK</p></td>
+<td><p>SPI2_MOSI</p></td>
+<td></td>
+<td><p>UART5_RTS</p></td>
+<td><p>GMAC1_RXCTL</p></td>
+<td><p>PBUS_AD2</p></td>
+<td><p>GMAC1_RXD1</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF3</p></td>
+<td><p>SDC2_CMD</p></td>
+<td><p>SPI2_MISO</p></td>
+<td></td>
+<td><p>UART5_CTS</p></td>
+<td><p>GMAC1_CLKIN</p></td>
+<td><p>PBUS_AD3</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PF4</p></td>
+<td><p>SDC2_D3</p></td>
+<td></td>
+<td></td>
+<td><p>UART6_TX</p></td>
+<td><p>GMAC1_TXD1</p></td>
+<td><p>PBUS_AD4</p></td>
+<td><p>DBG_IO26</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF5</p></td>
+<td><p>SDC2_D2</p></td>
+<td></td>
+<td></td>
+<td><p>UART6_RX</p></td>
+<td><p>GMAC1_TXD0</p></td>
+<td><p>PBUS_AD5</p></td>
+<td><p>DBG_IO27</p></td>
+</tr>
+<tr class="row-even"><td><p>PF6</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_TX</p></td>
+<td><p>GMAC1_TXCK</p></td>
+<td><p>PBUS_AD6</p></td>
+<td><p>DBG_IO28</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF7</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_RX</p></td>
+<td><p>GMAC1_TXCTL</p></td>
+<td><p>PBUS_AD7</p></td>
+<td><p>DBG_IO29</p></td>
+</tr>
+<tr class="row-even"><td><p>PF8</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_RTS</p></td>
+<td><p>GMAC1_MDC</p></td>
+<td><p>PBUS_AD8</p></td>
+<td><p>DBG_IO30</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF9</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>UART7_CTS</p></td>
+<td><p>GMAC1_MDIO</p></td>
+<td><p>PBUS_AD9</p></td>
+<td><p>DBG_IO31</p></td>
+</tr>
+<tr class="row-even"><td><p>PF10</p></td>
+<td><p>I2S1_MCLK</p></td>
+<td><p>I2S1_DIN</p></td>
+<td></td>
+<td><p>UART3_CTS</p></td>
+<td><p>CLK_OUT3</p></td>
+<td><p>PBUS_AD10</p></td>
+<td><p>GMAC1_CLKIN</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF11</p></td>
+<td><p>I2S1_BCLK</p></td>
+<td></td>
+<td><p>PBUS_AD11</p></td>
+<td><p>UART3_TX</p></td>
+<td><p>GMAC1_RXD3</p></td>
+<td><p>PBUS_CLK</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PF12</p></td>
+<td><p>I2S1_LRCK</p></td>
+<td></td>
+<td><p>UART4_RTS</p></td>
+<td><p>UART3_RX</p></td>
+<td><p>GMAC1_RXD2</p></td>
+<td><p>PBUS_NCS</p></td>
+<td><p>GMAC1_TXD0</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF13</p></td>
+<td><p>I2S1_DOUT</p></td>
+<td><p>I2S1_DIN</p></td>
+<td><p>UART4_CTS</p></td>
+<td><p>UART3_RTS</p></td>
+<td><p>GMAC1_RXCK</p></td>
+<td><p>PBUS_NADV</p></td>
+<td><p>GMAC1_RXCTL</p></td>
+</tr>
+<tr class="row-even"><td><p>PF14</p></td>
+<td><p>I2S1_DIN</p></td>
+<td><p>DSPK0</p></td>
+<td><p>DMIC_D0</p></td>
+<td><p>UART4_TX</p></td>
+<td><p>GMAC1_TXD3</p></td>
+<td><p>PBUS_NWE</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PF15</p></td>
+<td><p>DE_TE</p></td>
+<td><p>DSPK1</p></td>
+<td><p>DMIC_CLK</p></td>
+<td><p>UART4_RX</p></td>
+<td><p>GMAC1_TXD2</p></td>
+<td><p>PBUS_NOE</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PU0</p></td>
+<td><p>USB0_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART1_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PU1</p></td>
+<td><p>USB0_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART1_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PU2</p></td>
+<td><p>USB1_DM</p></td>
+<td></td>
+<td><p>UART0_RX</p></td>
+<td><p>UART2_RX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PU3</p></td>
+<td><p>USB1_DP</p></td>
+<td></td>
+<td><p>UART0_TX</p></td>
+<td><p>UART2_TX</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../cpu_bus/index.html" class="btn btn-neutral float-right" title="5. 处理器和总线" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../memory_maps/index.html" class="btn btn-neutral float-left" title="3. 地址映射" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

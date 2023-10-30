@@ -1,0 +1,2467 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.5.4. 寄存器定义 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.6. I2C" href="../i2c/index.html" />
+    <link rel="prev" title="12.5.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.5.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.5.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">12.5.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.5.4. 寄存器定义</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-uart-rbr">12.5.4.1. 0x000 UART_RBR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x000-uart-thr">12.5.4.2. 0x000 UART_THR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x000-uart-dll">12.5.4.3. 0x000 UART_DLL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-uart-dlh">12.5.4.4. 0x004 UART_DLH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-uart-ier">12.5.4.5. 0x004 UART_IER</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-uart-iir">12.5.4.6. 0x008 UART_IIR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-uart-fcr">12.5.4.7. 0x008 UART_FCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-uart-lcr">12.5.4.8. 0x00C UART_LCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-uart-mcr">12.5.4.9. 0x010 UART_MCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-uart-lsr">12.5.4.10. 0x014 UART_LSR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-uart-msr">12.5.4.11. 0x018 UART_MSR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-uart-sch">12.5.4.12. 0x01C UART_SCH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x07c-uart-usr">12.5.4.13. 0x07C UART_USR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-uart-tfl">12.5.4.14. 0x080 UART_TFL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x084-uart-rfl">12.5.4.15. 0x084 UART_RFL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x088-uart-hsk">12.5.4.16. 0x088 UART_HSK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a4-uart-halt">12.5.4.17. 0x0A4 UART_HALT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0b0-uart-dbg-dll">12.5.4.18. 0x0B0 UART_DBG_DLL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0b4-uart-dbg-dlh">12.5.4.19. 0x0B4 UART_DBG_DLH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0b8-uart-485-de">12.5.4.20. 0x0B8 UART_485_DE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c0-uart-485-ctl">12.5.4.21. 0x0C0 UART_485_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c4-rs485-addr-match">12.5.4.22. 0x0C4 RS485_ADDR_MATCH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c8-bus-idle-chk">12.5.4.23. 0x0C8 BUS_IDLE_CHK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0cc-tx-dly">12.5.4.24. 0x0CC TX_DLY</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0d0-uart-dbr">12.5.4.25. 0x0D0 UART_DBR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0fc-uart-version">12.5.4.26. 0x0FC UART_VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.5. </span>UART</a> &raquo;</li>
+        
+      <li><span class="section-number">12.5.4. </span>寄存器定义</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.5.4. </span>寄存器定义<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>寄存器列表</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 21%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>寄存器名</p></th>
+<th class="head"><p>偏移地址</p></th>
+<th class="head"><p>寄存器功能描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>UART_RBR</p></td>
+<td><p>0x000</p></td>
+<td><p>UART 数据接收寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_THR</p></td>
+<td><p>0x000</p></td>
+<td><p>UART 数据发送寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_DLL</p></td>
+<td><p>0x000</p></td>
+<td><p>UART 低位除数寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_DLH</p></td>
+<td><p>0x004</p></td>
+<td><p>UART 高位除数寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_IER</p></td>
+<td><p>0x004</p></td>
+<td><p>UART 中断使能寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_IIR</p></td>
+<td><p>0x008</p></td>
+<td><p>UART 中断标志寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_FCR</p></td>
+<td><p>0x008</p></td>
+<td><p>UART FIFO控制寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_LCR</p></td>
+<td><p>0x00C</p></td>
+<td><p>UART 线路控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_MCR</p></td>
+<td><p>0x010</p></td>
+<td><p>UART 调制解调器控制寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_LSR</p></td>
+<td><p>0x014</p></td>
+<td><p>UART 线路状态寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_MSR</p></td>
+<td><p>0x018</p></td>
+<td><p>UART 调制解调器状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_SCH</p></td>
+<td><p>0x01C</p></td>
+<td><p>UART 暂存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_USR</p></td>
+<td><p>0x07C</p></td>
+<td><p>UART 状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_TFL</p></td>
+<td><p>0x080</p></td>
+<td><p>UART 发送FIFO深度寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_RFL</p></td>
+<td><p>0x084</p></td>
+<td><p>UART 接收FIFO深度寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_HSK</p></td>
+<td><p>0x088</p></td>
+<td><p>UART DMA握手配置寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_HALT</p></td>
+<td><p>0x0A4</p></td>
+<td><p>UART 停止发送寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_DBG_DLL</p></td>
+<td><p>0x0B0</p></td>
+<td><p>UART 低位除数调试寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_DBG_DLH</p></td>
+<td><p>0x0B4</p></td>
+<td><p>UART 高位除数调试寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>UART_485_DE</p></td>
+<td><p>0x0B8</p></td>
+<td><p>UART RS485 DE时间寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_485_CTL</p></td>
+<td><p>0x0C0</p></td>
+<td><p>UART RS485 控制与状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>RS485_ADDR_MATCH</p></td>
+<td><p>0x0C4</p></td>
+<td><p>UART RS485 地址匹配寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>BUS_IDLE_CHK</p></td>
+<td><p>0x0C8</p></td>
+<td><p>UART RS485 总线空闲查询寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>TX_DLY</p></td>
+<td><p>0x0CC</p></td>
+<td><p>UART 发送延时寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>UART_VERSION</p></td>
+<td><p>0x0FC</p></td>
+<td><p>UART 版本号</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>寄存器描述</strong></p>
+<div class="section" id="x000-uart-rbr">
+<h2><span class="section-number">12.5.4.1. </span>0x000 UART_RBR<a class="headerlink" href="#x000-uart-rbr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART数据接收寄存器（Receive Buffer）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RBR（Receive Buffer Register）</div>
+<div class="line">数据接收寄存器</div>
+<div class="line">串行输入端口在UART模式下接收到的数据，或者红外模式下串行红外输入的数据。仅当线路</div>
+<div class="line">状态寄存器（LSR）中的数据就绪位（DR bit）被设为1时，该寄存器中的数据才有效。</div>
+<div class="line">如果在FIFO模式中FIFO使能（FCR[0]设为1），该寄存器则访问接收FIFO的顶部（先进先出）。</div>
+<div class="line">如果接收FIFO已满，并且在下一个数据到达之前没有读取该寄存器，那么FIFO中已经存在的</div>
+<div class="line">数据将被保留，但任何传入的数据都会丢失并发生溢出错误。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x000-uart-thr">
+<h2><span class="section-number">12.5.4.2. </span>0x000 UART_THR<a class="headerlink" href="#x000-uart-thr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART数据发送寄存器（Transmit Holding）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THR（Transmit Holding Register）</div>
+<div class="line">数据发送寄存器</div>
+<div class="line">串行输出端口在UART模式下发送的数据，或者红外模式下串行输出的数据。仅当线路</div>
+<div class="line">状态寄存器（LSR）中的THRE位（LSR[5]）被设为1时，数据才会写到该寄存器。</div>
+<div class="line">如果在FIFO模式中FIFO使能（FCR[0]设为1）并且THRE为1，16个字符的数据则可以</div>
+<div class="line">在FIFO满之前写入该寄存器。当FIFO已满时，任何写入数据的尝试都会导致写入数据丢失。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x000-uart-dll">
+<h2><span class="section-number">12.5.4.3. </span>0x000 UART_DLL<a class="headerlink" href="#x000-uart-dll" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART低位除数寄存器（Divisor Latch Low）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLL(Divisor Latch Low)</div>
+<div class="line">低位除数寄存器。</div>
+<div class="line">16位UART波特率除数的低8位。仅当DLAB位（LCR[7]）为1并且UART空闲（USR[0]）时，</div>
+<div class="line">该寄存器才能被访问。输出波特率等于串行时钟频率除以波特率除数的16倍，如下：</div>
+<div class="line">波特率=串行时钟频率/（16*除数）</div>
+<div class="line">注意当除数寄存器（DLL与DLH）设置为0时，波特时钟被禁用，并且没有串行通信发生。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-uart-dlh">
+<h2><span class="section-number">12.5.4.4. </span>0x004 UART_DLH<a class="headerlink" href="#x004-uart-dlh" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART高位除数寄存器（Divisor Latch High）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLH(Divisor Latch High)</div>
+<div class="line">高位除数寄存器。</div>
+<div class="line">16位UART波特率除数的高8位。仅当DLAB位（LCR[7]）为1并且UART空闲（USR[0]）时，</div>
+<div class="line">该寄存器才能被访问。输出波特率等于串行时钟频率除以波特率除数的16倍，如下：</div>
+<div class="line">波特率=串行时钟频率/（16*除数）</div>
+<div class="line">注意当除数寄存器（DLL与DLH）设置为零时，波特时钟被禁用，并且没有串行通信发生。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-uart-ier">
+<h2><span class="section-number">12.5.4.5. </span>0x004 UART_IER<a class="headerlink" href="#x004-uart-ier" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART中断使能寄存器（Interrupt Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PTIME(Programmable THRE Interrupt Mode Enable)</div>
+<div class="line">THRE中断模式使能</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+<div class="line">此位设0时，THRE中断会在非空的条件清除</div>
+<div class="line">此位设1时，THRE中断会在低于触发深度FCR[5:4]的条件清除</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Shifter_Reg_Empty_EN</div>
+<div class="line">发送移位寄存器为空中断使能</div>
+<div class="line">此为用于发送FIFO为空并且移位寄存器也为空使能控制</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RS485_INT_EN(RS485 Interrupt Enable)</div>
+<div class="line">RS485中断使能</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EDSSI(Enable Modem Status Interrupt)</div>
+<div class="line">调制解调器状态中断使能</div>
+<div class="line">该位用于调制解调器状态（MSR）中断使能控制，为第四优先级中断。</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ELSI(Enable Receive Line Status Interrupt)</div>
+<div class="line">接收线路状态中断使能</div>
+<div class="line">该位用于接收线路状态中断使能控制，为最高级中断。</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ETBEI(Enable Transmit Holding Register Empty Interrupt)</div>
+<div class="line">数据发送寄存器为空中断使能</div>
+<div class="line">该位用于数据发送寄存器为空中断使能控制，为第三优先级中断。</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERBFI(Enable Receive Data Available Interrupt)</div>
+<div class="line">接收数据可用中断使能</div>
+<div class="line">该位用于接收数据可用中断使能控制，以及字符超时中断控制（如果在FIFO模式</div>
+<div class="line">并且FIFO使能），为第二优先级中断。</div>
+<div class="line">0：未使能</div>
+<div class="line">1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-uart-iir">
+<h2><span class="section-number">12.5.4.6. </span>0x008 UART_IIR<a class="headerlink" href="#x008-uart-iir" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>UART中断标志寄存器（Interrupt Identity）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FEFLAG(FIFOs Enable Flag)</div>
+<div class="line">FIFOs使能标志</div>
+<div class="line">该位用于表明FIFO是否使能</div>
+<div class="line">0：未使能</div>
+<div class="line">3：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Shifter_Reg_Empty_INT</div>
+<div class="line">发送移位寄存器为空中断状态</div>
+<div class="line">1：中断触发</div>
+<div class="line">0：中断未触发或被清除</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">IID(Interrupt ID)</div>
+<div class="line">中断ID</div>
+<div class="line">表示最高优先级的挂起中断，可以是以下类型之一：</div>
+<div class="line">0x0：调制解调器状态</div>
+<div class="line">0x1：无中断</div>
+<div class="line">0x2：THR为空</div>
+<div class="line">0x3：RS485中断</div>
+<div class="line">0x4：接收数据可用</div>
+<div class="line">0x6：接收线路状态</div>
+<div class="line">0x7：繁忙检测</div>
+<div class="line">0xC：字符超时</div>
+<div class="line">位3表示只有在启用FIFO并用于区分字符超时条件中断时，才会发生中断</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>中断优先级</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 15%" />
+<col style="width: 35%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>中断ID</p></th>
+<th class="head"><p>优先级</p></th>
+<th class="head"><p>中断类型</p></th>
+<th class="head"><p>中断源</p></th>
+<th class="head"><p>中断复位</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x1</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x6</p></td>
+<td><p>最高级</p></td>
+<td><div class="line-block">
+<div class="line">接收线路状态</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">溢位/奇偶检验/帧错误或者break中断</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">读取线路状态寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x3</p></td>
+<td><p>第二级</p></td>
+<td><div class="line-block">
+<div class="line">RS485中断</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">在RS485模式中，接收地址数据和匹配设置</div>
+<div class="line">地址</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">地址标志写1复位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x4</p></td>
+<td><p>第三级</p></td>
+<td><div class="line-block">
+<div class="line">接收数据可用</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">接收数据可用（非FIFO模式或者FIFO</div>
+<div class="line">未使能）或达到接收FIFO触发水平</div>
+<div class="line">（FIFO模式和FIFO使能)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">读取接收缓冲寄存器（非FIFO模</div>
+<div class="line">式或者FIFO未使能）或FIFO低于</div>
+<div class="line">触发水平（FIFO模式和FIFO使能）</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0xC</p></td>
+<td><p>第四级</p></td>
+<td><div class="line-block">
+<div class="line">字符超时</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">在4个字符时间内，接收FIFO没有字符进</div>
+<div class="line">出，并且在此期间FIFO中至少有一个字符</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">读取数据接收寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x2</p></td>
+<td><p>第五级</p></td>
+<td><div class="line-block">
+<div class="line">数据发送寄存器</div>
+<div class="line">为空</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">数据发送寄存器为空(THRE模式未使能)</div>
+<div class="line">或发送FIFO处于或者低于阈值</div>
+<div class="line">（THRE模式使能）</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">读取中断标志寄存器(如果为中断</div>
+<div class="line">源)；或写数据进数据发送寄存器</div>
+<div class="line">（FIFO或者THRE模式未选择或者</div>
+<div class="line">未使能）；或发送FIFO高于阈值</div>
+<div class="line">(选择并使能FIFO和THRE模式)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x0</p></td>
+<td><p>第六级</p></td>
+<td><div class="line-block">
+<div class="line">调制解调器状态</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">CTS  如果处于自动流控，CTS不会触发</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">读取调制解调器状态寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x7</p></td>
+<td><p>第七级</p></td>
+<td><div class="line-block">
+<div class="line">繁忙检测标志</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">主处理器在UART繁忙时（USR[0]设置为1）</div>
+<div class="line">尝试写入线路控制寄存器</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">读取UART状态寄存器</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-uart-fcr">
+<h2><span class="section-number">12.5.4.7. </span>0x008 UART_FCR<a class="headerlink" href="#x008-uart-fcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART FIFO控制寄存器（FIFO Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RT(RX Trigger)</div>
+<div class="line">接收触发</div>
+<div class="line">用于在接收FIFO中选择接收数据可用中断的触发深度。在自动流控制模式中，它用于确定</div>
+<div class="line">何时使rts_n(Request to Send)信号无效,也用于确定DRQ信号在某些操作模式下何时有效。</div>
+<div class="line">0：FIFO中一个字符</div>
+<div class="line">1：四分之一 FIFO</div>
+<div class="line">2：二分之一 FIFO</div>
+<div class="line">3：接近FIFO满状态（FIFO-2）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TFT(TX Empty Trigger)</div>
+<div class="line">发送为空触发</div>
+<div class="line">用于选择产生发送保持寄存器为空中断的空阈值电平；也用于确定DRQ信号在某些操作模式</div>
+<div class="line">中何时有效。</div>
+<div class="line">0：FIFO为空</div>
+<div class="line">1：FIFO中2个字符</div>
+<div class="line">2：四分之一 FIFO</div>
+<div class="line">3：二分之一 FIFO</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAM(DMA Mode)</div>
+<div class="line">DMA模式</div>
+<div class="line">0：模式0</div>
+<div class="line">在这个模式中,如果PTE(HALT[7])为1并且发送FIFO使能，当TFL（发送FIFO深度）小于</div>
+<div class="line">或者等于FIFO触发深度时，将发送TX DMA请求。如果PTE为1并且发送FIFO未使能，</div>
+<div class="line">当THRE为0时，将发送TX DMA请求。如果PTE为0，当发送FIFO为空时，将发送TX DMA请求。</div>
+<div class="line">如果DMA_PTE_RX为1并且接收FIFO使能，当RFL（接收FIFO深度）等于或者大于FIFO触发</div>
+<div class="line">深度时将发送RX_DRQ</div>
+<div class="line">1：模式1</div>
+<div class="line">在这个模式中，如果PTE为1并且发送FIFO使能，当TFL小于或者等于FIFO触发深度时，</div>
+<div class="line">将发送TX DMA请求。如果PTE为低，TX DMA请求将在TX FIFO为空时发送，并且仅当</div>
+<div class="line">TX FIFO已满时停止请求。如果RFL等于或者大于FIFO触发深度，RX_DRQ将会设为1，</div>
+<div class="line">在其他情况则为0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXFIFOR(TX FIFO Reset)</div>
+<div class="line">发送FIFO复位</div>
+<div class="line">复位发送FIFO的控制并且将FIFO清空。也可以清除DMA发送请求。</div>
+<div class="line">此位不需要清除，为自动清除</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXFIFOR(RX FIFO Reset)</div>
+<div class="line">接收FIFO复位</div>
+<div class="line">复位接收FIFO的控制并且将FIFO清空。也可以清除DMA接收请求。</div>
+<div class="line">此位不需要清除，为自动清除</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIFOE(FIFOs Enable)</div>
+<div class="line">FIFOs使能</div>
+<div class="line">使能/未使能发送以及接收FIFO.</div>
+<div class="line">每当该位的值改变时，FIFO的发送以及接收控制部分都会复位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-uart-lcr">
+<h2><span class="section-number">12.5.4.8. </span>0x00C UART_LCR<a class="headerlink" href="#x00c-uart-lcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART线路控制寄存器（Line Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLAB(Divisor Latch Access Bit)</div>
+<div class="line">除数存取位</div>
+<div class="line">此位只有当UART空闲时（USR[0]为0）才可写。用于使能除数寄存器（DLL和DLH）的读写，</div>
+<div class="line">以设置UART的波特率。在初始化波特率设置后，必须清除此位，以便访问其他寄存器。</div>
+<div class="line">0：选择接收缓冲寄存器（RBR）/发送保持寄存器(THR)/中断使能寄存器（IER）</div>
+<div class="line">1：选择低位除数寄存器(DLL)以及高位除数寄存器（DLH）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BC(Break Control Bit)</div>
+<div class="line">中断信号控制位</div>
+<div class="line">产生一个中断条件传输到接收端。</div>
+<div class="line">若此位设1，串行输出将强制为逻辑0状态。</div>
+<div class="line">如果处于非回环模式中（取决于MCR[4]）,串行输出线强制为低电平，直到清除此位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EPS(Even Parity Select)</div>
+<div class="line">偶校验选择</div>
+<div class="line">此位只有当UART空闲时（USR[0]为0）才可写。当使能奇偶校验时（PEN 设为1），</div>
+<div class="line">用于选择奇性或者偶性校验。设置 LCR[5] 可反转LCR[4]。</div>
+<div class="line">0:奇性校验</div>
+<div class="line">1:偶性校验</div>
+<div class="line">2或3:反转LCR[4]</div>
+<div class="line">在RS485模式中，它是第9位地址位。</div>
+<div class="line">3：第9位为0，表明这是一个数据字节</div>
+<div class="line">2：第9位为1，表明这是一个地址字节</div>
+<div class="line">注意：当使用此功能时，PEN（LCR[3]）必须设为1.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PEN(Parity Enable)</div>
+<div class="line">奇偶校验使能</div>
+<div class="line">此位只有当UART空闲时（USR[0]为0）才可写。该位用于使能和未使能发送接收串行字符中的</div>
+<div class="line">奇偶校验生成与检测。</div>
+<div class="line">0:奇偶检验未使能</div>
+<div class="line">1:奇偶检验使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STOP(Number of Stop Bits)</div>
+<div class="line">停止位数</div>
+<div class="line">只有当UART空闲时（USR[0]为0）才可写。用于选择外围设备发送和接收的每个字符的停止</div>
+<div class="line">位数。当设为0时，在串行数据中传输1停止位。当设为1且数据位设为5位时（LCR[1:0]）,传输</div>
+<div class="line">1.5个停止位；否则传输2位停止位。注意不管选择多少个停止位，接收器只检查第一个停止位。</div>
+<div class="line">0：1个停止位</div>
+<div class="line">1：当DLS（LCR[1:0]）为0时1.5个停止位，否则2个停止位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1：0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLS(Data length Select)</div>
+<div class="line">数据长度选择</div>
+<div class="line">此位只有当UART空闲时（USR[0]为0）才可写。用于选择外围设备发送和接收的每个字符的</div>
+<div class="line">数据位数。可选择的位数如下：</div>
+<div class="line">0：5位</div>
+<div class="line">1：6位</div>
+<div class="line">2：7位</div>
+<div class="line">3：8位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-uart-mcr">
+<h2><span class="section-number">12.5.4.9. </span>0x010 UART_MCR<a class="headerlink" href="#x010-uart-mcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART调制解调器控制寄存器（Modem Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UART_FUNCTION</div>
+<div class="line">选择UART或者RS485</div>
+<div class="line">0：UART 模式</div>
+<div class="line">2：RS485模式（常规485，3线模式，TX、RX、RTS）</div>
+<div class="line">3：RS485-2wire模式（特殊485，2线模式，TX/RX、RTS）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AFCE(Auto Flow Control Enable)</div>
+<div class="line">自动流控制使能</div>
+<div class="line">当使能FIFO以及此位设1时，自动流控制功能使能</div>
+<div class="line">0：自动流控制模式未使能</div>
+<div class="line">1：自动流控制模式使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOOP(Loop Back Mode)</div>
+<div class="line">回环模式</div>
+<div class="line">0：正常模式</div>
+<div class="line">1：回环模式</div>
+<div class="line">用于将UART置于调试模式以进行测试。如果在UART模式下运行(MCR[7:6] 设为0)，</div>
+<div class="line">sout线上的数据保持为高，而串行数据输出在内部回环到sin线路。在这种模式下，</div>
+<div class="line">所有的中断都是正常的。此外，在回环模式下，调制解调器控制输入（cts_n）断开，</div>
+<div class="line">输出(rts_n)在内部回环输入。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RTS(Request To Send)</div>
+<div class="line">发送请求</div>
+<div class="line">用于直接控制发送请求（rts_n）输出。rts_n输出用于通知调制解调器UART已准备好交换</div>
+<div class="line">数据。当自动流控制未使能（MCR[5]设为0），则需通过将此位设为1，使rts_n处于低电平。</div>
+<div class="line">在自动流模式中（MCR[5]设为1）并且FIFO使能（FCR[0]设为1），也需通过将此位设为1，</div>
+<div class="line">使rts_n处于低电平，但同时也受到接收FIFO触发深度门控（当超过阈值时rts_n处于高电平</div>
+<div class="line">无效状态）。当MCR[1]设为0时rts_n无效</div>
+<div class="line">0: rts_n 信号无效状态（高电平）</div>
+<div class="line">1: rts_n 信号有效状态（低电平）</div>
+<div class="line">注意在回环模式中（MCR[4]设为1），当该位置的值在内部回环输入时，rts_n输出保持高电平</div>
+<div class="line">无效状态。</div>
+<div class="line">在RS485或RS485-2模式中，RTS外接485收发器方向控制脚DE，需通过设置此位控制发送接收</div>
+<div class="line">方向，设1则为接收方向，设0则为发送方向。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-uart-lsr">
+<h2><span class="section-number">12.5.4.10. </span>0x014 UART_LSR<a class="headerlink" href="#x014-uart-lsr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000060</p></th>
+<th class="head"><p>UART线路状态寄存器（Line Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIFOERR(RX Data Error In FIFO)</div>
+<div class="line">FIFO接收数据错误</div>
+<div class="line">如果FIFO未使能，此位总为0；如果FIFO使能且接收FIFO中至少有PE(LSR[2])、FE(LSR[3])</div>
+<div class="line">和BI(LSR[4])中一个，此为被置1。如果FIFO没有后续错误，则通过读取LSR寄存器清除此位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TEMT(Transmitter Empty)</div>
+<div class="line">发送器为空</div>
+<div class="line">如果FIFO未使能，每当数据发送寄存器以及发送移位寄存器为空时，该位设为1；</div>
+<div class="line">如果FIFO使能，每当发送FIFO以及发送移位寄存器为空时，该位设位1。</div>
+<div class="line">在这两种情况下，当一个字符被写入发送数据信道时，该位被清除</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">THRE(TX Holding Register Empty)</div>
+<div class="line">数据发送寄存器为空</div>
+<div class="line">如果FIFO未使能，每当数据发送寄存器为空并且准备接收新数据时，该位被设为1；CPU写入</div>
+<div class="line">数据发送寄存器时，该位被清除。如果FIFO使能，每当发送FIFO为空时，该位被设为1；</div>
+<div class="line">当至少有一个字符写入发送FIFO时，该位被清除。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BI(Break Interrupt)</div>
+<div class="line">Break中断</div>
+<div class="line">用于指示在串行输入数据上检测到中断序列。</div>
+<div class="line">输入上的break条件会导致UART接收到仅且一个由0组成的字符。在FIFO模式中，与break条件</div>
+<div class="line">相关联的字符通过FIFO传输，当字符位于FIFO顶部时此位置1，读取清除此位。在非FIFO模式中，</div>
+<div class="line">此位立即置1并持续到读取此位清除。</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FE(Framing Error)</div>
+<div class="line">帧错误</div>
+<div class="line">用于指示接收器中出现帧错误。当接收器在接收的数据中没有检测到有效的停止位时，就会发生</div>
+<div class="line">帧错误。在FIFO模式中，由于帧错误与接收到的字符相关，因此当具有帧错误的字符位于FIFO</div>
+<div class="line">顶部时，才会显示该错误。帧错误出现时，UART会尝试重新同步。重新同步是通过假设错误</div>
+<div class="line">是由下一个字符的起始位引起的，然后继续接收另一个数据位，以及奇偶检验位和停止位。</div>
+<div class="line">需要注意的是，如果发生BI，则此位也置1。</div>
+<div class="line">0：无帧错误</div>
+<div class="line">1：帧错误</div>
+<div class="line">读取LSR清除此位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PE(Parity Error)</div>
+<div class="line">奇偶校验错误</div>
+<div class="line">如果设置了奇偶校验使能（PEN）位（LCR[3]），则此位用于指示在接收中发生奇偶校验错误</div>
+<div class="line">0：无奇偶校验错误</div>
+<div class="line">1：奇偶校验错误</div>
+<div class="line">读取LSR清除此位</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OE(Overrun Error)</div>
+<div class="line">溢出错误</div>
+<div class="line">如果在读取先前数据之前接收到新的数据字符，则出现此错误。</div>
+<div class="line">在非FIFO模式，当从RBR读取先前字符之前接收一个新字符，则此位被置1，发生这种情况时，</div>
+<div class="line">RBR中的数据则会被覆盖。</div>
+<div class="line">在FIFO模式，当FIFO为满时接收到一个新的字符，则会发生此错误，此时FIFO中的数据被保留，</div>
+<div class="line">而接收移位寄存器中的数据丢失。</div>
+<div class="line">0：无溢出错误</div>
+<div class="line">1：溢出错误</div>
+<div class="line">读取LSR清除此位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DR(Data Ready)</div>
+<div class="line">数据就绪</div>
+<div class="line">用于指示在RBR或者接收FIFO中至少包含一个字符。</div>
+<div class="line">0：无数据就绪</div>
+<div class="line">1：数据就绪</div>
+<div class="line">当非FIFO模式中读取RBR或者FIFO模式中FIFO为空时清除此位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-uart-msr">
+<h2><span class="section-number">12.5.4.11. </span>0x018 UART_MSR<a class="headerlink" href="#x018-uart-msr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000010</p></th>
+<th class="head"><p>UART调制解调器状态寄存器（Modem Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:5</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CTS(Line State Of Clear To Send)</div>
+<div class="line">可发送状态</div>
+<div class="line">用于指示调制解调器控制线cts_n信号的当前状态。</div>
+<div class="line">当ctr_n有效时表示调制解调器已准备好UART交换数据。</div>
+<div class="line">0: cts_n无效（高电平状态）</div>
+<div class="line">1: cts_n有效（低电平状态）</div>
+<div class="line">在回环模式中（MCR[4]设为1），CTS如RTS（MCR[1]）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DCTS(Delta Clear To Send)</div>
+<div class="line">表示自上次读取MSR后cts_n信号发生了改变</div>
+<div class="line">0: 上一次读取MSR后cts_n无变化</div>
+<div class="line">1: 上一次读取MSR后cts_n有变化</div>
+<div class="line">读取MSR清除此位。在回环模式中（MSR[4]=1），DCTS反映MCR[1]（RTS）的变化。</div>
+<div class="line">注意：如果未设置此位，并且cts_n信号有效（低电平）以及发生复位（软件复位</div>
+<div class="line">或其他情况），如cts_n信号仍然保持有效，那么在移除复位时此位置1。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-uart-sch">
+<h2><span class="section-number">12.5.4.12. </span>0x01C UART_SCH<a class="headerlink" href="#x01c-uart-sch" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART暂存器（Scratch）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SCRATCH_REG</div>
+<div class="line">暂存器</div>
+<div class="line">此寄存器供用户作临时存储空间。在UART中没有定义它的目的</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x07c-uart-usr">
+<h2><span class="section-number">12.5.4.13. </span>0x07C UART_USR<a class="headerlink" href="#x07c-uart-usr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000006</p></th>
+<th class="head"><p>UART状态寄存器（Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:5</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RFF(Receive FIFO Full)</div>
+<div class="line">接收FIFO为满</div>
+<div class="line">用于指示接收FIFO已完全满</div>
+<div class="line">0：接收FIFO未满</div>
+<div class="line">1：接收FIFO已满</div>
+<div class="line">当接收FIFO不再满时自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RFNE(Receive FIFO Not Empty)</div>
+<div class="line">接收FIFO非空</div>
+<div class="line">用于指示接收FIFO包含一个或多个数据</div>
+<div class="line">0：接收FIFO为空</div>
+<div class="line">1：接收FIFO非空</div>
+<div class="line">当接收FIFO为空时自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TFE(Transmit FIFO Empty)</div>
+<div class="line">发送FIFO为空</div>
+<div class="line">用于指示发送FIFO完全空</div>
+<div class="line">0：发送FIFO非空</div>
+<div class="line">1：发送FIFO为空</div>
+<div class="line">当发送FIFO不再空时自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TFNF(Transmit FIFO Not Full)</div>
+<div class="line">发送FIFO未满</div>
+<div class="line">用于指示发送FIFO未满</div>
+<div class="line">0：发送FIFO已满</div>
+<div class="line">1：发送FIFO未满</div>
+<div class="line">当发送FIFO已满时自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUSY(UART Busy Bit)</div>
+<div class="line">UART繁忙位</div>
+<div class="line">0：空闲</div>
+<div class="line">1：繁忙</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-uart-tfl">
+<h2><span class="section-number">12.5.4.14. </span>0x080 UART_TFL<a class="headerlink" href="#x080-uart-tfl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART发送FIFO深度寄存器（Transmit FIFO Level）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TFL(Transmit FIFO Level)</div>
+<div class="line">发送FIFO深度</div>
+<div class="line">用于指示发送FIFO中的数据数量</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x084-uart-rfl">
+<h2><span class="section-number">12.5.4.15. </span>0x084 UART_RFL<a class="headerlink" href="#x084-uart-rfl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART接收FIFO深度寄存器（Receive FIFO Level</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RFL(Receive FIFO Level)</div>
+<div class="line">接收FIFO深度</div>
+<div class="line">用于指示接收FIFO中的数据数量</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x088-uart-hsk">
+<h2><span class="section-number">12.5.4.16. </span>0x088 UART_HSK<a class="headerlink" href="#x088-uart-hsk" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000000A5</p></th>
+<th class="head"><p>UART DMA握手配置寄存器（DMA Handshake Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xA5</p></td>
+<td><div class="line-block">
+<div class="line">HSK(Handshake Configuration)</div>
+<div class="line">握手配置</div>
+<div class="line">0xA5：DMA wait cycle模式</div>
+<div class="line">0xE5：DMA handshake模式</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a4-uart-halt">
+<h2><span class="section-number">12.5.4.17. </span>0x0A4 UART_HALT<a class="headerlink" href="#x0a4-uart-halt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART停止发送寄存器（Halt TX）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMA_PTE_RX(The Sending Of RX_DRQ)</div>
+<div class="line">发送RX_DRQ</div>
+<div class="line">在DMA1模式中，当RFL大于或者等于触发深度/接收超时，发送DRQ</div>
+<div class="line">在DMA0模式中，如果DMA_PTE_RX=1并且FIFO使能，当RFL大于触发深度时，发送DRQ。</div>
+<div class="line">在其他情况下，一旦接收数据有效，发送DRQ。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PTE(The Sending Of TX_REQ)</div>
+<div class="line">发送TX_REQ</div>
+<div class="line">在DMA1模式（FIFO使能）中，如果PTE设为1，当TFL小于触发深度时，发送DMA请求。</div>
+<div class="line">如果PTE设为0，当FIFO为空，发送DMA请求。当FIFO为满时，DMA请求将停止。</div>
+<div class="line">在DMA0模式中，如果PTE设为1并且FIFO使能，当TFL小于触发深度时，发送DMA请求；</div>
+<div class="line">如果PTE设为1并且FIFO未使能，当THRE为空时,发送DMA请求。如果PTE设为0，</div>
+<div class="line">当FIFO为空时发送DMA请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:3</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CHANGE_UPDATE</div>
+<div class="line">更改更新</div>
+<div class="line">用户使用HALT[1]更改波特率或者LCR配置后，写1来更新配置，等待此位自动清0</div>
+<div class="line">来完成更新过程。写0到此位无影响。</div>
+<div class="line">1：更新触发，完成更新后自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CHCFG_AT_BUSY</div>
+<div class="line">繁忙状态更改配置使能</div>
+<div class="line">用户可在UART繁忙（USB[0]为1）时通过此位使能更改LCR配置以及波特率。</div>
+<div class="line">1：UART繁忙时使能更改</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HALT_TX</div>
+<div class="line">停止发送</div>
+<div class="line">此位用于停止传输以进行测试，以便在使能FIFO时，主控可以填充发送FIFO</div>
+<div class="line">0：停止发送未使能</div>
+<div class="line">1：停止发送使能</div>
+<div class="line">注意：如果FIFO未使能，设置此位对操作没有影响</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0b0-uart-dbg-dll">
+<h2><span class="section-number">12.5.4.18. </span>0x0B0 UART_DBG_DLL<a class="headerlink" href="#x0b0-uart-dbg-dll" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART低位除数调试寄存器（DBG DLL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEBUG DLL</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0b4-uart-dbg-dlh">
+<h2><span class="section-number">12.5.4.19. </span>0x0B4 UART_DBG_DLH<a class="headerlink" href="#x0b4-uart-dbg-dlh" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART高位除数调试寄存器（DBG DLH）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEBUG DLH</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0b8-uart-485-de">
+<h2><span class="section-number">12.5.4.20. </span>0x0B8 UART_485_DE<a class="headerlink" href="#x0b8-uart-485-de" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000000ff</p></th>
+<th class="head"><p>UART RS485 DE时间寄存器（RS485 DE Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0xf</p></td>
+<td><div class="line-block">
+<div class="line">DE_DAT(Driver Enable De-assertion Time)</div>
+<div class="line">DE无效时间T2</div>
+<div class="line">Sout结束位到DE信号下降沿之间的时间间隔，以串行时钟周期为单位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xf</p></td>
+<td><div class="line-block">
+<div class="line">DE_AT(Driver Enable Assertion Time)</div>
+<div class="line">DE有效时间T1</div>
+<div class="line">DE信号上升沿到Sout起始位之间的时间间隔，以串行时钟周期为单位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c0-uart-485-ctl">
+<h2><span class="section-number">12.5.4.21. </span>0x0C0 UART_485_CTL<a class="headerlink" href="#x0c0-uart-485-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000080</p></th>
+<th class="head"><p>UART RS485控制与状态寄存器（RS485 Control and Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RS485_CTL_MODE(RS485 Control Mode)</div>
+<div class="line">RS485控制模式</div>
+<div class="line">0：硬件控制模式。DE信号（RTS）在数据发送时通过内部硬件逻辑进行自动控制，</div>
+<div class="line">发送数据前自动使能DE为有效高电平，发送移位寄存器为空且发送FIFO为空，</div>
+<div class="line">则自动切换DE为无效低电平。</div>
+<div class="line">1：软件控制模式。DE信号（RTS）在数据发送时通过外部软件配置进行手动控制，</div>
+<div class="line">配置MCR[1]=0则DE为有效高电平可发送数据，MCR[1]=1则DE为无效低电平可接受数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AAD_ADDR_F</div>
+<div class="line">AAD地址匹配标志</div>
+<div class="line">在AAD模式中，当UART接收到地址字节且与RS485_ADDR_MATCH相同时，该位将置为1。</div>
+<div class="line">如果RS485中断使能，则将产生RS485中断</div>
+<div class="line">写1清除该位并且复位RS485中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RS485_ADDR_DET_F</div>
+<div class="line">RS485地址检测标志</div>
+<div class="line">此位为地址字节检测标志。当UART接收到地址字节时，此位将设为1。如果RS485中断使能，</div>
+<div class="line">则将产生RS485中断</div>
+<div class="line">写1清除该位并且复位RS485中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_BF_ADDR</div>
+<div class="line">地址之前接收</div>
+<div class="line">在NMM模式中，如果此位设为1，UART将在接收到一个地址字节之前将所有字节接收到</div>
+<div class="line">FIFO中；如果设为0，则不进行此操作</div>
+<div class="line">1：接收</div>
+<div class="line">0：不接收</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_AF_ADDR</div>
+<div class="line">地址之后接收</div>
+<div class="line">在NMM模式中，如果此位设为1，UART将在接收到一个地址字节之后将所有字节接收到</div>
+<div class="line">FIFO中；如果设为0，则不进行此操作</div>
+<div class="line">1：接收</div>
+<div class="line">0：不接收</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RS485_SLAVE_MODE_SEL</div>
+<div class="line">RS485从机模式选择</div>
+<div class="line">RS485从机模式：</div>
+<div class="line">0：标准多点操作（NMM）</div>
+<div class="line">1：自动地址检测操作（AAD）</div>
+<div class="line">2：保留</div>
+<div class="line">3：保留</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c4-rs485-addr-match">
+<h2><span class="section-number">12.5.4.22. </span>0x0C4 RS485_ADDR_MATCH<a class="headerlink" href="#x0c4-rs485-addr-match" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART RS485地址匹配寄存器（RS485 Address Match）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADDR_MATCH</div>
+<div class="line">地址匹配</div>
+<div class="line">在AAD模式下使用的匹配地址</div>
+<div class="line">注意：仅在AAD模式下可用</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c8-bus-idle-chk">
+<h2><span class="section-number">12.5.4.23. </span>0x0C8 BUS_IDLE_CHK<a class="headerlink" href="#x0c8-bus-idle-chk" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART RS485总线空闲查询寄存器（RS485 Bus Idle Check）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUS_IDLE_CHK_EN</div>
+<div class="line">总线空闲查询使能</div>
+<div class="line">1：使能总线空闲查询功能</div>
+<div class="line">0：未使能总线空闲查询功能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUS_STATUS</div>
+<div class="line">总线状态标志</div>
+<div class="line">1：繁忙</div>
+<div class="line">0：空闲</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADJ_TIME</div>
+<div class="line">总线空闲时间。单位为8*16*Tclk</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0cc-tx-dly">
+<h2><span class="section-number">12.5.4.24. </span>0x0CC TX_DLY<a class="headerlink" href="#x0cc-tx-dly" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART发送延时寄存器（TX Delay）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLY</div>
+<div class="line">发送延时</div>
+<div class="line">最后一个停止位与下一个开始位之间的延迟时间。单位为16*Tclk。</div>
+<div class="line">它用于控制数据发送中两个字节之间的间隔。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0d0-uart-dbr">
+<h2><span class="section-number">12.5.4.25. </span>0x0D0 UART_DBR<a class="headerlink" href="#x0d0-uart-dbr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UART调试寄存器（Debug Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Bypass 预取调试</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0fc-uart-version">
+<h2><span class="section-number">12.5.4.26. </span>0x0FC UART_VERSION<a class="headerlink" href="#x0fc-uart-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>UART版本号寄存器（Version Number）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">UART版本号寄存器</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../i2c/index.html" class="btn btn-neutral float-right" title="12.6. I2C" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="12.5.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

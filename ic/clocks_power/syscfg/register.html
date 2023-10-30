@@ -1,0 +1,1960 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>8.2.3. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="8.3. WRI" href="../wri/index.html" />
+    <link rel="prev" title="8.2.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">8. 时钟和电源</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cmu/index.html">8.1. Clock Manage Unit (CMU)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">8.2. System Configuration (SYSCFG)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">8.2.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">8.2.2. 功能描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8.2.3. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x020-ldo30-cfg">8.2.3.1. 0x020 LDO30_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-ldo25-cfg">8.2.3.2. 0x024 LDO25_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-ldo1x-cfg">8.2.3.3. 0x028 LDO1x_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-ddr-vref">8.2.3.4. 0x040 DDR_VREF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-ddr-rext">8.2.3.5. 0x044 DDR_REXT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-usb0-rext">8.2.3.6. 0x048 USB0_REXT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-usb1-rext">8.2.3.7. 0x04C USB1_REXT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-ephy-rext">8.2.3.8. 0x050 EPHY_REXT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c0-psen-cfg">8.2.3.9. 0x0C0 PSEN_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c4-psen-cnt-val">8.2.3.10. 0x0C4 PSEN_CNT_VAL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x100-sys-sram-par">8.2.3.11. 0x100 SYS_SRAM_PAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x104-cpu-sram-par">8.2.3.12. 0x104 CPU_SRAM_PAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x108-ddr-sram-par">8.2.3.13. 0x108 DDR_SRAM_PAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x10c-ve-sram-par">8.2.3.14. 0x10C VE_SRAM_PAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x110-ge-sram-par">8.2.3.15. 0x110 GE_SRAM_PAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x140-sram-clk-cfg">8.2.3.16. 0x140 SRAM_CLK_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x40c-usb0-cfg">8.2.3.17. 0x40C USB0_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x410-gmac0-cfg">8.2.3.18. 0x410 GMAC0_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x414-gmac1-cfg">8.2.3.19. 0x414 GMAC1_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x418-ephy-cfg0">8.2.3.20. 0x418 EPHY_CFG0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x41c-ephy-cfg1">8.2.3.21. 0x41C EPHY_CFG1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-syscfg-ver">8.2.3.22. 0xFFC SYSCFG_VER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../wri/index.html">8.3. Warm Reset Information (WRI)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">8. </span>时钟和电源</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">8.2. </span>SYSCFG</a> &raquo;</li>
+        
+      <li><span class="section-number">8.2.3. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">8.2.3. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x020-ldo30-cfg">
+<h2><span class="section-number">8.2.3.1. </span>0x020 LDO30_CFG<a class="headerlink" href="#x020-ldo30-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0006000C</p></th>
+<th class="head"><p>LDO30配置（LDO30 Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_ANA_EN</div>
+<div class="line">模拟测试使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>26:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_ANA_SEL</div>
+<div class="line">模拟测试模块选择</div>
+<div class="line">0: BIAS_ATB</div>
+<div class="line">1: RTC_ATB</div>
+<div class="line">OTHERS: 预留</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_BIAS_EN</div>
+<div class="line">偏置模块驱动使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_BIAS_SEL</div>
+<div class="line">偏置模块信号选择</div>
+<div class="line">0: vref12</div>
+<div class="line">1: vbg</div>
+<div class="line">2: vbp_casc</div>
+<div class="line">3: verf14 trim</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LVDS0_IBIAS_EN</div>
+<div class="line">LVDS0 参考电流使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LVDS1_IBIAS_EN</div>
+<div class="line">LVDS1 参考电流使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BAK_IBIAS_EN</div>
+<div class="line">备用参考电流使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BG_CTRL</div>
+<div class="line">BG 电压控制</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RTC_VAL_SEL</div>
+<div class="line">RTC电压选择</div>
+<div class="line">0: 1.10V</div>
+<div class="line">1: 1.05V</div>
+<div class="line">2: 1.00V</div>
+<div class="line">3: 0.95V</div>
+<div class="line">4: 0.90V</div>
+<div class="line">5: 0.85V</div>
+<div class="line">6: 0.80V</div>
+<div class="line">7: 无效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LDO_AVCC_EN</div>
+<div class="line">LDO30 使能</div>
+<div class="line">0: LDO关闭</div>
+<div class="line">1: LDO使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x4</p></td>
+<td><div class="line-block">
+<div class="line">LDO_VAL</div>
+<div class="line">LDO电压设置</div>
+<div class="line">0: 2.80V</div>
+<div class="line">1: 2.85V</div>
+<div class="line">2: 2.90V</div>
+<div class="line">3: 2.95V</div>
+<div class="line">4: 3.00V</div>
+<div class="line">5: 3.05V</div>
+<div class="line">6: 3.10V</div>
+<div class="line">7: 3.15V</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-ldo25-cfg">
+<h2><span class="section-number">8.2.3.2. </span>0x024 LDO25_CFG<a class="headerlink" href="#x024-ldo25-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000009</p></th>
+<th class="head"><p>LDO25配置（LDO25 Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_ANA_EN</div>
+<div class="line">模拟测试使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>26:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_ANA_SEL</div>
+<div class="line">模拟测试模块选择</div>
+<div class="line">0: BIAS_ATB</div>
+<div class="line">1: VREF DDR</div>
+<div class="line">2: VREF DDR1</div>
+<div class="line">3: VERF OUT</div>
+<div class="line">OTHERS: 预留</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_BIAS_EN</div>
+<div class="line">偏置模块驱动使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_BIAS_SEL</div>
+<div class="line">偏置模块信号选择</div>
+<div class="line">0: vref12</div>
+<div class="line">1: vbg</div>
+<div class="line">2: vbp_casc</div>
+<div class="line">3: verf14 trim</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BG_CTRL</div>
+<div class="line">BG 电压控制</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LDO25_EN</div>
+<div class="line">LDO25 使能</div>
+<div class="line">0: LDO关闭</div>
+<div class="line">1: LDO使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LDO25_VAL</div>
+<div class="line">LDO25 电压设置</div>
+<div class="line">0: 2.45V</div>
+<div class="line">1: 2.50V</div>
+<div class="line">2: 2.55V</div>
+<div class="line">3: 2.60V</div>
+<div class="line">OTHERS: 预留</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-ldo1x-cfg">
+<h2><span class="section-number">8.2.3.3. </span>0x028 LDO1x_CFG<a class="headerlink" href="#x028-ldo1x-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000043</p></th>
+<th class="head"><p>LDO1x配置（LDO1x Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x4</p></td>
+<td><div class="line-block">
+<div class="line">LDO1x_VAL_FB</div>
+<div class="line">LDO1x反馈调整</div>
+<div class="line"><strong>建议按默认值配置</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LDO1x_EN</div>
+<div class="line">LDO1x 使能</div>
+<div class="line">0: LDO关闭</div>
+<div class="line">1: LDO使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">LDO1x_VAL</div>
+<div class="line">LDO1x 电压设置</div>
+<div class="line">0: 1.35V</div>
+<div class="line">1: 1.40V</div>
+<div class="line">2: 1.45V</div>
+<div class="line">3: 1.50V</div>
+<div class="line">4: 1.55V</div>
+<div class="line">5: 1.75V</div>
+<div class="line">6: 1.80V</div>
+<div class="line">7: 1.85V</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-ddr-vref">
+<h2><span class="section-number">8.2.3.4. </span>0x040 DDR_VREF<a class="headerlink" href="#x040-ddr-vref" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000808</p></th>
+<th class="head"><p>DDR参考电压（DDR Voltage Reference）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x8</p></td>
+<td><div class="line-block">
+<div class="line">RES1_SEL</div>
+<div class="line">电阻使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x8</p></td>
+<td><div class="line-block">
+<div class="line">RES0_SEL</div>
+<div class="line">电阻使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-ddr-rext">
+<h2><span class="section-number">8.2.3.5. </span>0x044 DDR_REXT<a class="headerlink" href="#x044-ddr-rext" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000136</p></th>
+<th class="head"><p>DDR外部电阻（DDR External Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_EN</div>
+<div class="line">电阻校准使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x36</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_VAL</div>
+<div class="line">电阻校准值</div>
+<div class="line">调整该值使得校准后阻值为目标值</div>
+<div class="line">DDR: 240欧姆</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-usb0-rext">
+<h2><span class="section-number">8.2.3.6. </span>0x048 USB0_REXT<a class="headerlink" href="#x048-usb0-rext" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000160</p></th>
+<th class="head"><p>USB0外部电阻（USB0 External Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_EN</div>
+<div class="line">电阻校准使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x60</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_VAL</div>
+<div class="line">电阻校准值</div>
+<div class="line">调整该值使得校准后阻值为目标值</div>
+<div class="line">USB: 200欧姆</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-usb1-rext">
+<h2><span class="section-number">8.2.3.7. </span>0x04C USB1_REXT<a class="headerlink" href="#x04c-usb1-rext" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000160</p></th>
+<th class="head"><p>USB1外部电阻（USB1 External Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_EN</div>
+<div class="line">电阻校准使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x60</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_VAL</div>
+<div class="line">电阻校准值</div>
+<div class="line">调整该值使得校准后阻值为目标值</div>
+<div class="line">USB: 200欧姆</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-ephy-rext">
+<h2><span class="section-number">8.2.3.8. </span>0x050 EPHY_REXT<a class="headerlink" href="#x050-ephy-rext" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000112</p></th>
+<th class="head"><p>EPHY外部电阻（EPHY External Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_EN</div>
+<div class="line">电阻校准使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x12</p></td>
+<td><div class="line-block">
+<div class="line">RES_CAL_VAL</div>
+<div class="line">电阻校准值</div>
+<div class="line">调整该值使得校准后阻值为目标值</div>
+<div class="line">EPHY: 2.49K欧姆</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c0-psen-cfg">
+<h2><span class="section-number">8.2.3.9. </span>0x0C0 PSEN_CFG<a class="headerlink" href="#x0c0-psen-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PSEN配置（Process Sensor Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CNT_TIME</div>
+<div class="line">计数时间</div>
+<div class="line">单位为APB总线时钟周期</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RO_SEL</div>
+<div class="line">PSEN选择</div>
+<div class="line">0: 无效</div>
+<div class="line">1: RVT_40 CELL</div>
+<div class="line">2: LVT_40 CELL</div>
+<div class="line">3: ULVT_40 CELL</div>
+<div class="line">4: 无效</div>
+<div class="line">5: RVT_50 CELL</div>
+<div class="line">6: LVT_50 CELL</div>
+<div class="line">7: ULVT_50 CELL</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSEN_START</div>
+<div class="line">PSEN使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+<div class="line"><strong>注意PSEN测试结束后，该位自动清零表示测试结束</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c4-psen-cnt-val">
+<h2><span class="section-number">8.2.3.10. </span>0x0C4 PSEN_CNT_VAL<a class="headerlink" href="#x0c4-psen-cnt-val" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PSEN计数值（Process Sensor Counter Value）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CNT_VAL</div>
+<div class="line">计数值</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x100-sys-sram-par">
+<h2><span class="section-number">8.2.3.11. </span>0x100 SYS_SRAM_PAR<a class="headerlink" href="#x100-sys-sram-par" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x22022202</p></th>
+<th class="head"><p>SYS SRAM参数（System SRAM Parameter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x22022202</p></td>
+<td><div class="line-block">
+<div class="line">SRAM_PAR</div>
+<div class="line">SRAM参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x104-cpu-sram-par">
+<h2><span class="section-number">8.2.3.12. </span>0x104 CPU_SRAM_PAR<a class="headerlink" href="#x104-cpu-sram-par" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x55555555</p></th>
+<th class="head"><p>CPU SRAM参数（CPU SRAM Parameter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x55555555</p></td>
+<td><div class="line-block">
+<div class="line">SRAM_PAR</div>
+<div class="line">SRAM参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x108-ddr-sram-par">
+<h2><span class="section-number">8.2.3.13. </span>0x108 DDR_SRAM_PAR<a class="headerlink" href="#x108-ddr-sram-par" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x22022202</p></th>
+<th class="head"><p>DDR SRAM参数（DDR SRAM Parameter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x22022202</p></td>
+<td><div class="line-block">
+<div class="line">SRAM_PAR</div>
+<div class="line">SRAM参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x10c-ve-sram-par">
+<h2><span class="section-number">8.2.3.14. </span>0x10C VE_SRAM_PAR<a class="headerlink" href="#x10c-ve-sram-par" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x22022202</p></th>
+<th class="head"><p>VE SRAM参数（VE SRAM Parameter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x22022202</p></td>
+<td><div class="line-block">
+<div class="line">SRAM_PAR</div>
+<div class="line">SRAM参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x110-ge-sram-par">
+<h2><span class="section-number">8.2.3.15. </span>0x110 GE_SRAM_PAR<a class="headerlink" href="#x110-ge-sram-par" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x22022202</p></th>
+<th class="head"><p>GE SRAM参数（GE SRAM Parameter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x22022202</p></td>
+<td><div class="line-block">
+<div class="line">SRAM_PAR</div>
+<div class="line">SRAM参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x140-sram-clk-cfg">
+<h2><span class="section-number">8.2.3.16. </span>0x140 SRAM_CLK_CFG<a class="headerlink" href="#x140-sram-clk-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SRAM时钟配置（SRAM Clock Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">SRAM_CLK_UNGATE</div>
+<div class="line">SRAM时钟不自动关闭</div>
+<div class="line">0: 自动关闭</div>
+<div class="line">1: 不自动关闭</div>
+<div class="line"><br /></div>
+<div class="line">每位对应一个模块，定义如下</div>
+<div class="line">- BIT15: DMIC</div>
+<div class="line">- BIT14: I2S</div>
+<div class="line">- BIT13: MIPI</div>
+<div class="line">- BIT12: SPI</div>
+<div class="line">- BIT11: USB</div>
+<div class="line">- BIT10: UART</div>
+<div class="line">- BIT9: SD</div>
+<div class="line">- BIT8: CE</div>
+<div class="line">- BIT7: DE</div>
+<div class="line">- BIT6: GE</div>
+<div class="line">- BIT5: VE</div>
+<div class="line">- BIT4: DVP</div>
+<div class="line">- BIT3: GMAC</div>
+<div class="line">- BIT2: DMA</div>
+<div class="line">- BIT1: DDR</div>
+<div class="line">- BIT0: SYS</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x40c-usb0-cfg">
+<h2><span class="section-number">8.2.3.17. </span>0x40C USB0_CFG<a class="headerlink" href="#x40c-usb0-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>USB0配置（USB0 Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">DRD_MODE</div>
+<div class="line">DRD模式选择</div>
+<div class="line">0: HOST</div>
+<div class="line">1: DEVICE</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x410-gmac0-cfg">
+<h2><span class="section-number">8.2.3.18. </span>0x410 GMAC0_CFG<a class="headerlink" href="#x410-gmac0-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GMAC0配置（GMAC0 Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_REFCLK_INV</div>
+<div class="line">GMAC参考时钟反向</div>
+<div class="line">0: 时钟正向</div>
+<div class="line">1: 时钟反向</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>28:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_REFDLY_SEL</div>
+<div class="line">GMAC参考时钟延迟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_RXCLK_INV</div>
+<div class="line">GMAC接收时钟反向</div>
+<div class="line">0: 时钟正向</div>
+<div class="line">1: 时钟反向</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22:18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_RXDLY_SEL</div>
+<div class="line">GMAC接收时钟延迟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_TXCLK_INV</div>
+<div class="line">GMAC发送时钟反向</div>
+<div class="line">0: 时钟正向</div>
+<div class="line">1: 时钟反向</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_TXDLY_SEL</div>
+<div class="line">GMAC发送时钟延迟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SW_TXCLK_DIV2</div>
+<div class="line">软件发送时钟分频2</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SW_TXCLK_DIV1</div>
+<div class="line">软件发送时钟分频1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SW_TXCLK_DIV_EN</div>
+<div class="line">软件发送时钟分频使能</div>
+<div class="line">0: 分频固定</div>
+<div class="line">1: 分频可配置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RMII_EXTCLK_SEL</div>
+<div class="line">RMII外部时钟选择</div>
+<div class="line">0: 使用INTCLK</div>
+<div class="line">1: 使用EXTCLK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_RGMII_SEL</div>
+<div class="line">PHY接口选择</div>
+<div class="line">0: 100M RMII</div>
+<div class="line">1: 1000M RGMII</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x414-gmac1-cfg">
+<h2><span class="section-number">8.2.3.19. </span>0x414 GMAC1_CFG<a class="headerlink" href="#x414-gmac1-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GMAC1配置（GMAC1 Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_REFCLK_INV</div>
+<div class="line">GMAC参考时钟反向</div>
+<div class="line">0: 时钟正向</div>
+<div class="line">1: 时钟反向</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>28:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_REFDLY_SEL</div>
+<div class="line">GMAC参考时钟延迟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_RXCLK_INV</div>
+<div class="line">GMAC接收时钟反向</div>
+<div class="line">0: 时钟正向</div>
+<div class="line">1: 时钟反向</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22:18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_RXDLY_SEL</div>
+<div class="line">GMAC接收时钟延迟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_TXCLK_INV</div>
+<div class="line">GMAC发送时钟反向</div>
+<div class="line">0: 时钟正向</div>
+<div class="line">1: 时钟反向</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GMAC_TXDLY_SEL</div>
+<div class="line">GMAC发送时钟延迟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SW_TXCLK_DIV2</div>
+<div class="line">软件发送时钟分频2</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SW_TXCLK_DIV1</div>
+<div class="line">软件发送时钟分频1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SW_TXCLK_DIV_EN</div>
+<div class="line">软件发送时钟分频使能</div>
+<div class="line">0: 分频固定</div>
+<div class="line">1: 分频可配置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RMII_EXTCLK_SEL</div>
+<div class="line">RMII外部时钟选择</div>
+<div class="line">0: 使用INTCLK</div>
+<div class="line">1: 使用EXTCLK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_RGMII_SEL</div>
+<div class="line">PHY接口选择</div>
+<div class="line">0: 100M RMII</div>
+<div class="line">1: 1000M RGMII</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x418-ephy-cfg0">
+<h2><span class="section-number">8.2.3.20. </span>0x418 EPHY_CFG0<a class="headerlink" href="#x418-ephy-cfg0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000042</p></th>
+<th class="head"><p>EPHY配置0（EPHY Configuration0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LED1_CYCLE_HIGH</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LED0_CYCLE_HIGH</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LED1_MODE</div>
+<div class="line">LED1输出模式</div>
+<div class="line">0: 单GPIO单LED</div>
+<div class="line">1: 单GPIO双LED</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LED0_MODE</div>
+<div class="line">LED0输出模式</div>
+<div class="line">0: 单GPIO单LED</div>
+<div class="line">1: 单GPIO双LED</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x4</p></td>
+<td><div class="line-block">
+<div class="line">LED1_SEL</div>
+<div class="line">LED1选择</div>
+<div class="line">0: 强制低电平</div>
+<div class="line">1: 强制高电平</div>
+<div class="line">2: LEDIN0</div>
+<div class="line">3: LEDIN0取反</div>
+<div class="line">4: LEDIN1</div>
+<div class="line">5: LEDIN1取反</div>
+<div class="line">OTHERS: 预留</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">LED0_SEL</div>
+<div class="line">LED0选择</div>
+<div class="line">0: 强制低电平</div>
+<div class="line">1: 强制高电平</div>
+<div class="line">2: LEDIN0</div>
+<div class="line">3: LEDIN0取反</div>
+<div class="line">4: LEDIN1</div>
+<div class="line">5: LEDIN1取反</div>
+<div class="line">OTHERS: 预留</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x41c-ephy-cfg1">
+<h2><span class="section-number">8.2.3.21. </span>0x41C EPHY_CFG1<a class="headerlink" href="#x41c-ephy-cfg1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xC34FC34F</p></th>
+<th class="head"><p>EPHY配置1（EPHY Configuration1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0xC34F</p></td>
+<td><div class="line-block">
+<div class="line">LED1_CYCLE_LOW</div>
+<div class="line">LED1导通周期</div>
+<div class="line"><strong>该字段只用于单GPIO双LED</strong></div>
+<div class="line"><strong>该模式下采用LED1_CYCLE控制LED1</strong></div>
+<div class="line"><strong>时间为24M时钟周期乘以(LED1_CYCLE+1)</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xC34F</p></td>
+<td><div class="line-block">
+<div class="line">LED0_CYCLE_LOW</div>
+<div class="line">LED0导通周期</div>
+<div class="line"><strong>该字段只用于单GPIO双LED</strong></div>
+<div class="line"><strong>该模式下采用LED0_CYCLE控制LED0</strong></div>
+<div class="line"><strong>时间为24M时钟周期乘以(LED0_CYCLE+1)</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-syscfg-ver">
+<h2><span class="section-number">8.2.3.22. </span>0xFFC SYSCFG_VER<a class="headerlink" href="#xffc-syscfg-ver" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>SYSCFG版本（SYSCFG Version）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">VERSION</div>
+<div class="line">版本</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../wri/index.html" class="btn btn-neutral float-right" title="8.3. WRI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="8.2.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

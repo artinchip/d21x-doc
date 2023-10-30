@@ -1,0 +1,586 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.3.3. JPEG模块功能说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.3.4. PNG模块功能说明" href="png.html" />
+    <link rel="prev" title="10.3.2. H264模块功能说明" href="h264.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../de/index.html">10.1. Display Engine (DE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.3. Video Engine (VE)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.3.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="h264.html">10.3.2. H264模块功能说明</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.3.3. JPEG模块功能说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">10.3.3.1. 原理框图</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">10.3.3.2. 解码流程</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">10.3.3.3. 前/后处理</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="png.html">10.3.4. PNG模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="register.html">10.3.5. 寄存器地址空间映射</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ve_top_register.html">10.3.6. VE_TOP寄存器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="h264_register.html">10.3.7. H264寄存器描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="png_register.html">10.3.8. PNG寄存器描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pic_register.html">10.3.9. 图像信息寄存器描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jpeg_register.html">10.3.10. JPEG寄存器描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsi/index.html">10.6. MIPI DSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">10.8. AUDIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">10.9. Integrated Interchip Sound (I2S)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.3. </span>VE</a> &raquo;</li>
+        
+      <li><span class="section-number">10.3.3. </span>JPEG模块功能说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="jpeg">
+<h1><span class="section-number">10.3.3. </span>JPEG模块功能说明<a class="headerlink" href="#jpeg" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">10.3.3.1. </span>原理框图<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>下图是JPEG编解码引擎的框架示意图</p>
+<div class="figure align-center">
+<img alt="../../../_images/jpg_framework.png" src="../../../_images/jpg_framework.png" />
+</div>
+<dl class="simple">
+<dt>JPEG解码流程如下：</dt><dd><ul class="simple">
+<li><p>VLD解码模块从外部DRAM读取原始码流，解码出MCU块系数信息，并将块系数信息传递给变换/量化模块；</p></li>
+<li><p>变换/量化模块根据接收到的块系数进行反量化和反变换；</p></li>
+<li><p>后处理模块读取反变换后的块数据，镜像旋转、镜像或下采样；</p></li>
+<li><p>最终解码得到的MCU数据通过DMA写入外部SDRAM；</p></li>
+<li><p>时序控制对各个子模块进行调度，确保解码过程的正确性与高效率，为了提高解码效率，各子模块之前采取并行的方式进行。</p></li>
+</ul>
+</dd>
+<dt>JPEG编码流程与解码完全相反。</dt><dd><ul class="simple">
+<li><p>首先通过DMA由SDRAM读取MCU亮度和色度数据，并保存到内部缓存用于前处理；</p></li>
+<li><p>前处理模块对MCU块数据进行镜像旋转、缩放处理；</p></li>
+<li><p>变换/量化模块对接收到的块系数进行变换和量化；</p></li>
+<li><p>量化后的块系数经过VLC模块进行huffman编码，得到最终的码流；</p></li>
+<li><p>最后通过DMA把比特流数据写入SDRAM。</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">10.3.3.2. </span>解码流程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>JPEG图片解码启动一次硬件就可以完成一张图片的解码。具体流程如下:</p>
+<div class="figure align-center">
+<img alt="../../../_images/jpg_decode.png" src="../../../_images/jpg_decode.png" />
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">10.3.3.3. </span>前/后处理<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>JPEG解码后处理和编码前处理复用同一个模块。其中，
+解码后处理支持缩放以及旋转镜像，但两个功能不能同时开启；
+编码前处理只支持旋转镜像，不支持缩放。</p>
+<ul class="simple">
+<li><p>缩放</p></li>
+</ul>
+<p>缩放功能支持对解码后数据进行下采样，水平、垂直像素宽度可以分别缩小为原始的1、1/2、1/4、1/8。</p>
+<ul class="simple">
+<li><p>旋转和镜像</p></li>
+</ul>
+<p>旋转4种模式，分别对应逆时针旋转90度*n (n=0, 1, 2, 3)，镜像支持两种模式（水平镜像和垂直镜像），旋转与镜像可组合使用，如下表所示。</p>
+<p>当旋转和镜像组合使用时，先做镜像再做旋转。当该模块被使能后，共有四位寄存器用于工作模式的选择：两位代表选择的角度，另外两位分别代表水平与垂直镜像功能的使能，实际有效只有8种表现。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>垂直镜像使能</p></th>
+<th class="head"><p>水平镜像使能</p></th>
+<th class="head"><p>旋转模式</p></th>
+<th class="head"><p>寄存器值</p></th>
+<th class="head"><p>模式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>否</p></td>
+<td><p>否</p></td>
+<td><p>0</p></td>
+<td><p>4‘b0000</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>否</p></td>
+<td><p>否</p></td>
+<td><p>90</p></td>
+<td><p>4‘b0001</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>否</p></td>
+<td><p>否</p></td>
+<td><p>180</p></td>
+<td><p>4‘b0010</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>否</p></td>
+<td><p>否</p></td>
+<td><p>270</p></td>
+<td><p>4‘b0011</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>是</p></td>
+<td><p>否</p></td>
+<td><p>0</p></td>
+<td><p>4‘b0100</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>是</p></td>
+<td><p>否</p></td>
+<td><p>90</p></td>
+<td><p>4‘b0101</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-even"><td><p>是</p></td>
+<td><p>否</p></td>
+<td><p>180</p></td>
+<td><p>4‘b0110</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>是</p></td>
+<td><p>否</p></td>
+<td><p>270</p></td>
+<td><p>4‘b0111</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>否</p></td>
+<td><p>是</p></td>
+<td><p>0</p></td>
+<td><p>4‘b1000</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>否</p></td>
+<td><p>是</p></td>
+<td><p>90</p></td>
+<td><p>4‘b1001</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p>否</p></td>
+<td><p>是</p></td>
+<td><p>180</p></td>
+<td><p>4‘b1010</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>否</p></td>
+<td><p>是</p></td>
+<td><p>270</p></td>
+<td><p>4‘b1011</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>是</p></td>
+<td><p>是</p></td>
+<td><p>0</p></td>
+<td><p>4‘b1100</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-odd"><td><p>是</p></td>
+<td><p>是</p></td>
+<td><p>90</p></td>
+<td><p>4‘b1101</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-even"><td><p>是</p></td>
+<td><p>是</p></td>
+<td><p>180</p></td>
+<td><p>4‘b1110</p></td>
+<td><p>14</p></td>
+</tr>
+<tr class="row-odd"><td><p>是</p></td>
+<td><p>是</p></td>
+<td><p>270</p></td>
+<td><p>4‘b1111</p></td>
+<td><p>15</p></td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center">
+<img alt="../../../_images/mirror.png" src="../../../_images/mirror.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="png.html" class="btn btn-neutral float-right" title="10.3.4. PNG模块功能说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="h264.html" class="btn btn-neutral float-left" title="10.3.2. H264模块功能说明" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

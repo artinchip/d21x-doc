@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>9.1.5. eMMC 平台测试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="9.1.6. SPI NAND 平台测试指南" href="6_spinand_test_guide.html" />
+    <link rel="prev" title="9.1.4. 调试指南" href="4_debug_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">9. 应用</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">9.1. OTA 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">9.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_emmc_config_guide.html">9.1.2. eMMC OTA参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_spinand_config_guide.html">9.1.3. SPINAND OTA参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_debug_guide.html">9.1.4. 调试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">9.1.5. eMMC 平台测试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">9.1.5.1. 测试环境</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id2">9.1.5.1.1. 硬件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">9.1.5.1.2. 软件</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#ota">9.1.5.2. 编译OTA升级包</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#otaota">9.1.5.3. 烧录OTA升级包到ota分区</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">9.1.5.4. 本地升级方式</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">9.1.5.4.1. 准备工作</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">9.1.5.4.2. 主系统下启动升级命令</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">9.1.5.4.3. 升级过程说明</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">9.1.5.4.4. 升级判断</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">9.1.5.5. 网络升级方式</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id10">9.1.5.5.1. 准备工作</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">9.1.5.5.2. 主系统下启动升级命令</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id12">9.1.5.5.3. 升级过程说明</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id13">9.1.5.5.4. 升级判断</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_spinand_test_guide.html">9.1.6. SPI NAND 平台测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="7_design_guide.html">9.1.7. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="8_faq.html">9.1.8. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">9. </span>应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">9.1. </span>OTA 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">9.1.5. </span>eMMC 平台测试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="emmc">
+<h1><span class="section-number">9.1.5. </span>eMMC 平台测试指南<a class="headerlink" href="#emmc" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">9.1.5.1. </span>测试环境<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3><span class="section-number">9.1.5.1.1. </span>硬件<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>开发板</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">9.1.5.1.2. </span>软件<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>PC端的串口终端软件, 用于PC和开发板进行串口通信</p></li>
+<li><p>http或ftp服务器, 网络升级方式需要使用</p>
+<p>FTP服务器窗口如下所示:</p>
+</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/ftp.png" src="../../../_images/ftp.png" />
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>编译2份OTA升级包(Kernel, RootFS不同), 测试升级是否成功。</p>
+</div>
+</div>
+</div>
+<div class="section" id="ota">
+<h2><span class="section-number">9.1.5.2. </span>编译OTA升级包<a class="headerlink" href="#ota" title="永久链接至标题">¶</a></h2>
+<p>执行 lunch &lt;board&gt; 命令进入主系统, 执行 m 命令编译整个主系统, 获得Luban镜像, OTA升级包。</p>
+<p>生成OTA升级包地址如下:</p>
+<ul class="simple">
+<li><p>output/&lt;board&gt;/images/swupdate/&lt;board&gt;.swu</p></li>
+</ul>
+<p>post-image.sh中swupdate_pack_swu函数用于编译生成OTA升级包。</p>
+</div>
+<div class="section" id="otaota">
+<h2><span class="section-number">9.1.5.3. </span>烧录OTA升级包到ota分区<a class="headerlink" href="#otaota" title="永久链接至标题">¶</a></h2>
+<p>首先将OTA升级包拷贝到target/d211/per1/ota目录下面:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cp output/d211_per1_mmc/images/swupdate/d211_per1_mmc.swu target/d211/per1/ota/
+</pre></div>
+</div>
+<p>执行 m 命令编译ota分区镜像ota.ext4到Luban烧录镜像</p>
+<p>通过 AiBurn 方式烧录ota.ext4到ota分区</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">9.1.5.4. </span>本地升级方式<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">9.1.5.4.1. </span>准备工作<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>挂载ota分区到mnt/ota目录下:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/etc/swupdate_main start
+</pre></div>
+</div>
+<p>检查OTA升级包是否存在,  默认应该存在d211_per1_mmc.swu 和 this_is_a_test_file 两个文件</p>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">9.1.5.4.2. </span>主系统下启动升级命令<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./usr/lib/swupdate/swupdate_cmd.sh -i /mnt/ota/d211_per1_mmc.swu -e stable,upgrade_recovery
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>-i 表示本地升级文件的路径, 根据具体路径, -e 表示升级哪个项目。</p></li>
+<li><p>执行该命令以后, 整个升级过程自动执行完成</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">9.1.5.4.3. </span>升级过程说明<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>参考sw-description和swupdate_cmd.sh文件, 升级过程会进行两次重启, 具体过程:</p>
+<ol class="arabic simple">
+<li><p>首先运行主系统, 启动升级命令以后, 升级recovery分区、引导等。</p></li>
+<li><p>重启, 进入Recovery系统。</p></li>
+<li><p>升级Kernel、RootFS等。</p></li>
+<li><p>重启, 进入主系统, 升级完成。</p></li>
+</ol>
+<p>具体参考OTA设计部分</p>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">9.1.5.4.4. </span>升级判断<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>从程序打印log差异和RootFS中文件差异判断当前运行的版本。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">9.1.5.5. </span>网络升级方式<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>网络升级方式有2种</p>
+<ul class="simple">
+<li><p>设备端为服务器, 电脑为客户端；</p></li>
+<li><p>设备端为客户端, 电脑为服务器；</p></li>
+</ul>
+<p>实际生产过程中, 使用第二种方式</p>
+<div class="section" id="id10">
+<h3><span class="section-number">9.1.5.5.1. </span>准备工作<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>主系统和Recovery系统在启动时自动搭建好网络环境, 需要在启动脚本里面添加好对应的配置</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ifconfig eth0 up
+ifconfig eth0 <span class="m">192</span>.168.1.200
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">9.1.5.5.2. </span>主系统下启动升级命令<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>主系统自动联网完成, 执行下面命令, 启动升级</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./usr/lib/swupdate/swupdate_cmd.sh -d -uftp://192.168.1.100/d211_per1_mmc.swu -e stable,upgrade_recovery
+</pre></div>
+</div>
+<p>如果搭建的是http服务器, 启动命令如下:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./usr/lib/swupdate/swupdate_cmd.sh -d -uhttp://192.168.1.100/d211_per1_mmc.swu -e stable,upgrade_recovery
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">9.1.5.5.3. </span>升级过程说明<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>参考sw-description和swupdate_cmd.sh文件, 升级过程会进行两次重启, 具体过程:</p>
+<ol class="arabic simple">
+<li><p>首先运行主系统, 启动升级命令以后, 从ftp服务器上下载对应OTA文件, 升级recovery分区、引导等。</p></li>
+<li><p>重启, 进入Recovery系统。</p></li>
+<li><p>从ftp服务器上下载对应OTA文件, 升级Kernel和RootFS。</p></li>
+<li><p>重启, 进入主系统, 升级完成。</p></li>
+</ol>
+<p>具体参考OTA设计部分</p>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">9.1.5.5.4. </span>升级判断<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>从程序打印log差异和RootFS中文件差异判断当前运行的版本。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>recovery系统启动内核时打开了内核信息, 主系统默认关闭, 通过内核打印信息可以判断程序执行在那个系统上</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_spinand_test_guide.html" class="btn btn-neutral float-right" title="9.1.6. SPI NAND 平台测试指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_debug_guide.html" class="btn btn-neutral float-left" title="9.1.4. 调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

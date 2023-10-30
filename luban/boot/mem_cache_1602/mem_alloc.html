@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.3.3. 内存分配 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.4. 环境变量" href="../env_setting/index.html" />
+    <link rel="prev" title="3.3.2. Cache" href="cache.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3.3. 内存相关</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ddr_init.html">3.3.1. DDR 初始化</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cache.html">3.3.2. Cache</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.3.3. 内存分配</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#brom">3.3.3.1. BROM 阶段</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#spl">3.3.3.2. SPL 阶段</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#u-boot">3.3.3.3. U-Boot 阶段</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers/index.html">3.8. 驱动支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">3.3. </span>内存相关</a> &raquo;</li>
+        
+      <li><span class="section-number">3.3.3. </span>内存分配</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">3.3.3. </span>内存分配<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>启动阶段的内存空间是通过预分配的形式进行使用。这里描述各阶段所使用的内存空间。</p>
+<div class="section" id="brom">
+<h2><span class="section-number">3.3.3.1. </span>BROM 阶段<a class="headerlink" href="#brom" title="永久链接至标题">¶</a></h2>
+<table class="colwidths-given docutils align-default" id="id2">
+<caption><span class="caption-number">表 3.7 </span><span class="caption-text">BROM 的内存分配</span><a class="headerlink" href="#id2" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 21%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>地址范围</p></th>
+<th class="head"><p>存放内容</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x00100000 ~ 0x00102000</p></td>
+<td><p>BROM DATA,BSS</p></td>
+<td><p>8KB</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x00102000 ~ 0x00103000</p></td>
+<td><p>BROM Stack</p></td>
+<td><p>4KB</p></td>
+</tr>
+<tr class="row-even"><td><p>0x00103000 ~ 0x00118000</p></td>
+<td><p>SPL,PBP</p></td>
+<td><p>84KB</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spl">
+<h2><span class="section-number">3.3.3.2. </span>SPL 阶段<a class="headerlink" href="#spl" title="永久链接至标题">¶</a></h2>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-number">表 3.8 </span><span class="caption-text">SPL 的内存分配</span><a class="headerlink" href="#id3" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 14%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>地址范围</p></th>
+<th class="head"><p>存放内容</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x00103000 ~ 0x00115F00</p></td>
+<td><p>SPL 初始栈空间</p></td>
+<td><div class="line-block">
+<div class="line">0x00118000 是配置的栈顶位置，但实际上</div>
+<div class="line">运行的时候，需要预留 HEAP 空间和 GD 全局变量的空间，</div>
+<div class="line">因此实际的栈顶地址是 0x00115F00</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_STACK, rch/riscv/cpu/start.S</div>
+<div class="line">位置：include/configs/d211.h</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x00115F00 ~ 0x00116000</p></td>
+<td><p>Global Data</p></td>
+<td><div class="line-block">
+<div class="line">GD 全局变量的初始空间</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x00116000 ~ 0x00118000</p></td>
+<td><p>HEAP</p></td>
+<td><div class="line-block">
+<div class="line">初始 HEAP 的空间</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SYS_MALLOC_F_LEN</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x40000000 ~ 0x42000000</p></td>
+<td><p>Kernel</p></td>
+<td><div class="line-block">
+<div class="line">SPL 直接启动 Kernel 时使用，从 U-Boot 启动时不用</div>
+<div class="line-block">
+<div class="line">配置：its</div>
+<div class="line">位置：kernel.its</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x40004000 ~ 0x41000000</p></td>
+<td><p>U-Boot</p></td>
+<td><div class="line-block">
+<div class="line">SPL 启动 U-Boot 时使用，直接启动 Kernel 时不用，预留约 16MB</div>
+<div class="line-block">
+<div class="line">配置：its</div>
+<div class="line">位置：u-boot.its</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x42000000 ~ 0x42000100</p></td>
+<td><p>SPL AIC 信息头</p></td>
+<td><div class="line-block">
+<div class="line">SPL 的 AIC 头信息</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x42000100 ~ 0x42020000</p></td>
+<td><p>SPL bin</p></td>
+<td><div class="line-block">
+<div class="line">0x42000100 是 SPL 的程序入口地址，SPL 大小不应该超过 128KB</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_TEXT_BASE, image_cfg.json</div>
+<div class="line">位置：common/spl/Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x42200000 ~ 0x42300000</p></td>
+<td><p>SPL STACK</p></td>
+<td><div class="line-block">
+<div class="line">1MB, 初始栈太小，在 board_r 之后切换到新的栈运行</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_STACK_R_ADDR - CONFIG_SPL_STACK_R_MALLOC_SIMPLE_LEN</div>
+<div class="line">预留完 Simple heap 之后，剩下的空间给 Stack</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x42300000 ~ 0x43F00000</p></td>
+<td><p>SPL heap</p></td>
+<td><div class="line-block">
+<div class="line">28MB</div>
+<div class="line">在 SPL board_r 初始化 CONFIG_SYS_SPL_MALLOC_START 之前使用</div>
+<div class="line">D211 不会定义 CONFIG_SYS_SPL_MALLOC_START，只用 Simple Heap</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_STACK_R_ADDR =0x43F00000</div>
+<div class="line">配置：CONFIG_SPL_STACK_R_MALLOC_SIMPLE_LEN = 0x1C000000,28MB</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x43F00000 ~ 0x43F20000</p></td>
+<td><p>Falcon 模式参数</p></td>
+<td><div class="line-block">
+<div class="line">SPL Falcon 模式才需要，所需空间不大</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SYS_SPL_ARGS_ADDR</div>
+<div class="line">位置：include/configs/d211.h</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x43FE0000 ~ 0x44000000</p></td>
+<td><p>OpenSBI</p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_OPENSBI_LOAD_ADDR</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="colwidths-given docutils align-default" id="id4">
+<caption><span class="caption-number">表 3.9 </span><span class="caption-text">USB 升级时下载地址</span><a class="headerlink" href="#id4" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 16%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>地址范围</p></th>
+<th class="head"><p>存放内容</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x40000000 ~ 0x41000000</p></td>
+<td><p>SPL</p></td>
+<td><div class="line-block">
+<div class="line">SPL 的下载地址，运行起来时会被搬运到指定</div>
+<div class="line">的链接位置</div>
+<div class="line-block">
+<div class="line">配置：image_cfg.json</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x41000000 ~ 0x41100000</p></td>
+<td><p>env.bin</p></td>
+<td><div class="line-block">
+<div class="line">存放启动升级程序（U-Boot）所用的环境变量，由于</div>
+<div class="line">升级时不会直接运行 Kernel，因此与上面的 Kernel 地址空间</div>
+<div class="line">不冲突</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_ENV_RAM_ADDR, image_cfg.json</div>
+<div class="line">位置：env/Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x41100000 ~ 0x42000000</p></td>
+<td><p>uboot.itb</p></td>
+<td><div class="line-block">
+<div class="line">存放升级程序</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_LOAD_FIT_ADDRESS, image_cfg.json</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="u-boot">
+<h2><span class="section-number">3.3.3.3. </span>U-Boot 阶段<a class="headerlink" href="#u-boot" title="永久链接至标题">¶</a></h2>
+<span id="mem-alloc-table-1602"></span><table class="colwidths-given docutils align-default" id="id5">
+<caption><span class="caption-number">表 3.10 </span><span class="caption-text">U-Boot 的内存分配</span><a class="headerlink" href="#id5" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>地址范围</p></th>
+<th class="head"><p>存放内容</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x40004000 ~ 0x41000000</p></td>
+<td><p>初始 U-Boot</p></td>
+<td><div class="line-block">
+<div class="line">U-Boot 的程序入口地址，但在初始化完成之后，</div>
+<div class="line">U-Boot 会自行重定位到 DRAM 的末尾运行，该空间被空出来，</div>
+<div class="line">用于加载 Kernel</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SYS_TEXT_BASE</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x40300000 ~ 0x40400000</p></td>
+<td><p>初始 U-Boot HEAP</p></td>
+<td><div class="line-block">
+<div class="line">初始 gd, HEAP, STACK 的保留空间，重定位之后，</div>
+<div class="line">该空间会被空出来。</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SYS_INIT_SP_ADDR</div>
+<div class="line">位置：include/configs/d211.h</div>
+<div class="line">配置：CONFIG_SYS_MALLOC_F_LEN</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x40000000 ~ 0x42000000</p></td>
+<td><p>Kernel</p></td>
+<td><div class="line-block">
+<div class="line">Kernel 的程序入口地址，Kernel 最终会被加载到该空间</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x41200000 ~ 0x42200000</p></td>
+<td><p>kenrel.itb</p></td>
+<td><div class="line-block">
+<div class="line">Kernel.itb 的加载地址，加载后 Kernel 被复制到 0x40000000</div>
+<div class="line">预留 16MB</div>
+<div class="line-block">
+<div class="line">配置：knl_addr</div>
+<div class="line">位置：env.txt</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x42200000 ~ 0x42300000</p></td>
+<td><p>dtb</p></td>
+<td><div class="line-block">
+<div class="line">调试用，正常情况下不使用</div>
+<div class="line-block">
+<div class="line">配置：dtb_addr</div>
+<div class="line">位置：env.txt</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x42400000 ~ ……….</p></td>
+<td><p>logo.itb</p></td>
+<td><div class="line-block">
+<div class="line">logo 数据的加载地址，logo.itb 中存储了多张 png 图片</div>
+<div class="line">uboot 会从该地址读取相应的 png 图片进行解码并显示</div>
+<div class="line-block">
+<div class="line">配置：logo: { ram: }</div>
+<div class="line">位置：image_cfg.json</div>
+<div class="line">配置：CONFIG_LOGO_ITB_ADDRESS</div>
+<div class="line">位置：drivers/video/artinchip/display/aic_display.c</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x41000000 ~ ……….</p></td>
+<td><p>ENV</p></td>
+<td><div class="line-block">
+<div class="line">U-Boot 环境变量的加载地址，USB 升级时使用，16KB 左右</div>
+<div class="line">初始化加载之后可释放，不影响 Kernel 的使用</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_ENV_RAM_ADDR</div>
+<div class="line">位置：env/Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>At the End of DRAM</p></td>
+<td><p>保留内存</p></td>
+<td><div class="line-block">
+<div class="line">重定位后的 U-Boot、栈、堆，以及其他需要预留的内存。</div>
+<div class="line">具体可以查看 board_f.c 相关处理。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0x43F00000 ~ 0x43FDFFFF</p></td>
+<td><p>dtb</p></td>
+<td><div class="line-block">
+<div class="line">预留给 Kernel dtb 的内存空间，正常启动时加载到该空间</div>
+<div class="line-block">
+<div class="line">配置：fdt-1: { load = }</div>
+<div class="line">位置：kernel.its</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0x43FE0000 ~ 0x44000000</p></td>
+<td><p>OpenSBI</p></td>
+<td><div class="line-block">
+<div class="line">预留给 OpenSBI 的内存空间</div>
+<div class="line-block">
+<div class="line">配置：CONFIG_SPL_OPENSBI_LOAD_ADDR</div>
+<div class="line">位置：Kconfig</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../env_setting/index.html" class="btn btn-neutral float-right" title="3.4. 环境变量" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cache.html" class="btn btn-neutral float-left" title="3.3.2. Cache" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

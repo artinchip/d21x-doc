@@ -1,0 +1,971 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.2.5.4.1. 概述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="6.2.5.5.1. mpp fb 接口使用" href="demo.html" />
+    <link rel="prev" title="6.2.5.3.1. mpp_types.h" href="data_structure.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../audio/index.html">6.1. Audio 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6.2. Display 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../01_introduction/index.html">6.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../02_config_guide/index.html">6.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../03_debug_guide/index.html">6.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../04_test_guide/index.html">6.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">6.2.5. 设计说明</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="index.html#id2">6.2.5.1. 源码和文档说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id3">6.2.5.2. 关键流程设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id4">6.2.5.3. 数据结构设计</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="index.html#id5">6.2.5.4. 接口设计</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">6.2.5.4.1. 概述</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp">6.2.5.4.2. mpp 接口</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioctl-cmd">6.2.5.4.3. ioctl cmd</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#app-demo">6.2.5.5. APP Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../06_panel_port/index.html">6.2.6. 屏适配指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../07_fb_rotation/index.html">6.2.7. 竖屏横用、横屏竖用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../08_disp_property/index.html">6.2.8. 色彩调整</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../10_faq/index.html">6.2.9. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mpp/index.html">6.7. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../player/index.html">6.8. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lvgl/index.html">6.9. LVGL 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6.2. </span>Display 使用指南</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.2.5. </span>设计说明</a> &raquo;</li>
+        
+      <li><span class="section-number">6.2.5.4.1. </span>概述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.2.5.4.1. </span>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>Luban-Lite SDK 通过 mpp 中间件，对外提供一套统一的接口来控制显示驱动，屏蔽操作系统内核和裸机方案的差异。</p>
+<p>接口功能：</p>
+<ol class="arabic simple">
+<li><p>获取图层个数</p></li>
+<li><p>获取图层能力</p></li>
+<li><p>获取图层配置数据</p></li>
+<li><p>更新图层配置数据</p></li>
+<li><p>支持同时更新多图层配置数据</p></li>
+<li><p>支持图层 scaler 设置</p></li>
+<li><p>支持 alpha blending 设置</p></li>
+<li><p>支持 color key</p></li>
+<li><p>支持 disp prop 色彩设置</p></li>
+</ol>
+</div>
+<div class="section" id="mpp">
+<h1><span class="section-number">6.2.5.4.2. </span>mpp 接口<a class="headerlink" href="#mpp" title="永久链接至标题">¶</a></h1>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">mpp_fb</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">mpp_fb</span> <span class="o">*</span><span class="n">mpp_fb_open</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">mpp_fb_close</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_fb</span> <span class="o">*</span><span class="n">fb</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">mpp_fb_probe</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">mpp_fb_ioctl</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_fb</span> <span class="o">*</span><span class="n">fb</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="mpp-fb-open">
+<h2><span class="section-number">6.2.5.4.2.1. </span>mpp_fb_open<a class="headerlink" href="#mpp-fb-open" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>struct mpp_fb *mpp_fb_open(void);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取一个 mpp_fb 句柄</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>非空：成功</p>
+<p>NULL：失败</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-fb-close">
+<h2><span class="section-number">6.2.5.4.2.2. </span>mpp_fb_close<a class="headerlink" href="#mpp-fb-close" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void mpp_fb_close(struct mpp_fb *fb);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>释放 mpp_fb 句柄</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>fb: mpp_fb 句柄</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-fb-probe">
+<h2><span class="section-number">6.2.5.4.2.3. </span>mpp_fb_probe<a class="headerlink" href="#mpp-fb-probe" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_probe(void);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>probe fb</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p>
+<p>&lt;0：失败</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>多次调用也只会 probe 一次，需要在 mpp_fb_open() 操作前调用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-fb-ioctl">
+<h2><span class="section-number">6.2.5.4.2.4. </span>mpp_fb_ioctl<a class="headerlink" href="#mpp-fb-ioctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(struct mpp_fb *fb, int cmd, void *args);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>ioctl 调用，控制显示驱动</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>fb: mpp fb 文件句柄</p>
+<p>cmd: 操作命名</p>
+<p>args: ioctl 调用私有数据</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p>
+<p>&lt;0：失败</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="ioctl-cmd">
+<h1><span class="section-number">6.2.5.4.3. </span>ioctl cmd<a class="headerlink" href="#ioctl-cmd" title="永久链接至标题">¶</a></h1>
+<div class="section" id="aicfb-wait-for-vsync">
+<h2><span class="section-number">6.2.5.4.3.1. </span>AICFB_WAIT_FOR_VSYNC<a class="headerlink" href="#aicfb-wait-for-vsync" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, unsigned int *pvalue);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>等待Vsync信号</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_WAIT_FOR_VSYNC
+pvalue:该值无意义，可为NULL</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-get-layer-num">
+<h2><span class="section-number">6.2.5.4.3.2. </span>AICFB_GET_LAYER_NUM<a class="headerlink" href="#aicfb-get-layer-num" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_layer_num *pvalue);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取显示图层的个数, 包括UI 图层个数和Video 图层</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_GET_LAYER_NUM
+player_num: 参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-layer-num"><span class="std std-ref">struct aicfb_layer_num</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-get-layer-capability">
+<h2><span class="section-number">6.2.5.4.3.3. </span>AICFB_GET_LAYER_CAPABILITY<a class="headerlink" href="#aicfb-get-layer-capability" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_layer_capability *player_cap);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取当前图层的能力</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_GET_LAYER_CAPABILITY
+player_cap: 参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-layer-capability"><span class="std std-ref">struct aicfb_layer_capability</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>调用接口前要先填写结构体中的 layer_id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-get-layer-config">
+<h2><span class="section-number">6.2.5.4.3.4. </span>AICFB_GET_LAYER_CONFIG<a class="headerlink" href="#aicfb-get-layer-config" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_layer_data *player_conf);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取图层配置信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_GET_LAYER_CONFIG
+player_conf: 参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-layer-data"><span class="std std-ref">struct aicfb_layer_data</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>调用接口前要先填写结构体中的layer_id，如果是多矩形窗口要同时填写rect_win_id</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-update-layer-config">
+<h2><span class="section-number">6.2.5.4.3.5. </span>AICFB_UPDATE_LAYER_CONFIG<a class="headerlink" href="#aicfb-update-layer-config" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_layer_data *player_conf)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>更新图层配置信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_UPDATE_LAYER_CONFIG
+player_ocnf:参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-layer-data"><span class="std std-ref">struct aicfb_layer_data</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0: 成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>如果是仅更新图层的部分config data 信息，</p>
+<p>可以先调用接口AICFB_GET_LAYER_CONFIG，获取当前图层信息，</p>
+<p>然后再修改要更新的图像信息，最后再调用此接口更新图层信息</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-update-layer-config-lists">
+<h2><span class="section-number">6.2.5.4.3.6. </span>AICFB_UPDATE_LAYER_CONFIG_LISTS<a class="headerlink" href="#aicfb-update-layer-config-lists" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_config_lists *player_lists);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>更新图层配置数据列表</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_UPDATE_LAYER_CONFIG_LISTS aicfb_config_lists
+player_lists: 参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-config-lists"><span class="std std-ref">struct aicfb_config_lists</span></a>  定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>通过此接口可以同时更新多个图层或者多个窗口的配置信息</p>
+<p>通过此接口调用的好处是相关图层配置的更新可以同时生效</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-get-alpha-config">
+<h2><span class="section-number">6.2.5.4.3.7. </span>AICFB_GET_ALPHA_CONFIG<a class="headerlink" href="#aicfb-get-alpha-config" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_alpha_config *alpha);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取当前图层的Alpha配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_GET_ALPHA_CONFIG
+alpha: 参结考构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-alpha-config"><span class="std std-ref">struct aicfb_alpha_config</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-update-alpha-config">
+<h2><span class="section-number">6.2.5.4.3.8. </span>AICFB_UPDATE_ALPHA_CONFIG<a class="headerlink" href="#aicfb-update-alpha-config" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_alpha_config *alpha);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>更新当前图层的Alpha配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_UPDATE_ALPHA_CONFIG
+alpha: 参结考构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-alpha-config"><span class="std std-ref">struct aicfb_alpha_config</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-get-ck-config">
+<h2><span class="section-number">6.2.5.4.3.9. </span>AICFB_GET_CK_CONFIG<a class="headerlink" href="#aicfb-get-ck-config" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_ck_config *player_ck);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取当前图层的CK配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_GET_CK_CONFIG
+player_ck: 参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-ck-config"><span class="std std-ref">struct aicfb_ck_config</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：当前图层不支持 color key</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-update-ck-config">
+<h2><span class="section-number">6.2.5.4.3.10. </span>AICFB_UPDATE_CK_CONFIG<a class="headerlink" href="#aicfb-update-ck-config" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_ck_config *player_ck);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>更新当前图层的CK配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_SET_CK_CONFIG
+player_ck: 参考结构体 <a class="reference internal" href="data_structure.html#ref-to-lite-aicfb-ck-config"><span class="std std-ref">struct aicfb_ck_config</span></a> 定义</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0： 成功
+-1：当前图层不支持 color key</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-get-screeninfo">
+<h2><span class="section-number">6.2.5.4.3.11. </span>AICFB_GET_SCREENINFO<a class="headerlink" href="#aicfb-get-screeninfo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, struct aicfb_screeninfo *pscreen_size);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取当前LCD外设 和 framebuffer 信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_GET_SCREEN_SIZE
+pscreen_size: 结构体 <a class="reference internal" href="data_structure.html#ref-to-aicfb-screeninfo"><span class="std std-ref">struct aicfb_screeninfo</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-poweron">
+<h2><span class="section-number">6.2.5.4.3.12. </span>AICFB_POWERON<a class="headerlink" href="#aicfb-poweron" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, unsigned int zero);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>enable LCD 外设</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_POWERON
+zero: NULL</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>多次调用只会 enable 一次</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aicfb-poweroff">
+<h2><span class="section-number">6.2.5.4.3.13. </span>AICFB_POWEROFF<a class="headerlink" href="#aicfb-poweroff" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int mpp_fb_ioctl(int fd, unsigned long cmd, unsigned int zero);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>disable LCD 外设</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>CMD: AICFB_POWEROFF
+zero:  NULL</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功
+-1：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="demo.html" class="btn btn-neutral float-right" title="6.2.5.5.1. mpp fb 接口使用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="data_structure.html" class="btn btn-neutral float-left" title="6.2.5.3.1. mpp_types.h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,1647 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.1.3. 描述符说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.1.4. 寄存器描述" href="register_desc.html" />
+    <link rel="prev" title="6.1.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 安全</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.1. Crypto Engine (CE)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">6.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">6.1.2. 功能描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.1.3. 描述符说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.1.3.1. 任务描述符</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.1.3.2. 算法描述符</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aes-ecb">6.1.3.2.1. AES-ECB 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aes-cbc">6.1.3.2.2. AES-CBC 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aes-ctr">6.1.3.2.3. AES-CTR 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aes-xts">6.1.3.2.4. AES-XTS 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aes-cts-cbc">6.1.3.2.5. AES-CTS-CBC 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#des-ecb">6.1.3.2.6. DES-ECB 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#des-cbc">6.1.3.2.7. DES-CBC 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#tdes-ecb">6.1.3.2.8. TDES-ECB 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#tdes-cbc">6.1.3.2.9. TDES-CBC 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#message-digest">6.1.3.2.10. Message Digest 描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#pkc">6.1.3.2.11. PKC 算子描述符</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#trng">6.1.3.2.12. TRNG 描述符</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">6.1.3.3. 数据描述符</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="register_desc.html">6.1.4. 寄存器描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../spi_enc/index.html">6.2. Serial Peripheral Interface Encryption (SPI_ENC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sid/index.html">6.3. Secure ID (SID)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>安全</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.1. </span>CE</a> &raquo;</li>
+        
+      <li><span class="section-number">6.1.3. </span>描述符说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.1.3. </span>描述符说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>本章节描述 CE 模块的软件编程接口: 描述符。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">6.1.3.1. </span>任务描述符<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>软件需要 CE 模块进行硬件加速时要以任务描述符的方式将详细的任务信息配置给 CE 模块，
+多个相关的任务通过链表的方式构建任务列表(Task List)，CE 模块在处理时按顺序逐个进行处理。</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>当由多个任务描述符组成一个任务链表时，链表内的所有任务描述符必须使用相同的算法。</p>
+</div>
+<p>任务描述符的大小固定，由下列几部分组成。</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 14%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>任务描述符组成部分</p></th>
+<th class="head"><p>大小/字节</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Algorithm descriptor</p></td>
+<td><p>36</p></td>
+<td><p>算法描述符</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data descriptor</p></td>
+<td><p>24</p></td>
+<td><p>数据描述符</p></td>
+</tr>
+<tr class="row-even"><td><p>Next</p></td>
+<td><p>4</p></td>
+<td><p>下一个任务描述符的地址</p></td>
+</tr>
+</tbody>
+</table>
+<p>多个相关的任务描述符构成的列表如下图所示。</p>
+<div class="figure align-center">
+<img alt="../../../_images/task_chain.png" src="../../../_images/task_chain.png" />
+</div>
+<p>下表是任务描述符的具体位域分配总览。</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 20%" />
+<col style="width: 14%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>备注</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="12"><p>Algorithm
+Desc</p></td>
+<td rowspan="8"><p>Algorithm
+Config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>Key size,       密钥大小</p></td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>Key source,     密钥源选择</p></td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>11:10</p></td>
+<td><p>Counter width</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>Hash IV flag</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>Direction</p></td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag,  算法标识</p></td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>IV address</p></td>
+<td><p>31:0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Counter output
+address</p></td>
+<td><p>31:0</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>[31:0] * 5</p></td>
+<td><p>20 字节</p></td>
+</tr>
+<tr class="row-even"><td rowspan="8"><p>Data Desc</p></td>
+<td rowspan="3"><p>Data Info</p></td>
+<td><p>31:2</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>First flag，当前数据是否为开始数据块</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Last flag，当前数据是否为结束数据块</p></td>
+</tr>
+<tr class="row-odd"><td><p>Total length</p></td>
+<td><p>31:0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Input Address</p></td>
+<td><p>31:0</p></td>
+<td><p>当前输入数据地址</p></td>
+</tr>
+<tr class="row-odd"><td><p>Input Length</p></td>
+<td><p>31:0</p></td>
+<td><p>当前输入数据长度</p></td>
+</tr>
+<tr class="row-even"><td><p>Output Address</p></td>
+<td><p>31:0</p></td>
+<td><p>当前输出数据地址</p></td>
+</tr>
+<tr class="row-odd"><td><p>Output Length</p></td>
+<td><p>31:0</p></td>
+<td><p>当前输出数据长度</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Next</p></td>
+<td><p>31:0</p></td>
+<td><p>下一个任务描述符的地址</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.1.3.2. </span>算法描述符<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>算法描述符区域，用于描述当前任务的算法信息和参数。为了实现的方便，这里定义算法描述符的大小固定为36个字节。</p>
+<p>不同算法需要的输入参数各有不同，对于任务描述符中定义的算法描述符位域，具体的算法描述符根据需要给出具体定义。</p>
+<span id="ref-to-alg-tag-table"></span><table class="docutils align-default" id="id5" style="width: 100%">
+<caption><span class="caption-number">表 6.3 </span><span class="caption-text">算法标记值列表</span><a class="headerlink" href="#id5" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>算法标记值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>AES-ECB</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>AES-CBC</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>AES-CTR</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x03</p></td>
+<td><p>AES-XTS</p></td>
+</tr>
+<tr class="row-even"><td><p>0x04</p></td>
+<td><p>AES-CTS-CBC</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x10</p></td>
+<td><p>DES-ECB</p></td>
+</tr>
+<tr class="row-even"><td><p>0x11</p></td>
+<td><p>DES-CBC</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x20</p></td>
+<td><p>TDES-ECB</p></td>
+</tr>
+<tr class="row-even"><td><p>0x21</p></td>
+<td><p>TDES-CBC</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x30</p></td>
+<td><p>RSA</p></td>
+</tr>
+<tr class="row-even"><td><p>0x40</p></td>
+<td><p>SHA-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x41</p></td>
+<td><p>SHA-224</p></td>
+</tr>
+<tr class="row-even"><td><p>0x42</p></td>
+<td><p>SHA-256</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x43</p></td>
+<td><p>SHA-384</p></td>
+</tr>
+<tr class="row-even"><td><p>0x44</p></td>
+<td><p>SHA-512</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x45</p></td>
+<td><p>MD5</p></td>
+</tr>
+<tr class="row-even"><td><p>0x46</p></td>
+<td><p>HMAC-SHA-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x47</p></td>
+<td><p>HMAC-SHA-256</p></td>
+</tr>
+<tr class="row-even"><td><p>0x50</p></td>
+<td><p>TRNG</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="aes-ecb">
+<h3><span class="section-number">6.1.3.2.1. </span>AES-ECB 描述符<a class="headerlink" href="#aes-ecb" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128</div>
+<div class="line">0x02: 192</div>
+<div class="line">0x03: 256</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: AES-ECB</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>28 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aes-cbc">
+<h3><span class="section-number">6.1.3.2.2. </span>AES-CBC 描述符<a class="headerlink" href="#aes-cbc" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128</div>
+<div class="line">0x02: 192</div>
+<div class="line">0x03: 256</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: AES-CBC</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>IV address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">初始化向量地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aes-ctr">
+<h3><span class="section-number">6.1.3.2.3. </span>AES-CTR 描述符<a class="headerlink" href="#aes-ctr" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128</div>
+<div class="line">0x02: 192</div>
+<div class="line">0x03: 256</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: AES-CTR</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Counter input</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">初始化计数值地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Counter output</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">计数值输出地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+<p>输出下一个数据块的计数值。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>20 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aes-xts">
+<h3><span class="section-number">6.1.3.2.4. </span>AES-XTS 描述符<a class="headerlink" href="#aes-xts" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128</div>
+<div class="line">0x02: 192  (不支持)</div>
+<div class="line">0x03: 256</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+<p>128bit 对应 AES-256-XTS,
+256bit 对应 AES-512-XTS。</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: AES-XTS</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Tweak address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">XTS Tweak 地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+<div class="line">数据大小应为 128bit。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>AES-256-XTS 使用两个 128bit 密钥进行运算，因此选择使用 AES-256-XTS 算法时，应该选择密钥大小为128bit，
+但是提供的密钥长度应该为256bit；同样，使用 AES-512-XTS 时应选择密钥大小为 256bit，但是提供的密钥长度应该为512bit。</p>
+</div>
+<div class="section" id="aes-cts-cbc">
+<h3><span class="section-number">6.1.3.2.5. </span>AES-CTS-CBC 描述符<a class="headerlink" href="#aes-cts-cbc" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128</div>
+<div class="line">0x02: 192</div>
+<div class="line">0x03: 256</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: AES-CTS-CBC</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>IV address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">初始化向量地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>CE 中 AES-CTS-CBC 按照 CS3 进行实现。使用 AES-CTS-CBC 算法时需注意输入的数据长度必须大于等于128bit。</p>
+</div>
+</div>
+<div class="section" id="des-ecb">
+<h3><span class="section-number">6.1.3.2.6. </span>DES-ECB 描述符<a class="headerlink" href="#des-ecb" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64</div>
+<div class="line">0x01: 128  (不支持)</div>
+<div class="line">0x02: 192  (不支持)</div>
+<div class="line">0x03: 256  (不支持)</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: DES-ECB</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>28 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="des-cbc">
+<h3><span class="section-number">6.1.3.2.7. </span>DES-CBC 描述符<a class="headerlink" href="#des-cbc" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64</div>
+<div class="line">0x01: 128  (不支持)</div>
+<div class="line">0x02: 192  (不支持)</div>
+<div class="line">0x03: 256  (不支持)</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: DES-CBC</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>IV address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">初始化向量地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tdes-ecb">
+<h3><span class="section-number">6.1.3.2.8. </span>TDES-ECB 描述符<a class="headerlink" href="#tdes-ecb" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128  (TDES-EDE)</div>
+<div class="line">0x02: 192  (TDES-EDE3)</div>
+<div class="line">0x03: 256  (不支持)</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: TDES-ECB</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>28 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tdes-cbc">
+<h3><span class="section-number">6.1.3.2.9. </span>TDES-CBC 描述符<a class="headerlink" href="#tdes-cbc" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Key size,密钥大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128  (TDES-EDE)</div>
+<div class="line">0x02: 192  (TDES-EDE3)</div>
+<div class="line">0x03: 256  (不支持)</div>
+<div class="line">0x04: 512  (不支持)</div>
+<div class="line">0x05: 1024 (不支持)</div>
+<div class="line">0x06: 2048 (不支持)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><div class="line-block">
+<div class="line">密钥源的选择</div>
+<div class="line">0x00: User/RAM</div>
+<div class="line">0x01: eFuse SSK</div>
+<div class="line">0x02: eFuse HUK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">Direction,运算方向</div>
+<div class="line">0x00: Encryption</div>
+<div class="line">0x01: Decryption</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: TDES-CBC</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>IV address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">初始化向量地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="message-digest">
+<h3><span class="section-number">6.1.3.2.10. </span>Message Digest 描述符<a class="headerlink" href="#message-digest" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="4"><p>Algorithm config</p></td>
+<td><p>31:12</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><div class="line-block">
+<div class="line">Input IV Flag,初始化向量标记</div>
+<div class="line">0x00: 使用内部默认的初始化向量值</div>
+<div class="line">0x01: 使用用户提供的初始化向量值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10:8</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Key address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">密钥地址</div>
+<div class="line"><br /></div>
+<div class="line">仅当密钥源类型为 RAM时需要配置。</div>
+<div class="line">地址应是SRAM/DRAM或Secure SRAM 的地址</div>
+<div class="line">仅 HMAC 算法需要配置，为任意长度数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>IV address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">初始化向量地址(Input IV Flag 为 1 时)</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+<div class="line">初始化向量的长度，应参考对应算法的规定</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pkc">
+<h3><span class="section-number">6.1.3.2.11. </span>PKC 算子描述符<a class="headerlink" href="#pkc" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="4"><p>Algorithm config</p></td>
+<td><p>31:24</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><div class="line-block">
+<div class="line">Operand size, 操作数大小</div>
+<div class="line">0x00: 64   (不支持)</div>
+<div class="line">0x01: 128  (不支持)</div>
+<div class="line">0x02: 192  (不支持)</div>
+<div class="line">0x03: 256  (不支持)</div>
+<div class="line">0x04: 512</div>
+<div class="line">0x05: 1024</div>
+<div class="line">0x06: 2048</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:8</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: RSA</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Modulus address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">模(n)的地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM/Secure SRAM 的地址</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Exp address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">指数(即素数 d、e)的地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是SRAM/DRAM/Secure SRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>24 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>RSA 算法的实现被定义为模幂算子，算子有三个操作数和一个输出，长度都为 Operand size 所指定的位宽，注意输入的三个操作数，要求为小端序。</p>
+<p>输入的三个操作数，其中模通过和指数的地址通过算法描述符 Modulus, Exp 指定，底数（即用户数据）的地址通过数据描述符的 Input 指定。</p>
+</div>
+<div class="section" id="trng">
+<h3><span class="section-number">6.1.3.2.12. </span>TRNG 描述符<a class="headerlink" href="#trng" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p>Algorithm config</p></td>
+<td><p>31:8</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>Algorithm tag: TRNG</p>
+<p>具体参考 <a class="reference internal" href="#ref-to-alg-tag-table"><span class="std std-ref">算法标记值列表</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>32 Bytes</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">6.1.3.3. </span>数据描述符<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>位域</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="4"><p>Data information</p></td>
+<td><p>31:24</p></td>
+<td><p>Hash data total length high8</p>
+<p>数据摘要总数据长度的高8位，在数据摘要算法
+中使用</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:2</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><div class="line-block">
+<div class="line">Last Flag, 结束数据块标记</div>
+<div class="line">0: 当前数据数据非结束数据块</div>
+<div class="line">1: 当前数据数据为结束数据块</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">First Flag, 结束数据块标记</div>
+<div class="line">0: 当前数据数据非开始数据块</div>
+<div class="line">1: 当前数据数据为开始数据块</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Hash data total
+length low32</p></td>
+<td><p>31:0</p></td>
+<td><p>数据摘要总数据长度的低32位</p>
+<p>仅在数据摘要算法中使用，表示所有处理的数据
+长度</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Input address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">当前输入数据地址</div>
+<div class="line"><br /></div>
+<div class="line">地址应是 SRAM/DRAM的有效地址</div>
+<div class="line">不可以为Secure SRAM 的地址。</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Input data length</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">当前输入数据长度</div>
+<div class="line"><br /></div>
+<div class="line">对AES算法，数据长度都应该为16字节对齐</div>
+<div class="line">CTR模式请向上取整到16字节对齐。</div>
+<div class="line">DES/TDES算法，数据长度都应该8字节对齐</div>
+<div class="line">RSA算法，数据长度应与密钥长度一致</div>
+<div class="line">即64字节、128字节或者256字节。</div>
+<div class="line">数据摘要算法对输入数据没有长度要求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Output address</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">当前输入数据地址</div>
+<div class="line"><br /></div>
+<div class="line">应为 SRAM/DRAM/Secure SRAM 的有效地址</div>
+<div class="line">地址应8字节对齐。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Output data length</p></td>
+<td><p>31:0</p></td>
+<td><div class="line-block">
+<div class="line">当前输出数据长度</div>
+<div class="line"><br /></div>
+<div class="line">对AES算法，数据长度都应该为16字节对齐</div>
+<div class="line">CTR模式请向上取整到16字节对齐。</div>
+<div class="line">DES/TDES算法，数据长度都应该8字节对齐</div>
+<div class="line">与输入数据长度一致。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="register_desc.html" class="btn btn-neutral float-right" title="6.1.4. 寄存器描述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="6.1.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

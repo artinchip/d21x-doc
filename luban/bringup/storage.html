@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>11.2. 存储配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="11.3. 调试配置" href="console.html" />
+    <link rel="prev" title="11.1. 准备工作" href="prepare.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">11. Bringup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="prepare.html">11.1. 准备工作</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">11.2. 存储配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#spinand">11.2.1. SPINAND</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">11.2.1.1. 型号选择</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#uboot">11.2.1.1.1. uboot</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#kernel">11.2.1.1.2. kernel</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">11.2.1.2. 文件系统</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">11.2.1.3. 分区</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">11.2.1.4. 固件</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#spinor">11.2.2. SPINOR</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#emmc">11.2.2.1. EMMC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">11.2.2.2. 分区</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">11.2.2.3. 固件</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">11.2.3. 成果</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="console.html">11.3. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">11.4. 刷机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chips.html">11.5. IC 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html">11.6. 屏幕配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="samples.html">11.7. 示例程序</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">11. </span>Bringup</a> &raquo;</li>
+        
+      <li><span class="section-number">11.2. </span>存储配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ref-luban-bringup-storage">
+<span id="id1"></span><h1><span class="section-number">11.2. </span>存储配置<a class="headerlink" href="#ref-luban-bringup-storage" title="永久链接至标题">¶</a></h1>
+<p>存储是编译的固件是否可刷机的最重要的原因，但存储的更换要修改的地方比较多，因此我们建议的方案就是按照现存的工程仿写需要 Bringup 的开发板</p>
+<div class="section" id="spinand">
+<h2><span class="section-number">11.2.1. </span>SPINAND<a class="headerlink" href="#spinand" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3><span class="section-number">11.2.1.1. </span>型号选择<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>SDK 默认支持了几种 SPINAND，编译之前需要确认开发板的型号被选中支持，如果不在支持列表中， 则需要参考 <a class="reference internal" href="../memory/spinand/index.html#ref-luban-spinand"><span class="std std-ref">SPINAND 移植指南</span></a> 进行移植</p>
+<p>uboot 和 SPL 分区一般都比较小，开启的 SPINAND 型号过多的话存储容易越界，因此建议只打开需要用到的型号即可</p>
+<div class="section" id="uboot">
+<h4><span class="section-number">11.2.1.1.1. </span>uboot<a class="headerlink" href="#uboot" title="永久链接至标题">¶</a></h4>
+<p>通过 make um –&gt; Device Drivers –&gt; MTD Support 选择</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mh">0x240000</span><span class="p">)</span> <span class="n">Offset</span> <span class="n">of</span> <span class="n">bbt</span> <span class="ow">in</span> <span class="n">nand</span>
+<span class="p">(</span><span class="mh">0x40000</span><span class="p">)</span> <span class="n">Range</span> <span class="n">of</span> <span class="n">bbt</span> <span class="ow">in</span> <span class="n">nand</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Define</span> <span class="n">U</span><span class="o">-</span><span class="n">boot</span> <span class="n">binaries</span> <span class="n">locations</span> <span class="ow">in</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">(</span><span class="mh">0x100000</span><span class="p">)</span> <span class="n">Location</span> <span class="ow">in</span> <span class="n">SPI</span> <span class="n">NAND</span> <span class="n">to</span> <span class="n">read</span> <span class="n">U</span><span class="o">-</span><span class="n">Boot</span> <span class="kn">from</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">Micron</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">Macronix</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Support</span> <span class="n">Winbond</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">Winbond</span> <span class="n">SPI</span> <span class="n">NAND</span> <span class="n">CONTINUOUS</span> <span class="n">READ</span> <span class="n">MODE</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Support</span> <span class="n">GigaDevice</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">Toshiba</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Support</span> <span class="n">FudanMicro</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Support</span> <span class="n">Foresee</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Support</span> <span class="n">Zbit</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">Elite</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">ESMT</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">Support</span> <span class="n">UMTEK</span> <span class="n">SPI</span> <span class="n">NAND</span>
+<span class="n">SPI</span> <span class="n">Flash</span> <span class="n">Support</span>  <span class="o">---&gt;</span>
+<span class="n">UBI</span> <span class="n">support</span>  <span class="o">---&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="kernel">
+<h4><span class="section-number">11.2.1.1.2. </span>kernel<a class="headerlink" href="#kernel" title="永久链接至标题">¶</a></h4>
+<p>kernel 分区比较大，默认打开了 SDK 支持的所有型号，因此不用选择。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">11.2.1.2. </span>文件系统<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>SPINAND 文件系统采用 UBIFS， 以 demo128_nand 工程为例，默认会生成两个固件，用以支持不同参数配置的 NAND 型号</p>
+<ul class="simple">
+<li><p>d211_demo128_nand_page_2k_block_128k_v1.0.0： page size 为 2K，大部分 SPINAND 为此类型</p></li>
+<li><p>d211_demo128_nand_page_4k_block_256k_v1.0.0： page size 为 4K</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>调整分区大小时，需要同时调整固件的大小来和分区匹配</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">11.2.1.3. </span>分区<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>分区信息在 target/d211/demo128_nand/image_cfg.json 中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;spi-nand&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Device</span><span class="p">,</span> <span class="n">The</span> <span class="n">name</span> <span class="n">should</span> <span class="n">be</span> <span class="n">the</span> <span class="n">same</span> <span class="k">with</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">image</span><span class="p">:</span><span class="n">info</span><span class="p">:</span><span class="n">media</span><span class="p">:</span><span class="nb">type</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;128m&quot;</span><span class="p">,</span> <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">SPI</span> <span class="n">NAND</span>
+        <span class="s2">&quot;partitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;spl&quot;</span><span class="p">:</span>      <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;uboot&quot;</span><span class="p">:</span>    <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;userid&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;bbt&quot;</span><span class="p">:</span>      <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;env&quot;</span><span class="p">:</span>      <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;env_r&quot;</span><span class="p">:</span>    <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;falcon&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;logo&quot;</span><span class="p">:</span>     <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;768K&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;kernel&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;12m&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;recovery&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;10m&quot;</span> <span class="p">},</span>
+            <span class="s2">&quot;ubiroot&quot;</span><span class="p">:</span>  <span class="p">{</span>
+                <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;32m&quot;</span><span class="p">,</span>                          <span class="o">//</span><span class="n">分区大小为32m</span>
+                <span class="s2">&quot;ubi&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Volume</span> <span class="ow">in</span> <span class="n">UBI</span> <span class="n">device</span>
+                    <span class="s2">&quot;rootfs&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="p">},</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;ubisystem&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ubi&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Volume</span> <span class="ow">in</span> <span class="n">UBI</span> <span class="n">device</span>
+                    <span class="s2">&quot;ota&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;48m&quot;</span> <span class="p">},</span>
+                    <span class="s2">&quot;user&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="p">},</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">11.2.1.4. </span>固件<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>固件的大小调整通过 make menuconfig –&gt; Filesystem images –&gt; RootFS images 调整</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[ ] ext2/3/4 root filesystem
+[ ] cpio the root filesystem (for use as an initial RAM filesystem)
+[ ] initial RAM filesystem linked into linux kernel
+[ ] jffs2 root filesystem
+[ ] squashfs root filesystem
+[ ] tar the root filesystem
+    ubi parameter select (spi-nand all type support)  ---&gt;
+[*] ubi image containing an ubifs root filesystem
+[ ]   Use custom config file
+()    Additional ubinize options
+-*- ubifs root filesystem
+(0x2000000) ubifs size(Should be aligned to MB)                      //固件大小，32M
+ubifs runtime compression (lzo)  ---&gt;
+Compression method (no compression)  ---&gt;
+(-F)  Additional mkfs.ubifs options
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="spinor">
+<h2><span class="section-number">11.2.2. </span>SPINOR<a class="headerlink" href="#spinor" title="永久链接至标题">¶</a></h2>
+<p>SPINOR 采用 squashfs 文件系统，以 per2_spinor 工程为例， 编译出来的固件为 d211_per2_spinor_v1.0.0.img</p>
+<p>SPINOR 的分区信息在 target/d211/per2_spinor/image_cfg.json 中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;spi-nor&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Media</span> <span class="nb">type</span>
+    <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;16m&quot;</span><span class="p">,</span> <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">NOR</span>
+    <span class="s2">&quot;partitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;spl&quot;</span><span class="p">:</span>    <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;uboot&quot;</span><span class="p">:</span>  <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;640k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;userid&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;64k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;env&quot;</span><span class="p">:</span>    <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;64k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;env_r&quot;</span><span class="p">:</span>  <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;64k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;falcon&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;64k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;logo&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;512k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;5m&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;rootfs&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;9m&quot;</span> <span class="p">},</span>
+        <span class="o">//</span> <span class="s2">&quot;user&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>SPINOR 存储一般比较小，在 Linux 系统上进行分区调整比较麻烦，本文档不详细描述</p>
+<div class="section" id="emmc">
+<h3><span class="section-number">11.2.2.1. </span>EMMC<a class="headerlink" href="#emmc" title="永久链接至标题">¶</a></h3>
+<p>EMMC 采用 squashfs，以 demo 工程为例， 编译出来的固件为 d211_demo_v1.0.0.img</p>
+<p>EMMC 的接口协议固定，因此不需要进行新器件型号的移植</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>调整分区大小时，也需要同时调整固件的大小来和分区匹配</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">11.2.2.2. </span>分区<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>分区信息在 target/d211/demo/image_cfg.json 中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;mmc&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Media</span> <span class="nb">type</span>
+    <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;4G&quot;</span><span class="p">,</span> <span class="o">//</span> <span class="n">Size</span> <span class="n">of</span> <span class="n">SD</span><span class="o">/</span><span class="n">eMMC</span>
+    <span class="s2">&quot;partitions&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">//</span> <span class="n">Partition</span> <span class="n">table</span> <span class="n">apply</span> <span class="n">to</span> <span class="n">device</span>
+        <span class="s2">&quot;spl&quot;</span><span class="p">:</span>    <span class="p">{</span> <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="s2">&quot;0x4400&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;495k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;uboot&quot;</span><span class="p">:</span>  <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;1m&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;env&quot;</span><span class="p">:</span>    <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;falcon&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;logo&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;512k&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;16m&quot;</span> <span class="p">},</span>
+        <span class="s2">&quot;rootfs&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;72m&quot;</span> <span class="p">},</span>        <span class="o">//</span><span class="n">分区大小为72M</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span> <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">11.2.2.3. </span>固件<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>固件的大小调整通过 make menuconfig –&gt; Filesystem images –&gt; RootFS images 调整</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">ext2</span><span class="o">/</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span> <span class="n">root</span> <span class="n">filesystem</span>
+<span class="n">ext2</span><span class="o">/</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span> <span class="n">variant</span> <span class="p">(</span><span class="n">ext4</span><span class="p">)</span>  <span class="o">---&gt;</span>
+<span class="p">(</span><span class="n">rootfs</span><span class="p">)</span> <span class="n">filesystem</span> <span class="n">label</span>
+<span class="p">(</span><span class="mi">72</span><span class="n">M</span><span class="p">)</span> <span class="n">exact</span> <span class="n">size</span>                                                 <span class="o">//</span><span class="n">固件大小为72M</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="n">exact</span> <span class="n">number</span> <span class="n">of</span> <span class="n">inodes</span> <span class="p">(</span><span class="n">leave</span> <span class="n">at</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">auto</span> <span class="n">calculation</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">)</span>   <span class="n">reserved</span> <span class="n">blocks</span> <span class="n">percentage</span>
+<span class="p">(</span><span class="o">-</span><span class="n">O</span> <span class="o">^</span><span class="mi">64</span><span class="n">bit</span><span class="p">)</span> <span class="n">additional</span> <span class="n">mke2fs</span> <span class="n">options</span>
+<span class="n">Compression</span> <span class="n">method</span> <span class="p">(</span><span class="n">no</span> <span class="n">compression</span><span class="p">)</span>  <span class="o">---&gt;</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">cpio</span> <span class="n">the</span> <span class="n">root</span> <span class="n">filesystem</span> <span class="p">(</span><span class="k">for</span> <span class="n">use</span> <span class="k">as</span> <span class="n">an</span> <span class="n">initial</span> <span class="n">RAM</span> <span class="n">filesystem</span><span class="p">)</span>
+<span class="p">[</span> <span class="p">]</span> <span class="n">initial</span> <span class="n">RAM</span> <span class="n">filesystem</span> <span class="n">linked</span> <span class="n">into</span> <span class="n">linux</span> <span class="n">kernel</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">11.2.3. </span>成果<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p><strong>正确的存储配置应该能够成功支持固件烧录</strong></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="console.html" class="btn btn-neutral float-right" title="11.3. 调试配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="prepare.html" class="btn btn-neutral float-left" title="11.1. 准备工作" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

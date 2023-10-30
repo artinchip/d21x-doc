@@ -1,0 +1,634 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.7.1. 模块介绍 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.7.2. 参数配置" href="2_config_guide.html" />
+    <link rel="prev" title="7.7. PWM 使用指南" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">7.4. GPIO 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.5. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../psadc/index.html">7.6. PSADC 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.7. PWM 使用指南</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.7.1. 模块介绍</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.7.1.1. 术语定义</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pwm">7.7.1.2. PWM 工作原理</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">7.7.1.2.1. PWM 信号</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">7.7.1.2.2. 增模式</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.7.1.2.3. 减模式</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.7.1.2.4. 增减模式</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">7.7.1.3. PWM 功能简介</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.7.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.7.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.7.4. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">7.7.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.7.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.8. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.9. QSPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.10. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.11. MAC 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.7. </span>PWM 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.7.1. </span>模块介绍</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.7.1. </span>模块介绍<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.7.1.1. </span>术语定义<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>术语/缩略语</p></th>
+<th class="head"><p>定义及说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PWM</p></td>
+<td><p>Pulse-Width Modulation，脉冲宽度控制，简称脉宽调制</p></td>
+</tr>
+<tr class="row-odd"><td><p>TBC</p></td>
+<td><p>Time Base Counter，时基计数器，用于产生锯齿波</p></td>
+</tr>
+<tr class="row-even"><td><p>占空比</p></td>
+<td><p>PWM信号中，高电平保持的时间 与 该PWM时钟周期的时间之比</p></td>
+</tr>
+<tr class="row-odd"><td><p>分辨率</p></td>
+<td><p>占空比最小能达到多少，如8位的PWM理论分辨率是1:255</p></td>
+</tr>
+<tr class="row-even"><td><p>Up Count</p></td>
+<td><p>增模式, 计数方式是递增计数，如从0计数到80、之后又从0到80（波形是锯齿波）</p></td>
+</tr>
+<tr class="row-odd"><td><p>Down Count</p></td>
+<td><p>减模式, 计数方式是递减计数，如从80计数到0、之后又从80到0（波形是锯齿波）</p></td>
+</tr>
+<tr class="row-even"><td><p>单斜率</p></td>
+<td><p>单个方向的计数，增模式、减模式都属于单斜率</p></td>
+</tr>
+<tr class="row-odd"><td><p>Up&amp;Down Count</p></td>
+<td><div class="line-block">
+<div class="line">增减模式，计数方向有两个，如从0计数到80、然后从80到0（波形是三角波），</div>
+<div class="line">增、减两个过程合起来算一个周期</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>双斜率</p></td>
+<td><p>两个方向的计数，增减模式属于双斜率</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pwm">
+<h2><span class="section-number">7.7.1.2. </span>PWM 工作原理<a class="headerlink" href="#pwm" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">7.7.1.2.1. </span>PWM 信号<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>PWM信号通常由一列占空比不同的矩形脉冲构成，其占空比可以调节。用数字输出来控制PWM占空比，占空比提高意味着高电平脉宽增大，输出的能量就会增加，PWM就相当于一个 <strong>功率版的DA转换模块</strong>。下图是一个典型的PWM信号波形：</p>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/pwm_wave.png" src="../../../_images/pwm_wave.png" />
+<p class="caption"><span class="caption-number">图 7.45 </span><span class="caption-text">典型的 PWM 信号波形</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>占空比的计算方法： <code class="docutils literal notranslate"><span class="pre">占空比</span> <span class="pre">=</span> <span class="pre">(脉宽时间</span> <span class="pre">/</span> <span class="pre">周期)</span> <span class="pre">*</span> <span class="pre">100%</span></code></p>
+<p>结合上图，我们可以说： 脉宽时间1 相比 脉宽时间2 提供较小的占空比。</p>
+<p>PWM通常用于背光亮度调节、电机控制、舵机控制等。本文仅限于PWM调节背光的功能，通过调节PWM中的占空比，达到控制LED背光电流的通和断，进而可调整背光亮度。</p>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">7.7.1.2.2. </span>增模式<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>为了灵活调节PWM信号的占空比，要先想办法产生一个递增、或者递减的锯齿波信号，另外再结合一个比较器来跟一个阈值进行比较，当满足条件时进行电平反转，这样达到的效果就是通过调节“阈值”来调节了占空比。</p>
+<p>下图是由一个 <strong>递增变化</strong> 的锯齿波产生PWM信号的过程：</p>
+<div class="figure align-center" id="id9">
+<img alt="../../../_images/generate_pwm_up.png" src="../../../_images/generate_pwm_up.png" />
+<p class="caption"><span class="caption-number">图 7.46 </span><span class="caption-text">由增模式锯齿波产生 PWM 信号的过程示意图</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>图中 Tpwm 表示PWM信号的周期值，另外有 <strong>三个关键的时间点（下文简称关键时点）</strong> （标注橙色圆圈，为了简洁只标注了最后一个周期）在下文中会频繁使用：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>ZRO</dt><dd><p>Zero Point的缩写，锯齿波的起始点</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PRD</dt><dd><p>Preiod Point的缩写，锯齿波到达一个满周期的时间点</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>CMP</dt><dd><p>Compare Point的缩写，锯齿波到达了阈值的时间点，如上图中的CMP值为7。</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>实际上，PWM模块支持设置两个CMP值：CMPA和CMPB。受限于OS中PWM子系统架构的接口设计，根据duty参数计算只能得到一个CMP值，所以 <strong>CMPB和CMPA实际上数值保持一致</strong>。</p>
+</div>
+<p>这些关键时点的触发行为Action有四种类型，详见 <a class="reference internal" href="2_config_guide.html#ref-lite-pwm-cfg"><span class="std std-ref">驱动配置</span></a></p>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">7.7.1.2.3. </span>减模式<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>下图是由一个 <strong>递减变化</strong> 的锯齿波产生PWM信号的过程：</p>
+<div class="figure align-center" id="id10">
+<img alt="../../../_images/generate_pwm_down.png" src="../../../_images/generate_pwm_down.png" />
+<p class="caption"><span class="caption-number">图 7.47 </span><span class="caption-text">由减模式锯齿波产生 PWM 信号的过程示意图</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.7.1.2.4. </span>增减模式<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>下图是由一个 <strong>同时有递减、递减变化</strong> 的锯齿波产生PWM信号的过程：</p>
+<div class="figure align-center" id="id11">
+<img alt="../../../_images/generate_pwm_updown.png" src="../../../_images/generate_pwm_updown.png" />
+<p class="caption"><span class="caption-number">图 7.48 </span><span class="caption-text">由增减模式锯齿波产生 PWM 信号的过程示意图</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+<p>比较以上三种模式的PWM产生过程，可以看到：</p>
+<ul class="simple">
+<li><p>三种模式可以产生同样效果的PWM信号</p></li>
+<li><p>配置ZRO、CMP（增减模式中有两处CMP）、PRD的触发行为（Action），可产生不同的PWM信号</p></li>
+<li><p>CMP的取值，直接决定了占空比，所以用户看到的 <strong>调节占空比就是通过调节CMP值来实现</strong></p></li>
+<li><p>PRD的值，决定了PWM信号的周期值Tpwm</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<ol class="arabic simple">
+<li><p>具体选择哪一种模式，要依据用户场景的需求特点，建议按 <strong>从简原则：首选相对简单的单斜率模式</strong>。</p></li>
+<li><p>为了简化使用，RTOS中默认只使用 <strong>增模式</strong>。</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.7.1.3. </span>PWM 功能简介<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>PWM的硬件设计，使用时基计数器产生上述的锯齿波信号，使用一个比较器可同时产生两路PWM信号。
+PWM模块的硬件原理图可简化如下：</p>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/hw_system2.png" src="../../../_images/hw_system2.png" />
+<p class="caption"><span class="caption-number">图 7.49 </span><span class="caption-text">简化的 PWM 硬件框图</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+<p>PWM模块共支持4个PWM通道，上图只画出了其中一个PWM通道，每个通道的输出信号有两个：PWMx0和PWMx1，对应DTS参数中的 action0和action1 配置。 <a class="reference internal" href="2_config_guide.html#ref-lite-pwm-cfg"><span class="std std-ref">驱动配置</span></a></p>
+<p>PWM 模块支持的功能特性有：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>每个PWM通道可以产生两个PWM输出信号: PWMx0 和 PWMx1，可遵循如下配置</dt><dd><ul>
+<li><p>两个独立的单边输出</p></li>
+<li><p>两个独立的双边对称输出</p></li>
+<li><p>一个独立的双边非对称输出</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>专用的16位可配置周期和频率的时基计数器（Time Base Counter）</p></li>
+<li><p>系统时钟100MHz</p></li>
+<li><p>多种事件可配置产生对应的中断</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>PWM硬件Spec文档中，将两个PWM输出信号称作 PWMxA 和 PWMxB，为了避免和阈值 CMPA、CMPB 混淆，软件设计中将两个输出信号称作 PWMx0 和 PWMx1。</p>
+</div>
+<p>在CMPA、CMPB同时使用的情况下，锯齿波就会有两次和阈值的比较，共产生4个关键时点：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 38%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>锯齿波信号波段</p></th>
+<th class="head"><p>CMPA</p></th>
+<th class="head"><p>CMPB</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>增斜率段</p></td>
+<td><p>CAU (Compare A Up)</p></td>
+<td><p>CBU (Compare B Up)</p></td>
+</tr>
+<tr class="row-odd"><td><p>减斜率段</p></td>
+<td><p>CAD (Compare A Down)</p></td>
+<td><p>CBD (Compare B Down)</p></td>
+</tr>
+</tbody>
+</table>
+<p>以增减模式的锯齿波为例，共6个关键时点：</p>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/cmpa_cmpb.png" src="../../../_images/cmpa_cmpb.png" />
+<p class="caption"><span class="caption-number">图 7.50 </span><span class="caption-text">增减模式的6个关键时点</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<p>上图中的，6个关机时点的触发行为配置是：（行为类型定义见 <a class="reference internal" href="2_config_guide.html#ref-lite-pwm-cfg"><span class="std std-ref">驱动配置</span></a>）</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>关键时点</p></th>
+<th class="head"><p>Action类型</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CBD</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-odd"><td><p>CBU</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>CAD</p></td>
+<td><p>high</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAU</p></td>
+<td><p>none</p></td>
+</tr>
+<tr class="row-even"><td><p>PRD</p></td>
+<td><p>low</p></td>
+</tr>
+<tr class="row-odd"><td><p>ZRO</p></td>
+<td><p>low</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="2_config_guide.html" class="btn btn-neutral float-right" title="7.7.2. 参数配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="7.7. PWM 使用指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

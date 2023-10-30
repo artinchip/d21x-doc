@@ -1,0 +1,1987 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.4.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.5. UART" href="../uart/index.html" />
+    <link rel="prev" title="12.4.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.4.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.4.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">12.4.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.4.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-spi-ver">12.4.4.1. 0x000 SPI_VER</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-spi-cfg">12.4.4.2. 0x004 SPI_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-spi-tcfg">12.4.4.3. 0x008 SPI_TCFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-spi-icr">12.4.4.4. 0x010 SPI_ICR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-spi-ists">12.4.4.5. 0x014 SPI_ISTS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-spi-fctl">12.4.4.6. 0x018 SPI_FCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-spi-fsts">12.4.4.7. 0x01C SPI_FSTS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-spi-ccfg">12.4.4.8. 0x024 SPI_CCFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-spi-tbc">12.4.4.9. 0x030 SPI_TBC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-spi-twc">12.4.4.10. 0x034 SPI_TWC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x038-spi-tmc">12.4.4.11. 0x038 SPI_TMC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-spi-bmtc">12.4.4.12. 0x040 SPI_BMTC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-spi-bmclk">12.4.4.13. 0x044 SPI_BMCLK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-spi-bmtxd">12.4.4.14. 0x048 SPI_BMTXD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-spi-bmrxd">12.4.4.15. 0x04C SPI_BMRXD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x200-spi-txd">12.4.4.16. 0x200 SPI_TXD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-spi-rxd">12.4.4.17. 0x300 SPI_RXD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.4. </span>QSPI</a> &raquo;</li>
+        
+      <li><span class="section-number">12.4.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.4.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-spi-ver">
+<h2><span class="section-number">12.4.4.1. </span>0x000 SPI_VER<a class="headerlink" href="#x000-spi-ver" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00090001</p></th>
+<th class="head"><p>SPI控制器版本（SPI Controller Version）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R</p></td>
+<td><p>0x9</p></td>
+<td><div class="line-block">
+<div class="line">VER_H</div>
+<div class="line">控制器高位版本号</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">VER_L</div>
+<div class="line">控制器低位版本号</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-spi-cfg">
+<h2><span class="section-number">12.4.4.2. </span>0x004 SPI_CFG<a class="headerlink" href="#x004-spi-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000080</p></th>
+<th class="head"><p>SPI配置（SPI Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CTRL_RST</div>
+<div class="line">控制器复位（Controller Reset）</div>
+<div class="line">置1，SPI控制器复位，完成后自动清0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RXFULL_STOP</div>
+<div class="line">传输停止使能（RX FIFO Full Transfer Stop Enable）</div>
+<div class="line">0:正常模式，忽略RXFIFO状态</div>
+<div class="line">1:当RXFIFO满时停止传输数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CTRL_MODE_SEL</div>
+<div class="line">工作模式选择（Controller Work Mode Select）</div>
+<div class="line">0:预留</div>
+<div class="line">1:主机模式</div>
+<div class="line"><strong>注意：当START=1时，不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CTRL_EN</div>
+<div class="line">控制器使能（Controller Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+<div class="line"><strong>注意：当传输形式从bit_mode切换到byte_mode时，必须使能一次。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-spi-tcfg">
+<h2><span class="section-number">12.4.4.3. </span>0x008 SPI_TCFG<a class="headerlink" href="#x008-spi-tcfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000087</p></th>
+<th class="head"><p>SPI传输配置（SPI Transfer Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">START</div>
+<div class="line">启动数据传输（Start Data Transfer）</div>
+<div class="line">0:空闲状态</div>
+<div class="line">1:启动数据传输</div>
+<div class="line">置1，开始执行SPI数据传输，完成后自动清零。</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">3WIRE_EN</div>
+<div class="line">三线byte模式传输使能（3-Wire Byte Mode Transfer Enable）</div>
+<div class="line">0:标准模式，MOSI与MISO引脚独立</div>
+<div class="line">1:使能三线byte模式传输，此时MOSI与MISO引脚复用</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXDLY_EN</div>
+<div class="line">发送数据延时模式使能（TX Data Delay Mode Enable）</div>
+<div class="line">0:正常发送</div>
+<div class="line">1:使能延时发送</div>
+<div class="line"><strong>注意：在 Dual/Quad模式下，该位推荐置1，发送数据延时半个时钟周期。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXDLY_DIS</div>
+<div class="line">接收数据延时采样模式配置（RX Data Delay Sample Mode Disable）</div>
+<div class="line">0:延时采样模式</div>
+<div class="line">1:正常采样模式</div>
+<div class="line">在正常采样模式下，SPI在边沿采样数据；</div>
+<div class="line">在延时采样模式下，SPI延迟半个时钟后在下一个边沿采样。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LSB_EN</div>
+<div class="line">最低有效位优先传输使能（Low Significant Bit Transmit Enable）</div>
+<div class="line">0:最高有效位先传输</div>
+<div class="line">1:最低有效位先传输</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXINDLY_EN</div>
+<div class="line">接收数据内部采样点模式配置（RX Data Inner Sample Delay Mode Enable）</div>
+<div class="line">0:内部读数据采样点不用延迟</div>
+<div class="line">1:内部读数据的采样点延迟半个时钟周期</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HSWM</div>
+<div class="line">高速写模式配置（High Speed Write Mode Configuration）</div>
+<div class="line">0:正常写模式</div>
+<div class="line">1:高速写模式，提前半个时钟周期切换到下一个数据</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMY_VAL</div>
+<div class="line">填充数据值配置（Dummy Byte Value Configuration）</div>
+<div class="line">0:填充数据的值为0x00</div>
+<div class="line">1:填充数据的值为0xFF</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DINVD</div>
+<div class="line">丢弃无效数据（Discard Invalid Data）</div>
+<div class="line">发送数据时，设备端会主动发无效数据回来，此时如果不能及时</div>
+<div class="line">读取FIFO的数据，该位需要使能，自动丢弃读到的无效数据。</div>
+<div class="line">0:接收所有的无效数据</div>
+<div class="line">1:丢弃所有的无效数据</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CS_LEVEL</div>
+<div class="line">片选信号电平配置（CS Level Configuration）</div>
+<div class="line">0:低电平</div>
+<div class="line">1:高电平</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CS_CTL_SEL</div>
+<div class="line">片选信号控制模式选择（CS Control Mode Select）</div>
+<div class="line">0:SPI控制器</div>
+<div class="line">1:软件控制</div>
+<div class="line">通常由控制器自动发送CS信号，当该位置1，必须手动配置CS_LEVEL</div>
+<div class="line">的电平状态。</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CS_NUM</div>
+<div class="line">选中外部SPI设备的CS引脚序号（CS Pin Number）</div>
+<div class="line">00:SPI_CS0有效</div>
+<div class="line">01-11：保留</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CS_VALID_CTL</div>
+<div class="line">片选信号有效控制（CS Valid Mode Control）</div>
+<div class="line">0:在SPI数据传输期间，片选信号一直有效</div>
+<div class="line">1:在SPI数据传输期间，传输暂停时片选信号无效</div>
+<div class="line">该位用于选择片选信号的输出波形形式。</div>
+<div class="line"><strong>注意：当START=1时不能写入，当CS_CTL_SEL=0时该位才有效。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CS_POL</div>
+<div class="line">片选信号极性控制(CS Polarity Control)</div>
+<div class="line">0:高电平有效</div>
+<div class="line">1:低电平有效</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CPOL</div>
+<div class="line">时钟极性控制（Clock Polarity Control）</div>
+<div class="line">0:空闲时为低电平</div>
+<div class="line">1:空闲时为高电平</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CPHA</div>
+<div class="line">时钟/数据相位控制（Clock Phase Control）</div>
+<div class="line">0:时钟的第一个边沿采样数据</div>
+<div class="line">1:时钟的第二个边沿采样数据</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-spi-icr">
+<h2><span class="section-number">12.4.4.4. </span>0x010 SPI_ICR<a class="headerlink" href="#x010-spi-icr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI中断控制（SPI Interrupt Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CS_INTE</div>
+<div class="line">CS无效中断使能（CS Invalid Interrupt Enable）</div>
+<div class="line">片选信号从有效状态变到无效状态。</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TD_INTE</div>
+<div class="line">传输完成中断使能（Transfer Done Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_UDR_INTE</div>
+<div class="line">TX FIFO下溢出中断使能（TX FIFO Underrun Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+<div class="line">当CPU/DMA读取空的TX FIFO会产生此中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_OVF_INTE</div>
+<div class="line">TX FIFO上溢出中断使能（TX FIFO Overflow Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+<div class="line">当CPU/DMA写入满的TX FIFO会产生此中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_UDR_INTE</div>
+<div class="line">RX FIFO下溢出中断使能（RX FIFO Underrun Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+<div class="line">当CPU/DMA读取空的RX FIFO会产生此中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_OVF_INTE</div>
+<div class="line">RX FIFO上溢出中断使能（RX FIFO Overflow Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+<div class="line">当CPU/DMA写入满的RX FIFO会产生此中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_FUL_INTE</div>
+<div class="line">TX FIFO满中断使能（TX FIFO Full Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_EMP_INTE</div>
+<div class="line">TX FIFO为空中断使能（TX FIFO Empty Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_RDY_INTE</div>
+<div class="line">TX FIFO准备好中断使能（TX FIFO Ready Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_FUL_INTE</div>
+<div class="line">RX FIFO满中断使能（RX FIFO Full Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_EMP_INTE</div>
+<div class="line">RX FIFO为空中断使能（RX FIFO Empty Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_RDY_INTE</div>
+<div class="line">RX FIFO准备好中断使能（RX FIFO Ready Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-spi-ists">
+<h2><span class="section-number">12.4.4.5. </span>0x014 SPI_ISTS<a class="headerlink" href="#x014-spi-ists" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000032</p></th>
+<th class="head"><p>SPI中断状态（SPI Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CS_INV</div>
+<div class="line">片选信号无效中断（CS Invalid Interrupt）</div>
+<div class="line">置1，表示片选状态从有效变为无效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TD</div>
+<div class="line">传输完成中断（Transfer Done Interrupt）</div>
+<div class="line">0:正在传输</div>
+<div class="line">1:传输完成</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_UDF</div>
+<div class="line">TX FIFO下溢出中断（TX FIFO Underrun Interrupt）</div>
+<div class="line">0:TXFIFO没有下溢出</div>
+<div class="line">1:TXFIFO下溢出</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_OVF</div>
+<div class="line">TX FIFO上溢出中断（TX FIFO Overflow Interrupt）</div>
+<div class="line">0:TXFIFO没有上溢出</div>
+<div class="line">1:TXFIFO上溢出</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_UDF</div>
+<div class="line">RX FIFO下溢出中断（RX FIFO Underrun Interrupt）</div>
+<div class="line">0:RXFIFO没有下溢出</div>
+<div class="line">1:RXFIFO下溢出</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_OVF</div>
+<div class="line">RX FIFO上溢出中断（RX FIFO Overflow Interrupt）</div>
+<div class="line">0:RXFIFO没有上溢出</div>
+<div class="line">1:RXFIFO上溢出</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_FULL</div>
+<div class="line">TX FIFO满中断（TX FIFO Full Interrupt）</div>
+<div class="line">0:TXFIFO未满</div>
+<div class="line">1:TXFIFO已满</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TF_EMP</div>
+<div class="line">TX FIFO为空中断（TX FIFO Empty Interrupt）</div>
+<div class="line">0:TXFIFO非空</div>
+<div class="line">1:TXFIFO为空</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TF_READY</div>
+<div class="line">TX FIFO准备好中断（TX FIFO Ready Interrupt）</div>
+<div class="line">0:TX_WL &gt; TX_WATER_MARK</div>
+<div class="line">1:TX_WL &lt;= TX_WATER_MARK</div>
+<div class="line">该位置1，CPU可以向TX FIFO写入数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_FULL</div>
+<div class="line">RX FIFO满中断（RX FIFO Full Interrupt）</div>
+<div class="line">0:RXFIFO未满</div>
+<div class="line">1:RXFIFO已满</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RF_EMP</div>
+<div class="line">RX FIFO为空中断（RX FIFO Empty Interrupt）</div>
+<div class="line">0:RXFIFO非空</div>
+<div class="line">1:RXFIFO为空</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_READY</div>
+<div class="line">RX FIFO准备好中断（RX FIFO Ready Interrupt）</div>
+<div class="line">0:RX_WL &lt; RX_WATER_MARK</div>
+<div class="line">1:RX_WL &gt;= RX_WATER_MARK</div>
+<div class="line">该位置1，CPU可以从RX FIFO读出数据。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-spi-fctl">
+<h2><span class="section-number">12.4.4.6. </span>0x018 SPI_FCTL<a class="headerlink" href="#x018-spi-fctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00400001</p></th>
+<th class="head"><p>SPI FIFO控制（SPI FIFO Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_RST</div>
+<div class="line">TX FIFO复位，完成后自动清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:25</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_DREQ_EN</div>
+<div class="line">TX FIFO DMA请求使能</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x40</p></td>
+<td><div class="line-block">
+<div class="line">TF_WATER_MARK</div>
+<div class="line">TX FIFO发出写请求信号的FIFO水位值，当FIFO水位小于该值，</div>
+<div class="line">并且TF_DREQ_EN=1,向DMA发起写请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_RST</div>
+<div class="line">RX FIFO复位，完成后自动清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_DREQ_EN</div>
+<div class="line">RX FIFO DMA请求使能</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RF_WATER_MARK</div>
+<div class="line">RX FIFO发出读请求信号的FIFO水位值，当FIFO水位大于该值，</div>
+<div class="line">并且RF_DREQ_EN=1,向DMA发起读请求。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-spi-fsts">
+<h2><span class="section-number">12.4.4.7. </span>0x01C SPI_FSTS<a class="headerlink" href="#x01c-spi-fsts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI FIFO状态（SPI FIFO Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_WBUF_STS</div>
+<div class="line">TX FIFO写缓存状态（TX FIFO Write Buffer Status）</div>
+<div class="line">置1，表示写缓存正在执行写操作。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_WBUF_CNT</div>
+<div class="line">写缓存计数器（TX FIFO Write Buffer Counter）</div>
+<div class="line">表示TX FIFO写缓存中字节的数量。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TF_CNT</div>
+<div class="line">TX FIFO计数器（TX FIFO Counter）</div>
+<div class="line">0:在TX FIFO中有0字节数据</div>
+<div class="line">1:在TX FIFO中有1字节数据</div>
+<div class="line">…</div>
+<div class="line">64:在TX FIFO中有64字节数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_RBUF_STS</div>
+<div class="line">RX FIFO读缓存状态（RX FIFO Read Buffer Status）</div>
+<div class="line">置1，表示读缓存正在执行读操作。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:12</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_RBUF_CNT</div>
+<div class="line">读缓存计数器（RX FIFO Read Buffer Counter）</div>
+<div class="line">表示RX FIFO 读缓存中字节的数量。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RF_CNT</div>
+<div class="line">RX FIFO计数器（RX FIFO Counter）</div>
+<div class="line">0:在RX FIFO中有0字节</div>
+<div class="line">1:在RX FIFO中有1字节</div>
+<div class="line">…</div>
+<div class="line">64:在RX FIFO中有64字节</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-spi-ccfg">
+<h2><span class="section-number">12.4.4.8. </span>0x024 SPI_CCFG<a class="headerlink" href="#x024-spi-ccfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000002</p></th>
+<th class="head"><p>SPI时钟配置（SPI Clock Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CKDIV_SEL</div>
+<div class="line">时钟分频器选择（Clock Divider Select）</div>
+<div class="line">0:选择时钟分频器1</div>
+<div class="line">1:选择时钟分频器2</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CKDIV1</div>
+<div class="line">时钟分频器1（Clock Divider 1）</div>
+<div class="line">SPI接口时钟频率根据如下公式计算:</div>
+<div class="line">SPI_CLK = 源时钟频率/(2^CKDIV1)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">CKDIV2</div>
+<div class="line">时钟分频器2（Clock Divider 2）</div>
+<div class="line">SPI接口时钟频率根据如下公式计算:</div>
+<div class="line">SPI_CLK = 源时钟频率/(2*(CKDIV2 + 1))</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-spi-tbc">
+<h2><span class="section-number">12.4.4.9. </span>0x030 SPI_TBC<a class="headerlink" href="#x030-spi-tbc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI总传输字节计数器（SPI Total Bytes Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TB_CNT</div>
+<div class="line">总传输字节计数器（Total Bytes Counter）</div>
+<div class="line">该值定义了传输的字节总数，包括发送，接收和填充数据。</div>
+<div class="line">0:共传输0个字节</div>
+<div class="line">1:共传输1个字节</div>
+<div class="line">…</div>
+<div class="line">N:共传输N个字节</div>
+<div class="line"><strong>注意：传输数据总数=发送数据+接收数据+填充数据</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-spi-twc">
+<h2><span class="section-number">12.4.4.10. </span>0x034 SPI_TWC<a class="headerlink" href="#x034-spi-twc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI写发送计数器（SPI Transmit Write Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXD_CNT</div>
+<div class="line">写数据计数器（TX Data Counter）</div>
+<div class="line">该值定义了在填充数据之前发送到TXFIFO的写数据字节</div>
+<div class="line">总数，为了节约带宽，填充数据由控制器自动发送。</div>
+<div class="line">0:共发送0个字节</div>
+<div class="line">1:共发送1个字节</div>
+<div class="line">…</div>
+<div class="line">N:共发送N个字节</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x038-spi-tmc">
+<h2><span class="section-number">12.4.4.11. </span>0x038 SPI_TMC<a class="headerlink" href="#x038-spi-tmc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI传输控制（SPI Transmit Miscellaneous Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">QUAD_EN</div>
+<div class="line">四线数据传输模式使能（Quad Transfer Mode Enable）</div>
+<div class="line">0:4线数据模式禁用</div>
+<div class="line">1:4线数据模式使能</div>
+<div class="line"><strong>注意：4线数据模式包括4线输入和4线输出。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DUAL_EN</div>
+<div class="line">双线数据传输模式使能（Dual Transfer Mode Enable）</div>
+<div class="line">0:发送或接收数据使用单线数据传输模式</div>
+<div class="line">1:发送或接收数据使用双线数据传输模式</div>
+<div class="line"><strong>注意：当START=1时不能写入，仅当Quad_Mode_EN=0时有效。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMY_CNT</div>
+<div class="line">填充数据计数器（Dummy Bytes Counter）</div>
+<div class="line">定义了待发送的填充数据的字节数，用于双路模式和四路模式。</div>
+<div class="line">0:共发送0个字节填充数据</div>
+<div class="line">1:共发送1个字节填充数据</div>
+<div class="line">…</div>
+<div class="line">N:共发送N个字节填充数据</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STXD_CNT</div>
+<div class="line">单线发送数据计数器（Single TX Data Counter）</div>
+<div class="line">该值定义了需要使用单线模式发送的数据长度。</div>
+<div class="line">对于单线模式：包括命令、地址、数据；</div>
+<div class="line">对于双线和四线模式：仅包括命令、地址；</div>
+<div class="line">对于双线IO模式：仅包括命令。</div>
+<div class="line">0:单线共发送0个字节</div>
+<div class="line">1:单线共发送1个字节</div>
+<div class="line">…</div>
+<div class="line">N:单线共发送N个字节</div>
+<div class="line"><strong>注意：当START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-spi-bmtc">
+<h2><span class="section-number">12.4.4.12. </span>0x040 SPI_BMTC<a class="headerlink" href="#x040-spi-bmtc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000000A0</p></th>
+<th class="head"><p>SPI位模式传输配置（SPI Bit-Mode Transfer Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BM_START</div>
+<div class="line">启动传输数据（Bit-Mode Start Data Transfer）</div>
+<div class="line">0:空闲状态</div>
+<div class="line">1:启动传输数据</div>
+<div class="line">该字段置1，启动发送串行数据流，数据存放在（SPI_BMTXD和SPI_BMRXD</div>
+<div class="line">寄存器），传输完成后自动清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BM_SMP_SEL</div>
+<div class="line">采样模式选择（Bit-Mode Sample Mode Select）</div>
+<div class="line">1:标准采样模式</div>
+<div class="line">0:延时采样模式</div>
+<div class="line">在标准采样模式下，SPI主机在SCLK的上升边沿采样数据；</div>
+<div class="line">在延时采样模式下，SPI主机延时半个时钟周期，在SCLK的上升边沿采样</div>
+<div class="line">数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29::26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BM_TD</div>
+<div class="line">传输完成（Bit-Mode Transfer Done）</div>
+<div class="line">0:忙等待</div>
+<div class="line">1:传输完成</div>
+<div class="line">置1，表示最后一位数据传输完成，该字段写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BM_TD_INTE</div>
+<div class="line">传输完成中断使能（Bit-Mode Transfer Done Interrupt Enable）</div>
+<div class="line">0:禁用</div>
+<div class="line">1:使能</div>
+<div class="line"><strong>注意：当总线模式选择10b/11b时有效。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:22</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>21:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">BM_RXCNT</div>
+<div class="line">接收串行数据长度（Bit-Mode RX Data Length）</div>
+<div class="line">000000b:接收0比特</div>
+<div class="line">000001b:接收1比特</div>
+<div class="line">…</div>
+<div class="line">100000b:接收32比特</div>
+<div class="line"><strong>注意：当总线模式选择10b/11b时有效，当BM_START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">BM_TXCNT</div>
+<div class="line">发送串行数据长度（Bit-Mode TX Data Length）</div>
+<div class="line">000000b:发送0比特</div>
+<div class="line">000001b:发送1比特</div>
+<div class="line">…</div>
+<div class="line">100000b:发送32比特</div>
+<div class="line"><strong>注意：当总线模式选择10b/11b时有效，当BM_START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">BMCS_LEVEL</div>
+<div class="line">片选信号电平配置</div>
+<div class="line">0:配置片选信号为低电平</div>
+<div class="line">1:配置片选信号为高电平</div>
+<div class="line"><strong>注意：当总线模式选择10b/11b时有效，当BM_START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BMCS_CTRL_SEL</div>
+<div class="line">片选信号输出控制方式选择</div>
+<div class="line">0:SPI控制器</div>
+<div class="line">1:软件控制</div>
+<div class="line">通常控制器会自动控制片选信号高低电平。当该位置1，则需要通过软件</div>
+<div class="line">编程写入SPI_TCFG.CS_LEVEL的值，来控制片选信号。</div>
+<div class="line"><strong>注意：当总线模式选择10b/11b时有效，当BM_START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">BMCS_POL</div>
+<div class="line">片选信号极性控制</div>
+<div class="line">0:高电平有效</div>
+<div class="line">1:低电平有效</div>
+<div class="line"><strong>注意：当总线模式选择10b/11b时有效，当BM_START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BMCS_NUM</div>
+<div class="line">片选信号引脚序号选择</div>
+<div class="line">00b:SPI_CS0选中</div>
+<div class="line">01b-11b：保留</div>
+<div class="line"><strong>注意：当总线模式选择10/11b时有效，当BM_START=1时不能写入。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BMOD_SEL</div>
+<div class="line">总线模式选择（Bus Mode Select）</div>
+<div class="line">00b:数据流按字节对齐，工作在标准SPI，双路输入/双路输出SPI，</div>
+<div class="line-block">
+<div class="line">双路IO SPI，或四路输入/四路输出SPI</div>
+</div>
+<div class="line">01b:预留</div>
+<div class="line">10b:数据流按位对齐，工作在3线模式下</div>
+<div class="line">11b:数据流按位对齐，工作在标准SPI模式下</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-spi-bmclk">
+<h2><span class="section-number">12.4.4.13. </span>0x044 SPI_BMCLK<a class="headerlink" href="#x044-spi-bmclk" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI位模式时钟配置（SPI Bit-Mode Clock Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BM_CKDIV</div>
+<div class="line">位模式时钟分频比例（Bit-Mode Clock Divide）</div>
+<div class="line">接口时钟频率计算公式如下：</div>
+<div class="line">SPI_CLK = 源时钟/(2*(BM_CKDIV + 1))</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-spi-bmtxd">
+<h2><span class="section-number">12.4.4.14. </span>0x048 SPI_BMTXD<a class="headerlink" href="#x048-spi-bmtxd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI位模式发送数据值（SPI Bit-Mode TX Data）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BMTXD</div>
+<div class="line">位模式发送数据值</div>
+<div class="line">该寄存器用来存储发送的数据</div>
+<div class="line"><strong>注意：在传输过程中，最高有效位先发送。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-spi-bmrxd">
+<h2><span class="section-number">12.4.4.15. </span>0x04C SPI_BMRXD<a class="headerlink" href="#x04c-spi-bmrxd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI位模式接收数据值（SPI Bit-Mode RX Data）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BMRXD</div>
+<div class="line">位模式接收数据值</div>
+<div class="line">该寄存器用来存储接收的数据</div>
+<div class="line"><strong>注意：在传输过程中，最高有效位先接收。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x200-spi-txd">
+<h2><span class="section-number">12.4.4.16. </span>0x200 SPI_TXD<a class="headerlink" href="#x200-spi-txd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI发送数据（SPI TX Data）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXD</div>
+<div class="line">发送数据值</div>
+<div class="line">该寄存器可以通过AHB总线以字节，半字或字为单位进行访问。</div>
+<div class="line">以字节访问时，每次写一笔数据到TX FIFO，FIFO深度加1；</div>
+<div class="line">以半字访问时，每次写两笔数据到TX FIFO，FIFO深度加2；</div>
+<div class="line">以字为单位访问时，每次写四笔数据到TX FIFO，FIFO深度加4。</div>
+<div class="line"><strong>注意：该寄存器为只写。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-spi-rxd">
+<h2><span class="section-number">12.4.4.17. </span>0x300 SPI_RXD<a class="headerlink" href="#x300-spi-rxd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>SPI接收数据（SPI RX Data）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXD</div>
+<div class="line">接收数据值</div>
+<div class="line">该寄存器可以通过AHB总线以字节，半字或字为单位进行访问。</div>
+<div class="line">以字节访问时，每次从RX FIFO读一笔数据到寄存器，FIFO深度减1；</div>
+<div class="line">以半字访问时，每次从RX FIFO读两笔数据，FIFO深度减2；</div>
+<div class="line">以字为单位访问时，每次从RX FIFO读四笔数据，FIFO深度减4。</div>
+<div class="line"><strong>注意：该寄存器为只读。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../uart/index.html" class="btn btn-neutral float-right" title="12.5. UART" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="12.4.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

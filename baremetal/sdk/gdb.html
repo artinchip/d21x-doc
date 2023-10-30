@@ -1,0 +1,738 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2.7. GDB 调试 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2.8. 添加驱动" href="driver.html" />
+    <link rel="prev" title="2.6. 烧录镜像" href="burn.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Baremetal</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 使用指南</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="architecture.html">2.1. 设计框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sourcecode.html">2.2. 代码结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html">2.3. 命令详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sconstruct.html">2.4. SConstruct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compile.html">2.5. 编译</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">2.6. 烧录镜像</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.7. GDB 调试</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.7.1. 工具介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.7.2. 准备工作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sdk">2.7.3. SDK 配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#jtag">2.7.3.1. 使用 JTAG 口</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">2.7.3.1.1. 配置接口</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#sd">2.7.3.2. 使用 SD调试 口</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id4">2.7.3.2.1. 修改文件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">2.7.3.2.2. 配置接口</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.7.4. 连接开发板</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">2.7.5. 调试</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#windows-eclipse">2.7.5.1. Windows 下使用 Eclipse 调试</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#linux-gdb">2.7.5.2. Linux 下使用 GDB 调试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="driver.html">2.8. 添加驱动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.html">2.9. 添加应用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. 启动引导</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Baremetal</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">2. </span>使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">2.7. </span>GDB 调试</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gdb">
+<span id="ref-baremetal-debug"></span><h1><span class="section-number">2.7. </span>GDB 调试<a class="headerlink" href="#gdb" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">2.7.1. </span>工具介绍<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>工具</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>T-HeadDebugServer</p></td>
+<td><p>运行 GDB Server</p></td>
+</tr>
+<tr class="row-odd"><td><p>AiBurn</p></td>
+<td><p>镜像烧写工具</p></td>
+</tr>
+<tr class="row-even"><td><p>AIC-JTAG</p></td>
+<td><p>AIC 调试器</p></td>
+</tr>
+<tr class="row-odd"><td><p>JTAG - SDMC 转接线</p></td>
+<td><p>仅用于调试器连接 SDMC 接口使用</p></td>
+</tr>
+<tr class="row-even"><td><p>Eclipse</p></td>
+<td><p>适配 luban-lite SDK 的 IDE</p></td>
+</tr>
+<tr class="row-odd"><td><p>riscv64-unknown-elf-gdb.exe</p></td>
+<td><p>调试工具，位于 <code class="docutils literal notranslate"><span class="pre">$(SDK)tool/riscv64-gdb/bin/</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>d21x.elf</p></td>
+<td><p>Eclipse 工程目录下生成的符号链接表</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">2.7.2. </span>准备工作<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>安装 T-HeadDebugServer（以下简称 DebugServer）</p></li>
+</ul>
+<p>安装包也带有 AIC-JTAG 的驱动，随下面安装过程一并安装</p>
+<p>解压，运行 setup.exe，在弹出页面中，点击Next：</p>
+<div class="figure align-center">
+<img alt="../../_images/install_1.png" src="../../_images/install_1.png" />
+</div>
+<p>在用户协议界面中点击Yes：</p>
+<div class="figure align-center">
+<img alt="../../_images/install_2.png" src="../../_images/install_2.png" />
+</div>
+<p>在安装路径页面，可以自行修改：</p>
+<div class="figure align-center">
+<img alt="../../_images/install_4.png" src="../../_images/install_4.png" />
+</div>
+<p>在安装内容页面，建议全选，继续点Next：</p>
+<div class="figure align-center">
+<img alt="../../_images/install_5.png" src="../../_images/install_5.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../_images/install_6.png" src="../../_images/install_6.png" />
+</div>
+<p>等待完成安装后，桌面会自动创建了一个 DebugServer 的图标：</p>
+<div class="figure align-center">
+<img alt="../../_images/install_7.png" src="../../_images/install_7.png" />
+</div>
+<ul class="simple">
+<li><p>将 AIC 调试器通过 USB-TypeC 连接 PC</p></li>
+<li><p>成功识别后，AIC 调试器绿灯会亮起</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/run_1.png" src="../../_images/run_1.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../_images/cklink_detected.png" src="../../_images/cklink_detected.png" />
+</div>
+</div>
+<div class="section" id="sdk">
+<h2><span class="section-number">2.7.3. </span>SDK 配置<a class="headerlink" href="#sdk" title="永久链接至标题">¶</a></h2>
+<p>luban-lite SDK 支持两种硬件接口进行调试，分别是 JTAG 和 SDMC 口。
+为避免 GPIO 冲突，需要对 <code class="docutils literal notranslate"><span class="pre">ddr_init.json</span></code> 和 <code class="docutils literal notranslate"><span class="pre">xxx_defconfig</span></code> 进行配置。</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>进行配置前，需确保已经加载目标工程。</p>
+</div>
+<p>下面将针对两种接口的连接和配置分别讲解。</p>
+<div class="section" id="jtag">
+<h3><span class="section-number">2.7.3.1. </span>使用 JTAG 口<a class="headerlink" href="#jtag" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id3">
+<h4><span class="section-number">2.7.3.1.1. </span>配置接口<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><p>运行</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scons --menuconfig
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>关闭 i2c、touch panel</p></li>
+</ul>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Board options  ---&gt;
+        [] Using i2c3
+        Touch Panel Support  ---&gt;
+                Gt911 touch panel options  ---&gt;
+                        [] Using touch panel gt911
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>若使用 JTAG 口，另外需断开 CTP 触屏排线</p>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/CTP_disconnected.png" src="../../_images/CTP_disconnected.png" />
+</div>
+</div>
+</div>
+<div class="section" id="sd">
+<h3><span class="section-number">2.7.3.2. </span>使用 SD调试 口<a class="headerlink" href="#sd" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id4">
+<h4><span class="section-number">2.7.3.2.1. </span>修改文件<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<p>打开 <code class="docutils literal notranslate"><span class="pre">target/&lt;CPU&gt;/&lt;board&gt;/pack/ddr_init.json</span></code> ，配置 jtag_only 和调试口引脚：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;jtag&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;jtag_only&quot;</span>: <span class="s2">&quot;1&quot;</span>, // <span class="m">1</span>: Boot code stop <span class="k">in</span> PBP after DDR init and jtag init
+    <span class="s2">&quot;main&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;jtag_id&quot;</span>: <span class="s2">&quot;0&quot;</span>,
+        //<span class="s2">&quot;jtag_do_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x187000A0&quot;</span>, // PA8
+        //<span class="s2">&quot;jtag_do_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+        //<span class="s2">&quot;jtag_di_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x187000A4&quot;</span>, // PA9
+        //<span class="s2">&quot;jtag_di_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+        //<span class="s2">&quot;jtag_ms_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x187000A8&quot;</span>, // PA10
+        //<span class="s2">&quot;jtag_ms_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+        //<span class="s2">&quot;jtag_ck_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x187000AC&quot;</span>, // PA11
+        //<span class="s2">&quot;jtag_ck_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+
+        <span class="s2">&quot;jtag_do_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x1870028C&quot;</span>, // PC3
+        <span class="s2">&quot;jtag_do_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+        <span class="s2">&quot;jtag_di_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x18700284&quot;</span>, // PC1
+        <span class="s2">&quot;jtag_di_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+        <span class="s2">&quot;jtag_ms_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x18700280&quot;</span>, // PC0
+        <span class="s2">&quot;jtag_ms_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+        <span class="s2">&quot;jtag_ck_pin_cfg_reg&quot;</span>: <span class="s2">&quot;0x18700294&quot;</span>, // PC5
+        <span class="s2">&quot;jtag_ck_pin_cfg_val&quot;</span>: <span class="s2">&quot;0x336&quot;</span>,
+    <span class="o">}</span>,
+<span class="o">}</span>,
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4><span class="section-number">2.7.3.2.2. </span>配置接口<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><p>运行</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scons --menuconfig
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>关闭SDMC1</p></li>
+</ul>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Board options  ---&gt;
+        [] Using SDMC1
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">2.7.4. </span>连接开发板<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>编译 SDK</p></li>
+<li><p>使用 AiBurn 烧录编译生成的镜像（参见烧录章节）</p></li>
+<li><p>开发板连接串口、AIC-JTAG、电源线</p></li>
+</ul>
+<div class="figure align-center" id="id8">
+<img alt="../../_images/debug_jtag.png" src="../../_images/debug_jtag.png" />
+<p class="caption"><span class="caption-number">图 2.55 </span><span class="caption-text">开发板连接 JTAG 接口</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id9">
+<img alt="../../_images/debug_SDMC.png" src="../../_images/debug_SDMC.png" />
+<p class="caption"><span class="caption-number">图 2.56 </span><span class="caption-text">开发板连接 SDMC 接口</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>在调试串口终端中，按住 Ctrl + C，同时重启开发板，串口打印如下：</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>Pre-Boot Program ... <span class="o">(</span><span class="m">2023</span>-08-08 <span class="m">11</span>:29:35 13a563f<span class="o">)</span>
+No DDR info
+Going to init DDR2. freq: 504MHz
+DDR2 initialized
+<span class="m">120186</span> <span class="m">134875</span> <span class="m">162258</span>
+PBP <span class="k">done</span>
+
+tinySPL <span class="o">[</span>Built on Aug <span class="m">21</span> <span class="m">2023</span> <span class="m">17</span>:12:58<span class="o">]</span>
+Boot <span class="nv">device</span> <span class="o">=</span> <span class="m">5</span><span class="o">(</span>BD_SPINAND<span class="o">)</span>
+nand <span class="nb">read</span> speed: <span class="m">1346320</span> byte, <span class="m">76998</span> us -&gt; <span class="m">17075</span> KB/s
+aic@tinySPL <span class="c1">#</span>
+aic@tinySPL <span class="c1">#</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>运行 DebugServer，首次运行会有安全警告，点击“允许访问”</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/run_0.png" src="../../_images/run_0.png" />
+</div>
+<ul class="simple">
+<li><p>配置 DebugServer,Setting -&gt; Target Setting</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/run_2.png" src="../../_images/run_2.png" />
+</div>
+<ul class="simple">
+<li><p>配置 DebugServer 的端口号</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/debug_server1.png" src="../../_images/debug_server1.png" />
+</div>
+<ul class="simple">
+<li><p>启动仿真器连接，显示本地 IP 及已配置的端口（3333），则表示连接成功：</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/connected.png" src="../../_images/connected.png" />
+</div>
+<ul class="simple">
+<li><p>连接成功后，即可通过 IDE 或命令行进行调试</p></li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">2.7.5. </span>调试<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="windows-eclipse">
+<h3><span class="section-number">2.7.5.1. </span>Windows 下使用 Eclipse 调试<a class="headerlink" href="#windows-eclipse" title="永久链接至标题">¶</a></h3>
+<p>采用 Eclipse 配合 GDB 的调试方案，方便用户上手</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>使用 Eclipse 调试前，需先按照 <code class="docutils literal notranslate"><span class="pre">1.4</span> <span class="pre">Eclipse</span></code> 章节，完成 Eclipse 工程导入及编译</p>
+</div>
+<ul class="simple">
+<li><p>配置 Debug Configurations - Main</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/eclipse_gdb_config.png" src="../../_images/eclipse_gdb_config.png" />
+</div>
+<ul class="simple">
+<li><p>配置 Debug Configurations - Debugger</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/eclipse_gdb_config2.png" src="../../_images/eclipse_gdb_config2.png" />
+</div>
+<ul class="simple">
+<li><p>Eclipse 进入 Debug 模式</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/eclipse_into_debug_mode.png" src="../../_images/eclipse_into_debug_mode.png" />
+</div>
+<ul class="simple">
+<li><p>Eclipse 调试常用快捷键</p>
+<ol class="arabic simple">
+<li><p>F5：单步进入，进入函数内部</p></li>
+<li><p>F6：下一行代码，逐行执行</p></li>
+<li><p>F7：返回值调用处的下一行代码</p></li>
+<li><p>F8：继续运行，跳过当前中断点</p></li>
+<li><p>F11：调试并启动程序</p></li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="linux-gdb">
+<h3><span class="section-number">2.7.5.2. </span>Linux 下使用 GDB 调试<a class="headerlink" href="#linux-gdb" title="永久链接至标题">¶</a></h3>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>在 Linux 下调试前，需确保与 DebugServer 所在的 Windows 系统可以 ping 通。</p>
+</div>
+<ul class="simple">
+<li><p>在 SDK 根目录编写 <code class="docutils literal notranslate"><span class="pre">jtag-debug.sh</span></code> 脚本：</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">$cat</span> jtag-debug.sh
+
+target remote <span class="m">172</span>.16.31.141:3333    <span class="c1">#此处 IP 为 DebugServer 运行 PC的 IP，端口为 DebugServer 配置的端口</span>
+
+load ./output/d13x_demo88-nor_rt-thread_helloworld/images/d13x.elf  <span class="c1"># 对应项目的 elf文件</span>
+file ./output/d13x_demo88-nor_rt-thread_helloworld/images/d13x.elf
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在 SDK 根目录下运行 GDB ：</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ./toolchain/bin/riscv64-unknown-elf-gdb -x ./jtag-debug.sh
+GNU gdb <span class="o">(</span>Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906<span class="o">)</span> <span class="m">10</span>.0.50.20200724-git
+Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2020</span> Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version <span class="m">3</span> or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type <span class="s2">&quot;show copying&quot;</span> and <span class="s2">&quot;show warranty&quot;</span> <span class="k">for</span> details.
+This GDB was configured as <span class="s2">&quot;--host=x86_64-pc-linux-gnu --target=riscv64-unknown-elf&quot;</span>.
+Type <span class="s2">&quot;show configuration&quot;</span> <span class="k">for</span> configuration details.
+For bug reporting instructions, please see:
+&lt;https://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+    &lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+
+For help, <span class="nb">type</span> <span class="s2">&quot;help&quot;</span>.
+Type <span class="s2">&quot;apropos word&quot;</span> to search <span class="k">for</span> commands related to <span class="s2">&quot;word&quot;</span>.
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the <span class="s2">&quot;file&quot;</span> command.
+0x0000000000106b3a <span class="k">in</span> ?? <span class="o">()</span>
+Loading section .text, size 0xa4780 lma 0x40000100
+        sectio--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+        section progress:  <span class="m">41</span>.5%, total progress:   inf%
+        section progress:  <span class="m">46</span>.2%, total progress:   inf%
+        section progress:  <span class="m">50</span>.4%, total progress:   inf%
+        section progress:  <span class="m">53</span>.9%, total progress:   inf%
+        section progress:  <span class="m">63</span>.3%, total--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+        section progress:  <span class="m">93</span>.5%, total progress:   inf%--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+        section progress: <span class="m">100</span>.0%, total progress:   inf%
+Loading section .rodata, size 0x843b8 lma 0x400a4880
+        section progress:  <span class="m">27</span>.7%, total progress:   i--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+        sect--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+        section progress: <span class="m">100</span>.0%, total progress:   inf%
+Loading section .data, size 0x32e0 lma 0x40128c40
+--Type &lt;RET&gt; <span class="k">for</span> more, q to quit, c to <span class="k">continue</span> without paging--
+        section progress: <span class="m">100</span>.0%, total progress:   inf%
+Start address 0x0000000040000100, load size <span class="m">1228312</span>
+Transfer rate: <span class="m">107</span> KB/sec, <span class="m">3988</span> bytes/write.
+</pre></div>
+</div>
+<p>显示以上信息，表示已经进入 GDB 调试模式。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="driver.html" class="btn btn-neutral float-right" title="2.8. 添加驱动" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="burn.html" class="btn btn-neutral float-left" title="2.6. 烧录镜像" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

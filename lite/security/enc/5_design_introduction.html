@@ -1,0 +1,649 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>8.2.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="8.2.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="8.2.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">8. 安全</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../efuse/index.html">8.1. eFuse 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">8.2. SPI ENC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">8.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">8.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">8.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">8.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8.2.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">8.2.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">8.2.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">8.2.5.3. 设计要点</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">8.2.5.3.1. 数据读写时启用</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">8.2.5.3.2. 空数据块的检测</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#driver">8.2.5.4. Driver 层接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#drv-spienc-set-cfg">8.2.5.4.1. drv_spienc_set_cfg</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-spienc-start">8.2.5.4.2. drv_spienc_start</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-spienc-stop">8.2.5.4.3. drv_spienc_stop</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-spienc-check-empty">8.2.5.4.4. drv_spienc_check_empty</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hal">8.2.5.5. HAL 层接口设计</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">8.2.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ce/index.html">8.3. CE 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">8. </span>安全</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">8.2. </span>SPI ENC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">8.2.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">8.2.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">8.2.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>bsp/artinchip/drv/spienc/drv_spienc.c，SPIENC Driver 层实现</p></li>
+<li><p>bsp/artinchip/hal/spienc/hal_spienc.c，SPIENC HAL 层实现</p></li>
+<li><p>bsp/artinchip/include/hal/hal_spienc.h，SPIENC HAL 层接口头文件</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">8.2.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>SPIENC 驱动 Driver 层采用直接调用 HAL 层的接口，如果只使用HAL层也可以支持 baremetal 方式的应用场景。</p>
+<div class="figure align-center" id="id7">
+<img alt="../../../_images/sw_system9.png" src="../../../_images/sw_system9.png" />
+<p class="caption"><span class="caption-number">图 8.27 </span><span class="caption-text">SPIENC驱动的软件架构图</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+<p>文件系统或者应用程序通过 MTD 层访问 SPI NOR / SPI NAND 设备的数据，SPI NOR / SPI NAND
+驱动通过 SPI 总线传输数据。</p>
+<p>在 SPI NOR / SPI NAND 驱动通过 SPI 总线访问相关数据时，其实需要发送一系列的命令来进行数据的读写。
+这个过程中，命令通信的数据，包括一些读写 SPI NOR / SPI NAND 的寄存器数据都不能加密，
+仅存储数据部分需要进行加密处理。因此，虽然 SPI_ENC 是在硬件总线上对数据进行加密，
+但是软件使用时需要在 SPI NOR / SPI NAND 驱动 根据需要，提供必要的加解密信息（数据地址和长度），
+并且启动相应的数据传输加解密。</p>
+<p>因此在软件层次上，SPI NOR / SPI NAND 驱动依赖 SPI 驱动以及 SPI_ENC 驱动，而 SPI 驱动与 SPI_ENC
+驱动是并列关系。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">8.2.5.3. </span>设计要点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>在设计实现 SPI_ENC 的驱动时，主要考虑了 SPI_ENC 的本身特点，以及与 SPI NOR / SPI NAND 驱动的结合。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<div class="line-block">
+<div class="line">由于 SPI_ENC 内部使用 eFuse 所提供的密钥，因此不需要通过外部设置密钥函数来设置密钥。</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">8.2.5.3.1. </span>数据读写时启用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>SPI NAND / SPI NOR 驱动通过发送命令的方式与 SPI NAND / SPI NOR 器件进行交互，从而实现数据的读写。
+在使能 SPI_ENC 之后，SPI NAND / SPI NOR 驱动需要进行区分：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>非存储数据的 SPI 传输，不启动 SPI_ENC，按照原有驱动的流程执行</p></li>
+<li><p>存储数据的 SPI 传输，启动 SPI_ENC 进行加密或者解密</p></li>
+</ul>
+</div></blockquote>
+<p>因此 SPI NAND / SPI NOR 驱动需要做一些改动，在对存储数据进行读写时，启动 SPI_ENC。</p>
+<p>以 SPI NAND 为例： 初始化 spinand 时，同时进行加密相关的初始化。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spinand_flash_init</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_init</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>读操作流程：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spinand_read_page</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">SPINAND_FLASH_OPS</span><span class="o">-&gt;</span><span class="n">read_dataload</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">cpos</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">SPINAND_FLASH_DUMMYBYTE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">);</span> <span class="cm">/* cpos = cmd.nbyte + addr.nbyte + dummy.nbyte */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_set_cfg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span> <span class="o">*</span> <span class="n">SPINAND_FLASH_PAGE_SIZE</span><span class="p">,</span> <span class="n">cpos</span><span class="p">,</span> <span class="n">data_len</span><span class="p">);</span> <span class="cm">/* 配置本次加密数据信息 */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_start</span><span class="p">();</span> <span class="cm">/* 启动 SPI_ENC */</span>
+<span class="o">|-&gt;</span> <span class="n">SPINAND_FLASH_OPS</span><span class="o">-&gt;</span><span class="n">read_quadoutput</span><span class="p">(</span><span class="n">qspi</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">data_len</span><span class="p">);</span> <span class="cm">/* 调用标准 SPI API 进行数据传输 */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_stop</span><span class="p">();</span> <span class="cm">/* 停止 SPI_ENC */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_check_empty</span><span class="p">()</span> <span class="cm">/* 检查是否为空 page */</span>
+</pre></div>
+</div>
+<p>写操作流程：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spinand_write_page</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">SPINAND_FLASH_OPS</span><span class="o">-&gt;</span><span class="n">program_dataload</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">cpos</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">SPINAND_FLASH_DUMMYBYTE</span> <span class="o">*</span> <span class="mi">8</span><span class="p">);</span> <span class="cm">/* cpos = cmd.nbyte + addr.nbyte + dummy.nbyte */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_set_cfg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span> <span class="o">*</span> <span class="n">SPINAND_FLASH_PAGE_SIZE</span><span class="p">,</span> <span class="n">cpos</span><span class="p">,</span> <span class="n">data_len</span><span class="p">);</span> <span class="cm">/* 配置本次加密数据信息 */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_start</span><span class="p">();</span> <span class="cm">/* 启动 SPI_ENC */</span>
+<span class="o">|-&gt;</span> <span class="n">SPINAND_FLASH_OPS</span><span class="o">-&gt;</span><span class="n">program_dataload</span><span class="p">();</span> <span class="cm">/* 调用标准 SPI API 进行数据传输 */</span>
+<span class="o">|-&gt;</span> <span class="n">drv_spienc_stop</span><span class="p">();</span> <span class="cm">/* 停止 SPI_ENC */</span>
+<span class="o">|-&gt;</span> <span class="n">SPINAND_FLASH_OPS</span><span class="o">-&gt;</span><span class="n">program_execute</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">8.2.5.3.2. </span>空数据块的检测<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>SPI NAND / SPI NOR 在执行了擦除之后，存储单元上的数据被认为是空的，值都是 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> 。
+但是在使用过程中，读取程序并不一定知道所读取的区域是否是被擦除过，因此在使能了 SPI_ENC 之后，
+通过 SPI 读取回来该区域的数据都是被 SPI_ENC 解密后的数据。原本是被擦除后的 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> ，
+读回来的却是其他数据。</p>
+<p>带来的问题：</p>
+<blockquote>
+<div><p>有些程序，如文件系统，会判断读回来的数据是否都为 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> ，如果是，则认为是未使用的块，做特殊处理。
+现在读回来的数据却被改变了，会导致原来的处理逻辑全部失效。</p>
+</div></blockquote>
+<p>为了解决上述问题，SPI_ENC 提供了一个空块检测功能。如下图所示：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>首先按照正常的流程读取一块数据</p></li>
+<li><p>传输完成之后，检查 SPI_ENC 的状态，如果提示解密前的所有数据都是 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> ，则软件将读取的结果全部置为 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/spienc_empty_detect.png" src="../../../_images/spienc_empty_detect.png" />
+<p class="caption"><span class="caption-number">图 8.28 </span><span class="caption-text">空块检测</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>相关的软件操作，在 <code class="docutils literal notranslate"><span class="pre">spinand_read_page()</span></code> 中读取完数据时进行。</p>
+</div>
+</div>
+<div class="section" id="driver">
+<h2><span class="section-number">8.2.5.4. </span>Driver 层接口设计<a class="headerlink" href="#driver" title="永久链接至标题">¶</a></h2>
+<div class="section" id="drv-spienc-set-cfg">
+<h3><span class="section-number">8.2.5.4.1. </span>drv_spienc_set_cfg<a class="headerlink" href="#drv-spienc-set-cfg" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void drv_spienc_set_cfg(u32 spi_bus, u32 addr, u32 cpos, u32 clen)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>配置加密数据信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">spi_bus - 选择需要配置的 QSPI 设备</div>
+<div class="line">addr - 本次传输数据的起始地址</div>
+<div class="line">cpos - 本次传输密文数据的开始位置</div>
+<div class="line">clen - 本次传输密文的数据长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-spienc-start">
+<h3><span class="section-number">8.2.5.4.2. </span>drv_spienc_start<a class="headerlink" href="#drv-spienc-start" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void drv_spienc_start(void)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>启动 SPI_ENC</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-spienc-stop">
+<h3><span class="section-number">8.2.5.4.3. </span>drv_spienc_stop<a class="headerlink" href="#drv-spienc-stop" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void drv_spienc_stop(void)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>停止 SPI_ENC</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-spienc-check-empty">
+<h3><span class="section-number">8.2.5.4.4. </span>drv_spienc_check_empty<a class="headerlink" href="#drv-spienc-check-empty" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int drv_spienc_check_empty(void)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>检查本次读取数据是否全为空</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，本次传输数据不全为空；1，本次传输数据全为空</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hal">
+<h2><span class="section-number">8.2.5.5. </span>HAL 层接口设计<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h2>
+<p>HAL 层的函数接口声明存放在 hal_spienc.h 中，主要接口有：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hal_spienc_init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_spienc_set_cfg</span><span class="p">(</span><span class="n">u32</span> <span class="n">spi_bus</span><span class="p">,</span> <span class="n">u32</span> <span class="n">addr</span><span class="p">,</span> <span class="n">u32</span> <span class="n">cpos</span><span class="p">,</span> <span class="n">u32</span> <span class="n">clen</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_spienc_start</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_spienc_stop</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_spienc_check_empty</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="8.2.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="8.2.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

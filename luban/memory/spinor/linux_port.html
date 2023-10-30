@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.3.3. Linux 移植 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.4. 文件系统使用指南" href="../filesystem/index.html" />
+    <link rel="prev" title="5.3.2. U-Boot 移植" href="uboot_port.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../sdmc/index.html">5.1. SDMC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.3. SPI NOR 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="config_guide.html">5.3.1. 配置指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uboot_port.html">5.3.2. U-Boot 移植</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.3.3. Linux 移植</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">5.3.3.1. 文件准备</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">5.3.3.2. 驱动索引</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#spi-nor-manufacturer">5.3.3.3. spi_nor_manufacturer</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#flash-info">5.3.3.4. flash_info</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id-table">5.3.3.5. id_table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">5.3.3.6. 总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/index.html">5.4. 文件系统使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.3. </span>SPI NOR 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.3.3. </span>Linux 移植</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux">
+<h1><span class="section-number">5.3.3. </span>Linux 移植<a class="headerlink" href="#linux" title="永久链接至标题">¶</a></h1>
+<p>SPI NOR 驱动 Linux 和 U-Boot 的驱动不一样，Linux 中驱动更复杂一些，本章阐述如何在 Linux 中进行 SPI NOR 器件的移植工作，以 <code class="docutils literal notranslate"><span class="pre">Gigadevice</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gd25q128</span></code> 和 <code class="docutils literal notranslate"><span class="pre">FudanMicro</span></code> 的 <code class="docutils literal notranslate"><span class="pre">FM25Q128</span></code> 为例</p>
+<div class="section" id="id1">
+<h2><span class="section-number">5.3.3.1. </span>文件准备<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>相较于 SPI NAND 器件， SPI NOR 的接口更加标准，但为了统一管理的方便，还是会为某一个公司创建一个文件进行管理，如果该公司的文件已经存在，则直接添加新器件支持即可</p>
+<ul class="simple">
+<li><p>在source/linux-5.10/drivers/mtd/spi-nor/ 下建相应公司的标识的文件，如 fmsh.c cfx.c</p></li>
+<li><p>在Makefile中添加该文件的编译： spi-nor-objs                    += fmsh.o</p></li>
+<li><p>在source/linux-5.10/drivers/mtd/spi-nor/core.h 中声明 extern const struct spi_nor_manufacturer spi_nor_fmsh;</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">5.3.3.2. </span>驱动索引<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>内核中所支持的 SPI NOR 设备通过两级列表进行设置。</p>
+<p>首先检查 <code class="docutils literal notranslate"><span class="pre">source/linux-5.10/drivers/mtd/spi-nor/core.c</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">manufacturers</span></code>,
+查看新设备的厂商是否在列表之中：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">spi_nor_manufacturer</span> <span class="o">*</span><span class="n">manufacturers</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_atmel</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_catalyst</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_eon</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_esmt</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_everspin</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_fujitsu</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_gigadevice</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_intel</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_issi</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_macronix</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_micron</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_st</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_spansion</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_sst</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_winbond</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_xilinx</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_xmc</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">spi_nor_boya</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>再检查具体的设备厂商文件，具体的型号是否在列表之中（ 以gigadevice 为例）:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">flash_info</span> <span class="n">gigadevice_parts</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">......</span>
+   <span class="p">{</span> <span class="s">&quot;gd25q128&quot;</span><span class="p">,</span> <span class="n">INFO</span><span class="p">(</span><span class="mh">0xc84018</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span>
+                       <span class="n">SECT_4K</span> <span class="o">|</span> <span class="n">SPI_NOR_DUAL_READ</span> <span class="o">|</span> <span class="n">SPI_NOR_QUAD_READ</span> <span class="o">|</span>
+                       <span class="n">SPI_NOR_HAS_LOCK</span> <span class="o">|</span> <span class="n">SPI_NOR_HAS_TB</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">......</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>此处检查，需要查找新设备的 Datasheet，找到该设备的 Manufacture 和 Device ID，并查看该 ID 是否出现在列表中。
+例如此处为 <code class="docutils literal notranslate"><span class="pre">0xc84018</span></code> ，其中 Manufacture ID = <code class="docutils literal notranslate"><span class="pre">0xc8</span></code>, Device ID  ID[15~8] = <code class="docutils literal notranslate"><span class="pre">0x40</span></code>, Device ID[7~0] = <code class="docutils literal notranslate"><span class="pre">0x18</span></code> 。</p>
+</div>
+<div class="section" id="spi-nor-manufacturer">
+<h2><span class="section-number">5.3.3.3. </span>spi_nor_manufacturer<a class="headerlink" href="#spi-nor-manufacturer" title="永久链接至标题">¶</a></h2>
+<p>该结构为第一级索引，用来描述器件厂家的信息</p>
+<p>SPI NOR 的接口和操作命令很统一，基本没有需要特殊处理的命令</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="k">struct</span> <span class="nc">spi_nor_manufacturer</span> <span class="n">spi_nor_fmsh</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;FudanMicro&quot;</span><span class="p">,</span>                   <span class="c1">//厂家名字标识</span>
+    <span class="p">.</span><span class="n">parts</span> <span class="o">=</span> <span class="n">fmsh_parts</span><span class="p">,</span>                    <span class="c1">//本驱动支持的器件</span>
+    <span class="p">.</span><span class="n">nparts</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">fmsh_parts</span><span class="p">),</span>       <span class="c1">//支持的器件的个数</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="flash-info">
+<h2><span class="section-number">5.3.3.4. </span>flash_info<a class="headerlink" href="#flash-info" title="永久链接至标题">¶</a></h2>
+<p>虽然和 U-Boot 的代码结构不同，但 flash_info 的描述基本类似，详细信息参考 U-Boot 的章节: <a class="reference internal" href="uboot_port.html#ref-to-spinor-flash-info"><span class="std std-ref">flash_info</span></a></p>
+</div>
+<div class="section" id="id-table">
+<h2><span class="section-number">5.3.3.5. </span>id_table<a class="headerlink" href="#id-table" title="永久链接至标题">¶</a></h2>
+<p>除了使用  dts 的 .compatible = “jedec,spi-nor” 统一匹配所有的 SPI NOR 外，驱动还兼容使用非标准 dts 的使用方式， 即直接在 dts 文件中描述要使用的 SPI NOR 的型号，
+但这会造成固件和器件的紧耦合，不推荐使用</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">struct</span> <span class="nc">spi_mem_driver</span> <span class="n">spi_nor_driver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">spidrv</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="p">.</span><span class="n">driver</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;spi-nor&quot;</span><span class="p">,</span>
+                    <span class="p">.</span><span class="n">of_match_table</span> <span class="o">=</span> <span class="n">spi_nor_of_table</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">.</span><span class="n">id_table</span> <span class="o">=</span> <span class="n">spi_nor_dev_ids</span><span class="p">,</span>
+    <span class="p">},</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">spi_device_id</span> <span class="n">spi_nor_dev_ids</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="cm">/*</span>
+<span class="cm">     * Entries not used in DTs that should be safe to drop after replacing</span>
+<span class="cm">     * them with &quot;spi-nor&quot; in platform data.</span>
+<span class="cm">     */</span>
+    <span class="p">{</span><span class="s">&quot;s25sl064a&quot;</span><span class="p">},</span>  <span class="p">{</span><span class="s">&quot;w25x16&quot;</span><span class="p">},</span>     <span class="p">{</span><span class="s">&quot;m25p10&quot;</span><span class="p">},</span>     <span class="p">{</span><span class="s">&quot;m25px64&quot;</span><span class="p">},</span>
+
+    <span class="cm">/*</span>
+<span class="cm">     * Entries that were used in DTs without &quot;jedec,spi-nor&quot; fallback and</span>
+<span class="cm">     * should be kept for backward compatibility.</span>
+<span class="cm">     */</span>
+    <span class="p">{</span><span class="s">&quot;at25df321a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;at25df641&quot;</span><span class="p">},</span>  <span class="p">{</span><span class="s">&quot;at26df081a&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;mx25l4005a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;mx25l1606e&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;mx25l6405d&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;mx25l12805d&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;mx25l25635e&quot;</span><span class="p">},{</span><span class="s">&quot;mx66l51235l&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;n25q064&quot;</span><span class="p">},</span>    <span class="p">{</span><span class="s">&quot;n25q128a11&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;n25q128a13&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;n25q512a&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;s25fl256s1&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;s25fl512s&quot;</span><span class="p">},</span>  <span class="p">{</span><span class="s">&quot;s25sl12801&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;s25fl008k&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;s25fl064k&quot;</span><span class="p">},</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">5.3.3.6. </span>总结<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>移植一款 SPI NOR，最重要的是 JEDEC ID，通过在数据手册中查找 0x9F 命令获得</p></li>
+<li><p>其他的参数都可以默认设置，INFO(0xa14017, 0, 64 * 1024, n_sectors, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)</p></li>
+<li><p>推荐使用标准 dts 进行 SPI NOR 的兼容</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../filesystem/index.html" class="btn btn-neutral float-right" title="5.4. 文件系统使用指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="uboot_port.html" class="btn btn-neutral float-left" title="5.3.2. U-Boot 移植" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

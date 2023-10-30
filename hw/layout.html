@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3. 布线设计 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="4. 设计自查" href="checklist.html" />
+    <link rel="prev" title="2. 原理图设计" href="design.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ic/index.html">芯片手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">硬件指南</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">1. 概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html">2. 原理图设计</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 布线设计</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3.1. 电源</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.2. 布局</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.3. 旁路和去耦</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dcdc">3.4. DCDC电路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.5. 晶体振荡电路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.6. 高速信号</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">3.7. 屏蔽</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.8. 隔离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">3.9. 信号回流路径</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html">4. 设计自查</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">硬件指南</a> &raquo;</li>
+        
+      <li><span class="section-number">3. </span>布线设计</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">3. </span>布线设计<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">3.1. </span>电源<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>在多层板设计中，一般建议采用单独的电源平面和地平面。这样可以降低电源和地回路的阻抗。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>参考 20H 规则是多层板电源和地层设计的准则，将地层边缘多出电源层边缘大约20倍两平面间距，这是做是为了减少板子边缘的边缘场辐射的影响。</p></li>
+<li><p>在电源层和地平面上尽量避免密集摆放过孔，并保持电源层和地平面的完整性。</p></li>
+<li><p>在合适的位置放置过孔。这样可以降低电源和地层的阻抗，有助于为信号提供一个低阻抗的回流回路。</p></li>
+<li><p>避免信号走线跨越不同的参考平面，否则会引入信号完整性问题。</p></li>
+<li><p>在多电源平面和地平面分割时， 优先考虑敏感信号的布局走线。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">3.2. </span>布局<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>PCB 布局时，要将不同功能的电路进行分类， 比如电源、模拟电路、数字电路和高速接口连接器等，这些电路应该分模块放置在 PCB 板的不同区域。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>电源电路放在电源输入端附近。元件放置按照从高压到低压的顺序。</p></li>
+<li><p>DCDC 或 LDO去耦电容应尽量靠近输入输出端口。</p></li>
+<li><p>模拟电路更容易受外界干扰影响，建议将模拟电路放置在远离高压和高速数字电路的地方，减少噪声耦合。</p></li>
+<li><p>建议晶体靠近CPU放置，尽量包地处理， 与其他敏感元件保持安全距离。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">3.3. </span>旁路和去耦<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>在CPU电源引脚处， 就近放置电容，使电流先通过电容，然后再进入电源引脚。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>去耦电容和旁路电容必须放置在尽可能靠近电源引脚的位置，保证滤波电路寄生电感最小化和电源提供瞬态大电流的能力。</p></li>
+<li><p>注意去耦电容和旁路电容的电流回流路径，一定要保证回流路径尽量短。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="dcdc">
+<h2><span class="section-number">3.4. </span>DCDC电路<a class="headerlink" href="#dcdc" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>DC/DC 需要外接电感和电容。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>尽量缩小 DC/DC 电流回路，以避免 EMI 问题。</p></li>
+<li><p>让电流首先流经滤波电容，然后流至引脚。</p></li>
+<li><p>去耦电容尽量靠近管脚放置，以避免环路不稳定问题。</p></li>
+<li><p>尽量避免电感和电容之间不必要的通孔，降低环路阻抗。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">3.5. </span>晶体振荡电路<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>PCB 板上的晶体振荡器电路有两种，分别是无源晶体振荡器和有源晶体振荡器。无源晶振应连接在器件的 XTAL_XI 和 XTAL_XO 引脚之间。晶体振荡器一方面会产生噪声，另一方面， 它也是易受干扰的器件。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>晶体和 XTAL_XI / XTAL_XO 之间的走线应尽可能短。同时保持两条走线的长度差不多。</p></li>
+<li><p>将负载电容和反馈电阻放在晶体附近，以减少寄生参数的影响。</p></li>
+<li><p>晶体和时钟线尽量包地处理。</p></li>
+<li><p>地平面必须位于与晶体相关的组件和走线的正下方。</p></li>
+<li><p>其他的信号线尽量避免穿过晶体相邻层。</p></li>
+<li><p>提高晶体振荡器驱动电路的驱动强度会得到更好的 EMS 性能，但也可能会增加功耗并带来 EMI 的问题。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">3.6. </span>高速信号<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>高速信号走线必须考虑传播延迟和阻抗匹配以保证设备间的良好通信。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>高速信号（EMMC、SD卡、RMII、RGMII、USB、LVDS、MIPI、DVP） 避免跨越不同参考平面。</p></li>
+<li><p>避免在参考平面上出现开槽、孔洞和分割的情况。</p></li>
+<li><p>当必须在不同的参考平面之间进行切换时，最好在信号切换通孔 100mil 附近提供接地回路通孔。</p></li>
+<li><p>同一层上的时钟或片选信号与相邻走线的间距至少应为 2.5 倍（ 距参考平面的高度为 2.5 倍）， 以减少串扰。</p></li>
+<li><p>数据、地址、时钟和控制信号线应做好阻抗匹配和走线长度控制（长度差取决于总线速率），并保持相同的过孔数量。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">3.7. </span>屏蔽<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>连接器接口有金属的或者是外壳导电的，裸漏在外面可被接触到，例如 USB接口 和以太网接口等，设计时应当考虑防静电性能。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>连接器（USB接口 和以太网接口）应设置单独的外壳屏蔽地。</p></li>
+<li><p>外壳接地回路要尽量短，避免跨越关键信号或元件。</p></li>
+<li><p>建议外壳屏蔽地用RC滤波电路或铁氧体磁珠连接到PCB数字地，注意连接位置和元件参数选择，这对EMC和EMI 性能至关重要。</p></li>
+<li><p>信号尽量从背面走线，远离外壳。</p></li>
+<li><p>其他元件或走线，与外壳保持一定的安全距离，尽量5mm以上，避免空气辐射路径。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">3.8. </span>隔离<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>隔离在设计中经常用到，例如隔离强电和弱电，或者模拟电路和数字电路。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>以RS485隔离电路为例，接口端与通信电路之间采用光耦隔离器用于隔离。为了提高隔离性能，在隔离器下方设置隔离间隙，且这种隔离间隙应用于所有平面（顶层/电源层/地层/底层）以保证良好的隔离性能。</p></li>
+<li><p>以模拟电路隔离为例，模拟地和数字地之间需要设置隔离间隙，可放置0R电阻单点接地。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">3.9. </span>信号回流路径<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>信号和电源都有自己的回流路径。地平面可以是信号和电源的参考面，电源面也可以作为信号的参考面。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>回路面积越小，阻抗越小，串扰和电磁干扰（EMI）的影响也就越小。</p></li>
+<li><p>去耦电容尽量靠近输入输出端口，回流信号可以从表层直接回流至源端，最大程度地减小电流回流路径和阻抗。</p></li>
+<li><p>考虑信号返回路径时，一定要避开电流回环路径上的断开点。电流回环的面积越小，EMC的性能就越好。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="checklist.html" class="btn btn-neutral float-right" title="4. 设计自查" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="design.html" class="btn btn-neutral float-left" title="2. 原理图设计" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

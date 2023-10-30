@@ -1,0 +1,1033 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>4.2.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="4.2.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="4.2.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">4. 系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bwm/index.html">4.1. BWM 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4.2. CMU 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">4.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure.html">4.2.2. CMU配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">4.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">4.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.2.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">4.2.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">4.2.5.2. 模块架构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#clock">4.2.5.2.1. clock</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#reset">4.2.5.2.2. reset</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">4.2.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id6">4.2.5.3.1. 初始化流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">4.2.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#fixed-parent-clk-cfg">4.2.5.4.1. fixed_parent_clk_cfg</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#multi-parent-clk-cfg">4.2.5.4.2. multi_parent_clk_cfg</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#pll-clk-cfg">4.2.5.4.3. pll_clk_cfg</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#disp-clk-cfg">4.2.5.4.4. disp_clk_cfg</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">4.2.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-clk-hw-fixed-parent-module">4.2.5.5.1. aic_clk_hw_fixed_parent_module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-clk-hw-multi-parent-module">4.2.5.5.2. aic_clk_hw_multi_parent_module</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-clk-hw-pll">4.2.5.5.3. aic_clk_hw_pll</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-clk-hw-disp">4.2.5.5.4. aic_clk_hw_disp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">4.2.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../dma/index.html">4.3. DMA 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtc/index.html">4.4. RTC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tsensor/index.html">4.5. TSensor 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">4.6. Watchdog 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wri/index.html">4.7. WRI 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">4. </span>系统</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">4.2. </span>CMU 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">4.2.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">4.2.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">4.2.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>内核的时钟驱动框架位于linux-5.10/drivers/clk目录下，CMU的底层驱动位于/drivers/clk/artinchip/目录下。</p>
+<p>Artinchip的目录结构如下图所示：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>clk-aic.h</p></td>
+<td><p>aic公用头文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk-aic.c</p></td>
+<td><p>CMU各个时钟的初始化，注册文件</p></td>
+</tr>
+<tr class="row-even"><td><p>clk-disp.c</p></td>
+<td><p>显示模块的时钟文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk-fixed-parent-mod.c</p></td>
+<td><p>只有一个父时钟源的时钟文件</p></td>
+</tr>
+<tr class="row-even"><td><p>clk-multi-parent-mod.c</p></td>
+<td><p>具有多个父时钟源的时钟文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk-pll.c</p></td>
+<td><p>PLL时钟文件</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">4.2.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="clock">
+<h3><span class="section-number">4.2.5.2.1. </span>clock<a class="headerlink" href="#clock" title="永久链接至标题">¶</a></h3>
+<p>按照CCF框架，时钟分为六类：</p>
+<ul class="simple">
+<li><p>fixed rate clock</p></li>
+<li><p>gate clock</p></li>
+<li><p>divider clock</p></li>
+<li><p>mux clock</p></li>
+<li><p>fixed clock</p></li>
+<li><p>composite clock</p></li>
+</ul>
+<p>时钟树中的每一个divider、gate、mux等都需要定义一个struct clk_hw结构体。CMU模块中有非常多的gate和divider，所以为了代码的简洁性和易用性，CMU的驱动并未严格按照CCF框架编写。CMU驱动模块将时钟分为五种类型：</p>
+<ul class="simple">
+<li><p>fixed rate clock</p></li>
+<li><p>fixed parent module clock</p></li>
+<li><p>multiple parent module clock</p></li>
+<li><p>display module clock</p></li>
+<li><p>pll clock</p></li>
+</ul>
+<p>fixed rate clock包含OSC24M、RC1M、OSC32K三个时钟，这种时钟频率固定，不能调节频率，不能打开或关闭(即底层ops无enable和disable函数)。</p>
+<p>fixed parent module clock实现只有一个父时钟源的时钟驱动，主要是各个外设模块的时钟，该类型时钟可以改变时钟频率，打开或关闭时钟，获取父时钟源参数，但不能设置或改变父时钟源。</p>
+<p>multiple parent module clock实现有多个父时钟源的时钟驱动，主要是各种总线时钟，该类型的时钟最为复杂，可以打开或关闭时钟，调节频率，获取或改变父时钟源。</p>
+<p>display module clock实现了几个与显示模块相关的时钟驱动，由于显示模块除了自身的模块时钟外，还有一个像素时钟，相应的底层寄存器的设计也不同，所以将显示相关的几个时钟重新设计了底层驱动。</p>
+<p>pll clock实现了CMU的pll时钟驱动。</p>
+<p>在上述的几种分类中，每中分类都自定义了一个该类型的结构体，基于该结构体实现各种时钟操作。在fixed parent module的结构体中，定义了模块的bus_gate和module_gate，以及该类型时钟的分频系数，相当于综合了CCF框架中的gate和divider。multiple parent module的结构体中定义了gate，mux以及分频系数，相当于综合了CCF框架中的gate，divider和mux。几种类型的时钟支持的API接口如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>fixed
+rate
+clock</p></th>
+<th class="head"><p>fixed
+parent
+clock</p></th>
+<th class="head"><p>multi
+parent
+clock</p></th>
+<th class="head"><p>disp
+clock</p></th>
+<th class="head"><p>pll
+clock</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>clk_prepare</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>√</p></td>
+<td rowspan="2"><p>√</p></td>
+<td rowspan="2"><p>√</p></td>
+<td rowspan="2"><p>√</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk_prepare_enable</p></td>
+</tr>
+<tr class="row-even"><td><p>clk_unprepare</p></td>
+<td rowspan="2"></td>
+<td rowspan="2"><p>√</p></td>
+<td rowspan="2"><p>√</p></td>
+<td rowspan="2"><p>√</p></td>
+<td rowspan="2"><p>√</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk_disable_unprepare</p></td>
+</tr>
+<tr class="row-even"><td><p>clk_set_rate</p></td>
+<td></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk_get_rate</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+</tr>
+<tr class="row-even"><td><p>clk_round_rate</p></td>
+<td></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+</tr>
+<tr class="row-odd"><td><p>clk_set_parent</p></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>clk_get_parent</p></td>
+<td></td>
+<td></td>
+<td><p>√</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>recalc_rate</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+<td><p>√</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id4">
+<h4><span class="section-number">4.2.5.2.1.1. </span>时钟树框图<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<div class="figure align-center">
+<img alt="../../../_images/clock_tree2.png" src="../../../_images/clock_tree2.png" />
+</div>
+<p>根据CMU驱动中对时钟的五种分类，对时钟树中各个时钟的归类进行了划分，如上图所示。</p>
+</div>
+<div class="section" id="fixed-rate-clock">
+<h4><span class="section-number">4.2.5.2.1.2. </span>fixed rate clock<a class="headerlink" href="#fixed-rate-clock" title="永久链接至标题">¶</a></h4>
+<p>属于该类型的时钟有：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>时钟</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>fixed rate clock</p></td>
+<td><p>OSC24M</p></td>
+</tr>
+<tr class="row-odd"><td><p>OSC32K</p></td>
+</tr>
+<tr class="row-even"><td><p>RC1M</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fixed-parent-clock">
+<h4><span class="section-number">4.2.5.2.1.3. </span>fixed parent clock<a class="headerlink" href="#fixed-parent-clock" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>时钟</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="31"><p>fixed parent clock</p></td>
+<td><p>CLK_DMA</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_CE</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_USBD</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_USBH0-1</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_USB_PHY0-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_GMAC0-1</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_SPI0-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_SDMMC0-2</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_SYSCON</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_RTC</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_I2S0-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_ADDA</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_DE</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_GE</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_VE</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_WDOG</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_SID</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_GTC</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_GPIO</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_UART0-7</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_TWI0-3</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_CAN0-1</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_PWM</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_ADCIM</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_GPADC</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_RTP</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_TSEN</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_CIR</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_RGB</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_LVDS</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_MIPIDSI</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="multiple-parent-clock">
+<h4><span class="section-number">4.2.5.2.1.4. </span>multiple parent clock<a class="headerlink" href="#multiple-parent-clock" title="永久链接至标题">¶</a></h4>
+<p>属于该类型的时钟有：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>时钟</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="9"><p>multi parent clock</p></td>
+<td><p>CLK_CPU</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_AHB0</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_APB0</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_APB1</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_AXI0</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_OUT0</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_OUT1</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_OUT2</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_OUT3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pll-clock">
+<h4><span class="section-number">4.2.5.2.1.5. </span>pll clock<a class="headerlink" href="#pll-clock" title="永久链接至标题">¶</a></h4>
+<p>属于该类型的时钟有：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>时钟</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="5"><p>pll clock</p></td>
+<td><p>CLK_PLL_INT0</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_PLL_INT1</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_PLL_FRA0</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_PLL_FRA1</p></td>
+</tr>
+<tr class="row-even"><td><p>CLK_PLL_FRA2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="disp-clock">
+<h4><span class="section-number">4.2.5.2.1.6. </span>disp clock<a class="headerlink" href="#disp-clock" title="永久链接至标题">¶</a></h4>
+<p>属于该类型的时钟有：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>时钟</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="2"><p>disp clock</p></td>
+<td><p>CLK_PIX</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLK_SCLK</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="reset">
+<h3><span class="section-number">4.2.5.2.2. </span>reset<a class="headerlink" href="#reset" title="永久链接至标题">¶</a></h3>
+<p>CMU模块的reset驱动实现基于内核提供的reset framework。其实现过程是创建并填充内核提供的reset controller设备结构体(struct reset_controller_dev)，并调用相应的接口：</p>
+<ul class="simple">
+<li><p>reset_controller_register</p></li>
+<li><p>reset_controller_unregister</p></li>
+</ul>
+<p>注册或注销。reset controller的结构体如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">reset_controller_dev</span> <span class="p">{</span>
+        <span class="k">const</span> <span class="k">struct</span> <span class="nc">reset_control_ops</span> <span class="o">*</span><span class="n">ops</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">module</span> <span class="o">*</span><span class="n">owner</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">list_head</span> <span class="n">list</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">list_head</span> <span class="n">reset_control_head</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">device_node</span> <span class="o">*</span><span class="n">of_node</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">of_reset_n_cells</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">of_xlate</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">reset_controller_dev</span> <span class="o">*</span><span class="n">rcdev</span><span class="p">,</span>
+                    <span class="k">const</span> <span class="k">struct</span> <span class="nc">of_phandle_args</span> <span class="o">*</span><span class="n">reset_spec</span><span class="p">);</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">nr_resets</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>驱动实现过程主要是对reset_control_ops结构体中的函数指针进行填充，基本上是reset驱动的所有工作量。在CMU模块的reset驱动中，实现了对assert和deassert及status三个函数指针的填充。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">4.2.5.3. </span>关键流程设计<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id6">
+<h3><span class="section-number">4.2.5.3.1. </span>初始化流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id7">
+<h4><span class="section-number">4.2.5.3.1.1. </span>clock驱动初始化<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
+<p>通过CLK_OF_DECLARE宏定义，CMU的clock驱动会在__clock_of_table段存放一个struct of_device_id类型的变量。在系统初始化内核时，调用of_clk_init函数，在该函数中调用相应的时钟初始化函数。初始化流程如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/clock_init.png" src="../../../_images/clock_init.png" />
+</div>
+</div>
+<div class="section" id="id8">
+<h4><span class="section-number">4.2.5.3.1.2. </span>reset驱动初始化<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h4>
+<p>通过postcore_initcall宏，将reset驱动存放到.initcall2.init段中。在系统初始化内核时，调用aic_reset_init函数进行reset controller的初始化和注册。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">4.2.5.4. </span>数据结构设计<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>CMU模块关键结构体定义如下：</p>
+<div class="section" id="fixed-parent-clk-cfg">
+<h3><span class="section-number">4.2.5.4.1. </span>fixed_parent_clk_cfg<a class="headerlink" href="#fixed-parent-clk-cfg" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">fixed_parent_clk_cfg</span> <span class="p">{</span>              <span class="c1">//fixed parent clock的配置结构体</span>
+    <span class="n">u32</span> <span class="n">id</span><span class="p">;</span>                            <span class="c1">//fixed parent clock的索引值，参考3.2节CLK_xxx</span>
+    <span class="n">u16</span> <span class="n">type</span><span class="p">;</span>
+    <span class="n">u8</span> <span class="n">fact_mult</span><span class="p">;</span>
+    <span class="n">u8</span> <span class="n">fact_div</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>                  <span class="c1">//fixed parent clock的名字</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">parent_names</span><span class="p">;</span>    <span class="c1">//父时钟的名字</span>
+    <span class="kt">int</span> <span class="n">num_parents</span><span class="p">;</span>                   <span class="c1">//父时钟个数</span>
+    <span class="n">u32</span> <span class="n">offset_reg</span><span class="p">;</span>                     <span class="c1">//时钟在CMU中的偏移地址</span>
+    <span class="n">s8</span> <span class="n">bus_gate_bit</span><span class="p">;</span>                    <span class="c1">//总线使能位偏移</span>
+    <span class="n">s8</span> <span class="n">mod_gate_bit</span><span class="p">;</span>                   <span class="c1">//模块使能位偏移</span>
+    <span class="n">u8</span> <span class="n">div_bit</span><span class="p">;</span>                         <span class="c1">//分频系数偏移</span>
+    <span class="n">u8</span> <span class="n">div_width</span><span class="p">;</span>                       <span class="c1">//分频系数所占位宽</span>
+    <span class="k">struct</span> <span class="nc">clk_hw</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">fixed_parent_clk_cfg</span> <span class="o">*</span><span class="n">cfg</span><span class="p">);</span> <span class="c1">//指向初始化和注册fixed parent时钟的函数指针</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multi-parent-clk-cfg">
+<h3><span class="section-number">4.2.5.4.2. </span>multi_parent_clk_cfg<a class="headerlink" href="#multi-parent-clk-cfg" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">multi_parent_clk_cfg</span> <span class="p">{</span>                 <span class="c1">//multi parent clock的配置结构体</span>
+    <span class="n">u32</span> <span class="n">id</span><span class="p">;</span>                               <span class="c1">//multi parent clock的索引值，参考3.3节CLK_xxx</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">parent_names</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">num_parents</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">offset_reg</span><span class="p">;</span>
+    <span class="n">s32</span> <span class="n">gate_bit</span><span class="p">;</span>
+    <span class="n">u8</span> <span class="n">mux_bit</span><span class="p">;</span>                          <span class="c1">//父时钟源选择位的bit偏移</span>
+    <span class="n">u8</span> <span class="n">mux_width</span><span class="p">;</span>                        <span class="c1">//父时钟源选择位所占位宽</span>
+    <span class="n">u8</span> <span class="n">div0_bit</span><span class="p">;</span>                           <span class="c1">//分频系数偏移</span>
+    <span class="n">u8</span> <span class="n">div0_width</span><span class="p">;</span>                         <span class="c1">//分频系数所占位宽</span>
+    <span class="k">struct</span> <span class="nc">clk_hw</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">multi_parent_clk_cfg</span> <span class="o">*</span><span class="n">cfg</span><span class="p">);</span> <span class="c1">//指向初始化和注册multi parent时钟的函数指针</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pll-clk-cfg">
+<h3><span class="section-number">4.2.5.4.3. </span>pll_clk_cfg<a class="headerlink" href="#pll-clk-cfg" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">pll_clk_cfg</span> <span class="p">{</span>                          <span class="c1">//pll时钟的配置结构体</span>
+    <span class="n">u32</span> <span class="n">id</span><span class="p">;</span>                               <span class="c1">//pll时钟的索引值，参考3.4节CLK_xxx</span>
+    <span class="k">enum</span> <span class="n">aic_pll_type</span> <span class="n">type</span><span class="p">;</span>                 <span class="c1">//pll时钟的类型，是整数分频还是小数分频</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">parent_names</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">num_parents</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">offset_int</span><span class="p">;</span>                         <span class="c1">//整数分频寄存器的偏移</span>
+    <span class="n">u32</span> <span class="n">offset_fra</span><span class="p">;</span>                         <span class="c1">//小数分频寄存器的偏移</span>
+    <span class="n">u32</span> <span class="n">offset_sdm</span><span class="p">;</span>                       <span class="c1">//展频寄存器的偏移</span>
+    <span class="k">struct</span> <span class="nc">clk_hw</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">pll_clk_cfg</span> <span class="o">*</span><span class="n">cfg</span><span class="p">);</span> <span class="c1">//指向初始化和注册pll时钟的函数指针</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disp-clk-cfg">
+<h3><span class="section-number">4.2.5.4.4. </span>disp_clk_cfg<a class="headerlink" href="#disp-clk-cfg" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">disp_clk_cfg</span> <span class="p">{</span>                          <span class="c1">//显示模块时钟配置的结构体</span>
+    <span class="n">u32</span> <span class="n">id</span><span class="p">;</span>                                 <span class="c1">//显示模块时钟的索引值，参考3.5节CLK_xxx</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="k">const</span> <span class="o">*</span><span class="n">parent_names</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">num_parents</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">offset_reg</span><span class="p">;</span>                          <span class="c1">//显示模块时钟使能寄存器</span>
+    <span class="n">s8</span> <span class="n">bus_gate_bit</span><span class="p">;</span>                         <span class="c1">//显示模块总线使能位偏移</span>
+    <span class="n">s8</span> <span class="n">mod_gate_bit</span><span class="p">;</span>                        <span class="c1">//显示模块模块使能位偏移</span>
+    <span class="n">u32</span> <span class="n">offset_div_reg</span><span class="p">;</span>                      <span class="c1">//显示模块分频寄存器偏移</span>
+    <span class="n">u8</span> <span class="n">divn_bit</span><span class="p">;</span>                            <span class="c1">//分频系数N偏移</span>
+    <span class="n">u8</span> <span class="n">divn_width</span><span class="p">;</span>                         <span class="c1">//分频系数N所占位宽</span>
+    <span class="n">u8</span> <span class="n">divm_bit</span><span class="p">;</span>                           <span class="c1">//分频系数M偏移</span>
+    <span class="n">u8</span> <span class="n">divm_width</span><span class="p">;</span>                         <span class="c1">//分频系数M所占位宽</span>
+    <span class="n">u8</span> <span class="n">flag_bit</span><span class="p">;</span>                             <span class="c1">//分频系数M标志位</span>
+    <span class="k">struct</span> <span class="nc">clk_hw</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)(</span><span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">disp_clk_cfg</span> <span class="o">*</span><span class="n">cfg</span><span class="p">);</span> <span class="c1">//指向初始化和注册显示模块时钟的函数指针</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">4.2.5.5. </span>接口设计<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-clk-hw-fixed-parent-module">
+<h3><span class="section-number">4.2.5.5.1. </span>aic_clk_hw_fixed_parent_module<a class="headerlink" href="#aic-clk-hw-fixed-parent-module" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct clk_hw *aic_clk_hw_fixed_parent(void __iomem *base, const struct fixed_parent_clk_cfg *cfg)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化fixed parent clock，并对时钟进行注册</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">base：CMU寄存器的基地址</div>
+<div class="line">cfg：指向配置参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回struct clk_hw*类型的指针</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-clk-hw-multi-parent-module">
+<h3><span class="section-number">4.2.5.5.2. </span>aic_clk_hw_multi_parent_module<a class="headerlink" href="#aic-clk-hw-multi-parent-module" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct clk_hw *aic_clk_hw_multi_parent(void __iomem *base, const struct multi_parent_clk_cfg *cfg)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化multi parent clock，并对时钟进行注册</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">base：CMU寄存器的基地址</div>
+<div class="line">cfg：指向配置参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回struct clk_hw*类型的指针</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-clk-hw-pll">
+<h3><span class="section-number">4.2.5.5.3. </span>aic_clk_hw_pll<a class="headerlink" href="#aic-clk-hw-pll" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct clk_hw *aic_clk_hw_pll(void __iomem *base, const struct pll_clk_cfg *cfg)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化pll clock，并对时钟进行注册</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">base：CMU寄存器的基地址</div>
+<div class="line">cfg：指向配置参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回struct clk_hw*类型的指针</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-clk-hw-disp">
+<h3><span class="section-number">4.2.5.5.4. </span>aic_clk_hw_disp<a class="headerlink" href="#aic-clk-hw-disp" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct clk_hw *aic_clk_hw_disp(void __iomem *base, const struct disp_clk_cfg *cfg)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化disp clock，并对时钟进行注册</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">base：CMU寄存器的基地址</div>
+<div class="line">cfg：指向配置参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回struct clk_hw*类型的指针</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="4.2.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="4.2.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

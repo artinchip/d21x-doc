@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6. 开发板 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="7. 文档" href="manuals.html" />
+    <link rel="prev" title="5. 工具" href="tools-brief.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../product/index.html">产品简介</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">快速入门</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ic-brief.html">1. SoC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk-brief.html">2. Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lite-brief.html">3. RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baremetal-brief.html">4. 裸机系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-brief.html">5. 工具</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. 开发板</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#d211bb-v1">6.1. D211BB-V1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.1.1. 开发板标识</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.1.2. 规格</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">6.1.3. 器件布局</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">6.1.4. 实物图</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">6.1.5. 方案配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">6.1.6. 原理图</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">6.1.7. 供电跳线</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#d211bb-v2">6.2. D211BB-V2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">6.2.1. 开发板标识</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">6.2.2. 规格</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">6.2.3. 器件布局</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">6.2.4. 实物图</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">6.2.5. 方案配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">6.2.6. 原理图</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#d211dc-v1">6.3. D211DC-V1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id15">6.3.1. 开发板标识</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">6.3.2. 规格</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">6.3.3. 器件布局</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">6.3.4. 实物图</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">6.3.5. 方案配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">6.3.6. 原理图</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#d213ec-v4">6.4. D213EC-V4</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id21">6.4.1. 开发板标识</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">6.4.2. 规格</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id23">6.4.3. 器件布局</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id24">6.4.4. 实物图</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">6.4.5. 方案配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">6.4.6. 原理图</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manuals.html">7. 文档</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">快速入门</a> &raquo;</li>
+        
+      <li><span class="section-number">6. </span>开发板</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6. </span>开发板<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>D211 针对不同的封装共开发了4套开发板供客户进行参考</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 12%" />
+<col style="width: 9%" />
+<col style="width: 16%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>开发板</p></th>
+<th class="head"><p>存储</p></th>
+<th class="head"><p>封装</p></th>
+<th class="head"><p>DDR</p></th>
+<th class="head"><p>屏幕</p></th>
+<th class="head"><p>工程目录</p></th>
+<th class="head"><p>其他功能</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>D211BB-V1-0</p></td>
+<td><p>enand</p></td>
+<td><p>qfn88</p></td>
+<td><p>64M ddr2</p></td>
+<td><p>lvds</p></td>
+<td><p>demo</p></td>
+<td><p>RTP,MAC,SDCARD</p></td>
+</tr>
+<tr class="row-odd"><td><p>D211BB-V2-0</p></td>
+<td><p>spi-nand</p></td>
+<td><p>qfn88</p></td>
+<td><p>64M ddr2</p></td>
+<td><p>rgb565</p></td>
+<td><p>demo88_nand</p></td>
+<td><p>CTP,MAC,CAN,SDCARD</p></td>
+</tr>
+<tr class="row-even"><td><p>D211DC-V1-0</p></td>
+<td><p>spi-nand</p></td>
+<td><p>qfn100</p></td>
+<td><p>128M ddr3</p></td>
+<td><p>lvds</p></td>
+<td><p>demo100_nand</p></td>
+<td><p>CTP,MAC,CAN,SDCARD,USB</p></td>
+</tr>
+<tr class="row-odd"><td><p>D213EC-V4-0</p></td>
+<td><p>spi-nand</p></td>
+<td><p>qfn128</p></td>
+<td><p>128M ddr3</p></td>
+<td><p>lvds</p></td>
+<td><p>demo128_nand</p></td>
+<td><p>CTP,MAC,SDCARD,WIFI,USB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="d211bb-v1">
+<h2><span class="section-number">6.1. </span>D211BB-V1<a class="headerlink" href="#d211bb-v1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3><span class="section-number">6.1.1. </span>开发板标识<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>D211BB-DEMO-V1-0 22/12/15</p>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">6.1.2. </span>规格<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>7寸屏1024*600，RGB565/LVDS+RTP/CTP</p></li>
+<li><p>SD Card</p></li>
+<li><p>EMMC x4/QSPI NAND Flash</p></li>
+<li><p>RTC +USB0</p></li>
+<li><p>100M Ethernet0</p></li>
+<li><p>RS485+RS232+UART+TWI</p></li>
+<li><p>DSPK+Buzzer</p></li>
+<li><p>DMIC</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">6.1.3. </span>器件布局<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/layout.jpg" src="../_images/layout.jpg" />
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">6.1.4. </span>实物图<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/dev_board.png" src="../_images/dev_board.png" />
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.1.5. </span>方案配置<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>方案的配置对应的是 target/d211/demo/ 工程</p>
+<p>make 时选择 d211_demo_defconfig</p>
+<p>固件：d211_demo_v1.0.0.img</p>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.1.6. </span>原理图<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>该开发板的原理图 <a class="reference download internal" download="" href="../_downloads/0e5c5839f611b1fffa119edde5aebaf5/d211bb-demo-v1-1-20230107.pdf"><code class="xref download docutils literal notranslate"><span class="pre">打开原理图</span></code></a>.</p>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">6.1.7. </span>供电跳线<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>为了功耗测试方便，对几个大模块的供电进行了跳线隔离</p>
+<ul class="simple">
+<li><p>VCC-ETH： 百兆网络的 VCC</p></li>
+<li><p>VCC-LCD：屏幕的 VCC</p></li>
+<li><p>VCC-UART： RS232 和 RS485 的 VCC</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="d211bb-v2">
+<h2><span class="section-number">6.2. </span>D211BB-V2<a class="headerlink" href="#d211bb-v2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h3><span class="section-number">6.2.1. </span>开发板标识<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>D211BB-DEMO-V1-0 22/12/15</p>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">6.2.2. </span>规格<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>7寸屏1024*600，RGB565/LVDS+RTP/CTP</p></li>
+<li><p>SD Card</p></li>
+<li><p>EMMC x4/QSPI NAND Flash</p></li>
+<li><p>RTC +USB0</p></li>
+<li><p>100M Ethernet0</p></li>
+<li><p>RS485+CAN+UART+TWI</p></li>
+<li><p>DSPK+Buzzer</p></li>
+<li><p>DMIC</p></li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">6.2.3. </span>器件布局<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/layout2.jpg" src="../_images/layout2.jpg" />
+</div>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">6.2.4. </span>实物图<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/dev_board2.png" src="../_images/dev_board2.png" />
+</div>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">6.2.5. </span>方案配置<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>方案的配置对应的是 target/d211/demo88_nand/ 工程</p>
+<p>make 时选择 d211_demo88_nand_defconfig</p>
+<p>固件：d211_demo88_nand_page_2k_block_128k_v1.0.0.img</p>
+</div>
+<div class="section" id="id14">
+<h3><span class="section-number">6.2.6. </span>原理图<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>该开发板的原理图 <a class="reference download internal" download="" href="../_downloads/4814bfe66b21e2ef99555805d88c7c06/D211BB-DEMO-V2-0-20230227.pdf"><code class="xref download docutils literal notranslate"><span class="pre">打开原理图</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="d211dc-v1">
+<h2><span class="section-number">6.3. </span>D211DC-V1<a class="headerlink" href="#d211dc-v1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id15">
+<h3><span class="section-number">6.3.1. </span>开发板标识<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<p>D211DC-DEMO-V1-0 23/03/09</p>
+</div>
+<div class="section" id="id16">
+<h3><span class="section-number">6.3.2. </span>规格<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>寸屏1024*600，LVDS/CTP</p></li>
+<li><p>SD Card</p></li>
+<li><p>QSPI NAND Flash</p></li>
+<li><p>RTC + USB0 + USB1</p></li>
+<li><p>100M Ethernet0</p></li>
+<li><p>WIFI</p></li>
+<li><p>DSPK+DMIC</p></li>
+<li><p>RS485</p></li>
+</ul>
+</div>
+<div class="section" id="id17">
+<h3><span class="section-number">6.3.3. </span>器件布局<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/layout3.jpg" src="../_images/layout3.jpg" />
+</div>
+</div>
+<div class="section" id="id18">
+<h3><span class="section-number">6.3.4. </span>实物图<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/dev_board3.jpg" src="../_images/dev_board3.jpg" />
+</div>
+</div>
+<div class="section" id="id19">
+<h3><span class="section-number">6.3.5. </span>方案配置<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<p>方案的配置对应的是 target/d211/demo100_nand/ 工程</p>
+<p>make 时选择 d211_demo100_nand_defconfig</p>
+<p>固件：d211_demo100_nand_page_2k_block_128k_v1.0.0.img</p>
+</div>
+<div class="section" id="id20">
+<h3><span class="section-number">6.3.6. </span>原理图<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<p>该开发板的原理图 <a class="reference download internal" download="" href="../_downloads/0f31eb2e56df423bef4bad985979b164/D211DC-DEMO-V1-0.pdf"><code class="xref download docutils literal notranslate"><span class="pre">打开原理图</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="d213ec-v4">
+<h2><span class="section-number">6.4. </span>D213EC-V4<a class="headerlink" href="#d213ec-v4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id21">
+<h3><span class="section-number">6.4.1. </span>开发板标识<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+<p>D213ECV-DEMO-V4-0 23-05-29</p>
+</div>
+<div class="section" id="id22">
+<h3><span class="section-number">6.4.2. </span>规格<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>寸屏1024*600，LVDS/CTP</p></li>
+<li><p>10.1寸屏 800*1280，MIPI/CTP</p></li>
+<li><p>SD Card</p></li>
+<li><p>QSPI NAND Flash</p></li>
+<li><p>RTC + USB0 + USB1</p></li>
+<li><p>100M Ethernet0</p></li>
+<li><p>WIFI</p></li>
+<li><p>DSPK+DMIC</p></li>
+<li><p>RS485x2 + RS232x2</p></li>
+<li><p>CAN0 + CAN1</p></li>
+</ul>
+</div>
+<div class="section" id="id23">
+<h3><span class="section-number">6.4.3. </span>器件布局<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/layout4.png" src="../_images/layout4.png" />
+</div>
+</div>
+<div class="section" id="id24">
+<h3><span class="section-number">6.4.4. </span>实物图<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../_images/dev_board4.png" src="../_images/dev_board4.png" />
+</div>
+</div>
+<div class="section" id="id25">
+<h3><span class="section-number">6.4.5. </span>方案配置<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h3>
+<p>方案的配置对应的是 target/d211/demo128_nand/ 工程</p>
+<p>make 时选择 d211_demo128_nand_defconfig</p>
+<p>固件：d211_demo128_nand_page_2k_block_128k_v1.0.0.img</p>
+</div>
+<div class="section" id="id26">
+<h3><span class="section-number">6.4.6. </span>原理图<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h3>
+<p>该开发板的原理图 <a class="reference download internal" download="" href="../_downloads/07988c54f953484ecdb48264f7082e44/D213EC-DEMO-V4-0.pdf"><code class="xref download docutils literal notranslate"><span class="pre">打开原理图</span></code></a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="manuals.html" class="btn btn-neutral float-right" title="7. 文档" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tools-brief.html" class="btn btn-neutral float-left" title="5. 工具" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

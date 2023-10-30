@@ -1,0 +1,887 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>9.1.7. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="9.1.8. 常见问题" href="8_faq.html" />
+    <link rel="prev" title="9.1.6. SPI NAND 平台测试指南" href="6_spinand_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">9. 应用</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">9.1. OTA 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">9.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_emmc_config_guide.html">9.1.2. eMMC OTA参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_spinand_config_guide.html">9.1.3. SPINAND OTA参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_debug_guide.html">9.1.4. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_emmc_test_guide.html">9.1.5. eMMC 平台测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_spinand_test_guide.html">9.1.6. SPI NAND 平台测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">9.1.7. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#luban-ota">9.1.7.1. Luban OTA 升级包制作过程</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ota-sw-images-cfg">9.1.7.1.1. OTA升级包配置文件:sw-images.cfg</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ota-sw-description">9.1.7.1.2. OTA策略描述文件:sw-description</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ota-swupdate-pack-swu">9.1.7.1.3. OTA升级包生成工具:swupdate_pack_swu</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#swupdate-cmd-sh">9.1.7.1.4. 升级脚本:swupdate_cmd.sh</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="8_faq.html">9.1.8. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">9. </span>应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">9.1. </span>OTA 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">9.1.7. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">9.1.7. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="luban-ota">
+<h2><span class="section-number">9.1.7.1. </span>Luban OTA 升级包制作过程<a class="headerlink" href="#luban-ota" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../../_images/swu.png" src="../../../_images/swu.png" />
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>OTA升级包配置文件:sw-images.cfg</p></li>
+<li><p>OTA策略描述文件:sw-description</p></li>
+<li><p>OTA升级包生成工具:swupdate_pack_swu</p></li>
+</ol>
+</div>
+<div class="section" id="ota-sw-images-cfg">
+<h3><span class="section-number">9.1.7.1.1. </span>OTA升级包配置文件:sw-images.cfg<a class="headerlink" href="#ota-sw-images-cfg" title="永久链接至标题">¶</a></h3>
+<p>sw-images.cfg由Luban提供, 用于指导哪些文件会被打包进OTA升级包, 路径为:
+${TARGET_BOARD_DIR}/swupdate/sw-images.cfg</p>
+<div class="section" id="spinand-sw-images-cfg">
+<h4><span class="section-number">9.1.7.1.1.1. </span>SPINAND 平台sw-images.cfg<a class="headerlink" href="#spinand-sw-images-cfg" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">swota_file_list</span><span class="o">=</span><span class="p">(</span>
+<span class="n">$</span><span class="p">{</span><span class="n">TARGET_BOARD_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">swupdate</span><span class="o">/</span><span class="n">sw</span><span class="o">-</span><span class="nl">description</span><span class="p">:</span> <span class="n">sw</span><span class="o">-</span><span class="n">description</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">recovery</span><span class="p">.</span><span class="nl">itb</span><span class="p">:</span><span class="n">recovery</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">kernel</span><span class="p">.</span><span class="nl">itb</span><span class="p">:</span><span class="n">kernel</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">boot_logo</span><span class="p">.</span><span class="nl">png</span><span class="p">:</span><span class="n">logo</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">rootfs_page_2k_block_128k</span><span class="p">.</span><span class="nl">ubifs</span><span class="p">:</span><span class="n">rootfs</span>
+<span class="cp">#下面这行给使用Page为4K的SPINAND方案预留, 目前注释掉</span>
+<span class="cp">#${BINARIES_DIR}/rootfs_page_4k_block_256k.ubifs:rootfs</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>指明打包SWUpdate升级包所需的各个文件的位置, 这些文件会被拷贝到out/images/swupdate目录下, 再生成OTA包。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h4><span class="section-number">9.1.7.1.1.2. </span>SPINAND 平台sw-images.cfg<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">swota_file_list</span><span class="o">=</span><span class="p">(</span>
+<span class="n">$</span><span class="p">{</span><span class="n">TARGET_BOARD_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">swupdate</span><span class="o">/</span><span class="n">sw</span><span class="o">-</span><span class="n">description</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">recovery</span><span class="p">.</span><span class="nl">itb</span><span class="p">:</span><span class="n">recovery</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">kernel</span><span class="p">.</span><span class="nl">itb</span><span class="p">:</span><span class="n">kernel</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">boot_logo</span><span class="p">.</span><span class="nl">png</span><span class="p">:</span><span class="n">logo</span>
+<span class="n">$</span><span class="p">{</span><span class="n">BINARIES_DIR</span><span class="p">}</span><span class="o">/</span><span class="n">rootfs</span><span class="p">.</span><span class="nl">ext4</span><span class="p">:</span><span class="n">rootfs</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sw-images-cfg">
+<h4><span class="section-number">9.1.7.1.1.3. </span>sw-images.cfg 使用说明<a class="headerlink" href="#sw-images-cfg" title="永久链接至标题">¶</a></h4>
+<p>sw-images.cfg文件名称是限定的, 名称不对, 编译OTA升级包出错。</p>
+<p>关于${TARGET_BOARD_DIR}/swupdate目录下sw-description文件名称, 可以指定为其它名称, 需要对应修改sw-images.cfg的描述信息, 只要最终打包进OTA升级包, 重命名为sw-description并放在第一个文件即可。</p>
+<p>比如将sw-description改为sw-description-ubi, 对应修改sw-images.cfg如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${TARGET_BOARD_DIR}/swupdate/sw-description-ubi: sw-description
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ota-sw-description">
+<h3><span class="section-number">9.1.7.1.2. </span>OTA策略描述文件:sw-description<a class="headerlink" href="#ota-sw-description" title="永久链接至标题">¶</a></h3>
+<p>OTA升级包中, 需要包含sw-description文件, 以及本次升级使用到的各个文件, 例如Kernel, RootFS。
+整个OTA升级包是cpio格式, 且要求sw-description文件在第一个位置, 包名称要求以.swu结尾才能被SWUpdate程序识别到。</p>
+<p>sw-description 文件是SWUpdate官方规定的OTA策略描述文件, 具体语法可以参考SWUpdate官方文档, 使用libconfig格式。</p>
+<p>Luban为 eMMC SPINAND 提供了一个示例, 参考sw-images.cfg, 默认指定路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${TARGET_BOARD_DIR}/swupdate/sw-description: sw-description
+</pre></div>
+</div>
+<div class="section" id="spinand-sw-description">
+<h4><span class="section-number">9.1.7.1.2.1. </span>SPINAND sw-description 文件使用说明<a class="headerlink" href="#spinand-sw-description" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">software</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="cm">/*版本号和描述符*/</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;1.0.0.0&quot;</span><span class="p">;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Firmware update for Luban Project&quot;</span><span class="p">;</span>
+
+    <span class="n">stable</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="cm">/*</span>
+<span class="cm">         * upgrade_recovery stage:</span>
+<span class="cm">         * Running in main system, and upgrade the &quot;recovery&quot; partition,</span>
+<span class="cm">         * then reboot to the new recovery system</span>
+<span class="cm">         * Step1: Download image and upgrade the &quot;recovery&quot; partition</span>
+<span class="cm">         * Step2: Setup bootenv &quot;swu_entry, boot_partition, boot_os, swu_status&quot;</span>
+<span class="cm">         * Step3: Reboot to the new recovery system to run &quot;upgrade_kernel&quot;</span>
+<span class="cm">        */</span>
+        <span class="cm">/*</span>
+<span class="cm">         * 内层entry, upgrade_recovery,</span>
+<span class="cm">         * 当调用swupdate xxx -e stable,upgrade_recovery 时, 会匹配到这部分, 执行{}内的动作,</span>
+<span class="cm">         * 可以修改, 调用的时候传入匹配的字符串即可</span>
+<span class="cm">         */</span>
+        <span class="n">upgrade_recovery</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nl">images</span><span class="p">:</span> <span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;recovery&quot;</span><span class="p">;</span>          <span class="c1">//烧录文件名称</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mtd8&quot;</span><span class="p">;</span>           <span class="c1">//对应设备节点</span>
+                    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flash&quot;</span><span class="p">;</span>                     <span class="c1">//操作mtd分区</span>
+                    <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@recovery&quot;</span><span class="p">;</span>           <span class="c1">//自动获取对应镜像的sha256值</span>
+                <span class="p">}</span>
+            <span class="p">);</span>
+
+            <span class="cm">/*</span>
+<span class="cm">             * Some key env variables:</span>
+<span class="cm">             * swu_boardname: The selected board name. Here is &quot;stable&quot;</span>
+<span class="cm">             * swu_entry: The upgrade entry selection. Value can be</span>
+<span class="cm">             * &quot;upgrade_recovery&quot; and &quot;upgrade_kernel&quot;</span>
+<span class="cm">             * boot_os: SPL Falcon mode flag. Should be set to &quot;no&quot;</span>
+<span class="cm">             * during OTA</span>
+<span class="cm">             * swu_status: OTA status flag, Value can be &quot;progress&quot;,</span>
+<span class="cm">             * &quot;finish&quot;</span>
+<span class="cm">             * swu_reboot: When this flag is set to &quot;yes&quot;, the</span>
+<span class="cm">             * system will be reboot when all works done for current</span>
+<span class="cm">             * stage.</span>
+<span class="cm">            */</span>
+            <span class="cm">/*</span>
+<span class="cm">             * image处理完以后, 需要设置一些标志, 切换状态,</span>
+<span class="cm">             * swu_entry= upgrade_kernel, 下次升级upgrade_kernel,</span>
+<span class="cm">             * boot_partition= recovery, 下次引导recovery里面的内核启动,</span>
+<span class="cm">             * boot_os= no, 临时关闭Falcon模式, 请查看后面注释信息,</span>
+<span class="cm">             * swu_status OTA升级的状态, 备用, Luban添加,</span>
+<span class="cm">             * swu_reboot=yes,升级upgrade_recovery完成, 和外部脚本配合, 指示外部脚本做reboot动作</span>
+<span class="cm">             */</span>
+            <span class="nl">bootenv</span><span class="p">:</span> <span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_entry&quot;</span><span class="p">;</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;upgrade_kernel&quot;</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;boot_partition&quot;</span><span class="p">;</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;recovery&quot;</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;boot_os&quot;</span><span class="p">;</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_status&quot;</span><span class="p">;</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;progress&quot;</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_reboot&quot;</span><span class="p">;</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">);</span>
+        <span class="p">};</span>
+
+        <span class="cm">/*</span>
+<span class="cm">        * upgrade_kernel stage:</span>
+<span class="cm">        * Running in Recovery system, it will upgrade some key</span>
+<span class="cm">        * partitions, then reboot to main system.</span>
+<span class="cm">        * Step1: Download and upgrade partitons</span>
+<span class="cm">        * Step2: Setup ENV variables, and mark OTA &quot;finish&quot;</span>
+<span class="cm">        * Step3: Reboot to main system</span>
+<span class="cm">        */</span>
+        <span class="n">upgrade_kernel</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nl">images</span><span class="p">:</span> <span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;logo&quot;</span><span class="p">;</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mtd5&quot;</span><span class="p">;</span>
+                    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flash&quot;</span><span class="p">;</span>
+                    <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@logo&quot;</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
+                    <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mtd6&quot;</span><span class="p">;</span>
+                    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;flash&quot;</span><span class="p">;</span>
+                    <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@kernel&quot;</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;rootfs&quot;</span><span class="p">;</span>
+                    <span class="n">volume</span> <span class="o">=</span> <span class="s">&quot;rootfs&quot;</span><span class="p">;</span>                      <span class="c1">//ubi分区名称</span>
+                    <span class="n">installed</span><span class="o">-</span><span class="n">directly</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>      <span class="c1">//读取升级镜像使用流控方式, 不用先拷贝到本地flash上</span>
+                    <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@rootfs&quot;</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">);</span>
+
+            <span class="nl">bootenv</span><span class="p">:</span> <span class="p">(</span>
+                        <span class="p">{</span>
+                                <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;boot_partition&quot;</span><span class="p">;</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                                <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_param&quot;</span><span class="p">;</span>         <span class="c1">//情况环境变量</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                                <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_boardname&quot;</span><span class="p">;</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                                <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_entry&quot;</span><span class="p">;</span>
+                                <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_status&quot;</span><span class="p">;</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;finish&quot;</span><span class="p">;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_reboot&quot;</span><span class="p">;</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
+                        <span class="p">}</span>
+                    <span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>U-Boot环境变量boot_partition用来指导主系统和Recovery系统之间切换过程。</p></li>
+<li><p>当U-Boot使能了Falcon功能, SPL程序会直接引导内核启动, 不会执行U-Boot程序, 也就不会判断环境变量boot_partition进行系统之间的切换, 因此需要通过设置boot_os=no, 临时关闭Falcon功能。</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="emmc-sw-description">
+<h4><span class="section-number">9.1.7.1.2.2. </span>eMMC sw-description 文件使用说明<a class="headerlink" href="#emmc-sw-description" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">software</span> <span class="o">=</span>
+<span class="p">{</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;1.0.0.0&quot;</span><span class="p">;</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Firmware update for Luban Project&quot;</span><span class="p">;</span>
+
+        <span class="n">stable</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="cm">/*</span>
+<span class="cm">                * upgrade_recovery stage:</span>
+<span class="cm">                * Running in main system, and upgrade the &quot;recovery&quot; partition,</span>
+<span class="cm">                * then reboot to the new recovery system</span>
+<span class="cm">                * Step1: Download image and upgrade the &quot;recovery&quot; partition</span>
+<span class="cm">                * Step2: Setup bootenv &quot;swu_entry, boot_partition, boot_os, swu_status&quot;</span>
+<span class="cm">                * Step3: Reboot to the new recovery system to run &quot;upgrade_kernel&quot;</span>
+<span class="cm">                */</span>
+                <span class="n">upgrade_recovery</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="nl">images</span><span class="p">:</span> <span class="p">(</span>
+                                <span class="p">{</span>
+                                        <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;recovery&quot;</span><span class="p">;</span>
+                                        <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mmcblk0p10&quot;</span><span class="p">;</span>
+                                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;raw&quot;</span><span class="p">;</span>       <span class="c1">//eMMC存储介质</span>
+                                        <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@recovery&quot;</span><span class="p">;</span>
+                                <span class="p">}</span>
+                        <span class="p">);</span>
+
+                        <span class="cm">/*</span>
+<span class="cm">                        * Some key env variables:</span>
+<span class="cm">                        * swu_boardname: The selected board name. Here is &quot;stable&quot;</span>
+<span class="cm">                        * swu_entry: The upgrade entry selection. Value can be</span>
+<span class="cm">                        * &quot;upgrade_recovery&quot; and &quot;upgrade_kernel&quot;</span>
+<span class="cm">                        * boot_os: SPL Falcon mode flag. Should be set to &quot;no&quot;</span>
+<span class="cm">                        * during OTA</span>
+<span class="cm">                        * swu_status: OTA status flag, Value can be &quot;progress&quot;,</span>
+<span class="cm">                        * &quot;finish&quot;</span>
+<span class="cm">                        * swu_reboot: When this flag is set to &quot;yes&quot;, the</span>
+<span class="cm">                        * system will be reboot when all works done for current</span>
+<span class="cm">                        * stage.</span>
+<span class="cm">                        */</span>
+                        <span class="nl">bootenv</span><span class="p">:</span> <span class="p">(</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_entry&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;upgrade_kernel&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;boot_partition&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;recovery&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;boot_os&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_status&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;progress&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_reboot&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
+                                <span class="p">}</span>
+                        <span class="p">);</span>
+                <span class="p">};</span>
+
+                <span class="cm">/*</span>
+<span class="cm">                * upgrade_recovery stage:</span>
+<span class="cm">                * Running in main system, and upgrade the &quot;recovery&quot; partition,</span>
+<span class="cm">                * then reboot to the new recovery system</span>
+<span class="cm">                * Step1: Download image and upgrade the &quot;recovery&quot; partition</span>
+<span class="cm">                * Step2: Setup bootenv &quot;swu_entry, boot_partition, boot_os, swu_status&quot;</span>
+<span class="cm">                * Step3: Reboot to the new recovery system to run &quot;upgrade_kernel&quot;</span>
+<span class="cm">                */</span>
+                <span class="n">upgrade_kernel</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="nl">images</span><span class="p">:</span> <span class="p">(</span>
+                                <span class="p">{</span>
+                                        <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;logo&quot;</span><span class="p">;</span>
+                                        <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mmcblk0p8&quot;</span><span class="p">;</span>
+                                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;raw&quot;</span><span class="p">;</span>
+                                        <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@logo&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
+                                        <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mmcblk0p9&quot;</span><span class="p">;</span>
+                                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;raw&quot;</span><span class="p">;</span>
+                                        <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@kernel&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;rootfs&quot;</span><span class="p">;</span>
+                                        <span class="n">device</span> <span class="o">=</span> <span class="s">&quot;/dev/mmcblk0p11&quot;</span><span class="p">;</span>
+                                        <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;raw&quot;</span><span class="p">;</span>
+                                        <span class="n">installed</span><span class="o">-</span><span class="n">directly</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>  <span class="c1">//使用流控方式</span>
+                                        <span class="n">sha256</span> <span class="o">=</span> <span class="s">&quot;@rootfs&quot;</span><span class="p">;</span>
+                                <span class="p">}</span>
+                        <span class="p">);</span>
+
+                        <span class="nl">bootenv</span><span class="p">:</span> <span class="p">(</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;boot_partition&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;kernel&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_param&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_boardname&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_entry&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_status&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;finish&quot;</span><span class="p">;</span>
+                                <span class="p">},</span>
+                <span class="p">{</span>
+                                        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;swu_reboot&quot;</span><span class="p">;</span>
+                                        <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">);</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ota-swupdate-pack-swu">
+<h3><span class="section-number">9.1.7.1.3. </span>OTA升级包生成工具:swupdate_pack_swu<a class="headerlink" href="#ota-swupdate-pack-swu" title="永久链接至标题">¶</a></h3>
+<p>制作OTA升级包通过功能命令swupdate_pack_swu, 相关文件路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">common</span><span class="o">/</span><span class="n">post</span><span class="o">-</span><span class="n">image</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>swupdate_pack_swu具体调用了cpio命令进行打包。</p>
+<p>使用方法:
+在编译主系统完成后, 会自动执行swupdate_pack_swu命令生成&lt;board&gt;.swu。</p>
+<p>OTA包组成:</p>
+<div class="figure align-center">
+<img alt="../../../_images/pack_swu.png" src="../../../_images/pack_swu.png" />
+</div>
+<p>解压OTA包的方法:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cpio -idv &lt; xxx.swu
+</pre></div>
+</div>
+</div>
+<div class="section" id="swupdate-cmd-sh">
+<h3><span class="section-number">9.1.7.1.4. </span>升级脚本:swupdate_cmd.sh<a class="headerlink" href="#swupdate-cmd-sh" title="永久链接至标题">¶</a></h3>
+<p>OTA的升级由SWUpdate程序完成, 但是如何使用SWUpdate完成整个OTA流程, 需要一个应用程序对流程进行控制, swupdate_cmd.sh脚本就是一个OTA流程控制脚本。</p>
+<p>swupdate_cmd.sh脚本主要功能如下:</p>
+<ol class="arabic simple">
+<li><p>触发和进入OTA升级</p></li>
+<li><p>生成和传递合适的参数给SWUpdate程序</p></li>
+<li><p>阶段升级完成后, 控制系统重启</p></li>
+</ol>
+<p>swupdate_cmd.sh位于以下路径:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span><span class="o">/</span><span class="n">third</span><span class="o">-</span><span class="n">party</span><span class="o">/</span><span class="n">swupdate</span><span class="o">/</span><span class="n">swupdate_cmd</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<div class="section" id="id3">
+<h4><span class="section-number">9.1.7.1.4.1. </span>启动升级脚本命令解析<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<p>具体解析过程如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>swupdate_cmd<span class="o">()</span>
+<span class="o">{</span>
+        <span class="k">while</span> <span class="nb">true</span>
+        <span class="k">do</span>
+                <span class="nv">swu_param</span><span class="o">=</span><span class="k">$(</span>fw_printenv -n swu_param <span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+                <span class="nv">swu_boardname</span><span class="o">=</span><span class="k">$(</span>fw_printenv -n swu_boardname <span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+                <span class="nv">swu_entry</span><span class="o">=</span><span class="k">$(</span>fw_printenv -n swu_entry <span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+                <span class="nv">swu_version</span><span class="o">=</span><span class="k">$(</span>fw_printenv -n swu_version <span class="m">2</span>&gt;/dev/null<span class="k">)</span>   <span class="c1"># 从env 环境变量里面读取swu相关环境变量</span>
+                <span class="nb">echo</span> <span class="s2">&quot;swu_param: ##</span><span class="nv">$swu_param</span><span class="s2">##&quot;</span>
+                <span class="nb">echo</span> <span class="s2">&quot;swu_boardname: ##</span><span class="nv">$swu_boardname</span><span class="s2">##&quot;</span>
+                <span class="nb">echo</span> <span class="s2">&quot;swu_entry: ##</span><span class="nv">$swu_entry</span><span class="s2">##&quot;</span>
+
+                <span class="nv">check_version_para</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+                <span class="o">[</span> x<span class="s2">&quot;</span><span class="nv">$swu_version</span><span class="s2">&quot;</span> !<span class="o">=</span> x<span class="s2">&quot;&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">{</span>         <span class="c1"># 解析swu_version</span>
+                        <span class="nb">echo</span> <span class="s2">&quot;now version is </span><span class="nv">$swu_version</span><span class="s2">&quot;</span>
+                        <span class="nv">check_version_para</span><span class="o">=</span><span class="s2">&quot;-N </span><span class="nv">$swu_version</span><span class="s2">&quot;</span>
+                <span class="o">}</span>
+
+                <span class="o">[</span> x<span class="s2">&quot;</span><span class="nv">$swu_entry</span><span class="s2">&quot;</span> <span class="o">=</span> x<span class="s2">&quot;&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">{</span>            <span class="c1"># 如果$swu_entry为空, 跳出swupdate_cmd函数</span>
+                        <span class="nb">echo</span> <span class="s2">&quot;no swupdate_cmd to run, wait for reboot swupdate&quot;</span>
+                        <span class="k">return</span>
+                <span class="o">}</span>
+
+                <span class="nb">echo</span> <span class="s2">&quot;###now do swupdate###&quot;</span>
+
+                <span class="nb">echo</span> <span class="s2">&quot;##swupdate -v</span><span class="nv">$swu_param</span><span class="s2"> -e &quot;</span><span class="nv">$swu_boardname</span>,<span class="nv">$swu_entry</span><span class="s2">&quot; ##&quot;</span>
+                swupdate -v<span class="nv">$swu_param</span> -e <span class="s2">&quot;</span><span class="nv">$swu_boardname</span><span class="s2">,</span><span class="nv">$swu_entry</span><span class="s2">&quot;</span>
+                <span class="c1"># 执行具体的升级过程</span>
+
+                <span class="nv">swu_reboot</span><span class="o">=</span><span class="k">$(</span>fw_printenv -n swu_reboot <span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+                <span class="nb">echo</span> <span class="s2">&quot;swu_reboot: ##</span><span class="nv">$swu_reboot</span><span class="s2">##&quot;</span>
+                <span class="k">if</span> <span class="o">[</span> x<span class="s2">&quot;</span><span class="nv">$swu_reboot</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;xyes&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>    <span class="c1"># $swu_reboot == yes 强制重启</span>
+                        fw_setenv swu_reboot
+                        reboot -f
+                <span class="k">fi</span>
+
+                sleep <span class="m">1</span>
+        <span class="k">done</span>
+<span class="o">}</span>
+
+<span class="c1"># 当$swu_entry为空, 跳转到此处执行程序</span>
+mkdir -p /var/lock
+
+<span class="c1"># 读取传递的参数信息，写入到环境变量里面</span>
+<span class="o">[</span> <span class="nv">$#</span> -ne <span class="m">0</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">{</span>
+        <span class="nb">echo</span> <span class="s2">&quot;config new swupdate&quot;</span>
+        <span class="nv">swu_input</span><span class="o">=</span><span class="nv">$*</span>
+        <span class="nb">echo</span> <span class="s2">&quot;swu_input: ##</span><span class="nv">$swu_input</span><span class="s2">##&quot;</span>
+
+        <span class="nv">swu_param</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot; </span><span class="nv">$swu_input</span><span class="s2">&quot;</span> <span class="p">|</span> sed -E <span class="s1">&#39;s/ -e +[^ ]*//&#39;</span><span class="k">)</span>
+<span class="c1">#       echo &quot;swu_param: ##$swu_param##&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;swu_param=</span><span class="nv">$swu_param</span><span class="s2">&quot;</span> &gt; /tmp/swupdate_param_file
+        <span class="nv">swu_param_e</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot; </span><span class="nv">$swu_input</span><span class="s2">&quot;</span> <span class="p">|</span> awk -F <span class="s1">&#39; -e &#39;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+        <span class="nv">swu_param_e</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$swu_param_e</span><span class="s2">&quot;</span> <span class="p">|</span> awk -F <span class="s1">&#39; &#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+        <span class="nv">swu_boardname</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$swu_param_e</span><span class="s2">&quot;</span> <span class="p">|</span> awk -F <span class="s1">&#39;,&#39;</span> <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+<span class="c1">#       echo &quot;swu_boardname: ##$swu_boardname##&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;swu_boardname=</span><span class="nv">$swu_boardname</span><span class="s2">&quot;</span> &gt;&gt; /tmp/swupdate_param_file
+        <span class="nv">swu_entry</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$swu_param_e</span><span class="s2">&quot;</span> <span class="p">|</span> awk -F <span class="s1">&#39;,&#39;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+<span class="c1">#       echo &quot;swu_entry: ##$swu_entry##&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;swu_entry=</span><span class="nv">$swu_entry</span><span class="s2">&quot;</span> &gt;&gt; /tmp/swupdate_param_file
+        fw_setenv -s /tmp/swupdate_param_file
+<span class="c1">#       一次写入所有的环境变量，延长存储介质寿命</span>
+        sync
+
+        <span class="nb">echo</span> <span class="s2">&quot;## set swupdate_param done ##&quot;</span>
+
+<span class="o">}</span>
+
+swupdate_cmd
+<span class="c1"># 跳转到swupdate_cmd执行程序</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4><span class="section-number">9.1.7.1.4.2. </span>主系统下启动升级命令过程<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<p>当带参调用swupdate_cmd.sh时, 脚本取出“-e xxx,yyy”部分信息, 保存到 “swu_boardname”和“swu_entry” 环境变量, 将其余参数原样保存到“swu_param” 环境变量。</p>
+<p>SPINAND 主系统下启动升级命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./usr/lib/swupdate/swupdate_cmd.sh -i /mnt/ota/d211_per2_spinand.swu -e stable,upgrade_recovery
+</pre></div>
+</div>
+<p>自动调用 swupdate $swu_param -e “$swu_boardname,$ swu_entry”启动升级</p>
+</div>
+<div class="section" id="recovery">
+<h4><span class="section-number">9.1.7.1.4.3. </span>Recovery系统下启动升级命令过程<a class="headerlink" href="#recovery" title="永久链接至标题">¶</a></h4>
+<p>当不带参调用swupdate_cmd.sh时, 脚本从env 读取“swu_boardname”、“swu_entry”、“swu_param”环境变量</p>
+<p>SPINAND Recovery系统下自动启动升级命令</p>
+<blockquote>
+<div><p>./usr/lib/swupdate/swupdate_cmd.sh</p>
+</div></blockquote>
+<p>自动调用 swupdate $swu_param -e “$swu_boardname,$ swu_entry”启动升级</p>
+</div>
+<div class="section" id="id5">
+<h4><span class="section-number">9.1.7.1.4.4. </span>升级过程中的重启实现<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<p>当主系统或者Recovery系统对应的程序升级完成以后, 在sw-description里面设置swu_reboot
+=yes, swupdate_cmd.sh在检测到该值以后, 会调用重启命令。</p>
+</div>
+<div class="section" id="id6">
+<h4><span class="section-number">9.1.7.1.4.5. </span>环境变量其它用法<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p>如果客户需要传递其它信息, 比如wifi密码, ip地址等可以通过修改swupdate_cmd.sh
+在env.txt里面添加设置对应。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="8_faq.html" class="btn btn-neutral float-right" title="9.1.8. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="6_spinand_test_guide.html" class="btn btn-neutral float-left" title="9.1.6. SPI NAND 平台测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

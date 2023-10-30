@@ -1,0 +1,1255 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.7.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.7.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.7.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.7. PINCTRL 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.7.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure.html">7.7.2. PINCTRL配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.7.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.7.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.7.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.7.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.7.5.2. 模块架构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pinctrl">7.7.5.2.1. pinctrl驱动</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#gpio">7.7.5.2.2. gpio驱动</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#irqchip">7.7.5.2.3. irqchip驱动</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.7.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#pin">7.7.5.3.1. pin脚功能定义</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.7.5.3.2. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#pinmux">7.7.5.3.3. 设备pinmux配置流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.7.5.3.4. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">7.7.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-desc-function">7.7.5.4.1. aic_desc_function</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-desc-pin">7.7.5.4.2. aic_desc_pin</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pinctrl-group">7.7.5.4.3. aic_pinctrl_group</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pinctrl-function">7.7.5.4.4. aic_pinctrl_function</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-bank">7.7.5.4.5. aic_gpio_bank</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pinctrl">7.7.5.4.6. aic_pinctrl</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">7.7.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pconf-group-get">7.7.5.5.1. aic_pconf_group_get</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pctrl-dt-node-to-map">7.7.5.5.2. aic_pctrl_dt_node_to_map</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pctrl-get-groups-count">7.7.5.5.3. aic_pctrl_get_groups_count</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pctrl-get-group-name">7.7.5.5.4. aic_pctrl_get_group_name</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pctrl-get-group-pins">7.7.5.5.5. aic_pctrl_get_group_pins</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pmx-get-funcs-cnt">7.7.5.5.6. aic_pmx_get_funcs_cnt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pmx-get-func-name">7.7.5.5.7. aic_pmx_get_func_name</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pmx-get-func-groups">7.7.5.5.8. aic_pmx_get_func_groups</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pmx-set-mux">7.7.5.5.9. aic_pmx_set_mux</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-pmx-gpio-set-direction">7.7.5.5.10. aic_pmx_gpio_set_direction</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-get">7.7.5.5.11. aic_gpio_get</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-set">7.7.5.5.12. aic_gpio_set</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-direction-input">7.7.5.5.13. aic_gpio_direction_input</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-direction-output">7.7.5.5.14. aic_gpio_direction_output</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-irq-mask">7.7.5.5.15. aic_gpio_irq_mask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpio-irq-unmask">7.7.5.5.16. aic_gpio_irq_unmask</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-gpiolib-register-bank">7.7.5.5.17. aic_gpiolib_register_bank</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.7.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.7. </span>PINCTRL 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.7.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.7.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.7.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>PINCTRL模块的底层驱动位于：linux-5.10/drivers/pinctrl/artinchip/</p>
+<p>驱动文件如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>pinctrl-aic.h</p></td>
+<td><p>pinctrl公用头文件，一些结构体和宏定义</p></td>
+</tr>
+<tr class="row-odd"><td><p>pinctrl-aic.c</p></td>
+<td><p>pinctrl驱动的核心文件，实现了gpio/pinctrl/irq的驱动</p></td>
+</tr>
+<tr class="row-even"><td><p>pinctrl-aic-v1.c</p></td>
+<td><p>pinctrl v1.0的pin脚功能列表，并将该功能列表注册到内核中</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.7.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在linux内核中，pin脚的配置涉及到pinctrl，gpio和irqchip三个子系统。在内核子系统的划分中，pinctrl子系统用来配置pin脚的电气属性及功能复用；gpio子系统主要是GPIO的输入输出设置；同时，GPIO口使用中断时，内核将GPIO controller视为一个级联到GIC的中断控制器，又涉及到irqchip子系统的内容。</p>
+<p>在把pin脚复用为GPIO口时，pinctrl子系统和gpio子系统具有一些功能相同的接口，所以，一些SOC厂商将gpio的驱动和pinctrl的驱动合并在了一起，PINCTRL模块的驱动实现也是采用的这种方式。所以，PINCTRL模块的驱动主要包括了三部分内容：</p>
+<ul class="simple">
+<li><p>电气属性和功能复用配置</p></li>
+<li><p>gpio输入输出设置</p></li>
+<li><p>gpio controller作为irqchip的驱动实现</p></li>
+</ul>
+<div class="section" id="pinctrl">
+<h3><span class="section-number">7.7.5.2.1. </span>pinctrl驱动<a class="headerlink" href="#pinctrl" title="永久链接至标题">¶</a></h3>
+<p>pinctrl子系统对pin controller进行了软件抽象，并由pin controller所实现的操作函数集来管理各个pin脚的属性和复用。子系统中主要的数据结构关系如下图：</p>
+<div class="figure align-center">
+<img alt="../../../_images/pinctrl_data_struct.png" src="../../../_images/pinctrl_data_struct.png" />
+</div>
+<p>其相应的软件基本框架为：</p>
+<div class="figure align-center">
+<img alt="../../../_images/pinctrl_subsystem.png" src="../../../_images/pinctrl_subsystem.png" />
+</div>
+<p>pinctrl子系统的底层驱动实现，主要分为三部分：</p>
+<ul class="simple">
+<li><p>struct pinconf_ops函数集实现，主要用来设置pin脚的电气参数，如上下拉，驱动能力等。</p></li>
+<li><p>struct pinctrl_ops函数集实现，主要用来实现对DTS的解析，获取实现某一功能所需的pin脚信息。</p></li>
+<li><p>struct pinmux_ops函数集实现，主要用来实现功能复用，依据获取到的pin脚信息，实现底层的寄存器配置等。</p></li>
+</ul>
+</div>
+<div class="section" id="gpio">
+<h3><span class="section-number">7.7.5.2.2. </span>gpio驱动<a class="headerlink" href="#gpio" title="永久链接至标题">¶</a></h3>
+<p>常见的gpio有外挂的gpio芯片以及SOC自身的gpio控制器，linux内核将这两种gpio统一看作是gpio chip进行处理。gpio子系统整体框架如下图：</p>
+<div class="figure align-center">
+<img alt="../../../_images/gpio_subsystem.png" src="../../../_images/gpio_subsystem.png" />
+</div>
+<p>gpio子系统的核心就是gpiolib。它的主要作用是：</p>
+<ol class="arabic simple">
+<li><p>向下为gpio chip driver提供注册struct gpio_chip的接口：gpiochip_xxx()</p></li>
+<li><p>向上为gpio consumer提供引用gpio的接口：gpiod_xxx()</p></li>
+<li><p>实现字符设备的功能</p></li>
+<li><p>注册sysfs</p></li>
+</ol>
+<p>作为SOC厂商，需要实现的驱动就是gpio chip driver部分，所以，这部分的主要工作就是实现struct gpio_chip结构体中的函数集，并注册gpio controller。</p>
+</div>
+<div class="section" id="irqchip">
+<h3><span class="section-number">7.7.5.2.3. </span>irqchip驱动<a class="headerlink" href="#irqchip" title="永久链接至标题">¶</a></h3>
+<p>当gpio口接收中断时，linux内核是将gpio作为一个级联到GIC上的二级中断控制器处理的。一个典型的拓扑结构如下图：</p>
+<div class="figure align-center">
+<img alt="../../../_images/irq_arch.png" src="../../../_images/irq_arch.png" />
+</div>
+<p>linux内核将此时的GPIO控制器看作是一个中断控制器，用struct irq_chip进行软件抽象。所以需要实现相应的gpio中断控制器的驱动。按照irqchip子系统的框架，每一个中断线对应一个struct irq_desc结构体，该结构体包含一个handle_irq，是该中断线的high-level中断处理函数。该函数的主要作用是：打开或关闭相应中断号的中断，通知CPU中断处理完成；调用底层的中断处理函数。子系统中定义了几个不同的high-level函数，可以依据不同的中断类型和不同的中断控制器，选择不同的high-level函数。</p>
+<p>与struct gpio_chip的驱动实现有些类似，irqchip的驱动也主要是实现struct irq_chip中的函数集。由于gpio中断控制器是一个二级中断控制器，所以驱动中需要做的工作有：</p>
+<ul class="simple">
+<li><p>实现gpio中断控制器的驱动，主要工作是实现struct irq_chip中的函数集</p></li>
+<li><p>实现每个gpio controller的中断线所对应的中断描述符的hand_irq，用于在gpio触发中断时查找触发中断的gpio line</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.7.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="pin">
+<h3><span class="section-number">7.7.5.3.1. </span>pin脚功能定义<a class="headerlink" href="#pin" title="永久链接至标题">¶</a></h3>
+<p>在pinctrl子系统中，有function和group的概念。function是指某个具体的功能，如uart0、spi1、twi2等。soc的几个pin脚可以构成一个group，形成特定的功能，如PA0和PA1可以组成uart0。一个function往往包含一个或多个group，例如，uart0这个function可以由PA0和PA1组成，也可以由PA2和PA3组成。pinctrl子系统就是通过function和group来确定最终需要设置的pin脚。</p>
+<p>PINCTRL模块的驱动定义了一个结构体数组，存储每个pin脚的所有可复用功能。如下所示，PA0是该pin脚的名称，下面依次是PA0可实现的功能复用。AIC_FUNCTION(index, func_name)用来定义pin脚功能复用时所对应的索引值。即PA0作为GPIOA0时，是使用的function 1；作为uart0时，是使用的function 5。驱动中并不会区分该pin脚是uart0的RX还是TX这些细节。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">struct</span> <span class="nc">aic_desc_pin</span> <span class="n">aic_pins_v1</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">AIC_PIN</span><span class="p">(</span>
+        <span class="n">PINCTRL_PIN</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;PA0&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;GPIOA0&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;GPAI0&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;jtag&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&quot;uart0&quot;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">AIC_PIN</span><span class="p">(</span>
+        <span class="n">PINCTRL_PIN</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;PA1&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;GPIOA1&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;GPAI1&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;jtag&quot;</span><span class="p">),</span>
+        <span class="n">AIC_FUNCTION</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&quot;uart0&quot;</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="cm">/* 此处省略其它pin脚配置 */</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>在pinctrl子系统中，一个group一般会包含多个pin脚。而在PINCTRL模块实现的驱动中，是将每个pin脚都看作一个group，这样做的优点是：</p>
+<ul class="simple">
+<li><p>不需要再单独定义每个group的pin脚组成情况，</p></li>
+<li><p>不需要再定义function与group的对应关系</p></li>
+<li><p>驱动源码简单明了，由上面的数组可以快速直观的了解到每个pin脚可复用的功能</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>按照pinctrl子系统对function和group的定义，gpio模块的uart0包含2个group，每个group包含2个pin脚，通过uart0可以找到这4个pin脚。而按照gpio模块实现的驱动，uart0包含4个group，每个group包含1个pin脚，最终通过uart0也可以找到4个pin脚。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">7.7.5.3.2. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li><p>释放reset和clock</p></li>
+<li><p>调用aic_pctrl_build_state，构建function与group的关系</p></li>
+<li><p>初始化struct aic_pinctrl结构体变量</p></li>
+<li><p>注册pin controller设备</p></li>
+<li><p>调用aic_gpiolib_register_bank，注册各个gpio bank</p></li>
+<li><p>初始化完成</p></li>
+</ol>
+</div>
+<div class="section" id="pinmux">
+<h3><span class="section-number">7.7.5.3.3. </span>设备pinmux配置流程<a class="headerlink" href="#pinmux" title="永久链接至标题">¶</a></h3>
+<p>在各个外设的驱动中，并没有调用与pin脚复用相关的接口，那么各个外设的pin脚复用功能是什么时候生效的呢？pin脚复用功能是如何进行初始化的？了解这个过程，有助于加深对pinctrl子系统的了解。外设的pin脚复用初始化流程如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/pinmux_initialize.png" src="../../../_images/pinmux_initialize.png" />
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.7.5.3.4. </span>中断处理流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../../_images/irq_flow1.png" src="../../../_images/irq_flow1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.7.5.4. </span>数据结构设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-desc-function">
+<h3><span class="section-number">7.7.5.4.1. </span>aic_desc_function<a class="headerlink" href="#aic-desc-function" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_desc_function</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">num</span><span class="p">;</span>  <span class="c1">//pin脚功能所对应的，最终写入寄存器的索引值</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>         <span class="c1">//pin脚对应的功能的名字</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-desc-pin">
+<h3><span class="section-number">7.7.5.4.2. </span>aic_desc_pin<a class="headerlink" href="#aic-desc-pin" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_desc_pin</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">pinctrl_pin_desc</span> <span class="n">pin</span><span class="p">;</span>                <span class="c1">//pin脚的描述符</span>
+    <span class="k">const</span> <span class="k">struct</span> <span class="nc">aic_desc_function</span> <span class="o">*</span><span class="n">functions</span><span class="p">;</span>  <span class="c1">//该pin脚所能设置的功能列表</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-pinctrl-group">
+<h3><span class="section-number">7.7.5.4.3. </span>aic_pinctrl_group<a class="headerlink" href="#aic-pinctrl-group" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_pinctrl_group</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>       <span class="c1">//group名字</span>
+    <span class="n">u32</span> <span class="n">config</span><span class="p">;</span>             <span class="c1">//pin脚的配置参数</span>
+    <span class="n">u32</span> <span class="n">pin</span><span class="p">;</span>                <span class="c1">//pin脚索引值</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-pinctrl-function">
+<h3><span class="section-number">7.7.5.4.4. </span>aic_pinctrl_function<a class="headerlink" href="#aic-pinctrl-function" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_pinctrl_function</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>       <span class="c1">//function名字</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">groups</span><span class="p">;</span>    <span class="c1">//function所对应的所有group列表</span>
+    <span class="n">u32</span> <span class="n">ngroups</span><span class="p">;</span>            <span class="c1">//function所对应的group个数</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-gpio-bank">
+<h3><span class="section-number">7.7.5.4.5. </span>aic_gpio_bank<a class="headerlink" href="#aic-gpio-bank" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_gpio_bank</span> <span class="p">{</span>
+    <span class="n">u32</span> <span class="n">bank_nr</span><span class="p">;</span>        <span class="c1">//gpio port索引值，GPIOA为0,GPIOB为1…</span>
+    <span class="kt">int</span> <span class="n">irq</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">saved_mask</span><span class="p">;</span>
+    <span class="n">spinlock_t</span> <span class="n">lock</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">gpio_chip</span> <span class="n">gpio_chip</span><span class="p">;</span>         <span class="c1">//gpio port的gpio_chip结构</span>
+    <span class="k">struct</span> <span class="nc">pinctrl_gpio_range</span> <span class="n">range</span><span class="p">;</span>    <span class="c1">//该gpio port的range范围</span>
+    <span class="k">struct</span> <span class="nc">irq_domain</span> <span class="o">*</span><span class="n">domain</span><span class="p">;</span>          <span class="c1">//转换hwirq到irq的结构体指针</span>
+    <span class="k">struct</span> <span class="nc">aic_gpio_regs</span> <span class="n">regs</span><span class="p">;</span>          <span class="c1">//GPIO控制器的寄存器</span>
+    <span class="k">struct</span> <span class="nc">aic_pinctrl</span> <span class="o">*</span><span class="n">pctl</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-pinctrl">
+<h3><span class="section-number">7.7.5.4.6. </span>aic_pinctrl<a class="headerlink" href="#aic-pinctrl" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_pinctrl</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">pinctrl_dev</span> <span class="o">*</span><span class="n">pctl_dev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">pinctrl_desc</span> <span class="n">pctl_desc</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_pinctrl_group</span> <span class="o">*</span><span class="n">groups</span><span class="p">;</span>       <span class="c1">//pin controller包含的group列表</span>
+    <span class="n">u32</span> <span class="n">ngroups</span><span class="p">;</span>                            <span class="c1">//pin controller包含的group个数</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">grp_names</span><span class="p">;</span>                 <span class="c1">//pin controller包含的group名字</span>
+    <span class="k">struct</span> <span class="nc">aic_pinctrl_function</span>     <span class="o">*</span><span class="n">functions</span><span class="p">;</span> <span class="c1">//pin controller包含的functions列表</span>
+    <span class="n">u32</span> <span class="n">nfunctions</span><span class="p">;</span>                         <span class="c1">//pin controller包含的functions个数</span>
+    <span class="k">struct</span> <span class="nc">aic_gpio_bank</span> <span class="o">*</span><span class="n">banks</span><span class="p">;</span>            <span class="c1">//pin controller包含的gpio bank列表</span>
+    <span class="n">u32</span> <span class="n">nbanks</span><span class="p">;</span>                             <span class="c1">//pin controller包含的gpio bank个数</span>
+    <span class="k">struct</span> <span class="nc">aic_desc_pin</span> <span class="o">*</span><span class="n">pins</span><span class="p">;</span>              <span class="c1">//pin controller包含的pin列表</span>
+    <span class="n">u32</span> <span class="n">npins</span><span class="p">;</span>                              <span class="c1">//pin controller包含的pin个数</span>
+    <span class="k">struct</span> <span class="nc">reset_control</span> <span class="o">*</span><span class="n">reset</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span> <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">7.7.5.5. </span>接口设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-pconf-group-get">
+<h3><span class="section-number">7.7.5.5.1. </span>aic_pconf_group_get<a class="headerlink" href="#aic-pconf-group-get" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_pconf_group_get(struct pinctrl_dev *pctldev, unsigned group, unsigned long *config)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>从pin controller的groups数组中，获取索引值为group的配置参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备</div>
+<div class="line">group：索引值</div>
+<div class="line">config：指向获取到的pctldev-&gt;groups[group]配置参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pctrl-dt-node-to-map">
+<h3><span class="section-number">7.7.5.5.2. </span>aic_pctrl_dt_node_to_map<a class="headerlink" href="#aic-pctrl-dt-node-to-map" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">static int aic_pctrl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node *node,</div>
+<div class="line-block">
+<div class="line">struct pinctrl_map **map, unsigned *num_maps)</div>
+</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>解析pinctrl结点的子结点，并将各个子结点的参数转换为struct pinctrl_map的结构存储</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备</div>
+<div class="line">node：pin controller的DTS结点</div>
+<div class="line">map：指向动态申请的类型为struct pinctrl_map *的数组，存储各个子结点配置参数</div>
+<div class="line">num_maps：struct pinctrl_map *数组中存储的个数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：执行成功</div>
+<div class="line">&lt;0：执行错误</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pctrl-get-groups-count">
+<h3><span class="section-number">7.7.5.5.3. </span>aic_pctrl_get_groups_count<a class="headerlink" href="#aic-pctrl-get-groups-count" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_pctrl_get_groups_count(struct pinctrl_dev *pctldev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取pin controller中的group个数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>pctldev：pin controller设备指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回group个数</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pctrl-get-group-name">
+<h3><span class="section-number">7.7.5.5.4. </span>aic_pctrl_get_group_name<a class="headerlink" href="#aic-pctrl-get-group-name" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static const char *aic_pctrl_get_group_name(struct pinctrl_dev *pctldev, unsigned group)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>根据索引值group，获取相应group的名字</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备指针</div>
+<div class="line">group：指向pctldev-&gt;groups数组元素的索引值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回相应的group的名字</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pctrl-get-group-pins">
+<h3><span class="section-number">7.7.5.5.5. </span>aic_pctrl_get_group_pins<a class="headerlink" href="#aic-pctrl-get-group-pins" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">static int aic_pctrl_get_group_pins(struct pinctrl_dev *pctldev,unsigned group,</div>
+<div class="line-block">
+<div class="line">const unsigned **pins, unsigned *num_pins)</div>
+</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取group所对应的pin脚信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备指针</div>
+<div class="line">group：指向pctldev-&gt;groups数组元素的索引值</div>
+<div class="line">pins：指向用来存储pin脚信息的数组</div>
+<div class="line">num_pins：该group所包含的pin脚个数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pmx-get-funcs-cnt">
+<h3><span class="section-number">7.7.5.5.6. </span>aic_pmx_get_funcs_cnt<a class="headerlink" href="#aic-pmx-get-funcs-cnt" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_pmx_get_funcs_cnt(struct pinctrl_dev     *pctldev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取pin controller中的function个数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>pctldev：pin controller设备指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回function个数</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pmx-get-func-name">
+<h3><span class="section-number">7.7.5.5.7. </span>aic_pmx_get_func_name<a class="headerlink" href="#aic-pmx-get-func-name" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static const char *aic_pmx_get_func_name(struct pinctrl_dev *pctldev, unsigned function)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>在pin controller的功能数组中，获取索引值为function的功能的名字</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备指针</div>
+<div class="line">function：功能的索引值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回function所对应的功能的名字</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pmx-get-func-groups">
+<h3><span class="section-number">7.7.5.5.8. </span>aic_pmx_get_func_groups<a class="headerlink" href="#aic-pmx-get-func-groups" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">static int aic_pmx_get_func_groups(struct pinctrl_dev *pctldev, unsigned function,</div>
+<div class="line-block">
+<div class="line">const char * const **groups, unsigned * const num_groups)</div>
+</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>在pin controller的所有功能的数组中，获取索引值为function的功能的所有group</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备指针</div>
+<div class="line">function：功能的索引值</div>
+<div class="line">groups：指向用来存储该功能所对应的所有group的数组</div>
+<div class="line">num_groups：该功能所对应的group的个数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pmx-set-mux">
+<h3><span class="section-number">7.7.5.5.9. </span>aic_pmx_set_mux<a class="headerlink" href="#aic-pmx-set-mux" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_pmx_set_mux(struct pinctrl_dev *pctldev, unsigned function, unsigned group)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>根据索引值function和group，设置功能复用</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数值</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备指针</div>
+<div class="line">function：功能的索引值</div>
+<div class="line">group：group索引值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：执行成功
+&lt;0：执行错误</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-pmx-gpio-set-direction">
+<h3><span class="section-number">7.7.5.5.10. </span>aic_pmx_gpio_set_direction<a class="headerlink" href="#aic-pmx-gpio-set-direction" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">static int aic_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,</div>
+<div class="line-block">
+<div class="line">struct pinctrl_gpio_range *range, unsigned gpio, bool input)</div>
+</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置gpio口的输入输出方向</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctldev：pin controller设备指针</div>
+<div class="line">range：每个gpio port的范围</div>
+<div class="line">gpio：所设置的pin脚在range内的偏移</div>
+<div class="line">input：指示是否设置为输入</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpio-get">
+<h3><span class="section-number">7.7.5.5.11. </span>aic_gpio_get<a class="headerlink" href="#aic-gpio-get" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_gpio_get(struct gpio_chip *chip, unsigned offset)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取gpio口的值</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chip：指向每个gpio port的指针</div>
+<div class="line">offset</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>返回该pin脚的高低电平值</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpio-set">
+<h3><span class="section-number">7.7.5.5.12. </span>aic_gpio_set<a class="headerlink" href="#aic-gpio-set" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void aic_gpio_set(struct gpio_chip *chip, unsigned offset, int value)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>将偏移为offset的gpio口的值设置为value</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chip：指向每个gpio port的指针</div>
+<div class="line">offset</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpio-direction-input">
+<h3><span class="section-number">7.7.5.5.13. </span>aic_gpio_direction_input<a class="headerlink" href="#aic-gpio-direction-input" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_gpio_direction_input(struct gpio_chip *chip, unsigned offset)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置gpio口为输入</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chip：指向每个gpio port的指针</div>
+<div class="line">offset</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：执行成功
+&lt;0：执行错误</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpio-direction-output">
+<h3><span class="section-number">7.7.5.5.14. </span>aic_gpio_direction_output<a class="headerlink" href="#aic-gpio-direction-output" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_gpio_direction_output(struct gpio_chip *chip, unsigned offset, int value)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置gpio口为输出，且输出值为value</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chip：指向每个gpio port的指针</div>
+<div class="line">offset</div>
+<div class="line">value：设置的输出值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：执行成功
+&lt;0：执行错误</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpio-irq-mask">
+<h3><span class="section-number">7.7.5.5.15. </span>aic_gpio_irq_mask<a class="headerlink" href="#aic-gpio-irq-mask" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void aic_gpio_irq_mask(struct irq_data *d)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>屏蔽gpio口的中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>d：指向struct irq_data的指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpio-irq-unmask">
+<h3><span class="section-number">7.7.5.5.16. </span>aic_gpio_irq_unmask<a class="headerlink" href="#aic-gpio-irq-unmask" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void aic_gpio_irq_unmask(struct irq_data *d)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>打开gpio口的中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>d：指向struct irq_data的指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-gpiolib-register-bank">
+<h3><span class="section-number">7.7.5.5.17. </span>aic_gpiolib_register_bank<a class="headerlink" href="#aic-gpiolib-register-bank" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_gpiolib_register_bank(struct aic_pinctrl *pctl, struct device_node *np)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>打开gpio口的中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pctl：pin controller设备指针</div>
+<div class="line">np：pin controller的DTS结点</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：执行成功</div>
+<div class="line">&lt;0：执行错误</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.7.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="7.7.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

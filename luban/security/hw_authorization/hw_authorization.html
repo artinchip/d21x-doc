@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>8.4.1. 硬件授权认证 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="9. 应用" href="../../app/index.html" />
+    <link rel="prev" title="8.4. 硬件授权认证" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">8. 安全</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../enc/index.html">8.1. SPI ENC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ce/index.html">8.2. CE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../efuse/index.html">8.3. eFuse 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">8.4. 硬件授权认证</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8.4.1. 硬件授权认证</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">8.4.1.1. 身份认证原理</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">8.4.1.2. 芯片型号认证</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">8.4.1.3. 软件授权认证</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">8.4.1.4. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-rsa-priv-enc">8.4.1.4.1. aic_rsa_priv_enc</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-rsa-pub-dec">8.4.1.4.2. aic_rsa_pub_dec</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hwp-rsa-priv-enc">8.4.1.4.3. aic_hwp_rsa_priv_enc</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#apidemo">8.4.1.5. API使用DEMO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">8. </span>安全</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">8.4. </span>硬件授权认证</a> &raquo;</li>
+        
+      <li><span class="section-number">8.4.1. </span>硬件授权认证</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">8.4.1. </span>硬件授权认证<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>硬件授权认证是基于身份认证原理以及硬件安全密钥实现的安全功能，可以让软件或者第三方合作伙伴对芯片的合法性进行认证。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">8.4.1.1. </span>身份认证原理<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>如下图所示，假设芯片拥有一个 RSA 私钥，软件拥有对应的 RSA 公钥。如果软件指定一笔数据，让芯片使用 RSA 私钥进行加密返回，
+软件使用 RSA 公钥对其进行进行解密，得到的数据是正确的，则可证明该芯片是正确 RSA 私钥的拥有者。</p>
+<div class="figure align-center">
+<img alt="../../../_images/identification.png" src="../../../_images/identification.png" />
+</div>
+<p>芯片安全存储 RSA 私钥的方式有多种，包括烧录在 eFuse 中，然后设置软件不可读写。</p>
+<dl class="simple">
+<dt>D211硬件特性：</dt><dd><ol class="arabic simple">
+<li><p>eFuse 可以通过读写禁止位，控制安全密钥区域是否可以被软件读和写</p></li>
+<li><p>eFuse 的安全密钥区域，一旦被设置为读禁止之后，仅 CE 硬件可访问</p></li>
+<li><p>CE 内部有独立的安全 SRAM，与外界隔绝，仅 CE 可访问，可安全存放密钥</p></li>
+</ol>
+</dd>
+</dl>
+<p>D211 的方案通过硬件安全密钥的方式，加密保存 RSA 私钥。</p>
+<dl class="simple">
+<dt>具体步骤：</dt><dd><ol class="arabic simple">
+<li><p>通过 AES/DES 加密的方式，将 RSA 私钥加密</p></li>
+<li><p>将解密的 AES/DES 密钥，烧录在 eFuse 安全密钥区域，软件不可读写</p></li>
+<li><p>使用时，将 RSA 私钥解密到安全 SRAM</p></li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">8.4.1.2. </span>芯片型号认证<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在一些应用中，通信的一方需要认证芯片的身份，在这种情况下，仅靠读取 CHIP ID 返回是不可信的，可以通过 RSA 身份认证的方式进行。</p>
+<p>芯片型号身份认证通过 AIC 颁发的 RSA 私钥(加密) 和 RSA 公钥对完成。AIC 为每一款芯片内置一个PNK(Part Number Key) 密钥，该密钥与型号一一对应，外界无法读取。</p>
+<p>AIC 为该型号生成一对 RSA 密钥，并且使用 PNK 对 RSA 私钥进行加密，然后将加密后的 RSA 私钥，以及公钥颁发给用户。</p>
+<p>对于需要对芯片型号进行认证的用户需要进行下列操作。</p>
+<dl class="simple">
+<dt>具体步骤：</dt><dd><ol class="arabic simple">
+<li><p>设置 CE 使用 PNK 将加密的 RSA 私钥解密到安全 SRAM</p></li>
+<li><p>让 CE 使用安全 SRAM 中的 RSA 私钥加密一段数据 Nonce，返回给认证方EncNonce</p></li>
+<li><p>认证方使用 RSA 公钥对返回的加密数据进行解密，得到 Nonce，验证数据是否正确</p></li>
+<li><p>数据正确，说明该型号芯片合法</p></li>
+</ol>
+</dd>
+</dl>
+<div class="figure align-center">
+<img alt="../../../_images/chip_certification.png" src="../../../_images/chip_certification.png" />
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">8.4.1.3. </span>软件授权认证<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>芯片身份认证可在软件授权认证中应用。</p>
+<p>在实际应用中，设备可能会集成了不同厂商的软件和算法。软件厂商会有相关知识产权保护、软件授权上的需求，即希望能够限定自身的软件只能运行在指定芯片型号上。</p>
+<p>软件厂商可以通过 PSK(Partner Secret Key) 机制实现安全的授权认证。</p>
+<dl class="simple">
+<dt>具体步骤：</dt><dd><ol class="arabic simple">
+<li><p>设备厂商将一个 eFuse PSK 区域分配给合作伙伴</p></li>
+<li><p>合作厂商将自己的密钥烧录到 PSK 区域，并且设置为软件不可读写</p></li>
+<li><p>合作厂商生成一对 RSA 密钥，并且使用 PSK 将 RSA 私钥加密</p></li>
+<li><p>将加密后的 RSA 私钥，以及对应的 RSA 公钥集成到软件当中</p></li>
+<li><p>需要进行授权检查时，软件设置 CE 使用 PSK，将加密的 RSA 私钥解密到安全 SRAM</p></li>
+<li><p>使用安全 SRAM 中的 RSA 私钥加密一笔数据，返回给认证软件</p></li>
+<li><p>认证软件使用 RSA 公钥解密返回的数据，如果结果正确，说明该芯片是合法授权的芯片</p></li>
+</ol>
+</dd>
+</dl>
+<div class="figure align-center">
+<img alt="../../../_images/sw_certification.png" src="../../../_images/sw_certification.png" />
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>D211共有5组保护密钥，一组是PNK，出厂烧录。另外四组是PSK，由终端厂商自行烧录。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">8.4.1.4. </span>接口设计<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-rsa-priv-enc">
+<h3><span class="section-number">8.4.1.4.1. </span>aic_rsa_priv_enc<a class="headerlink" href="#aic-rsa-priv-enc" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_rsa_priv_enc(int flen, unsigned char *from, unsigned char *to, struct ak_options *opts)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>使用私钥进行加密。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">int flen</div>
+<div class="line-block">
+<div class="line">输入数据长度</div>
+</div>
+<div class="line">from</div>
+<div class="line-block">
+<div class="line">输入需要被加密的数据</div>
+</div>
+<div class="line">to</div>
+<div class="line-block">
+<div class="line">输出加密后的数据</div>
+</div>
+<div class="line">opts</div>
+<div class="line-block">
+<div class="line">一些其它参数</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">成功返回加密后数据长度，失败返回-1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-rsa-pub-dec">
+<h3><span class="section-number">8.4.1.4.2. </span>aic_rsa_pub_dec<a class="headerlink" href="#aic-rsa-pub-dec" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_rsa_pub_dec(int flen, unsigned char *from, unsigned char *to, struct ak_options *opts)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>使用公钥进行解密。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">int flen</div>
+<div class="line-block">
+<div class="line">输入数据长度</div>
+</div>
+<div class="line">from</div>
+<div class="line-block">
+<div class="line">输入需要被解密的数据</div>
+</div>
+<div class="line">to</div>
+<div class="line-block">
+<div class="line">输出解密后的数据</div>
+</div>
+<div class="line">opts</div>
+<div class="line-block">
+<div class="line">一些其它参数</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">成功返回加密后数据长度，失败返回-1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hwp-rsa-priv-enc">
+<h3><span class="section-number">8.4.1.4.3. </span>aic_hwp_rsa_priv_enc<a class="headerlink" href="#aic-hwp-rsa-priv-enc" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hwp_rsa_priv_enc(int flen, unsigned char *from, unsigned char *to, struct ak_options *opts, char *algo)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>使用经过 <code class="docutils literal notranslate"><span class="pre">保护密钥加密过的私钥</span></code> 进行加密。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">flen</div>
+<div class="line-block">
+<div class="line">输入数据长度</div>
+</div>
+<div class="line">from</div>
+<div class="line-block">
+<div class="line">输入需要被解密的数据</div>
+</div>
+<div class="line">to</div>
+<div class="line-block">
+<div class="line">输出解密后的数据</div>
+</div>
+<div class="line">opts</div>
+<div class="line-block">
+<div class="line">一些其它参数</div>
+</div>
+<div class="line">algo</div>
+<div class="line-block">
+<div class="line">指定选用烧录在eFuse中的保护密钥</div>
+<div class="line">PNK_PROTECTED_RSA</div>
+<div class="line">PSK0_PROTECTED_RSA</div>
+<div class="line">PSK1_PROTECTED_RSA</div>
+<div class="line">PSK2_PROTECTED_RSA</div>
+<div class="line">PSK3_PROTECTED_RSA</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">成功返回加密后数据长度，失败返回-1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="apidemo">
+<h2><span class="section-number">8.4.1.5. </span>API使用DEMO<a class="headerlink" href="#apidemo" title="永久链接至标题">¶</a></h2>
+<p>授权的检查可以在 APP/中间件 启动时进行，或者在运行时随机进行。</p>
+<p>Demo 见 source/artinchip/aic-authorization/test/test_aic_hw_authorization.c</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">app_hw_authorization_check</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flen</span><span class="p">,</span>
+                <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">esk</span><span class="p">,</span> <span class="kt">int</span> <span class="n">esk_len</span><span class="p">,</span>
+                <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pk</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pk_len</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">algo</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">ak_options</span> <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">inbuf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">outbuf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">esk_buf</span><span class="p">[</span><span class="n">esk_len</span><span class="p">];</span>
+    <span class="kt">uint8_t</span> <span class="n">pk_buf</span><span class="p">[</span><span class="n">pk_len</span><span class="p">];</span>
+    <span class="kt">size_t</span> <span class="n">pagesize</span> <span class="o">=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">sysconf</span><span class="p">(</span><span class="n">_SC_PAGESIZE</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rlen</span><span class="p">,</span> <span class="n">nonce</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">inbuf</span><span class="p">,</span> <span class="n">pagesize</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pagesize</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to allocate inbuf.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="n">ENOMEM</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">outbuf</span><span class="p">,</span> <span class="n">pagesize</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pagesize</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Failed to allocate outbuf.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="o">-</span><span class="n">ENOMEM</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 1. Set RSA key parameters</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">esk_buf</span><span class="p">,</span> <span class="n">esk</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">);</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">pk_buf</span><span class="p">,</span> <span class="n">pk</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">);</span>
+    <span class="n">opts</span><span class="p">.</span><span class="n">esk_buf</span> <span class="o">=</span> <span class="n">esk_buf</span><span class="p">;</span>
+    <span class="n">opts</span><span class="p">.</span><span class="n">esk_len</span> <span class="o">=</span> <span class="n">esk_len</span><span class="p">;</span>
+    <span class="n">opts</span><span class="p">.</span><span class="n">pk_buf</span> <span class="o">=</span> <span class="n">pk_buf</span><span class="p">;</span>
+    <span class="n">opts</span><span class="p">.</span><span class="n">pk_len</span> <span class="o">=</span> <span class="n">pk_len</span><span class="p">;</span>
+
+    <span class="c1">// 2. Nonce private key encryption</span>
+    <span class="n">rlen</span> <span class="o">=</span> <span class="n">aic_hwp_rsa_priv_enc</span><span class="p">(</span><span class="n">flen</span><span class="p">,</span> <span class="n">from</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">opts</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;aic_hwp_rsa_priv_enc failed.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">inbuf</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">,</span> <span class="n">rlen</span><span class="p">);</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">outbuf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pagesize</span><span class="p">);</span>
+
+    <span class="c1">// 3. EncNonce public key decryption</span>
+    <span class="n">rlen</span> <span class="o">=</span> <span class="n">aic_rsa_pub_dec</span><span class="p">(</span><span class="n">rlen</span><span class="p">,</span> <span class="n">inbuf</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">opts</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;aic_rsa_pub_dec failed.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 4. Compare Nonce and DecNonce</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">outbuf</span><span class="p">,</span> <span class="n">rlen</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">hexdump</span><span class="p">(</span><span class="s">&quot;Expect&quot;</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">nonce</span><span class="p">,</span> <span class="n">rlen</span><span class="p">);</span>
+        <span class="n">hexdump</span><span class="p">(</span><span class="s">&quot;Got Result&quot;</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">outbuf</span><span class="p">,</span> <span class="n">rlen</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;App %s stop.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;App %s running.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="nl">out</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inbuf</span><span class="p">)</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">inbuf</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">outbuf</span><span class="p">)</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">outbuf</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">flen</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">esk</span><span class="p">,</span> <span class="o">*</span><span class="n">pk</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">algo</span><span class="p">;</span>
+
+    <span class="n">esk</span> <span class="o">=</span> <span class="n">rsa_private_key2048_encrypted_der</span><span class="p">;</span>
+    <span class="n">esk_len</span> <span class="o">=</span> <span class="n">rsa_private_key2048_encrypted_der_len</span><span class="p">;</span>
+    <span class="n">pk</span> <span class="o">=</span> <span class="n">rsa_public_key2048_der</span><span class="p">;</span>
+    <span class="n">pk_len</span> <span class="o">=</span> <span class="n">rsa_public_key2048_der_len</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">nonce</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>     <span class="cm">/* Generate random number Nonce */</span>
+        <span class="n">flen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">PNK_PROTECTED_RSA</span><span class="p">;</span>   <span class="cm">/* Specify hardware protection key */</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">app_hw_authorization_check</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">nonce</span><span class="p">,</span> <span class="n">flen</span><span class="p">,</span>
+                        <span class="n">esk</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">,</span> <span class="n">pk</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Application %s not authorization.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">nonce</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>     <span class="cm">/* Generate random number Nonce */</span>
+        <span class="n">flen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">PSK0_PROTECTED_RSA</span><span class="p">;</span>  <span class="cm">/* Specify hardware protection key */</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">app_hw_authorization_check</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">nonce</span><span class="p">,</span> <span class="n">flen</span><span class="p">,</span>
+                        <span class="n">esk</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">,</span> <span class="n">pk</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Application %s not authorization.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">nonce</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>     <span class="cm">/* Generate random number Nonce */</span>
+        <span class="n">flen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">PSK1_PROTECTED_RSA</span><span class="p">;</span>  <span class="cm">/* Specify hardware protection key */</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">app_hw_authorization_check</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">nonce</span><span class="p">,</span> <span class="n">flen</span><span class="p">,</span>
+                        <span class="n">esk</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">,</span> <span class="n">pk</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Application %s not authorization.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">nonce</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>     <span class="cm">/* Generate random number Nonce */</span>
+        <span class="n">flen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">PSK2_PROTECTED_RSA</span><span class="p">;</span>  <span class="cm">/* Specify hardware protection key */</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">app_hw_authorization_check</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">nonce</span><span class="p">,</span> <span class="n">flen</span><span class="p">,</span>
+                        <span class="n">esk</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">,</span> <span class="n">pk</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Application %s not authorization.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">nonce</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>     <span class="cm">/* Generate random number Nonce */</span>
+        <span class="n">flen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">nonce</span><span class="p">);</span>
+        <span class="n">algo</span> <span class="o">=</span> <span class="n">PSK3_PROTECTED_RSA</span><span class="p">;</span>  <span class="cm">/* Specify hardware protection key */</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">app_hw_authorization_check</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">nonce</span><span class="p">,</span> <span class="n">flen</span><span class="p">,</span>
+                        <span class="n">esk</span><span class="p">,</span> <span class="n">esk_len</span><span class="p">,</span> <span class="n">pk</span><span class="p">,</span> <span class="n">pk_len</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Application %s not authorization.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">algo</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../app/index.html" class="btn btn-neutral float-right" title="9. 应用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="8.4. 硬件授权认证" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

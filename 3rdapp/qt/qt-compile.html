@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1.1. QT Cross Compile &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="1.2. QT Luban" href="qt-luban.html" />
+    <link rel="prev" title="1. QT 使用" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">三方应用</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. QT 使用</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. QT Cross Compile</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#git">1.1.1. 建立git仓库进行跟踪</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.1.2. 配置编译工具链</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#qplatformdefs-h">1.1.2.1. qplatformdefs.h</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#qmake-conf">1.1.2.2. qmake.conf</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">1.1.2.3. 环境变量</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.1.3. 编译</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#configure">1.1.3.1. configure</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#swpb">1.1.3.2. swpb汇编</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#gnu">1.1.3.3. gnu兼容</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#directfb">1.1.4. Directfb 集成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#config-test">1.1.5. config.test</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="qt-luban.html">1.2. QT Luban</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-accel.html">1.3. QT 性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-ide.html">1.4. QT Windows IDE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-develop.html">1.5. QT 应用开发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dfb-compile.html">1.6. Directfb Cross Compile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dfb-ge.html">1.7. QT + Directfb + GE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lvgl/index.html">2. LVGL移植</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">三方应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">1. </span>QT 使用</a> &raquo;</li>
+        
+      <li><span class="section-number">1.1. </span>QT Cross Compile</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qt-cross-compile">
+<h1><span class="section-number">1.1. </span>QT Cross Compile<a class="headerlink" href="#qt-cross-compile" title="永久链接至标题">¶</a></h1>
+<div class="section" id="git">
+<h2><span class="section-number">1.1.1. </span>建立git仓库进行跟踪<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h2>
+<p>因为在编译的时候会对QT 进行部分的代码修改，建立仓库可以很好的跟踪修改记录</p>
+<p>.gitignore 会把一些不需要的中间文件不进行跟踪</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git init
+git add *
+vim .gitignore
+git add .gitignore
+git commit -m <span class="s2">&quot;init&quot;</span>
+
+cat .gitignore
+*.a
+*.asn1.<span class="o">[</span>ch<span class="o">]</span>
+*.bin
+*.bz2
+*.dwo
+*.elf
+*.gcno
+*.gz
+*.i
+*.ko
+*.lex.c
+*.ll
+*.lst
+*.lz4
+*.lzma
+*.lzo
+*.o
+*.o.*
+*.s
+*.so
+*.so.dbg
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">1.1.2. </span>配置编译工具链<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>工具链的配置建议使用qt提供的qmake机制进行配置，配置文件在mkspecs/qws目录下，通过两个文件完成配置</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> mkspecs/qws/
+cp -r linux-arm-gnueabi-g++ linux-riscv-gnueabi-g++
+<span class="nb">cd</span> linux-riscv-gnu-g++/
+</pre></div>
+</div>
+<div class="section" id="qplatformdefs-h">
+<h3><span class="section-number">1.1.2.1. </span>qplatformdefs.h<a class="headerlink" href="#qplatformdefs-h" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>QT 代码本身兼容32位和64位，因此对于64位CPU，不需要进行过多的设置</p></li>
+<li><p>qplatformdefs进行一些基础的数据变量的定义，如type，ipc等，和linux平台的关联性更强，和arm riscv 的关联性没有</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat qplatformdefs.h
+<span class="c1">#include &quot;../../linux-g++-64/qplatformdefs.h&quot;</span>
+
+cat ../../linux-g++-64/qplatformdefs.h
+<span class="c1">#include &quot;../linux-g++/qplatformdefs.h&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qmake-conf">
+<h3><span class="section-number">1.1.2.2. </span>qmake.conf<a class="headerlink" href="#qmake-conf" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>qmake 配置了交叉编译的工具链信息，是交叉编译的主要</p></li>
+<li><p>qmake 并没有指定工具链的路径，因此需要编译前把路径手工加入到PATH环境变量</p></li>
+<li><p>export PATH=/xxx/d211/bin/:$PATH</p></li>
+<li><p>包含工具参数的定义：QMAKE_COPY            = cp -f</p></li>
+<li><p>qws.conf中定义基础功能：QT               += core gui network</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># qmake configuration for building with arm-none-linux-gnueabi-g++</span>
+<span class="c1">#</span>
+
+include<span class="o">(</span>../../common/linux.conf<span class="o">)</span>
+include<span class="o">(</span>../../common/gcc-base-unix.conf<span class="o">)</span>
+include<span class="o">(</span>../../common/g++-unix.conf<span class="o">)</span>
+include<span class="o">(</span>../../common/qws.conf<span class="o">)</span>
+
+<span class="c1"># modifications to g++.conf</span>
+<span class="nv">QMAKE_CC</span>                <span class="o">=</span> riscv64-unknown-linux-gnu-gcc
+<span class="nv">QMAKE_CXX</span>               <span class="o">=</span> riscv64-unknown-linux-gnu-g++
+<span class="nv">QMAKE_LINK</span>              <span class="o">=</span> riscv64-unknown-linux-gnu-g++
+<span class="nv">QMAKE_LINK_SHLIB</span>        <span class="o">=</span> riscv64-unknown-linux-gnu-g++
+
+<span class="c1"># modifications to linux.conf</span>
+<span class="nv">QMAKE_AR</span>                <span class="o">=</span> riscv64-unknown-linux-gnu-ar cqs
+<span class="nv">QMAKE_OBJCOPY</span>           <span class="o">=</span> riscv64-unknown-linux-gnu-objcopy
+<span class="nv">QMAKE_STRIP</span>             <span class="o">=</span> riscv64-unknown-linux-gnu-strip
+
+load<span class="o">(</span>qt_config<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3><span class="section-number">1.1.2.3. </span>环境变量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>和传统的交叉编译不同，QT 采用的是QMake进行系统编译，编译方案是先进行一些Host 的工具编译（采用CC），再进行交叉编译（采用QMAKE_CC），因此在设置环境变量时，
+只可以添加交叉编译工具链到PATH，设置QMAKE_CC， 绝对不能设置CC的传统的交叉编译变量，否则出现莫名的问题。</p>
+<p>如果需要directfb的支持，则需要明确指定一下directfb的路径，导如下两个环境变量</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">QT_CFLAGS_DIRECTFB</span><span class="o">=</span><span class="s2">&quot;-I/xxx/install/include/directfb/&quot;</span>
+<span class="nb">export</span> <span class="nv">QT_LIBS_DIRECTFB</span><span class="o">=</span><span class="s2">&quot;-L/xxx/install/lib -ldirectfb -lfusion -ldirect -lpthread -lz&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.1.3. </span>编译<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="configure">
+<h3><span class="section-number">1.1.3.1. </span>configure<a class="headerlink" href="#configure" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>用最简单的编译方式编译，大部分功能先disable，如果需要再打开</p></li>
+<li><p>通过-xplatform qws/linux-arm-gnueabi-g++指定交叉编译工具链</p></li>
+<li><p>configure 完成后会生成Makefile</p></li>
+<li><p>make distclean命令无效，无法清除生成的Makefile</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./configure -opensource -confirm-license -xplatform qws/linux-riscv-gnueabi-g++ <span class="se">\</span>
+-prefix /xxx/install -plugin-gfx-directfb -no-qt3support <span class="se">\</span>
+-nomake demos -nomake examples -no-glib -depths <span class="m">8</span>,16,32 -qt-gfx-linuxfb -no-gfx-transformed <span class="se">\</span>
+-no-gfx-qvfb -no-gfx-vnc -no-gfx-multiscreen -no-mouse-pc -no-mouse-linuxtp -no-mouse-linuxinput <span class="se">\</span>
+-no-mouse-tslib -no-mouse-qvfb -no-kbd-tty -no-kbd-linuxinput -no-kbd-qvfb -release -shared <span class="se">\</span>
+-little-endian -embedded arm -no-gif -no-libmng -no-accessibility  -no-libjpeg -no-libtiff -no-freetype <span class="se">\</span>
+-no-openssl -no-opengl -no-sql-sqlite -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon <span class="se">\</span>
+-no-phonon-backend -no-svg -no-webkit -script -no-scripttools -no-stl -no-declarative -no-pch <span class="se">\</span>
+-no-xinerama -no-cups -no-nis -no-separate-debug-info -fast -no-rpath
+</pre></div>
+</div>
+</div>
+<div class="section" id="swpb">
+<h3><span class="section-number">1.1.3.2. </span>swpb汇编<a class="headerlink" href="#swpb" title="永久链接至标题">¶</a></h3>
+<p>我们的工具链没有提供swpb汇编，需要直接使用C语言的交换方式完成</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>../../include/QtCore/../../src/corelib/arch/qatomic_armv5.h:128: Error: unrecognized opcode `swpb a3,a4,[s0]&#39;
+
+diff --git a/src/corelib/arch/qatomic_armv5.h b/src/corelib/arch/qatomic_armv5.h
+index 27e23d9e..b265d149 100644
+--- a/src/corelib/arch/qatomic_armv5.h
++++ b/src/corelib/arch/qatomic_armv5.h
+@@ -125,10 +125,12 @@ Q_CORE_EXPORT __asm char q_atomic_swp(volatile char *ptr, char newval);
+inline char q_atomic_swp(volatile char *ptr, char newval)
+{
+    register char ret;
+-    asm volatile(&quot;swpb %0,%2,[%3]&quot;
+-                 : &quot;=&amp;r&quot;(ret), &quot;=m&quot; (*ptr)
+-                 : &quot;r&quot;(newval), &quot;r&quot;(ptr)
+-                 : &quot;cc&quot;, &quot;memory&quot;);
++    //asm volatile(&quot;swpb %0,%2,[%3]&quot;
++    //             : &quot;=&amp;r&quot;(ret), &quot;=m&quot; (*ptr)
++    //             : &quot;r&quot;(newval), &quot;r&quot;(ptr)
++    //             : &quot;cc&quot;, &quot;memory&quot;);
++    ret = *ptr;
++    *ptr = newval;
+    return ret;
+}
+
+@@ -227,10 +229,12 @@ inline int QBasicAtomicInt::fetchAndStoreOrdered(int newValue)
+{
+    int originalValue;
+#ifndef QT_NO_ARM_EABI
+-    asm volatile(&quot;swp %0,%2,[%3]&quot;
+-                 : &quot;=&amp;r&quot;(originalValue), &quot;=m&quot; (_q_value)
+-                 : &quot;r&quot;(newValue), &quot;r&quot;(&amp;_q_value)
+-                 : &quot;cc&quot;, &quot;memory&quot;);
++    //asm volatile(&quot;swp %0,%2,[%3]&quot;
++    //             : &quot;=&amp;r&quot;(originalValue), &quot;=m&quot; (_q_value)
++    //             : &quot;r&quot;(newValue), &quot;r&quot;(&amp;_q_value)
++    //             : &quot;cc&quot;, &quot;memory&quot;);
++    originalVlaue = _q_value;
++    _q_value = newValue;
+</pre></div>
+</div>
+</div>
+<div class="section" id="gnu">
+<h3><span class="section-number">1.1.3.3. </span>gnu兼容<a class="headerlink" href="#gnu" title="永久链接至标题">¶</a></h3>
+<p>工具链版本的不同，会使某些C++ code 的兼容性会有差异，需要指定gnu++98</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>error: <span class="s1">&#39;std::tr1&#39;</span> has not been declared
+
+--- a/mkspecs/common/g++-base.conf
++++ b/mkspecs/common/g++-base.conf
+@@ -15,7 +15,7 @@ <span class="nv">QMAKE_LINK_C_SHLIB</span> <span class="o">=</span> <span class="nv">$$</span>QMAKE_CC
+
+<span class="nv">QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO</span> <span class="o">+=</span> -O2 -g
+
+-QMAKE_CXX <span class="o">=</span> g++
++QMAKE_CXX <span class="o">=</span> g++ -std<span class="o">=</span>gnu++98
+
+<span class="nv">QMAKE_LINK</span>       <span class="o">=</span> <span class="nv">$$</span>QMAKE_CXX
+<span class="nv">QMAKE_LINK_SHLIB</span> <span class="o">=</span> <span class="nv">$$</span>QMAKE_CXX
+
+--- a/mkspecs/common/gcc-base.conf
++++ b/mkspecs/common/gcc-base.conf
+@@ -42,7 +42,7 @@ <span class="nv">QMAKE_CFLAGS_STATIC_LIB</span>     <span class="o">+=</span> -fPIC
+<span class="nv">QMAKE_CFLAGS_YACC</span>           <span class="o">+=</span> -Wno-unused -Wno-parentheses
+<span class="nv">QMAKE_CFLAGS_HIDESYMS</span>       <span class="o">+=</span> -fvisibility<span class="o">=</span>hidden
+
+-QMAKE_CXXFLAGS            +<span class="o">=</span> <span class="nv">$$</span>QMAKE_CFLAGS
++QMAKE_CXXFLAGS            +<span class="o">=</span> <span class="nv">$$</span>QMAKE_CFLAGS -std<span class="o">=</span>gnu++98
+<span class="nv">QMAKE_CXXFLAGS_DEPS</span>       <span class="o">+=</span> <span class="nv">$$</span>QMAKE_CFLAGS_DEPS
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="directfb">
+<h2><span class="section-number">1.1.4. </span>Directfb 集成<a class="headerlink" href="#directfb" title="永久链接至标题">¶</a></h2>
+<p>configure会优先使用pkg_config, directfb-config 两个工具进行directfb的路径获取，会很容易的受到系统directfb的影响，
+因此此处最简单的办法的绕开系统的变量，直接设置QT_CFLAGS_DIRECTFB 和QT_LIBS_DIRECTFB的变量值</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>The DirectFB screen driver functionality <span class="nb">test</span> failed!
+
+--- a/configure
++++ b/configure
+@@ -6641,13 +6641,13 @@ <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$PLATFORM_QWS</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;yes&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">screen</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;directfb&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">CFG_CONFIGURE_EXIT_ON_ERROR</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;yes&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+-           <span class="k">if</span> <span class="nb">test</span> -n <span class="s2">&quot;</span><span class="nv">$PKG_CONFIG</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;</span><span class="nv">$PKG_CONFIG</span><span class="s2">&quot;</span> --exists directfb <span class="m">2</span>&gt;/dev/null<span class="p">;</span> <span class="k">then</span>
+-               <span class="nv">QT_CFLAGS_DIRECTFB</span><span class="o">=</span><span class="sb">`</span><span class="nv">$PKG_CONFIG</span> --cflags directfb <span class="m">2</span>&gt;/dev/null<span class="sb">`</span>
+-               <span class="nv">QT_LIBS_DIRECTFB</span><span class="o">=</span><span class="sb">`</span><span class="nv">$PKG_CONFIG</span> --libs directfb <span class="m">2</span>&gt;/dev/null<span class="sb">`</span>
+-           <span class="k">elif</span> directfb-config --version &gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> <span class="k">then</span>
+-               <span class="nv">QT_CFLAGS_DIRECTFB</span><span class="o">=</span><span class="sb">`</span>directfb-config --cflags <span class="m">2</span>&gt;/dev/null<span class="sb">`</span>
+-               <span class="nv">QT_LIBS_DIRECTFB</span><span class="o">=</span><span class="sb">`</span>directfb-config --libs <span class="m">2</span>&gt;/dev/null<span class="sb">`</span>
+-           <span class="k">fi</span>
++           <span class="c1">#if test -n &quot;$PKG_CONFIG&quot; &amp;&amp; &quot;$PKG_CONFIG&quot; --exists directfb 2&gt;/dev/null; then</span>
++           <span class="c1">#    QT_CFLAGS_DIRECTFB=`$PKG_CONFIG --cflags directfb 2&gt;/dev/null`</span>
++           <span class="c1">#    QT_LIBS_DIRECTFB=`$PKG_CONFIG --libs directfb 2&gt;/dev/null`</span>
++           <span class="c1">#elif directfb-config --version &gt;/dev/null 2&gt;&amp;1; then</span>
++           <span class="c1">#    QT_CFLAGS_DIRECTFB=`directfb-config --cflags 2&gt;/dev/null`</span>
++           <span class="c1">#    QT_LIBS_DIRECTFB=`directfb-config --libs 2&gt;/dev/null`</span>
++           <span class="c1">#fi</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="config-test">
+<h2><span class="section-number">1.1.5. </span>config.test<a class="headerlink" href="#config-test" title="永久链接至标题">¶</a></h2>
+<p>config.tests 是configure的测试目录，其中有不少简单的verify示例，以directfb为例</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>config.tests/qws/directfb
+directfb.cpp  directfb.o  directfb.pro  Makefile
+
+cat Makefile
+<span class="nv">CC</span>            <span class="o">=</span> riscv64-unknown-linux-gnu-gcc
+<span class="nv">CXX</span>           <span class="o">=</span> riscv64-unknown-linux-gnu-g++
+<span class="nv">DEFINES</span>       <span class="o">=</span>
+<span class="nv">CFLAGS</span>        <span class="o">=</span> -pipe -O2 -Wall -W <span class="k">$(</span>DEFINES<span class="k">)</span>
+<span class="nv">CXXFLAGS</span>      <span class="o">=</span> -pipe -std<span class="o">=</span>gnu++98 -D_REENTRANT -O2 -Wall -W <span class="k">$(</span>DEFINES<span class="k">)</span>
+<span class="nv">INCPATH</span>       <span class="o">=</span> -I../../../mkspecs/qws/linux-riscv-gnueabi-g++ -I. -I/usr/include/directfb
+<span class="nv">LINK</span>          <span class="o">=</span> riscv64-unknown-linux-gnu-g++
+<span class="nv">LFLAGS</span>        <span class="o">=</span> -Wl,-O1
+<span class="nv">LIBS</span>          <span class="o">=</span> <span class="k">$(</span>SUBLIBS<span class="k">)</span>   -L/usr/lib/x86_64-linux-gnu -ldirectfb -lfusion -ldirect -lpthread
+<span class="nv">AR</span>            <span class="o">=</span> riscv64-unknown-linux-gnu-ar cqs
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>如果某一test没有过，可以通过查看Makefile 确认相关参数是否正确，如上的include参数不正确</p></li>
+<li><p>如果参数正确，可以直接进入该目录执行make命令确认出错原因</p></li>
+<li><p>最初编译directfb是动态link zlib，因此需要明确link zlib，第一次仿照上面的LIBS设置，则在编译的时候报告zlib 的错误</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="qt-luban.html" class="btn btn-neutral float-right" title="1.2. QT Luban" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="1. QT 使用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.8.4. 测试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.8.5. 设计说明" href="5_design_guide.html" />
+    <link rel="prev" title="6.8.3. 调试指南" href="3_debug_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.8. I2S 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.8.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure.html">6.8.2. I2S配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.8.3. 调试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.8.4. 测试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.8.4.1. 测试环境</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">6.8.4.1.1. 硬件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">6.8.4.1.2. 软件</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">6.8.4.2. 创建声卡</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#machine">6.8.4.2.1. machine驱动</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dts">6.8.4.2.2. 声卡DTS配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">6.8.4.3. 音频测试</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.8.4.3.1. 测试音频播放</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">6.8.4.3.2. 测试音频录音</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">6.8.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.8.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.8. </span>I2S 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.8.4. </span>测试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.8.4. </span>测试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.8.4.1. </span>测试环境<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">6.8.4.1.1. </span>硬件<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>测试板：带有第三方codec芯片的测试板</p></li>
+<li><p>PC：用于和测试板交互</p></li>
+<li><p>串口线：连接测试板的调试串口</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">6.8.4.1.2. </span>软件<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>PC端串口终端软件</p></li>
+<li><p>alsa-lib和alsa-utils第三方软件包</p></li>
+<li><p>第三方codec驱动</p></li>
+<li><p>创建声卡的machine驱动</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">6.8.4.2. </span>创建声卡<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="machine">
+<h3><span class="section-number">6.8.4.2.1. </span>machine驱动<a class="headerlink" href="#machine" title="永久链接至标题">¶</a></h3>
+<p>声卡的驱动分为三部分：platform驱动、codec驱动、machine驱动。对于本章节来说，platform驱动即I2S驱动。codec驱动一般会由codec厂家提供，内核中也提供了大量的codec驱动源码，可以选择相应的codec芯片进行测试，本章节会选用allwinner的ac102芯片。所以在测试前需要做的就是编写声卡的machine驱动，machine驱动实现platform驱动和codec驱动的耦合，创建声卡，同时确定cpu_dai和codec_dai的连接方式以及支持的格式、采样深度等信息。</p>
+<p>创建声卡的一个非常重要的结构体是struct snd_soc_dai_link，该结构体用来指定platform和codec的耦合关系，主要的成员变量如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">snd_soc_dai_link</span> <span class="p">{</span>
+    <span class="cm">/* config - must be set by machine driver */</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">stream_name</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">snd_soc_dai_link_component</span> <span class="o">*</span><span class="n">cpus</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">num_cpus</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">snd_soc_dai_link_component</span> <span class="o">*</span><span class="n">codecs</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">num_codecs</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">snd_soc_dai_link_component</span> <span class="o">*</span><span class="n">platforms</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">num_platforms</span><span class="p">;</span>
+    <span class="cm">/* format to set on init */</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">dai_fmt</span><span class="p">;</span>
+    <span class="cm">/* machine stream operations */</span>
+    <span class="k">const</span> <span class="k">struct</span> <span class="nc">snd_soc_ops</span> <span class="o">*</span><span class="n">ops</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>dai_link中成员变量的一些定义规则(规则定义可参考snd_soc_dai_link结构体定义或函数soc_dai_link_sanity_check)：</p>
+<ol class="arabic simple">
+<li><p>codecs必须定义，codecs-&gt;name和codecs-&gt;of_node必须定义其一，不可以都定义，也不可以都不定义。codecs-&gt;dai_name必须定义</p></li>
+<li><p>cpus可不定义。但定义时，cpus-&gt;name和cpus-&gt;of_node二者定义其一，不可以都定义。cpus-&gt;dai_name可定义，也可不定义。cpus-&gt;name和cpus-&gt;of_node未定义时，将会通过cpus-&gt;dai_name进行匹配。cpus-&gt;dai_name未定义时，将会通过cpus-&gt;name或cpus-&gt;of_node进行匹配。</p></li>
+<li><p>platforms可不定义。但定义时platforms-&gt;name和platforms-&gt;of_node二者定义其一，不可以都定义。platforms-&gt;dai_name在ALSA框架中并未使用。</p></li>
+</ol>
+<p>ALSA框架中提供了一些宏，用来定义上述的一些成员变量，比较常用的是通过宏SND_SOC_DAILINK_DEFS进行定义。现在内核中比较通用的做法是通过SND_SOC_DAILINK_DEFS将成员变量定义为空，在声卡的probe函数中通过读取DTS定义cpus/codecs/platforms的of_node变量。这样做的优点是修改codec外部配置或连接方式时，只需编译DTS即可，不需要重新编译内核。</p>
+<p>dai_fmt变量定义I2S和codec之间的音频数据传输方式。</p>
+<p>ops定义machine驱动所支持的操作函数集。</p>
+<p>将定义的struct snd_soc_dai_link结构体变量赋值给struct snd_soc_card结构体的dai_link成员变量，然后调用snd_soc_register_card即可完成声卡的注册，具体可参考内核中提供的一些machine驱动。</p>
+</div>
+<div class="section" id="dts">
+<h3><span class="section-number">6.8.4.2.2. </span>声卡DTS配置<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h3>
+<p>需要在DTS中配置声卡的结点，才能正确调用声卡的machine驱动。DTS中声卡的结点配置如下(以allwinner的ac102为例说明)：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">soundCard</span> <span class="p">{</span>
+            <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;artinchip,aic-ac102&quot;</span><span class="p">;</span>
+            <span class="n">aic</span><span class="p">,</span><span class="n">codec</span><span class="o">-</span><span class="n">chip</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">ac102</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">aic</span><span class="p">,</span><span class="n">i2s</span><span class="o">-</span><span class="n">controller</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">i2s1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+</pre></div>
+</div>
+<p>machine驱动通过读取aic,codec-chip和aic,i2s-controller属性获取相应的i2s和codec结点。SOC一般是通过I2C接口对codec芯片进行控制，所以需要在I2C控制器下挂接codec芯片</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">twi3</span> <span class="p">{</span>
+        <span class="n">pinctrl</span><span class="o">-</span><span class="n">names</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">;</span>
+        <span class="n">pinctrl</span><span class="o">-</span><span class="mi">0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">twi3_pins_b</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+        <span class="n">ac102</span><span class="p">:</span> <span class="n">ac102</span><span class="o">@</span><span class="mi">33</span> <span class="p">{</span>
+                <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;allwinner,ac102&quot;</span><span class="p">;</span>
+                <span class="n">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x33</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">6.8.4.3. </span>音频测试<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h3><span class="section-number">6.8.4.3.1. </span>测试音频播放<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aplay test.wav
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">6.8.4.3.2. </span>测试音频录音<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>arecord -d <span class="m">10</span> -f dat -t wav test.wav
+</pre></div>
+</div>
+<p>-d：指定录音时长，单位为秒</p>
+<p>-f：指定录制的格式，dat表示16bit小端数据，48K采样率，立体声</p>
+<p>-t：指定生成的文件格式，为wav文件</p>
+<p>test.wav：生成的wav文件名</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="5_design_guide.html" class="btn btn-neutral float-right" title="6.8.5. 设计说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3_debug_guide.html" class="btn btn-neutral float-left" title="6.8.3. 调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

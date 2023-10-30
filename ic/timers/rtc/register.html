@@ -1,0 +1,1445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>11.3.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="11.4. PWM" href="../pwm/index.html" />
+    <link rel="prev" title="11.3.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">11. 计时器</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../gtc/index.html">11.1. Generic Timer Controller (GTC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wdog/index.html">11.2. Watch Dog (WDOG)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">11.3. Real Time Clock (RTC)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">11.3.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">11.3.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">11.3.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">11.3.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-rtc-ctl">11.3.4.1. 0x000 RTC_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-rtc-init">11.3.4.2. 0x004 RTC_INIT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-rtc-irq-en">11.3.4.3. 0x008 RTC_IRQ_EN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-rtc-irq-sta">11.3.4.4. 0x00C RTC_IRQ_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-0x02c-rtc-time">11.3.4.5. 0x020~0x02C RTC_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-0x03c-rtc-alarm">11.3.4.6. 0x030~0x03C RTC_ALARM</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-rtc-cali0">11.3.4.7. 0x040 RTC_CALI0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-rtc-cali1">11.3.4.8. 0x044 RTC_CALI1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-rtc-analog0">11.3.4.9. 0x050 RTC_ANALOG0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-rtc-analog1">11.3.4.10. 0x054 RTC_ANALOG1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x058-rtc-analog2">11.3.4.11. 0x058 RTC_ANALOG2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x05c-rtc-analog3">11.3.4.12. 0x05C RTC_ANALOG3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0fc-rtc-wr-key">11.3.4.13. 0x0FC RTC_WR_KEY</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x100-boot-info">11.3.4.14. 0x100 BOOT_INFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x104-0x13f-sys-bak">11.3.4.15. 0x104~0x13F SYS_BAK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x800-rtc-tcnt-val">11.3.4.16. 0x800 RTC_TCNT_VAL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x804-rtc-32k-det">11.3.4.17. 0x804 RTC_32K_DET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x8fc-rtc-ver">11.3.4.18. 0x8FC RTC_VER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">11.4. Pulse Width Modulation (PWM)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">11. </span>计时器</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">11.3. </span>RTC</a> &raquo;</li>
+        
+      <li><span class="section-number">11.3.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">11.3.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-rtc-ctl">
+<h2><span class="section-number">11.3.4.1. </span>0x000 RTC_CTL<a class="headerlink" href="#x000-rtc-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC控制（RTC Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RTC_IO_SEL</div>
+<div class="line">RTC IO输出选择</div>
+<div class="line">0: 关闭输出（RTC_IO输出高电平）</div>
+<div class="line">1: 使能输出（RTC_IO输出低电平）</div>
+<div class="line">2: 闹钟输出（闹钟产生时RTC_IO输出低电平）</div>
+<div class="line">3: 32.768K时钟输出</div>
+<div class="line"><strong>RTC_IO为开漏设计，方案设计RTC_IO上拉电阻，</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALARM_EN</div>
+<div class="line">闹钟使能</div>
+<div class="line">0: 关闭闹钟</div>
+<div class="line">1: 打开闹钟</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TCNT_EN</div>
+<div class="line">时钟计数使能</div>
+<div class="line">0: 时钟暂停计数</div>
+<div class="line">1: 时钟开始计数</div>
+<div class="line"><strong>每次TCNT_EN从0到1，将检查TCNT_INIT的值，</strong></div>
+<div class="line"><strong>如果为1，则将RTC_TIME的值初始化到TCNT。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-rtc-init">
+<h2><span class="section-number">11.3.4.2. </span>0x004 RTC_INIT<a class="headerlink" href="#x004-rtc-init" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC初始化（RTC Initial）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TCNT_INIT</div>
+<div class="line">时钟计数初始化</div>
+<div class="line">0: 不做初始化</div>
+<div class="line">1: 进行初始化</div>
+<div class="line"><strong>每次TCNT_EN从0到1，才会检查该值进行初始化，</strong></div>
+<div class="line"><strong>初始化完成后该值自动清零。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-rtc-irq-en">
+<h2><span class="section-number">11.3.4.3. </span>0x008 RTC_IRQ_EN<a class="headerlink" href="#x008-rtc-irq-en" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC中断使能（RTC Interrupt Request Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">32K_ERR_IRQ_EN</div>
+<div class="line">32K时钟异常中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALARM_IRQ_EN</div>
+<div class="line">闹钟中断使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-rtc-irq-sta">
+<h2><span class="section-number">11.3.4.4. </span>0x00C RTC_IRQ_STA<a class="headerlink" href="#x00c-rtc-irq-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC中断状态（RTC Interrupt Request Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>30:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">32K_ERR_IRQ_STA</div>
+<div class="line">32K时钟异常中断状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALARM_IO_STA</div>
+<div class="line">闹钟IO输出状态</div>
+<div class="line">0: 输出关闭</div>
+<div class="line">1: 输出使能</div>
+<div class="line"><strong>RTC_IO为开漏输出设计，需要连接上拉电阻到电源，</strong></div>
+<div class="line"><strong>该位为1时输出使能，即RTC_IO为低电平</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALARM_IRQ_STA</div>
+<div class="line">闹钟中断状态</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-0x02c-rtc-time">
+<h2><span class="section-number">11.3.4.5. </span>0x020~0x02C RTC_TIME<a class="headerlink" href="#x020-0x02c-rtc-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC时间（RTC Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TIME_SET</div>
+<div class="line">时间设置值</div>
+<div class="line">0x020~0x02C四个低8位拼接为32位时间设置，低地址表示低位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-0x03c-rtc-alarm">
+<h2><span class="section-number">11.3.4.6. </span>0x030~0x03C RTC_ALARM<a class="headerlink" href="#x030-0x03c-rtc-alarm" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC闹钟（RTC Alarm）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALARM_SET</div>
+<div class="line">闹钟设置值</div>
+<div class="line">0x030~0x03C四个低8位拼接为32位闹钟设置，低地址表示低位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-rtc-cali0">
+<h2><span class="section-number">11.3.4.7. </span>0x040 RTC_CALI0<a class="headerlink" href="#x040-rtc-cali0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC校准0（RTC Calibration0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CALI_VAL[7:0]</div>
+<div class="line">校准值</div>
+<div class="line">校准时间为CALI_VAL×1ppm</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-rtc-cali1">
+<h2><span class="section-number">11.3.4.8. </span>0x044 RTC_CALI1<a class="headerlink" href="#x044-rtc-cali1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC校准1（RTC Calibration1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CALI_DIR</div>
+<div class="line">校准方向</div>
+<div class="line">0: 减慢</div>
+<div class="line">1: 加快</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CALI_VAL[9:8]</div>
+<div class="line">校准值</div>
+<div class="line">校准时间为CALI_VAL×1ppm</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-rtc-analog0">
+<h2><span class="section-number">11.3.4.9. </span>0x050 RTC_ANALOG0<a class="headerlink" href="#x050-rtc-analog0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000043</p></th>
+<th class="head"><p>RTC模拟0（RTC Analog0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RC1M_ISEL</div>
+<div class="line">RC1M参考电流选择</div>
+<div class="line">0: IBIAS</div>
+<div class="line">1: BG</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RC1M_EN</div>
+<div class="line">RC1M振荡使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LDO18_BYPASS</div>
+<div class="line">1.8V LDO旁路</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">配置为1即XTAL 32K工作在VCC_RTC域</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LDO18_VOL</div>
+<div class="line">1.8V LDO输出电压设置</div>
+<div class="line">0: 1.9V</div>
+<div class="line">1: 1.8V</div>
+<div class="line">2: 1.7V</div>
+<div class="line">3: 1.6V</div>
+<div class="line">4: 1.5V</div>
+<div class="line">5: 1.4V</div>
+<div class="line">6: 1.3V</div>
+<div class="line">7: 1.2V</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LDO18_EN</div>
+<div class="line">1.8V LDO使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-rtc-analog1">
+<h2><span class="section-number">11.3.4.10. </span>0x054 RTC_ANALOG1<a class="headerlink" href="#x054-rtc-analog1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000011</p></th>
+<th class="head"><p>RTC模拟1（RTC Analog1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PD_CUR_SEL</div>
+<div class="line">1.1V LDO输出负载电流</div>
+<div class="line">0: 0.25uA</div>
+<div class="line">1: 0.50uA</div>
+<div class="line">2: 0.75uA</div>
+<div class="line">3: 1.00uA</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">PD_CUR_EN</div>
+<div class="line">1.1V LDO输出负载使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LDO11_VOL</div>
+<div class="line">1.1V LDO输出电压设置</div>
+<div class="line">0: 1.10V</div>
+<div class="line">1: 1.05V</div>
+<div class="line">2: 1.00V</div>
+<div class="line">3: 0.95V</div>
+<div class="line">4: 0.90V</div>
+<div class="line">5: 0.85V</div>
+<div class="line">6: 0.80V</div>
+<div class="line">7: 预留</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LDO11_LPEN</div>
+<div class="line">1.1V LDO低功耗模式使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x058-rtc-analog2">
+<h2><span class="section-number">11.3.4.11. </span>0x058 RTC_ANALOG2<a class="headerlink" href="#x058-rtc-analog2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001000</p></th>
+<th class="head"><p>RTC模拟2（RTC Analog2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_SEL</div>
+<div class="line">模拟测试选择</div>
+<div class="line">0: vref</div>
+<div class="line">1: vosc</div>
+<div class="line">2: ibp_ibias(≈20nA)</div>
+<div class="line">3: ibp_vdet(≈15.6nA)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_EN</div>
+<div class="line">模拟测试使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">XTAL32K_STRENGTH_UP</div>
+<div class="line">XTAL 32K增强</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">XTAL32K_DRV</div>
+<div class="line">XTAL 32K驱动能力</div>
+<div class="line">值越大驱动能力越强</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x05c-rtc-analog3">
+<h2><span class="section-number">11.3.4.12. </span>0x05C RTC_ANALOG3<a class="headerlink" href="#x05c-rtc-analog3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>RTC模拟3（RTC Analog3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RSV</div>
+<div class="line">预留</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LDO12_XTAL32K_SW</div>
+<div class="line">LDO12到XTAL32K开关</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">XTAL32K_EN</div>
+<div class="line">XTAL 32K使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0fc-rtc-wr-key">
+<h2><span class="section-number">11.3.4.13. </span>0x0FC RTC_WR_KEY<a class="headerlink" href="#x0fc-rtc-wr-key" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC写密钥（RTC Write Key）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WR_KEY</div>
+<div class="line">写操作密钥</div>
+<div class="line">0xAC: 允许写</div>
+<div class="line">其他：不允许写</div>
+<div class="line"><strong>注意写RTC_KEEP寄存器（0x000~0x7FC，该寄存器除外），</strong></div>
+<div class="line"><strong>需要先确保该寄存器为0xAC，写操作才能成功，</strong></div>
+<div class="line"><strong>读操作无此影响。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x100-boot-info">
+<h2><span class="section-number">11.3.4.14. </span>0x100 BOOT_INFO<a class="headerlink" href="#x100-boot-info" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>启动信息（Boot Info）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">REBOOT_REASON</div>
+<div class="line">启动/重启的原因记录寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BOOT_DEV</div>
+<div class="line">启动介质记录寄存器，该信息由 BROM 设置。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x104-0x13f-sys-bak">
+<h2><span class="section-number">11.3.4.15. </span>0x104~0x13F SYS_BAK<a class="headerlink" href="#x104-0x13f-sys-bak" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>系统备份（System Backup）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SYS_BAK</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x800-rtc-tcnt-val">
+<h2><span class="section-number">11.3.4.16. </span>0x800 RTC_TCNT_VAL<a class="headerlink" href="#x800-rtc-tcnt-val" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTC时间计数值（RTC Time Counter Value）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TCNT</div>
+<div class="line">时间计数值</div>
+<div class="line"><strong>以秒为单位计数，时间跨度136年</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x804-rtc-32k-det">
+<h2><span class="section-number">11.3.4.17. </span>0x804 RTC_32K_DET<a class="headerlink" href="#x804-rtc-32k-det" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x03000000</p></th>
+<th class="head"><p>RTC 32K检测（RTC 32K Detect）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x300</p></td>
+<td><div class="line-block">
+<div class="line">DET_LEVEL</div>
+<div class="line">检测水位</div>
+<div class="line">使用PCLK进行计数，每个32K周期进行复位，</div>
+<div class="line">当计数值大于该字段表示32K时钟异常</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DET_EN</div>
+<div class="line">检测使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x8fc-rtc-ver">
+<h2><span class="section-number">11.3.4.18. </span>0x8FC RTC_VER<a class="headerlink" href="#x8fc-rtc-ver" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>RTC版本（RTC Version）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">VERSION</div>
+<div class="line">实时时钟版本</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../pwm/index.html" class="btn btn-neutral float-right" title="11.4. PWM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="11.3.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

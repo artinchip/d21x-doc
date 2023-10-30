@@ -1,0 +1,3260 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.6.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.7. DVP" href="../dvp/index.html" />
+    <link rel="prev" title="10.6.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../de/index.html">10.1. Display Engine (DE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">10.3. Video Engine (VE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.6. MIPI DSI</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.6.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">10.6.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id5">10.6.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.6.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-dsi-ctl">10.6.4.1. 0x000 DSI_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-clk-cfg">10.6.4.2. 0x004 CLK_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-dpi-in-pol">10.6.4.3. 0x010 DPI_IN_POL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-dpi-in-fmt">10.6.4.4. 0x014 DPI_IN_FMT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-dpi-vc">10.6.4.5. 0x018 DPI_VC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-dpi-lptx-time">10.6.4.6. 0x01C DPI_LPTX_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-gen-ph-cfg">10.6.4.7. 0x020 GEN_PH_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-gen-pd-cfg">10.6.4.8. 0x024 GEN_PD_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-gen-vc-rx">10.6.4.9. 0x028 GEN_VC_RX</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-vid-mode-cfg">10.6.4.10. 0x030 VID_MODE_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-vid-pkg-size">10.6.4.11. 0x034 VID_PKG_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x038-vid-chk-num">10.6.4.12. 0x038 VID_CHK_NUM</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x03c-vid-null-size">10.6.4.13. 0x03C VID_NULL_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-vid-hinact-time">10.6.4.14. 0x040 VID_HINACT_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-vid-ht-time">10.6.4.15. 0x044 VID_HT_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-vid-vblank-line">10.6.4.16. 0x048 VID_VBLANK_LINE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-vid-vact-line">10.6.4.17. 0x04C VID_VACT_LINE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-cmd-mode-cfg">10.6.4.18. 0x050 CMD_MODE_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-edpi-cmd-size">10.6.4.19. 0x054 EDPI_CMD_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x058-cmd-pkg-sta">10.6.4.20. 0x058 CMD_PKG_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x060-irq-en1">10.6.4.21. 0x060 IRQ_EN1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x064-irq-en2">10.6.4.22. 0x064 IRQ_EN2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x068-irq-sta1">10.6.4.23. 0x068 IRQ_STA1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x06c-irq-sta2">10.6.4.24. 0x06C IRQ_STA2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x070-to-cnt-cfg">10.6.4.25. 0x070 TO_CNT_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x074-to-rd">10.6.4.26. 0x074 TO_RD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x078-to-wr">10.6.4.27. 0x078 TO_WR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x07c-to-bta">10.6.4.28. 0x07C TO_BTA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-phy-cfg">10.6.4.29. 0x080 PHY_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x084-phy-sta">10.6.4.30. 0x084 PHY_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x088-phy-clk-time">10.6.4.31. 0x088 PHY_CLK_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x08c-phy-data-time">10.6.4.32. 0x08C PHY_DATA_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x090-phy-rd-time">10.6.4.33. 0x090 PHY_RD_TIME</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x400-dpi-if-cfg">10.6.4.34. 0x400 DPI_IF_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x410-lane-cfg">10.6.4.35. 0x410 LANE_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x500-ana-cfg1">10.6.4.36. 0x500 ANA_CFG1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x504-ana-cfg2">10.6.4.37. 0x504 ANA_CFG2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x508-ana-cfg3">10.6.4.38. 0x508 ANA_CFG3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x50c-ana-cfg4">10.6.4.39. 0x50C ANA_CFG4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xfc-version">10.6.4.40. 0xFC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">10.8. AUDIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">10.9. Integrated Interchip Sound (I2S)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.6. </span>MIPI-DSI</a> &raquo;</li>
+        
+      <li><span class="section-number">10.6.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">10.6.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-dsi-ctl">
+<h2><span class="section-number">10.6.4.1. </span>0x000 DSI_CTL<a class="headerlink" href="#x000-dsi-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000002</p></th>
+<th class="head"><p>DSI控制（DSI Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CRC_RX_EN</div>
+<div class="line">接收检查CRC使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ECC_RX_EN</div>
+<div class="line">接收检查ECC使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BTA_EN</div>
+<div class="line">BTA发送使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EOTP_RX_EN</div>
+<div class="line">HS结束接收EOTP使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EOTP_TX_EN</div>
+<div class="line">HS结束发送EOTP使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">DSI_MODE</div>
+<div class="line">DSI模式</div>
+<div class="line">0: Video模式</div>
+<div class="line">1: Command模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DSI_EN</div>
+<div class="line">DSI模块使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-clk-cfg">
+<h2><span class="section-number">10.6.4.2. </span>0x004 CLK_CFG<a class="headerlink" href="#x004-clk-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>时钟配置（Clock Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TO_CLK_DIV</div>
+<div class="line">超时时钟除频</div>
+<div class="line">本字段表示HS转LP和LP转HS错误配置时，用作定时单元的超时时钟</div>
+<div class="line">除数因子</div>
+<div class="line">TO_CLK =HS_CLK_D8 / DIV，DIV配置为0时，除频为1</div>
+<div class="line">注：HS_CLK_D8即HS_CLK/8</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LP_CLK_DIV</div>
+<div class="line">LP时钟除频</div>
+<div class="line">LP_CLK =HS_CLK_D8 / DIV，DIV配置为0时，除频为1</div>
+<div class="line">其中除频值为1时，LP停止产生时钟，因此此位建议配置大于等于2</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-dpi-in-pol">
+<h2><span class="section-number">10.6.4.3. </span>0x010 DPI_IN_POL<a class="headerlink" href="#x010-dpi-in-pol" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DPI输入极性（DPI IN Polarity）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COLORM_POL</div>
+<div class="line">COLORM极性</div>
+<div class="line">0: 高有效</div>
+<div class="line">1: 低有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SHUTDOWN_POL</div>
+<div class="line">SHUTDOWN极性</div>
+<div class="line">0: 高有效</div>
+<div class="line">1: 低有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HSYNC_POL</div>
+<div class="line">HSYNC极性</div>
+<div class="line">0: 高有效</div>
+<div class="line">1: 低有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VSYNC_POL</div>
+<div class="line">VSYNC极性</div>
+<div class="line">0: 高有效</div>
+<div class="line">1: 低有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DE_POL</div>
+<div class="line">DE极性</div>
+<div class="line">0: 高有效</div>
+<div class="line">1: 低有效</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-dpi-in-fmt">
+<h2><span class="section-number">10.6.4.4. </span>0x014 DPI_IN_FMT<a class="headerlink" href="#x014-dpi-in-fmt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DPI输入格式（DPI IN Format）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOOSELY 18</div>
+<div class="line">Loosely 18bit模式使能</div>
+<div class="line">关闭</div>
+<div class="line">打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_DT</div>
+<div class="line">DPI数据类型</div>
+<div class="line">0: 16位格式（RGB565）</div>
+<div class="line">3: 18位格式（RGB666）</div>
+<div class="line">5: 24位格式（RGB888）</div>
+<div class="line">1、2、4、6~15：预留</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-dpi-vc">
+<h2><span class="section-number">10.6.4.5. </span>0x018 DPI_VC<a class="headerlink" href="#x018-dpi-vc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DPI虚拟通道（DPI Virtual Channel）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_VC</div>
+<div class="line">DPI虚拟通道</div>
+<div class="line">本字段配置为索引到数据包的DPI虚拟通道ID</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-dpi-lptx-time">
+<h2><span class="section-number">10.6.4.6. </span>0x01C DPI_LPTX_TIME<a class="headerlink" href="#x01c-dpi-lptx-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DPI LPTX 时间（DPI_LPTX_TIME）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:25</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>24:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTVACT_LPTX_TIME</div>
+<div class="line">非VACT区域允许LPTX最大时间</div>
+<div class="line">本字段用于LP命令，定义再VSA、VBP以及VFP区域中可以容纳</div>
+<div class="line">一行中的最大数据包的大小（字节为单位）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INVACT_LPTX_TIME</div>
+<div class="line">VACT区域允许LPTX最大时间</div>
+<div class="line">本字段用于LP命令，定义再VACT区域中可以容纳一行中的最大
+| 数据包的大小（字节为单位）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-gen-ph-cfg">
+<h2><span class="section-number">10.6.4.7. </span>0x020 GEN_PH_CFG<a class="headerlink" href="#x020-gen-ph-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>数据包头配置（General Packet Header Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_WC</div>
+<div class="line">GEN写计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_VC</div>
+<div class="line">GEN虚拟通道ID</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_DT</div>
+<div class="line">GEN数据类型</div>
+<div class="line">注意写该寄存器发起一次GEN发送操作，因此发送内容先写入
+| GEN_PD，再配置此寄存器</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-gen-pd-cfg">
+<h2><span class="section-number">10.6.4.8. </span>0x024 GEN_PD_CFG<a class="headerlink" href="#x024-gen-pd-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>数据包配置（General Packet Data Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PD</div>
+<div class="line">GEN数据内容</div>
+<div class="line">注意写该寄存器即将需要发送内容写到GEN_FIFO中,LP_RX的数据</div>
+<div class="line">也会接收到本字段</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-gen-vc-rx">
+<h2><span class="section-number">10.6.4.9. </span>0x028 GEN_VC_RX<a class="headerlink" href="#x028-gen-vc-rx" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>虚拟通道ID读取（General Vitural Channel Receive）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_VC_RX</div>
+<div class="line">GEN接口读回虚拟通道标志ID</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-vid-mode-cfg">
+<h2><span class="section-number">10.6.4.10. </span>0x030 VID_MODE_CFG<a class="headerlink" href="#x030-vid-mode-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式配置（Video Mode Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:25</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TEST_PATTERN_DIR</div>
+<div class="line">测试图案方向</div>
+<div class="line">0: 垂直</div>
+<div class="line">1: 水平</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TEST_PATTERN_MODE</div>
+<div class="line">测试图案模式</div>
+<div class="line">0: 彩条</div>
+<div class="line">1: 误码率（只支持垂直模式）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TEST_PATTERN_EN</div>
+<div class="line">测试图案使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CMD_LPTX_FORCE</div>
+<div class="line">命令强制LPTX</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">设为1，则command传输只允许在LP模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FRAME_BTA_ACK_EN</div>
+<div class="line">每帧BTA应答使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LP_EN</div>
+<div class="line">区域LP使能</div>
+<div class="line">0: 保持HS模式</div>
+<div class="line">1: 变成LP模式</div>
+<div class="line">注意每位代表一个区域</div>
+<div class="line">BIT13: LP_EN_HFP</div>
+<div class="line">BIT12: LP_EN_HBP</div>
+<div class="line">BIT11: LP_EN_VACT</div>
+<div class="line">BIT10: LP_EN_VFP</div>
+<div class="line">BIT9: LP_EN_VBP</div>
+<div class="line">BIT8: LP_EN_VSA</div>
+<div class="line">当设置为1,则允许此区域返回LP状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_MODE_TYPE</div>
+<div class="line">Video模式类型</div>
+<div class="line">0: Non-burst with sync pulses</div>
+<div class="line">1: Non-burst with sync events</div>
+<div class="line">2~3: Burst mode</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-vid-pkg-size">
+<h2><span class="section-number">10.6.4.11. </span>0x034 VID_PKG_SIZE<a class="headerlink" href="#x034-vid-pkg-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频数据包大小（Video Packet Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_PKG_SIZE</div>
+<div class="line">视频包大小</div>
+<div class="line">注意18-bit not loosely模式，需要配置为4的倍数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x038-vid-chk-num">
+<h2><span class="section-number">10.6.4.12. </span>0x038 VID_CHK_NUM<a class="headerlink" href="#x038-vid-chk-num" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式Chunk数量（Video Chunk Number）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_CHK_NUM</div>
+<div class="line">视频包块数量</div>
+<div class="line">本字段表示在行周期期间要传输的chunk的数量（一个chunk由</div>
+<div class="line">一个视频数据包和一个空包组成）。</div>
+<div class="line">设置为0或1，视频数据仍以行数据为单个数据包传输；若</div>
+<div class="line">VID_NULL_SIZE大于0且此为设为1，则表示这是一个chunk，</div>
+<div class="line">行数据包接着一个空包。此外，多个chunk是用于传输视频中</div>
+<div class="line">的行数据。</div>
+<div class="line">实际使用，建议配置为1</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x03c-vid-null-size">
+<h2><span class="section-number">10.6.4.13. </span>0x03C VID_NULL_SIZE<a class="headerlink" href="#x03c-vid-null-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式Null数量（Video Null Number）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_NULL_SIZE</div>
+<div class="line">空包大小，字节为单位</div>
+<div class="line">实际使用，建议配置为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-vid-hinact-time">
+<h2><span class="section-number">10.6.4.14. </span>0x040 VID_HINACT_TIME<a class="headerlink" href="#x040-vid-hinact-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式水平无效时间（Video Horizonal Inactive Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_HBP_TIME</div>
+<div class="line">HBP时间</div>
+<div class="line">注意该时间是以HS_CLK_D8为单位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_HSA_TIME</div>
+<div class="line">HSYNC时间</div>
+<div class="line">注意该时间是以HS_CLK_D8为单位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-vid-ht-time">
+<h2><span class="section-number">10.6.4.15. </span>0x044 VID_HT_TIME<a class="headerlink" href="#x044-vid-ht-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式水平时间（Video Horizonal Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_HT_TIME</div>
+<div class="line">行总时间</div>
+<div class="line">HT=HSA+HBP+HACT+HFP</div>
+<div class="line">注意该时间是以HS_CLK_D8为单位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-vid-vblank-line">
+<h2><span class="section-number">10.6.4.16. </span>0x048 VID_VBLANK_LINE<a class="headerlink" href="#x048-vid-vblank-line" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式垂直空白行数（Video Vertical Blank Line）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_VFP_TIME</div>
+<div class="line">VFP行数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_VBP_TIME</div>
+<div class="line">VBP行数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-vid-vact-line">
+<h2><span class="section-number">10.6.4.17. </span>0x04C VID_VACT_LINE<a class="headerlink" href="#x04c-vid-vact-line" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>视频模式垂直有效行数（Video Vertical Active Line）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_VSA_LINE</div>
+<div class="line">VSA行数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VID_VACT_TIME</div>
+<div class="line">VACT行数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-cmd-mode-cfg">
+<h2><span class="section-number">10.6.4.18. </span>0x050 CMD_MODE_CFG<a class="headerlink" href="#x050-cmd-mode-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>命令模式配置（Command Mode Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:25</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>24:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PKG_TX_MODE</div>
+<div class="line">包发送模式</div>
+<div class="line">0: HS</div>
+<div class="line">1: LP</div>
+<div class="line">注意每位对应一种包控制</div>
+<div class="line">BIT24: MAX_RD_PKG_SIZE</div>
+<div class="line">BIT23~20: 保留</div>
+<div class="line">BIT19: DCS_LW</div>
+<div class="line">BIT18: DCS_SR_0P</div>
+<div class="line">BIT17: DCS_SW_1P</div>
+<div class="line">BIT16: DCS_SW_0P</div>
+<div class="line">BIT15: 保留</div>
+<div class="line">BIT14: GEN_LW</div>
+<div class="line">BIT13: GEN_SR_2P</div>
+<div class="line">BIT12: GEN_SR_1P</div>
+<div class="line">BIT11: GEN_SR_0P</div>
+<div class="line">BIT10: GEN_SW_2P</div>
+<div class="line">BIT9: GEN_SW_1P</div>
+<div class="line">BIT8: GEN_SW_0P</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACK_REQ_EN</div>
+<div class="line">传输应答使能，配置为1时，每次传输完成后发起应用请求</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TE_EN</div>
+<div class="line">TE使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-edpi-cmd-size">
+<h2><span class="section-number">10.6.4.19. </span>0x054 EDPI_CMD_SIZE<a class="headerlink" href="#x054-edpi-cmd-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>EDPI命令包大小（EDPI Command Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EDPI_CMD_SIZE</div>
+<div class="line">EDPI CMD模式包大小</div>
+<div class="line">本字段表示command mode数据包允许的最大大小</div>
+<div class="line">注意该大小是以像素为单位</div>
+<div class="line">最大值为2048</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x058-cmd-pkg-sta">
+<h2><span class="section-number">10.6.4.20. </span>0x058 CMD_PKG_STA<a class="headerlink" href="#x058-cmd-pkg-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000000A</p></th>
+<th class="head"><p>命令包状态（Command Packet Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_RD_CMD_BUSY</div>
+<div class="line">GEN 读命令进行中</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLD_R_FULL</div>
+<div class="line">GEN PLD读FIFO为满</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLD_R_EMPTY</div>
+<div class="line">GEN PLD读FIFO为空</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLD_W_FULL</div>
+<div class="line">GEN PLD写FIFO为满</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLD_W_EMPTY</div>
+<div class="line">GEN PLD写FIFO为空</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_CMD_FULL</div>
+<div class="line">GEN CMD FIFO为满</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">GEN_CMD_EMPTY</div>
+<div class="line">GEN CMD FIFO为空</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x060-irq-en1">
+<h2><span class="section-number">10.6.4.21. </span>0x060 IRQ_EN1<a class="headerlink" href="#x060-irq-en1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>中断使能1（Interrupt Enable 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_ERR_EN</div>
+<div class="line">PHY错误中断使能，该错误只检查DATA0</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+<div class="line">每位代表一种错误，具体定义如下</div>
+<div class="line">BIT20: ErrContention LP1</div>
+<div class="line">BIT19: ErrContention LP0</div>
+<div class="line">BIT18: ErrControl</div>
+<div class="line">BIT17: ErrSyncEsc LPDT</div>
+<div class="line">BIT16: ErrEsc escape entry</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACK_ERR_EN</div>
+<div class="line">应答错误中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+<div class="line">每位代表一个应答错误，具体定义如下</div>
+<div class="line">BIT15: DSI Protocol Violation</div>
+<div class="line">BIT14: Reserved</div>
+<div class="line">BIT13: Invalid Transmission Length</div>
+<div class="line">BIT12: DSI VC ID Invalid</div>
+<div class="line">BIT11: DSI Data Type Not Recognized</div>
+<div class="line">BIT10: Checksum Error (Long packet only)</div>
+<div class="line">BIT9: ECC Error, multi-bit (detected, not corrected)</div>
+<div class="line">BIT8: ECC Error, single-bit (detected and corrected)</div>
+<div class="line">BIT7: Contention Detected</div>
+<div class="line">BIT6: False Control Error</div>
+<div class="line">BIT5: Peripheral Timeout Error</div>
+<div class="line">BIT4: Low-Power Transmit Sync Error</div>
+<div class="line">BIT3: Escape Mode Entry Command Error</div>
+<div class="line">BIT2: EoT Sync Error</div>
+<div class="line">BIT1: SoT Sync Error</div>
+<div class="line">BIT0: SoT Error</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x064-irq-en2">
+<h2><span class="section-number">10.6.4.22. </span>0x064 IRQ_EN2<a class="headerlink" href="#x064-irq-en2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>中断使能2（Interrupt Enable 2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLDRD_OV_EN</div>
+<div class="line">GEN PLD READ FIFO上溢出中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLDRD_UD_EN</div>
+<div class="line">GEN PLD READ FIFO下溢出中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLDSEND_UD_EN</div>
+<div class="line">GEN PLD SEND FIFO下溢出中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLD_OV_EN</div>
+<div class="line">GEN PLD FIFO上溢出中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_CMD_OV_EN</div>
+<div class="line">GEN CMD FIFO上溢出中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_FIFO_OV_EN</div>
+<div class="line">DPI FIFO上溢出中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EOPT_ERR_EN</div>
+<div class="line">EOPT未接收中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSIZE_ERR_EN</div>
+<div class="line">接收包大小错误中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CRC_ERR_EN</div>
+<div class="line">接收包CRC错误中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ECC_MERR_EN</div>
+<div class="line">接收包ECC多个位错误中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ECC_SERR_EN</div>
+<div class="line">接收包ECC单个位错误中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TO_LPRX_EN</div>
+<div class="line">LPRX超时中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TO_HSTX_EN</div>
+<div class="line">HSTX超时中断使能</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x068-irq-sta1">
+<h2><span class="section-number">10.6.4.23. </span>0x068 IRQ_STA1<a class="headerlink" href="#x068-irq-sta1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>中断状态1（Interrupt Status 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_ERR_STA</div>
+<div class="line">PHY错误中断状态，该错误只检查DATA0</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+<div class="line">每位代表一种错误，具体定义如下</div>
+<div class="line">BIT20: ErrContention LP1</div>
+<div class="line">BIT19: ErrContention LP0</div>
+<div class="line">BIT18: ErrControl</div>
+<div class="line">BIT17: ErrSyncEsc LPDT</div>
+<div class="line">BIT16: ErrEsc escape entry</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACK_ERR_STA</div>
+<div class="line">应答错误中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+<div class="line">每位代表一个应答错误，具体定义如下</div>
+<div class="line">BIT15: DSI Protocol Violation</div>
+<div class="line">BIT14: Reserved</div>
+<div class="line">BIT13: Invalid Transmission Length</div>
+<div class="line">BIT12: DSI VC ID Invalid</div>
+<div class="line">BIT11: DSI Data Type Not Recognized</div>
+<div class="line">BIT10: Checksum Error (Long packet only)</div>
+<div class="line">BIT9: ECC Error, multi-bit (detected, not corrected)</div>
+<div class="line">BIT8: ECC Error, single-bit (detected and corrected)</div>
+<div class="line">BIT7: Contention Detected</div>
+<div class="line">BIT6: False Control Error</div>
+<div class="line">BIT5: Peripheral Timeout Error</div>
+<div class="line">BIT4: Low-Power Transmit Sync Error</div>
+<div class="line">BIT3: Escape Mode Entry Command Error</div>
+<div class="line">BIT2: EoT Sync Error</div>
+<div class="line">BIT1: SoT Sync Error</div>
+<div class="line">BIT0: SoT Error</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x06c-irq-sta2">
+<h2><span class="section-number">10.6.4.24. </span>0x06C IRQ_STA2<a class="headerlink" href="#x06c-irq-sta2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>中断状态2（Interrupt Status 2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLDRD_OV_STA</div>
+<div class="line">GEN PLD READ FIFO上溢出中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLDRD_UD_STA</div>
+<div class="line">GEN PLD READ FIFO下溢出中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLDSEND_UD_STA</div>
+<div class="line">GEN PLD SEND FIFO下溢出中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_PLD_OV_STA</div>
+<div class="line">GEN PLD FIFO上溢出中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_CMD_OV_STA</div>
+<div class="line">GEN CMD FIFO上溢出中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_FIFO_OV_STA</div>
+<div class="line">DPI FIFO上溢出中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EOPT_ERR_STA</div>
+<div class="line">EOPT未接收中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSIZE_ERR_STA</div>
+<div class="line">接收包大小错误中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CRC_ERR_STA</div>
+<div class="line">接收包CRC错误中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ECC_MERR_STA</div>
+<div class="line">接收包ECC多个位错误中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ECC_SERR_STA</div>
+<div class="line">接收包ECC单个位错误中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TO_LPRX_STA</div>
+<div class="line">LPRX超时中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TO_HSTX_STA</div>
+<div class="line">HSTX超时中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x070-to-cnt-cfg">
+<h2><span class="section-number">10.6.4.25. </span>0x070 TO_CNT_CFG<a class="headerlink" href="#x070-to-cnt-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>超时计数器配置（Timeout Count Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HSTX_TO_CNT</div>
+<div class="line">HSTX超时计数值</div>
+<div class="line">本字段用于配置HS传输超时触发阈值</div>
+<div class="line">如果使用non-burst模式，并且在一行数据传输完成到下一行的</div>
+<div class="line">HSYNC没有足够的时间从HS切换到LP再切换HS，则DSI只能每帧</div>
+<div class="line">返回LP一次，因此需配置满足以下公式：</div>
+<div class="line">HSTX_TO_CNT*HS_CLK_D8_period*TO_CLK_DIV  &gt;=</div>
+<div class="line">一帧数据传输时间*（1+10%）</div>
+<div class="line">如果使用burst模式，RGB像素数据包经过时间压缩，在扫描行中</div>
+<div class="line">留下更多的时间。因此如果在burst模式下并且在一行数据传输</div>
+<div class="line">完成到下一行的HSYNC有足够的时间从HS切换到LP再切换HS，</div>
+<div class="line">则可在此段时间内切换成LP状态节省功耗。此时应满足以下公式：</div>
+<div class="line">HSTX_TO_CNT*HS_CLK_D8_period*TO_CLK_DIV  &gt;=</div>
+<div class="line">一行数据传输时间*（1+10%）</div>
+<div class="line">注意HSTX_TO_CNT计数以TO_CLK周期为单位计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LPRX_TO_CNT</div>
+<div class="line">LPRX超时计数值</div>
+<div class="line">本字段用于配置LP接收超时触发阈值</div>
+<div class="line">该计数以TO_CLK周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x074-to-rd">
+<h2><span class="section-number">10.6.4.26. </span>0x074 TO_RD<a class="headerlink" href="#x074-to-rd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>读超时（Timeout Read）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HS_RD_TO_CNT</div>
+<div class="line">HS_RD超时计数值</div>
+<div class="line">本字段设置DSI在发送HS读取操作后保持链路静止的时间，</div>
+<div class="line">从D-PHY进入LP11状态并且无中断时开始计数</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LP_RD_TO_CNT</div>
+<div class="line">HS_RD超时计数值</div>
+<div class="line">本字段设置DSI在发送LP读取操作后保持链路静止的时间，</div>
+<div class="line">从D-PHY进入LP11状态并且无中断时开始计数</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x078-to-wr">
+<h2><span class="section-number">10.6.4.27. </span>0x078 TO_WR<a class="headerlink" href="#x078-to-wr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>写超时（Timeout Write）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HS_WR_TO_CNT</div>
+<div class="line">LPRX超时计数值</div>
+<div class="line">本字段设置DSI在发送HS写入操作后保持链路静止的时间，</div>
+<div class="line">从D-PHY进入LP11状态并且无中断时开始计数</div>
+<div class="line">该计数以TO_CLK周期为单位计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LP_WR_TO_CNT</div>
+<div class="line">LP_WR超时计数值</div>
+<div class="line">本字段设置DSI在发送LP写入操作后保持链路静止的时间，</div>
+<div class="line">从D-PHY进入LP11状态并且无中断时开始计数</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x07c-to-bta">
+<h2><span class="section-number">10.6.4.28. </span>0x07C TO_BTA<a class="headerlink" href="#x07c-to-bta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>总线交换超时（Timeout Bus Turn Around）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BTA_TO_CNT</div>
+<div class="line">LP_WR超时计数值</div>
+<div class="line">本字段设置DSI在完成BTA操作后保持链路静止的时间，</div>
+<div class="line">从D-PHY进入LP11状态并且无中断时开始计数</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-phy-cfg">
+<h2><span class="section-number">10.6.4.29. </span>0x080 PHY_CFG<a class="headerlink" href="#x080-phy-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000003</p></th>
+<th class="head"><p>物理层配置（Physical Layer Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_LP11_TIME</div>
+<div class="line">PHY LP11最小时间</div>
+<div class="line">表示在停止状态请求HS传输的最小等待时间</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_PLL_FORCE</div>
+<div class="line">PHY PLL强制打开</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_CLK_EN</div>
+<div class="line">PHY时钟使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_RSTN</div>
+<div class="line">PHY复位</div>
+<div class="line">0: 复位状态</div>
+<div class="line">1: 工作状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_SHUTDOWNZ</div>
+<div class="line">PHY关闭</div>
+<div class="line">0: PHY关闭状态</div>
+<div class="line">1: PHY工作状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUTO_CLK_EN</div>
+<div class="line">自动时钟控制使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">设为1时，在时间允许时自动停止在时钟通道中提供时钟</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PHY_HSCLK_REQ</div>
+<div class="line">PHY HS时钟请求</div>
+<div class="line">写该位时，控制到给PHY的PPI信号，发送HSCLK请求；</div>
+<div class="line">该位用于时钟非连续模式对时钟控制产生LP和HS切换</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">DATA_LANES_NUM</div>
+<div class="line">数据通路数量</div>
+<div class="line">0: 1 LANE（lane 0）</div>
+<div class="line">1: 2 LANE（lane 0~1）</div>
+<div class="line">2: 3 LANE（lane 0~2）</div>
+<div class="line">3: 4 LANE（lane 0~3）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x084-phy-sta">
+<h2><span class="section-number">10.6.4.30. </span>0x084 PHY_STA<a class="headerlink" href="#x084-phy-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001540</p></th>
+<th class="head"><p>物理层状态（Physical Layer Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x1540</p></td>
+<td><div class="line-block">
+<div class="line">PHY_SIGNAL_STATUS</div>
+<div class="line">PHY信号状态</div>
+<div class="line">0: 低电平</div>
+<div class="line">1: 高电平</div>
+<div class="line">每位代表一个信号，具体定义如下</div>
+<div class="line">BIT31:13: 预留</div>
+<div class="line">BIT12: ULPS_ACTIVE_NOT_3</div>
+<div class="line">BIT11: STOP_STATE_3</div>
+<div class="line">BIT10: ULPS_ACTIVE_NOT_2</div>
+<div class="line">BIT9: STOP_STATE_2</div>
+<div class="line">BIT8: ULPS_ACTIVE_NOT_1</div>
+<div class="line">BIT7: STOP_STATE_1</div>
+<div class="line">BIT6: RXULPS_ESC_0</div>
+<div class="line">BIT5: ULPS_ACTIVE_NOT_0</div>
+<div class="line">BIT4: STOP_STATE_0</div>
+<div class="line">BIT3: ULPS_ACTIVE_NOT_C</div>
+<div class="line">BIT2: STOP_STATE_C</div>
+<div class="line">BIT1: PHY_DIRECTION</div>
+<div class="line">BIT0: PHY_LOCK</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x088-phy-clk-time">
+<h2><span class="section-number">10.6.4.31. </span>0x088 PHY_CLK_TIME<a class="headerlink" href="#x088-phy-clk-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>物理层时钟通道时间（Physical Layer Clock Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_HS2LP_TIME</div>
+<div class="line">时钟通道HS切LP时间</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_LP2HS_TIME</div>
+<div class="line">时钟通道LP切HS时间</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x08c-phy-data-time">
+<h2><span class="section-number">10.6.4.32. </span>0x08C PHY_DATA_TIME<a class="headerlink" href="#x08c-phy-data-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>物理层数据通道时间（Physical Layer Data Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_HS2LP_TIME</div>
+<div class="line">数据通道HS切LP最长时间</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_LP2HS_TIME</div>
+<div class="line">数据通道LP切HS最长时间</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x090-phy-rd-time">
+<h2><span class="section-number">10.6.4.33. </span>0x090 PHY_RD_TIME<a class="headerlink" href="#x090-phy-rd-time" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>物理层读时间（Physical Layer Read Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MAX_RD_TIME</div>
+<div class="line">允许读操作的最长时间，只有在无读取命令进行时才能修改此值</div>
+<div class="line">该计数以HS_CLK_D8周期为单位计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x400-dpi-if-cfg">
+<h2><span class="section-number">10.6.4.34. </span>0x400 DPI_IF_CFG<a class="headerlink" href="#x400-dpi-if-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DPI接口配置（DPI Interface Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_COLORM</div>
+<div class="line">DPI_COLORM输入</div>
+<div class="line">0: 低电平</div>
+<div class="line">1: 高电平</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_SHUTD</div>
+<div class="line">DPI_SHUTD输入</div>
+<div class="line">0: 低电平</div>
+<div class="line">1: 高电平</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DPI_FMT</div>
+<div class="line">DPI输入格式</div>
+<div class="line">0: 24位</div>
+<div class="line">1: 18位</div>
+<div class="line">2: 16位</div>
+<div class="line">3: 预留</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x410-lane-cfg">
+<h2><span class="section-number">10.6.4.35. </span>0x410 LANE_CFG<a class="headerlink" href="#x410-lane-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00003210</p></th>
+<th class="head"><p>通道配置（Lane Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">LANE3_SEL</div>
+<div class="line">数据通道3选择</div>
+<div class="line">0: DATA0</div>
+<div class="line">1: DATA1</div>
+<div class="line">2: DATA2</div>
+<div class="line">3: DATA3</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">LANE2_SEL</div>
+<div class="line">数据通道2选择</div>
+<div class="line">0: DATA0</div>
+<div class="line">1: DATA1</div>
+<div class="line">2: DATA2</div>
+<div class="line">3: DATA3</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LANE1_SEL</div>
+<div class="line">数据通道1选择</div>
+<div class="line">0: DATA0</div>
+<div class="line">1: DATA1</div>
+<div class="line">2: DATA2</div>
+<div class="line">3: DATA3</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LANE0_SEL</div>
+<div class="line">数据通道0选择</div>
+<div class="line">0: DATA0</div>
+<div class="line">1: DATA1</div>
+<div class="line">2: DATA2</div>
+<div class="line">3: DATA3</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x500-ana-cfg1">
+<h2><span class="section-number">10.6.4.36. </span>0x500 ANA_CFG1<a class="headerlink" href="#x500-ana-cfg1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00005000</p></th>
+<th class="head"><p>模拟配置1（Analog Configuration 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>19:15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LANE_POL</div>
+<div class="line">正负极取反</div>
+<div class="line">每位对应一个通道</div>
+<div class="line">BIT19: D3</div>
+<div class="line">BIT18: D2</div>
+<div class="line">BIT17: D1</div>
+<div class="line">BIT16: D0</div>
+<div class="line">BIT15: CLK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LPTX_SL</div>
+<div class="line">LPTX低速模式</div>
+<div class="line">0: 普通模式</div>
+<div class="line">1: 低速模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LPTX_DRV</div>
+<div class="line">LPTX驱动能力，总共4个档位，所有通路同时生效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HSTX_PREEMPH</div>
+<div class="line">HSTX预加重配置，总共16个档位，所有通路同时生效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_SYNCSEL</div>
+<div class="line">数据通路并转串选择</div>
+<div class="line">0: 本地时钟</div>
+<div class="line">1: PHY时钟输入，配置SOFT_PHSEL有四相位可选</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SOFT_PHSEL</div>
+<div class="line">PHY时钟输入相位设置，调试使用</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SYNC_SET</div>
+<div class="line">PHY时钟输出相位设置，调试使用</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x504-ana-cfg2">
+<h2><span class="section-number">10.6.4.37. </span>0x504 ANA_CFG2<a class="headerlink" href="#x504-ana-cfg2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>模拟配置2（Analog Configuration 2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_CLK</div>
+<div class="line">时钟使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RCAL_FLAG</div>
+<div class="line">自动校准完成</div>
+<div class="line">0: 未开始</div>
+<div class="line">1: 完成</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ON_RESCAL</div>
+<div class="line">自动校准使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_RESCAL</div>
+<div class="line">电阻校准使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_LDO</div>
+<div class="line">HSTX 0.4V电源使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">每位对应一个通道</div>
+<div class="line">BIT7: D3</div>
+<div class="line">BIT6: D2</div>
+<div class="line">BIT5: D1</div>
+<div class="line">BIT4: D0</div>
+<div class="line">BIT3: CLK</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_VP</div>
+<div class="line">DATA低压PRE_DRV使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_VPCK</div>
+<div class="line">CLK低压PRE_DRV使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_BIAS</div>
+<div class="line">BAIS电流使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x508-ana-cfg3">
+<h2><span class="section-number">10.6.4.38. </span>0x508 ANA_CFG3<a class="headerlink" href="#x508-ana-cfg3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>模拟配置3（Analog Configuration 3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>30:29</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_SEL</div>
+<div class="line">模拟测试选择</div>
+<div class="line">0: VRES</div>
+<div class="line">1: IPN_5u</div>
+<div class="line">2: V0P4</div>
+<div class="line">3: VPCK</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_EN</div>
+<div class="line">模拟测试使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:25</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>24:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SET_ITRIM</div>
+<div class="line">精准电流设置，总共32个档位</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_ITRIM</div>
+<div class="line">精准电流使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>16:12</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RCAL_VAL</div>
+<div class="line">软件校准值，总共32个档位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RCAL_SET</div>
+<div class="line">软件校准设置，总共32个档位，调试使用</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RCAL_CMPO</div>
+<div class="line">电阻校准比较输，调试使用</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_SOFTCAL</div>
+<div class="line">软件校准使能，调试使用</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x50c-ana-cfg4">
+<h2><span class="section-number">10.6.4.39. </span>0x50C ANA_CFG4<a class="headerlink" href="#x50c-ana-cfg4" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>模拟配置3（Analog Configuration 4）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LP_CD_STA</div>
+<div class="line">LP冲突检测使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">每位对应一个通道</div>
+<div class="line">BIT31: D3N</div>
+<div class="line">BIT30: D3P</div>
+<div class="line">BIT29: D2N</div>
+<div class="line">BIT28: D2P</div>
+<div class="line">BIT27: D1N</div>
+<div class="line">BIT26: D1P</div>
+<div class="line">BIT25: D0N</div>
+<div class="line">BIT24: D0P</div>
+<div class="line">BIT23: CLKN</div>
+<div class="line">BIT22: CLKP</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>15:11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LP_CD_EN</div>
+<div class="line">LP冲突检测使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">每位对应一个通道</div>
+<div class="line">BIT15: D3</div>
+<div class="line">BIT14: D2</div>
+<div class="line">BIT13: D1</div>
+<div class="line">BIT12: D0</div>
+<div class="line">BIT11: CLK</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>7:3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ULPS_EN</div>
+<div class="line">ULPS使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">每位对应一个通道</div>
+<div class="line">BIT7: D3</div>
+<div class="line">BIT6: D2</div>
+<div class="line">BIT5: D1</div>
+<div class="line">BIT4: D0</div>
+<div class="line">BIT3: CLK</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xfc-version">
+<h2><span class="section-number">10.6.4.40. </span>0xFC VERSION<a class="headerlink" href="#xfc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>版本号（Version）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">Version(模块版本号)</div>
+<div class="line">采用BCD码显示，V1.0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../dvp/index.html" class="btn btn-neutral float-right" title="10.7. DVP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="10.6.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

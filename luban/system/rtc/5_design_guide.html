@@ -1,0 +1,1153 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>4.4.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="4.4.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="4.4.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">4. 系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bwm/index.html">4.1. BWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cmu/index.html">4.2. CMU 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dma/index.html">4.3. DMA 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4.4. RTC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">4.4.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">4.4.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">4.4.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">4.4.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.4.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">4.4.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">4.4.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">4.4.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">4.4.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">4.4.5.3.2. 校准算法设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">4.4.5.3.3. 系统状态的备份功能</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#reboot-reason">4.4.5.3.4. Reboot Reason 的设计</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">4.4.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-rtc-dev">4.4.5.4.1. aic_rtc_dev</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">4.4.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id10">4.4.5.5.1. 外部接口</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rtc">4.4.5.5.2. RTC 相关的内部接口</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">4.4.5.5.3. 系统状态备份相关的内部接口</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#demo">4.4.5.6. Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">4.4.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tsensor/index.html">4.5. TSensor 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">4.6. Watchdog 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wri/index.html">4.7. WRI 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">4. </span>系统</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">4.4. </span>RTC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">4.4.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">4.4.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">4.4.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于：</p>
+<ul class="simple">
+<li><p>RTC V1.0: drivers/rtc/artinchip-rtc.c</p></li>
+<li><p>RTC V0.1: drivers/rtc/artinchip-rtc-v0.1.c</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">4.4.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Linux提供了一个RTC子系统（简称RTC Core），使得在用户空间可以通过/dev/watchdogX来访问Watchdog控制器。为了更方便查看硬件状态和参数设置，本驱动另外扩展了几个sysfs节点。
+整个软件框架可以简单抽象为下图：</p>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/sw_system20.png" src="../../../_images/sw_system20.png" />
+<p class="caption"><span class="caption-number">图 4.6 </span><span class="caption-text">Linux RTC子系统架构图</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+<p>RTC V1.0控制器可以适配到Linux标准的时间、闹钟接口，其他非标准的特性有：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Alarm的中断输出：</dt><dd><p>是否有输出完全由板级电路的设计决定，软件上只需要使能中断信号即可。在DTS中提供了一个bool类型的参数方便用户配置“alarm-io-output”。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>校准参数：</dt><dd><p>控制器支持±975ppm的校准范围，用户需要配置DTS中的参数 <code class="docutils literal notranslate"><span class="pre">clock-rate</span></code> 详见 <a class="reference internal" href="2_config_guide.html#ref-to-rtc-dts"><span class="std std-ref">RTC 自定义参数</span></a>。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>精准驱动能力</dt><dd><p>为了节省功耗，可以降低32K时钟的驱动能力到刚好够用，扫描方法见 <a class="reference internal" href="3_debug_guide.html#ref-to-rtc-driver-capability"><span class="std std-ref">驱动能力扫描</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>8bit寄存器的读写</dt><dd><p>在驱动设计时将8bit数据的拆解、打包进行封装，可以尽量减少对代码的干扰，封装如下：</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define RTC_WRITEL(val, reg) \</span>
+<span class="cp">    do { \</span>
+<span class="cp">        writeb((val) &amp; 0xFF, (reg)); \</span>
+<span class="cp">        writeb(((val) &gt;&gt; 8) &amp; 0xFF, (reg) + 0x4); \</span>
+<span class="cp">        writeb(((val) &gt;&gt; 16) &amp; 0xFF, (reg) + 0x8); \</span>
+<span class="cp">        writeb(((val) &gt;&gt; 24) &amp; 0xFF, (reg) + 0xC); \</span>
+<span class="cp">    } while (0)</span>
+
+<span class="cp">#define RTC_READL(reg)  (readb(reg) | (readb((reg) + 0x4) &lt;&lt; 8) \</span>
+<span class="cp">            | (readb((reg) + 0x8) &lt;&lt; 16) \</span>
+<span class="cp">            | (readb((reg) + 0xC) &lt;&lt; 24))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">4.4.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">4.4.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>RTC驱动的初始化过程见aic_rtc_probe()函数，除了普通platform设备的处理过程（申请regs资源、clk、reset）外，需要调用RTC子系统的接口rtc_register_device()来注册RTC设备。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define rtc_register_device(device)   __rtc_register_device(THIS_MODULE, device)</span>
+</pre></div>
+</div>
+<p>其中参数struct rtc_device device中关键信息有：最大值、ops等，aic_rtc_ops定义如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">rtc_class_ops</span> <span class="n">aic_rtc_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">read_time</span>      <span class="o">=</span> <span class="n">aic_rtc_read_time</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">set_time</span>           <span class="o">=</span> <span class="n">aic_rtc_set_time</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">read_alarm</span>     <span class="o">=</span> <span class="n">aic_rtc_read_alarm</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">set_alarm</span>      <span class="o">=</span> <span class="n">aic_rtc_set_alarm</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">alarm_irq_enable</span>   <span class="o">=</span> <span class="n">aic_rtc_alarm_irq_enable</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">4.4.5.3.2. </span>校准算法设计<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>校准的算法原理是，将输入的 32KHz 晶振时钟校准到理想的 32KHz，公式如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">calibrate</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">clock</span><span class="o">-</span><span class="n">rate</span> <span class="o">/</span> <span class="mi">32</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="o">=&gt;</span> <span class="n">calibrate</span> <span class="o">=</span> <span class="p">(</span><span class="n">clock</span><span class="o">-</span><span class="n">rate</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>其中：</p>
+<ul class="simple">
+<li><p>clock-rate: 是用户实测 32K晶振的频率值 * 100，需要配置在DTS中，详见 <a class="reference internal" href="2_config_guide.html#ref-to-rtc-dts"><span class="std std-ref">RTC 自定义参数</span></a></p></li>
+<li><p>calibrate: 最终要填入RTC控制器的校准值</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>校准值calibrate分正负，正 - 表示32K晶振实际偏快了，负 - 表示32K晶振偏慢了。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">4.4.5.3.3. </span>系统状态的备份功能<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>RTC控制器提供了 128bit 的备份寄存器 SYS_BAK，用于掉电时一些重要状态或者参数的保存。RTC驱动将这几个寄存器封装为对外接口（ <code class="docutils literal notranslate"><span class="pre">EXPORT_SYMBOL_GPL()</span></code> 的形式)，Linux中其他驱动都可以调用。</p>
+</div>
+<div class="section" id="reboot-reason">
+<span id="ref-rtc-reboot-reason"></span><h3><span class="section-number">4.4.5.3.4. </span>Reboot Reason 的设计<a class="headerlink" href="#reboot-reason" title="永久链接至标题">¶</a></h3>
+<p>将上节中 <strong>系统备份寄存器</strong> 保存不同情况的Reboot reason，可用于分析终端运行稳定性问题、进入快速启动模式等场景。</p>
+<p>SYS_BAK 寄存器需要和 WRI 模块一起配合来完成Boot reason的处理：</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>WRI</dt><dd><p>负责记录 <strong>硬件可监测</strong> 到的Reboot原因，如过温保护、看门狗复位、外部输入复位等；</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SYS_BAK</dt><dd><p>负责记录 <strong>软件可监测</strong> 到的Reboot原因，如Suspend、Panic、进入烧写模式、正常重启等。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>关于Reboot原因，梳理分类如下：</p>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/reboot_reason.png" src="../../../_images/reboot_reason.png" />
+<p class="caption"><span class="caption-number">图 4.7 </span><span class="caption-text">各种情况的Reboot reason梳理</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>其中“外部IO复位”指常用的Reset按键。</p>
+</div>
+<p>所以，定义 <strong>SYS_BAK0寄存器（4~7bit）</strong> 的值如下：（详见include/linux/reboot-reason.h）</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">aic_reboot_reason</span> <span class="p">{</span>
+    <span class="n">REBOOT_REASON_COLD</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_CMD_REBOOT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_CMD_SHUTDOWN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_SUSPEND</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_UPGRADE</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_FASTBOOT</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+
+    <span class="cm">/* Some software exception reason */</span>
+    <span class="n">REBOOT_REASON_SW_LOCKUP</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_HW_LOCKUP</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_PANIC</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">REBOOT_REASON_RAMDUMP</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>针对不同场景，SYS_BAK0寄存器中的Reboot reason 和 WRI中的RST_FLAG值对应如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 48%" />
+<col style="width: 17%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>场景</p></th>
+<th class="head"><p>触发行为</p></th>
+<th class="head"><p>WRI状态</p></th>
+<th class="head"><p>SYS_BAK状态值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>正常</p>
+<p>重启</p>
+</td>
+<td><p>按Reset按键</p></td>
+<td><p>EXT_RST</p></td>
+<td><p>COLD</p></td>
+</tr>
+<tr class="row-odd"><td><p>shell中执行reboot命令</p></td>
+<td><p>WDOG_RST</p></td>
+<td><p>CMD_REBOOT</p></td>
+</tr>
+<tr class="row-even"><td><p>shell执行aicupg命令进入烧写</p></td>
+<td><p>WDOG_RST</p></td>
+<td><p>UPGRADE</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>正常</p>
+<p>关机</p>
+</td>
+<td><p>长按PowerOn按键</p></td>
+<td><p>SYS_POR</p></td>
+<td><p>COLD</p></td>
+</tr>
+<tr class="row-even"><td><p>shell中执行poweroff命令</p></td>
+<td><p>SYS_POR</p></td>
+<td><p>CMD_SHUTDOWN</p></td>
+</tr>
+<tr class="row-odd"><td><p>进入深度休眠状态</p></td>
+<td><p>SYS_POR</p></td>
+<td><p>SUSPEND</p></td>
+</tr>
+<tr class="row-even"><td rowspan="8"><p>异常</p>
+<p>重启</p>
+</td>
+<td><p>过温保护</p></td>
+<td><p>OTP</p></td>
+<td><p>COLD</p></td>
+</tr>
+<tr class="row-odd"><td><p>通过Jtag执行reset命令</p></td>
+<td><p>DM_RST</p></td>
+<td><p>COLD</p></td>
+</tr>
+<tr class="row-even"><td><p>RTC模块断电</p></td>
+<td><p>RTC_POR</p></td>
+<td><p>COLD</p></td>
+</tr>
+<tr class="row-odd"><td><p>内核中发生SW Lock</p></td>
+<td><p>WDOG_RST</p></td>
+<td><p>SW_LOCKUP</p></td>
+</tr>
+<tr class="row-even"><td><p>内核中发生HW Lock</p></td>
+<td><p>WDOG_RST</p></td>
+<td><p>HW_LOCKUP</p></td>
+</tr>
+<tr class="row-odd"><td><p>内核中发生Panic</p></td>
+<td><p>WDOG_RST</p></td>
+<td><p>PANIC</p></td>
+</tr>
+<tr class="row-even"><td><p>内核中触发进入Ramdump</p></td>
+<td><p>WDOG_RST</p></td>
+<td><p>RAMDUMP</p></td>
+</tr>
+<tr class="row-odd"><td><p>电源电压不稳定</p></td>
+<td><p>CMP_RST</p></td>
+<td><p>COLD</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>其中“按Reset按键”的情况，因为软件来不及设置SYS_BAK，所以是初始值0 （COLD）。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">4.4.5.4. </span>数据结构设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-rtc-dev">
+<h3><span class="section-number">4.4.5.4.1. </span>aic_rtc_dev<a class="headerlink" href="#aic-rtc-dev" title="永久链接至标题">¶</a></h3>
+<p>记录RTC控制器的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_rtc_dev</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">rtc_device</span> <span class="o">*</span><span class="n">rtc_dev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">attribute_group</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span> <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+    <span class="n">u32</span>  <span class="n">clk_rate</span><span class="p">;</span>
+    <span class="n">u32</span>  <span class="n">clk_drv</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">alarm_io</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">cal_fast</span><span class="p">;</span>
+    <span class="n">s32</span>  <span class="n">cal_val</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">completion</span> <span class="n">complete</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">4.4.5.5. </span>接口设计<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>以下接口是 Linux RTC 子系统需要的标准接口。</p>
+<div class="section" id="id10">
+<h3><span class="section-number">4.4.5.5.1. </span>外部接口<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<div class="section" id="ioctl">
+<h4><span class="section-number">4.4.5.5.1.1. </span>ioctl 接口<a class="headerlink" href="#ioctl" title="永久链接至标题">¶</a></h4>
+<p>Linux对用户态提供了一组RTC的ioctl接口，用户态可以通过设备节点/dev/rtc0来访问：（详见include/upai/linux/rtc.h）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define RTC_AIE_ON  _IO(&#39;p&#39;, 0x01)  /* Alarm int. enable on     */</span>
+<span class="c1">#define RTC_AIE_OFF _IO(&#39;p&#39;, 0x02)  /* ... off          */</span>
+<span class="c1">#define RTC_UIE_ON  _IO(&#39;p&#39;, 0x03)  /* Update int. enable on    */</span>
+<span class="c1">#define RTC_UIE_OFF _IO(&#39;p&#39;, 0x04)  /* ... off          */</span>
+<span class="c1">#define RTC_PIE_ON  _IO(&#39;p&#39;, 0x05)  /* Periodic int. enable on  */</span>
+<span class="c1">#define RTC_PIE_OFF _IO(&#39;p&#39;, 0x06)  /* ... off          */</span>
+<span class="c1">#define RTC_WIE_ON  _IO(&#39;p&#39;, 0x0f)  /* Watchdog int. enable on  */</span>
+<span class="c1">#define RTC_WIE_OFF _IO(&#39;p&#39;, 0x10)  /* ... off          */</span>
+
+<span class="c1">#define RTC_ALM_SET _IOW(&#39;p&#39;, 0x07, struct rtc_time) /* Set alarm time  */</span>
+<span class="c1">#define RTC_ALM_READ    _IOR(&#39;p&#39;, 0x08, struct rtc_time) /* Read alarm time */</span>
+<span class="c1">#define RTC_RD_TIME _IOR(&#39;p&#39;, 0x09, struct rtc_time) /* Read RTC time   */</span>
+<span class="c1">#define RTC_SET_TIME    _IOW(&#39;p&#39;, 0x0a, struct rtc_time) /* Set RTC time    */</span>
+<span class="c1">#define RTC_IRQP_READ   _IOR(&#39;p&#39;, 0x0b, unsigned long)   /* Read IRQ rate   */</span>
+<span class="c1">#define RTC_IRQP_SET    _IOW(&#39;p&#39;, 0x0c, unsigned long)   /* Set IRQ rate    */</span>
+<span class="c1">#define RTC_EPOCH_READ  _IOR(&#39;p&#39;, 0x0d, unsigned long)   /* Read epoch      */</span>
+<span class="c1">#define RTC_EPOCH_SET   _IOW(&#39;p&#39;, 0x0e, unsigned long)   /* Set epoch       */</span>
+
+<span class="c1">#define RTC_WKALM_SET   _IOW(&#39;p&#39;, 0x0f, struct rtc_wkalrm)/* Set wakeup alarm*/</span>
+<span class="c1">#define RTC_WKALM_RD    _IOR(&#39;p&#39;, 0x10, struct rtc_wkalrm)/* Get wakeup alarm*/</span>
+
+<span class="c1">#define RTC_PLL_GET _IOR(&#39;p&#39;, 0x11, struct rtc_pll_info)  /* Get PLL correction */</span>
+<span class="c1">#define RTC_PLL_SET _IOW(&#39;p&#39;, 0x12, struct rtc_pll_info)  /* Set PLL correction */</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#ref-to-rtc-demo"><span class="std std-ref">Demo</span></a> 就是调用的这些接口完成alarm配置，以及hwclock工具也是调用上述接口。</p>
+</div>
+</div>
+<div class="section" id="rtc">
+<h3><span class="section-number">4.4.5.5.2. </span>RTC 相关的内部接口<a class="headerlink" href="#rtc" title="永久链接至标题">¶</a></h3>
+<div class="section" id="aic-rtc-read-time">
+<h4><span class="section-number">4.4.5.5.2.1. </span>aic_rtc_read_time<a class="headerlink" href="#aic-rtc-read-time" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_rtc_read_time(struct device *dev, struct rtc_time *tm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>读取当前的RTC时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向RTC设备的指针</div>
+<div class="line">tm - 用于存放获取到的时间信息</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-rtc-set-time">
+<h4><span class="section-number">4.4.5.5.2.2. </span>aic_rtc_set_time<a class="headerlink" href="#aic-rtc-set-time" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_rtc_set_time(struct device *dev, struct rtc_time *tm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置RTC时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向RTC设备的指针</div>
+<div class="line">tm - 需要设置的时间信息</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>更新RTC控制器的秒数，需要先暂停RTC计数，设置完秒数，再使能RTC。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-rtc-read-alarm">
+<h4><span class="section-number">4.4.5.5.2.3. </span>aic_rtc_read_alarm<a class="headerlink" href="#aic-rtc-read-alarm" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alarm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>读取当前的Alarm状态信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向RTC设备的指针</div>
+<div class="line">alarm - 用于保存读取到的当前Alarm信息，包括下一次超时时间和超时状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-rtc-set-alarm">
+<h4><span class="section-number">4.4.5.5.2.4. </span>aic_rtc_set_alarm<a class="headerlink" href="#aic-rtc-set-alarm" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alarm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置一个Alarm，并使能Alarm中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向RTC设备的指针</div>
+<div class="line">alarm - 需要设置的Alarm信息</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-rtc-alarm-irq-enable">
+<h4><span class="section-number">4.4.5.5.2.5. </span>aic_rtc_alarm_irq_enable<a class="headerlink" href="#aic-rtc-alarm-irq-enable" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_rtc_alarm_irq_enable(struct device *dev, unsigned int enabled)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>开关Alarm中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向RTC设备的指针</div>
+<div class="line">enabled - 使能标记</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">4.4.5.5.3. </span>系统状态备份相关的内部接口<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<div class="section" id="aic-rtc-set-bak">
+<h4><span class="section-number">4.4.5.5.3.1. </span>aic_rtc_set_bak<a class="headerlink" href="#aic-rtc-set-bak" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void aic_rtc_set_bak(u32 offset, u32 mask, u32 shift, u32 val)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置SYS_BAK寄存器中某几个（连续的）bit</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">offset - 寄存器的偏移地址，取值范围：0、4、8、12</div>
+<div class="line">mask - 待设置的bit掩码</div>
+<div class="line">shift - 待设置的bit需要左移多少位</div>
+<div class="line">val - 待设置的实际值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>设置过程：先将val左移，然后再做掩码处理</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-rtc-get-bak">
+<h4><span class="section-number">4.4.5.5.3.2. </span>aic_rtc_get_bak<a class="headerlink" href="#aic-rtc-get-bak" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>u32 aic_rtc_get_bak(u32 offset, u32 mask, u32 shift)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>读取SYS_BAK寄存器中某几个（连续的）bit</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">offset - 寄存器的偏移地址，取值范围：0、4、8、12</div>
+<div class="line">mask - 待读取的bit掩码</div>
+<div class="line">shift - 待读取的bit需要右移多少位</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>实际读取到的寄存器值</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>读取过程：先将读取到的寄存器当前值做掩码处理，然后再右移</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-set-software-reboot-reason">
+<h4><span class="section-number">4.4.5.5.3.3. </span>aic_set_software_reboot_reason<a class="headerlink" href="#aic-set-software-reboot-reason" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void aic_set_software_reboot_reason(enum aic_reboot_reason reason)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置Reboot reason到SYS_BAK寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">reason - aic_reboot_reason类型的启动原因</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>aic_reboot_reason 详见 <a class="reference internal" href="#ref-rtc-reboot-reason"><span class="std std-ref">Reboot Reason 的设计</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-get-software-reboot-reason">
+<h4><span class="section-number">4.4.5.5.3.4. </span>aic_get_software_reboot_reason<a class="headerlink" href="#aic-get-software-reboot-reason" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>enum aic_reboot_reason aic_get_software_reboot_reason(void)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>从SYS_BAK寄存器中读取上一次系统的Reboot reason类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>aic_reboot_reason类型的启动原因</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>aic_reboot_reason 详见 <a class="reference internal" href="#ref-rtc-reboot-reason"><span class="std std-ref">Reboot Reason 的设计</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="demo">
+<span id="ref-to-rtc-demo"></span><h2><span class="section-number">4.4.5.6. </span>Demo<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h2>
+<p>本Demo是通过ioctl接口来访问设备节点/dev/rtc0：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;base.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sys/time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/rtc.h&gt;</span><span class="cp"></span>
+
+<span class="cm">/* Global macro and variables */</span>
+
+<span class="cp">#define ALARM_MAX_DELAY     (60 * 60)</span>
+<span class="cp">#define ALARM_MIN_DELAY     1</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">sopts</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;d:u&quot;</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">option</span> <span class="n">lopts</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">&quot;delay&quot;</span><span class="p">,</span>     <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;usage&quot;</span><span class="p">,</span>       <span class="n">no_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;u&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cm">/* Functions */</span>
+
+<span class="kt">void</span> <span class="nf">usage</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">program</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s will start a timer of given seconds, and wait it</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -d, --delay</span><span class="se">\t</span><span class="s">range: [%d, %d]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ALARM_MIN_DELAY</span><span class="p">,</span>
+        <span class="n">ALARM_MAX_DELAY</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -u, --usage </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Example: %s -d 12</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">program</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Open a device file to be needed. */</span>
+<span class="kt">int</span> <span class="nf">device_open</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">_fname</span><span class="p">,</span> <span class="kt">int</span> <span class="n">_flag</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">s32</span> <span class="n">fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">_fname</span><span class="p">,</span> <span class="n">_flag</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to open %s errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">_fname</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">fd</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">delay</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rtc_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="kt">time_t</span> <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">rtc_time</span> <span class="n">start</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">rtc_time</span> <span class="n">end</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">rtc_wkalrm</span> <span class="n">alrm_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">rtc_wkalrm</span> <span class="n">alrm_get</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Compile time: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">__TIME__</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">getopt_long</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">sopts</span><span class="p">,</span> <span class="n">lopts</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;d&#39;</span><span class="o">:</span>
+            <span class="n">delay</span> <span class="o">=</span> <span class="n">str2int</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;u&#39;</span><span class="o">:</span>
+            <span class="n">usage</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">delay</span> <span class="o">&lt;</span> <span class="n">ALARM_MIN_DELAY</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">delay</span> <span class="o">&gt;</span> <span class="n">ALARM_MAX_DELAY</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Invalid delay: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">delay</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">rtc_fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">&quot;/dev/rtc0&quot;</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rtc_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to open RTC device!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;ioctl(%#x)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">RTC_RD_TIME</span><span class="p">);</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ioctl</span><span class="p">(</span><span class="n">rtc_fd</span><span class="p">,</span> <span class="n">RTC_RD_TIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to read RTC time!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Current time: %04d-%02d-%02d %02d:%02d:%02d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+        <span class="n">start</span><span class="p">.</span><span class="n">tm_year</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">tm_mon</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">tm_mday</span><span class="p">,</span>
+        <span class="n">start</span><span class="p">.</span><span class="n">tm_hour</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">tm_min</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">tm_sec</span><span class="p">);</span>
+
+    <span class="n">alrm_set</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">mktime</span><span class="p">((</span><span class="k">struct</span> <span class="nc">tm</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">start</span><span class="p">)</span> <span class="o">+</span> <span class="n">delay</span><span class="p">;</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tmp</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">rtc_time</span><span class="p">));</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;ioctl(%#x)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">RTC_WKALM_SET</span><span class="p">);</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ioctl</span><span class="p">(</span><span class="n">rtc_fd</span><span class="p">,</span> <span class="n">RTC_WKALM_SET</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">alrm_set</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to set alarm! [%d]: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Set a alarm to: %04d-%02d-%02d %02d:%02d:%02d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+        <span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">tm_year</span><span class="p">,</span> <span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">tm_mon</span><span class="p">,</span>
+        <span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">tm_mday</span><span class="p">,</span> <span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">tm_hour</span><span class="p">,</span>
+        <span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">tm_min</span><span class="p">,</span> <span class="n">alrm_set</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">tm_sec</span><span class="p">);</span>
+
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">alrm_get</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">rtc_wkalrm</span><span class="p">));</span>
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;ioctl(%#x)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">RTC_WKALM_RD</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ioctl</span><span class="p">(</span><span class="n">rtc_fd</span><span class="p">,</span> <span class="n">RTC_WKALM_RD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">alrm_get</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to read alarm!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">alrm_get</span><span class="p">.</span><span class="n">pending</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Waiting ...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">usleep</span><span class="p">(</span><span class="mi">200000</span><span class="p">);</span> <span class="c1">// 200ms</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;ioctl(%#x)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">RTC_RD_TIME</span><span class="p">);</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ioctl</span><span class="p">(</span><span class="n">rtc_fd</span><span class="p">,</span> <span class="n">RTC_RD_TIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to read RTC time!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">err</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Current time: %04d-%02d-%02d %02d:%02d:%02d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+        <span class="n">end</span><span class="p">.</span><span class="n">tm_year</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">tm_mon</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">tm_mday</span><span class="p">,</span>
+        <span class="n">end</span><span class="p">.</span><span class="n">tm_hour</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">tm_min</span><span class="p">,</span> <span class="n">end</span><span class="p">.</span><span class="n">tm_sec</span><span class="p">);</span>
+
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">mktime</span><span class="p">((</span><span class="k">struct</span> <span class="nc">tm</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">end</span><span class="p">)</span> <span class="o">-</span> <span class="n">mktime</span><span class="p">((</span><span class="k">struct</span> <span class="nc">tm</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">start</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Start a timer of %d, actualy is %ld ...</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">delay</span><span class="p">,</span> <span class="n">tmp</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="n">delay</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;The timer is not accurate!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;The timer is good!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="nl">err</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rtc_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">rtc_fd</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="4.4.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="4.4.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

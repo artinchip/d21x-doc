@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>11.7. 示例程序 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="RTOS SDK" href="../../lite/index.html" />
+    <link rel="prev" title="11.6. 屏幕配置" href="display.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">11. Bringup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="prepare.html">11.1. 准备工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="storage.html">11.2. 存储配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="console.html">11.3. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">11.4. 刷机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chips.html">11.5. IC 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html">11.6. 屏幕配置</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">11.7. 示例程序</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lvgl">11.7.1. LVGL</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">11.7.1.1. 编译</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">11.7.1.2. 运行</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">11.7.1.3. 界面</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">11.7.1.4. 注意问题</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#qt">11.7.2. QT</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id6">11.7.2.1. 编译</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">11.7.2.2. 运行</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">11.7.2.3. 界面</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">11.7.2.4. 注意问题</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#samples">11.7.3. Samples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">11. </span>Bringup</a> &raquo;</li>
+        
+      <li><span class="section-number">11.7. </span>示例程序</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">11.7. </span>示例程序<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="lvgl">
+<h2><span class="section-number">11.7.1. </span>LVGL<a class="headerlink" href="#lvgl" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3><span class="section-number">11.7.1.1. </span>编译<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>如果要运行 LVGL demo， 需要在 luban 系统通过 “make m” 命令打开 luban  配置界面：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>ArtInChip packages
+    Sample code
+        [*] test-lvgl  ---&gt;
+</pre></div>
+</div>
+<p>需要的三方库会自动加载和编译</p>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">11.7.1.2. </span>运行<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>自动运行：脚本为 /etc/init.d/S00lvgl</p></li>
+<li><p>手工运行：/usr/local/bin/test_lvgl</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">11.7.1.3. </span>界面<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../_images/test-lvgl.png" src="../../_images/test-lvgl.png" />
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">11.7.1.4. </span>注意问题<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>test-lvgl 默认的 UI 界面为 1024x600，不会自适应屏幕大小</p></li>
+<li><p>test-lvgl 默认需要双buffer，因此在board.dts 中要按 高度 x 2 配置</p></li>
+</ul>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span>fb0 {
+    height-virtual <span class="o">=</span> &lt;1200&gt;;            //600 x <span class="mi">2</span>
+    port {
+        fb0_out: endpoint {
+            remote-endpoint <span class="o">=</span> &lt;&amp;de0_in&gt;;
+        };
+    };
+};
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="qt">
+<h2><span class="section-number">11.7.2. </span>QT<a class="headerlink" href="#qt" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id6">
+<h3><span class="section-number">11.7.2.1. </span>编译<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>如果要运行 QT demo， 需要在 luban 系统通过 “make m” 命令打开 luban  配置界面：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>ArtInChip packages
+    Launchers
+        [*] qtlauncher  ---&gt;
+            [*]   use GE to render image <span class="p">(</span>NEW)
+            [*]   small memory device <span class="p">(</span>NEW)
+</pre></div>
+</div>
+<p>需要的三方库如 QT 会自动加载和编译</p>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">11.7.2.2. </span>运行<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>自动运行：脚本为 /etc/init.d/S99qtlauncher</p></li>
+<li><p>手工运行：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export TSLIB_FBDEVICE=/dev/fb0
+export POINTERCAL_CALIBFILE=/etc/pointercal
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_TSDEVICE=/dev/input/event0
+export TSLIB_PLUGINDIR=/usr/lib/ts
+export QWS_MOUSE_PROTO=tslib:/dev/input/event0
+/usr/local/launcher/qtlauncher -qws
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">11.7.2.3. </span>界面<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../_images/qtlauncher.png" src="../../_images/qtlauncher.png" />
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">11.7.2.4. </span>注意问题<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>qtlancher 应用比较大，因此需要调整 root 分区到64M， 参考 <a class="reference internal" href="storage.html#ref-luban-bringup-storage"><span class="std std-ref">存储章节说明</span></a></p>
+</div>
+</div>
+<div class="section" id="samples">
+<h2><span class="section-number">11.7.3. </span>Samples<a class="headerlink" href="#samples" title="永久链接至标题">¶</a></h2>
+<p>为了方便使用，Luban 开发了一些模块的使用示例，可以通过 “make m” 命令打开 luban  配置界面进行设置：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>ArtInChip packages
+    Sample code
+        [*] test-adc
+        [*] test-mtop
+        [*] test-ce
+        [*] test-dma-buf
+        [ ] test-dvp
+        [*] test-fb
+        [*] test-lvgl
+        [*] test-touchscreen
+        [*] test-uart
+        [*] test-watchdog
+        [ ] test-libmad
+        [*] test-clock
+        [*] test-keyadc
+        [*] reg-dump
+        [*] test-gpio
+        [*] test-can
+        [*] test-eth
+        [*] test-audio
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../lite/index.html" class="btn btn-neutral float-right" title="RTOS SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="display.html" class="btn btn-neutral float-left" title="11.6. 屏幕配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

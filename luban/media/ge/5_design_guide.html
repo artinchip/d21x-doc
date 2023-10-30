@@ -1,0 +1,1957 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.1.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.1.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.1.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.1. GE 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.1.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.1.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.1.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.1.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.1.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.1.5.2. 非命令队列模式</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id4">6.1.5.2.1. 关键流程设计</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">6.1.5.3. 命令队列模式</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.1.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#batch">6.1.5.3.2. batch管理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.1.5.3.3. 多进程支持</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">6.1.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#enum-ge-pd-rules">6.1.5.4.1. enum ge_pd_rules</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-ge-ctrl">6.1.5.4.2. struct ge_ctrl</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#enum-ge-fillrect-type">6.1.5.4.3. enum ge_fillrect_type</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-ge-fillrect">6.1.5.4.4. struct ge_fillrect</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-ge-bitblt">6.1.5.4.5. struct ge_bitblt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id9">6.1.5.4.6. struct ge_bitblt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#enum-ge-mode">6.1.5.4.7. enum ge_mode</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">6.1.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-version">6.1.5.5.1. IOC_GE_VERSION</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-mode">6.1.5.5.2. IOC_GE_MODE</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-fillrect">6.1.5.5.3. IOC_GE_FILLRECT</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-bitblt">6.1.5.5.4. IOC_GE_BITBLT</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-rotate">6.1.5.5.5. IOC_GE_ROTATE</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-sync">6.1.5.5.6. IOC_GE_SYNC</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-cmd-buf-size">6.1.5.5.7. IOC_GE_CMD_BUF_SIZE</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-add-dma-buf">6.1.5.5.8. IOC_GE_ADD_DMA_BUF</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ge-rm-dma-buf">6.1.5.5.9. IOC_GE_RM_DMA_BUF</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mppge">6.1.5.6. MPP对GE接口的封装</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-open">6.1.5.6.1. mpp_ge_open</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-close">6.1.5.6.2. mpp_ge_close</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-get-mode">6.1.5.6.3. mpp_ge_get_mode</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-add-dmabuf">6.1.5.6.4. mpp_ge_add_dmabuf</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-rm-dmabuf">6.1.5.6.5. mpp_ge_rm_dmabuf</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-fillrect">6.1.5.6.6. mpp_ge_fillrect</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-bitblt">6.1.5.6.7. mpp_ge_bitblt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-rotate">6.1.5.6.8. mpp_ge_rotate</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-emit">6.1.5.6.9. mpp_ge_emit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-sync">6.1.5.6.10. mpp_ge_sync</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#app">6.1.5.7. APP 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.1.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.1. </span>GE 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.1.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.1.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.1.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本模块源代码在内核目录linux-5.10/drivers/video/artinchip下，目录结构如下</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>drivers/video/artinchip/ge/
+├── ge_normal.c  // normal模式驱动
+├── ge_hw.c  // normal模式对硬件操作的封装
+├── ge_hw.h  // normal模式对硬件操作封装的API
+├── ge_cmdq.c  // CMD queue模式驱动
+├── ge_reg.h    // GE寄存器定义
+├── Kconfig
+└── Makefile
+</pre></div>
+</div>
+<p>GE驱动是基于misc设备驱动实现的，在用户态通过open设备节点/dev/ge和GE驱动进行交互，
+GE驱动可以配置成normal（非命令队列）模式或命令队列模式，配置方法可参考参数配置章节。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.1.5.2. </span>非命令队列模式<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id11">
+<img alt="../../../_images/ge_sw_normal_0.png" src="../../../_images/ge_sw_normal_0.png" />
+<p class="caption"><span class="caption-number">图 6.10 </span><span class="caption-text">normal模式架构图</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+<p>非命令队列模式，即normal模式。在normal模式下，当用户态通过open函数打开/dev/ge设备节点，会调用到驱动中的ge_open，
+当用户通过close关闭驱动的时候，会调用到驱动中的ge_release。在ge_open中主要是实现了模块clock的打开操作，
+在ge_release中实现了模块clock的关闭操作。当用户态有多个用户打开GE驱动的时候，对驱动打开次数进行引用计数，
+至少有一个用户打开GE驱动时打开GE的clock, 当所有的用户都关闭GE驱动时关闭GE的clock。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="n">ge_open</span><span class="p">(</span><span class="k">struct</span> <span class="nc">inode</span> <span class="o">*</span><span class="n">inode</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">file</span> <span class="o">*</span><span class="n">file</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_data</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_data</span><span class="o">-&gt;</span><span class="n">refs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ge_clk_enable</span><span class="p">(</span><span class="n">g_data</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">g_data</span><span class="o">-&gt;</span><span class="n">refs</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_data</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nf">nonseekable_open</span><span class="p">(</span><span class="n">inode</span><span class="p">,</span> <span class="n">file</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">ge_release</span><span class="p">(</span><span class="k">struct</span> <span class="nc">inode</span> <span class="o">*</span><span class="n">inode</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">file</span> <span class="o">*</span><span class="n">file</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_data</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_data</span><span class="o">-&gt;</span><span class="n">refs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ge_clk_disable</span><span class="p">(</span><span class="n">g_data</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">g_data</span><span class="o">-&gt;</span><span class="n">refs</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_data</span><span class="o">-&gt;</span><span class="n">lock</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>normal模式用户态可用ioctl：</p>
+<ul class="simple">
+<li><p>IOC_GE_VERSION</p></li>
+<li><p>IOC_GE_MODE</p></li>
+<li><p>IOC_GE_FILLRECT</p></li>
+<li><p>IOC_GE_BITBLT</p></li>
+<li><p>IOC_GE_ROTATE</p></li>
+</ul>
+<p>对于接口IOC_GE_FILLRECT、IOC_GE_BITBLT、IOC_GE_ROTATE在normal模式下调用是同步的，
+硬件执行任务完成后接口调用才会返回，在normal模式下，无需调用IOC_GE_SYNC接口。</p>
+<div class="section" id="id4">
+<h3><span class="section-number">6.1.5.2.1. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在normal模式下，GE驱动各种功能都是通过ioctrl调用来实现，每一次ioctl的调用都包括GE参数配置、GE模块中断开启，
+GE启动，GE等中断（阻塞等待中断服务程序通知中断到来），硬件完成任务后，关闭中断。Ioctl通过mutex保护，
+支持多用户同时打开驱动设备节点，并调用ioctl。</p>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/ge_sw_normal_11.png" src="../../../_images/ge_sw_normal_11.png" />
+<p class="caption"><span class="caption-number">图 6.11 </span><span class="caption-text">normal模式中断流程</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+<p>等待中断流程：</p>
+<ul>
+<li><p>在probe时候初始化等待队列：
+init_waitqueue_head(&amp;data-&gt;wait);</p></li>
+<li><p>在ioctl中调用如下函数，使当前进程在等待队列中睡眠：</p>
+<div class="line-block">
+<div class="line">wait_event_timeout(data-&gt;wait, data-&gt;status, msecs_to_jiffies(GE_TIMEOUT_MS));</div>
+</div>
+</li>
+<li><p>在中断服务程序中调用wake_up(&amp;data-&gt;wait)，唤醒等待队列中的睡眠进程</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">6.1.5.3. </span>命令队列模式<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/ge_sw_cmdq.png" src="../../../_images/ge_sw_cmdq.png" />
+<p class="caption"><span class="caption-number">图 6.12 </span><span class="caption-text">CMD queue模式架构图</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<p>命令队列模式，即CMD queue模式。在CMD queue模式下，GE驱动内部是以Command queue的方式执行的，
+GE驱动只负责从用户态接收命令队列，然后执行命令队列。GE的完整功能需要依赖MPP中间件，
+在MPP中间件中会把用户设置的参数信息转换成硬件可以识别的命令队列信息。</p>
+<p>Command Queue相关的几个概念：</p>
+<ul class="simple">
+<li><p>Task： GE（Graphics Engine） 可以执行的最小任务单元，比如说一次blit操作、一次矩形填充</p></li>
+<li><p>Batch：硬件以batch为单位执行，是一系列命令的集合，可以包含一个或者多个task，软件也必须以batch为单位向驱动写入命令</p></li>
+<li><p>Command Queue：软件可以向Command Queue写入多个batch，硬件以batch为单位，按顺序执行</p></li>
+</ul>
+<p>GE Command Queue是以ring buffer的方式实现的, 关于ring buffer的说明，请参考GE规格书</p>
+<p>CMD queue和normal模式驱动相比增加了write接口，命令队列通过write接口，以batch为单位发送给驱动，batch中可以包含多个task的命令。
+write操作是异步的，相应的命令只要写入驱动中的cmd queue buffer即返回，不用等待硬件执行完当前batch中的所有命令，
+当用户需要等待发送的命令执行完成时可以调用IOC_GE_SYNC接口。在CMD queue模式下，通过write接口写入以batch为单位的命令，
+硬件可以连续执行多个task。而在normal模式下，通过IOC_GE_BITBLT等接口，硬件一次只能执行一个任务。</p>
+<p>CMD Queue模式用户态可用ioctl：</p>
+<ul class="simple">
+<li><p>IOC_GE_VERSION</p></li>
+<li><p>IOC_GE_MODE</p></li>
+<li><p>IOC_GE_CMD_BUF_SIZE</p></li>
+<li><p>IOC_GE_SYNC</p></li>
+<li><p>IOC_GE_ADD_DMA_BUF</p></li>
+<li><p>IOC_GE_RM_DMA_BUF</p></li>
+</ul>
+<div class="section" id="id6">
+<h3><span class="section-number">6.1.5.3.1. </span>初始化流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>GE驱动的初始化过程见aic_ge_probe()函数，除了申请regs、clk、reset等资源外，
+还申请了存储Command Queue需要的ring buffer，以及存储batch信息的结构体。
+batch结构体不存储实际的命令，batch结构体中保存指向ring buffer的一段空间，
+包括相对于ring buffer起始地址的offset，以及当前batch中的命令length。batch结构体定义如下:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_ge_batch</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">list_head</span> <span class="n">list</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">client_id</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>下图ring buffer中不同的颜色代表不同的batch对应的命令：</p>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/ge_function_cmdq_02.png" src="../../../_images/ge_function_cmdq_02.png" />
+<p class="caption"><span class="caption-number">图 6.13 </span><span class="caption-text">ring buffer与batch关系图</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+<p>目前驱动中定义了8个存储batch信息的结构体，ring buffer的size定义为32K, 32K的空间可以缓存超过256个task（假如都是RGB格式的task）。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define MAX_BATCH_NUM 8</span>
+<span class="cp">#define CMD_BUF_SIZE  (32 * 1024)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="batch">
+<h3><span class="section-number">6.1.5.3.2. </span>batch管理<a class="headerlink" href="#batch" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li><p>每一个batch总共可能存在3中状态：</p></li>
+</ol>
+<ul class="simple">
+<li><p>free状态，batch中没有可用信息，在free batch list中</p></li>
+<li><p>ready状态，batch中有等待执行的cmd信息，在ready list batch中</p></li>
+<li><p>运行状态，当前硬件正在运行的batch，即不在free list中也不在ready list中</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>在用户态的缓冲buffer中，用户组织好命令队列，以batch为单位，通过标准的write接口把命令copy到内核中的ring buffer。</p></li>
+<li><p>在内核中维护一个包含每个batch起始offset和length信息的链表，硬件以batch为单位执行命令队列。</p></li>
+</ol>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/ge_function_cmdq_41.png" src="../../../_images/ge_function_cmdq_41.png" />
+<p class="caption"><span class="caption-number">图 6.14 </span><span class="caption-text">batch状态变化流程图</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>如上图所示，会有两个地方启动硬件执行batch命令</p></li>
+</ol>
+<ul class="simple">
+<li><p>当用户调用了write命令写入当前batch信息，并且硬件处于空闲状态</p></li>
+<li><p>在中断服务判断当前的ready list batch不为空，则从列表中dequeue一个batch，送给硬件执行</p></li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.1.5.3.3. </span>多进程支持<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>支持多进程调用，不同进程添加的batch，按照先进先出原则运行。</p>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/ge_function_cmdq_31.png" src="../../../_images/ge_function_cmdq_31.png" />
+<p class="caption"><span class="caption-number">图 6.15 </span><span class="caption-text">多进程支持</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>当某个进程需要等待当前进程任务是否完成的时候，需要调用IOC_GE_SYNC命令，等待当前进程所有的任务完成即可，如上图所示。
+当进程2调用IOC_GE_SYNC命令时，只需要等待Batch5完成即可，不用管后边加入的其他进程的Batch6、Batch7</p>
+<p>IOC_GE_SYNC的实现：</p>
+<ol class="arabic simple">
+<li><p>在open中的file上下文中创建当前client的上下文信息，并添加到client链表中，在client中有唯一识别id</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_ge_client</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">list_head</span> <span class="n">list</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">list_head</span> <span class="n">buf_list</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mutex</span> <span class="n">buf_lock</span><span class="p">;</span> <span class="cm">/* dma buf list lock */</span>
+    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">batch_num</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>当前用户调用write接口，写入一个batch命令的时候， 当前batch中的client_id会写入对应的client识别id，
+并且对应的client上下文中的batch_num引用计数会加1。</p></li>
+<li><p>硬件每执行完成一个batch产生一次中断，在中断服务程序中查询当前batch中的client_id，并通过client_id从client链表中找到当前client，
+对应的client上下文中的batch_num引用计数减1。在中断服务程序中每来一次中断会通知所有进程</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">wake_up_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>用户通过接口IOC_GE_SYNC等待任务完成，只需要等待当前client中的batch_num为0即可。</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="n">ge_client_sync</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_ge_data</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span>
+            <span class="k">struct</span> <span class="nc">aic_ge_client</span> <span class="o">*</span><span class="n">client</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">client</span><span class="o">-&gt;</span><span class="n">batch_num</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">wait_event_interruptible_timeout</span><span class="p">(</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">wait</span><span class="p">,</span>
+                            <span class="o">!</span><span class="n">client</span><span class="o">-&gt;</span><span class="n">batch_num</span><span class="p">,</span>
+                            <span class="n">GE_TIMEOUT</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">6.1.5.4. </span>数据结构设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="enum-ge-pd-rules">
+<h3><span class="section-number">6.1.5.4.1. </span>enum ge_pd_rules<a class="headerlink" href="#enum-ge-pd-rules" title="永久链接至标题">¶</a></h3>
+<p>Porter/Duff alpha混合规则枚举</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * enum ge_pd_mode - graphics engine Porter/Duff alpha blending rules</span>
+<span class="cm"> *</span>
+<span class="cm"> * pixel = (source * fs + destination * fd)</span>
+<span class="cm"> * sa = source alpha</span>
+<span class="cm"> * da = destination alpha</span>
+<span class="cm"> *</span>
+<span class="cm"> * @GE_PD_NONE:           fs: sa      fd: 1.0-sa (defaults)</span>
+<span class="cm"> * @GE_PD_CLEAR:          fs: 0.0     fd: 0.0</span>
+<span class="cm"> * @GE_PD_SRC:            fs: 1.0     fd: 0.0</span>
+<span class="cm"> * @GE_PD_SRC_OVER:       fs: 1.0     fd: 1.0-sa</span>
+<span class="cm"> * @GE_PD_DST_OVER:       fs: 1.0-da  fd: 1.0</span>
+<span class="cm"> * @GE_PD_SRC_IN:         fs: da      fd: 0.0</span>
+<span class="cm"> * @GE_PD_DST_IN:         fs: 0.0     fd: sa</span>
+<span class="cm"> * @GE_PD_SRC_OUT:        fs: 1.0-da  fd: 0.0</span>
+<span class="cm"> * @GE_PD_DST_OUT:        fs: 0.0     fd: 1.0-sa</span>
+<span class="cm"> * @GE_PD_SRC_ATOP:       fs: da      fd: 1.0-sa</span>
+<span class="cm"> * @GE_PD_DST_ATOP:       fs: 1.0-da  fd: sa</span>
+<span class="cm"> * @GE_PD_ADD:            fs: 1.0     fd: 1.0</span>
+<span class="cm"> * @GE_PD_XOR:            fs: 1.0-da  fd: 1.0-sa</span>
+<span class="cm"> * @GE_PD_DST:            fs: 0.0     fd: 1.0</span>
+<span class="cm"> */</span>
+<span class="k">enum</span> <span class="n">ge_pd_rules</span> <span class="p">{</span>
+        <span class="n">GE_PD_NONE</span>           <span class="o">=</span>  <span class="mi">0</span><span class="p">,</span>
+        <span class="n">GE_PD_CLEAR</span>          <span class="o">=</span>  <span class="mi">1</span><span class="p">,</span>
+        <span class="n">GE_PD_SRC</span>            <span class="o">=</span>  <span class="mi">2</span><span class="p">,</span>
+        <span class="n">GE_PD_SRC_OVER</span>       <span class="o">=</span>  <span class="mi">3</span><span class="p">,</span>
+        <span class="n">GE_PD_DST_OVER</span>       <span class="o">=</span>  <span class="mi">4</span><span class="p">,</span>
+        <span class="n">GE_PD_SRC_IN</span>         <span class="o">=</span>  <span class="mi">5</span><span class="p">,</span>
+        <span class="n">GE_PD_DST_IN</span>         <span class="o">=</span>  <span class="mi">6</span><span class="p">,</span>
+        <span class="n">GE_PD_SRC_OUT</span>        <span class="o">=</span>  <span class="mi">7</span><span class="p">,</span>
+        <span class="n">GE_PD_DST_OUT</span>        <span class="o">=</span>  <span class="mi">8</span><span class="p">,</span>
+        <span class="n">GE_PD_SRC_ATOP</span>       <span class="o">=</span>  <span class="mi">9</span><span class="p">,</span>
+        <span class="n">GE_PD_DST_ATOP</span>       <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">GE_PD_ADD</span>            <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
+        <span class="n">GE_PD_XOR</span>            <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="n">GE_PD_DST</span>            <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-ge-ctrl">
+<h3><span class="section-number">6.1.5.4.2. </span>struct ge_ctrl<a class="headerlink" href="#struct-ge-ctrl" title="永久链接至标题">¶</a></h3>
+<p>GE控制结构体</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct ge_ctrl - ge ctrl functions</span>
+<span class="cm"> * @alpha_en</span>
+<span class="cm"> *  0: enable Porter/Duff alpha blending</span>
+<span class="cm"> *  1: disable Porter/Duff alpha blending</span>
+<span class="cm"> * @alpha_rules: Porter/Duff alpha blending rules</span>
+<span class="cm"> * @src_alpha_mode: source alpha mode</span>
+<span class="cm"> *  0: pixel alpha mode(src_alpha = src_pixel_alpha)</span>
+<span class="cm"> *  1: global alpha mode(src_alpha = src_global_alpha)</span>
+<span class="cm"> *  2: mixded alpha mode(src_alpha = src_pixel_alpha * src_global_alpha / 255)</span>
+<span class="cm"> * @src_global_alpha: source global alpha value (0~255)</span>
+<span class="cm"> *  used by global alpha mode and mixded alpha mode</span>
+<span class="cm"> * @dst_alpha_mode: destination alpha mode</span>
+<span class="cm"> *  0: pixel alpha mode(dst_alpha = dst_pixel_alpha)</span>
+<span class="cm"> *  1: global alpha mode(dst_alpha = dst_global_alpha)</span>
+<span class="cm"> *  2: mixded alpha mode(dst_alpha = dst_pixel_alpha * dst_global_alpha / 255)</span>
+<span class="cm"> * @dst_global_alpha: destination global alpha value (0~255)</span>
+<span class="cm"> *  used by global alpha mode and mixed alpha mode</span>
+<span class="cm"> * @ck_en</span>
+<span class="cm"> *  0: disable color key</span>
+<span class="cm"> *  1: enable color key</span>
+<span class="cm"> * @ck_value: rgb value of color key to match the source pixels</span>
+<span class="cm"> *  bit[31:24]: reserved</span>
+<span class="cm"> *  bit[23:16]: R value</span>
+<span class="cm"> *  bit[15:8]: G value</span>
+<span class="cm"> *  bit[7:0]: B value</span>
+<span class="cm"> * @dither_en(Not supported by IOC_GE_ROTATE)</span>
+<span class="cm"> *  0: disable dither</span>
+<span class="cm"> *  1: enable dither</span>
+<span class="cm"> * @flags: the flags of some functions, such as scan order, src H/V flip</span>
+<span class="cm"> *         and src 90/180/270 degree rotation, the H flip, V flip</span>
+<span class="cm"> *         and rotation can be enabled at the same time, the effect</span>
+<span class="cm"> *         of flip is in front of rotation, only supported by IOC_GE_BITBLT</span>
+<span class="cm"> *         the flags was defined in mpp_types.h</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">ge_ctrl</span> <span class="p">{</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">alpha_en</span><span class="p">;</span>
+        <span class="k">enum</span> <span class="n">ge_pd_rules</span>   <span class="n">alpha_rules</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">src_alpha_mode</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">src_global_alpha</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">dst_alpha_mode</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">dst_global_alpha</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">ck_en</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">ck_value</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">dither_en</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>       <span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enum-ge-fillrect-type">
+<h3><span class="section-number">6.1.5.4.3. </span>enum ge_fillrect_type<a class="headerlink" href="#enum-ge-fillrect-type" title="永久链接至标题">¶</a></h3>
+<p>颜色填充类型枚举</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * enum ge_fillrect_type - the ge fill rectangle types:</span>
+<span class="cm"> *</span>
+<span class="cm"> * GE_NO_GRADIENT: No gradient is used, only use start_color to</span>
+<span class="cm"> *                  fill rectangle, ignore end_color</span>
+<span class="cm"> * GE_H_LINEAR_GRADIENT: Interpolates colors between start_color</span>
+<span class="cm"> *                  and end_color in the horizontal direction</span>
+<span class="cm"> *                  form left to right</span>
+<span class="cm"> * GE_V_LINEAR_GRADIENT: Interpolates colors between start_color and</span>
+<span class="cm"> *                  end_color in the vertical direction from top to</span>
+<span class="cm"> *                  buttom</span>
+<span class="cm"> */</span>
+<span class="k">enum</span> <span class="n">ge_fillrect_type</span> <span class="p">{</span>
+        <span class="n">GE_NO_GRADIENT</span>         <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">GE_H_LINEAR_GRADIENT</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">GE_V_LINEAR_GRADIENT</span>   <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-ge-fillrect">
+<h3><span class="section-number">6.1.5.4.4. </span>struct ge_fillrect<a class="headerlink" href="#struct-ge-fillrect" title="永久链接至标题">¶</a></h3>
+<p>矩形填充结构体</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct ge_fillrect - ge fill rectangle</span>
+<span class="cm"> * @type: fill rect type</span>
+<span class="cm"> * @start_color: start color(32 bits)</span>
+<span class="cm"> * bit[31:24] alpha value</span>
+<span class="cm"> * bit[23:16] r value</span>
+<span class="cm"> * bit[15:8]  g value</span>
+<span class="cm"> * bit[7:0]   b value</span>
+<span class="cm"> * @end_color: end color(32 bits)</span>
+<span class="cm"> * bit[31:24] alpha value</span>
+<span class="cm"> * bit[23:16] r value</span>
+<span class="cm"> * bit[15:8]  g value</span>
+<span class="cm"> * bit[7:0]   b value</span>
+<span class="cm"> * @dst_buf: the destination buffer</span>
+<span class="cm"> * @ctrl: ge ctrl functions</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">ge_fillrect</span> <span class="p">{</span>
+        <span class="k">enum</span> <span class="n">ge_fillrect_type</span>  <span class="n">type</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>           <span class="n">start_color</span><span class="p">;</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span>           <span class="n">end_color</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_buf</span>         <span class="n">dst_buf</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">ge_ctrl</span>         <span class="n">ctrl</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-ge-bitblt">
+<h3><span class="section-number">6.1.5.4.5. </span>struct ge_bitblt<a class="headerlink" href="#struct-ge-bitblt" title="永久链接至标题">¶</a></h3>
+<p>位块搬移结构体</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct ge_bitblt - ge bitblt</span>
+<span class="cm"> * @src_buf: the source buffer</span>
+<span class="cm"> * @dst_buf: the destination buffer</span>
+<span class="cm"> * @ctrl: ge ctrl functions</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">ge_bitblt</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">mpp_buf</span>   <span class="n">src_buf</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_buf</span>   <span class="n">dst_buf</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">ge_ctrl</span>   <span class="n">ctrl</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">6.1.5.4.6. </span>struct ge_bitblt<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>位块搬移结构体</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct ge_rotation - ge rotation</span>
+<span class="cm"> * @src_buf: the source buffer</span>
+<span class="cm"> * @dst_buf: the destination buffer</span>
+<span class="cm"> * @src_rot_center: left-top x/y coordinate of src center</span>
+<span class="cm"> * @dst_rot_center: left-top x/y coordinate of dst center</span>
+<span class="cm"> * @angle_sin: 2.12 fixed point, the sin value of rotation angle</span>
+<span class="cm"> * @angle_cos: 2.12 fixed point, the cos value of rotation angle</span>
+<span class="cm"> * @ctrl: ge ctrl functions</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">ge_rotation</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">mpp_buf</span>        <span class="n">src_buf</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_buf</span>        <span class="n">dst_buf</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_point</span>      <span class="n">src_rot_center</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_point</span>      <span class="n">dst_rot_center</span><span class="p">;</span>
+        <span class="kt">int</span>                   <span class="n">angle_sin</span><span class="p">;</span>
+        <span class="kt">int</span>                   <span class="n">angle_cos</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">ge_ctrl</span>        <span class="n">ctrl</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enum-ge-mode">
+<h3><span class="section-number">6.1.5.4.7. </span>enum ge_mode<a class="headerlink" href="#enum-ge-mode" title="永久链接至标题">¶</a></h3>
+<p>GE模式枚举</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">ge_mode</span> <span class="p">{</span>
+        <span class="n">GE_MODE_NORMAL</span><span class="p">,</span>
+        <span class="n">GE_MODE_CMDQ</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">6.1.5.5. </span>接口设计<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<p>用户态通过/dev/ge节点打开GE驱动。</p>
+<div class="section" id="ioc-ge-version">
+<h3><span class="section-number">6.1.5.5.1. </span>IOC_GE_VERSION<a class="headerlink" href="#ioc-ge-version" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">unsinged</span> <span class="kt">int</span> <span class="o">*</span><span class="n">pversion</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取GE版本</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_VERSION</div>
+<div class="line">pversion: 指向32bits无符号版本号指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-mode">
+<h3><span class="section-number">6.1.5.5.2. </span>IOC_GE_MODE<a class="headerlink" href="#ioc-ge-mode" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">enum</span> <span class="n">ge_mode</span> <span class="o">*</span><span class="n">mode</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取工作模式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_MODE</div>
+<div class="line">mode: enum ge_mode指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-fillrect">
+<h3><span class="section-number">6.1.5.5.3. </span>IOC_GE_FILLRECT<a class="headerlink" href="#ioc-ge-fillrect" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_fillrect</span> <span class="o">*</span><span class="n">fill</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>矩形填充</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_FILLRECT</div>
+<div class="line">fill: 指向struct ge_fillrect指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>仅供normal模式使用, cmd queue模式不可用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-bitblt">
+<h3><span class="section-number">6.1.5.5.4. </span>IOC_GE_BITBLT<a class="headerlink" href="#ioc-ge-bitblt" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_bitblt</span> <span class="o">*</span><span class="n">bitblt</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>位块搬移</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_BITBLT</div>
+<div class="line">bitblt: 指向struct ge_bitblt指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>仅供normal模式使用, cmd queue模式不可用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-rotate">
+<h3><span class="section-number">6.1.5.5.5. </span>IOC_GE_ROTATE<a class="headerlink" href="#ioc-ge-rotate" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_rotation</span> <span class="o">*</span><span class="n">rot</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>任意角度旋转</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_ROTATE</div>
+<div class="line">rot: 指向struct ge_rotation指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>仅供normal模式使用, cmd queue模式不可用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-sync">
+<h3><span class="section-number">6.1.5.5.6. </span>IOC_GE_SYNC<a class="headerlink" href="#ioc-ge-sync" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>等待任务完成</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_SYNC</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-cmd-buf-size">
+<h3><span class="section-number">6.1.5.5.7. </span>IOC_GE_CMD_BUF_SIZE<a class="headerlink" href="#ioc-ge-cmd-buf-size" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">unsinged</span> <span class="kt">int</span> <span class="o">*</span><span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取cmd buffer size</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_CMD_BUF_SIZE</div>
+<div class="line">size: 指向32bits无符号数指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>cmd queue模式可用，normal模式不可用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-add-dma-buf">
+<h3><span class="section-number">6.1.5.5.8. </span>IOC_GE_ADD_DMA_BUF<a class="headerlink" href="#ioc-ge-add-dma-buf" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">dma_buf_info</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>添加DMA buffer</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_ADD_DMA_BUF</div>
+<div class="line">buf: 指向struct dma_buf_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ge-rm-dma-buf">
+<h3><span class="section-number">6.1.5.5.9. </span>IOC_GE_RM_DMA_BUF<a class="headerlink" href="#ioc-ge-rm-dma-buf" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">dma_buf_info</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>删除DMA buffer</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">cmd：IOC_GE_RM_DMA_BUF</div>
+<div class="line">buf: 指向struct dma_buf_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="mppge">
+<span id="ref-luban-mpp-ge"></span><h2><span class="section-number">6.1.5.6. </span>MPP对GE接口的封装<a class="headerlink" href="#mppge" title="永久链接至标题">¶</a></h2>
+<p>由于驱动支持非命令队列和命令队列两种模式，在提供的用户态MPP接口中，对调用驱动的接口进行了封装，保持了统一的调用API，
+建议用户统一使用MPP中间层API。在命令队列模式下，task会先缓存在用户态的cmd buffer中，当调用mpp_ge_emit后，
+会通过write接口把命令写入内核的ring buffer。</p>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/ge_function_cmdq_51.png" src="../../../_images/ge_function_cmdq_51.png" />
+<p class="caption"><span class="caption-number">图 6.16 </span><span class="caption-text">应用调用MPP框架</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+<div class="section" id="mpp-ge-open">
+<h3><span class="section-number">6.1.5.6.1. </span>mpp_ge_open<a class="headerlink" href="#mpp-ge-open" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">mpp_ge_open</span><span class="p">();</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>打开ge设备</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">struct mpp_ge 结构体指针</div>
+<div class="line">NULL：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-close">
+<h3><span class="section-number">6.1.5.6.2. </span>mpp_ge_close<a class="headerlink" href="#mpp-ge-close" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">mpp_ge_close</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>关闭ge设备</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge 结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-get-mode">
+<h3><span class="section-number">6.1.5.6.3. </span>mpp_ge_get_mode<a class="headerlink" href="#mpp-ge-get-mode" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">ge_mode</span> <span class="n">mpp_ge_get_mode</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取GE模式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge 结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">enum ge_mode枚举类型</div>
+<div class="line">通过返回值可以获取GE是否工作在命令队列</div>
+<div class="line">模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-add-dmabuf">
+<h3><span class="section-number">6.1.5.6.4. </span>mpp_ge_add_dmabuf<a class="headerlink" href="#mpp-ge-add-dmabuf" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_add_dmabuf</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dma_fd</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>添加DMA buffer</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge：struct mpp_ge 结构体指针</div>
+<div class="line">dma_fd：dma buffer fd</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-rm-dmabuf">
+<h3><span class="section-number">6.1.5.6.5. </span>mpp_ge_rm_dmabuf<a class="headerlink" href="#mpp-ge-rm-dmabuf" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_rm_dmabuf</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dma_fd</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>删除DMA buffer</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge：struct mpp_ge 结构体指针</div>
+<div class="line">dma_fd：dma buffer fd</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-fillrect">
+<h3><span class="section-number">6.1.5.6.6. </span>mpp_ge_fillrect<a class="headerlink" href="#mpp-ge-fillrect" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_fillrect</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_fillrect</span> <span class="o">*</span><span class="n">fillrect</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>矩形填充</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+<div class="line">fillrect:struct ge_fillrect结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口是同步</div>
+<div class="line">的。</div>
+<div class="line">命令队列模式此接口是异步的：</div>
+<div class="line">（1）当用户态的缓存buffer足够时候仅把</div>
+<div class="line-block">
+<div class="line">命令缓存在用户态</div>
+</div>
+<div class="line">（2）当用户态的缓存空间不够的时候，先</div>
+<div class="line-block">
+<div class="line">通过write接口，把缓存的命令全部</div>
+<div class="line">写入驱动，然后再把当前命令缓存到</div>
+<div class="line">用户态buffer</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>矩形填充在目标图像中指定一块矩形区域，填充颜色格式只能为ARGB8888格式，
+在进行固定颜色填充的时候，不支持scaler，不支持90/180/270度旋转，不支持镜像，
+填充的颜色可以和目标层进行alpha blending和color key。</p>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/ge_function_fill2.png" src="../../../_images/ge_function_fill2.png" />
+<p class="caption"><span class="caption-number">图 6.17 </span><span class="caption-text">矩形填充</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="mpp-ge-bitblt">
+<h3><span class="section-number">6.1.5.6.7. </span>mpp_ge_bitblt<a class="headerlink" href="#mpp-ge-bitblt" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_bitblt</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_bitblt</span> <span class="o">*</span><span class="n">blt</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>位块搬移</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+<div class="line">blt:struct ge_bitblt结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口是同步</div>
+<div class="line">的。</div>
+<div class="line">命令队列模式此接口是异步的：</div>
+<div class="line">（1）当用户态的缓存buffer足够时候仅把</div>
+<div class="line-block">
+<div class="line">命令缓存在用户态</div>
+</div>
+<div class="line">（2）当用户态的缓存空间不够的时候，先</div>
+<div class="line-block">
+<div class="line">通过write接口，把缓存的命令全部</div>
+<div class="line">写入驱动，然后再把当前命令缓存到</div>
+<div class="line">用户态buffer</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>位块搬移可以分两种情况：</p>
+<ol class="arabic simple">
+<li><p>原图的矩形区域搬移到目标图的矩形区域中不进行缩放</p></li>
+</ol>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/ge_function_blit2.png" src="../../../_images/ge_function_blit2.png" />
+<p class="caption"><span class="caption-number">图 6.18 </span><span class="caption-text">不进行缩放</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>原图的矩形区域搬移到目标图的矩形区域中同时进行放大或者缩小</p></li>
+</ol>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/ge_function_stretchblit2.png" src="../../../_images/ge_function_stretchblit2.png" />
+<p class="caption"><span class="caption-number">图 6.19 </span><span class="caption-text">进行缩放</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+<p>在进行位块搬移的同时可以进行alpha blending和color key，同时也支持90/180/270度旋转和镜像。</p>
+</div>
+<div class="section" id="mpp-ge-rotate">
+<h3><span class="section-number">6.1.5.6.8. </span>mpp_ge_rotate<a class="headerlink" href="#mpp-ge-rotate" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_rotate</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_rotation</span> <span class="o">*</span><span class="n">rot</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>任意角度旋转</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+<div class="line">rot:struct ge_rotation结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口是同步</div>
+<div class="line">的。</div>
+<div class="line">命令队列模式此接口是异步的：</div>
+<div class="line">（1）当用户态的缓存buffer足够时候仅把</div>
+<div class="line-block">
+<div class="line">命令缓存在用户态</div>
+</div>
+<div class="line">（2）当用户态的缓存空间不够的时候，先</div>
+<div class="line-block">
+<div class="line">通过write接口，把缓存的命令全部</div>
+<div class="line">写入驱动，然后再把当前命令缓存到</div>
+<div class="line">用户态buffer</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>进行任意角度旋转的时候可以进行alpha blending，并且可以指定原图和目标图的旋转中心，任意角度旋转原图和目标图都只支持RGB格式。
+其中旋转角度传给驱动的是旋转角度的sin和cos值，为2.12定点数，其中小数部分12bits ，则应用程序计算sin和cos值的方法如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/ge_function_rot12.png" src="../../../_images/ge_function_rot12.png" />
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#define PI 3.14159265</span>
+
+<span class="cp">#define SIN(x) (sin(x* PI / 180.0))</span>
+<span class="cp">#define COS(x) (cos(x* PI / 180.0))</span>
+
+<span class="kt">double</span> <span class="n">degree</span> <span class="o">=</span> <span class="mf">30.0</span>  <span class="c1">// (0 &lt;= degree &lt; 360)</span>
+<span class="n">angle_sin</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">SIN</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4096</span><span class="p">);</span>
+<span class="n">angle_cos</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">COS</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4096</span><span class="p">);</span>
+<span class="c1">// 应用程序也可以预先生成需要的角度的sin和cos值列表，通过查表减小计算量</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mpp-ge-emit">
+<h3><span class="section-number">6.1.5.6.9. </span>mpp_ge_emit<a class="headerlink" href="#mpp-ge-emit" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">iint</span> <span class="nf">mpp_ge_emit</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>向驱动发送命令</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口为空，</div>
+<div class="line">不产生任何作用</div>
+<div class="line">命令队列模式此接口通过write接口，</div>
+<div class="line">把用户态buffer中缓存的命令都写入驱动</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-sync">
+<h3><span class="section-number">6.1.5.6.10. </span>mpp_ge_sync<a class="headerlink" href="#mpp-ge-sync" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">iint</span> <span class="nf">mpp_ge_sync</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>阻塞等待所有任务执行完成</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口为空，</div>
+<div class="line">不产生任何作用</div>
+<div class="line">命令队列模式此接口通过调用IOC_GE_SYNC</div>
+<div class="line">接口，等待所有任务都完成</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="app">
+<h2><span class="section-number">6.1.5.7. </span>APP 参考<a class="headerlink" href="#app" title="永久链接至标题">¶</a></h2>
+<p>Demo代码见test-ge/ge_bitblt.c，如下</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sys/time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/fb.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;artinchip/sample_base.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;video/artinchip_fb.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/dma-buf.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/dma-heap.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_ge.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define FB_DEV              &quot;/dev/fb0&quot;</span>
+<span class="cp">#define DMA_HEAP_DEV        &quot;/dev/dma_heap/reserved&quot;</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_screen_w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_screen_h</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_fb_fd</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_fb_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_fb_stride</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">g_fb_format</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">g_fb_phy</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">g_fb_buf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">sopts</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;w:h:f:i:u&quot;</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">option</span> <span class="n">lopts</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">&quot;width&quot;</span><span class="p">,</span>       <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;w&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;height&quot;</span><span class="p">,</span>      <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;h&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;format&quot;</span><span class="p">,</span>      <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;f&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;input&quot;</span><span class="p">,</span>       <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;i&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;usage&quot;</span><span class="p">,</span>       <span class="n">no_argument</span><span class="p">,</span>       <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;u&#39;</span><span class="p">},</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">fb_open</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">fb_fix_screeninfo</span> <span class="n">fix</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">fb_var_screeninfo</span> <span class="n">var</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_layer_data</span> <span class="n">layer</span><span class="p">;</span>
+
+    <span class="n">g_fb_fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">FB_DEV</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb_fd</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;open %s&quot;</span><span class="p">,</span> <span class="n">FB_DEV</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">FBIOGET_FSCREENINFO</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fix</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl FBIOGET_FSCREENINFO&quot;</span><span class="p">);</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">FBIOGET_VSCREENINFO</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">var</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl FBIOGET_VSCREENINFO&quot;</span><span class="p">);</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">AICFB_GET_FB_LAYER_CONFIG</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">layer</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl FBIOGET_VSCREENINFO&quot;</span><span class="p">);</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">g_screen_w</span> <span class="o">=</span> <span class="n">var</span><span class="p">.</span><span class="n">xres</span><span class="p">;</span>
+    <span class="n">g_screen_h</span> <span class="o">=</span> <span class="n">var</span><span class="p">.</span><span class="n">yres</span><span class="p">;</span>
+    <span class="n">g_fb_len</span> <span class="o">=</span> <span class="n">fix</span><span class="p">.</span><span class="n">smem_len</span><span class="p">;</span>
+    <span class="n">g_fb_phy</span> <span class="o">=</span> <span class="n">fix</span><span class="p">.</span><span class="n">smem_start</span><span class="p">;</span>
+    <span class="n">g_fb_stride</span> <span class="o">=</span> <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">g_fb_format</span> <span class="o">=</span> <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">format</span><span class="p">;</span>
+
+    <span class="n">g_fb_buf</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">g_fb_len</span><span class="p">,</span>
+            <span class="n">PROT_READ</span> <span class="o">|</span> <span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_FILE</span> <span class="o">|</span> <span class="n">MAP_SHARED</span><span class="p">,</span>
+                <span class="n">g_fb_fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb_buf</span> <span class="o">==</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;mmap framebuffer&quot;</span><span class="p">);</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">);</span>
+        <span class="n">g_fb_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="n">g_fb_buf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;screen_w = %d, screen_h = %d, stride = %d, format = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">var</span><span class="p">.</span><span class="n">xres</span><span class="p">,</span> <span class="n">var</span><span class="p">.</span><span class="n">yres</span><span class="p">,</span> <span class="n">g_fb_stride</span><span class="p">,</span> <span class="n">g_fb_format</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">fb_close</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">g_fb_buf</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">munmap</span><span class="p">(</span><span class="n">g_fb_buf</span><span class="p">,</span> <span class="n">g_fb_len</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">usage</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">app</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s [Options], built on %s %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">__DATE__</span><span class="p">,</span> <span class="n">__TIME__</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-w, --width       image width</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-h, --height      image height</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-i, --input       need an argb8888 bmp </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">-u, --usage</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Example: %s -w 480 -h 320 -i my.bmp</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">app</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">dmabuf_request_one</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">dma_heap_allocation_data</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Invalid len %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">data</span><span class="p">.</span><span class="n">fd</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">data</span><span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="n">len</span><span class="p">;</span>
+    <span class="n">data</span><span class="p">.</span><span class="n">fd_flags</span> <span class="o">=</span> <span class="n">O_RDWR</span><span class="p">;</span>
+    <span class="n">data</span><span class="p">.</span><span class="n">heap_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">DMA_HEAP_IOCTL_ALLOC</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Get dma_heap fd: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">fd</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">fd</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">draw_src_dmabuf</span><span class="p">(</span><span class="kt">int</span> <span class="n">dmabuf_fd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">buf</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">buf</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_SHARED</span><span class="p">,</span> <span class="n">dmabuf_fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">buf</span> <span class="o">==</span> <span class="n">MAP_FAILED</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;mmap() failed! errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;read(%d) return %d. errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span>
+            <span class="n">ret</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">munmap</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">src_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">src_dmabuf_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">heap_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">fsize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">176</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">144</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">ge_bitblt</span> <span class="n">blt</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="k">while</span> <span class="p">((</span><span class="n">ret</span> <span class="o">=</span> <span class="n">getopt_long</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">sopts</span><span class="p">,</span> <span class="n">lopts</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;u&#39;</span><span class="o">:</span>
+            <span class="n">usage</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+            <span class="k">goto</span> <span class="n">EXIT</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;w&#39;</span><span class="o">:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">str2int</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;h&#39;</span><span class="o">:</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="n">str2int</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;i&#39;</span><span class="o">:</span>
+            <span class="n">src_fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">optarg</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">src_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to open %s. errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+                    <span class="n">optarg</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">fsize</span> <span class="o">=</span> <span class="n">lseek</span><span class="p">(</span><span class="n">src_fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SEEK_END</span><span class="p">);</span>
+            <span class="n">lseek</span><span class="p">(</span><span class="n">src_fd</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="n">SEEK_SET</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Invalid parameter: %#x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+            <span class="k">goto</span> <span class="n">EXIT</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">ge</span> <span class="o">=</span> <span class="n">mpp_ge_open</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ge</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;open ge device</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">fb_open</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">fb_close</span><span class="p">();</span>
+        <span class="n">mpp_ge_close</span><span class="p">(</span><span class="n">ge</span><span class="p">);</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;fb_open</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">heap_fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">DMA_HEAP_DEV</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">heap_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to open %s, errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">DMA_HEAP_DEV</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">goto</span> <span class="n">EXIT</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">src_dmabuf_fd</span> <span class="o">=</span> <span class="n">dmabuf_request_one</span><span class="p">(</span><span class="n">heap_fd</span><span class="p">,</span> <span class="n">fsize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">src_dmabuf_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to request dmabuf</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">EXIT</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">draw_src_dmabuf</span><span class="p">(</span><span class="n">src_dmabuf_fd</span><span class="p">,</span> <span class="n">src_fd</span><span class="p">,</span> <span class="n">fsize</span> <span class="o">-</span> <span class="mi">54</span><span class="p">);</span>
+    <span class="n">mpp_ge_add_dmabuf</span><span class="p">(</span><span class="n">ge</span><span class="p">,</span> <span class="n">src_dmabuf_fd</span><span class="p">);</span>
+
+    <span class="cm">/* source buffer */</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">buf_type</span> <span class="o">=</span> <span class="n">MPP_DMA_BUF_FD</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_dmabuf_fd</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">MPP_FMT_ARGB_8888</span><span class="p">;</span>
+
+    <span class="n">blt</span><span class="p">.</span><span class="n">src_buf</span><span class="p">.</span><span class="n">crop_en</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="cm">/* dstination buffer */</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">buf_type</span> <span class="o">=</span> <span class="n">MPP_PHY_ADDR</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">phy_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">g_fb_phy</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">g_fb_stride</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">g_screen_w</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">g_screen_h</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">g_fb_format</span><span class="p">;</span>
+
+    <span class="n">blt</span><span class="p">.</span><span class="n">ctrl</span><span class="p">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">GE_FLIP_H</span><span class="p">;</span>
+
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">crop_en</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">crop</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">crop</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">crop</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">;</span>
+    <span class="n">blt</span><span class="p">.</span><span class="n">dst_buf</span><span class="p">.</span><span class="n">crop</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_ge_bitblt</span><span class="p">(</span><span class="n">ge</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blt</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;bitblt task:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_ge_emit</span><span class="p">(</span><span class="n">ge</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;emit task:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_ge_sync</span><span class="p">(</span><span class="n">ge</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;sync task:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+
+<span class="nl">EXIT</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">heap_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">heap_fd</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ge</span><span class="p">)</span>
+        <span class="n">mpp_ge_close</span><span class="p">(</span><span class="n">ge</span><span class="p">);</span>
+
+    <span class="n">fb_close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.1.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.1.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

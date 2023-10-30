@@ -1,0 +1,1046 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.10.4. 寄存器定义 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="13. 模拟" href="../../analog/index.html" />
+    <link rel="prev" title="12.10.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.10. General Purpose Input Output (GPIO)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.10.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.10.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">12.10.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.10.4. 寄存器定义</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">12.10.5. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x00-g-0x100-gen-in-sta">12.10.5.1. 0x00+G*0x100 GEN_IN_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04-g-0x100-gen-out-cfg">12.10.5.2. 0x04+G*0x100 GEN_OUT_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x08-g-0x100-gen-irq-en">12.10.5.3. 0x08+G*0x100 GEN_IRQ_EN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c-g-0x100-gen-irq-sta">12.10.5.4. 0x0C+G*0x100 GEN_IRQ_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x10-g-0x100-gen-out-clr">12.10.5.5. 0x10+G*0x100 GEN_OUT_CLR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x14-g-0x100-gen-out-set">12.10.5.6. 0x14+G*0x100 GEN_OUT_SET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x18-g-0x100-gen-out-tog">12.10.5.7. 0x18+G*0x100 GEN_OUT_TOG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x80-p-0x4-g-0x100-pin-cfg">12.10.5.8. 0x80+P*0x4+G*0x100 PIN_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-version">12.10.5.9. 0xFFC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.10. </span>GPIO</a> &raquo;</li>
+        
+      <li><span class="section-number">12.10.4. </span>寄存器定义</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.10.4. </span>寄存器定义<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>地址映射</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 30%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块名</p></th>
+<th class="head"><p>基地址</p></th>
+<th class="head"><p>地址空间</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GPIO</p></td>
+<td><p>0x18700000</p></td>
+<td><p>4KB</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>寄存器列表</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 33%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>寄存器名</p></th>
+<th class="head"><p>偏移地址</p></th>
+<th class="head"><p>寄存器功能描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GEN_IN_STA</p></td>
+<td><p>0x00+G*0x100</p></td>
+<td><p>通用输入状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEN_OUT_CFG</p></td>
+<td><p>0x04+G*0x100</p></td>
+<td><p>通用输出控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>GEN_IRQ_EN</p></td>
+<td><p>0x08+G*0x100</p></td>
+<td><p>通用中断使能寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEN_IRQ_STA</p></td>
+<td><p>0x0C+G*0x100</p></td>
+<td><p>通用中断状态寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>GEN_OUT_CLR</p></td>
+<td><p>0x10+G*0x100</p></td>
+<td><p>通用输出清除寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>GEN_OUT_SET</p></td>
+<td><p>0x14+G*0x100</p></td>
+<td><p>通用输出置位寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>GEN_OUT_TOG</p></td>
+<td><p>0x18+G*0x100</p></td>
+<td><p>通用输出反转寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PIN_CFG</p></td>
+<td><p>0x80+G*0x100+P*0x4</p></td>
+<td><p>功能配置寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>VERSION</p></td>
+<td><p>0xFFC</p></td>
+<td><p>版本寄存器</p></td>
+</tr>
+</tbody>
+</table>
+<p>其中，P和G取值范围如下:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 28%" />
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分组</p></th>
+<th class="head"><p>偏移地址</p></th>
+<th class="head"><p>G取值</p></th>
+<th class="head"><p>P取值</p></th>
+<th class="head"><p>基地址</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PA</p></td>
+<td><p>0x000</p></td>
+<td><p>0</p></td>
+<td><p>0~11</p></td>
+<td><p>0x18700000</p></td>
+</tr>
+<tr class="row-odd"><td><p>PB</p></td>
+<td><p>0x100</p></td>
+<td><p>1</p></td>
+<td><p>0~11</p></td>
+<td><p>0x18700100</p></td>
+</tr>
+<tr class="row-even"><td><p>PC</p></td>
+<td><p>0x200</p></td>
+<td><p>2</p></td>
+<td><p>0~6</p></td>
+<td><p>0x18700200</p></td>
+</tr>
+<tr class="row-odd"><td><p>PD</p></td>
+<td><p>0x300</p></td>
+<td><p>3</p></td>
+<td><p>0~27</p></td>
+<td><p>0x18700300</p></td>
+</tr>
+<tr class="row-even"><td><p>PE</p></td>
+<td><p>0x400</p></td>
+<td><p>4</p></td>
+<td><p>0~19</p></td>
+<td><p>0x18700400</p></td>
+</tr>
+<tr class="row-odd"><td><p>PF</p></td>
+<td><p>0x500</p></td>
+<td><p>5</p></td>
+<td><p>0~15</p></td>
+<td><p>0x18700500</p></td>
+</tr>
+<tr class="row-even"><td><p>PU</p></td>
+<td><p>0xE00</p></td>
+<td><p>14</p></td>
+<td><p>0~3</p></td>
+<td><p>0x18700E00</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h1><span class="section-number">12.10.5. </span>寄存器描述<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x00-g-0x100-gen-in-sta">
+<h2><span class="section-number">12.10.5.1. </span>0x00+G*0x100 GEN_IN_STA<a class="headerlink" href="#x00-g-0x100-gen-in-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO通用输入状态寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IN_STA</div>
+<div class="line">引脚输入状态</div>
+<div class="line">0: 表示输入为低电平</div>
+<div class="line">1: 表示输入为高电平</div>
+<div class="line">每位对应一个引脚</div>
+<div class="line">该寄存器在PIN_FUN=1 &amp; GEN_IN_EN=1有效</div>
+<div class="line">在PIN_FUN=2~6 &amp; SPE_IN_EN=1有效</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04-g-0x100-gen-out-cfg">
+<h2><span class="section-number">12.10.5.2. </span>0x04+G*0x100 GEN_OUT_CFG<a class="headerlink" href="#x04-g-0x100-gen-out-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO通用输出控制寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_CFG</div>
+<div class="line">引脚输出配置</div>
+<div class="line">0: 输出设置为低电平</div>
+<div class="line">1: 输出设置为高电平</div>
+<div class="line">每位对应一个引脚</div>
+<div class="line">该寄存器只有在PIN_FUN=1 &amp; GEN_OUT_EN=1才有效</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x08-g-0x100-gen-irq-en">
+<h2><span class="section-number">12.10.5.3. </span>0x08+G*0x100 GEN_IRQ_EN<a class="headerlink" href="#x08-g-0x100-gen-irq-en" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO通用中断使能寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IRQ_EN</div>
+<div class="line">引脚中断使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 使能</div>
+<div class="line">该寄存器只有在PIN_FUN=1 &amp; GEN_IN_EN=1才有效</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c-g-0x100-gen-irq-sta">
+<h2><span class="section-number">12.10.5.4. </span>0x0C+G*0x100 GEN_IRQ_STA<a class="headerlink" href="#x0c-g-0x100-gen-irq-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO通用中断状态寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IRQ_STA</div>
+<div class="line">引脚中断状态</div>
+<div class="line">0: 无中断</div>
+<div class="line">1: 有中断</div>
+<div class="line">该寄存器只有在PIN_FUN=1 &amp; GEN_IN_EN=1 &amp; IRQ_EN=1才有效</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x10-g-0x100-gen-out-clr">
+<h2><span class="section-number">12.10.5.5. </span>0x10+G*0x100 GEN_OUT_CLR<a class="headerlink" href="#x10-g-0x100-gen-out-clr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO通用输出清除寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_CFG_CLR</div>
+<div class="line">输出控制寄存器清除</div>
+<div class="line">0: 对应位保持不变</div>
+<div class="line">1: 对应位清除为零</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x14-g-0x100-gen-out-set">
+<h2><span class="section-number">12.10.5.6. </span>0x14+G*0x100 GEN_OUT_SET<a class="headerlink" href="#x14-g-0x100-gen-out-set" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO通用输出置位寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_CFG_SET</div>
+<div class="line">输出控制寄存器置位</div>
+<div class="line">0: 对应位保持不变</div>
+<div class="line">1: 对应位设置为一</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x18-g-0x100-gen-out-tog">
+<h2><span class="section-number">12.10.5.7. </span>0x18+G*0x100 GEN_OUT_TOG<a class="headerlink" href="#x18-g-0x100-gen-out-tog" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPIO反转寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_CFG_TOG</div>
+<div class="line">输出控制寄存器置位</div>
+<div class="line">0: 对应位保持不变</div>
+<div class="line">1: 对应位设置为一</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x80-p-0x4-g-0x100-pin-cfg">
+<h2><span class="section-number">12.10.5.8. </span>0x80+P*0x4+G*0x100 PIN_CFG<a class="headerlink" href="#x80-p-0x4-g-0x100-pin-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 14%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000336(PA8~PA11)</p></th>
+<th class="head"><p>GPIO引脚功能配置寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_IN_DB1_POINT</div>
+<div class="line">通用输入第二级去抖参考点数</div>
+<div class="line">该配置值为去抖采样点数，配置为0则关闭本级去抖。</div>
+<div class="line">此字段只有在PIN_FUN=1 &amp; GEN_IE=1才有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_IN_DB1_SAMP</div>
+<div class="line">通用输入第二级去抖采样除频</div>
+<div class="line">第二级去抖采样周期为2^(SAMP+1)个APB1时钟（100MHz）周期。</div>
+<div class="line">此字段只有在PIN_FUN=1 &amp; GEN_IE=1才有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_IN_DB0_POINT</div>
+<div class="line">通用输入第一级去抖采样点数</div>
+<div class="line">第一级去抖采样周期为1个APB1时钟（100MHz）周期；</div>
+<div class="line">该配置为去抖采样点数，配置为0则关闭本级去抖。</div>
+<div class="line">此字段只有在PIN_FUN=1 &amp; GEN_IE=1才有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SPE_IE_FORCE</div>
+<div class="line">专用功能输入强制使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">此字段只有在PIN_FUN=2~6才有效，用于调试使用，强制使能输入，</div>
+<div class="line">并将输入状态存到“通用输入状态寄存器”</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_OE</div>
+<div class="line">通用功能输出使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">此字段只有在PIN_FUN=1才有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_IE</div>
+<div class="line">通用功能输入使能</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 打开</div>
+<div class="line">此字段只有在PIN_FUN=1才有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_IRQ_MODE</div>
+<div class="line">通用功能中断检测模式</div>
+<div class="line">0: 下降沿</div>
+<div class="line">1: 上升沿</div>
+<div class="line">2: 低电平</div>
+<div class="line">3: 高电平</div>
+<div class="line">4: 双沿（上升沿或下降沿）</div>
+<div class="line">5~7: 预留</div>
+<div class="line">此字段只有在PIN_FUN=1 &amp; GEN_IE=1才有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:10</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><div class="line-block">
+<div class="line">PA8: 3</div>
+<div class="line">PA9: 3</div>
+<div class="line">PA10: 3</div>
+<div class="line">PA11: 3</div>
+<div class="line">OTHERS: 0</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">PIN_PULL</div>
+<div class="line">引脚上下拉设置</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 预留</div>
+<div class="line">2: 下拉33KΩ到GND</div>
+<div class="line">3: 上拉33KΩ到VCC-IO</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6:4</p></td>
+<td><p>R/W</p></td>
+<td><div class="line-block">
+<div class="line">PA8: 3</div>
+<div class="line">PA9: 3</div>
+<div class="line">PA10: 3</div>
+<div class="line">PA11: 3</div>
+<div class="line">OTHERS: 0</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">PIN_DRV</div>
+<div class="line">引脚输出驱动能力</div>
+<div class="line-block">
+<div class="line">3.3V    1.8V</div>
+</div>
+<div class="line">0:  180Ω    300Ω</div>
+<div class="line">1:  90Ω     150Ω</div>
+<div class="line">2:  60Ω     100Ω</div>
+<div class="line">3:  45Ω     75Ω</div>
+<div class="line">4:  36Ω     60Ω</div>
+<div class="line">5:  30Ω     50Ω</div>
+<div class="line">6:  26Ω     43Ω</div>
+<div class="line">7:  23Ω     38Ω</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><div class="line-block">
+<div class="line">PA8: 6</div>
+<div class="line">PA9: 6</div>
+<div class="line">PA10: 6</div>
+<div class="line">PA11: 6</div>
+<div class="line">OTHERS: 0</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">PIN_FUN</div>
+<div class="line">引脚功能设置</div>
+<div class="line">0: 关闭</div>
+<div class="line">1: 通用功能（GEN）</div>
+<div class="line">2~8: 专用功能（SPE），参考 “引脚复用” 章节</div>
+<div class="line">注意该寄存器选择I/IE/O/OE信号，其他信号如PLL/DRV不受该寄存器影响</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-version">
+<h2><span class="section-number">12.10.5.9. </span>0xFFC VERSION<a class="headerlink" href="#xffc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>GPIO版本寄存器</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">VERSION</div>
+<div class="line">GPIO版本 V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../analog/index.html" class="btn btn-neutral float-right" title="13. 模拟" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="12.10.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,2128 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>13.3.12. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="13.4. THS" href="../ths/index.html" />
+    <link rel="prev" title="13.3.11. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">13. 模拟</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../adcim/index.html">13.1. ADC Interface Module (ADCIM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">13.2. General Purpose Analog Input (GPAI)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">13.3. Resistance Touch Panel (RTP)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">13.3.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">13.3.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id3">13.3.3. 模块工作流程与控制机制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id4">13.3.4. 中断产生机制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id5">13.3.5. 按压检测</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id6">13.3.6. 采样模式描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id7">13.3.7. 工作模式描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id8">13.3.8. 自动模式采样数据滤波</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id9">13.3.9. 自动模式下的单点采样描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id10">13.3.10. 自动模式下的采样循环描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">13.3.11. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">13.3.12. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-rtp-mcr">13.3.12.1. 0x000   RTP_MCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-rtp-intr">13.3.12.2. 0x004   RTP_INTR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-rtp-pdeb">13.3.12.3. 0x008   RTP_PDEB</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-rtp-pctl">13.3.12.4. 0x00C  RTP_PCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-rtp-chcfg">13.3.12.5. 0x010  RTP_CHCFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-rtp-mmsc">13.3.12.6. 0x014   RTP_MMSC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-rtp-fil">13.3.12.7. 0x018  RTP_FIL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-rtp-amsc">13.3.12.8. 0x01C  RTP_AMSC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-rtp-fcr">13.3.12.9. 0x020   RTP_FCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-rtp-data">13.3.12.10. 0x024   RTP_DATA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-rtp-delay">13.3.12.11. 0x028   RTP_DELAY</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf00-rtp-atb">13.3.12.12. 0xf00   RTP_ATB</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf04-debug0">13.3.12.13. 0xf04   Debug0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf08-debug1">13.3.12.14. 0xf08   Debug1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf0c-debug2">13.3.12.15. 0xf0c   Debug2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf10-debug3">13.3.12.16. 0xf10   Debug3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf14-debug4">13.3.12.17. 0xf14   Debug4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xf18-debug5">13.3.12.18. 0xf18   Debug5</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-version">13.3.12.19. 0xFFC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ths/index.html">13.4. Thermal Sensor (THS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">13. </span>模拟</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">13.3. </span>RTP</a> &raquo;</li>
+        
+      <li><span class="section-number">13.3.12. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">13.3.12. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-rtp-mcr">
+<h2><span class="section-number">13.3.12.1. </span>0x000   RTP_MCR<a class="headerlink" href="#x000-rtp-mcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001000</p></th>
+<th class="head"><p>RTP模块控制(RTP Module Control Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PDET_BYP（Press Detect Bypass，按压检测屏蔽功能）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。本字段定义了RTP 自动采样过程中，</div>
+<div class="line">每个单点采样完成之后，是否判断按压状态。</div>
+<div class="line">0: 判断按压检测信号；</div>
+<div class="line">1: 屏蔽按压检测信号。</div>
+<div class="line">本字段为0时，如果自动采样过程中抬起，会有可能产生SCI（采样循环不完整）中断；</div>
+<div class="line">本字段为1时，自动采样过程中不会判断按压检测信号。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>RO</p></td>
+<td><p>1</p></td>
+<td><div class="line-block">
+<div class="line">PDET_STS（RTP Press Detect Status，RTP按压检测状态）</div>
+<div class="line">本字段直接反映RTP模块的按压检测（PDETn）输入信号状态。</div>
+<div class="line">0: 按压状态；</div>
+<div class="line">1: 抬起状态。</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PU_SEL（RTP Press Detect Pull-up Resistor Select，RTP按压检测上拉电阻选择）</div>
+<div class="line">本字段控制按压检测上拉电阻阻值：</div>
+<div class="line">0: 上拉电阻=50Kohm；</div>
+<div class="line">1: 上拉电阻=90Kohm。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PDET_EN（RTP Press Detection Enable，RTP按压检测使能）</div>
+<div class="line">本字段控制按键检测使能信号：</div>
+<div class="line">0: 按压检测禁止，关闭X+信号上的按压检测上拉电阻，</div>
+<div class="line">检测状态PDET_STS不能真实反映按压真实状态；</div>
+<div class="line">1: 按压检测使能，打开X+信号上按压检测上拉电阻，</div>
+<div class="line">检测状态PDET_STS反映按压真实状态。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MODE（RTP Mode Select, RTP工作模式选择）</div>
+<div class="line">本字段定义了RTP模块的工作模式，包括手动模式，以及多种自动模式。</div>
+<div class="line">0x0: 手动模式：包括RTP驱动控制，采样命令，采样滤波，采样选择均由软件手动完成；</div>
+<div class="line">0x1: 自动模式1：对应单点无压感功能，自动完成XN -YN采样</div>
+<div class="line">，并返回滤波后的采样值；</div>
+<div class="line">0x2: 自动模式2：对应单点有压感，自动完成XN -YN -ZA  -ZB采样，</div>
+<div class="line">并返回滤波后的采样值；</div>
+<div class="line">0x3: 自动模式3：对应两点有压感，自动完成XN - XP -YN -YP -ZA -ZB采样，</div>
+<div class="line">并返回滤波后的采样值；</div>
+<div class="line">0x4: 自动模式4：对应全采样，自动完成XN - XP -YN -YP -ZA -ZB -ZC -ZD采样，</div>
+<div class="line">并返回滤波后的采样值。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">EN（RTP Module Enable,RTP模块使能）</div>
+<div class="line">0: 本模块被禁止，本模块停止工作；</div>
+<div class="line">1: 本模块被使能。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-rtp-intr">
+<h2><span class="section-number">13.3.12.2. </span>0x004   RTP_INTR<a class="headerlink" href="#x004-rtp-intr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP中断状态与控制(RTP Interrupt Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:22</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">SCI_FLG（RTP Sample Cycle Incomplete Flag，采样循环不完整标志)</div>
+<div class="line">数据超限与抬起都会导致不完整标志起来</div>
+<div class="line">RTP单点采样完成之后出现抬起（PDETn=0）或数据超限，都会导致采样</div>
+<div class="line">循环被打断，会置位SCI_FLG标志位，仅在自动模式(RTP_MODE&gt;0)下有效：</div>
+<div class="line">0 : RTP无新的采样循环不完整事件；</div>
+<div class="line">1 : RTP有新的采样循环不完整事件。</div>
+<div class="line">清除该标志之后，硬件自动从第一点重新开始，完成单循环采样。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DOUR_FLG（RTP Data Over Uncertain Range Flag，数据超限标志）</div>
+<div class="line">RTP数据超限（超出范围）标志，仅在自动模式且滤波功能使能</div>
+<div class="line">((RTP_MODE &gt; 0) &amp;&amp; (FIL &gt; 0))下有效：</div>
+<div class="line">0: RTP无新的数据超限事件；</div>
+<div class="line">1: RTP有新的数据超限事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_FLG（RTP FIFO Error Flag，RTP FIFO异常标志）</div>
+<div class="line">本字段表示总的FIFO异常状态，具体异常状态见FIFO管理寄存器（RTP_FCR）定义。</div>
+<div class="line">0: RTP无FIFO异常状况；</div>
+<div class="line">1: RTP发生了FIFO异常状况。</div>
+<div class="line">本标志位不能被直接清除，可以通过清除FIFO管理寄存器（RTP_FCR）</div>
+<div class="line">中的异常状态间接清除本标志。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DRDY_FLG（RTP FIFO Data Ready Flag，RTP FIFO数据有效标志）</div>
+<div class="line">本字段表示RTP FIFO的数据数量满足了FIFO数据有效阈值，</div>
+<div class="line">具体阈值参考FIFO控制寄存器。</div>
+<div class="line">0: RTP无新的数据有效事件；</div>
+<div class="line">1: RTP有新的数据有效事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">RDET_FLG（RTP Rise Detect Flag，RTP抬起检测标志）</div>
+<div class="line">本字段表示RTP控制器检测到了从按压到抬起的一个变化过程，</div>
+<div class="line">本标志是反映去抖之后的检测结果。</div>
+<div class="line">0: RTP无新的抬起事件；</div>
+<div class="line">1: RTP发生新的抬起事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PDET_FLG（RTP Press Detect Flag，RTP按压检测标志）</div>
+<div class="line">本字段表示RTP控制器检测到了从抬起到按压的一个变化过程，</div>
+<div class="line">本标志是反映去抖之后的检测结果。</div>
+<div class="line">0: RTP无新的按压事件；</div>
+<div class="line">1: RTP发生新的按压事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">SCI_INTEN（RTP Sample Cycle Incomplete Interrupt Enable，</div>
+<div class="line">采样循环不完整中断使能）</div>
+<div class="line">RTP采样循环不完整（采样循环被打断）中断使能：</div>
+<div class="line">0: 禁止RTP采样循环不完整中断；</div>
+<div class="line">1: 使能RTP采样循环不完整中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DOUR_INTEN（RTP Data Over Uncertain Range Interrupt Enable，</div>
+<div class="line">数据超限中断使能）</div>
+<div class="line">RTP数据超限（超出确定范围）中断使能：</div>
+<div class="line">0: 禁止RTP数据超限中断；</div>
+<div class="line">1: 使能RTP数据超限中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_INTEN（RTP FIFO Interrupt Enable，RTP FIFO异常中断使能）</div>
+<div class="line">RTP FIFO异常中断使能，FIFO异常状态参考FIFO控制寄存器（RTP_FCR）定义。</div>
+<div class="line">0: 禁止RTP FIFO异常中断；</div>
+<div class="line">1: 使能RTP FIFO异常中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DRDY_INTEN（RTP Data Ready Interrupt Enable，RTP数据有效中断使能）</div>
+<div class="line">RTP FIFO数据有效中断使能，数据有效的阈值参考FIFO控制寄存器（RTP_FCR）中的配置。</div>
+<div class="line">0: 禁止RTP FIFO数据有效中断；</div>
+<div class="line">1: 使能RTP FIFO数据有效中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">RDET_INTEN（RTP Rise Detect Interrupt Enable，RTP抬起检测中断使能）</div>
+<div class="line">RTP抬起检测中断使能信号：</div>
+<div class="line">0: 禁止RTP抬起检测中断；</div>
+<div class="line">1: 使能RTP抬起检测中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PDET_INTEN（RTP Press Detect Interrupt Enable，RTP按压检测中断使能）</div>
+<div class="line">RTP按压检测中断使能信号：</div>
+<div class="line">0: 禁止RTP按压检测中断；</div>
+<div class="line">1: 使能RTP按压检测中断。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-rtp-pdeb">
+<h2><span class="section-number">13.3.12.3. </span>0x008   RTP_PDEB<a class="headerlink" href="#x008-rtp-pdeb" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x23012301</p></th>
+<th class="head"><p>RTP按压检测去抖配置(RTP Press Detect Enable Debounce)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">FLRDET_DEB（First Level Rise Detect Debounce，一级抬起去抖配置）</div>
+<div class="line">本字段定义了抬起事件去抖时间计数，本计数单位为TPCLK。当本字段为0</div>
+<div class="line">（即0x0000）时，抬起去抖功能无效。</div>
+<div class="line">本字段定义的去抖时间范围为0~（2^4-1）*TPCLK。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">SLRDET_DEB（Second Level Rise Detect Debounce，二级抬起去抖配置）</div>
+<div class="line">本字段定义了抬起事件去抖时间计数，本计数单位为TRiseDivClk。</div>
+<div class="line">当本字段为0（即0x0000）时，抬起去抖功能无效。</div>
+<div class="line">本字段定义的去抖时间范围为0~（2^4-1）*TRiseDivClk。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x01</p></td>
+<td><div class="line-block">
+<div class="line">SLRDET_DEBDC(Second Level Rise Detect Debounce Div Clk，二级抬起去抖分频计数）</div>
+<div class="line">本字段定义了抬起事件去抖时间计数RiseDivClk，本计数单位为TPCLK。</div>
+<div class="line">当本字段为0（即0x0000）时，抬起去抖功能无效。</div>
+<div class="line">本字段定义的分频时间范围为0~（2^8-1）*256*TPCLK。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">FLRDET_DEB（First Level Press Detect Debounce，一级按压去抖配置）</div>
+<div class="line">本字段定义了抬起事件去抖时间计数，本计数单位为TPCLK。</div>
+<div class="line">当本字段为0（即0x0000）时，抬起去抖功能无效。</div>
+<div class="line">本字段定义的去抖时间范围为0~（2^4-1）*TPCLK。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">SLRDET_DEB（Second Level Press Detect Debounce，二级按压去抖配置）</div>
+<div class="line">本字段定义了抬起事件去抖时间计数，本计数单位为TPressDivClk。</div>
+<div class="line">当本字段为0（即0x0000）时，抬起去抖功能无效。</div>
+<div class="line">本字段定义的去抖时间范围为0~（2^4-1）*TPressDivClk。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x01</p></td>
+<td><div class="line-block">
+<div class="line">SLRDET_DEBDC（Second Level Press Detect Debounce Div Clk，二级按压去抖分频计数）</div>
+<div class="line">本字段定义了抬起事件去抖时间计数PressDivClk，本计数单位为TPCLK。</div>
+<div class="line">当本字段为0（即0x0000）时，抬起去抖功能无效。</div>
+<div class="line">本字段定义的分频时间范围为0~（2^8-1）*256*TPCLK。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-rtp-pctl">
+<h2><span class="section-number">13.3.12.4. </span>0x00C  RTP_PCTL<a class="headerlink" href="#x00c-rtp-pctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FF00FF</p></th>
+<th class="head"><p>RTP按压检测延时控制(RTP Press Dectect Control Delay)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FF</p></td>
+<td><div class="line-block">
+<div class="line">PDET_ISD（Press Dectect Idle State Delay ，按压检测空闲状态延时）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。</div>
+<div class="line">本字段定义了RTP在IDLE状态与PDET_EN==1条件下，延长一定时间进行按压检测。</div>
+<div class="line">本字段表示按压检测空闲状态延时为 <code class="docutils literal notranslate"><span class="pre">（PDET_ISD+1）*TPCLK</span></code>，</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FF</p></td>
+<td><div class="line-block">
+<div class="line">PDET_DRV2DETD（Press Dectect Drive-to-Detect Delay ，按压检测驱动到检测延时）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。本字段定义了RTP</div>
+<div class="line">自动采样过程中，RTP由驱动状态变为检测状态时，延时一段时间之后才开始按压检测。</div>
+<div class="line">自动采样模式下，两点采样之间会对按压检测信号进行判断，为了更加高效，</div>
+<div class="line">这个判断点未经过去抖（不受PDEB寄存器控制），</div>
+<div class="line">需要在驱动到检测之间增加一个Delay控制，以适应XN的不同的外部负载。</div>
+<div class="line">本字段表示按压检测驱动到检测的延时为 <code class="docutils literal notranslate"><span class="pre">（PDET_DRV2DET+1）*TPCLK</span></code>，</div>
+<div class="line">有效值为1~65536个PCLK周期，</div>
+<div class="line">例如，默认值为0x0F表示这个延时为16个PCLK周期。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-rtp-chcfg">
+<h2><span class="section-number">13.3.12.5. </span>0x010  RTP_CHCFG<a class="headerlink" href="#x010-rtp-chcfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xCEDF0801</p></th>
+<th class="head"><p>RTP通道配置(RTP Channel Config)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>RO</p></td>
+<td><p>0xC</p></td>
+<td><div class="line-block">
+<div class="line">XP_CHN（X+ ADC Channel Number, X+对应的ADC通道号）</div>
+<div class="line">本字段显示系统分配给X+信号的ADC通道号，硬件会根据此通道号匹配ADC</div>
+<div class="line">并获取返回的数据，软件驱动不需要使用，本字段仅作Debug用。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>RO</p></td>
+<td><p>0xE</p></td>
+<td><div class="line-block">
+<div class="line">YP_CHN（Y+ ADC Channel Number, Y+对应的ADC通道号）</div>
+<div class="line">本字段显示系统分配给Y+信号的ADC通道号，硬件会根据此通道号匹配ADC</div>
+<div class="line">并获取返回的数据，软件驱动不需要使用，本字段仅作Debug用。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>RO</p></td>
+<td><p>0xD</p></td>
+<td><div class="line-block">
+<div class="line">XN_CHN（X- ADC Channel Number, X-对应的ADC通道号）</div>
+<div class="line">本字段显示系统分配给X-信号的ADC通道号，硬件会根据此通道号匹配ADC</div>
+<div class="line">并获取返回的数据，软件驱动不需要使用，本字段仅作Debug用。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>RO</p></td>
+<td><p>0xF</p></td>
+<td><div class="line-block">
+<div class="line">YN_CHN（Y- ADC Channel Number, Y-对应的ADC通道号）</div>
+<div class="line">本字段显示系统分配给Y-信号的ADC通道号，硬件会根据此通道号匹配ADC</div>
+<div class="line">并获取返回的数据，软件驱动不需要使用，本字段仅作Debug用。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x08</p></td>
+<td><div class="line-block">
+<div class="line">ADC_ACQ（ADC捕获时间）</div>
+<div class="line">本字段定义了本次采样的ADC通道的捕获时间长度。本计数值单位为ADC_CLK的周期数，</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">T（ADCACQ）</span> <span class="pre">=（ADC_ACQ+1）*16*T（ADC_CLK）</span></code>。</div>
+<div class="line">假设 <code class="docutils literal notranslate"><span class="pre">ADC_CLK=24MHz</span></code>， <code class="docutils literal notranslate"><span class="pre">ADC_ACQ=0x2F</span></code>， <code class="docutils literal notranslate"><span class="pre">T(ADCACQ)</span> <span class="pre">=</span> <span class="pre">(47+1)*16*41.67ns</span> <span class="pre">=</span> <span class="pre">2*16us=32us</span></code>。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>1</p></td>
+<td><div class="line-block">
+<div class="line">ADC_PRI（ADC采样优先级）</div>
+<div class="line">本字段定义了本次ADC采样的优先级控制。</div>
+<div class="line">0: 表示低优先级非实时采样，采样命令会与其他非实时采样命令进入采样队列；</div>
+<div class="line">1: 表示高优先级实时采样，采样命令会被直接处理，不进入采样队列。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-rtp-mmsc">
+<h2><span class="section-number">13.3.12.6. </span>0x014   RTP_MMSC<a class="headerlink" href="#x014-rtp-mmsc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP手动模式控制(RTP Manual Mode Sample Control)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VNSEL（Vref- Select，Vref-选通控制）</div>
+<div class="line">本字段仅在手动模式（RTP_MODE == 0）下有效。</div>
+<div class="line">本字段定义了ADC参考电压负端（Vref-）的选通控制。</div>
+<div class="line">0x0: Vref-连通GND；</div>
+<div class="line">0x1: Vref-连通X-信号；</div>
+<div class="line">0x2: Vref-连通Y-信号；</div>
+<div class="line">0x3: Vref-连通GND。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>21:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VPSEL（Vref+ Select，Vref+选通控制）</div>
+<div class="line">本字段仅在手动模式（RTP_MODE == 0）下有效。</div>
+<div class="line">本字段定义了ADC参考电压正端（Vref+）的选通控制。</div>
+<div class="line">0x0: Vref+连通VCC；</div>
+<div class="line">0x1: Vref+连通X+信号；</div>
+<div class="line">0x2: Vref+连通Y+信号；</div>
+<div class="line">0x3: Vref+连通VCC。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DRV（RTP X/Y Drive，RTP X/Y信号驱动控制）</div>
+<div class="line">本字段仅在手动模式（RTP_MODE == 0）下有效。</div>
+<div class="line">本字段定义了RTP X+/X-/Y+/Y-信号的驱动控制，高电平有效。</div>
+<div class="line">bit3: X+，高电平X+连通VCC，低电平X+断开VCC；</div>
+<div class="line">bit2: Y+，高电平Y+连通VCC，低电平Y+断开VCC；</div>
+<div class="line">bit1: X-，高电平X-连通GND，低电平X-断开GND；</div>
+<div class="line">bit0: Y-，高电平Y-连通GND，低电平Y-断开GND。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SCPT（Sample Count per Trigger，每次触发的采样次数）</div>
+<div class="line">本字段仅在手动模式（RTP_MODE == 0）下有效。</div>
+<div class="line">本字段定义了每次采样触发之后，连续采样的次数，次数为SCPT+1，</div>
+<div class="line">SCPT的有效值为0x0~0x7，对应有效的连续采样次数是1~8。每次触发数据（SCPT+1）</div>
+<div class="line">都在FIFO</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">SCSEL（Sample Channel Select，采样通道选通）</div>
+<div class="line">本字段仅在手动模式（RTP_MODE == 0）下有效。</div>
+<div class="line">本字段定义了当前发起采样的对应通道。</div>
+<div class="line">0x0: Y-通道；</div>
+<div class="line">0x1: X-通道；</div>
+<div class="line">0x2: Y+通道；</div>
+<div class="line">0x3: X+通道。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">STRG（Sample Trigger，手动采样触发）</div>
+<div class="line">本字段仅在手动模式（RTP_MODE == 0）下有效。</div>
+<div class="line">本字段为本通道采样的触发信号。由软件置位，表示启动本通道ADC采样，</div>
+<div class="line">采样完成之后，本字段就会由硬件自动清零。</div>
+<div class="line">注意：一次触发有可能会包含多次采样，对应地由硬件向ADC接口控制器</div>
+<div class="line">连续发出多个采样命令，连续发出采样命令的个数由SCPT字段设定。</div>
+<div class="line">例如SCPT=0x7，那么每次启动STRG，硬件会连续发出SCPT+1=8个采样命令，</div>
+<div class="line">8个采样命令发出后，硬件自动清零STRG。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-rtp-fil">
+<h2><span class="section-number">13.3.12.7. </span>0x018  RTP_FIL<a class="headerlink" href="#x018-rtp-fil" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000002</p></th>
+<th class="head"><p>RTP自动采样滤波配置(RTP Auto Mode Filter)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ZRUR（Z Data Relative Uncertainty Range，Z采样数据相对不确定范围）</div>
+<div class="line">本字段仅在自动模式((RTP_MODE &gt; 0) 下有效。</div>
+<div class="line">本字段定义了ZA/ZB/ZC/ZD采样样本的相对的有效性判定范围。</div>
+<div class="line">0x0: 数据相对范围判定功能禁止；</div>
+<div class="line">0x1: 不超过1/8；</div>
+<div class="line">0x2: 不超过1/16；</div>
+<div class="line">0x3: 不超过1/32；</div>
+<div class="line">0x4: 不超过1/64；</div>
+<div class="line">0x5: 不超过1/128；</div>
+<div class="line">0x6: 不超过1/256；</div>
+<div class="line">0x7: 不超过1/512。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>26:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ZAUR（Z Data Absolute Uncertainty Range，Z采样数据绝对不确定范围）</div>
+<div class="line">本字段仅在自动模式(RTP_MODE &gt; 0) 下有效。</div>
+<div class="line">本字段定义了ZA/ZB/ZC/ZD采样样本的绝对的有效性判断范围。</div>
+<div class="line">0x0: 数据绝对范围判定功能禁止；</div>
+<div class="line">0x1: 不超过29；</div>
+<div class="line">0x2: 不超过28；</div>
+<div class="line">0x3: 不超过27；</div>
+<div class="line">0x4: 不超过26；</div>
+<div class="line">0x5: 不超过25；</div>
+<div class="line">0x6: 不超过24；</div>
+<div class="line">0x7: 不超过23。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>22:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">XYRUR（X/Y Data Relative Uncertainty Range，X/Y采样数据相对不确定范围）</div>
+<div class="line">本字段仅在自动模式(RTP_MODE &gt; 0) 下有效。</div>
+<div class="line">本字段定义了XP/XN/YP/YN采样样本的相对的有效性判定范围。</div>
+<div class="line">0x0: 数据相对范围判定功能禁止；</div>
+<div class="line">0x1: 不超过1/8；</div>
+<div class="line">0x2: 不超过1/16；</div>
+<div class="line">0x3: 不超过1/32；</div>
+<div class="line">0x4: 不超过1/64；</div>
+<div class="line">0x5: 不超过1/128；</div>
+<div class="line">0x6: 不超过1/256；</div>
+<div class="line">0x7: 不超过1/512。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">XYAUR（X/Y Data Absolute Uncertainty Range，X/Y采样数据绝对不确定范围）</div>
+<div class="line">本字段仅在自动模式(RTP_MODE &gt; 0) 下有效。</div>
+<div class="line">本字段定义了XP/XN/YP/YN采样样本的绝对的有效性判断范围。</div>
+<div class="line">0x0: 数据绝对范围判定功能禁止；</div>
+<div class="line">0x1: 不超过29；</div>
+<div class="line">0x2: 不超过28；</div>
+<div class="line">0x3: 不超过27；</div>
+<div class="line">0x4: 不超过26；</div>
+<div class="line">0x5: 不超过25；</div>
+<div class="line">0x6: 不超过24；</div>
+<div class="line">0x7: 不超过23。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">FIL（Filter，采样数据滤波器配置）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。本字段定义了RTP 采样数据滤波配置。</div>
+<div class="line">0x0：1/1，无滤波；</div>
+<div class="line">0x1：2/4，连续采样4次，去掉最大最小各1个，剩下2个进行算数平均；</div>
+<div class="line">0x2：4/6，连续采样6次，去掉最大最小各1个，剩下4个进行算数平均；</div>
+<div class="line">0x3：4/8，连续采样8次，去掉最大最小各2个，剩下4个进行算数平均。</div>
+<div class="line">本字段也规定了自动模式下每次的连续采样数。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-rtp-amsc">
+<h2><span class="section-number">13.3.12.8. </span>0x01C  RTP_AMSC<a class="headerlink" href="#x01c-rtp-amsc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0024A000</p></th>
+<th class="head"><p>RTP自动模式采样控制(RTP Auto Mode Sample Control)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x024A</p></td>
+<td><div class="line-block">
+<div class="line">PSI（Periodic Sample Interval，周期性采样间隔）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。</div>
+<div class="line">此字段定义自动模式周期性采样的采样间隔，采样间隔为 <code class="docutils literal notranslate"><span class="pre">PSI*4096*TPCLK</span></code>。</div>
+<div class="line">举例，假设 <code class="docutils literal notranslate"><span class="pre">PCLK=24MHz</span></code>， <code class="docutils literal notranslate"><span class="pre">PSI</span> <span class="pre">=</span> <span class="pre">0x24A</span> <span class="pre">=</span> <span class="pre">586</span></code>。</div>
+<div class="line">采样周期 <code class="docutils literal notranslate"><span class="pre">T（PSI）</span> <span class="pre">=</span> <span class="pre">586*4096/24000000</span> <span class="pre">=</span> <span class="pre">0.1s</span> <span class="pre">=</span> <span class="pre">100ms</span></code>。</div>
+<div class="line">本字段为0表示连续采样，两次采样循环之间没有Delay。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RTP BUSY状态</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。</div>
+<div class="line">0:空闲；</div>
+<div class="line">1:忙碌。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PSEN（Periodic Sample Enable，周期性采样使能）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。</div>
+<div class="line">0:停止周期性循环采样；</div>
+<div class="line">1:启动周期性循环采样。</div>
+<div class="line">本字段为周期性循环采样使能信号，由软件置位清零。周期性采样流程参考前文描述。</div>
+<div class="line">（软件清0：完成本周期循环采样之后才停止采样）</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">SSEN（Single Sample Enable，单循环采样使能）</div>
+<div class="line">本字段仅在自动模式（RTP_MODE &gt; 0）下有效。</div>
+<div class="line">0：单循环采样完成；</div>
+<div class="line">1：启动单循环采样。</div>
+<div class="line">单循环完成之后，，本字段就会由硬件自动清零。</div>
+<div class="line">单循环采样的定义是指一个完整自动采样流程，流程涵盖多个采样模式，</div>
+<div class="line">具体参考RTP_MODE定义。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-rtp-fcr">
+<h2><span class="section-number">13.3.12.9. </span>0x020   RTP_FCR<a class="headerlink" href="#x020-rtp-fcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP FIFO控制(RTP FIFO Control Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>28:24</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_DCNT（FIFO Data Count，FIFO有效数据量）</div>
+<div class="line">本字段定义了当前FIFO有效数据量，0x0~0x10为合法值。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_UFS（FIFO Underflow Status，FIFO下溢出状态）</div>
+<div class="line">本字段定义了当前FIFO下溢出状态，高电平有效。本字段由硬件置位，并由软件写1清零。</div>
+<div class="line">当本字段有效，且FIFO_UFIE有效，则会导致RTP_INTR. FIFO_FLG置位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_OFS（FIFO Overflow Status，FIFO上溢出状态）</div>
+<div class="line">本字段定义了当前FIFO上溢出状态，高电平有效。本字段由硬件置位，并由软件写1清零。</div>
+<div class="line">当本字段有效，且FIFO_OFIE有效，则会导致RTP_INTR. FIFO_FLG置位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_DRTH（FIFO Data Ready Threshold，FIFO数据有效阈值）</div>
+<div class="line">本字段定义了FIFO数据有效的阈值，当FIFO的数据量达到了本阈值后，</div>
+<div class="line">就会置位RTP_INTR. DRDY_FLG标志位，</div>
+<div class="line">如果同时RTP_INTR. DRDY_INTEN也有效，就会产生中断。</div>
+<div class="line">0x0: 表示不设置有效阈值，导致不会产生DRDY_FLG标志；</div>
+<div class="line">0x1~0x10: 有效阈值范围，表示当FIFO数据量达到了对应数值后，就会置位DRDY_FLG标志；</div>
+<div class="line">0x11~0x1F: 非法配置，效果等同于0x0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_UFIE（FIFO Underflow Interrupt Enable，FIFO下溢出中断使能）</div>
+<div class="line">本字段定义了FIFO下溢出中断使能信号，高电平有效。</div>
+<div class="line">当本字段有效，且FIFO_UFS有效，则会导致RTP_INTR. FIFO_FLG置位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_OFIE（FIFO Overflow Interrupt Enable，FIFO上溢出中断使能）</div>
+<div class="line">本字段定义了FIFO上溢出中断使能信号，高电平有效。</div>
+<div class="line">当本字段有效，且FIFO_OFS有效，则会导致RTP_INTR. FIFO_FLG置位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_FLUSH（FIFO Flush，FIFO清空操作）</div>
+<div class="line">本字段定义了FIFO清空操作，本字段由软件置位硬件清零。软件置位启动</div>
+<div class="line">FIFO清空操作，FIFO清空操作完成后，由硬件清零。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-rtp-data">
+<h2><span class="section-number">13.3.12.10. </span>0x024   RTP_DATA<a class="headerlink" href="#x024-rtp-data" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP数据(RTP Data)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">超限标志</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">抬起标志</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17:16</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CHN（Channel Number，采样数据的对应通道号）</div>
+<div class="line">本字段定义了当前返回数据的对应通道号，表示当前数据（DATA）来自该通道。</div>
+<div class="line">本字段的用途更多是Debug或者容错设计。具体对应如下：</div>
+<div class="line">0x0: Y-通道；</div>
+<div class="line">0x1: X-通道；</div>
+<div class="line">0x2: Y+通道；</div>
+<div class="line">0x3: X+通道。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA（Sample Data，采样数据）</div>
+<div class="line">采样数据返回值。</div>
+<div class="line">对应手动模式（RTP_MODE == 0），本FIFO数据是一个通道的多次采样值，</div>
+<div class="line">未经过滤波；</div>
+<div class="line">对应自动模式1（RTP_MODE == 1），本FIFO数据的顺序是XN -YN，</div>
+<div class="line">均为滤波后的数值；</div>
+<div class="line">对应自动模式2（RTP_MODE == 2），本FIFO数据的顺序是XN -YN -ZA -ZB，</div>
+<div class="line">均为滤波后的数值；</div>
+<div class="line">对应自动模式3（RTP_MODE == 3），本FIFO数据的顺序是XN -XP -YN -YP -ZA -ZB，</div>
+<div class="line">均为滤波后的数值；</div>
+<div class="line">对应自动模式4（RTP_MODE == 4），本FIFO数据的顺序是XN -XP -YN -YP -ZA -ZB -ZC -ZD，</div>
+<div class="line">均为滤波后的数值。</div>
+<div class="line">如果SCI_FLG==1，所有采样数据滤波有效，但是不足对应采样模式所需的数据量；</div>
+<div class="line">如果DOUR_FLG==1，采样数据前面FIFO_DCNT-3个数据有效，倒数第三个数据为</div>
+<div class="line">超限数据滤波后的值，</div>
+<div class="line">倒数第二个数据为超限数据组的最大值，最后一个数据为超限数据组的最小值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-rtp-delay">
+<h2><span class="section-number">13.3.12.11. </span>0x028   RTP_DELAY<a class="headerlink" href="#x028-rtp-delay" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000F0001</p></th>
+<th class="head"><p>RTP延时控制(RTP Delay)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0F</p></td>
+<td><div class="line-block">
+<div class="line">Precharge Delay</div>
+<div class="line">按压检测预充电延时（仅自动模式有效）</div>
+<div class="line">本字段定义按压检测预充电延时，本计数单位为TPCLK。当本字段为0（即0x0000）时，无延时。</div>
+<div class="line">本字段定义的延时时间范围为 <code class="docutils literal notranslate"><span class="pre">0~（2^16-1）*TPCLK</span></code>。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x01</p></td>
+<td><div class="line-block">
+<div class="line">Stabilization_Delay</div>
+<div class="line">驱动与ADC采样之间延时（仅自动模式有效）</div>
+<div class="line">本字段定义了驱动延时，本计数单位为TPCLK。当本字段为0（即0x0000）时，无延时。</div>
+<div class="line">本字段定义的延时时间范围为 <code class="docutils literal notranslate"><span class="pre">0~（2^16-1）*256*TPCLK</span></code>。</div>
+<div class="line">举例，当 <code class="docutils literal notranslate"><span class="pre">PCLK</span> <span class="pre">=24MHz，TPCLK</span> <span class="pre">=41.67ns，256*TPCLK</span> <span class="pre">=10.67us</span></code>，</div>
+<div class="line">假设本字段的配置 <code class="docutils literal notranslate"><span class="pre">RDET_DEB</span> <span class="pre">=0x100</span> <span class="pre">=256</span></code> ，抬起去抖时间为 <code class="docutils literal notranslate"><span class="pre">256*10.67us</span> <span class="pre">=2.73ms</span></code>。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf00-rtp-atb">
+<h2><span class="section-number">13.3.12.12. </span>0xf00   RTP_ATB<a class="headerlink" href="#xf00-rtp-atb" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP ATB引脚输出控制(RTP Analog Test Bin)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>5：4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">输出信号选择</div>
+<div class="line">0：Vin  ADC Input（X+，X-，Y+，Y- 之1）</div>
+<div class="line">1：vref+</div>
+<div class="line">2：vref-</div>
+<div class="line">3：ptouch(按压检测信号)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">输出使能</div>
+<div class="line">0：关闭</div>
+<div class="line">1：开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf04-debug0">
+<h2><span class="section-number">13.3.12.13. </span>0xf04   Debug0<a class="headerlink" href="#xf04-debug0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00060000</p></th>
+<th class="head"><p>RTP 调试0(RTP Debug0)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31：28</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rtp_drv[3:0]  RTP 驱动</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27：16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rtp_vpsel[1:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>25：24</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rtp_vnsel[1:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23：20</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">st_cnt[3:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">manu_fsm_start 手动模式开始</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">pdetn 内部按压检测信号  1’b1:抬起   0’b1:按压</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">pdetn_dbc_out  去抖输出</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rtp_pdet_en 按压检测使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15：12</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rtp_mode[3:0]  RTP模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11：8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">auto_fsm_start 自动模式开始</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">pdet_cat</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5：0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">st_cur[5:0] 当前状态机</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf08-debug1">
+<h2><span class="section-number">13.3.12.14. </span>0xf08   Debug1<a class="headerlink" href="#xf08-debug1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00800000</p></th>
+<th class="head"><p>RTP 调试1(RTP Debug1)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:25</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_full</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">fifo_empty</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>22:18</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_dlen[4:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_ivld</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_idat[15:0]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf0c-debug2">
+<h2><span class="section-number">13.3.12.15. </span>0xf0c   Debug2<a class="headerlink" href="#xf0c-debug2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP 调试2(RTP Debug2)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">max_m1[11:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">max_m0[11:0]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf10-debug3">
+<h2><span class="section-number">13.3.12.16. </span>0xf10   Debug3<a class="headerlink" href="#xf10-debug3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP 调试3(RTP Debug3)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">min_m1[11:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">min_m0[11:0]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf14-debug4">
+<h2><span class="section-number">13.3.12.17. </span>0xf14   Debug4<a class="headerlink" href="#xf14-debug4" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP 调试4(RTP Debug4)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rang_avg[11:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">abso_rang_out</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rela_rang_out</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">rang_diff [11:0]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xf18-debug5">
+<h2><span class="section-number">13.3.12.18. </span>0xf18   Debug5<a class="headerlink" href="#xf18-debug5" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP 调试5(RTP Debug5)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">flt_out_tmp[14:0]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">flt_sum[14:0]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-version">
+<h2><span class="section-number">13.3.12.19. </span>0xFFC VERSION<a class="headerlink" href="#xffc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RTP版本(RTP Version)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version（模块版本号）</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../ths/index.html" class="btn btn-neutral float-right" title="13.4. THS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="13.3.11. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

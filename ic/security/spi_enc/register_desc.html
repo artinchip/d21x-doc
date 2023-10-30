@@ -1,0 +1,1148 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.2.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.3. SID" href="../sid/index.html" />
+    <link rel="prev" title="6.2.3. 编程指南" href="programming_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 安全</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ce/index.html">6.1. Crypto Engine (CE)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.2. Serial Peripheral Interface Encryption (SPI_ENC)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">6.2.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">6.2.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="programming_guide.html">6.2.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.2.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-spie-ctl">6.2.4.1. 0x000 SPIE_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-spie-icr">6.2.4.2. 0x004 SPIE_ICR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-spie-isr">6.2.4.3. 0x008 SPIE_ISR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-spie-kcnt">6.2.4.4. 0x00C SPIE_KCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-spie-ocnt">6.2.4.5. 0x010 SPIE_OCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-spie-addr">6.2.4.6. 0x014 SPIE_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-spie-tweak">6.2.4.7. 0x018 SPIE_TWEAK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-spie-cpos">6.2.4.8. 0x01C SPIE_CPOS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-spie-clen">6.2.4.9. 0x020 SPIE_CLEN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x03c-spie-dbgr">6.2.4.10. 0x03C SPIE_DBGR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-spie-kdbg0">6.2.4.11. 0x040 SPIE_KDBG0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-spie-kdbg1">6.2.4.12. 0x044 SPIE_KDBG1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-spie-kdbg2">6.2.4.13. 0x048 SPIE_KDBG2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-spie-kdbg3">6.2.4.14. 0x04C SPIE_KDBG3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-spie-ndbg0">6.2.4.15. 0x050 SPIE_NDBG0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-spie-ndbg1">6.2.4.16. 0x054 SPIE_NDBG1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-spie-ver">6.2.4.17. 0xFFC SPIE_VER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../sid/index.html">6.3. Secure ID (SID)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>安全</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.2. </span>SPI ENC</a> &raquo;</li>
+        
+      <li><span class="section-number">6.2.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.2.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-spie-ctl">
+<h2><span class="section-number">6.2.4.1. </span>0x000 SPIE_CTL<a class="headerlink" href="#x000-spie-ctl" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>控制寄存器（Control Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>13:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>SPI_SEL</p>
+<p>SPI 控制器选择。选择连接的总线，加密器对所选总线上的数据进
+行加解密。</p>
+<div class="line-block">
+<div class="line">0x0：BY PASS，不连接任何总线</div>
+<div class="line">0x1：连接 SPI0</div>
+<div class="line">0x2：连接 SPI1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:1</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_START</p>
+<p>开始计算分组密钥。</p>
+<div class="line-block">
+<div class="line">数据加解密开始之前（或者同时），必须先计</div>
+<div class="line">算分组密钥，否则加解密单元会一直等待密钥生成，导致传输失败。</div>
+<div class="line">传输完成，需要清零以停止密钥计算。</div>
+<div class="line">0：停止计算分组密钥</div>
+<div class="line">1：开始计算分组密钥</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-spie-icr">
+<h2><span class="section-number">6.2.4.2. </span>0x004 SPIE_ICR<a class="headerlink" href="#x004-spie-icr" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>中断控制寄存器（Interrupt Control Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:6</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_OVF</p>
+<p>分组密钥 FIFO 上溢中断使能</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_UDF</p>
+<p>分组密钥 FIFO 下溢中断使能</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>READ_HALF_EMPTY</p>
+<p>读过半空数据中断使能</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>READ_EMPTY_DATA</p>
+<p>读空数据中断使能</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>ENC_DEC_FINISHED</p>
+<p>加解密完成中断使能</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_GEN</p>
+<p>第一组分组密钥生成中断使能</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-spie-isr">
+<h2><span class="section-number">6.2.4.3. </span>0x008 SPIE_ISR<a class="headerlink" href="#x008-spie-isr" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>中断状态寄存器（Interrupt Status Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:6</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_OVF</p>
+<p>分组密钥 FIFO Overflow 中断状态。</p>
+<div class="line-block">
+<div class="line">0：分组密钥 FIFO 未发生上溢</div>
+<div class="line">1：分组密钥 FIFO 发生上溢</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_UDF</p>
+<p>分组密钥 FIFO Underflow 中断状态。</p>
+<div class="line-block">
+<div class="line">0：分组密钥 FIFO 未发生下溢</div>
+<div class="line">1：分组密钥 FIFO 发生下溢</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><p>READ_HALF_EMPTY</p>
+<p>读过半空数据中断，即读取的密文位置的数据，过半都是 0xFF。</p>
+<div class="line-block">
+<div class="line">0：中断未发生</div>
+<div class="line">1：表示当前读取的密文数据，超过一半都是 0xFF</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><p>READ_EMPTY_DATA</p>
+<p>读空数据中断，即读取的密文位置的数据全部为 0xFF，即Flash
+擦除后的状态。</p>
+<div class="line-block">
+<div class="line">0：中断未发生</div>
+<div class="line">1：表示当前读取的密文数据，全部为 0xFF</div>
+<div class="line"><br /></div>
+<div class="line">软件可以根据该中断判断当前读取的 Page，是否为擦除后的数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><p>ENC_DEC_FINISHED</p>
+<p>加解密完成中断。</p>
+<div class="line-block">
+<div class="line">0：中断未发生</div>
+<div class="line">1：对密文位置的数据加密或者解密完成</div>
+<div class="line"><br /></div>
+<div class="line">若当前传输的密文长度为0时，该中断不会产生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_GEN</p>
+<p>表示第一组分组密钥生成的中断状态。</p>
+<div class="line-block">
+<div class="line">0：中断未发生</div>
+<div class="line">1：第一组分组密钥已经产生 SPI 控制器可以开始传输数据。</div>
+<div class="line"><br /></div>
+<div class="line">在数据传输前，应确保该中断状态位为1。</div>
+<div class="line">由于SPI ENC 模块产生密钥的速度比 SPI 数据传输的速度快，因此</div>
+<div class="line">可以保证传输过程中，密钥总是能跟上数据传输的速度。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-spie-kcnt">
+<h2><span class="section-number">6.2.4.4. </span>0x00C SPIE_KCNT<a class="headerlink" href="#x00c-spie-kcnt" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>密钥计数寄存器（Key Counter Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><p>KEY_CNT</p>
+<p>SPI ENC 输出对应密文区域的分组密钥个数，单位为字节。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-spie-ocnt">
+<h2><span class="section-number">6.2.4.5. </span>0x010 SPIE_OCNT<a class="headerlink" href="#x010-spie-ocnt" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输出计数寄存器（Output Counter Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><p>OUTPUT_CNT</p>
+<p>SPI ENC 输出的分组密钥个数，以字节为单位计数。</p>
+<div class="line-block">
+<div class="line">SPI ENC 为每一个传输的 SPI 数据输出分组密钥，但是如果对应输</div>
+<div class="line">出的位置是明文，SPI ENC 输出的分组密钥为0。所以这里的计数是</div>
+<div class="line">输出的0的个数和密文对应的分组密钥个数之和。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-spie-addr">
+<h2><span class="section-number">6.2.4.6. </span>0x014 SPIE_ADDR<a class="headerlink" href="#x014-spie-addr" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>数据地址寄存器（Data Address Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_ADDR</div>
+<div class="line">本次访问的 Flash 数据地址。从0开始，是相对 Flash 开始位置</div>
+<div class="line">的访问偏移值，单位为字节。该地址信息有两个用途：</div>
+<div class="line-block">
+<div class="line">1.计算数据分组对应的 Counter 值</div>
+<div class="line">2.输出分组密钥数据</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-spie-tweak">
+<h2><span class="section-number">6.2.4.7. </span>0x018 SPIE_TWEAK<a class="headerlink" href="#x018-spie-tweak" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>计数调整寄存器（Tweak Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>CTR_TWEAK</p>
+<div class="line-block">
+<div class="line">用于产生数据分组的 Counter 值。数据分组的 Counter 值由 eFuse</div>
+<div class="line">中的 SPI_ENC_NONCE、SPIE_ADDR 以及TWEAK 值共同产生，其中</div>
+<div class="line">SPI_ENC_NONCE 与数据的分组地址是固定的，TWEAK 值软件可调。</div>
+<div class="line">通过配置 TWEAK 值，软件可以根据实际情况调整 Counter 值，以</div>
+<div class="line">免每次产生的分组密钥相同。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-spie-cpos">
+<h2><span class="section-number">6.2.4.8. </span>0x01C SPIE_CPOS<a class="headerlink" href="#x01c-spie-cpos" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>密文位置寄存器（Ciphertext Position Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>CIPHERTEXT_POS</p>
+<div class="line-block">
+<div class="line">本次传输的密文数据开始位置。</div>
+<div class="line">用于指示本次传输的数据中密文数据所在的偏移位置。如果当前传</div>
+<div class="line">输包含了发送和接收，则位置总是从发送开始计算。</div>
+<div class="line"><br /></div>
+<div class="line">值 M：表示本次传输的数据，从第 M 个字节开始是密文</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-spie-clen">
+<h2><span class="section-number">6.2.4.9. </span>0x020 SPIE_CLEN<a class="headerlink" href="#x020-spie-clen" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>密文长度寄存器（Ciphertext Length Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>CIPHERTEXT _LEN</p>
+<p>本次传输的密文数据长度。</p>
+<p>值 N：表示本次传输的密文数据为 N 字节</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x03c-spie-dbgr">
+<h2><span class="section-number">6.2.4.10. </span>0x03C SPIE_DBGR<a class="headerlink" href="#x03c-spie-dbgr" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试使能寄存器（Debug Enable Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBG_MAGIC</div>
+<div class="line">内部调试寄存器。</div>
+<div class="line">内部调试功能。当往 [31:0] 写入 0x1602DEB1 时，进入调试模式，</div>
+<div class="line">SPI ENC 模块从调试寄存器读取密钥数据，不再从 eFuse 读取密钥。</div>
+<div class="line">此时 Bit0 被置1。当写入寄存器的值不是 0x1602DEB1 时，SPI ENC</div>
+<div class="line">模块从 eFuse 读取密钥数据。此时 Bit0 被清零。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-spie-kdbg0">
+<h2><span class="section-number">6.2.4.11. </span>0x040 SPIE_KDBG0<a class="headerlink" href="#x040-spie-kdbg0" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试密钥寄存器0（Debug Key Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>DBG_KEY0</p>
+<p>内部调试寄存器。</p>
+<div class="line-block">
+<div class="line">4个寄存器的值组成 128bit AES 密钥，比特位分布如下：</div>
+<div class="line-block">
+<div class="line">DBG_KEYn &lt;&lt; (n * 32)。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-spie-kdbg1">
+<h2><span class="section-number">6.2.4.12. </span>0x044 SPIE_KDBG1<a class="headerlink" href="#x044-spie-kdbg1" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试密钥寄存器1（Debug Key Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>DBG_KEY1</p>
+<p>内部调试寄存器。</p>
+<div class="line-block">
+<div class="line">4个寄存器的值组成 128bit AES 密钥，比特位分布如下：</div>
+<div class="line-block">
+<div class="line">DBG_KEYn &lt;&lt; (n * 32)。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-spie-kdbg2">
+<h2><span class="section-number">6.2.4.13. </span>0x048 SPIE_KDBG2<a class="headerlink" href="#x048-spie-kdbg2" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试密钥寄存器2（Debug Key Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>DBG_KEY2</p>
+<p>内部调试寄存器。</p>
+<div class="line-block">
+<div class="line">4个寄存器的值组成 128bit AES 密钥，比特位分布如下：</div>
+<div class="line-block">
+<div class="line">DBG_KEYn &lt;&lt; (n * 32)。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-spie-kdbg3">
+<h2><span class="section-number">6.2.4.14. </span>0x04C SPIE_KDBG3<a class="headerlink" href="#x04c-spie-kdbg3" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试密钥寄存器3（Debug Key Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBG_KEY3</div>
+<div class="line">内部调试寄存器。</div>
+<div class="line">4个寄存器的值组成 128bit AES 密钥，比特位分布如下：</div>
+<div class="line-block">
+<div class="line">DBG_KEYn &lt;&lt; (n * 32)。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-spie-ndbg0">
+<h2><span class="section-number">6.2.4.15. </span>0x050 SPIE_NDBG0<a class="headerlink" href="#x050-spie-ndbg0" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试随机数寄存器0（Debug Nonce Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><p>DBG_NONCE0</p>
+<p>内部调试寄存器。</p>
+<div class="line-block">
+<div class="line">2个寄存器的值组成64 bit Nonce，比特位分布如下：</div>
+<div class="line-block">
+<div class="line">DBG_NONCEn &lt;&lt; (n * 32)。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-spie-ndbg1">
+<h2><span class="section-number">6.2.4.16. </span>0x054 SPIE_NDBG1<a class="headerlink" href="#x054-spie-ndbg1" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>调试随机数寄存器1（Debug Nonce Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBG_NONCE1</div>
+<div class="line">内部调试寄存器。</div>
+<div class="line">2个寄存器的值组成64 bit Nonce，比特位分布如下：</div>
+<div class="line-block">
+<div class="line">DBG_NONCEn &lt;&lt; (n * 32)。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-spie-ver">
+<h2><span class="section-number">6.2.4.17. </span>0xFFC SPIE_VER<a class="headerlink" href="#xffc-spie-ver" title="永久链接至标题">¶</a></h2>
+<table class="longtable colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>版本寄存器（Version Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x100</p></td>
+<td><p>Version(模块版本号)</p>
+<p>采用BCD码显示，V1.00</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../sid/index.html" class="btn btn-neutral float-right" title="6.3. SID" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="programming_guide.html" class="btn btn-neutral float-left" title="6.2.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

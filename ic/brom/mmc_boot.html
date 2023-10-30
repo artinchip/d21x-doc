@@ -1,0 +1,633 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.6. SD/eMMC 启动 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7.7. SD FAT32 启动" href="sd_fat32_boot.html" />
+    <link rel="prev" title="7.5. 时钟配置" href="clock_cfg.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">6. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. 启动</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">7.1. 模块概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_flow.html">7.2. 整体流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_cfg.html">7.3. 启动配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_image_format.html">7.4. 镜像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clock_cfg.html">7.5. 时钟配置</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.6. SD/eMMC 启动</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">7.6.1. 分区和启动流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sdmc">7.6.2. SDMC 控制器初始化</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.6.3. SD/eMMC 类型识别</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sd">7.6.4. SD 卡版本的识别</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">7.6.5. SD 卡的配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emmc">7.6.6. eMMC 的版本识别和配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">7.6.7. SD/eMMC 数据的读取</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">7.6.8. eMMC 启动的烧录配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sd_fat32_boot.html">7.7. SD FAT32 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nand_boot.html">7.8. SPI NAND 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nor_boot.html">7.9. SPI NOR 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secure_boot.html">7.10. 安全启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jtag_unlock.html">7.11. JTAG 解锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usb_mode.html">7.12. USB 升级模式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7. </span>启动</a> &raquo;</li>
+        
+      <li><span class="section-number">7.6. </span>SD/eMMC 启动</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sd-emmc">
+<h1><span class="section-number">7.6. </span>SD/eMMC 启动<a class="headerlink" href="#sd-emmc" title="永久链接至标题">¶</a></h1>
+<p>芯片有三个 SDMC 控制器，每一个控制器的设计使用目的各有不同：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>控制器</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDMC0</p></td>
+<td><p>设计对接 eMMC</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDMC1</p></td>
+<td><p>设计对接 SD 卡</p></td>
+</tr>
+<tr class="row-even"><td><p>SDMC2</p></td>
+<td><p>设计对接其他 SDIO 设备，如 SDIO WiFi</p></td>
+</tr>
+</tbody>
+</table>
+<p>BROM 程序只会尝试从 SDMC0 和 SDMC1 进行启动，不会检查 SDMC2 接口。</p>
+<p>eMMC：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>支持 eMMC1.2 ~eMMC 5.1</p></li>
+<li><p>默认使用 26MHz 和4线模式读取数据，如果读取数据过程失败，则尝试 6MHz 和 1线模式</p></li>
+<li><p>从 UDA 分区启动，不支持从 eMMC 的两个 Boot partition 分区启动</p></li>
+</ul>
+</div></blockquote>
+<p>SD Card：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>支持 SD 1.0 以及以后的版本</p></li>
+<li><p>工作电压 3.3V</p></li>
+<li><p>默认使用 25MHz 和4线模式启动，如果读取数据过程失败，则尝试 6MHz 和 1线模式</p></li>
+<li><p>主要用于开发者调试、工厂量产和升级</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="id1">
+<h2><span class="section-number">7.6.1. </span>分区和启动流程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>固件在 SD/eMMC 中统一使用 GPT (GUID Partition Table) 的方式进行分区存储，默认的存储分区排列如下表。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分区</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>boot-spl0</p></td>
+<td><p>u-boot-spl.bin</p></td>
+</tr>
+<tr class="row-odd"><td><p>boot-spl1</p></td>
+<td><p>u-boot-spl.bin</p></td>
+</tr>
+<tr class="row-even"><td><p>u-boot</p></td>
+<td><p>u-boot.bin</p></td>
+</tr>
+<tr class="row-odd"><td><p>kernel</p></td>
+<td><p>zImage/kernel.itb/…</p></td>
+</tr>
+<tr class="row-even"><td><p>rootfs</p></td>
+<td><p>Rootfs.ext4/…</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>这里只关心 BROM 涉及的前面两个分区，后续的分区以及内容可以根据不同的应用进行规划。
+前面两个分区用来保存第一级引导程序及其备份程序，大小固定为每个分区 128KB。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>区域</p></th>
+<th class="head"><p>大小/位置</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GPT Header</p></td>
+<td><p>17KB(LBA0 ~ LBA33)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Partition0</p></td>
+<td><p>128KB(LBA34 ~ LBA289)</p></td>
+</tr>
+<tr class="row-even"><td><p>Partition1</p></td>
+<td><p>128KB(LBA290 ~ LBA545)</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>BROM 尝试从 SD/eMMC 启动时，首先从 LBA34 的位置读取数据尝试启动，如果失败，则再尝试从 LBA290 的位置读取数据。
+这里 Logic Block 大小512 Byte。</p>
+<p>前面两个分区 boot-spl0, boot-spl1 的内容是一样的。</p>
+<div class="figure align-center" id="id6">
+<img alt="../../_images/mmc_boot_read_spl.png" src="../../_images/mmc_boot_read_spl.png" />
+<p class="caption"><span class="caption-number">图 7.3 </span><span class="caption-text">SD/eMMC 读取启动固件</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="sdmc">
+<h2><span class="section-number">7.6.2. </span>SDMC 控制器初始化<a class="headerlink" href="#sdmc" title="永久链接至标题">¶</a></h2>
+<p>在 SD/eMMC启动的过程中，首先要对控制器进行初始化，主要几个步骤：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Pinmux 配置</p></li>
+<li><p>SDMC时钟频率初始化</p></li>
+<li><p>SDMC内部 DMA 初始化</p></li>
+<li><p>Reset SDMC（FIFO/DMA）</p></li>
+<li><p>清除 SDMC内部中断，配置 DMA trigger threshold</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">7.6.3. </span>SD/eMMC 类型识别<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在进行数据读取前，首先要识别当前插入的卡的类型。</p>
+<div class="figure align-center" id="id7">
+<img alt="../../_images/mmc_boot_identification.png" src="../../_images/mmc_boot_identification.png" />
+<p class="caption"><span class="caption-number">图 7.4 </span><span class="caption-text">SD/eMMC 的类型识别</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+<p>在卡识别阶段，设置频率为 400KHz，1-bit 模式。</p>
+<p>区分 SD 卡和 eMMC 时，可以在 IDLE 状态下，通过发送 CMD8 的方式进行测试。从 SD v2.0 开始，
+SD 卡都支持 CMD8 （SD_CMD_SEND_IF_COND），而在 IDLE 状态下 eMMC 是不响应该命令的，因此通过测试则表明该卡为 SD。</p>
+<p>对于 eMMC，在上电后进入 IDLE 状态（由于没有启用 Boot partition，直接进入 IDLE 状态），
+在该状态下卡响应 CMD1（MMC_CMD_SEND_OP_COND），而 SD 卡是不响应该命令的。</p>
+<p>因此通过在 IDLE 状态发送不同命令，可以区分具体是什么类型的卡。</p>
+</div>
+<div class="section" id="sd">
+<h2><span class="section-number">7.6.4. </span>SD 卡版本的识别<a class="headerlink" href="#sd" title="永久链接至标题">¶</a></h2>
+<p>SD 卡识别需要获取的信息包括：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>卡的版本类型</p></li>
+<li><p>卡的容量类型 High Capacity or Standard Capacity</p></li>
+<li><p>支持的工作电压</p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center" id="id8">
+<img alt="../../_images/mmc_sd_cap_ident.png" src="../../_images/mmc_sd_cap_ident.png" />
+<p class="caption"><span class="caption-number">图 7.5 </span><span class="caption-text">SD 卡能力的识别</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>ACMD41 (APP_SEND_OP_COND) 是 SD 卡开始初始化的命令，通过该命令让 SD 开始初始化，
+并且读取关于 SD 卡的OCR(Operation Conditions Register)信息。</p>
+<p>发送 ACMD41 命令时，需要将参数中的 HCS(Host Capacity Support) 比特设置为1，
+表示 Host 支持SDHC 或 SDXC。</p>
+<p>ACMD41 命令需要重复发送，轮询 SD 卡是否初始化完成。通过读取 Response 中的 OCR 寄存器
+Busy 比特位判断是否完成初始化，值为1表示已经完成初始化。</p>
+<p>最后通过 OCR 寄存器的 CCS(Card Capacity Status) 比特位来判断该卡是否为 SDHC 或 SDXC.</p>
+<p>由于 BROM 不会使用 UHS-1 的模式进行工作，因此不需要关心其他信息。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.6.5. </span>SD 卡的配置<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id9">
+<img alt="../../_images/mmc_sd_config_flow.png" src="../../_images/mmc_sd_config_flow.png" />
+<p class="caption"><span class="caption-number">图 7.6 </span><span class="caption-text">SD 卡配置流程</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>在进行卡的配置时，主机首先需要发送 CMD2(ALL_SEND_CID)，读取卡的唯一 ID，
+并且让卡进入 Identification 状态。</p>
+<p>然后主机发送 CMD3(SEND_RELATIVE_ADDR) 命令，询问卡的地址 RCA(Relative Card Address)，
+该地址在后续的传输模式中需要使用，用来寻址要进行操作的卡。</p>
+<p>发送 CMD9 (SEND_CSD)，让卡发送 CSD(Card Specific Data)。CSD 提供了如何访问 SD 卡的信息，
+可以读取到关于 Read block length 相关的信息。</p>
+<p>发送 CMD7(SELECT_CARD) 命令，通过指定 RCA 来选中具体的 SD 卡，并且让 SD 卡进入传输模式。</p>
+<p>发送 CMD51(APP_SEND_SCR) 命令，读取卡的 SCR(SD Configuration Register) 。
+SCR 包含卡实现的Spec 版本，数据总线位宽等信息。</p>
+<p>通过上述配置和命令读取的信息，可以确定当前 SD 卡的确切版本，以及数据位宽信息。</p>
+</div>
+<div class="section" id="emmc">
+<h2><span class="section-number">7.6.6. </span>eMMC 的版本识别和配置<a class="headerlink" href="#emmc" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id10">
+<img alt="../../_images/mmc_emmc_version_ident.png" src="../../_images/mmc_emmc_version_ident.png" />
+<p class="caption"><span class="caption-number">图 7.7 </span><span class="caption-text">eMMC 的版本识别和配置</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+<p>上述流程中，获取eMMC 相关信息的地方有两个，分别是发送 CMD9 读取 CSD 和 CMD8 读取 ext CSD。
+通过读取的 CSD 数据，可以获取关于 eMMC 的详细版本信息，以及其他参数。</p>
+<p>经过上述流程，eMMC 进行了初始化，并且进入传输模式，可以进行数据传输。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.6.7. </span>SD/eMMC 数据的读取<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id11">
+<img alt="../../_images/mmc_data_read_flow.png" src="../../_images/mmc_data_read_flow.png" />
+<p class="caption"><span class="caption-number">图 7.8 </span><span class="caption-text">SD/eMMC 数据读取流程</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+<p>BROM 在读取 SD/eMMC 数据时，以 Block 为单位，统一使用 READ_MULTI_BLOCK 命令进行读取。
+读取完毕后发送 STOP_TRANSMISSION 结束读取动作。</p>
+<p>在读取数据的策略上，采取兼容性较好的方式进行。</p>
+<p>对于 SD 卡，首先通过 400KHz 和 1 线模式进行识别和配置；数据传输时首先使用 SD Legacy 的方式，
+25MHz 和 4 线模式尝试读取；如果读取失败，则转为 6MHz 和 1 线模式进行读取。如果都失败则放弃。</p>
+<p>对于 eMMC，首先通过 400KHz 和 1 线模式进行识别和配置；数据传输时首先使用 MMC HS 的方式，
+26MHz 和 4 线模式尝试读取；如果读取失败，则转为 6MHz 和 1 线模式进行读取。如果都失败则放弃。</p>
+<p>为了实现的简单和兼容性上的考虑，其他更快的模式并没有使用。</p>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">7.6.8. </span>eMMC 启动的烧录配置<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>eMMC 烧录时需要确认下列Ext CSD 配置。
+PARTITION_CONFIG(Ext CSD[179) 应该保持默认配置：</p>
+<div class="figure align-center">
+<img alt="../../_images/emmc_ext_csd_cfg.png" src="../../_images/emmc_ext_csd_cfg.png" />
+</div>
+<p>其中：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>BOOT_ACK: 0x0, No boot acknowledge send(Default)</p></li>
+<li><p>BOOT_PARTITION_ENABLE: 0x0, Device not boot enabled(Default)</p></li>
+<li><p>PARTITION_ACCESS: 0x0, No access to boot partition(Default)</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="sd_fat32_boot.html" class="btn btn-neutral float-right" title="7.7. SD FAT32 启动" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clock_cfg.html" class="btn btn-neutral float-left" title="7.5. 时钟配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

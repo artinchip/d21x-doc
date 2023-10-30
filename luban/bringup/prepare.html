@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>11.1. 准备工作 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="11.2. 存储配置" href="storage.html" />
+    <link rel="prev" title="11. Bringup" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">11. Bringup</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">11.1. 准备工作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#git">11.1.1. Git 仓库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">11.1.2. 生成固件</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id3">11.1.2.1. 选择已有工程</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">11.1.2.2. 建立新工程</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">11.1.2.3. 编译工程</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">11.1.3. 成果</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="storage.html">11.2. 存储配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="console.html">11.3. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">11.4. 刷机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chips.html">11.5. IC 配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="display.html">11.6. 屏幕配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="samples.html">11.7. 示例程序</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">11. </span>Bringup</a> &raquo;</li>
+        
+      <li><span class="section-number">11.1. </span>准备工作</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">11.1. </span>准备工作<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>在开始进行开发板 Bringup 之前，建议做好准备工作，可以让后续的开发工作更方便，编译环境的搭建可以参考：<a class="reference internal" href="../env/index.html#ref-luban-env"><span class="std std-ref">编译准备</span></a></p>
+<div class="section" id="git">
+<h2><span class="section-number">11.1.1. </span>Git 仓库<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h2>
+<p>务必使用一个版本管理工具对代码进行管理，如果没有 Git 服务器， 也强烈建议建一个本地仓库进行跟踪：</p>
+<ul class="simple">
+<li><p>可以方便跟踪修改的历史记录，籍此进行信息记录</p></li>
+<li><p>可以很方便的进行修改的回退，防止调试代码影响开发工作</p></li>
+<li><p>如果是使用 git clone 获取的代码，则 git 仓库本身是存在的</p></li>
+<li><p>如果是直接下载的代码，则可以手工建一下本地 git 仓库</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">git</span>   <span class="o">//</span><span class="n">安装</span> <span class="n">git</span>
+<span class="n">git</span> <span class="n">init</span>                   <span class="o">//</span><span class="n">创建本地仓库</span>
+<span class="n">git</span> <span class="n">add</span> <span class="o">*</span>                  <span class="o">//</span><span class="n">添加所有代码到本地仓库暂存区</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;init&quot;</span>       <span class="o">//</span><span class="n">将暂存区的代码提交到本地参考</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">11.1.2. </span>生成固件<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>每一块开发板可以对应一个工程，工程的代码在 target/d211/ 目录下，详细介绍的可以参考 <a class="reference internal" href="../sdk/index.html#ref-luban-sdk"><span class="std std-ref">使用指南</span></a></p>
+<p>在进行工程编译的时候，可以使用现在已有的工程，也可以建一个给开发板使用的独立工程</p>
+<div class="section" id="id3">
+<h3><span class="section-number">11.1.2.1. </span>选择已有工程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>选择已有的工程进行 Bringup 最简单，但选择一个合适的工程可以让修改工作更少，需要按如下优先级选择一个最适合开发板的工程</p>
+<ul class="simple">
+<li><p>存储：SPINAND、SPINOR、EMMC</p></li>
+<li><p>屏幕：RGB、LVDS、MIPI-DSI</p></li>
+<li><p>封装: D211B(88pin)、D211D(100pin)、D213E(128pin)</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 12%" />
+<col style="width: 8%" />
+<col style="width: 16%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>工程名称</p></th>
+<th class="head"><p>存储</p></th>
+<th class="head"><p>封装</p></th>
+<th class="head"><p>DDR</p></th>
+<th class="head"><p>屏幕</p></th>
+<th class="head" colspan="2"><p>其他功能</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>perf1</p></td>
+<td><p>emmc</p></td>
+<td><p>bga</p></td>
+<td><p>128M ddr3</p></td>
+<td><p>lvds</p></td>
+<td colspan="2"><p>DVP,GMAC,RTP,PWM,SDMC,USB</p></td>
+</tr>
+<tr class="row-odd"><td><p>perf2-spinand</p></td>
+<td><p>spi-nand</p></td>
+<td><p>bga</p></td>
+<td><p>64M ddr2</p></td>
+<td><p>rgb888</p></td>
+<td colspan="2"><p>Audio,RTP,2xMAC,CAN,SDCARD,PWM,USB</p></td>
+</tr>
+<tr class="row-even"><td><p>perf2-spinor</p></td>
+<td><p>spi-nor</p></td>
+<td><p>bga</p></td>
+<td><p>64M ddr2</p></td>
+<td><p>rgb888</p></td>
+<td colspan="2"><p>Audio,RTP,2xMAC,CAN,SDCARD,PWM,USB</p></td>
+</tr>
+<tr class="row-odd"><td><p>demo</p></td>
+<td><p>emmc</p></td>
+<td><p>qfn88</p></td>
+<td><p>64M ddr2</p></td>
+<td><p>lvds</p></td>
+<td colspan="2"><p>RTP,UART,MAC,SDCARD</p></td>
+</tr>
+<tr class="row-even"><td><p>demo88_nand</p></td>
+<td><p>spi-nand</p></td>
+<td><p>qfn88</p></td>
+<td><p>64M ddr2</p></td>
+<td><p>rgb565</p></td>
+<td colspan="2"><p>CTP,MAC,CAN,SDCARD</p></td>
+</tr>
+<tr class="row-odd"><td><p>demo100_nand</p></td>
+<td><p>spi-nand</p></td>
+<td><p>qfn100</p></td>
+<td><p>128M ddr3</p></td>
+<td><p>lvds</p></td>
+<td colspan="2"><p>CTP,MAC,CAN,SDCARD,USB</p></td>
+</tr>
+<tr class="row-even"><td><p>demo128_nand</p></td>
+<td><p>spi-nand</p></td>
+<td><p>qfn128</p></td>
+<td><p>128M ddr3</p></td>
+<td><p>lvds</p></td>
+<td colspan="2"><p>CTP,2xGMAC,SDCARD,WIFI,2xUSB,RS485</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">11.1.2.2. </span>建立新工程<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>可以使用 <code class="docutils literal notranslate"><span class="pre">add_board</span></code> 命令创建新板子对应的工程，该命令会参考某一个已经存在的工程建立一个全新命名的工程，
+参考工程的选择依然需要按照 <code class="docutils literal notranslate"><span class="pre">存储</span></code> ， <code class="docutils literal notranslate"><span class="pre">屏幕</span></code> ， <code class="docutils literal notranslate"><span class="pre">封装</span></code> 的优先级进行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">add_board</span>
+<span class="n">Chip</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="n">d211</span>
+<span class="n">Select</span> <span class="n">chip</span> <span class="k">for</span> <span class="n">new</span> <span class="n">board</span><span class="p">(</span><span class="n">number</span><span class="p">):</span> <span class="mi">1</span>
+    <span class="n">d211</span>
+
+<span class="n">Reference</span> <span class="n">defconfig</span><span class="p">:(</span><span class="n">Create</span> <span class="n">new</span> <span class="n">board</span> <span class="n">base</span> <span class="n">on</span> <span class="n">selected</span> <span class="n">defconfig</span><span class="p">)</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="n">d211_demo100_nand_defconfig</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="n">d211_demo128_nand_defconfig</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="n">d211_demo88_nand_defconfig</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="n">d211_demo88_nand_musl_defconfig</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="n">d211_demo_defconfig</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="n">d211_initramfs_defconfig</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="n">d211_ota_defconfig</span>
+    <span class="mi">8</span><span class="p">:</span> <span class="n">d211_ota_emmc_defconfig</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="n">d211_per1_mmc_defconfig</span>
+    <span class="mi">10</span><span class="p">:</span> <span class="n">d211_per1_mmc_secure_boot_defconfig</span>
+    <span class="mi">11</span><span class="p">:</span> <span class="n">d211_per2_spinand_defconfig</span>
+    <span class="mi">12</span><span class="p">:</span> <span class="n">d211_per2_spinor_defconfig</span>
+<span class="n">Select</span> <span class="n">reference</span> <span class="n">defconfig</span> <span class="k">for</span> <span class="n">new</span> <span class="n">board</span><span class="p">(</span><span class="n">number</span><span class="p">):</span> <span class="mi">2</span>
+    <span class="n">d211_demo128_nand_defconfig</span>
+
+<span class="n">Input</span> <span class="n">new</span> <span class="n">board</span><span class="s1">&#39;s name: newboard</span>
+    <span class="n">newboard</span>
+
+<span class="n">Input</span> <span class="n">manufacturer</span><span class="s1">&#39;s name: customer</span>
+    <span class="n">customer</span>
+
+<span class="n">Created</span><span class="p">:</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">newboard</span>
+<span class="n">Created</span><span class="p">:</span> <span class="n">source</span><span class="o">/</span><span class="n">uboot</span><span class="o">-</span><span class="mf">2021.10</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_newboard_defconfig</span>
+<span class="n">Created</span><span class="p">:</span> <span class="n">source</span><span class="o">/</span><span class="n">linux</span><span class="o">-</span><span class="mf">5.10</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">riscv</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_newboard_defconfig</span>
+<span class="n">Created</span><span class="p">:</span> <span class="n">package</span><span class="o">/</span><span class="n">third</span><span class="o">-</span><span class="n">party</span><span class="o">/</span><span class="n">busybox</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_newboard_defconfig</span>
+<span class="n">Created</span><span class="p">:</span> <span class="n">target</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_newboard_defconfig</span>
+<span class="n">Updated</span><span class="p">:</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">Config</span><span class="o">.</span><span class="ow">in</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">11.1.2.3. </span>编译工程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>强烈推荐使用 onestep 命令进行系统的 bringup</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">tools</span><span class="o">/</span><span class="n">onestep</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">lunch</span> <span class="n">d211_newboard_defconfig</span>
+<span class="n">make</span>                              <span class="o">//</span><span class="n">在任何目录</span> <span class="n">m</span> <span class="n">命令都可以编译出固件</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">11.1.3. </span>成果<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p><strong>准备工作完成后应该能够顺利编译出固件</strong></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="storage.html" class="btn btn-neutral float-right" title="11.2. 存储配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="11. Bringup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

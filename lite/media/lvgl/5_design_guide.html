@@ -1,0 +1,1089 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.9.5. 设计指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.9.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.9.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.1. Audio 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.2. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.7. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.8. MPP 播放器使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.9. LVGL 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.9.1. LVGL介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure.html">6.9.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.9.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.9.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.9.5. 设计指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.9.5.1. 代码目录</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#lvgl">6.9.5.2. LVGL整体流程</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.9.5.3. LVGL层次结构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">6.9.5.4. 父子结构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">6.9.5.4.1. 父子对象一起移动</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.9.5.4.2. 子对象超出父对象部分不可见</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">6.9.5.5. 显示对接</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#buffer">6.9.5.5.1. 绘制buffer初始化</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#flush-cb">6.9.5.5.2. flush_cb对接</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#d">6.9.5.5.3. 2D硬件加速对接</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">6.9.5.5.4. 显示驱动注册</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">6.9.5.6. 硬件解码对接</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#lv-img-decoder-t">6.9.5.6.1. lv_img_decoder_t注册</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#cache">6.9.5.6.2. 图片cache机制</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#lvgl-demo">6.9.5.7. LVGL demo</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#base-demo">6.9.5.7.1. base demo</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#meter-demo">6.9.5.7.2. meter demo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.9.6. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.9. </span>LVGL 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.9.5. </span>设计指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.9.5. </span>设计指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.9.5.1. </span>代码目录<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li><p>LVGL库目录： /luban-lite/packages/third-party/lvgl/lvgl-8.3.2</p></li>
+<li><p>LVGL官方music demo：/luban-lite/packages/third-party/lvgl/lv_demo_music-0.3.1</p></li>
+<li><p>LVGL对接以及APP demo目录：/luban-lite/application/os/helloworld/lvgl</p></li>
+</ol>
+</div>
+<div class="section" id="lvgl">
+<h2><span class="section-number">6.9.5.2. </span>LVGL整体流程<a class="headerlink" href="#lvgl" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id10">
+<img alt="../../../_images/key_process.png" src="../../../_images/key_process.png" />
+<p class="caption"><span class="caption-number">图 6.86 </span><span class="caption-text">整体流程</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+<p>LVGL框架的运行都是基于LVGL中定义的”Timer”定时器，系统需要给LVGL一个“心跳”，
+LVGL才能正常的运转起来，两个关键的函数：</p>
+<ul class="simple">
+<li><p>lv_tick_get(), 获取以ms为单位的tick时间</p></li>
+<li><p>lv_timer_handler()，在while循环中的基于定时器的任务处理，函数lv_task_handler会调用lv_timer_handler, lv_tick_get
+决定了lv_timer_handler基于定时器的任务处理的时间的准确性</p></li>
+</ul>
+<p>其中在文件lv_hal_tick.c中的lv_tick_get的实现代码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">lv_tick_get</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#if LV_TICK_CUSTOM == 0</span>
+
+    <span class="cm">/*If `lv_tick_inc` is called from an interrupt while `sys_time` is read</span>
+<span class="cm">    *the result might be corrupted.</span>
+<span class="cm">    *This loop detects if `lv_tick_inc` was called while reading `sys_time`.</span>
+<span class="cm">    *If `tick_irq_flag` was cleared in `lv_tick_inc` try to read again</span>
+<span class="cm">    *until `tick_irq_flag` remains `1`.*/</span>
+    <span class="kt">uint32_t</span> <span class="n">result</span><span class="p">;</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">tick_irq_flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">result</span>        <span class="o">=</span> <span class="n">sys_time</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">tick_irq_flag</span><span class="p">);</span> <span class="cm">/*Continue until see a non interrupted cycle*/</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="cp">#else</span>
+    <span class="k">return</span> <span class="n">LV_TICK_CUSTOM_SYS_TIME_EXPR</span><span class="p">;</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>在头文件lv_rt_thread_conf.h中定义了上述函数中的LV_TICK_CUSTOM_SYS_TIME_EXPR</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define LV_TICK_CUSTOM 1</span>
+<span class="cp">#define LV_TICK_CUSTOM_INCLUDE LV_RTTHREAD_INCLUDE</span>
+<span class="cp">#define LV_TICK_CUSTOM_SYS_TIME_EXPR (rt_tick_get_millisecond())    </span><span class="cm">/*Expression evaluating to current system time in ms*/</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>创建LVGL线程的代码如下所示：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="n">lvgl_thread_entry</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">parameter</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#if LV_USE_LOG</span>
+    <span class="n">lv_log_register_print_cb</span><span class="p">(</span><span class="n">lv_rt_log</span><span class="p">);</span>
+<span class="cp">#endif </span><span class="cm">/* LV_USE_LOG */</span><span class="cp"></span>
+    <span class="n">lv_init</span><span class="p">();</span>
+    <span class="n">lv_port_disp_init</span><span class="p">();</span>
+    <span class="n">lv_port_indev_init</span><span class="p">();</span>
+    <span class="n">lv_user_gui_init</span><span class="p">();</span>
+
+    <span class="cm">/* handle the tasks of LVGL */</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">lv_task_handler</span><span class="p">();</span>
+        <span class="n">rt_thread_mdelay</span><span class="p">(</span><span class="n">SLEEP_PERIOD</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">lvgl_thread_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">rt_err_t</span> <span class="n">err</span><span class="p">;</span>
+
+    <span class="n">err</span> <span class="o">=</span> <span class="n">rt_thread_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lvgl_thread</span><span class="p">,</span> <span class="s">&quot;LVGL&quot;</span><span class="p">,</span> <span class="n">lvgl_thread_entry</span><span class="p">,</span> <span class="n">RT_NULL</span><span class="p">,</span>
+        <span class="o">&amp;</span><span class="n">lvgl_thread_stack</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">lvgl_thread_stack</span><span class="p">),</span> <span class="n">LPKG_LVGL_THREAD_PRIO</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">RT_EOK</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s">&quot;Failed to create LVGL thread&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">rt_thread_startup</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lvgl_thread</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>用户只需要实现三个函数lv_port_disp_init()、lv_port_indev_init()、lv_user_gui_init()：</p>
+<ul class="simple">
+<li><p>其中在函数lv_port_disp_init()中实现显示接口的对接以及硬件2D加速的对接</p></li>
+<li><p>在函数lv_port_indev_init()中实现触摸屏的对接</p></li>
+<li><p>在函数lv_user_gui_init()中适配不同UI界面的初始化</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.9.5.3. </span>LVGL层次结构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id11">
+<img alt="../../../_images/struct.png" src="../../../_images/struct.png" />
+<p class="caption"><span class="caption-number">图 6.87 </span><span class="caption-text">层次结构</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>LVGL的display是对显示驱动的封装和抽象</p></li>
+<li><p>display包含Active Screen、Top layer、System layer</p></li>
+<li><p>Active Screen、Top layer、System layer是不同的screen对象，这里的screen用layer表达更准确一点，
+表示的是图层的概念，其中Active Screen在最底层，System layer在最顶层</p></li>
+<li><p>一般在Active Screen实现不同的app界面，用户可以创建多个screen，但只能有一个screen设置为Active Screen</p></li>
+<li><p>Top layer在Active Screen之上，可以用来创建弹出窗口，Top layer永远在Active Screen之上</p></li>
+<li><p>System layer在最顶层，比如鼠标可以在System layer，永远不会被遮挡</p></li>
+</ul>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/layer.png" src="../../../_images/layer.png" />
+<p class="caption"><span class="caption-number">图 6.88 </span><span class="caption-text">图层叠加</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">6.9.5.4. </span>父子结构<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>LVGL是面向对象的基于父子结构的设计，每一个对象都包含一个父对象（screen对象除外），
+但是一个父对象可以包含任意数量的子对象。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * 创建对象的时候，需要传入父对象的指针，</span>
+<span class="cm"> * 如果父对象对NULL, 表示创建的是screen对象</span>
+<span class="cm"> */</span>
+<span class="n">lv_obj_create</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">6.9.5.4.1. </span>父子对象一起移动<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/move.png" src="../../../_images/move.png" />
+<p class="caption"><span class="caption-number">图 6.89 </span><span class="caption-text">父子对象移动</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.9.5.4.2. </span>子对象超出父对象部分不可见<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/outside.png" src="../../../_images/outside.png" />
+<p class="caption"><span class="caption-number">图 6.90 </span><span class="caption-text">子对象可见区域</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">6.9.5.5. </span>显示对接<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>主要包括三部分：</p>
+<ol class="arabic simple">
+<li><p>绘制buffer初始化</p></li>
+<li><p>flush_cb对接</p></li>
+<li><p>2D硬件加速对接</p></li>
+</ol>
+<div class="section" id="buffer">
+<h3><span class="section-number">6.9.5.5.1. </span>绘制buffer初始化<a class="headerlink" href="#buffer" title="永久链接至标题">¶</a></h3>
+<p>绘制buffer初始化函数如下:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">lv_disp_draw_buf_init</span><span class="p">(</span><span class="n">lv_disp_draw_buf_t</span> <span class="o">*</span> <span class="n">draw_buf</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">buf1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span> <span class="n">buf2</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">size_in_px_cnt</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>buf1：当为单缓冲或多缓冲的时候，都要设置此buffer</p></li>
+<li><p>buf2：当选择双缓冲的时候，需要配置此buffer，单缓冲不需要</p></li>
+<li><p>size_in_px_cnt： 以像素为单位的buf大小</p></li>
+</ul>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/double_frame.png" src="../../../_images/double_frame.png" />
+<p class="caption"><span class="caption-number">图 6.91 </span><span class="caption-text">双缓冲</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="flush-cb">
+<h3><span class="section-number">6.9.5.5.2. </span>flush_cb对接<a class="headerlink" href="#flush-cb" title="永久链接至标题">¶</a></h3>
+<p>flush_cb回调函数的处理流程，我们以双缓冲为例进行说明，绘制模式有full_refresh和direct_mode两种：</p>
+<ol class="arabic simple">
+<li><p>全刷新模式，每一帧都刷新整个显示屏</p></li>
+</ol>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/full_flush_cb.png" src="../../../_images/full_flush_cb.png" />
+<p class="caption"><span class="caption-number">图 6.92 </span><span class="caption-text">全刷新模式</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>在虚线框中为flush_cb中处理部分，在全刷新的流程中，直接通过 pan_display接口送当前绘制buffer到显示，然后等待vsync中断，
+等到中断后，当前的绘制buffer就真正的在显示屏中显示出来，然后调用lv_disp_flush_ready通知LVGL框架已经flush结束，
+最后在LVGL框架中会进行绘制buffer的交换。</p>
+<ol class="arabic simple" start="2">
+<li><p>局部刷新，每一帧只刷新需要更新的无效区域（可以有多个无效区域）</p></li>
+</ol>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/invalid_area.png" src="../../../_images/invalid_area.png" />
+<p class="caption"><span class="caption-number">图 6.93 </span><span class="caption-text">无效区域</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/direct_flush_cb.png" src="../../../_images/direct_flush_cb.png" />
+<p class="caption"><span class="caption-number">图 6.94 </span><span class="caption-text">局部刷新模式</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+<p>上图中的示例，为了方便描述每一帧都有两个无效区域（invalid area0 和invalid area1），LVGL可以支持更多的无效区域，到了最后一个无效区域，
+说明当前帧的数据已经处理完，才把绘制buffer送显示，然后进行buffer交换</p>
+<p>flush_cb的实现代码fbdev_flush如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="n">fbdev_flush</span><span class="p">(</span><span class="n">lv_disp_drv_t</span> <span class="o">*</span> <span class="n">drv</span><span class="p">,</span> <span class="k">const</span> <span class="n">lv_area_t</span> <span class="o">*</span> <span class="n">area</span><span class="p">,</span> <span class="n">lv_color_t</span> <span class="o">*</span><span class="n">color_p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">lv_disp_t</span> <span class="o">*</span> <span class="n">disp</span> <span class="o">=</span> <span class="n">_lv_refr_get_disp_refreshing</span><span class="p">();</span>
+    <span class="n">lv_disp_draw_buf_t</span> <span class="o">*</span> <span class="n">draw_buf</span> <span class="o">=</span> <span class="n">lv_disp_get_draw_buf</span><span class="p">(</span><span class="n">disp</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">disp</span><span class="o">-&gt;</span><span class="n">driver</span><span class="o">-&gt;</span><span class="n">direct_mode</span> <span class="o">||</span> <span class="n">draw_buf</span><span class="o">-&gt;</span><span class="n">flushing_last</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">disp</span><span class="o">-&gt;</span><span class="n">driver</span><span class="o">-&gt;</span><span class="n">direct_mode</span><span class="p">)</span>
+            <span class="n">aicos_dcache_clean_invalid_range</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">info</span><span class="p">.</span><span class="n">framebuffer</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">info</span><span class="p">.</span><span class="n">smem_len</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="nf">aicos_dcache_clean_invalid_range</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">color_p</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">info</span><span class="p">.</span><span class="n">smem_len</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">color_p</span> <span class="o">==</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">info</span><span class="p">.</span><span class="n">framebuffer</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">mpp_fb_ioctl</span><span class="p">(</span><span class="n">g_fb</span><span class="p">,</span> <span class="n">AICFB_PAN_DISPLAY</span> <span class="p">,</span> <span class="o">&amp;</span><span class="n">index</span><span class="p">);</span>
+        <span class="n">mpp_fb_ioctl</span><span class="p">(</span><span class="n">g_fb</span><span class="p">,</span> <span class="n">AICFB_WAIT_FOR_VSYNC</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">drv</span><span class="o">-&gt;</span><span class="n">direct_mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">disp</span><span class="o">-&gt;</span><span class="n">inv_p</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">disp</span><span class="o">-&gt;</span><span class="n">inv_area_joined</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">sync_disp_buf</span><span class="p">(</span><span class="n">drv</span><span class="p">,</span> <span class="n">color_p</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">disp</span><span class="o">-&gt;</span><span class="n">inv_areas</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">lv_disp_flush_ready</span><span class="p">(</span><span class="n">drv</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">lv_disp_flush_ready</span><span class="p">(</span><span class="n">drv</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="d">
+<h3><span class="section-number">6.9.5.5.3. </span>2D硬件加速对接<a class="headerlink" href="#d" title="永久链接至标题">¶</a></h3>
+<p>2D加速主要对接 lv_draw_ctx_t中的绘制函数</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 47%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>成员</p></th>
+<th class="head"><p>说明</p></th>
+<th class="head"><p>是否硬件加速</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>void *buf</p></td>
+<td><p>当前要绘制的buffer</p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>const lv_area_t * clip_area</p></td>
+<td><p>绘制区域裁剪（以屏幕为参考的绝对坐标）</p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>void (*draw_rect)()</p></td>
+<td><p>绘制矩形（包括圆角、阴影、渐变等）</p></td>
+<td><p>否</p></td>
+</tr>
+<tr class="row-odd"><td><p>void (*draw_arc)()</p></td>
+<td><p>绘制弧形</p></td>
+<td><p>否</p></td>
+</tr>
+<tr class="row-even"><td><p>void (*draw_img_decoded)()</p></td>
+<td><p>绘制已经解码后的图像</p></td>
+<td><p>是</p></td>
+</tr>
+<tr class="row-odd"><td><p>lv_res_t (*draw_img)()</p></td>
+<td><p>绘制图像（包括图片解码）</p></td>
+<td><p>是</p></td>
+</tr>
+<tr class="row-even"><td><p>void (*draw_letter)()</p></td>
+<td><p>绘制文字</p></td>
+<td><p>否</p></td>
+</tr>
+<tr class="row-odd"><td><p>void (*draw_line)()</p></td>
+<td><p>绘制直线</p></td>
+<td><p>否</p></td>
+</tr>
+<tr class="row-even"><td><p>void (*draw_polygon)()</p></td>
+<td><p>绘制多边形</p></td>
+<td><p>否</p></td>
+</tr>
+</tbody>
+</table>
+<p>在lv_draw_aic_ctx_t（重定义了lv_draw_sw_ctx_t）结构体中包含lv_draw_ctx_t和blend函数：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">lv_draw_ctx_t</span> <span class="n">base_draw</span><span class="p">;</span>
+
+    <span class="cm">/** Fill an area of the destination buffer with a color*/</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">blend</span><span class="p">)(</span><span class="n">lv_draw_ctx_t</span> <span class="o">*</span> <span class="n">draw_ctx</span><span class="p">,</span> <span class="k">const</span> <span class="n">lv_draw_sw_blend_dsc_t</span> <span class="o">*</span> <span class="n">dsc</span><span class="p">);</span>
+<span class="p">}</span> <span class="n">lv_draw_sw_ctx_t</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>在draw_rect、draw_line等操作的功能由多个步骤组成，虽然我们没有对这些接口进行硬件加速，但是这些操作的部分实现
+会调用到blend，我们对blend接口进行了硬件加速对接：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">lv_draw_aic_ctx_init</span><span class="p">(</span><span class="n">lv_disp_drv_t</span> <span class="o">*</span> <span class="n">drv</span><span class="p">,</span> <span class="n">lv_draw_ctx_t</span> <span class="o">*</span> <span class="n">draw_ctx</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">lv_draw_sw_init_ctx</span><span class="p">(</span><span class="n">drv</span><span class="p">,</span> <span class="n">draw_ctx</span><span class="p">);</span>
+    <span class="n">lv_draw_aic_ctx_t</span> <span class="o">*</span> <span class="n">aic_draw_ctx</span> <span class="o">=</span> <span class="p">(</span><span class="n">lv_draw_aic_ctx_t</span> <span class="o">*</span><span class="p">)</span><span class="n">draw_ctx</span><span class="p">;</span>
+
+    <span class="n">aic_draw_ctx</span><span class="o">-&gt;</span><span class="n">blend</span> <span class="o">=</span> <span class="n">lv_draw_aic_blend</span><span class="p">;</span>
+    <span class="n">aic_draw_ctx</span><span class="o">-&gt;</span><span class="n">base_draw</span><span class="p">.</span><span class="n">draw_img</span> <span class="o">=</span> <span class="n">lv_draw_aic_draw_img</span><span class="p">;</span>
+    <span class="n">aic_draw_ctx</span><span class="o">-&gt;</span><span class="n">base_draw</span><span class="p">.</span><span class="n">draw_img_decoded</span> <span class="o">=</span> <span class="n">lv_draw_aic_img_decoded</span><span class="p">;</span>
+
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>先调用lv_draw_sw_init_ctx函数把所有绘制操作都初始化为软件实现，然后对可以硬件加速的接口重新实现，
+覆盖原来的软件实现。</p>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">6.9.5.5.4. </span>显示驱动注册<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>所有的显示相关功能都包含在lv_disp_drv_t结构体中：</p>
+<ol class="arabic simple">
+<li><p>通过lv_disp_drv_init来初始化lv_disp_drv_t结构体</p></li>
+<li><p>通过lv_disp_draw_buf_init初始化绘制buffer</p></li>
+<li><p>通过回调flush_cb来注册显示接口</p></li>
+<li><p>通过lv_draw_aic_ctx_init来注册2D硬件加速相关接口</p></li>
+<li><p>通过lv_disp_drv_register来注册lv_disp_drv_t</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">lv_disp_drv_t</span> <span class="n">disp_drv</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">lv_port_disp_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">buf1</span> <span class="o">=</span> <span class="n">RT_NULL</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">buf2</span> <span class="o">=</span> <span class="n">RT_NULL</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">fb_Size</span><span class="p">;</span>
+    <span class="n">rt_err_t</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="n">g_fb</span> <span class="o">=</span> <span class="n">mpp_fb_open</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s">&quot;can&#39;t find aic framebuffer device!&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">mpp_fb_ioctl</span><span class="p">(</span><span class="n">g_fb</span><span class="p">,</span> <span class="n">AICFB_GET_SCREENINFO</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">info</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="n">RT_EOK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s">&quot;get device fb info failed!&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">g_ge</span> <span class="o">=</span> <span class="n">mpp_ge_open</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">g_ge</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">LOG_E</span><span class="p">(</span><span class="s">&quot;ge open fail</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">fb_Size</span> <span class="o">=</span> <span class="n">info</span><span class="p">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">info</span><span class="p">.</span><span class="n">stride</span><span class="p">;</span>
+    <span class="n">buf1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">info</span><span class="p">.</span><span class="n">framebuffer</span><span class="p">;</span>
+    <span class="n">buf2</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)((</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="p">)</span><span class="n">info</span><span class="p">.</span><span class="n">framebuffer</span> <span class="o">+</span> <span class="n">fb_Size</span><span class="p">);</span>
+    <span class="n">lv_disp_draw_buf_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">disp_buf</span><span class="p">,</span> <span class="n">buf2</span><span class="p">,</span> <span class="n">buf1</span><span class="p">,</span>
+                        <span class="n">info</span><span class="p">.</span><span class="n">width</span> <span class="o">*</span> <span class="n">info</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+    <span class="n">lv_disp_drv_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">disp_drv</span><span class="p">);</span>
+
+    <span class="cm">/*Set a display buffer*/</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">draw_buf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">disp_buf</span><span class="p">;</span>
+
+    <span class="cm">/*Set the resolution of the display*/</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">hor_res</span> <span class="o">=</span> <span class="n">info</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">ver_res</span> <span class="o">=</span> <span class="n">info</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">full_refresh</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">direct_mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">flush_cb</span> <span class="o">=</span> <span class="n">fbdev_flush</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">draw_ctx_init</span> <span class="o">=</span> <span class="n">lv_draw_aic_ctx_init</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">draw_ctx_deinit</span> <span class="o">=</span> <span class="n">lv_draw_aic_ctx_deinit</span><span class="p">;</span>
+    <span class="n">disp_drv</span><span class="p">.</span><span class="n">draw_ctx_size</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">lv_draw_aic_ctx_t</span><span class="p">);</span>
+
+    <span class="cm">/*Finally register the driver*/</span>
+    <span class="n">lv_disp_drv_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">disp_drv</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>上述代码中表示目前是局部刷新模式：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">disp_drv</span><span class="p">.</span><span class="n">full_refresh</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">disp_drv</span><span class="p">.</span><span class="n">direct_mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>全刷新模式参数配置如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">disp_drv</span><span class="p">.</span><span class="n">full_refresh</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">disp_drv</span><span class="p">.</span><span class="n">direct_mode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">6.9.5.6. </span>硬件解码对接<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<div class="section" id="lv-img-decoder-t">
+<h3><span class="section-number">6.9.5.6.1. </span>lv_img_decoder_t注册<a class="headerlink" href="#lv-img-decoder-t" title="永久链接至标题">¶</a></h3>
+<p>我们通过lv_img_decoder_t来注册硬件解码器接口，主要实现了三个接口：</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aic_decoder_info</p></td>
+<td><p>获取图片宽、高、图片格式信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>aic_decoder_open</p></td>
+<td><p>申请解码输出buffer，硬件解码输出</p></td>
+</tr>
+<tr class="row-even"><td><p>aic_decoder_close</p></td>
+<td><p>释放硬件解码资源（包括输出buffer）</p></td>
+</tr>
+</tbody>
+</table>
+<p>注册解码器过程；</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">aic_dec_create</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">lv_img_decoder_t</span> <span class="o">*</span><span class="n">aic_dec</span> <span class="o">=</span> <span class="n">lv_img_decoder_create</span><span class="p">();</span>
+
+    <span class="cm">/* init frame info lists */</span>
+    <span class="n">mpp_list_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf_list</span><span class="p">);</span>
+    <span class="n">lv_img_decoder_set_info_cb</span><span class="p">(</span><span class="n">aic_dec</span><span class="p">,</span> <span class="n">aic_decoder_info</span><span class="p">);</span>
+    <span class="n">lv_img_decoder_set_open_cb</span><span class="p">(</span><span class="n">aic_dec</span><span class="p">,</span> <span class="n">aic_decoder_open</span><span class="p">);</span>
+    <span class="n">lv_img_decoder_set_close_cb</span><span class="p">(</span><span class="n">aic_dec</span><span class="p">,</span> <span class="n">aic_decoder_close</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>绘制函数draw_img_decoded需要的解码后数据，需要通过注册解码器回调去获取，
+这是我们默认的图片处理流程：</p>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/draw_img_decoded.png" src="../../../_images/draw_img_decoded.png" />
+<p class="caption"><span class="caption-number">图 6.95 </span><span class="caption-text">draw_img_decoded</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>采用此流程需要额外申请一块解码buffer，占用内存增加</p></li>
+<li><p>缓存解码后的buffer，下次再显示同样的image，不用重复解码，加快UI加载速度</p></li>
+</ul>
+<p>当绘制函数为draw_img的时候，硬件解码在函数draw_img内部，无需注册解码回调函数，我们默认不采用此方法，
+当在内存受限的场景下，可以评估此方法是否可满足场景需求。</p>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/draw_img.png" src="../../../_images/draw_img.png" />
+<p class="caption"><span class="caption-number">图 6.96 </span><span class="caption-text">draw_img</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>采用此流程无需额外申请解码buffer，直接解码到绘制buffer</p></li>
+<li><p>当需要进行alpha blending的时候，此方法不可行</p></li>
+<li><p>每次都要重新对image解码，速度不如draw_img_decoded</p></li>
+<li><p>当硬件解码不支持裁剪的时进行局部更新，此方法不可行</p></li>
+</ul>
+</div>
+<div class="section" id="cache">
+<h3><span class="section-number">6.9.5.6.2. </span>图片cache机制<a class="headerlink" href="#cache" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li><p>采用lv_img_decoder_t提供的接口注册的解码器可以采用LVGL内部的图片缓冲机制，
+在lv_conf.h 中宏定义LV_IMG_CACHE_DEF_SIZE为1的时候，表示打开图片缓冲机制，
+当LV_IMG_CACHE_DEF_SIZE为0的时候，图片缓冲机制关闭。</p></li>
+<li><p>通过void lv_img_cache_set_size(uint16_t entry_cnt)来设置缓冲的图片张数，图片以张数为单位进行缓存。</p></li>
+<li><p>当图片缓存到设置的最大张数的时候，如果需要新的缓存，图片缓存机制内部会进行图片缓存价值的判断，
+例如：如果某一张图片解码的时间比较久，或者某一张图片使用的更频繁，那么这种图片的缓存价值打分会更高，
+优先缓存这些缓存价值更高的图片。</p></li>
+</ol>
+<p>如果一些图片的读取时间或者解码时间比较长，采用图片缓存机制可以提升UI流畅性</p>
+</div>
+</div>
+<div class="section" id="lvgl-demo">
+<h2><span class="section-number">6.9.5.7. </span>LVGL demo<a class="headerlink" href="#lvgl-demo" title="永久链接至标题">¶</a></h2>
+<p>目前支持三个demo，base demo、meter demo以及music demo。</p>
+<div class="section" id="base-demo">
+<h3><span class="section-number">6.9.5.7.1. </span>base demo<a class="headerlink" href="#base-demo" title="永久链接至标题">¶</a></h3>
+<p>对png、jpg硬件解码，以及build-in的图片使用方式进行演示，UI界面如下：</p>
+<div class="figure align-center" id="id21">
+<img alt="../../../_images/base_demo.png" src="../../../_images/base_demo.png" />
+<p class="caption"><span class="caption-number">图 6.97 </span><span class="caption-text">base demo</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+<p>此demo一共有4四个页面， 第一个页面为仪表演示、第二个页面为音乐播放演示、第三个页面为菜单演示、
+第四个页面为播放器演示。播放器演示页面需要打开base_ui.c中的宏定义VIDEO_PLAYER</p>
+<ol class="arabic simple">
+<li><p>不同页面通过滑动操作切换，页面滑动使用了控件tabview</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">lv_obj_set_size</span><span class="p">(</span><span class="n">main_tabview</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">600</span><span class="p">);</span>
+<span class="n">lv_obj_set_pos</span><span class="p">(</span><span class="n">main_tabview</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_obj_set_style_bg_opa</span><span class="p">(</span><span class="n">main_tabview</span><span class="p">,</span> <span class="n">LV_OPA_0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="n">lv_obj_t</span> <span class="o">*</span><span class="n">main_tab0</span> <span class="o">=</span> <span class="n">lv_tabview_add_tab</span><span class="p">(</span><span class="n">main_tabview</span><span class="p">,</span> <span class="s">&quot;main page 0&quot;</span><span class="p">);</span>
+<span class="n">lv_obj_t</span> <span class="o">*</span><span class="n">main_tab1</span> <span class="o">=</span> <span class="n">lv_tabview_add_tab</span><span class="p">(</span><span class="n">main_tabview</span><span class="p">,</span> <span class="s">&quot;main page 1&quot;</span><span class="p">);</span>
+
+<span class="n">lv_obj_set_style_bg_opa</span><span class="p">(</span><span class="n">main_tab0</span><span class="p">,</span> <span class="n">LV_OPA_0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_obj_set_style_bg_opa</span><span class="p">(</span><span class="n">main_tab1</span><span class="p">,</span> <span class="n">LV_OPA_0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_obj_set_size</span><span class="p">(</span><span class="n">main_tab0</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">600</span><span class="p">);</span>
+<span class="n">lv_obj_set_size</span><span class="p">(</span><span class="n">main_tab1</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">600</span><span class="p">);</span>
+
+<span class="n">lv_obj_set_pos</span><span class="p">(</span><span class="n">main_tab0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_obj_set_pos</span><span class="p">(</span><span class="n">main_tab1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>背景图片通过image控件来创建，是一个名字为global_bg.png的png图片，此图片会采用注册的硬件解码器进行解码</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">lv_obj_t</span> <span class="o">*</span><span class="n">img_bg</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="n">img_bg</span> <span class="o">=</span> <span class="n">lv_img_create</span><span class="p">(</span><span class="n">lv_scr_act</span><span class="p">());</span>
+<span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">img_bg</span><span class="p">,</span> <span class="n">LVGL_PATH</span><span class="p">(</span><span class="n">global_bg</span><span class="p">.</span><span class="n">png</span><span class="p">));</span>
+<span class="n">lv_obj_set_pos</span><span class="p">(</span><span class="n">img_bg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>菜单图片也通过image控件来创建，是png图片，此图片也会采用注册的硬件解码器进行解码</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">lv_obj_t</span> <span class="o">*</span><span class="n">sub_image00</span> <span class="o">=</span> <span class="n">lv_img_create</span><span class="p">(</span><span class="n">sub_tab0</span><span class="p">);</span>
+<span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">sub_image00</span><span class="p">,</span> <span class="n">LVGL_PATH</span><span class="p">(</span><span class="n">cook_0</span><span class="p">.</span><span class="n">jpg</span><span class="p">));</span>
+<span class="n">lv_obj_set_pos</span><span class="p">(</span><span class="n">sub_image00</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>fake image</p></li>
+</ol>
+<blockquote>
+<div><p>fake image不是一个真实的图片，通过此方式可以方便的对一个矩形区域进行填充：包括alpha、red、green、blue</p>
+</div></blockquote>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">lv_obj_t</span> <span class="o">*</span><span class="n">img_bg</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="n">FAKE_IMAGE_DECLARE</span><span class="p">(</span><span class="n">bg_dark</span><span class="p">)</span>  <span class="c1">// 声明（bg_dark名字可修改）</span>
+
+<span class="cm">/* 最后一个参数为要设置的颜色值：bit31:24 为alpha */</span>
+<span class="n">FAKE_IMAGE_INIT</span><span class="p">(</span><span class="n">bg_dark</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x00000000</span><span class="p">);</span>
+
+<span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">img_bg</span><span class="p">,</span> <span class="n">FAKE_IMAGE_NAME</span><span class="p">(</span><span class="n">bg_dark</span><span class="p">));</span> <span class="c1">// 设置fake image数据源</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>build-in image是通过数组变量在程序中表示图像，图片转换成.c文件的工具参考官网：<a class="reference external" href="http://lvgl.io/tools/imageconverter">http://lvgl.io/tools/imageconverter</a></p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span> <span class="n">circle_white_map</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0x7f</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span>
+        <span class="p">........................................................};</span>
+
+<span class="k">const</span> <span class="n">lv_img_dsc_t</span> <span class="n">circle_white</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">cf</span> <span class="o">=</span> <span class="n">LV_IMG_CF_TRUE_COLOR_ALPHA</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">always_zero</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">reserved</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">data_size</span> <span class="o">=</span> <span class="mi">400</span> <span class="o">*</span> <span class="n">LV_IMG_PX_SIZE_ALPHA_BYTE</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">circle_white_map</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="n">lv_obj_t</span> <span class="o">*</span> <span class="n">circle_0</span> <span class="o">=</span> <span class="n">lv_img_create</span><span class="p">(</span><span class="n">img_bg</span><span class="p">);</span>
+<span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">circle_0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">circle_white</span><span class="p">);</span>
+<span class="n">lv_obj_align</span><span class="p">(</span><span class="n">circle_0</span><span class="p">,</span> <span class="n">LV_ALIGN_BOTTOM_MID</span><span class="p">,</span> <span class="mi">-16</span><span class="p">,</span> <span class="mi">-28</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="meter-demo">
+<h3><span class="section-number">6.9.5.7.2. </span>meter demo<a class="headerlink" href="#meter-demo" title="永久链接至标题">¶</a></h3>
+<p>此demo演示了硬件旋转，以及仪表盘的设计参考</p>
+<div class="figure align-center" id="id22">
+<img alt="../../../_images/meter_demo.png" src="../../../_images/meter_demo.png" />
+<p class="caption"><span class="caption-number">图 6.98 </span><span class="caption-text">meter demo</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple">
+<li><p>其中各种控件的动作通过timer来实现，每间隔一定的时间执行相应的callback</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">lv_timer_create</span><span class="p">(</span><span class="n">point_callback</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_timer_create</span><span class="p">(</span><span class="n">fps_callback</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_timer_create</span><span class="p">(</span><span class="n">speed_callback</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">lv_timer_create</span><span class="p">(</span><span class="n">time_callback</span><span class="p">,</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>指针和光影通过贴图和硬件任意角度旋转来实现，其中前74张指针通过切换74张图片来实现，
+从第75张开始的红色指针，采用硬件任意角度旋转来实现</p></li>
+</ol>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="n">point_callback</span><span class="p">(</span><span class="n">lv_timer_t</span> <span class="o">*</span><span class="n">tmr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">data_str</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">tmr</span><span class="p">;</span>
+
+    <span class="k">static</span> <span class="kt">bool</span> <span class="n">first</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">direct</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">mode_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">mode_num</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">rot_mode_list</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">rot_mode_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">start_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">end_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">first</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">start_id</span> <span class="o">=</span> <span class="n">rot_mode_list</span><span class="p">[</span><span class="n">mode_id</span><span class="p">].</span><span class="n">start_id</span><span class="p">;</span>
+        <span class="n">end_id</span> <span class="o">=</span> <span class="n">rot_mode_list</span><span class="p">[</span><span class="n">mode_id</span><span class="p">].</span><span class="n">end_id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">direct</span> <span class="o">=</span> <span class="n">start_id</span> <span class="o">&lt;</span> <span class="n">end_id</span> <span class="o">?</span> <span class="mi">0</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span> <span class="mi">75</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">img_circle</span><span class="p">,</span> <span class="n">LVGL_PATH</span><span class="p">(</span><span class="n">bg</span><span class="o">/</span><span class="n">small_blue</span><span class="p">.</span><span class="n">png</span><span class="p">));</span>
+    <span class="n">lv_obj_clear_flag</span><span class="p">(</span><span class="n">img_circle</span><span class="p">,</span> <span class="n">LV_OBJ_FLAG_HIDDEN</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">lv_obj_add_flag</span><span class="p">(</span><span class="n">img_circle</span><span class="p">,</span> <span class="n">LV_OBJ_FLAG_HIDDEN</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span> <span class="mi">75</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sprintf</span><span class="p">(</span><span class="n">data_str</span><span class="p">,</span> <span class="s">&quot;%spoint/point_%05d.png&quot;</span><span class="p">,</span> <span class="n">LVGL_DIR</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+        <span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">img_point</span><span class="p">,</span> <span class="n">data_str</span><span class="p">);</span>
+        <span class="n">lv_img_set_angle</span><span class="p">(</span><span class="n">img_point</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// id to angle</span>
+        <span class="kt">float</span> <span class="n">rot_angle</span> <span class="o">=</span> <span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">id</span> <span class="o">-</span> <span class="mi">75</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.84</span><span class="p">;</span>
+        <span class="n">sprintf</span><span class="p">(</span><span class="n">data_str</span><span class="p">,</span> <span class="s">&quot;%spoint/point_%05d.png&quot;</span><span class="p">,</span> <span class="n">LVGL_DIR</span><span class="p">,</span> <span class="mi">75</span><span class="p">);</span>
+        <span class="n">lv_img_set_src</span><span class="p">(</span><span class="n">img_point</span><span class="p">,</span> <span class="n">data_str</span><span class="p">);</span>
+        <span class="n">lv_img_set_pivot</span><span class="p">(</span><span class="n">img_point</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">210</span><span class="p">);</span>
+        <span class="n">lv_img_set_angle</span><span class="p">(</span><span class="n">img_point</span><span class="p">,</span> <span class="p">(</span><span class="kt">int16_t</span><span class="p">)</span><span class="n">rot_angle</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">direct</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">id</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">id</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="o">!</span><span class="n">direct</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">id</span> <span class="o">&gt;</span> <span class="n">end_id</span><span class="p">)</span> <span class="p">)</span> <span class="o">||</span>
+        <span class="p">(</span><span class="n">direct</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">id</span> <span class="o">&lt;</span> <span class="n">end_id</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">end_id</span><span class="p">;</span>
+        <span class="n">mode_id</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">mode_id</span> <span class="o">%=</span> <span class="n">mode_num</span><span class="p">;</span>
+        <span class="n">start_id</span> <span class="o">=</span> <span class="n">rot_mode_list</span><span class="p">[</span><span class="n">mode_id</span><span class="p">].</span><span class="n">start_id</span><span class="p">;</span>
+        <span class="n">end_id</span> <span class="o">=</span> <span class="n">rot_mode_list</span><span class="p">[</span><span class="n">mode_id</span><span class="p">].</span><span class="n">end_id</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>UI怎么设计更高效？</p>
+<p>针对本demo场景给出两种流程：</p>
+</li>
+</ol>
+<p>（1）UI设计方案1</p>
+<div class="figure align-center" id="id23">
+<img alt="../../../_images/meter_draw_1.png" src="../../../_images/meter_draw_1.png" />
+<p class="caption"><span class="caption-number">图 6.99 </span><span class="caption-text">UI设计方案1</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>需要光条、指针、光圈、底图四张</p></li>
+<li><p>首先光圈和背景进行alpha blending，然后光条和背景进行alpha blending，最后指针和背景进行alpha blending</p></li>
+<li><p>每一个角度的旋转都需要进行3次 alpha blending</p></li>
+</ul>
+<p>（2）UI设计方案2</p>
+<div class="figure align-center" id="id24">
+<img alt="../../../_images/meter_draw_2.png" src="../../../_images/meter_draw_2.png" />
+<p class="caption"><span class="caption-number">图 6.100 </span><span class="caption-text">UI设计方案2</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>光条和指针合并为一张图</p></li>
+<li><p>光圈合并到背景图中</p></li>
+<li><p>需要光条和指针图片和底图2张图片</p></li>
+<li><p>每一个角度的旋转都只需要光条和指针图片与背景图进行一次alpha blending</p></li>
+</ul>
+<p>显然UI设计方案2更高效，实现同样的界面效果，简化流程速度可以提升一倍以上</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.9.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.9.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

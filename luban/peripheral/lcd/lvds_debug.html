@@ -1,0 +1,521 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.2.2. LVDS屏调试配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.2.3. MIPI屏调试配置" href="mipi_debug.html" />
+    <link rel="prev" title="10.2.1. RGB屏调试配置" href="rgb_debug.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 外设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../tp/index.html">10.1. 触摸屏调试指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.2. 显示屏调试指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rgb_debug.html">10.2.1. RGB屏调试配置</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.2.2. LVDS屏调试配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">10.2.2.1. 概述</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">10.2.2.2. 内核配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dts">10.2.2.3. DTS参数配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">10.2.2.4. 调试</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mipi_debug.html">10.2.3. MIPI屏调试配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../wifi/index.html">10.3. WiFi调试指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keyadc/index.html">10.4. 按键矩阵使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>外设</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.2. </span>显示屏调试指南</a> &raquo;</li>
+        
+      <li><span class="section-number">10.2.2. </span>LVDS屏调试配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lvds">
+<h1><span class="section-number">10.2.2. </span>LVDS屏调试配置<a class="headerlink" href="#lvds" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">10.2.2.1. </span>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>相比MIPI屏的调试，LVDS屏的调试相对简单，只需要把规格书中所描述的时序和规格参数加入相应的配置文件即可，不需要额外的驱动程序。
+此章节详细的描述一款LVDS显示屏的调试过程和配置方法。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">10.2.2.2. </span>内核配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>驱动源码目录：linux-5.10/drivers/video/fbdev/artinchip/panel/</p>
+<p>配置请参考 <a class="reference internal" href="../../media/display/02_config_guide/menuconfig/index.html#ref-to-display-module-menuconfig"><span class="std std-ref">显示部分章节说明</span></a></p>
+</div>
+<div class="section" id="dts">
+<h2><span class="section-number">10.2.2.3. </span>DTS参数配置<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h2>
+<p>这些参数主要在文件target/d211/方案x/board.dts中，功能参数的设置必须和硬件原理图相匹配</p>
+<ul>
+<li><p>首先设置显示模块数据通路关系，RGB屏幕数据通路如下：</p>
+<blockquote>
+<div><div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">fb0</span> <span class="p">{</span>
+        <span class="na">port</span> <span class="p">{</span>
+                <span class="nl">fb0_out</span><span class="p">:</span> <span class="na">endpoint</span> <span class="p">{</span>
+                        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_in</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="na">de0</span> <span class="p">{</span>
+        <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+        <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+                <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="nl">de0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+                        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">fb0_out</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+
+        <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+                <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="nl">de0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+                        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_in</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">lvds0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+        <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+                <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="nl">lvds0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+                        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_out</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+
+        <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+                <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="nl">lvds0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+                        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_lvds_in</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>在上述例子中，board.dts通过port和status结点，定义了一条数据通道。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fb</span>       <span class="o">|</span>      <span class="n">de</span>    <span class="o">|</span>     <span class="o">|</span>     <span class="n">lvds</span>    <span class="o">|</span>     <span class="n">panel</span>
+<span class="n">port</span>  <span class="o">--&gt;</span> <span class="n">port0</span>   <span class="n">port1</span> <span class="o">--&gt;</span>  <span class="n">port0</span>   <span class="n">port1</span> <span class="o">--&gt;</span>  <span class="n">port</span>
+</pre></div>
+</div>
+<p>如果board.dts中没有正确定义一条数据通道，显示驱动可能无法完成初始化。</p>
+</div></blockquote>
+</li>
+<li><p>设置屏幕参数</p>
+<blockquote>
+<div><div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_lvds</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;artinchip,aic-general-lvds-panel&quot;</span><span class="p">;</span>
+        <span class="n">enable-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_a</span> <span class="mi">4</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">data-mapping</span> <span class="o">=</span> <span class="s">&quot;vesa-24&quot;</span><span class="p">;</span>
+        <span class="n">data-channel</span> <span class="o">=</span> <span class="s">&quot;single-link0&quot;</span><span class="p">;</span>
+        <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+        <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+                <span class="nl">panel_lvds_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+                        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_out</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+
+        <span class="nf">display-timings</span><span class="cm"> </span><span class="p">{</span>
+                <span class="n">native-mode</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">timing1</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="nl">timing1</span><span class="p">:</span> <span class="nf">1024x600</span><span class="cm"> </span><span class="p">{</span>
+                        <span class="n">clock-frequency</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">60000000</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">hactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">vactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">600</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">hback-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">140</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">hfront-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">160</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">hsync-len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">vback-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">vfront-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">12</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">vsync-len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">de-active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+                        <span class="n">pixelclk-active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中类似 <code class="docutils literal notranslate"><span class="pre">enable-gpios</span></code> 控制引脚需要根据实际显示屏的需要增加或减少，驱动中做相应修改， <code class="docutils literal notranslate"><span class="pre">data-mapping</span></code> <code class="docutils literal notranslate"><span class="pre">data-channel</span></code> 需要从规格书中获取，
+关于参数详细的解析请参考 <a class="reference internal" href="../../media/display/02_config_guide/device_tree/index.html#ref-to-panel-dts"><span class="std std-ref">显示部分章节DTS关于pannel_lvds的配置说明</span></a></p>
+<p>其中参数 <code class="docutils literal notranslate"><span class="pre">display-timings</span></code> 需要从屏幕规格书中或供应商处获取，例如规格书会有如下信息：</p>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/lvds_timing.png" src="../../../_images/lvds_timing.png" />
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">10.2.2.4. </span>调试<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>调试部分请查看 <a class="reference internal" href="../../media/display/10_faq/index.html#ref-to-display-faq"><span class="std std-ref">显示部分章节关于常见问题的调试说明</span></a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="mipi_debug.html" class="btn btn-neutral float-right" title="10.2.3. MIPI屏调试配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rgb_debug.html" class="btn btn-neutral float-left" title="10.2.1. RGB屏调试配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

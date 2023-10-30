@@ -1,0 +1,2159 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.9.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="11. 计时器" href="../../timers/index.html" />
+    <link rel="prev" title="10.9.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../de/index.html">10.1. Display Engine (DE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">10.3. Video Engine (VE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsi/index.html">10.6. MIPI DSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">10.8. AUDIO</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.9. Integrated Interchip Sound (I2S)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.9.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">10.9.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id2">10.9.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.9.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-i2s-ctl">10.9.4.1. 0x000 I2S_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-i2s-fmt0">10.9.4.2. 0x004 I2S_FMT0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-i2s-fmt1">10.9.4.3. 0x008 I2S_FMT1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-i2s-int-sts">10.9.4.4. 0x00C I2S_INT_STS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-i2s-rxfifo">10.9.4.5. 0x010 I2S_RXFIFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-i2s-fifo-ctl">10.9.4.6. 0x014 I2S_FIFO_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-i2s-fifo-sts">10.9.4.7. 0x018 I2S_FIFO_STS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-i2s-int-en">10.9.4.8. 0x01C I2S_INT_EN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-i2s-txfifo">10.9.4.9. 0x020 I2S_TXFIFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-i2s-clk-div">10.9.4.10. 0x024 I2S_CLK_DIV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-i2s-tx-cnt">10.9.4.11. 0x028 I2S_TX_CNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x02c-i2s-rx-cnt">10.9.4.12. 0x02C I2S_RX_CNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-i2s-ch-cfg">10.9.4.13. 0x030 I2S_CH_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-i2s-tx0ch-sel">10.9.4.14. 0x034 I2S_TX0CH_SEL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-i2s-tx0ch-map0">10.9.4.15. 0x044 I2S_TX0CH_MAP0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-i2s-tx0ch-map1">10.9.4.16. 0x048 I2S_TX0CH_MAP1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x064-i2s-rx0ch-sel">10.9.4.17. 0x064 I2S_RX0CH_SEL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x068-i2s-rx0ch-map0">10.9.4.18. 0x068 I2S_RX0CH_MAP0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x06c-i2s-rx0ch-map1">10.9.4.19. 0x06C I2S_RX0CH_MAP1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x074-version">10.9.4.20. 0x074 VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.9. </span>I2S</a> &raquo;</li>
+        
+      <li><span class="section-number">10.9.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">10.9.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-i2s-ctl">
+<h2><span class="section-number">10.9.4.1. </span>0x000 I2S_CTL<a class="headerlink" href="#x000-i2s-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00060000</p></th>
+<th class="head"><p>I2S控制（I2S Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">BCLK_OUT</div>
+<div class="line">BCLK输出输入使能</div>
+<div class="line">0x0: BCLK为输入信号</div>
+<div class="line">0x1: BCLK为输出信号</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LRCK_OUT</div>
+<div class="line">LRCK输出输入使能</div>
+<div class="line">0x0: LRCK为输入信号</div>
+<div class="line">0x1: LRCK为输出信号</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DOUT0_EN</div>
+<div class="line">0x0：DOUT0关闭，高阻态</div>
+<div class="line">0x1：DOUT0使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_MUTE</div>
+<div class="line">输出静音使能</div>
+<div class="line">0x0：正常传输模式</div>
+<div class="line">0x1：DOUT强制输出0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Mode SEL</div>
+<div class="line">模式选择</div>
+<div class="line">0x0: PCM模式(offset = 0, Long Frame模式;offset = 1, Short Frame模式)</div>
+<div class="line">0x1：Left Mode（offset = 0，Left Justified模式；offset = 1，I2s模式）</div>
+<div class="line">0x2：Right Justified模式</div>
+<div class="line">0x3：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOOP</div>
+<div class="line">Loop Back测试</div>
+<div class="line">0x0：正常工作模式</div>
+<div class="line">0x1：Loop Back测试模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXEN</div>
+<div class="line">发送模块使能</div>
+<div class="line">0x0：发送模块禁止</div>
+<div class="line">0x1：发送模块使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXEN</div>
+<div class="line">接收模块使能</div>
+<div class="line">0x0：接收模块禁止</div>
+<div class="line">0x1：接收模块使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN</div>
+<div class="line">全局使能</div>
+<div class="line">0x0：全局模块禁止</div>
+<div class="line">0x1：全局模块使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-i2s-fmt0">
+<h2><span class="section-number">10.9.4.2. </span>0x004 I2S_FMT0<a class="headerlink" href="#x004-i2s-fmt0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000033</p></th>
+<th class="head"><p>I2S格式0寄存器（I2S Format 0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LRCK_WIDTH</div>
+<div class="line">选择PCM long frame/short frame</div>
+<div class="line">0x0：Short Frame模式</div>
+<div class="line">0x1：Long Frame模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LRCK_POLARITY</div>
+<div class="line">选择LRCK的左右通道极性</div>
+<div class="line">0x0：I2S模式下，LRCK低电平表示左声道；PCM模式下，LRCK下降沿</div>
+<div class="line">有效进行数据传输</div>
+<div class="line">0x1：I2S模式下，LRCK高电平表示左声道；PCM模式下，LRCK上升沿</div>
+<div class="line">有效进行数据传输</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>17:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LRCK_PERIOD</div>
+<div class="line">LRCK的数据时间长度，在PCM模式下，这里是左右声道的数据时间</div>
+<div class="line">长度，在I2S模式下，这里是左声道或右声道的数据时间长度。</div>
+<div class="line">0x0：1x BCLK时间长度</div>
+<div class="line">0x1：2x BCLK时间长度</div>
+<div class="line">0x2：3x BCLK时间长度</div>
+<div class="line">…</div>
+<div class="line">0x3FF：1024x BCLK时间长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BCLK_POLARITY</div>
+<div class="line">选择BCLK的工作模式</div>
+<div class="line">0：正常模式，DOUT在BCLK的下降沿发送数据</div>
+<div class="line">1：反相模式，DOUT在BCLK的上升沿发送数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">SR</div>
+<div class="line">Sample Resolution采样点精度配置</div>
+<div class="line">0x0：Reserved</div>
+<div class="line">0x1：8-bit</div>
+<div class="line">0x2：12-bit</div>
+<div class="line">0x3：16-bit</div>
+<div class="line">0x4：20-bit</div>
+<div class="line">0x5：24-bit</div>
+<div class="line">0x6：28-bit</div>
+<div class="line">0x7：32-bit</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EDGE_TRANSFER</div>
+<div class="line">DOUT和DIN收发数据边沿配置</div>
+<div class="line">0x0：DOUT和DIN采用不同的BCLK边沿进行收发</div>
+<div class="line">0x1：DOUT和DIN采用相同的BCLK边沿进行收发</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">SW</div>
+<div class="line">Slot Width Select 通道位宽设定</div>
+<div class="line">0x0：Reserved</div>
+<div class="line">0x1：8-bit</div>
+<div class="line">0x2：12-bit</div>
+<div class="line">0x3：16-bit</div>
+<div class="line">0x4：20-bit</div>
+<div class="line">0x5：24-bit</div>
+<div class="line">0x6：28-bit</div>
+<div class="line">0x7：32-bit</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-i2s-fmt1">
+<h2><span class="section-number">10.9.4.3. </span>0x008 I2S_FMT1<a class="headerlink" href="#x008-i2s-fmt1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000030</p></th>
+<th class="head"><p>I2S格式1寄存器（I2S Format 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX MLS</div>
+<div class="line">MSB/LSB First Select</div>
+<div class="line">0x0：最高比特MSB先接收</div>
+<div class="line">0x1：最低比特LSB先接收</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX MLS</div>
+<div class="line">MSB/LSB First Select</div>
+<div class="line">0x0：最高比特MSB先发送</div>
+<div class="line">0x1：最低比特LSB先发送</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">SEXT</div>
+<div class="line">Slot扩展方式（在SR&lt;Slot Width的情况下）</div>
+<div class="line">0x0：Zeros or Audio gain padding at LSB Position</div>
+<div class="line">0x1：以MSB符号位填充</div>
+<div class="line">0x2：Reserved</div>
+<div class="line">0x3：以0填充</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_PDM</div>
+<div class="line">接收PCM数据模式</div>
+<div class="line">0x0：线性PCM</div>
+<div class="line">0x1：Reserved</div>
+<div class="line">0x2：8-bit u-law</div>
+<div class="line">0x3：8-bit A-law</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_PDM</div>
+<div class="line">发送PCM数据模式</div>
+<div class="line">0x0：线性PCM</div>
+<div class="line">0x1：Reserved</div>
+<div class="line">0x2：8-bit u-law</div>
+<div class="line">0x3：8-bit A-law</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-i2s-int-sts">
+<h2><span class="section-number">10.9.4.4. </span>0x00C I2S_INT_STS<a class="headerlink" href="#x00c-i2s-int-sts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000010</p></th>
+<th class="head"><p>I2S中断状态寄存器（I2S Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXU_INT</div>
+<div class="line">TXFIFO下溢出中断</div>
+<div class="line">0x0：中断未产生</div>
+<div class="line">0x1：中断产生</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXO_INT</div>
+<div class="line">TXFIFO上溢出中断</div>
+<div class="line">0x0：中断未产生</div>
+<div class="line">0x1：中断产生</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TXE_INT</div>
+<div class="line">TXFIFO的空中断产生（小于触发阈值TXTL）</div>
+<div class="line">0x0：中断未产生</div>
+<div class="line">0x1：中断产生</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXU_INT</div>
+<div class="line">RXFIFO下溢出中断产生</div>
+<div class="line">0x0：中断未产生</div>
+<div class="line">0x1：中断产生</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXO_INT</div>
+<div class="line">RXFIFO上溢出中断产生</div>
+<div class="line">0x0：中断未产生</div>
+<div class="line">0x1：中断产生</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXA_INT</div>
+<div class="line">RXFIFO接收到有用数据（大于触发阈值RXTL+1）中断产生</div>
+<div class="line">0x0：中断未产生</div>
+<div class="line">0x1：中断产生</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-i2s-rxfifo">
+<h2><span class="section-number">10.9.4.5. </span>0x010 I2S_RXFIFO<a class="headerlink" href="#x010-i2s-rxfifo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S RXFIFO寄存器（I2S RXFIFO）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_DATA</div>
+<div class="line">RXFIFO的数据从这里读出，左通道先读，然后是右通道。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-i2s-fifo-ctl">
+<h2><span class="section-number">10.9.4.6. </span>0x014 I2S_FIFO_CTL<a class="headerlink" href="#x014-i2s-fifo-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000400F0</p></th>
+<th class="head"><p>I2S FIFO控制寄存器（I2S FIFO Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FTX</div>
+<div class="line">清除TXFIFO，写1清除TXFIFO，自动清0</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FRX</div>
+<div class="line">清除RXFIFO，写1清除RXFIFO，自动清0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>18:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x40</p></td>
+<td><div class="line-block">
+<div class="line">TXTL</div>
+<div class="line">TXFIFO触发阈值，在TXFIFO的数据小于TXTL，将触发中断以及DMA</div>
+<div class="line">请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>9:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0xF</p></td>
+<td><div class="line-block">
+<div class="line">RXTL</div>
+<div class="line">RXFIFO触发阈值，在RXFIFO的数据大于（RXTL+1），将触发中断</div>
+<div class="line">以及DMA请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXIM</div>
+<div class="line">TXFIFO输入模式</div>
+<div class="line">0x0：发送有效数据占据高位，例如TXFIFO[31:0] = {APB_WDTATA[31:12]，12’h0}</div>
+<div class="line">0x1：发送有效数据占据低位，例如TXFIFO[31:0] = {12’h0，APB_WDTATA[19:0] }</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXOM</div>
+<div class="line">RXFIFO输出模式</div>
+<div class="line">0x0：RXFIFO输出数据低位填充0</div>
+<div class="line">例如APB_RDATA = {RXFIFO[31:12]，12’h0}</div>
+<div class="line">0x1：RXFIFO输出数据高位填充MSB符号位</div>
+<div class="line">例如APB_RDATA = {12*RXFIFO[31]，RXFIFO[31:12]}</div>
+<div class="line">0x2：截取RXFIFO的高16-bit数据，低16位补充0</div>
+<div class="line">例如APB_RDATA = {RXFIFO[31:16]，16’h0}</div>
+<div class="line">0x3：截取RXFIFO的低16-bit数据，高16位补充MSB</div>
+<div class="line">例如APB_RDATA = {16*RXFIFO[31]，RXFIFO[31:16]}</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-i2s-fifo-sts">
+<h2><span class="section-number">10.9.4.7. </span>0x018 I2S_FIFO_STS<a class="headerlink" href="#x018-i2s-fifo-sts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x10800000</p></th>
+<th class="head"><p>I2S FIFO状态寄存器（I2S FIFO Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TXE</div>
+<div class="line">TX FIFO空状态</div>
+<div class="line">0x0：TXFIFO空间满，无空间存放新的采样点数据</div>
+<div class="line">0x1：TXFIFO空间未满，可以存放多于1个采样点数据（大于1word）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXE_CNT</div>
+<div class="line">TX FIFO可用空间（Word）计数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXA</div>
+<div class="line">RXFIFO接收有用数据状态</div>
+<div class="line">0x0：RXFIFO没有可用的数据</div>
+<div class="line">0x1：FIFO存在超过1个采样点数据（大于1word）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXA_CNT</div>
+<div class="line">RXFIFO接收的有用数据（Word）计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-i2s-int-en">
+<h2><span class="section-number">10.9.4.8. </span>0x01C I2S_INT_EN<a class="headerlink" href="#x01c-i2s-int-en" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S中断使能寄存器（I2S Interrupt Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_DRQ_EN</div>
+<div class="line">TXFIFO发送数据的DRQ请求</div>
+<div class="line">0x0：禁止请求</div>
+<div class="line">0x1：使能请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXUI_EN</div>
+<div class="line">TXFIFO发送数据下溢出中断TXUI_INT使能</div>
+<div class="line">0x0：禁止中断</div>
+<div class="line">0x1：使能中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXOI_EN</div>
+<div class="line">TXFIFO发送数据上溢出中断TXOI_INT使能</div>
+<div class="line">0x0：禁止中断</div>
+<div class="line">0x1：使能中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXEI_EN</div>
+<div class="line">TXFIFO发送数据空中断TXEI_INT使能</div>
+<div class="line">0x0：禁止中断</div>
+<div class="line">0x1：使能中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_DRQ</div>
+<div class="line">RXFIFO接收有用数据的DRQ请求</div>
+<div class="line">0x0：禁止请求</div>
+<div class="line">0x1：使能请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXUI_EN</div>
+<div class="line">RXFIFO接收数据下溢出中断RXUI_INT使能</div>
+<div class="line">0x0：禁止中断</div>
+<div class="line">0x1：使能中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXOI_EN</div>
+<div class="line">RXFIFO接收数据上溢出中断RXOI_INT使能</div>
+<div class="line">0x0：禁止中断</div>
+<div class="line">0x1：使能中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXAI_EN</div>
+<div class="line">RXFIFO接收有用数据中断RXA_INT使能</div>
+<div class="line">0x0：禁止中断</div>
+<div class="line">0x1：使能中断</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-i2s-txfifo">
+<h2><span class="section-number">10.9.4.9. </span>0x020 I2S_TXFIFO<a class="headerlink" href="#x020-i2s-txfifo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S TXFIFO寄存器（I2S TXFIFO）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_DATA</div>
+<div class="line">TXFIFO的数据需从这里写入，左通道的数据先写，然后是右通道的数据。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-i2s-clk-div">
+<h2><span class="section-number">10.9.4.10. </span>0x024 I2S_CLK_DIV<a class="headerlink" href="#x024-i2s-clk-div" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S时钟分频寄存器（I2S Clock Divide）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MCLKO_EN</div>
+<div class="line">使能MCLK输出</div>
+<div class="line">0x0：MCLK禁止输出</div>
+<div class="line">0x1：MCLK使能输出</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BCLKDIV</div>
+<div class="line">BCLK的分频系数</div>
+<div class="line">0x0：Reserved</div>
+<div class="line">0x1：除1</div>
+<div class="line">0x2：除2</div>
+<div class="line">0x3：除4</div>
+<div class="line">0x4：除6</div>
+<div class="line">0x5：除8</div>
+<div class="line">0x6：除12</div>
+<div class="line">0x7：除16</div>
+<div class="line">0x8：除24</div>
+<div class="line">0x9：除32</div>
+<div class="line">0xA：除48</div>
+<div class="line">0xB：除64</div>
+<div class="line">0xC：除96</div>
+<div class="line">0xD：除128</div>
+<div class="line">0xE：除176</div>
+<div class="line">0xF：除192</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MCLKDIV</div>
+<div class="line">MCLK分频系数</div>
+<div class="line">0x0：Reserved</div>
+<div class="line">0x1：除1</div>
+<div class="line">0x2：除2</div>
+<div class="line">0x3：除4</div>
+<div class="line">0x4：除6</div>
+<div class="line">0x5：除8</div>
+<div class="line">0x6：除12</div>
+<div class="line">0x7：除16</div>
+<div class="line">0x8：除24</div>
+<div class="line">0x9：除32</div>
+<div class="line">0xA：除48</div>
+<div class="line">0xB：除64</div>
+<div class="line">0xC：除96</div>
+<div class="line">0xD：除128</div>
+<div class="line">0xE：除176</div>
+<div class="line">0xF：除192</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-i2s-tx-cnt">
+<h2><span class="section-number">10.9.4.11. </span>0x028 I2S_TX_CNT<a class="headerlink" href="#x028-i2s-tx-cnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S发送计数器寄存器（I2S Transmit Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CNT</div>
+<div class="line">TX Sample Counter，传送至TXFIFO的采样点数据的计数器。当</div>
+<div class="line">一个采样点写入TXFIFO，这里自增1。这里可以在任意时间写入任</div>
+<div class="line">意初始值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x02c-i2s-rx-cnt">
+<h2><span class="section-number">10.9.4.12. </span>0x02C I2S_RX_CNT<a class="headerlink" href="#x02c-i2s-rx-cnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S发送计数器寄存器（I2S Transmit Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_CNT</div>
+<div class="line">RX Sample Counter，传送至RXFIFO的采样点数据的计数器。当</div>
+<div class="line">一个采样点写入RXFIFO，这里自增1。这里可以在任意时间写入任</div>
+<div class="line">意初始值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-i2s-ch-cfg">
+<h2><span class="section-number">10.9.4.13. </span>0x030 I2S_CH_CFG<a class="headerlink" href="#x030-i2s-ch-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S通道配置寄存器（I2S Channel Configure）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_SLOT_HIZ</div>
+<div class="line">0x0：Normal mode for the last half cycle of BCLK in the slot</div>
+<div class="line">0x1：Turn to Hi-Z state for the last half cycle of BCLK in the slot</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_STATE</div>
+<div class="line">在不需要的Slot上发送0/设置高阻态</div>
+<div class="line">0x0：在不需要传输的slot上发送0</div>
+<div class="line">0x1：在不需要传输的slot上设置高阻态</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_SLOT_NUM</div>
+<div class="line">RX的TDM SLOT 数量</div>
+<div class="line">0x0：1x SLOT</div>
+<div class="line">0x1：2x SLOT</div>
+<div class="line">…</div>
+<div class="line">0xF：16x SLOT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_SLOT_NUM</div>
+<div class="line">TX的TDM SLOT 数量</div>
+<div class="line">0x0：1x SLOT</div>
+<div class="line">0x1：2x SLOT</div>
+<div class="line">…</div>
+<div class="line">0xF：16x SLOT</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-i2s-tx0ch-sel">
+<h2><span class="section-number">10.9.4.14. </span>0x034 I2S_TX0CH_SEL<a class="headerlink" href="#x034-i2s-tx0ch-sel" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S TX0通道选择寄存器（I2S TX0 Channel Select）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:22</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>21:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_OFFSET</div>
+<div class="line">配置DATA与LRCK的偏移量，单位为BCLK</div>
+<div class="line">0x0：无偏移</div>
+<div class="line">0x1：1x BCLK偏移</div>
+<div class="line">0x2：2x BCLK偏移</div>
+<div class="line">0x3：3x BCLK偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CHSEL</div>
+<div class="line">配置TX0的TDM模式通道数量</div>
+<div class="line">0x0：1x 通道</div>
+<div class="line">0x1：2x 通道</div>
+<div class="line">…</div>
+<div class="line">0xF：16x 通道</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CHEN</div>
+<div class="line">配置TX0的TDM模式通道使能，BIT[15:0]分别对应通道15~0的使能。</div>
+<div class="line">0x0：通道禁止</div>
+<div class="line">0x1：通道使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-i2s-tx0ch-map0">
+<h2><span class="section-number">10.9.4.15. </span>0x044 I2S_TX0CH_MAP0<a class="headerlink" href="#x044-i2s-tx0ch-map0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S TX0通道映射0寄存器（I2S TX0 Channel Map0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH15_MAP</div>
+<div class="line">TX0 CH15的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH14_MAP</div>
+<div class="line">TX0 CH14的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH13_MAP</div>
+<div class="line">TX0 CH13的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH12_MAP</div>
+<div class="line">TX0 CH12的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH11_MAP</div>
+<div class="line">TX0 CH11的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH10_MAP</div>
+<div class="line">TX0 CH10的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH9_MAP</div>
+<div class="line">TX0 CH9的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH8_MAP</div>
+<div class="line">TX0 CH8的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-i2s-tx0ch-map1">
+<h2><span class="section-number">10.9.4.16. </span>0x048 I2S_TX0CH_MAP1<a class="headerlink" href="#x048-i2s-tx0ch-map1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S TX0通道映射1寄存器（I2S TX0 Channel Map1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH7_MAP</div>
+<div class="line">TX0 CH7的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH6_MAP</div>
+<div class="line">TX0 CH6的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH5_MAP</div>
+<div class="line">TX0 CH5的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH4_MAP</div>
+<div class="line">TX0 CH4的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH3_MAP</div>
+<div class="line">TX0 CH3的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH2_MAP</div>
+<div class="line">TX0 CH2的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH1_MAP</div>
+<div class="line">TX0 CH1的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX0_CH0_MAP</div>
+<div class="line">TX0 CH0的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x064-i2s-rx0ch-sel">
+<h2><span class="section-number">10.9.4.17. </span>0x064 I2S_RX0CH_SEL<a class="headerlink" href="#x064-i2s-rx0ch-sel" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S RX0通道选择寄存器（I2S RX0 Channel Select）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:22</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>21:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_OFFSET</div>
+<div class="line">配置DATA与LRCK的偏移量，单位为BCLK</div>
+<div class="line">0x0：无偏移</div>
+<div class="line">0x1：1x BCLK偏移</div>
+<div class="line">0x2：2x BCLK偏移</div>
+<div class="line">0x3：3x BCLK偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CHSEL</div>
+<div class="line">配置RX0的TDM模式通道数量</div>
+<div class="line">0x0：1x 通道</div>
+<div class="line">0x1：2x 通道</div>
+<div class="line">…</div>
+<div class="line">0xF：16x 通道</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x068-i2s-rx0ch-map0">
+<h2><span class="section-number">10.9.4.18. </span>0x068 I2S_RX0CH_MAP0<a class="headerlink" href="#x068-i2s-rx0ch-map0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S RX0通道映射0寄存器（I2S RX0 Channel Map0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH15_MAP</div>
+<div class="line">RX0 CH15的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH14_MAP</div>
+<div class="line">RX0 CH14的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH13_MAP</div>
+<div class="line">RX0 CH13的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH12_MAP</div>
+<div class="line">RX0 CH12的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH11_MAP</div>
+<div class="line">RX0 CH11的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH10_MAP</div>
+<div class="line">RX0 CH10的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH9_MAP</div>
+<div class="line">RX0 CH9的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH8_MAP</div>
+<div class="line">RX0 CH8的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x06c-i2s-rx0ch-map1">
+<h2><span class="section-number">10.9.4.19. </span>0x06C I2S_RX0CH_MAP1<a class="headerlink" href="#x06c-i2s-rx0ch-map1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2S RX0通道映射1寄存器（I2S RX0 Channel Map1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH7_MAP</div>
+<div class="line">RX0 CH7的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH6_MAP</div>
+<div class="line">RX0 CH6的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH5_MAP</div>
+<div class="line">RX0 CH5的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH4_MAP</div>
+<div class="line">RX0 CH4的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH3_MAP</div>
+<div class="line">RX0 CH3的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH2_MAP</div>
+<div class="line">RX0 CH2的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH1_MAP</div>
+<div class="line">RX0 CH1的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX0_CH0_MAP</div>
+<div class="line">RX0 CH0的通道映射</div>
+<div class="line">0x0：第1个采样点数据</div>
+<div class="line">0x1：第2个采样点数据</div>
+<div class="line">…</div>
+<div class="line">0xF：第16个采样点数据</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x074-version">
+<h2><span class="section-number">10.9.4.20. </span>0x074 VERSION<a class="headerlink" href="#x074-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>I2S 版本号（VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">Version(模块版本号)</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../timers/index.html" class="btn btn-neutral float-right" title="11. 计时器" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="10.9.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

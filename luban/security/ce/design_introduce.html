@@ -1,0 +1,2024 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>8.2.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="8.2.6. 常见问题" href="ce_faq.html" />
+    <link rel="prev" title="8.2.4. 测试指南" href="test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">8. 安全</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../enc/index.html">8.1. SPI ENC</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">8.2. CE 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="introduce.html">8.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user_guide.html">8.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug_guide.html">8.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="test_guide.html">8.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8.2.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">8.2.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">8.2.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">8.2.5.3. 设计要点</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ce">8.2.5.3.1. CE 算法的分类注册</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">8.2.5.3.2. 异步调用和处理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#efuse-sram">8.2.5.3.3. eFuse 密钥和安全 SRAM</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#fallback">8.2.5.3.4. Fallback 机制</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">8.2.5.3.5. 内核补丁</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">8.2.5.4. 关键流程</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id8">8.2.5.4.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id9">8.2.5.4.2. 数据处理流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id10">8.2.5.4.3. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id11">8.2.5.5. 数据结构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id12">8.2.5.5.1. 设备结构体</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id13">8.2.5.5.2. 对称密钥算法</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id14">8.2.5.5.3. 非对称密钥算法</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id15">8.2.5.5.4. 消息摘要算法</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id16">8.2.5.6. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-skcipher-alg-init">8.2.5.6.1. aic_skcipher_alg_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-skcipher-alg-exit">8.2.5.6.2. aic_skcipher_alg_exit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-skcipher-alg-setkey">8.2.5.6.3. aic_skcipher_alg_setkey</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-skcipher-crypt">8.2.5.6.4. aic_skcipher_crypt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-akcipher-rsa-alg-init">8.2.5.6.5. aic_akcipher_rsa_alg_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-akcipher-rsa-alg-exit">8.2.5.6.6. aic_akcipher_rsa_alg_exit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-akcipher-rsa-set-pub-key">8.2.5.6.7. aic_akcipher_rsa_set_pub_key</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-akcipher-rsa-set-priv-key">8.2.5.6.8. aic_akcipher_rsa_set_priv_key</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-akcipher-rsa-max-size">8.2.5.6.9. aic_akcipher_rsa_max_size</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-akcipher-rsa-crypt">8.2.5.6.10. aic_akcipher_rsa_crypt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-alg-init">8.2.5.6.11. aic_hash_alg_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-alg-exit">8.2.5.6.12. aic_hash_alg_exit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-init">8.2.5.6.13. aic_hash_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-update">8.2.5.6.14. aic_hash_update</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-final">8.2.5.6.15. aic_hash_final</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-finup">8.2.5.6.16. aic_hash_finup</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-hash-digest">8.2.5.6.17. aic_hash_digest</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id17">8.2.5.7. 应用编程</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#af-alg-api">8.2.5.7.1. AF_ALG API</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#libkcapi-api">8.2.5.7.2. Libkcapi API</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#openssl-api">8.2.5.7.3. OpenSSL API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ce_faq.html">8.2.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../efuse/index.html">8.3. eFuse 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hw_authorization/index.html">8.4. 硬件授权认证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">8. </span>安全</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">8.2. </span>CE 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">8.2.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">8.2.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">8.2.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>相关模块</p></th>
+<th class="head"><p>源码路径</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">1. Crypto subsystem</div>
+<div class="line">2. AF_ALG</div>
+</div>
+</td>
+<td><p>source/linux-5.10/crypto/</p></td>
+</tr>
+<tr class="row-odd"><td><p>Driver</p></td>
+<td><p>source/linux-5.10/drivers/crypto/artinchip/ce/</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">8.2.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>CE 模块对接内核加密子系统。 <code class="docutils literal notranslate"><span class="pre">CE</span></code> &lt;—&gt; <code class="docutils literal notranslate"><span class="pre">Crypto</span> <span class="pre">subsystem</span></code> &lt;—&gt; <code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">space</span></code>
+之间的层次关系如下图所示。</p>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/ce_kernel.png" src="../../../_images/ce_kernel.png" />
+<p class="caption"><span class="caption-number">图 8.13 </span><span class="caption-text">CE 与内核加密子系统</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+<p>Linux 内核加密子系统由几个部分组成</p>
+<dl>
+<dt>核心部分:</dt><dd><p>该部分实现了加密子系统的主要核心功能，包括</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>主要的数据结构和管理</p></li>
+<li><p>所支持的算法类型</p></li>
+<li><p>以及不同算法之间进行组合的模板等</p></li>
+</ul>
+</div></blockquote>
+<p>对下对接各种算法的具体软硬件实现，对上提供对应的 API，为内核其他模块提供服务。</p>
+</dd>
+<dt>算法实现部分:</dt><dd><p>分为</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>软件的基本算法实现</p></li>
+<li><p>硬件算法加速器的驱动。</p></li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>用户空间接口部分:</dt><dd><p>内核加密子系统通过 Socket 接口向用户空间程序提供服务</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>AF_NETLINK 接口，提供关于加密学子系统的信息，用户态程序可以通过该接口查询当前加密子系统向用户态提供了哪些服务，以及相关算法的详细信息；</p></li>
+<li><p>AF_ALG 接口，提供与具体算法进行交互的接口，用户态程序可以使用该接口对数据进行加解密等处理。</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">8.2.5.3. </span>设计要点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="ce">
+<h3><span class="section-number">8.2.5.3.1. </span>CE 算法的分类注册<a class="headerlink" href="#ce" title="永久链接至标题">¶</a></h3>
+<p>CE 硬件实现了多组不同类型的加密算法加速单元，分别对应内核加密子系统中的几种类型加密算法。在驱动实现时，根据不同的算法类型，将 CE 硬件抽象出三个不同的算法加速器：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>对称密钥算法加速器</p></li>
+<li><p>非对称密钥算法加速器</p></li>
+<li><p>消息摘要算法加速器</p></li>
+</ol>
+</div></blockquote>
+<p>驱动按照不同的算法加速器进行资源分配和实现，每个算法加速器支持多种不同的具体算法，并且将具体算法注册到加密子系统。</p>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/ce_alg_and_accel.png" src="../../../_images/ce_alg_and_accel.png" />
+<p class="caption"><span class="caption-number">图 8.14 </span><span class="caption-text">CE 算法分类</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<p>驱动为 每一个 CE 算法实现一个实例，然后注册到内核加密子系统。
+内核加密子系统使用链表的方式管理所有注册的算法，后续的使用者通过两个名字（ <code class="docutils literal notranslate"><span class="pre">cra_name</span></code>, <code class="docutils literal notranslate"><span class="pre">cra_driver_name</span></code> ）可以查找到对应的算法。
+例如：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">skcipher_alg</span> <span class="n">alg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_name</span> <span class="o">=</span> <span class="s">&quot;ecb(aes)&quot;</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_driver_name</span> <span class="o">=</span> <span class="s">&quot;ecb-aes-aic&quot;</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_priority</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_flags</span> <span class="o">=</span> <span class="n">CRYPTO_ALG_ASYNC</span> <span class="o">|</span> <span class="n">CRYPTO_ALG_ALLOCATES_MEMORY</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_blocksize</span> <span class="o">=</span> <span class="n">AES_BLOCK_SIZE</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_ctxsize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_skcipher_tfm_ctx</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_alignmask</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_module</span> <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">aic_skcipher_alg_init</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">exit</span> <span class="o">=</span> <span class="n">aic_skcipher_alg_exit</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">setkey</span> <span class="o">=</span> <span class="n">aic_skcipher_alg_setkey</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">decrypt</span> <span class="o">=</span> <span class="n">aic_skcipher_aes_ecb_decrypt</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">encrypt</span> <span class="o">=</span> <span class="n">aic_skcipher_aes_ecb_encrypt</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">min_keysize</span> <span class="o">=</span> <span class="n">AES_MIN_KEY_SIZE</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">max_keysize</span> <span class="o">=</span> <span class="n">AES_MAX_KEY_SIZE</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">ivsize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>各驱动和算法实现模块，通过下列接口向加密子系统注册算法。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">crypto_register_skcipher</span><span class="p">(</span><span class="k">struct</span> <span class="nc">skcipher_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">crypto_unregister_skcipher</span><span class="p">(</span><span class="k">struct</span> <span class="nc">skcipher_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">crypto_register_akcipher</span><span class="p">(</span><span class="k">struct</span> <span class="nc">akcipher_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">crypto_unregister_akcipher</span><span class="p">(</span><span class="k">struct</span> <span class="nc">akcipher_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">crypto_register_ahash</span><span class="p">(</span><span class="k">struct</span> <span class="nc">ahash_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">crypto_unregister_ahash</span><span class="p">(</span><span class="k">struct</span> <span class="nc">ahash_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">crypto_register_aead</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aead_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">crypto_unregister_aead</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aead_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">crypto_register_kpp</span><span class="p">(</span><span class="k">struct</span> <span class="nc">kpp_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">crypto_unregister_kpp</span><span class="p">(</span><span class="k">struct</span> <span class="nc">kpp_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">crypto_register_rng</span><span class="p">(</span><span class="k">struct</span> <span class="nc">rng_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">crypto_unregister_rng</span><span class="p">(</span><span class="k">struct</span> <span class="nc">rng_alg</span> <span class="o">*</span><span class="n">alg</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/ce_subsystem_alg_list.png" src="../../../_images/ce_subsystem_alg_list.png" />
+<p class="caption"><span class="caption-number">图 8.15 </span><span class="caption-text">加密子系统的算法列表</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+<p>使用时，使用者需要使用对应的 API，创建对应算法的数据处理实例，然后使用对应类型算法的接口，进行数据的处理。如对称密钥算法使用下列的接口。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">crypto_skcipher</span> <span class="o">*</span>
+<span class="n">crypto_alloc_skcipher</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">alg_name</span><span class="p">,</span> <span class="n">u32</span> <span class="n">type</span><span class="p">,</span> <span class="n">u32</span> <span class="n">mask</span><span class="p">);</span>
+
+<span class="k">struct</span> <span class="nc">skcipher_request</span> <span class="o">*</span>
+<span class="n">skcipher_request_alloc</span><span class="p">(</span><span class="k">struct</span> <span class="nc">crypto_skcipher</span> <span class="o">*</span><span class="n">tfm</span><span class="p">,</span> <span class="n">gfp_t</span> <span class="n">gfp</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">crypto_skcipher_encrypt</span><span class="p">(</span><span class="k">struct</span> <span class="nc">skcipher_request</span> <span class="o">*</span><span class="n">req</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">crypto_skcipher_decrypt</span><span class="p">(</span><span class="k">struct</span> <span class="nc">skcipher_request</span> <span class="o">*</span><span class="n">req</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>可以留意，以对对称密钥算法为例，向加密子系统注册算法实例时，使用的结构体为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">skciper_alg</span></code>，
+用户 API 使用时，使用的结构体为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">crypto_skcipher</span></code> 。这里的区别是，前者是对内，
+是具体算法的实现；后者是对外，代表一个对称密钥算法。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">8.2.5.3.2. </span>异步调用和处理<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>为了支持更广泛的应用场景，CE 的算法驱动需要实现异步调用，即每一个请求调用，都会立刻返回，
+然后通过注册的回调函数来获取请求处理完成的通知。</p>
+<p>要实现异步调用需要为每一个加速器实现对应的任务队列，以及相应的执行线程。内核加密子系统提供的公共模块
+<code class="docutils literal notranslate"><span class="pre">crypto_engine</span></code> 已经实现了对应的功能，只需为每个加速器创建 <code class="docutils literal notranslate"><span class="pre">crypto_engine</span></code> 即可。</p>
+<div class="figure align-center" id="id21">
+<img alt="../../../_images/ce_async_call.png" src="../../../_images/ce_async_call.png" />
+<p class="caption"><span class="caption-number">图 8.16 </span><span class="caption-text">Crypto Engine 的异步工作流程</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+<p>如上图所示，当算法驱动接收到一个数据处理请求时，只需做一些基本的标记工作，然后将该请求转发给对应的
+<code class="docutils literal notranslate"><span class="pre">crypto_engine</span></code> 进行管理。<code class="docutils literal notranslate"><span class="pre">crypto_engine</span></code> 包含一个任务队列，以及一个工作线程。</p>
+<p>工作线程总是检查当前队列是否有待处理的任务，如果有任务需要处理，则对当前任务按顺序调用对应的回调函数：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>回调函数</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>prepare(…)</p></td>
+<td><p>准备硬件以及对将要送给硬件的数据进行预处理</p></td>
+</tr>
+<tr class="row-odd"><td><p>do_one_request(…)</p></td>
+<td><p>启动硬件，处理数据</p></td>
+</tr>
+</tbody>
+</table>
+<p>硬件完成处理之后，在对一个的 IRQ 处理线程中处理输出数据，并且调用该请求的回调函数，以及释放本次数据处理请求所申请的资源。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>CE 的每一个算法处理单元对应一个 <code class="docutils literal notranslate"><span class="pre">crypto_engine</span></code>, 即有：skcipher engine，akcipher engine，hash engine</p>
+</div>
+</div>
+<div class="section" id="efuse-sram">
+<h3><span class="section-number">8.2.5.3.3. </span>eFuse 密钥和安全 SRAM<a class="headerlink" href="#efuse-sram" title="永久链接至标题">¶</a></h3>
+<p>安全 SRAM 是 CE 中的一块专用 SRAM，该 SRAM 与其他模块安全隔离，仅 CE 可以访问，
+因此用其保存的密钥和数据可以保证不被其他模块窃取。</p>
+<p>安全 SRAM 的设计目的是要解决密钥的本地存储的安全问题。在一些数据加密的应用场景中，用户生成了一个密钥，
+并且使用该密钥对数据进行加密。本地存储了加密后的数据，但是密钥要如何保存才安全又成了新的问题。
+如果明文保存在本地，则很容易被窃取。</p>
+<p>使用安全 SRAM 如何解决密钥的本地存储的安全问题？具体做法是：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>本地不保存明文密钥，只保存经过 eFuse 密钥加密后的密钥数据（eFuse 密钥 CPU 不可读，仅 CE 可读）</p></li>
+<li><p>需要使用密钥时，首先将加密后的密钥数据，解密到安全 SRAM，CE 再从安全 SRAM 读取密钥明文</p></li>
+</ol>
+</div></blockquote>
+<div class="figure align-center" id="id22">
+<img alt="../../../_images/secure_sram_1.png" src="../../../_images/secure_sram_1.png" />
+<p class="caption"><span class="caption-number">图 8.17 </span><span class="caption-text">安全密钥的生成</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
+</div>
+<p>在需要使用安全 SRAM 进行加解密处理时，需要完成下列操作：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>用户指定一种对称密钥算法，指定 eFuse 密钥，对加密后的密钥数据进行解密</p></li>
+<li><p>用户指定解密后的明文密钥输出的安全 SRAM 位置</p></li>
+<li><p>配置 CE 使用特定安全 SRAM 中的明文密钥，对数据进行加解密处理</p></li>
+</ol>
+</div></blockquote>
+<p>问题：</p>
+<blockquote>
+<div><p>该流程是 AIC CE 特有，用户提供了更多的输入信息，中间多了密钥的解密、安全 SRAM 的管理等。
+该处理流程如何融入到内核加密子系统的算法处理流程成为了问题。</p>
+</div></blockquote>
+<p>为了很好的对接内核加密子系统，并且方便用户使用，CE 驱动采取的方案是：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>将安全 SRAM 的使用场景具体化，限制到具体的应用需求</p></li>
+<li><p>将使用安全 SRAM 的算法抽象为一种特殊的算法，注册到内核加密子系统中</p></li>
+<li><p>算法的处理过程中首先进行一个密钥的解密，然后再进行数据的处理</p></li>
+</ol>
+</div></blockquote>
+<p>具体实现是为每一个场景实现一个对应的特殊算法，如为需要使用 eFuse HUK 进行密钥解密的
+AES ECB 算法，实现一个名为 <code class="docutils literal notranslate"><span class="pre">huk-protected(ecb(aes))</span></code> 的算法，并且注册到内核加密子系统中。</p>
+<p>当用户指定使用该算法时：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>对应的驱动总是先申请一块安全 SRAM 空间</p></li>
+<li><p>使用 eFuse HUK 对用户所提供的密钥数据进行解密，并输出到安全 SRAM 空间</p></li>
+<li><p>然后指定 CE 使用安全 SRAM 中生成的明文密钥，对数据进行处理</p></li>
+</ol>
+</div></blockquote>
+<div class="figure align-center" id="id23">
+<img alt="../../../_images/secure_sram_2.png" src="../../../_images/secure_sram_2.png" />
+<p class="caption"><span class="caption-number">图 8.18 </span><span class="caption-text">算法使用安全 SRAM 的示意图</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
+</div>
+<p>通过这种方式，既可以让用户选择符合条件的处理算法，又避免了用户参与处理 eFuse 密钥等额外流程，
+还与当前内核加密子系统中其他算法的使用流程保持一致，用户只要指定正确的名字即可使用这些特殊算法。</p>
+<p>当前 CE 驱动为下列几个应用场景定义了特殊算法。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>数据安全保护：将数据与设备型号加密绑定</p>
+<p>eFuse SSK 密钥，一型一密（厂商定义，一个型号共用相同密码），通过 <code class="docutils literal notranslate"><span class="pre">ssk-protected(ecb(aes))</span></code>
+和 <code class="docutils literal notranslate"><span class="pre">ssk-protected(cbc(aes))</span></code> 算法加密的数据，结合本地密钥可在相同型号的机器上进行解密。</p>
+</li>
+<li><p>数据安全保护：将数据与具体设备加密绑定</p>
+<p>eFuse HUK 密钥，一机一密（芯片出厂时随机生成，每台唯一），通过 <code class="docutils literal notranslate"><span class="pre">huk-proteced(ecb(aes))</span></code>
+和 <code class="docutils literal notranslate"><span class="pre">huk-proteced(cbc(aes))</span></code> 算法加密的数据，只能在当前设备可以解密。</p>
+<p><code class="docutils literal notranslate"><span class="pre">huk-proteced(cts(aes))</span></code> 和 <code class="docutils literal notranslate"><span class="pre">huk-proteced(xts(aes))</span></code> 可用于当前设备的文件系统加密，
+保证加密后的文件系统只有当前设备可以解密使用。</p>
+</li>
+<li><p>设备身份安全认证</p>
+<p>RSA 算法可以用于设备身份认证，前提是设备可以安全的保存其特有的私钥。</p>
+<p>AIC 的方案中可以使用 eFuse 密钥 PNK、PSK 对私钥进行加密保存在设备本地，然后使用
+<code class="docutils literal notranslate"><span class="pre">pnk-proteced(rsa)</span></code> 算法，或者 <code class="docutils literal notranslate"><span class="pre">pskx-proteced(rsa)</span></code> 算法，将对应的私钥解密到安全 SRAM 中使用。</p>
+<p>PNK、PSK 是仅 CE 可访问的安全 eFuse 空间，可根据实际情况，分配给不同的厂商/用户使用。
+当用户需要对设备进行身份认证时，可使用这些算法。</p>
+</li>
+</ol>
+</div></blockquote>
+<div class="figure align-center" id="id24">
+<img alt="../../../_images/secure_sram_3.png" src="../../../_images/secure_sram_3.png" />
+<p class="caption"><span class="caption-number">图 8.19 </span><span class="caption-text">使用安全 SRAM 的特殊算法</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="fallback">
+<h3><span class="section-number">8.2.5.3.4. </span>Fallback 机制<a class="headerlink" href="#fallback" title="永久链接至标题">¶</a></h3>
+<p>当用户使用指定的 CE 算法时，遇到一些 CE 无法支持的边角情况，此时需要通过 Fallback 机制，
+使用软件实现的算法完成用户指定的数据处理任务。</p>
+<p>目前可能需要使用 Fallback 机制的是 RSA 算法。</p>
+<p>RSA 算法共有5 种密钥长度，但是目前 CE 仅支持三种（512、1024、2048），当用户需要使用 3072，
+4096 比特的密钥时，需要使用 Fallback 机制，使用软件计算。</p>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">8.2.5.3.5. </span>内核补丁<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>如前面所述，内核加密子系统通过 AF_ALG Socket 接口向用户空间程序提供了部分算法服务，包括下面四中类型的算法：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>SKCIPHER 对称密钥类算法，如 AES、DES 等算法</p></li>
+<li><p>AEAD 关联数据的认证加密类算法，如 GCM-AES, CCM-AES 等算法</p></li>
+<li><p>HASH 消息摘要类算法，如 MD5，SHA-256 等算法</p></li>
+<li><p>RNG 随机数类算法</p></li>
+</ol>
+</div></blockquote>
+<p>默认情况下，非对称密钥算法，如 RSA、ECC 等算法内核并没有提供接口给用户空间程序使用。这里有部分原因是这类算法运算量大，在应用中不会用来直接对数据进行处理，仅用于对小量的关键数据进行加解密，因此直接使用用户空间的算法库效率更高，避免了系统调用等的额外开销。</p>
+<p>但是提供非对称密钥算法的接口在一些情况下是有意义的，比如平台支持非对称密钥算法的硬件加速，并且运算速度明显比 CPU 计算更快；或者硬件提供基于非对称密钥算法的额外安全功能，比如 AIC 的 CE 可以提供基于 RSA 算法的硬件设备身份安全认证功能，用户空间程序需要有接口可以使用 CE 的 RSA 算法加速器。</p>
+<p>虽然主线的内核并没有提供非对称密钥算法的 AF_ALG 接口，但是社区中有相关接口的补丁。Libkcapi 是一个对内核加密子系统 AF_ALG 接口进行封装的开源库，该库将 AF_ALG 接口封装成用户空间更容易使用的 API 接口，并且为若干内核版本提供了非对称密钥的 AF_ALG 接口补丁，通过使用这些补丁，用户空间程序可以使用内核中的非对称密钥算法。</p>
+<p>相关的信息链接：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.chronox.de/libkcapi.html">https://www.chronox.de/libkcapi.html</a></p></li>
+<li><p><a class="reference external" href="https://github.com/smuellerDD/libkcapi">https://github.com/smuellerDD/libkcapi</a></p></li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">8.2.5.4. </span>关键流程<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id8">
+<h3><span class="section-number">8.2.5.4.1. </span>初始化流程<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center" id="id25">
+<img alt="../../../_images/ce_keyflow.png" src="../../../_images/ce_keyflow.png" />
+<p class="caption"><span class="caption-number">图 8.20 </span><span class="caption-text">初始化流程</span><a class="headerlink" href="#id25" title="永久链接至图片">¶</a></p>
+</div>
+<p>相关的代码流程如下。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">aic_crypto_probe</span><span class="p">(</span><span class="n">pdev</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">=</span> <span class="n">devm_platform_ioremap_resource</span><span class="p">(</span><span class="n">pdev</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">devm_request_threaded_irq</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">irq</span><span class="p">,</span> <span class="n">aic_crypto_irq_handler</span><span class="p">,</span>
+<span class="o">|</span>                                   <span class="n">aic_crypto_irq_thread</span><span class="p">,</span> <span class="n">IRQF_ONESHOT</span><span class="p">,</span>
+<span class="o">|</span>                                   <span class="n">dev_name</span><span class="p">(</span><span class="n">dev</span><span class="p">),</span> <span class="n">ce_dev</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">clk</span> <span class="o">=</span> <span class="n">devm_clk_get</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">clk_prepare_enable</span><span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">clk</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">reset</span> <span class="o">=</span> <span class="n">devm_reset_control_get</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">reset_control_assert</span><span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">reset_control_deassert</span><span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aic_crypto_skcipher_accelerator_init</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">eng</span> <span class="o">=</span> <span class="n">crypto_engine_alloc_init_and_set</span><span class="p">(</span><span class="n">ce</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span>
+<span class="o">|</span>   <span class="o">|</span>                                          <span class="n">ACCEL_QUEUE_MAX_SIZE</span><span class="p">);</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">kfifo_alloc</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ce</span><span class="o">-&gt;</span><span class="n">sk_accel</span><span class="p">.</span><span class="n">req_fifo</span><span class="p">,</span> <span class="n">ACCEL_QUEUE_MAX_SIZE</span><span class="p">,</span> <span class="n">GFP_KERNEL</span><span class="p">);</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">crypto_engine_start</span><span class="p">(</span><span class="n">ce</span><span class="o">-&gt;</span><span class="n">sk_accel</span><span class="p">.</span><span class="n">engine</span><span class="p">);</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">crypto_register_skcipher</span><span class="p">(</span><span class="o">&amp;</span><span class="n">sk_algs</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">alg</span><span class="p">);</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">aic_crypto_akcipher_accelerator_init</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aic_crypto_hash_accelerator_init</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">8.2.5.4.2. </span>数据处理流程<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>由于 CE 中几种类型算法的数据处理流程相似，这里仅以对称密钥算法的数据处理流程为例进行说明。</p>
+<p>在处理步骤上，各种算法都遵循标准化的几个步骤：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>从 Crypto Core 层将处理请求传递给 CE 算法</p></li>
+<li><p>CE 算法处理函数将请求转交给(transfer)给对应加速器的 crypto_engine 队列</p></li>
+<li><p>crypto_engine 中的处理线程从队列中取出请求，调用对应的 prepare/do_one_req 进行处理</p></li>
+<li><p>do_one_req 回调函数中，将对应的请求交给硬件处理</p></li>
+<li><p>在中断处理函数中，取出结果，返回给调用者</p></li>
+</ol>
+</div></blockquote>
+<p>对称密钥算法的具体处理调用流程如下所示。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">aic_skcipher_aes_ecb_encrypt</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aic_skcipher_crypt</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">FLG_AES</span> <span class="o">|</span> <span class="n">FLG_ECB</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">crypto_transfer_skcipher_request_to_engine</span><span class="p">(</span><span class="n">eng</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+
+<span class="n">crypto_engine</span>
+<span class="o">|-&gt;</span> <span class="n">aic_skcipher_prepare_req</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aic_skcipher_do_one_req</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">aic_crypto_enqueue_task</span><span class="p">(</span><span class="n">ce</span><span class="p">,</span> <span class="n">algo</span><span class="p">,</span> <span class="n">rctx</span><span class="o">-&gt;</span><span class="n">phy_task</span><span class="p">);</span>
+
+<span class="n">aic_crypto_irq_thread</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aic_skcipher_handle_irq</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">crypto_finalize_skcipher_request</span><span class="p">(</span><span class="n">ce</span><span class="o">-&gt;</span><span class="n">sk_accel</span><span class="p">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+        <span class="o">|-&gt;</span> <span class="n">aic_skcipher_unprepare_req</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+        <span class="o">|-&gt;</span> <span class="n">req</span><span class="p">.</span><span class="n">complete</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>除了上述的大处理流程，还有一个关键点需要注意，就是 <strong>数据的对齐处理</strong> 。用户发起数据处理请求时，
+提供了输入和输出的数据缓冲区，然而这些数据缓冲区对 CE 而言有两个问题：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>这些缓冲区是虚拟地址空间的内存，并不一定是物理连续的内存空间</p></li>
+<li><p>缓冲区的开始地址并不一定是对齐的，不一定满足 CE 的地址对齐要求</p></li>
+</ol>
+</div></blockquote>
+<p>因此需要对输入和输出的数据做一些处理。</p>
+<p>一个简单的处理方式是对输入和输出的数据，一律复制到驱动新申请的物理连续的缓冲区中，
+使用该空间作为 CE 的硬件工作缓冲区，处理完成之后再复制到用户提供的输出缓冲区。
+但是对每一笔数据都会有额外的两次数据拷贝操作，对于处理大量数据的应用场景，效率较低。</p>
+<p>为了兼顾数据处理效率，CE 驱动针对可能出现的情况，做了几个分类， <strong>原则上尽量避免数据拷贝</strong> 。</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>输入缓冲区和输出缓冲区 CE 都无法使用</p>
+<p>此种情况CE 驱动为输入和输出缓冲区分配物理连续的工作缓冲区，并且需要对输入和输出数据进行复制。</p>
+</li>
+<li><p>输入缓冲区 CE 可用，输出缓冲区 CE 不可用</p>
+<p>此种情况 CE 驱动为输出缓冲区分配物理连续的工作缓冲区，CE 将数据处理完成之后，再复制到用户提供的输出缓冲区。</p>
+</li>
+<li><p>输入缓冲区 CE 不可用，输出缓冲区 CE 可用</p>
+<p>此种情况 CE 驱动为输入缓冲区分配物理连续的工作缓冲区，CE 驱动先将输入数据复制到工作缓冲区，
+再启动 CE 处理，直接输出到输出缓冲区。</p>
+</li>
+<li><p>输入缓冲区和输出缓冲区都是 CE 可用</p>
+<p>此种情况效率最高，CE 直接使用用户提供的输入输出缓冲区。</p>
+</li>
+</ol>
+</div></blockquote>
+<div class="figure align-center">
+<img alt="../../../_images/ce_data_buffer_for_ce.png" src="../../../_images/ce_data_buffer_for_ce.png" />
+</div>
+<p>当用户处理大量数据时，为了提高系统的处理效率，应为输入和输出数据申请按页对齐的缓冲区，这样 CE 驱动可以直接使用，避免额外的复制操作。</p>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">8.2.5.4.3. </span>中断处理流程<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>CE 驱动的中断处理比较简单，采用线程化的 IRQ 处理方式实现。</p>
+<p>当中断发生时，首先在 irq handler 函数中保存当前的 IRQ 状态寄存器和错误状态寄存器的值。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">irqreturn_t</span> <span class="n">aic_crypto_irq_handler</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">aic_crypto_dev</span> <span class="o">*</span><span class="n">ce_dev</span> <span class="o">=</span> <span class="n">arg</span><span class="p">;</span>
+
+        <span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">irq_status</span> <span class="o">=</span> <span class="n">readl</span><span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">CE_REG_ISR</span><span class="p">);</span>
+        <span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">err_status</span> <span class="o">=</span> <span class="n">readl</span><span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">CE_REG_ERR</span><span class="p">);</span>
+        <span class="n">writel</span><span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">irq_status</span><span class="p">,</span> <span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">CE_REG_ISR</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">IRQ_WAKE_THREAD</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>然后唤醒对应的处理线程，根据中断状态值，调用对应算法加速器的 IRQ 处理函数。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">irqreturn_t</span> <span class="n">aic_crypto_irq_thread</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">aic_crypto_dev</span> <span class="o">*</span><span class="n">ce_dev</span> <span class="o">=</span> <span class="n">arg</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">irq_status</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0x1</span> <span class="o">&lt;&lt;</span> <span class="n">DMA_CHAN_SK_ACCELERATOR</span><span class="p">))</span>
+                <span class="n">aic_skcipher_handle_irq</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">irq_status</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0x1</span> <span class="o">&lt;&lt;</span> <span class="n">DMA_CHAN_AK_ACCELERATOR</span><span class="p">))</span>
+                <span class="n">aic_akcipher_handle_irq</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ce_dev</span><span class="o">-&gt;</span><span class="n">irq_status</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0x1</span> <span class="o">&lt;&lt;</span> <span class="n">DMA_CHAN_HASH_ACCELERATOR</span><span class="p">))</span>
+                <span class="n">aic_hash_handle_irq</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">IRQ_HANDLED</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>如前面所述，各算法加速器的 IRQ 处理函数只做相关资源的释放，以及请求处理完成的通知。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">aic_skcipher_handle_irq</span><span class="p">(</span><span class="n">ce_dev</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">crypto_finalize_skcipher_request</span><span class="p">(</span><span class="n">ce</span><span class="o">-&gt;</span><span class="n">sk_accel</span><span class="p">.</span><span class="n">engine</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">aic_skcipher_unprepare_req</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">req</span><span class="p">.</span><span class="n">complete</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">8.2.5.5. </span>数据结构<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id12">
+<h3><span class="section-number">8.2.5.5.1. </span>设备结构体<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>CE 设备结构体用来保存 CE 基地址等相关信息，除此之外，还包含了三个不同类型的算法加速器结构体，
+以及安全 SRAM 的分配管理信息等。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_alg_accelerator</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">crypto_engine</span> <span class="o">*</span><span class="n">engine</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mutex</span> <span class="n">alock</span><span class="p">;</span>
+    <span class="n">DECLARE_KFIFO_PTR</span><span class="p">(</span><span class="n">req_fifo</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_crypto_dev</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span> <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">reset_control</span> <span class="o">*</span><span class="n">reset</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mutex</span> <span class="n">mlock</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_alg_accelerator</span> <span class="n">sk_accel</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_alg_accelerator</span> <span class="n">ak_accel</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_alg_accelerator</span> <span class="n">hash_accel</span><span class="p">;</span>
+    <span class="n">u64</span> <span class="n">ssram_bitmap</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">irq_status</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">err_status</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>sk_accel</p>
+<p>对称密钥算法加速器结构体，用于管理对称密钥算法所使用的 crypto_engine 实例，以及正在处理的请求 FIFO。</p>
+</li>
+<li><p>ak_accel</p>
+<p>非对称密钥算法加速器结构体，用于管理非对称密钥算法所使用的 crypto_engine 实例，以及正在处理的请求 FIFO。</p>
+</li>
+<li><p>hash_accel</p>
+<p>消息摘要算法加速器结构体，用于管理消息摘要算法所使用的 crypto_engine 实例，以及正在处理的请求 FIFO。</p>
+</li>
+<li><p>ssram_bitmap</p>
+<p>安全 SRAM 空间的分配位图。安全 SRAM 按照32字节为单位进行分配管理，这里每一个比特对应一个32字节的安全 SRAM 空间。</p>
+</li>
+<li><p>irq_status</p>
+<p>记录最新的 IRQ 状态寄存器的值。</p>
+</li>
+<li><p>err_status</p>
+<p>记录最新的错误状态寄存器的值。</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">8.2.5.5.2. </span>对称密钥算法<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>aic_skcipher_tfm_ctx 是一个对称密钥算法实例对应的上下文结构体，当用户使用 API 接口</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">crypto_skcipher</span> <span class="o">*</span>
+<span class="n">crypto_alloc_skcipher</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">alg_name</span><span class="p">,</span> <span class="n">u32</span> <span class="n">type</span><span class="p">,</span> <span class="n">u32</span> <span class="n">mask</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>创建一个实例时，自动创建对应的上下文。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_skcipher_tfm_ctx</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">crypto_engine_ctx</span> <span class="n">enginectx</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">inkey</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">inkeylen</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_crypto_dev</span> <span class="o">*</span><span class="n">ce</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>enginectx</p>
+<p>crypto_engine 的上下文，用于配置该算法的回调处理函数。</p>
+</li>
+<li><p>inkey</p>
+<p>用于保存用户配置的密钥信息。此处保存的密钥不直接交给 CE 硬件。</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_skcipher_reqctx</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">task_desc</span> <span class="o">*</span><span class="n">task</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_task</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">key</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_key</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">iv</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">backup_ivs</span><span class="p">;</span> <span class="cm">/* Back up iv for CBC decrypt */</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_iv</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">ssram_addr</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">backup_phy_ivs</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">next_iv</span><span class="p">;</span> <span class="cm">/* Next IV address for CBC encrypt */</span>
+    <span class="kt">int</span> <span class="n">tasklen</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">keylen</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ivsize</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">blocksize</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">backup_iv_cnt</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">mode</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">src_cpy_buf</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">dst_cpy_buf</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">src_phy_buf</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">dst_phy_buf</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">src_map_sg</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">dst_map_sg</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>aic_skcipher_reqctx 是每一个数据请求所对应的上下文，在每一个 struct skcipher_request 实例化时自动创建。</p>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>task</p>
+<p>CE 任务描述符指针。任务描述符所使用的空间是动态分配的空间，需要相关指针信息保存，以便完成时释放。</p>
+</li>
+<li><p>phy_task</p>
+<p>任务描述符的物理地址。</p>
+</li>
+<li><p>key</p>
+<p>密钥缓冲区的指针。该缓冲区为动态分配，地址空间 DMA 可用。</p>
+</li>
+<li><p>phy_key</p>
+<p>密钥缓冲区的物理地址。</p>
+</li>
+<li><p>iv</p>
+<p>初始化向量缓冲区指针。该缓冲区动态分配，地址空间 DMA 可用。</p>
+<p>该成员变量在不同的算法模式中，含义有所不同。CBC 模式中为初始化向量；CTR 模式中为初始计数值，同时也用于保存 CE 输出的下一个数据块的计数值；XTS 中为 TWEAK 值。</p>
+</li>
+<li><p>phy_iv</p>
+<p>初始化向量缓冲区的物理地址。</p>
+</li>
+<li><p>backup_ivs</p>
+<p>用于 CBC 算法模式的解密情景。解密时，需要保存不同数据段的最后一个密文块，作为下一个数据段的初始化向量。</p>
+</li>
+<li><p>backup_phy_ivs</p>
+<p>对应的物理地址。</p>
+</li>
+<li><p>next_iv</p>
+<p>用于 CBC 算法模式加密的场景。在 CBC 算法模式的加密处理时，如果一个请求中有多个数据块串行处理，使用 next_iv 指向当前数据块的最后一个密文块的地址，以作为下一个数据块的初始化向量输入。</p>
+</li>
+<li><p>ssram_addr</p>
+<p>当需要使用安全 SRAM 时，用于保存申请到的安全 SRAM 地址。</p>
+</li>
+<li><p>mode</p>
+<p>算法和模式标记变量，用于标记当前请求所使用的算法和模式等信息。</p>
+</li>
+<li><p>src_cpy_buf</p>
+<p>输入数据的工作缓冲区。当前请求的输入数据缓冲区不满足 CE 硬件的使用要求时，需要分配物理连续的工作缓冲区。</p>
+</li>
+<li><p>src_phy_buf</p>
+<p>输入数据的工作缓冲区物理地址。</p>
+</li>
+<li><p>dst_cpy_buf</p>
+<p>输出数据的工作缓冲区。当前输出数据缓冲区不满足 CE 硬件的使用要求时，需要分配物理连续的工作缓冲区。</p>
+</li>
+<li><p>dst_phy_buf</p>
+<p>输出数据缓冲区的物理地址。</p>
+</li>
+<li><p>src_map_sg</p>
+<p>输入 sg list 是否执行了 map 的标记。</p>
+</li>
+<li><p>dst_map_sg</p>
+<p>输出 sg list 是否执行了map 的标记。</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id14">
+<h3><span class="section-number">8.2.5.5.3. </span>非对称密钥算法<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_akcipher_tfm_ctx</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">crypto_engine_ctx</span> <span class="n">enginectx</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_crypto_dev</span> <span class="o">*</span><span class="n">ce</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">n</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">e</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">d</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n_sz</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">e_sz</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">d_sz</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>aic_akcipher_tfm_ctx 是非对称密钥算法实例所对应的上下文。</p>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>enginectx</p>
+<p>crypto_engine 的上下文，用于配置该算法的回调处理函数。</p>
+</li>
+<li><p>n</p>
+<p>RSA 密钥中的 modulus。</p>
+</li>
+<li><p>e</p>
+<p>RSA 密钥中的公钥指数。</p>
+</li>
+<li><p>d</p>
+<p>RSA 密钥中的私钥指数。</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_akcipher_reqctx</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">task_desc</span> <span class="o">*</span><span class="n">task</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_task</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">wbuf</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_wbuf</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">ssram_addr</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">tasklen</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wbuf_size</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>aic_akcipher_reqctx 是每一个数据请求所对应的上下文，在每一个 struct akcipher_request 实例化时自动创建。</p>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>task</p>
+<p>CE 任务描述符指针。任务描述符所使用的空间是动态分配的空间，需要相关指针信息保存，以便完成时释放。</p>
+</li>
+<li><p>phy_task</p>
+<p>任务描述符的物理地址。</p>
+</li>
+<li><p>wbuf</p>
+<p>工作缓冲区。</p>
+</li>
+<li><p>phy_wbuf</p>
+<p>工作缓冲区的物理地址。</p>
+</li>
+<li><p>ssram_addr</p>
+<p>当需要使用安全 SRAM 时，用于保存申请到的安全 SRAM 地址。</p>
+</li>
+<li><p>flags</p>
+<p>算法和模式标记变量，用于标记当前请求所使用的算法和模式等信息。</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id15">
+<h3><span class="section-number">8.2.5.5.4. </span>消息摘要算法<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_hash_tfm_ctx</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">crypto_engine_ctx</span> <span class="n">enginectx</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_crypto_dev</span> <span class="o">*</span><span class="n">ce</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">hmac</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>aic_hash_tfm_ctx 是消息摘要算法实例所对应的上下文。</p>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>enginectx</p>
+<p>crypto_engine 的上下文，用于配置该算法的回调处理函数。</p>
+</li>
+<li><p>hmac</p>
+<p>用于标记当前算法是否为 HMAC 类算法。</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_hash_reqctx</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">task_desc</span> <span class="o">*</span><span class="n">task</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_task</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ivbuf</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_ivbuf</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">total_bitlen</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">phy_total_bitlen</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">src_cpy_buf</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span> <span class="n">src_phy_buf</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">tasklen</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">digest_size</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">digest</span><span class="p">[</span><span class="n">CE_MAX_DIGEST_SIZE</span><span class="p">];</span>
+    <span class="kt">bool</span> <span class="n">src_map_sg</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>aic_hash_reqctx 是每一个数据请求所对应的上下文，在每一个 struct ahash_request 实例化时自动创建。</p>
+<p>其中：</p>
+<blockquote>
+<div><ul>
+<li><p>task</p>
+<p>CE 任务描述符指针。任务描述符所使用的空间是动态分配的空间，需要相关指针信息保存，以便完成时释放。</p>
+</li>
+<li><p>phy_task</p>
+<p>任务描述符的物理地址。</p>
+</li>
+<li><p>total_bitlen</p>
+<p>当前请求处理的数据总长度，单位 bit。</p>
+</li>
+<li><p>phy_total_bitlen</p>
+<p>保存数据总长度的变量的物理地址。</p>
+</li>
+<li><p>src_cpy_buf</p>
+<p>输入数据的工作缓冲区。当前请求的输入数据缓冲区不满足 CE 硬件的使用要求时，需要分配物理连续的工作缓冲区。</p>
+</li>
+<li><p>src_phy_buf</p>
+<p>输入数据的工作缓冲区物理地址。</p>
+</li>
+<li><p>flags</p>
+<p>算法和模式标记变量，用于标记当前请求所使用的算法和模式等信息。</p>
+</li>
+<li><p>digest</p>
+<p>用于保存当前一笔请求数据的摘要结果。当有连续多个请求的数据需要处理时，同时作为下一个请求的初始化向量输入。</p>
+</li>
+<li><p>src_map_sg</p>
+<p>输入 sg list 是否执行了 map 的标记。</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id16">
+<h2><span class="section-number">8.2.5.6. </span>接口设计<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-skcipher-alg-init">
+<h3><span class="section-number">8.2.5.6.1. </span>aic_skcipher_alg_init<a class="headerlink" href="#aic-skcipher-alg-init" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_skcipher_alg_init(struct crypto_skcipher *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>对称密钥算法的初始化函数</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_skcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-skcipher-alg-exit">
+<h3><span class="section-number">8.2.5.6.2. </span>aic_skcipher_alg_exit<a class="headerlink" href="#aic-skcipher-alg-exit" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>void aic_skcipher_alg_exit(struct crypto_skcipher *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>对称密钥算法使用完毕，释放相关资源</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_skcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-skcipher-alg-setkey">
+<h3><span class="section-number">8.2.5.6.3. </span>aic_skcipher_alg_setkey<a class="headerlink" href="#aic-skcipher-alg-setkey" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_skcipher_alg_setkey(struct crypto_skcipher *tfm, const u8 *key, unsigned int keylen)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>设置对称密钥算法的密钥</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_skcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+<div class="line">const u8 *key</div>
+<div class="line-block">
+<div class="line">密钥的指针</div>
+</div>
+<div class="line">unsigned int keylen</div>
+<div class="line-block">
+<div class="line">密钥的长度</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-skcipher-crypt">
+<h3><span class="section-number">8.2.5.6.4. </span>aic_skcipher_crypt<a class="headerlink" href="#aic-skcipher-crypt" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_skcipher_crypt(struct skcipher_request *req, unsigned long flg)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>发起一个对称密钥算法的加解密处理的请求</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct skcipher_request *req</div>
+<div class="line-block">
+<div class="line">加解密请求的指针</div>
+</div>
+<div class="line">unsigned logn flg</div>
+<div class="line-block">
+<div class="line">算法标记，用来标识算法类型和算法模式</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-akcipher-rsa-alg-init">
+<h3><span class="section-number">8.2.5.6.5. </span>aic_akcipher_rsa_alg_init<a class="headerlink" href="#aic-akcipher-rsa-alg-init" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_akcipher_rsa_alg_init(struct crypto_akcipher *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>RSA 算法初始化</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_akcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例的指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-akcipher-rsa-alg-exit">
+<h3><span class="section-number">8.2.5.6.6. </span>aic_akcipher_rsa_alg_exit<a class="headerlink" href="#aic-akcipher-rsa-alg-exit" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>void aic_akcipher_rsa_alg_exit(struct crypto_akcipher *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>RSA 算法使用完毕，释放相关资源</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_akcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例的指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-akcipher-rsa-set-pub-key">
+<h3><span class="section-number">8.2.5.6.7. </span>aic_akcipher_rsa_set_pub_key<a class="headerlink" href="#aic-akcipher-rsa-set-pub-key" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><div class="line-block">
+<div class="line">int aic_akcipher_rsa_set_pub_key(struct crypto_akcipher *tfm, const void *key,</div>
+<div class="line-block">
+<div class="line">unsigned int keylen)</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>设置 RSA 算法的公钥</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_akcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+<div class="line">const void *key</div>
+<div class="line-block">
+<div class="line">密钥数据的指针</div>
+</div>
+<div class="line">unsigned int keylen</div>
+<div class="line-block">
+<div class="line">密钥的长度</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-akcipher-rsa-set-priv-key">
+<h3><span class="section-number">8.2.5.6.8. </span>aic_akcipher_rsa_set_priv_key<a class="headerlink" href="#aic-akcipher-rsa-set-priv-key" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><div class="line-block">
+<div class="line">int aic_akcipher_rsa_set_priv_key(struct crypto_akcipher *tfm, const void *key,</div>
+<div class="line-block">
+<div class="line">unsigned int keylen)</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>设置 RSA 算法的私钥</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_akcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+<div class="line">const void *key</div>
+<div class="line-block">
+<div class="line">密钥数据的指针</div>
+</div>
+<div class="line">unsigned int keylen</div>
+<div class="line-block">
+<div class="line">密钥的长度</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-akcipher-rsa-max-size">
+<h3><span class="section-number">8.2.5.6.9. </span>aic_akcipher_rsa_max_size<a class="headerlink" href="#aic-akcipher-rsa-max-size" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_akcipher_rsa_max_size(struct crypto_akcipher *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>获取当前 RSA 算法的密钥长度</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_akcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-akcipher-rsa-crypt">
+<h3><span class="section-number">8.2.5.6.10. </span>aic_akcipher_rsa_crypt<a class="headerlink" href="#aic-akcipher-rsa-crypt" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_akcipher_rsa_crypt(struct akcipher_request *req, unsigned long flag)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>发起一个 RSA 算法的加解密请求</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct akcipher_request *req</div>
+<div class="line-block">
+<div class="line">请求的指针</div>
+</div>
+<div class="line">unsigned long flag</div>
+<div class="line-block">
+<div class="line">算法标记</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-alg-init">
+<h3><span class="section-number">8.2.5.6.11. </span>aic_hash_alg_init<a class="headerlink" href="#aic-hash-alg-init" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hash_alg_init(struct crypto_tfm *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>HASH 算法的初始化</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_tfm *tfm</div>
+<div class="line-block">
+<div class="line">算法实例的指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-alg-exit">
+<h3><span class="section-number">8.2.5.6.12. </span>aic_hash_alg_exit<a class="headerlink" href="#aic-hash-alg-exit" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>void aic_hash_alg_exit(struct crypto_tfm *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>HASH 算法使用完毕，释放相关资源</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_tfm *tfm</div>
+<div class="line-block">
+<div class="line">算法实例的指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-init">
+<h3><span class="section-number">8.2.5.6.13. </span>aic_hash_init<a class="headerlink" href="#aic-hash-init" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hash_init(struct ahash_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>初始化一个 HASH 运算的操作</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct ahash_request *req</div>
+<div class="line-block">
+<div class="line">HASH 运算的请求，具体所使用的算法，根据消息摘要的大小决定</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-update">
+<h3><span class="section-number">8.2.5.6.14. </span>aic_hash_update<a class="headerlink" href="#aic-hash-update" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hash_update(struct ahash_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>更新一笔 HASH 运算的数据，用于数据分多次输入的场景</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct ahash_request *req</div>
+<div class="line-block">
+<div class="line">HASH 运算的请求，数据信息保存在该结构体中</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-final">
+<h3><span class="section-number">8.2.5.6.15. </span>aic_hash_final<a class="headerlink" href="#aic-hash-final" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hash_final(struct ahash_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>HASH 运算的数据输入结束，获取结果</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct ahash_request *req</div>
+<div class="line-block">
+<div class="line">HASH 运算的请求，本请求不带数据，只获取结果</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-finup">
+<h3><span class="section-number">8.2.5.6.16. </span>aic_hash_finup<a class="headerlink" href="#aic-hash-finup" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hash_finup(struct ahash_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>HASH 运算的最后一笔数据，并且获取结果</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct ahash_request *req</div>
+<div class="line-block">
+<div class="line">HASH 运算的请求，本请求带最后一笔数据，并获取结果</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-hash-digest">
+<h3><span class="section-number">8.2.5.6.17. </span>aic_hash_digest<a class="headerlink" href="#aic-hash-digest" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_hash_digest(struct ahash_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>针对一笔数据，完成 init 和 finup 的 HASH 运算操作，并获取结果</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct ahash_request *req</div>
+<div class="line-block">
+<div class="line">HASH 运算的请求，本请求带最后一笔数据，并获取结果</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id17">
+<h2><span class="section-number">8.2.5.7. </span>应用编程<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<p>用户空间编程使用 CE 时，根据使用场景和需求的不同，有几层 API 可以选择：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>AF_ALG Socket API</p></li>
+<li><p>Libkcapi API</p></li>
+<li><p>OpenSSL API</p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center" id="id26">
+<img alt="../../../_images/ce_userpace_api.png" src="../../../_images/ce_userpace_api.png" />
+<p class="caption"><span class="caption-number">图 8.21 </span><span class="caption-text">用户空间 API 对接</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
+</div>
+<div class="section" id="af-alg-api">
+<h3><span class="section-number">8.2.5.7.1. </span>AF_ALG API<a class="headerlink" href="#af-alg-api" title="永久链接至标题">¶</a></h3>
+<p>相关 API 可参考头文件</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>linux/if_alg.h</p></li>
+</ul>
+</div></blockquote>
+<p>要使用内核提供的算法和驱动，需要知道对应的算法名字。可通过下列命令获取:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">crypto</span>
+</pre></div>
+</div>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span>         <span class="p">:</span> <span class="n">ctr</span><span class="p">(</span><span class="n">aes</span><span class="p">)</span>
+<span class="n">driver</span>       <span class="p">:</span> <span class="n">ctr</span><span class="o">-</span><span class="n">aes</span><span class="o">-</span><span class="n">aic</span>
+<span class="n">module</span>       <span class="p">:</span> <span class="n">kernel</span>
+<span class="n">priority</span>     <span class="p">:</span> <span class="mi">400</span>
+<span class="n">refcnt</span>       <span class="p">:</span> <span class="mi">1</span>
+<span class="n">selftest</span>     <span class="p">:</span> <span class="n">passed</span>
+<span class="n">internal</span>     <span class="p">:</span> <span class="n">no</span>
+<span class="nb">type</span>         <span class="p">:</span> <span class="n">skcipher</span>
+<span class="k">async</span>        <span class="p">:</span> <span class="n">yes</span>
+<span class="n">blocksize</span>    <span class="p">:</span> <span class="mi">16</span>
+<span class="nb">min</span> <span class="n">keysize</span>  <span class="p">:</span> <span class="mi">16</span>
+<span class="nb">max</span> <span class="n">keysize</span>  <span class="p">:</span> <span class="mi">32</span>
+<span class="n">ivsize</span>       <span class="p">:</span> <span class="mi">16</span>
+<span class="n">chunksize</span>    <span class="p">:</span> <span class="mi">16</span>
+<span class="n">walksize</span>     <span class="p">:</span> <span class="mi">16</span>
+
+<span class="n">name</span>         <span class="p">:</span> <span class="n">cbc</span><span class="p">(</span><span class="n">aes</span><span class="p">)</span>
+<span class="n">driver</span>       <span class="p">:</span> <span class="n">cbc</span><span class="o">-</span><span class="n">aes</span><span class="o">-</span><span class="n">aic</span>
+<span class="n">module</span>       <span class="p">:</span> <span class="n">kernel</span>
+<span class="n">priority</span>     <span class="p">:</span> <span class="mi">400</span>
+<span class="n">refcnt</span>       <span class="p">:</span> <span class="mi">1</span>
+<span class="n">selftest</span>     <span class="p">:</span> <span class="n">passed</span>
+<span class="n">internal</span>     <span class="p">:</span> <span class="n">no</span>
+<span class="nb">type</span>         <span class="p">:</span> <span class="n">skcipher</span>
+<span class="k">async</span>        <span class="p">:</span> <span class="n">yes</span>
+<span class="n">blocksize</span>    <span class="p">:</span> <span class="mi">16</span>
+<span class="nb">min</span> <span class="n">keysize</span>  <span class="p">:</span> <span class="mi">16</span>
+<span class="nb">max</span> <span class="n">keysize</span>  <span class="p">:</span> <span class="mi">32</span>
+<span class="n">ivsize</span>       <span class="p">:</span> <span class="mi">16</span>
+<span class="n">chunksize</span>    <span class="p">:</span> <span class="mi">16</span>
+<span class="n">walksize</span>     <span class="p">:</span> <span class="mi">16</span>
+
+<span class="o">......</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>这里的 /proc/crypto 是目标平台上的文件</p>
+</div>
+<p>AF_ALG API 的特点：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>效率高</p></li>
+<li><p>接口灵活</p></li>
+<li><p>较为复杂</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="libkcapi-api">
+<h3><span class="section-number">8.2.5.7.2. </span>Libkcapi API<a class="headerlink" href="#libkcapi-api" title="永久链接至标题">¶</a></h3>
+<p>SDK 已经提供对应的 libkcapi 库，默认配置已经支持</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>对称密钥算法</p></li>
+<li><p>非对称密钥算法</p></li>
+<li><p>消息摘要算法</p></li>
+<li><p>随机数读取</p></li>
+</ul>
+</div></blockquote>
+<p>如果需要修改对应包的编译配置，可在 Luban SDK 顶层目录执行:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">menuconfig</span> <span class="p">(</span><span class="ow">or</span> <span class="n">make</span> <span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>配置界面的索引如下：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Third-party packages  ---&gt;
+    -*- libkcapi  ---&gt;
+        [*]   use prebuilt binary instead of building from source
+        [*]   enable asym algorithm support
+        [*]   build enc application
+        [*]   build hasher application
+        [*]   build rng read application
+        [*]   build speed-test program
+        [*]   build test program
+</pre></div>
+</div>
+<p>Libkcapi 的特点：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>接口简单</p></li>
+<li><p>效率高</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>基于 Libkcapi API 的参考示例:</dt><dd><p>source/artinchip/test-ce/kcapi/</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="openssl-api">
+<h3><span class="section-number">8.2.5.7.3. </span>OpenSSL API<a class="headerlink" href="#openssl-api" title="永久链接至标题">¶</a></h3>
+<p>Luban SDK 通过 OpenSSL 的 Engine 机制，以实现 Engine 库的方式，已经完成了对 OpenSSL 的对接。
+无论是通过 OpenSSL 的命令行，还是通过使用库编程，都可以使用到 CE。</p>
+<p>Engine 库有两个，根据不同的目的进行使用。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 29%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Engine</p></th>
+<th class="head"><p>库和路径</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aic engine</p></td>
+<td><p>usr/lib/libengine_aic.so</p></td>
+<td><div class="line-block">
+<div class="line">实现 CE 所提供的对称密钥算法、RSA 算法和消息摘要算法</div>
+<div class="line">该 Engine 实现的都是标准算法。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>huk engine</p></td>
+<td><p>usr/lib/libengine_huk.so</p></td>
+<td><div class="line-block">
+<div class="line">实现了 HUK 保护的 AES 算法，可用于本地数据保护。</div>
+<div class="line">使用该 Engine 时，输入的密钥会被 HUK 进行一次解密，</div>
+<div class="line">然后才用于 AES 加解密。HUK 每一颗芯片不同，因此使用</div>
+<div class="line">该 Engine 加密后的数据，仅当前平台可解密。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>命令行中使用指定 Engine 的示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">enc</span> <span class="o">-</span><span class="n">engine</span> <span class="n">aic</span> <span class="o">-</span><span class="n">p</span> <span class="o">-</span><span class="n">nosalt</span> <span class="o">-</span><span class="n">nopad</span> <span class="o">-</span><span class="n">aes</span><span class="o">-</span><span class="mi">128</span><span class="o">-</span><span class="n">ecb</span> <span class="o">-</span><span class="n">e</span> <span class="o">-</span><span class="n">K</span> <span class="mi">0123</span> <span class="o">-</span><span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">bin</span> <span class="o">-</span><span class="n">out</span> <span class="n">enc</span><span class="o">.</span><span class="n">bin</span>
+</pre></div>
+</div>
+<p>上述示例中，通过 <code class="docutils literal notranslate"><span class="pre">-engine</span> <span class="pre">aic</span></code> 指定了使用 <code class="docutils literal notranslate"><span class="pre">aic</span></code> engine。</p>
+<p>当在 <code class="docutils literal notranslate"><span class="pre">openssl.cnf</span></code> 文件中配置了默认的 Engine 之后，命令行中可以忽略 <code class="docutils literal notranslate"><span class="pre">-engine</span></code> 参数。
+具体配置可参考 <code class="docutils literal notranslate"><span class="pre">/etc/ssl/openssl_aic.cnf</span></code> 文件。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>openssl_conf = openssl_def
+
+[openssl_def]
+engines = engine_section
+
+[engine_section]
+aic = aic_section
+
+[aic_section]
+engine_id = aic
+dynamic_path = /usr/lib/libengine_aic.so
+default_algorithms = CIPHERS,DIGESTS,RSA
+</pre></div>
+</div>
+<p>Libopenssl API 的特点：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>功能强大</p></li>
+<li><p>调用效率稍差</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>基于 Libopenssl API 的参考示例:</dt><dd><p>source/artinchip/test-ce/openssl/</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ce_faq.html" class="btn btn-neutral float-right" title="8.2.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="test_guide.html" class="btn btn-neutral float-left" title="8.2.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

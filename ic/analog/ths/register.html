@@ -1,0 +1,1245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>13.4.6. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="14. 伺服系统" href="../../svo/index.html" />
+    <link rel="prev" title="13.4.5. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">13. 模拟</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../adcim/index.html">13.1. ADC Interface Module (ADCIM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">13.2. General Purpose Analog Input (GPAI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">13.3. Resistance Touch Panel (RTP)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">13.4. Thermal Sensor (THS)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">13.4.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">13.4.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id2">13.4.3. 中断</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id3">13.4.4. 高/低温报警的双阈值说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">13.4.5. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">13.4.6. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-mcr">13.4.6.1. 0x000  MCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-mintr">13.4.6.2. 0x004  MINTR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x100-n-0x20-thsn-cfg">13.4.6.3. 0x100+n*0x20  THSn_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x104-n-0x20-thsn-itv">13.4.6.4. 0x104+n*0x20:  THSn_ITV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x108-n-0x20-thsn-fil">13.4.6.5. 0x108+n*0x20  THSn_FIL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x10c-n-0x20-thsn-data">13.4.6.6. 0x10C+n*0x20  THSn_DATA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x110-n-0x20-thsn-int">13.4.6.7. 0x110+n*0x20 THSn_INT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x114-n-0x20-thsn-htav">13.4.6.8. 0x114+n*0x20 THSn_HTAV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x118-n-0x20-thsn-ltav">13.4.6.9. 0x118+n*0x20  THSn_LTAV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-version">13.4.6.10. 0xFFC  VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">13. </span>模拟</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">13.4. </span>THS</a> &raquo;</li>
+        
+      <li><span class="section-number">13.4.6. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">13.4.6. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>note n=0~1 为ths通道号</strong></p>
+<div class="section" id="x000-mcr">
+<h2><span class="section-number">13.4.6.1. </span>0x000  MCR<a class="headerlink" href="#x000-mcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00002F30</p></th>
+<th class="head"><p>THS模块控制(THS Module Control Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS1_EN（THS1 Enable, THS1传感器使能）</div>
+<div class="line">本字段仅在THS_MAX≥1时有效：</div>
+<div class="line">0: THS1禁止；</div>
+<div class="line">1: THS1使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS0_EN（THS0 Enable, THS0传感器使能）</div>
+<div class="line">0: THS0禁止；</div>
+<div class="line">1: THS0使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2F</p></td>
+<td><div class="line-block">
+<div class="line">THS_ACQ（THS Acquisition Time,THS捕获时间）</div>
+<div class="line">本字段定义了温度传感器的捕获时间长度。本计数值单位为ADC_CLK的</div>
+<div class="line">周期数， <code class="docutils literal notranslate"><span class="pre">T（THS_ACQ）</span> <span class="pre">=（THS_ACQ+1）*T(ADC_CLK)</span></code>。假设 <code class="docutils literal notranslate"><span class="pre">ADC_CLK=24MHz</span></code>,</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">THS_ACQ=0x2F</span></code>， <code class="docutils literal notranslate"><span class="pre">T(THS_ACQ)</span> <span class="pre">=</span> <span class="pre">(47+1)*41.67ns</span> <span class="pre">=</span> <span class="pre">2us</span></code>。</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>RO</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">THS_MAX（THS Maximum Number , THS最大编号）</div>
+<div class="line">本字段规定了THSn中n的最大编号，n+1即为本模块实际使用的温度传感</div>
+<div class="line">器数量。本字段小于等于3，即传感器数量最少为1个，最多为4个。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN（Module Enable, 模块使能）</div>
+<div class="line">0: 本模块被禁止，本模块停止工作；</div>
+<div class="line">1: 本模块被使能。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-mintr">
+<h2><span class="section-number">13.4.6.2. </span>0x004  MINTR<a class="headerlink" href="#x004-mintr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>THS中断控制与状态(THS Module Interrupt Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS1_INTF（THS1 Interrupt Flag，THS1中断标志）</div>
+<div class="line">本字段仅在THS_MAX≥1时有效。本字段只读，只要清除了相应THS的中断</div>
+<div class="line">标志，本字段就会自动清零：</div>
+<div class="line">0: THS1无中断请求；</div>
+<div class="line">1: THS1有中断请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS0_INTF（THS0 Interrupt Flag，THS0中断标志）</div>
+<div class="line">本字段只读，只要清除了相应THS的中断标志，本字段就会自动清零：</div>
+<div class="line">0: THS0无中断请求；</div>
+<div class="line">1: THS0有中断请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS1_INTEN（THS1 Interrupt Enable，THS1中断使能）</div>
+<div class="line">本字段仅在THS_MAX≥1时有效，THS1中断使能信号：</div>
+<div class="line">0: 禁止THS1中断；</div>
+<div class="line">1: 使能THS1中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS0_INTEN（THS0 Interrupt Enable，THS0中断使能）</div>
+<div class="line">THS0中断使能信号：</div>
+<div class="line">0: 禁止THS0中断；</div>
+<div class="line">1: 使能THS0中断。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x100-n-0x20-thsn-cfg">
+<h2><span class="section-number">13.4.6.3. </span>0x100+n*0x20  THSn_CFG<a class="headerlink" href="#x100-n-0x20-thsn-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000(n+8)2F00</p></th>
+<th class="head"><p>THS通道控制配置(THS Channel N Config)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line"><em>_</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>RO</p></td>
+<td><p>n+8</p></td>
+<td><div class="line-block">
+<div class="line">ADC_CHN（ADC Channel Number, ADC通道号）</div>
+<div class="line">本字段显示系统分配的ADC通道号，硬件会根据此通道号匹配ADC并获取</div>
+<div class="line">返回的数据，软件驱动不需要使用，本字段仅作Debug用。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2F</p></td>
+<td><div class="line-block">
+<div class="line">ADC_ACQ（ADC Acquisition Time, ADC捕获时间）</div>
+<div class="line">本字段定义了本ADC通道的捕获时间长度。本计数值单位为ADC_CLK的周</div>
+<div class="line">期数， <code class="docutils literal notranslate"><span class="pre">T(ADC_ACQ)</span> <span class="pre">=（ADC_ACQ+1）*T(ADC_CLK)</span></code> 。假设 <code class="docutils literal notranslate"><span class="pre">ADC_CLK=24MHz</span></code>，</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ADC_ACQ=0x2F</span></code>， <code class="docutils literal notranslate"><span class="pre">T(ADC_ACQ)</span> <span class="pre">=</span> <span class="pre">(47+1)*41.67ns</span> <span class="pre">=</span> <span class="pre">2us</span></code>。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_PRI（ADC Priority, ADC采样优先级）</div>
+<div class="line">本字段定义了本次ADC采样的优先级控制。</div>
+<div class="line">0: 低优先级非实时采样，采样命令与其他非实时采样命令进入采样队列；</div>
+<div class="line">1: 高优先级实时采样，采样命令会被直接处理，不进入采样队列。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">THS_CHSTA(THS Channel State , THS通道工作状态)</div>
+<div class="line">0: 表示当前THS通道处于空闲状态；</div>
+<div class="line">1: 表示当前THS通道处于忙碌状态。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSEN（Periodic Sample Enable，周期采样使能）</div>
+<div class="line">本字段功能为使能温度传感器周期采样。</div>
+<div class="line">0：表示停止相应温度传感器周期采样；</div>
+<div class="line">1：表示启动相应温度传感器周期采样。</div>
+<div class="line"><br /></div>
+<div class="line">采样间隔由THSn_ITV寄存器设定。</div>
+<div class="line">如果在软件清零之前硬件已经启动了一次新的采样，那么这次采样会继续</div>
+<div class="line">完成，并最终返回数据。</div>
+<div class="line">注意：不允许同时使能周期采样与单次采样，即SSEN与PSEN不能同时有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SSEN（Single Sample Enable，单点采样使能）</div>
+<div class="line">本字段功能为使能温度传感器单点采样。</div>
+<div class="line">0：表示相应传感器的温度单点采样已完成；</div>
+<div class="line">1：表示启动相应传感器的温度单点采样。</div>
+<div class="line">本字段会由硬件自动清零，表示相应传感器的温度单点采样已完成。</div>
+<div class="line"><br /></div>
+<div class="line">注意：尽管本字段描述为“单点”采样，但为了避免单次采样误差，</div>
+<div class="line">可能需要通过单点多次采样后的数据进行算术平均，得到一个相对稳定的温度值。</div>
+<div class="line">所以本“单点”采样实际上会包含“多次”采样。</div>
+<div class="line">对应的由硬件向ADC接口控制器连续发出多个采样命令。连续发</div>
+<div class="line">出采样命令的个数由滤波器配置THSn_FIL设定。例如滤波器配置为0x1</div>
+<div class="line">（2点平均），那么每次启动SSEN，硬件会连续发出2个采样命令，</div>
+<div class="line">接收到2个温度数据之后，硬件自动清零SSEN。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x104-n-0x20-thsn-itv">
+<h2><span class="section-number">13.4.6.4. </span>0x104+n*0x20:  THSn_ITV<a class="headerlink" href="#x104-n-0x20-thsn-itv" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 9%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x016EFFFF</p></th>
+<th class="head"><p>THS通道采样间隔配置(THS Channel N Interval)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x016E</p></td>
+<td><div class="line-block">
+<div class="line">ITV（Interval，采样间隔）</div>
+<div class="line">此字段定义了周期采样的采样间隔,单位为T（div_clk），即 <code class="docutils literal notranslate"><span class="pre">采样间隔=ITV*T（div_clk）</span></code>。</div>
+<div class="line">假设 <code class="docutils literal notranslate"><span class="pre">PCLK=24MHz</span></code>， <code class="docutils literal notranslate"><span class="pre">ITV=0x16E=366</span></code>， <code class="docutils literal notranslate"><span class="pre">DIV=65535</span></code>, <code class="docutils literal notranslate"><span class="pre">采样间隔=366*（65535+1）*41.67ns=1s</span></code>。</div>
+<div class="line">注意：此字段不可为0。硬件自动保护：当软件配置为0时，效果等同于1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xFFFF</p></td>
+<td><div class="line-block">
+<div class="line">DIV(Divide CLK,分频时钟 ）</div>
+<div class="line">此字段定义了时钟（div_clk）分频系数,单位为PCLK</div>
+<div class="line">T（div_clk）=（DIV+1）*T（PCLK）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x108-n-0x20-thsn-fil">
+<h2><span class="section-number">13.4.6.5. </span>0x108+n*0x20  THSn_FIL<a class="headerlink" href="#x108-n-0x20-thsn-fil" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>THS采样滤波配置(THS Channel Filter)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIL（Filter，滤波器配置）</div>
+<div class="line">本字段定义了温度传感器采样数据算数平均滤波器的输入样本数。</div>
+<div class="line">0x0：无滤波；</div>
+<div class="line">0x1：2；</div>
+<div class="line">0x2：4；</div>
+<div class="line">0x3：8。</div>
+<div class="line">本字段也定义了单点采样和周期采样每次的单点采样命令数量</div>
+<div class="line">，本控制器接收到对应样本数的数据后，进行算数平均，</div>
+<div class="line">并把平均值通过本传感器的THSn_DATA寄存器返回。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x10c-n-0x20-thsn-data">
+<h2><span class="section-number">13.4.6.6. </span>0x10C+n*0x20  THSn_DATA<a class="headerlink" href="#x10c-n-0x20-thsn-data" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>THS数据(THS Channel N Data)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">DATA（ADC DATA, ADC采样数据）</div>
+<div class="line">此字段为温度传感器的ADC采样数据结果。如果THSn_FIL.FIL为0x0，</div>
+<div class="line">则直接返回ADC的采样值；否则返回的是多次采样的算数平均值。</div>
+<div class="line"><br /></div>
+<div class="line">注意：本模块无数据FIFO，本寄存器只能暂存一个结果，</div>
+<div class="line">如果未被及时读取，则会被后来新的采样数据直接覆盖。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x110-n-0x20-thsn-int">
+<h2><span class="section-number">13.4.6.7. </span>0x110+n*0x20 THSn_INT<a class="headerlink" href="#x110-n-0x20-thsn-int" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>THS中断状态(THS Channel N Interrupt)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LTARF（Low-Temperature-Alarm Removed Flag，低温警告解除标志）</div>
+<div class="line">本字段为低温警告解除标志，仅周期采样模式（THSn_CFG.PSEN=1）时有效。</div>
+<div class="line">本字段的操作为硬件置位，软件写1清零。</div>
+<div class="line">当温度传感器采样值从低于THSn_LTAV.LTAVV值到高于THSn_LTAV.LTARV值，</div>
+<div class="line">就会置位本字段。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>26</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LTAVF（Low-Temperature-Alarm Valid Flag，低温警告有效标志）</div>
+<div class="line">本字段为低温警告有效标志，仅周期采样模式（THSn_CFG. PSEN=1）时有效</div>
+<div class="line">。本字段的操作为硬件置位，软件写1清零。</div>
+<div class="line">当温度传感器采样值从高于THSn_LTAV.LTARV值到低于THSn_LTAV.LTAVV值，</div>
+<div class="line">就会置位本字段。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HTARF（High-Temperature-Alarm Removed Flag，高温警告解除标志）</div>
+<div class="line">本字段为高温警告解除标志，仅周期采样模式（THSn_CFG. PSEN=1）时有效。</div>
+<div class="line">本字段的操作为硬件置位，软件写1清零。</div>
+<div class="line">当温度传感器采样值从高于THSn_HTAV.HTAVV值到低于THSn_HTAV.HTARV值，</div>
+<div class="line">就会置位本字段。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HTAVF（High-Temperature-Alarm Valid Flag，高温警告有效标志）</div>
+<div class="line">本字段为高温警告有效标志，仅周期采样模式（THSn_CFG. PSEN=1）时有效。</div>
+<div class="line">本字段的操作为硬件置位，软件写1清零。</div>
+<div class="line">当温度传感器采样值从低于THSn_HTAV.HTARV值到高于THSn_HTAV.HTAVV值，</div>
+<div class="line">就会置位本字段。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DOVWF（Data Overwrite Flag，数据覆盖标志）</div>
+<div class="line">本字段为数据覆盖标志。本字段的操作为硬件置位，软件写1清零。</div>
+<div class="line">当DRDYF=1（软件未清零数据有效标志），而且又有新的有效数据时，</div>
+<div class="line">硬件置位本字段，</div>
+<div class="line">表示数据寄存器由于软件未及时读取，产生了上次有效数据被覆盖的情况。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DRDYF（Data Ready Flag，数据有效标志）</div>
+<div class="line">本字段为数据有效标志。本字段的操作为硬件置位，软件写1清零。</div>
+<div class="line">当THSn_DATA寄存器有新的有效数据时，硬件置位本字段，软件读取数据后，</div>
+<div class="line">由软件操作清除本字段。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LTARIE（Low-Temperature-Alarm Removed Interrupt Enable，</div>
+<div class="line">低温警告解除中断使能）</div>
+<div class="line">本字段为低温警告解除中断使能。当本字段使能时，低温警告解除标志</div>
+<div class="line">（LTARF）的状态就会传递到本温度传感器的总中断标志。</div>
+<div class="line">0: 禁止低温警告解除中断；</div>
+<div class="line">1: 使能低温警告解除中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LTAVIE（Low-Temperature-Alarm Valid Interrupt Enable，</div>
+<div class="line">低温警告有效中断使能）</div>
+<div class="line">本字段为低温警告有效中断使能。当本字段使能时，低温警告有效标志</div>
+<div class="line">（LTAVF）的状态就会传递到本温度传感器的总中断标志。</div>
+<div class="line">0: 禁止低温警告有效中断；</div>
+<div class="line">1: 使能低温警告有效中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HTARIE（High-Temperature-Alarm Removed Interrupt Enable，</div>
+<div class="line">高温警告解除中断使能）</div>
+<div class="line">本字段为高温警告解除中断使能。当本字段使能时，高温警告解除标志</div>
+<div class="line">（HTARF）的状态就会传递到本温度传感器的总中断标志。</div>
+<div class="line">0: 禁止高温警告解除中断；</div>
+<div class="line">1: 使能高温警告解除中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HTAVIE（High-Temperature-Alarm Valid Interrupt Enable，</div>
+<div class="line">高温警告有效中断使能）</div>
+<div class="line">本字段为高温警告有效中断使能。当本字段使能时，高温警告有效标志</div>
+<div class="line">（HTAVF）的状态就会传递到本温度传感器的总中断标志。</div>
+<div class="line">0: 禁止高温警告有效中断；</div>
+<div class="line">1: 使能高温警告有效中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DOVWIE（Data Overwrite Interrupt Enable，数据覆盖中断使能）</div>
+<div class="line">本字段为数据覆盖中断使能。当本字段使能时，数据覆盖标志（DOVWF）</div>
+<div class="line">的状态就会传递到本温度传感器的总中断标志。</div>
+<div class="line">0: 禁止数据覆盖中断；</div>
+<div class="line">1: 使能数据覆盖中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DRDYIE（Data Ready Interrupt Enable，数据有效中断使能）</div>
+<div class="line">本字段为数据有效中断使能。当本字段使能时，数据有效标志（DRDYF）</div>
+<div class="line">的状态就会传递到本温度传感器的总中断标志。</div>
+<div class="line">0: 禁止数据有效中断；</div>
+<div class="line">1: 使能数据有效中断。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x114-n-0x20-thsn-htav">
+<h2><span class="section-number">13.4.6.8. </span>0x114+n*0x20 THSn_HTAV<a class="headerlink" href="#x114-n-0x20-thsn-htav" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>THS高温报警阈值设置(Channel N High-Temperature Alarm Value)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HTAE（High-Temperature-Alarm Enable, 高温警报使能）</div>
+<div class="line">0: 禁止高温警报功能，高温警报阈值无效；</div>
+<div class="line">1: 使能高温警报功能，高温警报阈值有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">HTARV（High-Temperature-Alarm Remove Value,高温警报解除阈值）</div>
+<div class="line">此字段规定了高温警报解除阈值，当温度从高于高温警报有效阈值</div>
+<div class="line">（HTAVV）的数值，降到高温警报解除阈值（HTARV）以下，</div>
+<div class="line">高温警报解除标志（HTARF）就会被硬件置位。</div>
+<div class="line">注意：HTARV&lt; HTAVV。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">HTAVV（High-Temperature-Alarm Valid Value,高温警报有效阈值）</div>
+<div class="line">此字段规定了高温警报有效阈值，当温度从低于高温警报解除阈值</div>
+<div class="line">（HTARV）的数值，升到高温警报有效阈值（HTAVV）以上，</div>
+<div class="line">高温警报有效标志（HTAVF）就会被硬件置位。</div>
+<div class="line">注意：HTARV&lt; HTAVV。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x118-n-0x20-thsn-ltav">
+<h2><span class="section-number">13.4.6.9. </span>0x118+n*0x20  THSn_LTAV<a class="headerlink" href="#x118-n-0x20-thsn-ltav" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>THS低温报警阈值设置(Channel N Low-Temperature Alarm Value)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LTAE（Low-Temperature-Alarm Enable, 低温警报使能）</div>
+<div class="line">0: 禁止低温警报功能，低温警报阈值无效；</div>
+<div class="line">1: 使能低温警报功能，低温警报阈值有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">LTARV（Low-Temperature-Alarm Remove Value, 低温警报解除阈值）</div>
+<div class="line">此字段规定了低温警报解除阈值，当温度从低于低温警报有效阈值</div>
+<div class="line">（LTAVV）的数值，升到低温警报解除阈值（LTARV）以上，</div>
+<div class="line">低温警报解除标志（LTARF）就会被硬件置位。</div>
+<div class="line">注意：LTAVV&lt; LTARV。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">LTAVV（Low-Temperature-Alarm Valid Value, 低温警报有效阈值）</div>
+<div class="line">此字段规定了低温警报有效阈值，当温度从高于低温警报解除阈值</div>
+<div class="line">（LTARV）的数值，降到低温警报有效阈值（LTAVV）以下，</div>
+<div class="line">低温警报有效标志（LTAVF）就会被硬件置位。</div>
+<div class="line">注意：LTAVV&lt; LTARV。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-version">
+<h2><span class="section-number">13.4.6.10. </span>0xFFC  VERSION<a class="headerlink" href="#xffc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>THS版本号(THS Version)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version（Version，模块版本号）</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../svo/index.html" class="btn btn-neutral float-right" title="14. 伺服系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="13.4.5. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

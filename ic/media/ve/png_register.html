@@ -1,0 +1,1404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.3.8. PNG寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.3.9. 图像信息寄存器描述" href="pic_register.html" />
+    <link rel="prev" title="10.3.7. H264寄存器描述" href="h264_register.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../de/index.html">10.1. Display Engine (DE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.3. Video Engine (VE)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.3.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="h264.html">10.3.2. H264模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jpeg.html">10.3.3. JPEG模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="png.html">10.3.4. PNG模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="register.html">10.3.5. 寄存器地址空间映射</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ve_top_register.html">10.3.6. VE_TOP寄存器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="h264_register.html">10.3.7. H264寄存器描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.3.8. PNG寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x0c00-inflate-int">10.3.8.1. 0x0C00 INFLATE_INT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c04-inflate-status">10.3.8.2. 0x0C04 INFLATE_STATUS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c08-inflate-start">10.3.8.3. 0x0C08 INFLATE_START</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c10-inflate-ctrl">10.3.8.4. 0x0C10 INFLATE_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c14-png-size">10.3.8.5. 0x0C14 PNG_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c18-png-output-stride">10.3.8.6. 0x0C18 PNG_OUTPUT_STRIDE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c1c-png-output-format">10.3.8.7. 0x0C1C PNG_OUTPUT_FORMAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c20-input-bs-start-addr">10.3.8.8. 0x0C20 INPUT_BS_START_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c24-input-bs-end-addr">10.3.8.9. 0x0C24 INPUT_BS_END_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c28-input-bs-offset">10.3.8.10. 0x0C28 INPUT_BS_OFFSET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c2c-input-bs-length">10.3.8.11. 0x0C2C INPUT_BS_LENGTH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c30-output-buf-addr">10.3.8.12. 0x0C30 OUTPUT_BUF_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c34-output-max-length">10.3.8.13. 0x0C34 OUTPUT_MAX_LENGTH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c38-output-count">10.3.8.14. 0x0C38 OUTPUT_COUNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c40-inflate-window-buf-addr">10.3.8.15. 0x0C40 INFLATE_WINDOW_BUF_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c44-png-pal-buf-addr">10.3.8.16. 0x0C44 PNG_PAL_BUF_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c48-data-valid">10.3.8.17. 0x0C48 DATA_VALID</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c4c-png-palette-addr">10.3.8.18. 0x0C4C PNG_PALETTE_ADDR</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pic_register.html">10.3.9. 图像信息寄存器描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jpeg_register.html">10.3.10. JPEG寄存器描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsi/index.html">10.6. MIPI DSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">10.8. AUDIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">10.9. Integrated Interchip Sound (I2S)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.3. </span>VE</a> &raquo;</li>
+        
+      <li><span class="section-number">10.3.8. </span>PNG寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="png">
+<h1><span class="section-number">10.3.8. </span>PNG寄存器描述<a class="headerlink" href="#png" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x0c00-inflate-int">
+<h2><span class="section-number">10.3.8.1. </span>0x0C00 INFLATE_INT<a class="headerlink" href="#x0c00-inflate-int" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Inflate 中断使能 (Inflate Interrupt Enable)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BIT_REQ_INT_EN</div>
+<div class="line">请求bitsteam中断控制</div>
+<div class="line">0：不使能</div>
+<div class="line">1：使能</div>
+<div class="line">DEC_REQ_INT_EN用于控制解码所需要的原始码流不够需要请求下笔</div>
+<div class="line">数据时是否向CPU发出中断请求。当DEC_REQ_INT_EN为1时，产生中</div>
+<div class="line">断请求，否则不产生中断请求。是否产生中断请求，不影响相应状</div>
+<div class="line">态标志位的产生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEC_ERR_INT_EN</div>
+<div class="line">解码error中断控制</div>
+<div class="line">0：不使能</div>
+<div class="line">1：使能</div>
+<div class="line">DEC_ERR_INT_EN用于控制解码发生错误结束后是否向CPU发出中断请</div>
+<div class="line">求。当DEC_ERR_INT_EN为1时，产生中断请求，否则不产生中断请求。</div>
+<div class="line">是否产生中断请求，不影响相应状态标志位的产生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEC_FINISH_INIT</div>
+<div class="line">解码结束中断控制</div>
+<div class="line">0：不使能</div>
+<div class="line">1：使能</div>
+<div class="line">DEC_FINISH_INT_EN用于控制正常解码结束后是否向CPU发出中断请</div>
+<div class="line">求。当DEC_FINISH_INT_EN为1时，产生中断请求，否则不产生中断</div>
+<div class="line">请求。是否产生中断请求，不影响相应状态标志位的产生。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c04-inflate-status">
+<h2><span class="section-number">10.3.8.2. </span>0x0C04 INFLATE_STATUS<a class="headerlink" href="#x0c04-inflate-status" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Inflate 解码状态 (Inflate Status)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:22</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEFILTER_ERR</div>
+<div class="line">[23]:0表示defilter解码数据足够;</div>
+<div class="line-block">
+<div class="line">1表示defilter解码数据不足;</div>
+</div>
+<div class="line">[22]:0表示filter类型正确;</div>
+<div class="line-block">
+<div class="line">1表示filter类型错误;</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>21:19</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WDMA_ERR</div>
+<div class="line">写 DMA 出错</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18:15</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RDMA_ERR</div>
+<div class="line">读 DMA 出错</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14:11</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LZ77_ERR</div>
+<div class="line">LZ77解码error</div>
+<div class="line">[14]:0表示LZ77解码数据足够;</div>
+<div class="line-block">
+<div class="line">1表示LZ77解码数据不足;</div>
+</div>
+<div class="line">[13]:0表示LZ77 huffman码值正确;</div>
+<div class="line-block">
+<div class="line">1表示LZ77 huffman码值错误;</div>
+</div>
+<div class="line">[12]:0表示LZ77 huffman码表1解码正确;</div>
+<div class="line-block">
+<div class="line">1表示LZ77 huffman码表1解码错误;</div>
+</div>
+<div class="line">[11]:0表示LZ77 huffman码表2解码正确;</div>
+<div class="line-block">
+<div class="line">1表示LZ77 huffman码表2解码错误;</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10:8</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HUFF_ERR</div>
+<div class="line">huffman解码error</div>
+<div class="line">[8]：0表示cl 个数正确；</div>
+<div class="line-block">
+<div class="line">1表示cl 个数不匹配；</div>
+</div>
+<div class="line">[9]：0表示cl huffman解码正确；</div>
+<div class="line-block">
+<div class="line">1表示cl huffman解码错误</div>
+</div>
+<div class="line">[8]：0表示ccl解码数据足够；</div>
+<div class="line-block">
+<div class="line">1表示ccl解码数据不足；</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:5</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PC_ERR</div>
+<div class="line">png文件头解码错误</div>
+<div class="line">[7]: 0表示deflate文件头解码数据足够；</div>
+<div class="line-block">
+<div class="line">1表示deflate文件头解码数据不足</div>
+</div>
+<div class="line">[6]：0表示deflate文件头参数正确；</div>
+<div class="line-block">
+<div class="line">1表示deflate文件头参数错误</div>
+</div>
+<div class="line">[5]：0表示deflate文件头解码正确；</div>
+<div class="line-block">
+<div class="line">1表示deflate文件头解码错误</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_BUF_OVERFLOW</div>
+<div class="line">0: 无</div>
+<div class="line">1：当前error的原因是输出buffer已满</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BIT_REQ_INT_FLAG</div>
+<div class="line">请求bitstream标记状态</div>
+<div class="line">当执行当前任务过程中发现码流不够，则暂停当前任务并向CPU发</div>
+<div class="line">送中断信号后，该位置1。软件向该位写1则清除相应中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERR_INIT_FLAG</div>
+<div class="line">解码error标记状态</div>
+<div class="line">当执行当前任务过程中发现码流错误，则停止当前任务并向CPU发</div>
+<div class="line">送中断信号后，该位置1。软件向该位写1则清除相应中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FINISH_INIT_FLAG</div>
+<div class="line">解码结束标记状态</div>
+<div class="line">当完成当前任务并向CPU发送中断信号后，该位置1。主控向该位</div>
+<div class="line">写1则清除相应中断。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c08-inflate-start">
+<h2><span class="section-number">10.3.8.3. </span>0x0C08 INFLATE_START<a class="headerlink" href="#x0c08-inflate-start" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Inflate 解码开始 (Inflate START)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">START</div>
+<div class="line">0: 未开始解码</div>
+<div class="line">1: 开始解码</div>
+<div class="line">写“1”会自动清零</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c10-inflate-ctrl">
+<h2><span class="section-number">10.3.8.4. </span>0x0C10 INFLATE_CTRL<a class="headerlink" href="#x0c10-inflate-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Inflate 解码控制 (Inflate Control)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BIT_DEPTH</div>
+<div class="line">位宽</div>
+<div class="line">0: 8 bits</div>
+<div class="line">只支持 8 bit</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x6</p></td>
+<td><div class="line-block">
+<div class="line">COLOR_TYPE</div>
+<div class="line">格式类型</div>
+<div class="line">0: reserved</div>
+<div class="line">1: reserved</div>
+<div class="line">2: PNG24</div>
+<div class="line">3:索引彩色图像</div>
+<div class="line">4: reserved</div>
+<div class="line">5: reserved</div>
+<div class="line">6: PNG32</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEC_TYPE_FLAG</div>
+<div class="line">解码类型</div>
+<div class="line">0: Inflate(gzip)</div>
+<div class="line">1: Inflate and png defilter</div>
+<div class="line">此标记用来指示解码类型,当解码类型为Inflate and png</div>
+<div class="line">defilter,需要设置PNG相关参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c14-png-size">
+<h2><span class="section-number">10.3.8.5. </span>0x0C14 PNG_SIZE<a class="headerlink" href="#x0c14-png-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PNG 图像大小 (PNG Picture Size)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HEIGHT</div>
+<div class="line">PNG图片高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td></td>
+<td></td>
+<td><div class="line-block">
+<div class="line">WIDTH</div>
+<div class="line">PNG图片宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c18-png-output-stride">
+<h2><span class="section-number">10.3.8.6. </span>0x0C18 PNG_OUTPUT_STRIDE<a class="headerlink" href="#x0c18-png-output-stride" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PNG 输出线宽 (PNG Line Stride)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:0</p></td>
+<td><p>R /W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STRIDE</div>
+<div class="line">PNG输出对齐</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c1c-png-output-format">
+<h2><span class="section-number">10.3.8.7. </span>0x0C1C PNG_OUTPUT_FORMAT<a class="headerlink" href="#x0c1c-png-output-format" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PNG解码输出颜色格式 (PNG Output Format)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTPUT_FORMAT</div>
+<div class="line">0: ARGB8888</div>
+<div class="line">1: ABGR8888</div>
+<div class="line">2: RGBA8888</div>
+<div class="line">3: BGRA8888</div>
+<div class="line">4: RGB888</div>
+<div class="line">5: BGR888</div>
+<div class="line">PNG8, PNG24, PNG32都可以设置以上任意像素格式,当PNG原图中</div>
+<div class="line">不包含alpha通道的时候，选择有alpha通道的格式，alpha值固定</div>
+<div class="line">为0xFF。当PNG原图中包含alpha通道，输出格式中不含alpha，</div>
+<div class="line">则alpha信息丢失。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c20-input-bs-start-addr">
+<h2><span class="section-number">10.3.8.8. </span>0x0C20 INPUT_BS_START_ADDR<a class="headerlink" href="#x0c20-input-bs-start-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输入码流起始地址 (Input Bitstream Start Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_BS_START_ADDR[31:4]</div>
+<div class="line">原始码流缓冲区起始位置,低4位固定为0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">固定为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c24-input-bs-end-addr">
+<h2><span class="section-number">10.3.8.9. </span>0x0C24 INPUT_BS_END_ADDR<a class="headerlink" href="#x0c24-input-bs-end-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输入码流结束地址 (Input Bitstream End Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_BS_END_ADDR[31:4],</div>
+<div class="line">原始码流缓冲区结束位置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>RO</p></td>
+<td><p>0xF</p></td>
+<td><div class="line-block">
+<div class="line">固定为全1</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c28-input-bs-offset">
+<h2><span class="section-number">10.3.8.10. </span>0x0C28 INPUT_BS_OFFSET<a class="headerlink" href="#x0c28-input-bs-offset" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输入码流偏移 (Input Bitstream Offset)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0000_0000</p></td>
+<td><div class="line-block">
+<div class="line">BIT_OFFSET</div>
+<div class="line">当前有效配置数据开始的位置，该位置是相对于</div>
+<div class="line">INPUT_BS_START_ADDR计算的，以bit为单位。最大128MB，</div>
+<div class="line">也就是说码流缓冲区最大128MB。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c2c-input-bs-length">
+<h2><span class="section-number">10.3.8.11. </span>0x0C2C INPUT_BS_LENGTH<a class="headerlink" href="#x0c2c-input-bs-length" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输入码流长度 (Input Bitstream Length)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0000_0000</p></td>
+<td><div class="line-block">
+<div class="line">BIT_LENGTH</div>
+<div class="line">当前配置的有效数据长度，以bit为单位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c30-output-buf-addr">
+<h2><span class="section-number">10.3.8.12. </span>0x0C30 OUTPUT_BUF_ADDR<a class="headerlink" href="#x0c30-output-buf-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>解码输出地址 (Output Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">解码输出buffer地址的高22bits</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c34-output-max-length">
+<h2><span class="section-number">10.3.8.13. </span>0x0C34 OUTPUT_MAX_LENGTH<a class="headerlink" href="#x0c34-output-max-length" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>解码输出缓存最大长度 (Output Buffer Max Length)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">解码输出buffer最大长度，以byte为单位。当解码输出的长度大于</div>
+<div class="line">OUTPUT_BUF_ADDR的时候，将会停止解码，防止越界访问内存</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c38-output-count">
+<h2><span class="section-number">10.3.8.14. </span>0x0C38 OUTPUT_COUNT<a class="headerlink" href="#x0c38-output-count" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>解码输出数据长度 (Output Data Count)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">解码输出到OUTPUT_BUF_ADDR的数据，以byte为单位的计数,</div>
+<div class="line">启动解码后将从零开始计数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c40-inflate-window-buf-addr">
+<h2><span class="section-number">10.3.8.15. </span>0x0C40 INFLATE_WINDOW_BUF_ADDR<a class="headerlink" href="#x0c40-inflate-window-buf-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>LZ77 窗口缓存地址 (Inflate Window Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">LZ77窗口buffer地址的高22bits</div>
+<div class="line">LZ77的DICT Buffer大小为32K Bytes</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">LZ77窗口buffer地址低10bits固定为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c44-png-pal-buf-addr">
+<h2><span class="section-number">10.3.8.16. </span>0x0C44 PNG_PAL_BUF_ADDR<a class="headerlink" href="#x0c44-png-pal-buf-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PNG索引色缓存地址 (PNG Pallete Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">PNG索引色缓存buffer地址的高22bits</div>
+<div class="line">大小为图像宽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">LZ77窗口buffer地址低10bits固定为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c48-data-valid">
+<h2><span class="section-number">10.3.8.17. </span>0x0C48 DATA_VALID<a class="headerlink" href="#x0c48-data-valid" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输入码流数据有效标志 (Data Valid Flag)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_VALID</div>
+<div class="line">如果该位置1，则表示当前配置的码流数据已经有效写入原始码流</div>
+<div class="line">缓冲区，VE可以预取码流数据到内部的缓冲区，等待启动解码；</div>
+<div class="line">如果该位置0，则表示码流数据还没有正确写入原始码流缓冲区。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_LAST</div>
+<div class="line">该位为1表示当前配置的数据是一个完整解码的最后一笔数据；</div>
+<div class="line">该位为0则表示当前配置的数据不是一个完整解码的最后一笔数</div>
+<div class="line">据，当前解码任务完成后需要硬件保持状态，待下笔数据配置</div>
+<div class="line">后继续完成一个完整解码。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_FIRST</div>
+<div class="line">该位为1表示当前配置的数据是一个完整解码的第一笔数据；该</div>
+<div class="line">位为0则表示当前配置的数据不是一个完整解码的第一笔数据，</div>
+<div class="line">当前解码任务需要承接前一次的解码继续完成一个完整解码。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c4c-png-palette-addr">
+<h2><span class="section-number">10.3.8.18. </span>0x0C4C PNG_PALETTE_ADDR<a class="headerlink" href="#x0c4c-png-palette-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PNG 索引表地址 (PNG Palette Buffet Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">PNG调色板地址的高22bits</div>
+<div class="line">PNG调色板空间的大小为1K Bytes，按照索引顺序排列，包含</div>
+<div class="line">A，R, G, B四个通道，总共可以索引256色</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">PNG调色板地址低10bits固定为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="pic_register.html" class="btn btn-neutral float-right" title="10.3.9. 图像信息寄存器描述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="h264_register.html" class="btn btn-neutral float-left" title="10.3.7. H264寄存器描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

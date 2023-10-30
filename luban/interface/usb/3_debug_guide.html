@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.12.2. 调试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.12.3. 测试指南" href="4_test_guide.html" />
+    <link rel="prev" title="7.12.1. 配置指南" href="2_config_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.12. USB 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.12.1. 配置指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.12.2. 调试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#usb-host">7.12.2.1. USB Host 调试</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#usb">7.12.2.1.1. 查看 USB 设备</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#sysfs">7.12.2.1.2. Sysfs 节点</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id2">7.12.2.1.3. USB 总线分析仪</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#usbmon">7.12.2.1.4. usbmon</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#usb-device">7.12.2.2. USB Device 调试</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">7.12.2.2.1. 查看 USB 设备</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">7.12.2.2.2. Sysfs 节点</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.12.2.2.3. 抓包工具</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.12.3. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">7.12.4. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_host_design_guide.html">7.12.5. USB Host 子系统代码架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_device_design_guide.html">7.12.6. USB Device 子系统代码架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.12.7. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.12. </span>USB 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.12.2. </span>调试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.12.2. </span>调试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="usb-host">
+<h2><span class="section-number">7.12.2.1. </span>USB Host 调试<a class="headerlink" href="#usb-host" title="永久链接至标题">¶</a></h2>
+<div class="section" id="usb">
+<h3><span class="section-number">7.12.2.1.1. </span>查看 USB 设备<a class="headerlink" href="#usb" title="永久链接至标题">¶</a></h3>
+<p>在单板的 USB Host 端口有设备插入或者拔出时，单板串口会有打印提示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1">#</span>
+<span class="p">[</span> <span class="mf">6792.678130</span><span class="p">]</span> <span class="n">usb</span> <span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="n">new</span> <span class="n">high</span><span class="o">-</span><span class="n">speed</span> <span class="n">USB</span> <span class="n">device</span> <span class="n">number</span> <span class="mi">2</span> <span class="n">using</span> <span class="n">aic</span><span class="o">-</span><span class="n">ehci</span>
+<span class="p">[</span> <span class="mf">6792.884601</span><span class="p">]</span> <span class="n">usb</span><span class="o">-</span><span class="n">storage</span> <span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mf">1.0</span><span class="p">:</span> <span class="n">USB</span> <span class="n">Mass</span> <span class="n">Storage</span> <span class="n">device</span> <span class="n">detected</span>
+<span class="p">[</span> <span class="mf">6792.910596</span><span class="p">]</span> <span class="n">scsi</span> <span class="n">host0</span><span class="p">:</span> <span class="n">usb</span><span class="o">-</span><span class="n">storage</span> <span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mf">1.0</span>
+<span class="p">[</span> <span class="mf">6793.970429</span><span class="p">]</span> <span class="n">scsi</span> <span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span> <span class="n">Direct</span><span class="o">-</span><span class="n">Access</span>     <span class="n">SanDisk</span>  <span class="n">Cruzer</span> <span class="n">Blade</span>     <span class="mf">1.00</span> <span class="n">PQ</span><span class="p">:</span> <span class="mi">0</span> <span class="n">ANSI</span><span class="p">:</span> <span class="mi">6</span>
+<span class="p">[</span> <span class="mf">6793.995300</span><span class="p">]</span> <span class="n">sd</span> <span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">sda</span><span class="p">]</span> <span class="mi">30842880</span> <span class="mi">512</span><span class="o">-</span><span class="n">byte</span> <span class="n">logical</span> <span class="n">blocks</span><span class="p">:</span> <span class="p">(</span><span class="mf">15.8</span> <span class="n">GB</span><span class="o">/</span><span class="mf">14.7</span> <span class="n">GiB</span><span class="p">)</span>
+<span class="p">[</span> <span class="mf">6794.018466</span><span class="p">]</span> <span class="n">sd</span> <span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">sda</span><span class="p">]</span> <span class="n">Write</span> <span class="n">Protect</span> <span class="ow">is</span> <span class="n">off</span>
+<span class="p">[</span> <span class="mf">6794.025383</span><span class="p">]</span> <span class="n">sd</span> <span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">sda</span><span class="p">]</span> <span class="n">Write</span> <span class="n">cache</span><span class="p">:</span> <span class="n">disabled</span><span class="p">,</span> <span class="n">read</span> <span class="n">cache</span><span class="p">:</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">doesn</span><span class="s1">&#39;t support DPO or FUA</span>
+<span class="p">[</span> <span class="mf">6794.055267</span><span class="p">]</span>  <span class="n">sda</span><span class="p">:</span> <span class="n">sda1</span>
+<span class="p">[</span> <span class="mf">6794.074720</span><span class="p">]</span> <span class="n">sd</span> <span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">sda</span><span class="p">]</span> <span class="n">Attached</span> <span class="n">SCSI</span> <span class="n">removable</span> <span class="n">disk</span>
+<span class="p">[</span> <span class="mf">6806.436142</span><span class="p">]</span> <span class="n">usb</span> <span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="n">USB</span> <span class="n">disconnect</span><span class="p">,</span> <span class="n">device</span> <span class="n">number</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>也可以使用 <code class="docutils literal notranslate"><span class="pre">lsusb</span></code> 命令查看目前系统 USB 总线的情况：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># lsusb</span>
+<span class="n">Bus</span> <span class="mi">001</span> <span class="n">Device</span> <span class="mi">001</span><span class="p">:</span> <span class="n">ID</span> <span class="mi">1</span><span class="n">d6b</span><span class="p">:</span><span class="mi">0002</span>
+<span class="n">Bus</span> <span class="mi">001</span> <span class="n">Device</span> <span class="mi">003</span><span class="p">:</span> <span class="n">ID</span> <span class="mi">0781</span><span class="p">:</span><span class="mi">5567</span>
+</pre></div>
+</div>
+<p>如果是 PC 上的 Linux 发行版， <code class="docutils literal notranslate"><span class="pre">lsusb</span> <span class="pre">-v</span></code> 命令可以查看 USB 设备的详细信息。但是单板上使用的 <code class="docutils literal notranslate"><span class="pre">lsusb</span> <span class="pre">-v</span></code> 被进行了简化。</p>
+</div>
+<div class="section" id="sysfs">
+<h3><span class="section-number">7.12.2.1.2. </span>Sysfs 节点<a class="headerlink" href="#sysfs" title="永久链接至标题">¶</a></h3>
+<p>也可以使用 <code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/usb/devices</span></code> 文件节点查看 USB 设备的详细信息：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># mount -t debugfs none /sys/kernel/debug</span>
+
+<span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># cat /sys/kernel/debug/usb/devices</span>
+
+<span class="n">T</span><span class="p">:</span>  <span class="n">Bus</span><span class="o">=</span><span class="mi">01</span> <span class="n">Lev</span><span class="o">=</span><span class="mi">00</span> <span class="n">Prnt</span><span class="o">=</span><span class="mi">00</span> <span class="n">Port</span><span class="o">=</span><span class="mi">00</span> <span class="n">Cnt</span><span class="o">=</span><span class="mi">00</span> <span class="n">Dev</span><span class="c1">#=  1 Spd=480  MxCh= 1</span>
+<span class="n">B</span><span class="p">:</span>  <span class="n">Alloc</span><span class="o">=</span>  <span class="mi">0</span><span class="o">/</span><span class="mi">800</span> <span class="n">us</span> <span class="p">(</span> <span class="mi">0</span><span class="o">%</span><span class="p">),</span> <span class="c1">#Int=  0, #Iso=  0</span>
+<span class="n">D</span><span class="p">:</span>  <span class="n">Ver</span><span class="o">=</span> <span class="mf">2.00</span> <span class="n">Cls</span><span class="o">=</span><span class="mi">09</span><span class="p">(</span><span class="n">hub</span>  <span class="p">)</span> <span class="n">Sub</span><span class="o">=</span><span class="mi">00</span> <span class="n">Prot</span><span class="o">=</span><span class="mi">00</span> <span class="n">MxPS</span><span class="o">=</span><span class="mi">64</span> <span class="c1">#Cfgs=  1</span>
+<span class="n">P</span><span class="p">:</span>  <span class="n">Vendor</span><span class="o">=</span><span class="mi">1</span><span class="n">d6b</span> <span class="n">ProdID</span><span class="o">=</span><span class="mi">0002</span> <span class="n">Rev</span><span class="o">=</span> <span class="mf">5.10</span>
+<span class="n">S</span><span class="p">:</span>  <span class="n">Manufacturer</span><span class="o">=</span><span class="n">Linux</span> <span class="mf">5.10</span><span class="o">.</span><span class="mi">44</span><span class="o">-</span><span class="mi">00071</span><span class="o">-</span><span class="n">g935288d48127</span><span class="o">-</span><span class="n">dirty</span> <span class="n">ehci_hcd</span>
+<span class="n">S</span><span class="p">:</span>  <span class="n">Product</span><span class="o">=</span><span class="n">EHCI</span> <span class="n">Host</span> <span class="n">Controller</span>
+<span class="n">S</span><span class="p">:</span>  <span class="n">SerialNumber</span><span class="o">=</span><span class="mf">10220000.</span><span class="n">usb</span>
+<span class="n">C</span><span class="p">:</span><span class="o">*</span> <span class="c1">#Ifs= 1 Cfg#= 1 Atr=e0 MxPwr=  0mA</span>
+<span class="n">I</span><span class="p">:</span><span class="o">*</span> <span class="n">If</span><span class="c1">#= 0 Alt= 0 #EPs= 1 Cls=09(hub  ) Sub=00 Prot=00 Driver=hub</span>
+<span class="n">E</span><span class="p">:</span>  <span class="n">Ad</span><span class="o">=</span><span class="mi">81</span><span class="p">(</span><span class="n">I</span><span class="p">)</span> <span class="n">Atr</span><span class="o">=</span><span class="mi">03</span><span class="p">(</span><span class="n">Int</span><span class="o">.</span><span class="p">)</span> <span class="n">MxPS</span><span class="o">=</span>   <span class="mi">4</span> <span class="n">Ivl</span><span class="o">=</span><span class="mi">256</span><span class="n">ms</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3><span class="section-number">7.12.2.1.3. </span>USB 总线分析仪<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>在 USB 设备不能正常枚举或者 USB 通讯过程中出现问题时，我们一般使用 USB 总线分析仪，接入到 USB 总线上进行旁路抓包分析。</p>
+<p><img alt="image0" src="../../../_images/usb_analy_instrument.png" /></p>
+<p>抓包数据的分析界面如下图所示：</p>
+<p><img alt="image1" src="../../../_images/usb_analy_ui.png" /></p>
+<p>USB 总线分析仪对抓取的数据包进行了解析，用起来非常方便。市面上这类仪器大同小异，非常容易上手。</p>
+</div>
+<div class="section" id="usbmon">
+<h3><span class="section-number">7.12.2.1.4. </span>usbmon<a class="headerlink" href="#usbmon" title="永久链接至标题">¶</a></h3>
+<p>在没有外部 USB 分析仪的情况下，也可以使用 Linux 内核自带的 USB 抓包模块 usbmon 来抓取数据包进行分析。</p>
+<ul class="simple">
+<li><p>首先得打开 Linux 内核中的 usbmon 配置：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Device</span> <span class="n">Drivers</span> <span class="o">&gt;</span> <span class="n">USB</span> <span class="n">support</span>
+
+ <span class="o">&lt;*&gt;</span>   <span class="n">USB</span> <span class="n">Monitor</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>重新编译内核后就可以进行抓包了：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># mount -t debugfs none /sys/kernel/debug</span>
+
+<span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># ls /sys/kernel/debug/usb/usbmon/</span>
+<span class="mi">0</span><span class="n">s</span>  <span class="mi">0</span><span class="n">u</span>  <span class="mi">1</span><span class="n">s</span>  <span class="mi">1</span><span class="n">t</span>  <span class="mi">1</span><span class="n">u</span>  <span class="mi">2</span><span class="n">s</span>  <span class="mi">2</span><span class="n">t</span>  <span class="mi">2</span><span class="n">u</span>
+<span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># cat /sys/kernel/debug/usb/usbmon/0u</span>
+<span class="n">c1b0e380</span> <span class="mi">68846726</span> <span class="n">C</span> <span class="n">Ii</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">1</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2048</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">02</span>
+<span class="n">c1b0e380</span> <span class="mi">68846851</span> <span class="n">S</span> <span class="n">Ii</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">1</span> <span class="o">-</span><span class="mi">115</span><span class="p">:</span><span class="mi">2048</span> <span class="mi">4</span> <span class="o">&lt;</span>
+<span class="n">c7a15900</span> <span class="mi">68847426</span> <span class="n">S</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="n">s</span> <span class="n">a3</span> <span class="mi">00</span> <span class="mi">0000</span> <span class="mi">0001</span> <span class="mi">0004</span> <span class="mi">4</span> <span class="o">&lt;</span>
+<span class="n">c7a15900</span> <span class="mi">68847507</span> <span class="n">C</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">01050100</span>
+<span class="n">c7a15900</span> <span class="mi">68847595</span> <span class="n">S</span> <span class="n">Co</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="n">s</span> <span class="mi">23</span> <span class="mi">01</span> <span class="mi">0010</span> <span class="mi">0001</span> <span class="mi">0000</span> <span class="mi">0</span>
+<span class="n">c7a15900</span> <span class="mi">68847652</span> <span class="n">C</span> <span class="n">Co</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="n">c7a15900</span> <span class="mi">68847732</span> <span class="n">S</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="n">s</span> <span class="n">a3</span> <span class="mi">00</span> <span class="mi">0000</span> <span class="mi">0001</span> <span class="mi">0004</span> <span class="mi">4</span> <span class="o">&lt;</span>
+<span class="n">c7a15900</span> <span class="mi">68847790</span> <span class="n">C</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">01050000</span>
+<span class="n">c7a15900</span> <span class="mi">68890082</span> <span class="n">S</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="n">s</span> <span class="n">a3</span> <span class="mi">00</span> <span class="mi">0000</span> <span class="mi">0001</span> <span class="mi">0004</span> <span class="mi">4</span> <span class="o">&lt;</span>
+<span class="n">c7a15900</span> <span class="mi">68890154</span> <span class="n">C</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">01050000</span>
+<span class="n">c7a15900</span> <span class="mi">68940072</span> <span class="n">S</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="n">s</span> <span class="n">a3</span> <span class="mi">00</span> <span class="mi">0000</span> <span class="mi">0001</span> <span class="mi">0004</span> <span class="mi">4</span> <span class="o">&lt;</span>
+<span class="n">c7a15900</span> <span class="mi">68940142</span> <span class="n">C</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">01050000</span>
+<span class="n">c7a15900</span> <span class="mi">68990067</span> <span class="n">S</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="n">s</span> <span class="n">a3</span> <span class="mi">00</span> <span class="mi">0000</span> <span class="mi">0001</span> <span class="mi">0004</span> <span class="mi">4</span> <span class="o">&lt;</span>
+<span class="n">c7a15900</span> <span class="mi">68990129</span> <span class="n">C</span> <span class="n">Ci</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">001</span><span class="p">:</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">01050000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="usb-device">
+<h2><span class="section-number">7.12.2.2. </span>USB Device 调试<a class="headerlink" href="#usb-device" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">7.12.2.2.1. </span>查看 USB 设备<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>当单板充当 USB Device 连接到 PC 主机 USB Host 端口时，可以在主机上查看 USB 设备有没有成功被枚举：</p>
+<ul>
+<li><p>Linux 主机，可以通过 <code class="docutils literal notranslate"><span class="pre">lsusb</span></code> 命令进行查看。</p></li>
+<li><p>Windows 主机，可以通过 <code class="docutils literal notranslate"><span class="pre">设备管理器</span></code> 命令进行查看：</p>
+<blockquote>
+<div><p><img alt="image2" src="../../../_images/dev_manager.png" /></p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">7.12.2.2.2. </span>Sysfs 节点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在单板上也可以通过 <code class="docutils literal notranslate"><span class="pre">/sys/kernel/debug/usb/xxxx.usb/</span></code> 文件夹下的文件节点，对 UDC 驱动进行配置：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># ls /sys/class/udc</span>
+<span class="mf">10200000.</span><span class="n">usb</span>
+<span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># ls /sys/kernel/debug/usb/10200000.usb/</span>
+<span class="n">dr_mode</span>    <span class="n">ep1out</span>     <span class="n">ep3in</span>      <span class="n">ep4out</span>     <span class="n">params</span>     <span class="n">testmode</span>
+<span class="n">ep0</span>        <span class="n">ep2in</span>      <span class="n">ep3out</span>     <span class="n">fifo</span>       <span class="n">regdump</span>
+<span class="n">ep1in</span>      <span class="n">ep2out</span>     <span class="n">ep4in</span>      <span class="n">hw_params</span>  <span class="n">state</span>
+<span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1">#</span>
+</pre></div>
+</div>
+<p>例如可以 dump 寄存器：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">aic</span><span class="o">@</span><span class="p">]</span> <span class="c1"># cat /sys/kernel/debug/usb/10200000.usb/regdump</span>
+<span class="n">GOTGCTL</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GOTGINT</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GAHBCFG</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GUSBCFG</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GRSTCTL</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GINTSTS</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GINTMSK</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GRXSTSR</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GRXFSIZ</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GNPTXFSIZ</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+<span class="n">GNPTXSTS</span> <span class="o">=</span> <span class="mh">0x00000000</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">7.12.2.2.3. </span>抓包工具<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>和 USB Host 调试一样，抓包可以使用专门的 USB 总线分析仪或者在 Linux 主机上使用 usbmon 进行抓包。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="4_test_guide.html" class="btn btn-neutral float-right" title="7.12.3. 测试指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="2_config_guide.html" class="btn btn-neutral float-left" title="7.12.1. 配置指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

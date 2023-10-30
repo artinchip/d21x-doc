@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.11. JTAG 解锁 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7.12. USB 升级模式" href="usb_mode.html" />
+    <link rel="prev" title="7.10. 安全启动" href="secure_boot.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">6. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. 启动</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">7.1. 模块概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_flow.html">7.2. 整体流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_cfg.html">7.3. 启动配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_image_format.html">7.4. 镜像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clock_cfg.html">7.5. 时钟配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmc_boot.html">7.6. SD/eMMC 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sd_fat32_boot.html">7.7. SD FAT32 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nand_boot.html">7.8. SPI NAND 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nor_boot.html">7.9. SPI NOR 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secure_boot.html">7.10. 安全启动</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.11. JTAG 解锁</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">7.11.1. JTAG 关闭和打开</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.11.2. 开关的安全性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">7.11.3. 解锁的安全验证</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="usb_mode.html">7.12. USB 升级模式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7. </span>启动</a> &raquo;</li>
+        
+      <li><span class="section-number">7.11. </span>JTAG 解锁</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="jtag">
+<h1><span class="section-number">7.11. </span>JTAG 解锁<a class="headerlink" href="#jtag" title="永久链接至标题">¶</a></h1>
+<p>在安全方案中，芯片使能安全启动之后，可通过 eFuse 关闭 JTAG，
+防止攻击者通过 JTAG 控制芯片和窃取芯片中的敏感信息。然而在实际应用中可能会遇到一些需要使用
+JTAG 调试的场景，即需要将关闭的 JTAG 重新打开。</p>
+<p>JTAG 安全解锁的作用是提供一种安全的方法，在不影响芯片的安全等级的情况下，
+让合法的用户可以重新打开芯片的 JTAG 接口。</p>
+<div class="section" id="id1">
+<h2><span class="section-number">7.11.1. </span>JTAG 关闭和打开<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>在芯片内部，JTAG 调试模块与外部调试器的通信由几个主要信号连接实现。</p>
+<div class="figure align-center" id="id4">
+<img alt="../../_images/jtag_signal.png" src="../../_images/jtag_signal.png" />
+<p class="caption"><span class="caption-number">图 7.12 </span><span class="caption-text">JTAG 信号</span><a class="headerlink" href="#id4" title="永久链接至图片">¶</a></p>
+</div>
+<p>这里的 JTAG 信号是：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>TMS</p></li>
+<li><p>TRST</p></li>
+<li><p>TDI</p></li>
+<li><p>TDO</p></li>
+</ol>
+</div></blockquote>
+<p>将其中的 TDO 关闭，可以实现关闭外部调试器的 JTAG 调试功能。本芯片通过烧录 eFuse
+的安全配置区域 JTAG_DIS 位进行关闭。</p>
+<div class="figure align-center" id="id5">
+<img alt="../../_images/jtag_tdo_signal.png" src="../../_images/jtag_tdo_signal.png" />
+<p class="caption"><span class="caption-number">图 7.13 </span><span class="caption-text">关闭 TDO 信号</span><a class="headerlink" href="#id5" title="永久链接至图片">¶</a></p>
+</div>
+<p>要重新打开 JTAG，可通过另外一个来自寄存器的设置信号来重新使能 TDO 信号。具体如下图所示。</p>
+<div class="figure align-center" id="id6">
+<img alt="../../_images/jtag_tdo_enable.png" src="../../_images/jtag_tdo_enable.png" />
+<p class="caption"><span class="caption-number">图 7.14 </span><span class="caption-text">重新打开 TDO 信号</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
+</div>
+<p>当JTAG_UNLOCK被设置为1时，不管 eFuse 中的 JTAG DIS 被设置为什么值，都会保证 TDO 有效。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">7.11.2. </span>开关的安全性<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>eFuse JTAG DIS 被设置为1之后，JTAG 立刻关闭。由于 eFuse 比特无法被重新设置为0，
+因此 JTAG_DIS 信号一直生效，每次重新上电，JTAG 总是默认关闭。</p>
+<p>重新打开 JTAG 由 JTAG_UNLOCK 信号控制，该信号由 SID 模块的 JTAG_UNLOCK 寄存器比特位控制，
+因此重新打开 JTAG 的安全性，取决于 JTAG_UNLOCK 比特位的安全性。</p>
+<p>JTAG_UNLOCK 比特位具有一个特性：该比特位设置为1时，解锁 JTAG，但是仅有 SID 模块寄存器中的
+BROM_PRIV_LOCK 为0时，JTAG_UNLOCK 才会有效。如果BROM_PRIV_LOCK为1，则 JTAG_UNLOCK位设置为1，
+也无法解锁 JTAG。</p>
+<p>BROM_PRIV_LOCK 有一个特点，一旦被设置为1，就无法清零，只有系统复位才可以清零。
+在系统复位时，BROM 会被运行。BROM 跳出之前，会主动设置BROM_PRIV_LOCK=1。
+即保证只有 BROM 程序可以设置 BROM_PRIV_LOCK和 JTAG_UNLOCK位。</p>
+<p>通过上述的配置，将重新打开 JTAG 的权力放在 BROM 之中。BROM 在升级模式下，通过 USB 命令的方式，
+对外部的解锁 JTAG 命令进行安全性校验，校验通过，则设置 JTAG_UNLOCK 对 JTAG 进行解锁。</p>
+<p>在安全启动使能的情况下，BROM ：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>不能通过 USB READ/WRITE 命令对寄存器进行读写</p></li>
+<li><p>所有BROM执行的程序，都需要经过安全校验（包括 PBP 程序，如果使能了安全启动，PBP 必须是加密的）</p></li>
+<li><p>BROM 在跳转任何其他程序之前，必须先设置 BROM_PRIV_LOCK 特权位</p></li>
+</ol>
+</div></blockquote>
+<p>通过上述措施，保证在 BROM 阶段，JTAG 无法被其他程序打开。</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.11.3. </span>解锁的安全验证<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在 BROM USB 升级模式下，可通过 USB 命令，让 BROM 执行 JTAG 解锁。具体流程如下：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>通过 USB 命令，读取芯片中的 CHIP DATA(包含了 CHIP ID 等信息)，保存为二进制文件</p></li>
+<li><p>主机端需要使用RSA 私钥，对读取到的 CHIP DATA二进制文件进行签名，生成签名后的 JTAG 解锁文件（具体格式参考后面的描述）</p></li>
+<li><p>通过 USB JTAG_UNLOCK 命令，发送 JTAG 解锁文件给 BROM</p></li>
+<li><p>BROM 验证通过后，执行 JTAG 解锁</p></li>
+</ol>
+</div></blockquote>
+<p>输入的解锁文件格式：</p>
+<div class="figure align-center" id="id7">
+<img alt="../../_images/jtag_unlock_msg_format.png" src="../../_images/jtag_unlock_msg_format.png" />
+<p class="caption"><span class="caption-number">图 7.15 </span><span class="caption-text">解锁消息格式</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="usb_mode.html" class="btn btn-neutral float-right" title="7.12. USB 升级模式" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="secure_boot.html" class="btn btn-neutral float-left" title="7.10. 安全启动" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

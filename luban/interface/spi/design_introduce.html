@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.10.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.10.6. 常见问题" href="faq.html" />
+    <link rel="prev" title="7.10.4. 测试指南" href="test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.10. SPI 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="introduce.html">7.10.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user_guide.html">7.10.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="debug_guide.html">7.10.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="test_guide.html">7.10.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.10.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.10.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.10.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.10.5.3. 关键流程</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.10.5.3.1. 初始化</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.10.5.3.2. 中断流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">7.10.5.4. 数据结构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">7.10.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spi-setup">7.10.5.5.1. aic_spi_setup</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spi-set-cs">7.10.5.5.2. aic_spi_set_cs</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spi-max-transfer-size">7.10.5.5.3. aic_spi_max_transfer_size</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spi-transfer-one">7.10.5.5.4. aic_spi_transfer_one</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="faq.html">7.10.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.10. </span>SPI 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.10.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.10.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.10.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>相关模块</p></th>
+<th class="head"><p>源码路径</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SPI subsystem</p></td>
+<td><p>source/linux-5.10/drivers/spi/</p></td>
+</tr>
+<tr class="row-odd"><td><p>Driver</p></td>
+<td><p>source/linux-5.10/drivers/spi/</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.10.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id9">
+<span id="ref-to-spi-kernel-arch"></span><img alt="../../../_images/spi_kernel_arch1.png" src="../../../_images/spi_kernel_arch1.png" />
+<p class="caption"><span class="caption-number">图 7.39 </span><span class="caption-text">内核 SPI 框图</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>由于使用 SPI 的外设较多，内核中通过 SPI 子系统来支持各种 SPI 外设，整体架构如上图所示，包括：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Artinchip SPI 驱动</p></li>
+<li><p>SPI Core</p></li>
+<li><p>SPI-MEM</p></li>
+<li><p>面向内核的 API</p></li>
+<li><p>面向用户空间的接口（SPIDEV）</p></li>
+</ul>
+</div></blockquote>
+<p>由于 SPI 传输需要使用 DMA，因此 DMA 子系统是一个相关模块。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.10.5.3. </span>关键流程<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">7.10.5.3.1. </span>初始化<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">aic_spi_probe</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">irq</span> <span class="o">=</span> <span class="n">platform_get_irq</span><span class="p">(</span><span class="n">pdev</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">ctlr</span> <span class="o">=</span> <span class="n">spi_alloc_master</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pdev</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_spi</span><span class="p">));</span>
+<span class="o">|-&gt;</span> <span class="n">platform_set_drvdata</span><span class="p">(</span><span class="n">pdev</span><span class="p">,</span> <span class="n">ctlr</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">dma_rx</span> <span class="o">=</span> <span class="n">dma_request_slave_channel</span><span class="p">(</span><span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">,</span> <span class="s">&quot;rx&quot;</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">dma_tx</span> <span class="o">=</span> <span class="n">dma_request_slave_channel</span><span class="p">(</span><span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">,</span> <span class="s">&quot;tx&quot;</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">request_irq</span><span class="p">(</span><span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">irq</span><span class="p">,</span> <span class="n">aic_spi_handle_irq</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">dev_name</span><span class="p">,</span> <span class="n">aicspi</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">spi_register_controller</span><span class="p">(</span><span class="n">ctlr</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.10.5.3.2. </span>中断流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>SPI 控制器驱动中的中断处理并不复杂，当中断发生时，首先在 irq handler 中读取相关状态寄存器，
+然后判断如何处理：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">irqreturn_t</span> <span class="n">aic_spi_handle_irq</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">dev_id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="n">spi_ctlr_pending_irq_clr</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">base_addr</span><span class="p">);</span>
+    <span class="cm">/* master mode, Transfer Complete Interrupt */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">&amp;</span> <span class="n">ISR_BIT_TC</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+        <span class="n">spi_ctlr_irq_disable</span><span class="p">(</span><span class="n">ISR_BIT_TC</span> <span class="o">|</span> <span class="n">ISR_BIT_ERRS</span><span class="p">,</span> <span class="n">base_addr</span><span class="p">);</span>
+        <span class="n">spi_finalize_current_transfer</span><span class="p">(</span><span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">ctlr</span><span class="p">);</span>    <span class="c1">// 传输完成，通知调用者</span>
+        <span class="p">...</span>
+        <span class="k">return</span> <span class="n">IRQ_HANDLED</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">&amp;</span> <span class="n">ISR_BIT_ERRS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+        <span class="n">spi_ctlr_irq_disable</span><span class="p">(</span><span class="n">ISR_BIT_TC</span> <span class="o">|</span> <span class="n">ISR_BIT_ERRS</span><span class="p">,</span> <span class="n">base_addr</span><span class="p">);</span>
+        <span class="n">spi_ctlr_soft_reset</span><span class="p">(</span><span class="n">base_addr</span><span class="p">);</span>                 <span class="c1">// 传输出错，reset 控制器</span>
+        <span class="n">spi_finalize_current_transfer</span><span class="p">(</span><span class="n">aicspi</span><span class="o">-&gt;</span><span class="n">ctlr</span><span class="p">);</span>
+        <span class="p">...</span>
+        <span class="k">return</span> <span class="n">IRQ_HANDLED</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+    <span class="k">return</span> <span class="n">IRQ_NONE</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.10.5.4. </span>数据结构<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">spi_mode_type</span> <span class="p">{</span>
+    <span class="n">SINGLE_HALF_DUPLEX_RX</span><span class="p">,</span>
+    <span class="n">SINGLE_HALF_DUPLEX_TX</span><span class="p">,</span>
+    <span class="n">SINGLE_FULL_DUPLEX_RX_TX</span><span class="p">,</span>
+    <span class="n">DUAL_HALF_DUPLEX_RX</span><span class="p">,</span>
+    <span class="n">DUAL_HALF_DUPLEX_TX</span><span class="p">,</span>
+    <span class="n">QUAD_HALF_DUPLEX_RX</span><span class="p">,</span>
+    <span class="n">QUAD_HALF_DUPLEX_TX</span><span class="p">,</span>
+    <span class="n">MODE_TYPE_NULL</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>设备数据结构。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_spi</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>                 <span class="c1">// 设备指针</span>
+    <span class="k">struct</span> <span class="nc">spi_controller</span> <span class="o">*</span><span class="n">ctlr</span><span class="p">;</span>        <span class="c1">// SPI CORE 的控制器指针</span>
+    <span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base_addr</span><span class="p">;</span>            <span class="c1">// 映射后的 SPI 控制器地址</span>
+    <span class="k">struct</span> <span class="nc">clk</span> <span class="o">*</span><span class="n">mclk</span><span class="p">;</span>                   <span class="c1">// SPI 控制器的时钟</span>
+    <span class="k">struct</span> <span class="nc">reset_control</span> <span class="o">*</span><span class="n">rst</span><span class="p">;</span>          <span class="c1">// SPI 控制器的复位</span>
+    <span class="k">struct</span> <span class="nc">dma_chan</span> <span class="o">*</span><span class="n">dma_rx</span><span class="p">;</span>            <span class="c1">// SPI 控制器的接收 DMA Channel</span>
+    <span class="k">struct</span> <span class="nc">dma_chan</span> <span class="o">*</span><span class="n">dma_tx</span><span class="p">;</span>            <span class="c1">// SPI 控制器的发送 DMA Channel</span>
+    <span class="n">dma_addr_t</span> <span class="n">dma_addr_rx</span><span class="p">;</span>             <span class="c1">// SPI 控制器 RX FIFO 地址</span>
+    <span class="n">dma_addr_t</span> <span class="n">dma_addr_tx</span><span class="p">;</span>             <span class="c1">// SPI 控制器 TX FIFO 地址</span>
+    <span class="k">enum</span> <span class="n">spi_mode_type</span> <span class="n">mode_type</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">irq</span><span class="p">;</span>                   <span class="c1">// 中断号</span>
+    <span class="kt">char</span> <span class="n">dev_name</span><span class="p">[</span><span class="mi">48</span><span class="p">];</span>
+    <span class="n">spinlock_t</span> <span class="n">lock</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">7.10.5.5. </span>接口设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-spi-setup">
+<h3><span class="section-number">7.10.5.5.1. </span>aic_spi_setup<a class="headerlink" href="#aic-spi-setup" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spi_setup(struct spi_device *spi)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>SPI 设备的传输位宽、模式的检查和配置</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct spi_device *spi</div>
+<div class="line-block">
+<div class="line">SPI 设备指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spi-set-cs">
+<h3><span class="section-number">7.10.5.5.2. </span>aic_spi_set_cs<a class="headerlink" href="#aic-spi-set-cs" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>void aic_spi_set_cs(struct spi_device *spi, bool cs_high)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>设置 SPI 设备的片选信号</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct spi_device *spi</div>
+<div class="line-block">
+<div class="line">SPI 设备指针</div>
+</div>
+<div class="line">bool cs_high</div>
+<div class="line-block">
+<div class="line">是否选择该设备</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spi-max-transfer-size">
+<h3><span class="section-number">7.10.5.5.3. </span>aic_spi_max_transfer_size<a class="headerlink" href="#aic-spi-max-transfer-size" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>size_t aic_spi_max_transfer_size(struct spi_device *spi)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>SPI CORE 获取当前 SPI 控制器单次最大可传输的数据长度</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct spi_device *spi</div>
+<div class="line-block">
+<div class="line">SPI 设备指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">单次可传输的数据长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spi-transfer-one">
+<h3><span class="section-number">7.10.5.5.4. </span>aic_spi_transfer_one<a class="headerlink" href="#aic-spi-transfer-one" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spi_transfer_one(struct spi_controller *ctlr,struct spi_device *spi, struct spi_transfer *t)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>执行一次传输</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct spi_controller *ctlr</div>
+<div class="line-block">
+<div class="line">SPI 控制器指针</div>
+</div>
+<div class="line">struct spi_device *spi</div>
+<div class="line-block">
+<div class="line">SPI 设备指针</div>
+</div>
+<div class="line">struct spi_transfer *t</div>
+<div class="line-block">
+<div class="line">单次 SPI 传输结构体指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="faq.html" class="btn btn-neutral float-right" title="7.10.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="test_guide.html" class="btn btn-neutral float-left" title="7.10.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

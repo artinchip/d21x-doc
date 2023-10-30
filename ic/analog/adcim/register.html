@@ -1,0 +1,678 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>13.1.7. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="13.2. GPAI" href="../gpai/index.html" />
+    <link rel="prev" title="13.1.6. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">13. 模拟</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">13.1. ADC Interface Module (ADCIM)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">13.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">13.1.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id3">13.1.3. 采样命令接口说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id4">13.1.4. 采样数据返回接口说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#adc">13.1.5. ADC校准功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">13.1.6. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">13.1.7. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-adcim-mcsr">13.1.7.1. 0x000  ADCIM_MCSR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-adcim-calcsr">13.1.7.2. 0x004  ADCIM_CALCSR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-adcim-fifosts">13.1.7.3. 0x008  ADCIM_FIFOSTS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-adcim-version">13.1.7.4. 0xFFC  ADCIM_VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">13.2. General Purpose Analog Input (GPAI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">13.3. Resistance Touch Panel (RTP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ths/index.html">13.4. Thermal Sensor (THS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">13. </span>模拟</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">13.1. </span>ADCIM</a> &raquo;</li>
+        
+      <li><span class="section-number">13.1.7. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">13.1.7. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-adcim-mcsr">
+<h2><span class="section-number">13.1.7.1. </span>0x000  ADCIM_MCSR<a class="headerlink" href="#x000-adcim-mcsr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADCIM模块控制状态(ADCIM Module Control State Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p><em>_</em></p></td>
+<td><p><em>_</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>_</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">BUSY（ADC忙闲标志）</div>
+<div class="line">0: ADC模块Idle状态，没有采样命令需要处理；</div>
+<div class="line">1: ADC模块正处于Busy状态，正在处理采样命令（包括捕获和转换）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">SEMFLAG（信号量标志）</div>
+<div class="line">本字段为一个8-bit寄存器，可以为软件任意读写，不会对硬件行为产生</div>
+<div class="line">任何影响。目的就是作为本模块被多个应用模块共享时的信号量标志。</div>
+<div class="line">每寄存器位的定义由软件自由定义。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p><em>_</em></p></td>
+<td><p><em>_</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>_</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">CHN(Number of Channel Processing，正在处理的通道号)</div>
+<div class="line">本字段仅作为Debug使用，表示当前正在采样的通道号，仅在BUSY=1时有效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-adcim-calcsr">
+<h2><span class="section-number">13.1.7.2. </span>0x004  ADCIM_CALCSR<a class="headerlink" href="#x004-adcim-calcsr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x08002F00</p></th>
+<th class="head"><p>ADCIM校准控制(ADCIM Calibration Control Set Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CALVAL_UPD（Calibration Value Update，ADC校准值更新）</div>
+<div class="line">(写完之后，马上变为0)</div>
+<div class="line">通过软件设置CALVAL的同时，置位本字段，表示软件需要更新CALVAL值</div>
+<div class="line">，本字段被置位后会触发内部更新的动作，硬件更新完毕之后，</div>
+<div class="line">会自动清零本字段。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p><em>_</em></p></td>
+<td><p><em>_</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>_</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x800</p></td>
+<td><div class="line-block">
+<div class="line">CALVAL（Calibration Value，ADC校准输出值）</div>
+<div class="line">ADC的校准过程是去采样一个参考电压的中间电平，就会返回一个</div>
+<div class="line">12bits的值，本字段会把这个值保存下来。并且由硬件使用这个值</div>
+<div class="line">对所有的采样数据进行校准。</div>
+<div class="line"><br /></div>
+<div class="line">如果希望使用一个非硬件自动校准取得的值，对ADC数据进行校准，</div>
+<div class="line">还可以通过软件设置一个合适的值，硬件就会参考本字段，</div>
+<div class="line">对ADC采样数据进行自动校准。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2F</p></td>
+<td><div class="line-block">
+<div class="line">ADC_ACQ（ADC校准捕获时间）</div>
+<div class="line">本字段定义了校准时ADC通道的捕获时间长度。本计数值单位为ADC_CLK的</div>
+<div class="line">周期数， <code class="docutils literal notranslate"><span class="pre">TADCACQ</span> <span class="pre">=（ADC_ACQ+1）*TADC_CLK</span></code>。假设 <code class="docutils literal notranslate"><span class="pre">ADC_CLK=24MHz</span></code>，</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ADC_ACQ=0x2F</span></code>， <code class="docutils literal notranslate"><span class="pre">TADCACQ</span> <span class="pre">=</span> <span class="pre">(47+1)*41.67ns</span> <span class="pre">=</span> <span class="pre">2us</span></code>。</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:2</p></td>
+<td><p><em>_</em></p></td>
+<td><p><em>_</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>_</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DCALMASK（Data Calibration Mask，采样数据校准屏蔽）</div>
+<div class="line">0: 硬件默认对采样数据进行校准后送给ADC应用功能模块；</div>
+<div class="line">1: 屏蔽采样数据校准功能，本模块直接把来自ADC模拟电路的</div>
+<div class="line">采样数据不经校准地送给ADC应用功能模块。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CALEN（Calibration Enable，ADC校准使能）</div>
+<div class="line">本使能信号由软件置位，使能ADC校准，ADC校准完后，对此控制信号</div>
+<div class="line">自动清零。软件查询到此信号被清零后，意味着校准已完成。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-adcim-fifosts">
+<h2><span class="section-number">13.1.7.3. </span>0x008  ADCIM_FIFOSTS<a class="headerlink" href="#x008-adcim-fifosts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000040</p></th>
+<th class="head"><p>ADCIM FIFO状态(ADCIM FIFO States)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p><em>_</em></p></td>
+<td><p><em>_</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>_</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>RO</p></td>
+<td><p>1</p></td>
+<td><div class="line-block">
+<div class="line">ADC Arbiter Idle Status</div>
+<div class="line">For Debug Only</div>
+<div class="line">ADC命令仲裁状态，0表示ADC接口模块正在接收其他模块的命令；</div>
+<div class="line">1表示ADC接口模块正处于Idle状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO Error Status</div>
+<div class="line">For Debug Only</div>
+<div class="line">0: 表示命令FIFO正常；</div>
+<div class="line">1: 表示命令FIFO Error（Overflow/Underflow）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">FIFOCTR（FIFO Counter，FIFO计数器）</div>
+<div class="line">本字段用于显示采样命令FIFO的占用情况。FIFO深度为16，本字段</div>
+<div class="line">的有效值为0~16（0x00~0x10），表示FIFO内未处理的采样命令数。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-adcim-version">
+<h2><span class="section-number">13.1.7.4. </span>0xFFC  ADCIM_VERSION<a class="headerlink" href="#xffc-adcim-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>模块版本(ADCIM Version)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version（模块版本号）</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../gpai/index.html" class="btn btn-neutral float-right" title="13.2. GPAI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="13.1.6. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

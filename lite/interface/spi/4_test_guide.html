@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.9.4. 测试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.9.5. 设计说明" href="5_design_introduce.html" />
+    <link rel="prev" title="7.9.3. 调试指南" href="3_debug_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">7.4. GPIO 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.5. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../psadc/index.html">7.6. PSADC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.7. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.8. RTP 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.9. QSPI 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduce.html">7.9.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_user_guide.html">7.9.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.9.3. 调试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.9.4. 测试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.9.4.1. 调试开关</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.9.4.2. 使用方法</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#qspi">7.9.4.2.1. 步骤1：找到 QSPI 设备</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">7.9.4.2.2. 步骤2：获取帮助信息</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.9.4.2.3. 步骤3：初始化 QSPI 设备</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.9.4.2.4. 步骤4：QSPI 收发测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_introduce.html">7.9.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.9.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.10. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.11. MAC 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.9. </span>QSPI 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.9.4. </span>测试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.9.4. </span>测试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.9.4.1. </span>调试开关<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Luban-Lite 中实现了一个 qspidev 的测试工具，可以用于测试 QSPI Device 的读写访问。
+编译使能配置如下。</p>
+<p>在 SDK 根目录下执行:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scons</span> <span class="o">--</span><span class="n">menuconfig</span>
+</pre></div>
+</div>
+<p>配置界面:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Drivers options  ---&gt;
+    Drivers examples  ---&gt;
+        [*] Enable QSPI driver test command
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.9.4.2. </span>使用方法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>首先在板子上运行 Luban-Lite。</p>
+<div class="section" id="qspi">
+<h3><span class="section-number">7.9.4.2.1. </span>步骤1：找到 QSPI 设备<a class="headerlink" href="#qspi" title="永久链接至标题">¶</a></h3>
+<p>在串口控制台执行命令:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">list_device</span>
+</pre></div>
+</div>
+<p>查看当前的系统she设备，可得到类似如下列表:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">aic</span> <span class="o">/&gt;</span> <span class="n">list_device</span>
+<span class="n">device</span>           <span class="nb">type</span>         <span class="n">ref</span> <span class="n">count</span>
+<span class="o">--------</span> <span class="o">--------------------</span> <span class="o">----------</span>
+<span class="n">gt911</span>    <span class="n">Touch</span> <span class="n">Device</span>         <span class="mi">1</span>
+<span class="n">wdt</span>      <span class="n">WDT</span> <span class="n">Device</span>           <span class="mi">0</span>
+<span class="n">temp_aic</span> <span class="n">Sensor</span> <span class="n">Device</span>        <span class="mi">0</span>
+<span class="n">rootfs</span>   <span class="n">MTD</span> <span class="n">Device</span>           <span class="mi">0</span>
+<span class="n">os</span>       <span class="n">MTD</span> <span class="n">Device</span>           <span class="mi">0</span>
+<span class="n">spl</span>      <span class="n">MTD</span> <span class="n">Device</span>           <span class="mi">0</span>
+<span class="n">spinand0</span> <span class="n">SPI</span> <span class="n">Device</span>           <span class="mi">0</span>
+<span class="n">mtop</span>     <span class="n">Character</span> <span class="n">Device</span>     <span class="mi">0</span>
+<span class="n">aicfb</span>    <span class="n">Graphic</span> <span class="n">Device</span>       <span class="mi">0</span>
+<span class="n">hwcryto</span>  <span class="n">Security</span> <span class="n">Device</span>      <span class="mi">0</span>
+<span class="n">record</span>   <span class="n">Pipe</span>                 <span class="mi">0</span>
+<span class="n">dmic0</span>    <span class="n">Sound</span> <span class="n">Device</span>         <span class="mi">0</span>
+<span class="n">sound0</span>   <span class="n">Sound</span> <span class="n">Device</span>         <span class="mi">0</span>
+<span class="n">uart1</span>    <span class="n">Character</span> <span class="n">Device</span>     <span class="mi">0</span>
+<span class="n">uart0</span>    <span class="n">Character</span> <span class="n">Device</span>     <span class="mi">2</span>
+<span class="n">rtc</span>      <span class="n">RTC</span>                  <span class="mi">0</span>
+<span class="n">qspi0</span>    <span class="n">SPI</span> <span class="n">Bus</span>              <span class="mi">0</span>
+<span class="n">i2c3</span>     <span class="n">I2C</span> <span class="n">Bus</span>              <span class="mi">1</span>
+<span class="n">pin</span>      <span class="n">Pin</span> <span class="n">Device</span>           <span class="mi">0</span>
+<span class="n">gpai</span>     <span class="n">ADC</span> <span class="n">Device</span>           <span class="mi">0</span>
+</pre></div>
+</div>
+<p>从中可看到， <code class="docutils literal notranslate"><span class="pre">spinand0</span></code> 为 <code class="docutils literal notranslate"><span class="pre">SPI</span> <span class="pre">Device</span></code> 。</p>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">7.9.4.2.2. </span>步骤2：获取帮助信息<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>执行命令:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">help</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">7.9.4.2.3. </span>步骤3：初始化 QSPI 设备<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>执行命令:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">init</span> <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">mode</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">freq</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">init</span> <span class="n">spinand0</span> <span class="mi">3</span> <span class="mi">50000000</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.9.4.2.4. </span>步骤4：QSPI 收发测试<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>仅发送命令和数据，例如使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">sendhex</span> <span class="o">&lt;</span><span class="n">lines</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">cmd</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">addr</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">dummy_cnt</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">data</span> <span class="nb">hex</span> <span class="n">string</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>参数：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>lines: 用于表示 <code class="docutils literal notranslate"><span class="pre">命令</span></code> <code class="docutils literal notranslate"><span class="pre">地址</span></code> 和 <code class="docutils literal notranslate"><span class="pre">数据</span></code> 分别使用多少线宽进行收发，
+例如： <code class="docutils literal notranslate"><span class="pre">111</span></code> 表示都使用1线进行收发， <code class="docutils literal notranslate"><span class="pre">144</span></code> 表示命令使用1线，地址和数据使用4线（QIO模式）</p></li>
+<li><p>cmd: 16进制的命令数据，比如 6b</p></li>
+<li><p>addr: 16进制的地址数据，比如 000000，表示24位的地址0。如果没有地址，使用 <code class="docutils literal notranslate"><span class="pre">-</span></code> 表示</p></li>
+<li><p>dummy_cnt: Dummy cycle count，表示使用的 dummy clock cycle 个数。如果没有 dummy，使用 <code class="docutils literal notranslate"><span class="pre">-</span></code> 表示</p></li>
+<li><p>data: 16进制的数据，比如 <code class="docutils literal notranslate"><span class="pre">41</span> <span class="pre">42</span> <span class="pre">43</span> <span class="pre">44</span> <span class="pre">45</span> <span class="pre">a1</span> <span class="pre">a2</span> <span class="pre">a3</span> <span class="pre">a4</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">sendhex</span> <span class="mi">111</span> <span class="n">ff</span>
+</pre></div>
+</div>
+<p>上面是发送 Reset 命令。</p>
+<p>发送命令并读取数据，例如使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">recvhex</span> <span class="o">&lt;</span><span class="n">lines</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">cmd</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">addr</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">dummy_cnt</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">data</span> <span class="n">length</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>参数：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>lines: 用于表示 <code class="docutils literal notranslate"><span class="pre">命令</span></code> <code class="docutils literal notranslate"><span class="pre">地址</span></code> 和 <code class="docutils literal notranslate"><span class="pre">数据</span></code> 分别使用多少线宽进行收发，
+例如： <code class="docutils literal notranslate"><span class="pre">111</span></code> 表示都使用1线进行收发， <code class="docutils literal notranslate"><span class="pre">144</span></code> 表示命令使用1线，地址和数据使用4线（QIO模式）</p></li>
+<li><p>cmd: 16进制的命令数据，比如 6b</p></li>
+<li><p>addr: 16进制的地址数据，比如 000000，表示24位的地址0。如果没有地址，使用 <code class="docutils literal notranslate"><span class="pre">-</span></code> 表示</p></li>
+<li><p>dummy_cnt: Dummy cycle count，表示使用的 dummy clock cycle 个数。如果没有 dummy，使用 <code class="docutils literal notranslate"><span class="pre">-</span></code> 表示</p></li>
+<li><p>data_length: 要接收的数据长度。数据接收后，直接打印到控制台。</p></li>
+</ul>
+</div></blockquote>
+<p>示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qspidev</span> <span class="n">sendhex</span> <span class="mi">111</span> <span class="mi">13</span> <span class="mi">000000</span>
+<span class="n">qspidev</span> <span class="n">recvhex</span> <span class="mi">111</span> <span class="mi">03</span> <span class="mi">000000</span> <span class="mi">0</span> <span class="mh">0x800</span>
+</pre></div>
+</div>
+<p>上述命令进行了一个 SPINAND 的 PAGE 数据读取。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="5_design_introduce.html" class="btn btn-neutral float-right" title="7.9.5. 设计说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3_debug_guide.html" class="btn btn-neutral float-left" title="7.9.3. 调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

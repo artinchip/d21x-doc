@@ -1,0 +1,2863 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>9.1.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10. 多媒体" href="../../media/index.html" />
+    <link rel="prev" title="9.1.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">9. 存储</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">9.1. Secure Digital Host Controller (SDMC)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">9.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">9.1.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">9.1.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">9.1.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-sdmc-blkcnt">9.1.4.1. 0x000 SDMC_BLKCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-sdmc-blksiz">9.1.4.2. 0x004 SDMC_BLKSIZ</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-sdmc-cmdarg">9.1.4.3. 0x008 SDMC_CMDARG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-sdmc-cmd">9.1.4.4. 0x00C SDMC_CMD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-sdmc-resp0">9.1.4.5. 0x010 SDMC_RESP0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-sdmc-resp1">9.1.4.6. 0x014 SDMC_RESP1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-sdmc-resp2">9.1.4.7. 0x018 SDMC_RESP2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-sdmc-resp3">9.1.4.8. 0x01C SDMC_RESP3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-sdmc-ttmc">9.1.4.9. 0x020 SDMC_TTMC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-sdmc-tcbc">9.1.4.10. 0x024 SDMC_TCBC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-sdmc-tfbc">9.1.4.11. 0x028 SDMC_TFBC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x02c-sdmc-ctrst">9.1.4.12. 0x02C SDMC_CTRST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-sdmc-hctrl1">9.1.4.13. 0x030 SDMC_HCTRL1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-sdmc-clkctrl">9.1.4.14. 0x034 SDMC_CLKCTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x038-sdmc-hctrl2">9.1.4.15. 0x038 SDMC_HCTRL2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x03c-sdmc-inten">9.1.4.16. 0x03C SDMC_INTEN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-sdmc-intst">9.1.4.17. 0x040 SDMC_INTST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-sdmc-ointst">9.1.4.18. 0x044 SDMC_OINTST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-sdmc-fifocfg">9.1.4.19. 0x048 SDMC_FIFOCFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-sdmc-cdet">9.1.4.20. 0x054 SDMC_CDET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-sdmc-pbuscfg">9.1.4.21. 0x080 SDMC_PBUSCFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x084-sdmc-idmarcap">9.1.4.22. 0x084 SDMC_IDMARCAP</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x088-sdmc-idmasaddr">9.1.4.23. 0x088 SDMC_IDMASADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x08c-sdmc-idmast">9.1.4.24. 0x08C SDMC_IDMAST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x090-sdmc-idmainten">9.1.4.25. 0x090 SDMC_IDMAINTEN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x094-sdmc-idmacda">9.1.4.26. 0x094 SDMC_IDMACDA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x098-sdmc-idmacba">9.1.4.27. 0x098 SDMC_IDMACBA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x100-sdmc-ctc">9.1.4.28. 0x100 SDMC_CTC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x104-sdmc-dlyctrl">9.1.4.29. 0x104 SDMC_DLYCTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x108-sdmc-emcr">9.1.4.30. 0x108 SDMC_EMCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x118-sdmc-verid">9.1.4.31. 0x118 SDMC_VERID</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x200-sdmc-fifo">9.1.4.32. 0x200 SDMC_FIFO</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">9. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">9.1. </span>SDMC</a> &raquo;</li>
+        
+      <li><span class="section-number">9.1.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">9.1.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-sdmc-blkcnt">
+<h2><span class="section-number">9.1.4.1. </span>0x000 SDMC_BLKCNT<a class="headerlink" href="#x000-sdmc-blkcnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>传输块数量（Block Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">block_count</div>
+<div class="line">传输块数量。</div>
+<div class="line">对于未定义的字节数量，该位应该设置为0。当该位设置为0时，host</div>
+<div class="line">应该明确的发送停止命令终止当前数据传输。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-sdmc-blksiz">
+<h2><span class="section-number">9.1.4.2. </span>0x004 SDMC_BLKSIZ<a class="headerlink" href="#x004-sdmc-blksiz" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000200</p></th>
+<th class="head"><p>传输块长度（Block Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x200</p></td>
+<td><div class="line-block">
+<div class="line">block_size</div>
+<div class="line">传输块大小。</div>
+<div class="line">配置单个传输块的字节数量，默认值为512个字节。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-sdmc-cmdarg">
+<h2><span class="section-number">9.1.4.3. </span>0x008 SDMC_CMDARG<a class="headerlink" href="#x008-sdmc-cmdarg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>命令参数（Command Argument）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">cmd_arg</div>
+<div class="line">该值表示发送给card的命令参数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-sdmc-cmd">
+<h2><span class="section-number">9.1.4.4. </span>0x00C SDMC_CMD<a class="headerlink" href="#x00c-sdmc-cmd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x20000000</p></th>
+<th class="head"><p>命令配置（Command Configure）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">start_command</div>
+<div class="line">开始发送命令</div>
+<div class="line">一旦命令被CIF获取，该位自动清零。</div>
+<div class="line">当该位置1，host不能写任何命令到寄存器。如果此时试图写命令，硬件</div>
+<div class="line">锁定错误中断会被置1。</div>
+<div class="line">一旦命令发出并接收到响应，命令完成中断会置1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">use_hold_reg</div>
+<div class="line">使用保持寄存器</div>
+<div class="line">0:命令和数据直接发送到卡</div>
+<div class="line">1:命令和数据通过保持寄存器发送到卡</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">volt_switch</div>
+<div class="line">SD卡电压切换</div>
+<div class="line">0:无电压切换</div>
+<div class="line">1:电压切换使能，对于CMD11命令一定要置位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">boot_mode</div>
+<div class="line">启动引导模式选择</div>
+<div class="line">0:执行强制的引导操作</div>
+<div class="line">1:执行替代的引导操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Disable_boot</div>
+<div class="line">禁止启动引导操作</div>
+<div class="line">软件将该位和start_cmd位置1时，CIF会终止引导操所。不能同时将该位</div>
+<div class="line">和Enable_boot位置1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">expect_boot_ack</div>
+<div class="line">接收引导操作应答信号</div>
+<div class="line">当软件将该位和enable_boot位置1，CIF接收来自卡的引导操作应答信号</div>
+<div class="line">0-1-0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">enable_boot</div>
+<div class="line">使能启动引导操作</div>
+<div class="line">对于强制的引导模式，该位应该置1。当软件将该位和start_cmd位置1时，</div>
+<div class="line">CIF开始发送引导序列，对应卡的命令线为低电平。不能同时将该位和</div>
+<div class="line">disable_boot位置1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:22</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">update_clock_registers_only</div>
+<div class="line">仅更新时钟寄存器</div>
+<div class="line">0:正常命令序列</div>
+<div class="line">1:不发送命令，仅更新时钟寄存器的值到相关的时钟域</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">card_number</div>
+<div class="line">当前在使用的card数量，表示硬件插入的可访问的card数量。当前版本一个</div>
+<div class="line">控制器仅支持一个设备。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">send_initialization</div>
+<div class="line">发送初始化序列</div>
+<div class="line">0:发送命令之前不发送初始化序列</div>
+<div class="line">1:发送命令之前发送初始化序列</div>
+<div class="line">上电后，发送命令之前，必须发送80个时钟等待card内部初始化完成。</div>
+<div class="line">在boot模式下，该位不用置1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">stop_abort_cmd</div>
+<div class="line">发送停止或丢弃命令</div>
+<div class="line">0:在数据传输时不用停止或丢弃命令终止当前传输</div>
+<div class="line">1:在数据传输时使用停止或丢弃命令终止当前传输</div>
+<div class="line">当工作在开放或者预定义数据传输模式时，host需要发送停止或丢弃命令来</div>
+<div class="line">终止数据传输，该位应该置1，使得CIF的命令、数据状态机正确的返回到</div>
+<div class="line">空闲状态。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">wait_prvdata_complete</div>
+<div class="line">等待之前的数据传输完成</div>
+<div class="line">0:即使之前的数据传输未完成，也可以再次发送命令</div>
+<div class="line">1:必须等待之前的数据传输完成，再发送命令</div>
+<div class="line">通常，在数据传输期间或者终止当前传输时，如果想要查询当前的状态，</div>
+<div class="line">可以将该位清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">send_auto_stop</div>
+<div class="line">自动发送停止命令</div>
+<div class="line">0:数据传输结束时不自动发送停止命令</div>
+<div class="line">1:数据传输结束时自动发送停止命令</div>
+<div class="line">该位置1，在数据传输结束后控制器会自动发送停止命令。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">transfer_mode</div>
+<div class="line">传输模式</div>
+<div class="line">0:基于块的数据传输命令</div>
+<div class="line">1:基于字节流的数据传输命令</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">read/write</div>
+<div class="line">读写方向</div>
+<div class="line">0:从卡读数据</div>
+<div class="line">1:写数据到卡</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">data_expected</div>
+<div class="line">0:无数据的命令传输(read/write)</div>
+<div class="line">1:有期望数据的命令传输(read/write)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">check_response_crc</div>
+<div class="line">检查响应信号的CRC</div>
+<div class="line">0:不检查响应的CRC</div>
+<div class="line">1:检查响应的CRC</div>
+<div class="line">一些命令的响应不会返回有效的CRC数据，对于这些命令软件应该禁止</div>
+<div class="line">CRC检查。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">response_length</div>
+<div class="line">响应信号长度</div>
+<div class="line">0:从卡获取短响应数据（48-bit）</div>
+<div class="line">1:从卡获取长响应数据（136-bit）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">response_expect</div>
+<div class="line">获取响应信号</div>
+<div class="line">0:不从卡获取响应信号</div>
+<div class="line">1:从卡获取响应信号</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">cmd_index</div>
+<div class="line">命令序号</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-sdmc-resp0">
+<h2><span class="section-number">9.1.4.5. </span>0x010 SDMC_RESP0<a class="headerlink" href="#x010-sdmc-resp0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>响应数据0（Response 0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">响应数据的bit[31:0]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-sdmc-resp1">
+<h2><span class="section-number">9.1.4.6. </span>0x014 SDMC_RESP1<a class="headerlink" href="#x014-sdmc-resp1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>响应数据1（Response 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">响应数据的bit[63:32]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-sdmc-resp2">
+<h2><span class="section-number">9.1.4.7. </span>0x018 SDMC_RESP2<a class="headerlink" href="#x018-sdmc-resp2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>响应数据2（Response 2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">响应数据的bit[95:64]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-sdmc-resp3">
+<h2><span class="section-number">9.1.4.8. </span>0x01C SDMC_RESP3<a class="headerlink" href="#x01c-sdmc-resp3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>响应数据3（Response 3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">响应数据的bit[127:96]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-sdmc-ttmc">
+<h2><span class="section-number">9.1.4.9. </span>0x020 SDMC_TTMC<a class="headerlink" href="#x020-sdmc-ttmc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xffffff40</p></th>
+<th class="head"><p>传输超时时间控制（Transfer Timeout Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0xffffff</p></td>
+<td><div class="line-block">
+<div class="line">data_timeout</div>
+<div class="line">读数据传输超时时间</div>
+<div class="line">超时计数器仅在card时钟停止后启动。</div>
+<div class="line"><strong>注意：如果超时值接近100ms，需要使用软件计时器。在这种情况下，</strong></div>
+<div class="line"><strong>读数据超时中断应该被禁止。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x40</p></td>
+<td><div class="line-block">
+<div class="line">response_timeout</div>
+<div class="line">响应超时时间</div>
+<div class="line">单位：卡输出时钟cclk_out</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-sdmc-tcbc">
+<h2><span class="section-number">9.1.4.10. </span>0x024 SDMC_TCBC<a class="headerlink" href="#x024-sdmc-tcbc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>发送到卡的字节数（Transferred Card Byte Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">trans_card_byte_count</div>
+<div class="line">通过CIF模块传输到Card的字节数。</div>
+<div class="line">在32位或者64位的AMBA总线模式下，寄存器应该全额访问避免读操作的</div>
+<div class="line">一致性问题。在16位的AMBA总线模式下，内部16位的一致性寄存器有效。</div>
+<div class="line">用户首先读取低16位数据，后读取高16位数据。当读取低16位数据时，</div>
+<div class="line">高16位数据存在临时寄存器里。当读取高16位数据时，再从临时寄存器</div>
+<div class="line">中取出。</div>
+<div class="line">TCBC和TFBC共享一致性寄存器。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-sdmc-tfbc">
+<h2><span class="section-number">9.1.4.11. </span>0x028 SDMC_TFBC<a class="headerlink" href="#x028-sdmc-tfbc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>发送到缓存的字节数（Transferred FIFO Byte Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">trans_fifo_byte_count</div>
+<div class="line">Host/DMA内存和HIF FIFO之间传输数据的字节数</div>
+<div class="line">在32位或者64位的AMBA总线模式下，寄存器应该全额访问避免读操作的</div>
+<div class="line">一致性问题。在16位的AMBA总线模式下，内部16位的一致性寄存器有效。</div>
+<div class="line">用户首先读取低16位数据，后读取高16位数据。当读取低16位数据时，</div>
+<div class="line">高16位数据存在临时寄存器里。当读取高16位数据时，再从临时寄存器</div>
+<div class="line">中取出。</div>
+<div class="line">TCBC和TFBC共享一致性寄存器。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x02c-sdmc-ctrst">
+<h2><span class="section-number">9.1.4.12. </span>0x02C SDMC_CTRST<a class="headerlink" href="#x02c-sdmc-ctrst" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000406</p></th>
+<th class="head"><p>控制器状态（控制器状态）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dma_req</div>
+<div class="line">DMA请求信号状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dma_ack</div>
+<div class="line">DMA应答信号状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29:17</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_count</div>
+<div class="line">FIFO数量</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16:11</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">response_index</div>
+<div class="line">前一个响应的索引值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">data_state_mc_busy</div>
+<div class="line">数据发送或接收状态机忙碌</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R</p></td>
+<td><p>0x1 or 0x0</p></td>
+<td><div class="line-block">
+<div class="line">data_busy</div>
+<div class="line">根据card_data[0]的电平状态判断是否忙碌</div>
+<div class="line">0:卡数据传输处于非忙碌状态</div>
+<div class="line">1:卡数据传输处于忙碌状态</div>
+<div class="line"><strong>注意：默认值状态取决于cdata_in的初始电平</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R</p></td>
+<td><p>0x1 or 0x0</p></td>
+<td><div class="line-block">
+<div class="line">data_3_status</div>
+<div class="line">根据card_data[3]的电平状态检查是否有卡插入</div>
+<div class="line">0:有SD卡插入</div>
+<div class="line">1:没有SD卡插入</div>
+<div class="line"><strong>注意：卡检测仅支持SDC1，默认值状态取决于cdata_in的初始电平</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">command fsm states</div>
+<div class="line">命令状态机状态：</div>
+<div class="line">0:空闲</div>
+<div class="line">1:发送初始化序列</div>
+<div class="line">2:Tx命令开始位</div>
+<div class="line">3:Tx命令tx位</div>
+<div class="line">4:Tx命令索引值+参数</div>
+<div class="line">5:Tx命令crc7校验</div>
+<div class="line">6:Tx命令结束位</div>
+<div class="line">7:Rx响应起始位</div>
+<div class="line">8:Rx响应中断请求响应</div>
+<div class="line">9:Rx响应tx位</div>
+<div class="line">10:Rx响应命令索引值</div>
+<div class="line">11:Rx响应数据</div>
+<div class="line">12:Rx响应crc7校验</div>
+<div class="line">13:Rx响应结束位</div>
+<div class="line">14:命令通路等待NCC</div>
+<div class="line">15:等待状态</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_full</div>
+<div class="line">FIFO为满</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">fifo_empty</div>
+<div class="line">FIFO为空</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">fifo_tx_watermark</div>
+<div class="line">FIFO达到发送数据门限值，不允许数据传输</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_rx_watermark</div>
+<div class="line">FIFO达到接收数据门限值，不允许数据传输</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-sdmc-hctrl1">
+<h2><span class="section-number">9.1.4.13. </span>0x030 SDMC_HCTRL1<a class="headerlink" href="#x030-sdmc-hctrl1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x01000004</p></th>
+<th class="head"><p>主机控制配置1（Host Control 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">use_inside_dmac</div>
+<div class="line">0:Host通过从机接口进行数据传输</div>
+<div class="line">1:仅使用内部DMA传输数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">enable_OD_pullup</div>
+<div class="line">外部开漏上拉使能</div>
+<div class="line">0:禁止</div>
+<div class="line">1:使能</div>
+<div class="line">当该位置1，命令信号的输出为开漏模式，信号驱动为0或者高阻态，</div>
+<div class="line">不能驱动为1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:11</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10:9</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">abort_read_data</div>
+<div class="line">读数据丢弃</div>
+<div class="line">0:不改变</div>
+<div class="line">1:在读数据，软件查找Card设备时，发送暂停命令会使操作暂停。一旦</div>
+<div class="line">暂停操作发生，软件会置位并复位数据状态机，等待下一笔数据传输。</div>
+<div class="line">一旦数据状态机复位到空闲状态，该位会自动清零。</div>
+<div class="line">该功能用于SDIO的暂停操作。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">send_irq_response</div>
+<div class="line">发送中断请求响应</div>
+<div class="line">0:不改变</div>
+<div class="line">1:发送自动中断请求响应</div>
+<div class="line">一旦响应被发送该位自动清零。</div>
+<div class="line">为了等待MMC卡中断，host发送CMD40命令，控制器等待来自MMC卡的中断</div>
+<div class="line">响应。同时，如果host想要控制器退出中断状态等待，可以将该位置1，</div>
+<div class="line">此时控制器命令状态机发送CMD40等待总线响应后返回到空闲状态。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">read_wait</div>
+<div class="line">读等待</div>
+<div class="line">0:清除读等待</div>
+<div class="line">1:使能读等待</div>
+<div class="line">用于SDIO卡设备的发送读等待功能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dma_enable</div>
+<div class="line">DMA使能</div>
+<div class="line">0:禁止DMA传输模式</div>
+<div class="line">1:使能DMA传输模式</div>
+<div class="line">仅当控制器配置为使用外部DMA接口时有效</div>
+<div class="line">即使使能DMA模式，host仍然可以访问FIFO；在正常操作下该行为不会发生。</div>
+<div class="line">如果host/DMA同时访问FIFO，数据会丢失。控制器内部没有仲裁器来决定</div>
+<div class="line">Host/DMA同时访问的优先级。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">int_enable</div>
+<div class="line">全局中断使能</div>
+<div class="line">0:禁止中断</div>
+<div class="line">1:使能中断</div>
+<div class="line">仅当该位置1，大于一个未屏蔽的中断置位时，对应的中断端口才为1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RST_n</div>
+<div class="line">硬件Reset控制</div>
+<div class="line">0:复位信号有效</div>
+<div class="line">1:复位信号无效</div>
+<div class="line">复位信号有效device进入pre-idle状态，需要重新初始化device。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dma_reset</div>
+<div class="line">DMA复位</div>
+<div class="line">0:不改变</div>
+<div class="line">1:复位内部DMA接口控制逻辑</div>
+<div class="line">经过两个AHB时钟周期后该位自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">fifo_reset</div>
+<div class="line">FIFO复位</div>
+<div class="line">0:不改变</div>
+<div class="line">1:复位数据FIFO和FIFO指针</div>
+<div class="line">复位完成后自动清零</div>
+<div class="line"><strong>注意：该位清零后，FIFO指针在2个周期的系统时钟加同步延时</strong></div>
+<div class="line"><strong>（2个周期的card时钟）后被复位。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">controller_reset</div>
+<div class="line">控制器复位</div>
+<div class="line">0:不改变</div>
+<div class="line">1:复位控制器</div>
+<div class="line">经过两个AHB时钟周期后该位自动清零</div>
+<div class="line">复位的模块包括：</div>
+<div class="line">HIF/CIF接口；</div>
+<div class="line">CIF和状态机；</div>
+<div class="line">控制寄存器的abort_read_data/send_irq_response/read_wait位域；</div>
+<div class="line">命令寄存器的start_cmd位域。</div>
+<div class="line">不影响其他寄存器和DMA接口，FIFO和host中断等。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-sdmc-clkctrl">
+<h2><span class="section-number">9.1.4.14. </span>0x034 SDMC_CLKCTRL<a class="headerlink" href="#x034-sdmc-clkctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>时钟控制配置（Clock Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">cclk_low_power</div>
+<div class="line">0:无低功耗模式</div>
+<div class="line">1:低功耗模式；当SD/MMC处于空闲状态时关闭时钟（在使用MMC或者</div>
+<div class="line">SD卡时应该置1；对于SDIO卡，如果使用中断，时钟不能被停止。）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">clk_divider0</div>
+<div class="line">时钟分频器0的值。</div>
+<div class="line">时钟分频为2*n(n为设定值)。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:1</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">cclk_enable</div>
+<div class="line">cclk时钟使能</div>
+<div class="line">0:时钟禁用</div>
+<div class="line">1:时钟使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x038-sdmc-hctrl2">
+<h2><span class="section-number">9.1.4.15. </span>0x038 SDMC_HCTRL2<a class="headerlink" href="#x038-sdmc-hctrl2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>主机控制配置2（Host Control 2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUS_WIDTH</div>
+<div class="line">总线位宽配置</div>
+<div class="line">0:1线模式</div>
+<div class="line">1:4线模式</div>
+<div class="line">2:8线模式</div>
+<div class="line">3:保留</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:25</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TMO_UNIT</div>
+<div class="line">超时时间单位选择</div>
+<div class="line">0:1 x cclk_out</div>
+<div class="line">1:256 x cclk_out</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DDR_MODE</div>
+<div class="line">DDR传输模式使能</div>
+<div class="line">0:数据传送工作在非DDR模式</div>
+<div class="line">1:数据传输工作在DDR模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:1</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VOLT_REG</div>
+<div class="line">高速电压模式</div>
+<div class="line">决定了外部调压器提供给缓存的电压值</div>
+<div class="line">0:缓存供电电压为3.3V</div>
+<div class="line">1:缓存供电电压为1.8V</div>
+<div class="line">外部调压器一定要匹配编程的电压值</div>
+<div class="line">例如：bit0 = 1，对于card 0必须工作在1.8V电压</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x03c-sdmc-inten">
+<h2><span class="section-number">9.1.4.16. </span>0x03C SDMC_INTEN<a class="headerlink" href="#x03c-sdmc-inten" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000000010</p></th>
+<th class="head"><p>中断使能（Interrupt Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">sdio_int_mask</div>
+<div class="line">屏蔽SDIO中断</div>
+<div class="line">当中断被屏蔽后，SDIO中断检测无效。</div>
+<div class="line">0:屏蔽中断</div>
+<div class="line">1:使能中断</div>
+<div class="line">在MMC-Ver3.3模式下，该位总是为0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">int_mask</div>
+<div class="line">中断屏蔽</div>
+<div class="line">该位域用于屏蔽不使用的中断。对于每个位：</div>
+<div class="line">0:屏蔽中断</div>
+<div class="line">1:使能中断</div>
+<div class="line">每个位的中断定义如下：</div>
+<div class="line">bit 15-EBE（读操作结束位错误或者写操作无CRC）</div>
+<div class="line">bit 14-ACD（自动发送命令完成）</div>
+<div class="line">bit 13-SBE（起始位错误）BCI（忙清除中断）</div>
+<div class="line">bit 12-HLE（硬件锁定写操作错误）</div>
+<div class="line">bit 11-FRUN（FIFO 向下溢出/向上溢出）</div>
+<div class="line">bit 10-HTO（host获取数据超时）或者电压切换中断</div>
+<div class="line">bit 9-DRTO（读数据超时）</div>
+<div class="line">bit 8-RTO（响应超时）</div>
+<div class="line">bit 7-DCRC（数据CRC错误）</div>
+<div class="line">bit 6-RCRC（响应CRC错误）</div>
+<div class="line">bit 5-RXDR（接收FIFO数据请求）</div>
+<div class="line">bit 4-TXDR（发送FIFO数据请求）</div>
+<div class="line">bit 3-DTO（数据传输完成）</div>
+<div class="line">bit 2-CD（命令发送完成）</div>
+<div class="line">bit 1-RE（响应错误）</div>
+<div class="line">bit 0-CD（卡检测中断）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-sdmc-intst">
+<h2><span class="section-number">9.1.4.17. </span>0x040 SDMC_INTST<a class="headerlink" href="#x040-sdmc-intst" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>已使能中断状态（Enabled Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">sdio_interrupt</div>
+<div class="line">SDIO中断</div>
+<div class="line">0:无来自SDIO的中断信号</div>
+<div class="line">1:有来自SDIO的中断信号</div>
+<div class="line">在MMC-Ver3.3模式下，该位总是为0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">int_status</div>
+<div class="line">中断状态</div>
+<div class="line">每个位的中断状态定义如下：</div>
+<div class="line">bit 15-EBE（读操作结束位错误或者写操作无CRC）</div>
+<div class="line">bit 14-ACD（自动发送命令完成）</div>
+<div class="line">bit 13-SBE（起始位错误）BCI（忙清除中断）</div>
+<div class="line">bit 12-HLE（硬件锁定写操作错误）</div>
+<div class="line">bit 11-FRUN（FIFO 向下溢出/向上溢出）</div>
+<div class="line">bit 10-HTO（host获取数据超时）或者电压切换中断</div>
+<div class="line">bit 9-DRTO（读数据超时）</div>
+<div class="line">bit 8-RTO（响应超时）</div>
+<div class="line">bit 7-DCRC（数据CRC错误）</div>
+<div class="line">bit 6-RCRC（响应CRC错误）</div>
+<div class="line">bit 5-RXDR（接收FIFO数据请求）</div>
+<div class="line">bit 4-TXDR（发送FIFO数据请求）</div>
+<div class="line">bit 3-DTO（数据传输完成）</div>
+<div class="line">bit 2-CD（命令发送完成）</div>
+<div class="line">bit 1-RE（响应错误）</div>
+<div class="line">bit 0-CD（卡检测中断）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-sdmc-ointst">
+<h2><span class="section-number">9.1.4.18. </span>0x044 SDMC_OINTST<a class="headerlink" href="#x044-sdmc-ointst" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>初始中断状态（Original Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">sdio_interrupt</div>
+<div class="line">SDIO中断，该位写1清零。</div>
+<div class="line">0:无来自SDIO的中断信号</div>
+<div class="line">1:有来自SDIO的中断信号</div>
+<div class="line">在MMC-Ver3.3模式下，该位总是为0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">int_status</div>
+<div class="line">中断状态，每个位写1清零。</div>
+<div class="line">每个位的中断状态定义如下：</div>
+<div class="line">bit 15-EBE（读操作结束位错误或者写操作无CRC）</div>
+<div class="line">bit 14-ACD（自动发送命令完成）</div>
+<div class="line">bit 13-SBE（起始位错误）BCI（忙清除中断）</div>
+<div class="line">bit 12-HLE（硬件锁定写操作错误）</div>
+<div class="line">bit 11-FRUN（FIFO 向下溢出/向上溢出）</div>
+<div class="line">bit 10-HTO（host获取数据超时）或者电压切换中断</div>
+<div class="line">bit 9-DRTO（读数据超时）</div>
+<div class="line">bit 8-RTO（响应超时）</div>
+<div class="line">bit 7-DCRC（数据CRC错误）</div>
+<div class="line">bit 6-RCRC（响应CRC错误）</div>
+<div class="line">bit 5-RXDR（接收FIFO数据请求）</div>
+<div class="line">bit 4-TXDR（发送FIFO数据请求）</div>
+<div class="line">bit 3-DTO（数据传输完成）</div>
+<div class="line">bit 2-CD（命令发送完成）</div>
+<div class="line">bit 1-RE（响应错误）</div>
+<div class="line">bit 0-CDET（卡检测中断）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-sdmc-fifocfg">
+<h2><span class="section-number">9.1.4.19. </span>0x048 SDMC_FIFOCFG<a class="headerlink" href="#x048-sdmc-fifocfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x007F0000</p></th>
+<th class="head"><p>FIFO配置（FIFO Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DW_DMA_Mutiple_Transaction_Size</div>
+<div class="line">DMA突发传输值</div>
+<div class="line">0:1 笔传输</div>
+<div class="line">1:4</div>
+<div class="line">2:8</div>
+<div class="line">3:16</div>
+<div class="line">4:32</div>
+<div class="line">5:64</div>
+<div class="line">6:128</div>
+<div class="line">7:256</div>
+<div class="line">突发传输单位为：H_DATA_WIDTH的设定值，为32bits。</div>
+<div class="line">该值应该设置为(RX_WMark + 1)*(F_DATA_WIDTH/H_DATA_WIDTH)</div>
+<div class="line">和(FIFO_DEPTH - TX_WMark)*(F_DATA_WIDTH/H_DATA_WIDTH)的</div>
+<div class="line">公约数。</div>
+<div class="line">举例：</div>
+<div class="line">如果FIFIO_DEPTH=16，</div>
+<div class="line">FDATA_WIDTH==H_DATA_WIDTH</div>
+<div class="line">允许的MSIZE和TX_WMark的组合如下：</div>
+<div class="line-block">
+<div class="line">MSize=1，TX_WMark=1-15</div>
+<div class="line">MSize=4，TX_WMark=8</div>
+<div class="line">MSize=4，TX_WMark=4</div>
+<div class="line">MSize=4，TX_WMark=12</div>
+<div class="line">MSize=8，TX_WMark=8</div>
+<div class="line">MSize=8，TX_WMark=4</div>
+</div>
+<div class="line">允许的MSIZE和RX_WMark的组合如下：</div>
+<div class="line-block">
+<div class="line">MSize=1，RX_WMark=0-14</div>
+<div class="line">MSize=4，RX_WMark=3</div>
+<div class="line">MSize=4，RX_WMark=7</div>
+<div class="line">MSize=4，RX_WMark=11</div>
+<div class="line">MSize=8，RX_WMark=7</div>
+</div>
+<div class="line">推荐值：</div>
+<div class="line-block">
+<div class="line">MSize=8，TX_WMark=8，RX_WMark=7</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>26:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x7F</p></td>
+<td><div class="line-block">
+<div class="line">RX_WMark</div>
+<div class="line">FIFO接收门限值</div>
+<div class="line">当FIFO的接收的数据大于这个门限值，DMA/FIFO请求信号拉高。当数据</div>
+<div class="line">包结束后，无论该值有没有设置都会产生请求信号。</div>
+<div class="line">在非DMA模式下，当接收FIFO门限中断使能时，此时将产生一个中断信号</div>
+<div class="line">替代DMA请求。数据包传输结束后，如果门限值大于剩下的字节数大小，</div>
+<div class="line">中断将不会产生。</div>
+<div class="line">此时Host应该读完剩下的字节，并产生数据传输完成中断。</div>
+<div class="line">在DMA模式下，在接收到最后一个数据包时，即使剩下的数据小于门限值，</div>
+<div class="line">DMA也会发送一个请求读出FIFO里面剩下的数据，然后产生一个数据传输</div>
+<div class="line">完成的中断。</div>
+<div class="line">限制条件：RX_WMark &lt;=FIFO_DEPTH-2</div>
+<div class="line">推荐值：(FIFO_DEPTH)/2-1</div>
+<div class="line"><strong>注意：在DMA模式下，如果CCS信号超时，DMA在最后一个数据包到来时</strong></div>
+<div class="line"><strong>不会产生请求，即使剩下的数据小于该门限值。</strong></div>
+<div class="line">在这种情况下，将会有一些数据保留在FIFO中。此时应该复位FIFO。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_WMark</div>
+<div class="line">FIFO发送门限值</div>
+<div class="line">当FIFO内数据量小于或等于这个门限值，DMA/FIFO请求信号拉高。如果</div>
+<div class="line">中断信号使能，此时会产生一个中断。当数据包结束后，无论该值是否</div>
+<div class="line">设置都会产生中断或请求信号。</div>
+<div class="line">在非DMA模式下，当TXDR中断使能时，会产生一个中断信号替代DMA请求</div>
+<div class="line">信号。发送完最后一个数据包时，host应该用剩下的数据填充FIFO。</div>
+<div class="line">在DMA模式下，最后一个数据包完成后，如果最后一笔传输小于突发数据</div>
+<div class="line">长度，DMA控制器会再执行一次传输直到所有数据传输完成。</div>
+<div class="line">限制条件：TX_WMark&gt;=1</div>
+<div class="line">推荐值：(FIFO_DEPTH)/2</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-sdmc-cdet">
+<h2><span class="section-number">9.1.4.20. </span>0x054 SDMC_CDET<a class="headerlink" href="#x054-sdmc-cdet" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x01FFFFFF</p></th>
+<th class="head"><p>卡检测配置（Card Detect Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:25</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">card_detect_n</div>
+<div class="line">该值表示卡检测信号card_detect_n输入端口的状态，默认为1。</div>
+<div class="line">当有卡插入时，该值为0；卡拔出时，该值为1。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xFFFFFF</p></td>
+<td><div class="line-block">
+<div class="line">Debounce_count</div>
+<div class="line">去除抖动维持的时钟周期数。</div>
+<div class="line">由于卡插拔是机械动作，会产生电平抖动，采样的电平值可能不稳定。</div>
+<div class="line">去抖逻辑根据该值设置计数器的初值，当计数器值变为0时，卡检测信号</div>
+<div class="line">稳定，此时可以采样到正确的电平值。</div>
+<div class="line">典型的去抖时间为5-25ms。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-sdmc-pbuscfg">
+<h2><span class="section-number">9.1.4.21. </span>0x080 SDMC_PBUSCFG<a class="headerlink" href="#x080-sdmc-pbuscfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>外设总线配置（Peripheral Bus Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:11</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10:8</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PBL</div>
+<div class="line">编程突发传输长度</div>
+<div class="line">这些位域表示内部DMA控制器执行一次突发传输的最大长度。这些值为</div>
+<div class="line">FIFOTH寄存器中MSIZE位域的镜像值。如果要改变这些值，需要写</div>
+<div class="line">FIFOTH寄存器。</div>
+<div class="line">0:1 笔传输</div>
+<div class="line">1:4</div>
+<div class="line">2:8</div>
+<div class="line">3:16</div>
+<div class="line">4:32</div>
+<div class="line">5:64</div>
+<div class="line">6:128</div>
+<div class="line">7:256</div>
+<div class="line">单笔突发传输的单位：32位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DE</div>
+<div class="line">置位，内部DMA使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DSL</div>
+<div class="line">置位，描述符跳过长度。</div>
+<div class="line">定义了两个非链式描述之间跳过的数量长度，单位是半字、字，双字</div>
+<div class="line">（取决于总线位宽，对应16位、32位、64位），仅用于双缓冲结构的</div>
+<div class="line">描述应用中。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FB</div>
+<div class="line">固定突发长度。</div>
+<div class="line">控制AHB主机接口是否执行固定长度的突发传输。置位，AHB使用</div>
+<div class="line">SINGLE，INCR4，INCR8，INC16的方式开始突发传输。复位后，</div>
+<div class="line">AHB使用SINGLE和INCR方式执行突发传输。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SWR</div>
+<div class="line">软件复位。</div>
+<div class="line">置位，DMA控制器复位内部寄存器，经过1个时钟周期后自动清零。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x084-sdmc-idmarcap">
+<h2><span class="section-number">9.1.4.22. </span>0x084 SDMC_IDMARCAP<a class="headerlink" href="#x084-sdmc-idmarcap" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>恢复获取描述符（Inside DMA Resume Capture Descriptor）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RCAP</div>
+<div class="line">恢复获取描述符</div>
+<div class="line">如果描述的OWN位没有置1，状态机会进入暂停状态。Host需要对该寄存</div>
+<div class="line">器写一些值，使内部的DMA状态机恢复到正常的描述符获取操作。</div>
+<div class="line">该寄存器为只写。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x088-sdmc-idmasaddr">
+<h2><span class="section-number">9.1.4.23. </span>0x088 SDMC_IDMASADDR<a class="headerlink" href="#x088-sdmc-idmasaddr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>描述符起始地址（Descriptor List Start Address）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLSA</div>
+<div class="line">描述符列表的起始地址。内部DMA会忽略低有效位[0/1/2:0]（对应16/</div>
+<div class="line">32/64位总线位宽）的数据，并把他们作为全零处理，这些位是只读的。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x08c-sdmc-idmast">
+<h2><span class="section-number">9.1.4.24. </span>0x08C SDMC_IDMAST<a class="headerlink" href="#x08c-sdmc-idmast" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>内部DMA状态（Inside DMAC Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16:13</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FSM</div>
+<div class="line">DMA控制器状态机当前的状态，该位段只读。</div>
+<div class="line">0:DMA_IDLE</div>
+<div class="line">1:DMA_SUSPEND</div>
+<div class="line">2:DMAC_RD</div>
+<div class="line">3:DMAC_CHK</div>
+<div class="line">4:DMA_RD_REQ_WAIT</div>
+<div class="line">5:DMA_WR_REQ_WATI</div>
+<div class="line">6:DMA_RD</div>
+<div class="line">7:DMA_WR</div>
+<div class="line">8:DESC_CLOSE</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12:10</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FBE_CODE</div>
+<div class="line">致命的总线错误。</div>
+<div class="line">表示造成总线出错的错误类型，IDSTS[2]置1该位段才有效。</div>
+<div class="line">该位段不产生中断。</div>
+<div class="line">1:在发送数据时Host中止</div>
+<div class="line">2:在接收数据时Host中止</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AIS</div>
+<div class="line">异常中断摘要</div>
+<div class="line">IDSTS[2]-致命的总线中断</div>
+<div class="line">IDSTS[4]-DU位中断</div>
+<div class="line">只有未屏蔽的位域才影响该位的值。该位写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">NIS</div>
+<div class="line">正常中断摘要</div>
+<div class="line">IDSTS[0]-发送中断</div>
+<div class="line">IDSTS[1]-接收中断</div>
+<div class="line">只有未屏蔽的位域才影响该位的值。该位写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CES</div>
+<div class="line">卡错误摘要</div>
+<div class="line">表示卡操作的状态信息，也存在于RINTSTS寄存器。</div>
+<div class="line">EBE-结束位错误</div>
+<div class="line">RTO-响应超时/Boot应答超时</div>
+<div class="line">RCRC-响应CRC</div>
+<div class="line">SBE-起始位错误</div>
+<div class="line">DRTO-读数据超时</div>
+<div class="line">DCRC-接收的数据CRC错误</div>
+<div class="line">RE-响应错误</div>
+<div class="line">该位写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DU</div>
+<div class="line">描述符不可用中断。该位置1表示当前描述符不可用（因为OWN位为0）。</div>
+<div class="line">该位写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FBE</div>
+<div class="line">致命的总线错误中断，表示有一个总线错误发生，当该位置1，</div>
+<div class="line">DMA禁止所有的总线访问。该位写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RI</div>
+<div class="line">接收完成中断。表示一个描述符的数据接收完成。该位写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TI</div>
+<div class="line">发送完成中断。表示一个描述符的数据发送完成，该位写1清零。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x090-sdmc-idmainten">
+<h2><span class="section-number">9.1.4.25. </span>0x090 SDMC_IDMAINTEN<a class="headerlink" href="#x090-sdmc-idmainten" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>内部DMA中断使能（Inside DMAC Interrupt Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AI</div>
+<div class="line">异常中断摘要使能，置1时，使能异常中断。</div>
+<div class="line">IDINTEN[2]-致命的总线中断</div>
+<div class="line">IDINTEN[4]-DU位中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">NIS</div>
+<div class="line">正常中断摘要使能，置1时，使能一个正常中断。</div>
+<div class="line">IDINTEN[0]-发送完成中断</div>
+<div class="line">IDINTEN[1]-接收完成中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CES</div>
+<div class="line">卡错误摘要中断使能，置1时，使能卡中断摘要。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DU</div>
+<div class="line">描述符不可用中断。当AI位段使能时，该位也一起使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FBE</div>
+<div class="line">置1时，致命总线错误中断使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RI</div>
+<div class="line">置1时，接收完成中断使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TI</div>
+<div class="line">置1时，发送完成中断使能。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x094-sdmc-idmacda">
+<h2><span class="section-number">9.1.4.26. </span>0x094 SDMC_IDMACDA<a class="headerlink" href="#x094-sdmc-idmacda" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>当前描述符地址指针（Current Descriptor Address）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HDAL</div>
+<div class="line">Host描述符地址指针。复位时清零。内部DMA操作时指针会自动刷新。</div>
+<div class="line">该寄存器指向当前描述符的起始地址。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x098-sdmc-idmacba">
+<h2><span class="section-number">9.1.4.27. </span>0x098 SDMC_IDMACBA<a class="headerlink" href="#x098-sdmc-idmacba" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>当前缓存地址指针（Current Buffer Address）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HBA</div>
+<div class="line">Host缓存地址指针。复位时清零。内部DMA操作时指针会自动刷新。</div>
+<div class="line">该寄存器指向当前数据缓存的地址。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x100-sdmc-ctc">
+<h2><span class="section-number">9.1.4.28. </span>0x100 SDMC_CTC<a class="headerlink" href="#x100-sdmc-ctc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>卡门限值配置（Card Threshold Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CardThreshold</div>
+<div class="line">卡传输门限值大小，N由FIFO的大小决定：</div>
+<div class="line"><strong>注意：当CardWrThrEn置位或CardRdThrEn置位，该寄存器有效。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:3</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CardWrThrEn</div>
+<div class="line">卡写操作门限值使能</div>
+<div class="line">0:卡写操作门限禁止</div>
+<div class="line">1:卡写操作门限值使能</div>
+<div class="line">仅当发送FIFO中存在门限值的数据量时，Host控制器初始化写传输。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BsyClrIntEn</div>
+<div class="line">0:忙状态清除中断禁止</div>
+<div class="line">1:忙状态清除中断使能</div>
+<div class="line"><strong>注意：如果不想等待忙清除中断可以不使用该功能。例如，对于多个</strong></div>
+<div class="line"><strong>卡的场景，切换到另一张卡时不需要等待忙状态完成。在这种情况下，</strong></div>
+<div class="line"><strong>应用程序可以使用轮询的方式决定忙碌的状态。该功能默认是禁止的。</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CardRdThrEn</div>
+<div class="line">卡读操作门限值使能</div>
+<div class="line">0:卡读操作门限值禁止</div>
+<div class="line">1:卡读操作门限值使能</div>
+<div class="line">仅当接收FIFO中存在门限值的数据量时才读数据。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x104-sdmc-dlyctrl">
+<h2><span class="section-number">9.1.4.29. </span>0x104 SDMC_DLYCTRL<a class="headerlink" href="#x104-sdmc-dlyctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>延时链和相位控制（Delay Chain and Phase Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EXT_CLK_MUX_CTRL</div>
+<div class="line">外部输入时钟选择控制</div>
+<div class="line">0:输入时钟4分频，典型值为50MHZ（DS，HS-SDR，HS-DDR模式）</div>
+<div class="line">1:输入时钟2分频，典型值为100MHz（HS，HS-SDR，HS-DDR模式）</div>
+<div class="line">2:输入时钟1分频，典型值为200MHz（HS-DDR模式）</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_DRV_PHASE_CTRL</div>
+<div class="line">驱动时钟相位控制</div>
+<div class="line">配置输出驱动时钟cclk_in_drv使用的相位值</div>
+<div class="line">0:0°</div>
+<div class="line">1:90°</div>
+<div class="line">2:180°</div>
+<div class="line">3:270°</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:23</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_DRV_DELAY_CTRL</div>
+<div class="line">驱动时钟延迟控制</div>
+<div class="line">配置输出驱动时钟cclk_in_drv使用的延时值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>22:21</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_SMPL_PHASE_CTRL</div>
+<div class="line">采样时钟相位控制</div>
+<div class="line">配置采样时钟cclk_in_sample使用的相位值</div>
+<div class="line">0:0°</div>
+<div class="line">1:90°</div>
+<div class="line">2:180°</div>
+<div class="line">3:270°</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_SMPL_DELAY_CTRL</div>
+<div class="line">采样时钟延迟控制</div>
+<div class="line">配置采样时钟cclk_in_sample使用的延时值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DS_SMPL_PHASE_CTRL</div>
+<div class="line">DS时钟相位控制</div>
+<div class="line">配置采样时钟cclk_in_sample使用的相位值</div>
+<div class="line">0:0°</div>
+<div class="line">1:90°</div>
+<div class="line">2:180°</div>
+<div class="line">3:270°</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13:9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DS_SMPL_DELAY_CTRL</div>
+<div class="line">DS时钟延迟控制</div>
+<div class="line">配置采样时钟cclk_in_sample使用的延时值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SAMP_SWAP</div>
+<div class="line">采样边沿交换，默认先采样even数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ddr_samp_seq_en</div>
+<div class="line">DDR模式采样顺序使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Even_shift</div>
+<div class="line">奇数据时钟移相选择：</div>
+<div class="line">0:选择默认相位</div>
+<div class="line">1:相位移动90°</div>
+<div class="line">2:相位移动180°</div>
+<div class="line">3:相位移动270°</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">Enable_shift</div>
+<div class="line">相位移位使能</div>
+<div class="line">0:选择默认相位</div>
+<div class="line">1:相位移动90°</div>
+<div class="line">2:相位移动180°</div>
+<div class="line">3:相位移动270°</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x108-sdmc-emcr">
+<h2><span class="section-number">9.1.4.30. </span>0x108 SDMC_EMCR<a class="headerlink" href="#x108-sdmc-emcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>EMMC配置（EMMC Configuration）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MMC_VOLT_REG</div>
+<div class="line">MMC 电源控制寄存器</div>
+<div class="line">控制MMC支持1.2V电压，该位与VOLT_REG位共同决定了输出的电压值。</div>
+<div class="line">当只使用SD卡，或者使用的eMMC只支持v4.41之前的协议，则Host控制器</div>
+<div class="line">不支持MMC_VOLT_REG编程。仅当Host支持3种不同的电压（3.3/1.8/</div>
+<div class="line">1.2V）选择，可以对该位进行编程。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:1</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HALF_START_BIT</div>
+<div class="line">起始位保持</div>
+<div class="line">对于eMMC 4.5版本，起始位可以保持：</div>
+<div class="line">0:完整的时钟周期</div>
+<div class="line">1:小于一个完整的时钟周期</div>
+<div class="line">对于eMMC 4.1及以上版本，该位置1。对于SD卡应用，该位清零。</div>
+<div class="line"><strong>注意：DDR操作时该位会被忽略。</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x118-sdmc-verid">
+<h2><span class="section-number">9.1.4.31. </span>0x118 SDMC_VERID<a class="headerlink" href="#x118-sdmc-verid" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>控制器版本号（Version ID）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0000_0100</p></td>
+<td><div class="line-block">
+<div class="line">VERID</div>
+<div class="line">控制器版本号，寄存器的值由硬件IP决定，只读。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x200-sdmc-fifo">
+<h2><span class="section-number">9.1.4.32. </span>0x200 SDMC_FIFO<a class="headerlink" href="#x200-sdmc-fifo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>数据FIFO缓存寄存器（Data FIFO）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0000_0000</p></td>
+<td><div class="line-block">
+<div class="line">DATA_FIFO</div>
+<div class="line">读写数据缓存FIFO寄存器，该寄存器映射到FIFO的入口地址。</div>
+<div class="line">对于写操作，CPU或IDMA通过AHB总线写数据到该地址；</div>
+<div class="line">对于读操作，CPU或IDMA通过AHB总线从该地址读数据。</div>
+<div class="line"><strong>注意：读写数据共享相同的FIFO，不支持同时对该地址进行读或写访问</strong></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../media/index.html" class="btn btn-neutral float-right" title="10. 多媒体" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="9.1.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

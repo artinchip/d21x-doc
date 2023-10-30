@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.3.2. U-Boot 移植 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.3.3. Linux 移植" href="linux_port.html" />
+    <link rel="prev" title="5.3.1. 配置指南" href="config_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../sdmc/index.html">5.1. SDMC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.3. SPI NOR 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="config_guide.html">5.3.1. 配置指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.3.2. U-Boot 移植</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#kconfig">5.3.2.1. Kconfig</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#spi-nor-ids">5.3.2.2. spi-nor-ids</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#flash-info">5.3.2.3. flash_info</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#jedec-id">5.3.2.3.1. JEDEC ID</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#sector-size">5.3.2.3.2. sector_size</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#n-sectors">5.3.2.3.3. n_sectors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#flags">5.3.2.3.4. flags</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id1">5.3.2.4. 总结</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="linux_port.html">5.3.3. Linux 移植</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/index.html">5.4. 文件系统使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.3. </span>SPI NOR 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.3.2. </span>U-Boot 移植</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="u-boot">
+<h1><span class="section-number">5.3.2. </span>U-Boot 移植<a class="headerlink" href="#u-boot" title="永久链接至标题">¶</a></h1>
+<p>SPI NOR 要工作既需要 SOC 端 SPI 模块的驱动能力，也需要对 SPI NOR 模块的正确配置，本章阐述如何进行 SPI NOR 器件的移植工作，以 <code class="docutils literal notranslate"><span class="pre">CFX</span></code> 的 <code class="docutils literal notranslate"><span class="pre">GM25Q128A</span></code> 和 <code class="docutils literal notranslate"><span class="pre">FudanMicro</span></code> 的 <code class="docutils literal notranslate"><span class="pre">FM25Q128</span></code> 为例</p>
+<p>U-Boot 中 对不同厂家的 SPI NOR 器件的管理集成度很高， 主要代码在 source/uboot-2021.10/drivers/mtd/spi/spi-nor-ids.c 中，添加一款新厂家的新器件需要经过如下步骤</p>
+<div class="section" id="kconfig">
+<h2><span class="section-number">5.3.2.1. </span>Kconfig<a class="headerlink" href="#kconfig" title="永久链接至标题">¶</a></h2>
+<p>添加厂家的宏定义</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="n">SPI_FLASH_FMSH</span>
+    <span class="kt">bool</span> <span class="s">&quot;FudanMicro SPI flash support&quot;</span>
+    <span class="n">help</span>
+      <span class="n">Add</span> <span class="n">support</span> <span class="k">for</span> <span class="n">various</span> <span class="n">FMSH</span> <span class="p">(</span><span class="n">Shanghai</span> <span class="n">Fudan</span> <span class="n">Microelectronics</span> <span class="n">Group</span> <span class="n">Company</span><span class="p">)</span>
+      <span class="n">SPI</span> <span class="n">flash</span> <span class="n">chips</span> <span class="p">(</span><span class="n">FM25xxx</span><span class="p">).</span>
+
+<span class="n">config</span> <span class="n">SPI_FLASH_CFX</span>
+    <span class="kt">bool</span> <span class="s">&quot;CFX SPI flash support&quot;</span>
+    <span class="n">help</span>
+      <span class="n">Add</span> <span class="n">support</span> <span class="k">for</span> <span class="n">various</span> <span class="n">CFX</span> <span class="p">(</span><span class="n">Zhuhai</span> <span class="n">ChuangFeiXin</span><span class="o">-</span><span class="n">Technology</span><span class="p">)</span>
+      <span class="n">SPI</span> <span class="n">flash</span> <span class="n">chips</span> <span class="p">(</span><span class="n">GM25xxx</span><span class="p">).</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spi-nor-ids">
+<h2><span class="section-number">5.3.2.2. </span>spi-nor-ids<a class="headerlink" href="#spi-nor-ids" title="永久链接至标题">¶</a></h2>
+<p>在 spi-nor-ids.c 的 spi_nor_ids 结构中添加 FMHS 和 CFX 的相关器件的支持</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifdef CONFIG_SPI_FLASH_FMSH</span>
+    <span class="cm">/* Shanghai Fudan Microelectronics Group Company */</span>
+    <span class="p">{</span> <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;FM25Q128&quot;</span><span class="p">,</span> <span class="mh">0xa14017</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">SECT_4K</span> <span class="o">|</span> <span class="n">SPI_NOR_DUAL_READ</span> <span class="o">|</span> <span class="n">SPI_NOR_QUAD_READ</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;FM25Q64&quot;</span><span class="p">,</span> <span class="mh">0xa14018</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">SECT_4K</span> <span class="o">|</span> <span class="n">SPI_NOR_DUAL_READ</span> <span class="o">|</span> <span class="n">SPI_NOR_QUAD_READ</span><span class="p">)</span> <span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef CONFIG_SPI_FLASH_CFX</span>
+    <span class="cm">/* Zhuhai ChuangFeiXin Technology */</span>
+    <span class="p">{</span> <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;GM25Q128A&quot;</span><span class="p">,</span> <span class="mh">0x1c4018</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">SECT_4K</span> <span class="o">|</span> <span class="n">SPI_NOR_DUAL_READ</span> <span class="o">|</span> <span class="n">SPI_NOR_QUAD_READ</span><span class="p">)</span> <span class="p">},</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="flash-info">
+<span id="ref-to-spinor-flash-info"></span><h2><span class="section-number">5.3.2.3. </span>flash_info<a class="headerlink" href="#flash-info" title="永久链接至标题">¶</a></h2>
+<p>flash_info 数据结构主要用来描述某一颗 SPI NOR 的参数，通过 INFO 宏来设置，其详细结构为：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">flash_info</span> <span class="p">{</span>
+    <span class="kt">char</span>    <span class="o">*</span><span class="n">name</span><span class="p">;</span>                  <span class="c1">//器件名称，一般用器件编号替代</span>
+    <span class="n">u8</span>      <span class="n">id</span><span class="p">[</span><span class="n">SPI_NOR_MAX_ID_LEN</span><span class="p">];</span> <span class="c1">//JEDEC 授权的器件ID</span>
+    <span class="n">u8</span>      <span class="n">id_len</span><span class="p">;</span>                 <span class="c1">//ID 长度，填0，自动计算</span>
+    <span class="kt">unsigned</span>    <span class="n">sector_size</span><span class="p">;</span>        <span class="c1">//sector size，现在的意义已经改变</span>
+    <span class="n">u16</span>     <span class="n">n_sectors</span><span class="p">;</span>              <span class="c1">//sector 数目，通过 flash size 和 sector size 计算出来</span>
+    <span class="n">u16</span>     <span class="n">page_size</span><span class="p">;</span>              <span class="c1">//页大小， INFO 宏固定为256</span>
+    <span class="n">u16</span>     <span class="n">addr_width</span><span class="p">;</span>             <span class="c1">//board.dts 中配置</span>
+    <span class="n">u32</span>     <span class="n">flags</span><span class="p">;</span>                  <span class="c1">//功能标识</span>
+</pre></div>
+</div>
+<div class="section" id="jedec-id">
+<h3><span class="section-number">5.3.2.3.1. </span>JEDEC ID<a class="headerlink" href="#jedec-id" title="永久链接至标题">¶</a></h3>
+<p>和 SPI NAND 不同， SPI NOR 的 ID 包含 Manufacture ID 和 Device ID 等多项内容，一般为24位，描述方式为</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 24%" />
+<col style="width: 26%" />
+<col style="width: 28%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>阈值</p></td>
+<td><p>名称</p></td>
+<td><p>示例</p></td>
+<td><p>标记方式</p></td>
+</tr>
+<tr class="row-even"><td><p>MID7 - IDF0</p></td>
+<td><p>Maunfacture ID</p></td>
+<td><p>0xa1</p></td>
+<td><p>JEDEC 分配</p></td>
+</tr>
+<tr class="row-odd"><td><p>D15 - D8</p></td>
+<td><p>Memory Type</p></td>
+<td><p>0x40</p></td>
+<td><p>0x9F 命令</p></td>
+</tr>
+<tr class="row-even"><td><p>D7 - D0</p></td>
+<td><p>Memory Desity</p></td>
+<td><p>0x17</p></td>
+<td><p>0x9F 命令</p></td>
+</tr>
+</tbody>
+</table>
+<p>不同厂家在数据手册中描述方法不一样，但现代的 SPI NOR 的 MID 一般通过 “Maunfacture/MID” 等字段标注，Device ID的（D15 - D0） 一般通过 0x9F 命令标注，
+因此在数据手册中通过搜索 9F 一般能构造出 JEDEC ID， 如下图所示</p>
+<ul class="simple">
+<li><p>0xC84018</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/id-1.png" src="../../../_images/id-1.png" />
+</div>
+<ul class="simple">
+<li><p>0xC22018</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/id-2.png" src="../../../_images/id-2.png" />
+</div>
+<ul class="simple">
+<li><p>0xA14017</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/id-3.png" src="../../../_images/id-3.png" />
+</div>
+</div>
+<div class="section" id="sector-size">
+<h3><span class="section-number">5.3.2.3.2. </span>sector_size<a class="headerlink" href="#sector-size" title="永久链接至标题">¶</a></h3>
+<p>Sector Size 是个历史产物，不管是文件系统还是厂家的器件规格都开始对外提供基于 Block 的接口，但在名称上还保留了 Sector 的名称，而驱动中则已经完全切换到 Block 的逻辑</p>
+<p>Sector Size 主要定义的是擦除参数，一般的器件提供三种擦除操作</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 42%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>操作方式</p></td>
+<td><p>命令</p></td>
+<td><p>擦除大小</p></td>
+<td><p>备注</p></td>
+</tr>
+<tr class="row-even"><td><p>Sector Erase( SE)</p></td>
+<td><p>0x20</p></td>
+<td><p>4K</p></td>
+<td><p>基础能力，主要做兼容，不做主力</p></td>
+</tr>
+<tr class="row-odd"><td><p>32K Block Erase (BE)</p></td>
+<td><p>0x52</p></td>
+<td><p>32K</p></td>
+<td><p>不再使用，和 BE-64 成对</p></td>
+</tr>
+<tr class="row-even"><td><p>64K Block Erase (BE)</p></td>
+<td><p>0xD8</p></td>
+<td><p>64K</p></td>
+<td><p>大部分都支持，如果不支持则必须支持SE</p></td>
+</tr>
+</tbody>
+</table>
+<p>在驱动中，Sector_Size 描述的实际是 BE-64 的参数，而 BE-64 要求的 size 又是固定的 64K，因此该参数的设置原则是：</p>
+<ul class="simple">
+<li><p>在数据手册中，如果支持 64K Block Erase (0xD8）命令，则设置为 ‘64 * 1024’</p></li>
+<li><p>在数据手册中, 如果不支持 64K Block Erase (0xD8）命令，则设置为 ‘4 * 1024’</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/se.png" src="../../../_images/se.png" />
+</div>
+</div>
+<div class="section" id="n-sectors">
+<h3><span class="section-number">5.3.2.3.3. </span>n_sectors<a class="headerlink" href="#n-sectors" title="永久链接至标题">¶</a></h3>
+<p>Sector (Block)  数目通过计算得到， 计算公式为 (（flash size）/ sector size)，需要注意不同参数使用 Byte（B） 还是 bit（b） 描述</p>
+<ul class="simple">
+<li><p>gd25q128： 128Mb / 64KB = 256</p></li>
+<li><p>FM25Q128:  128Mb / 64KB = 256</p></li>
+<li><p>FM25Q64:  64Mb / 64KB = 128</p></li>
+</ul>
+</div>
+<div class="section" id="flags">
+<h3><span class="section-number">5.3.2.3.4. </span>flags<a class="headerlink" href="#flags" title="永久链接至标题">¶</a></h3>
+<p>flags用来设置额外的功能标志</p>
+<ul class="simple">
+<li><p>SECT_4K 建议均设置，此功能用来兼容 Sector Erase( SE)  的支持，在一些特殊情况下可以继续工作</p></li>
+<li><p>如果支持 0xBB 命令，则打开 SPI_NOR_DUAL_READ</p></li>
+<li><p>如果支持 0xEB 命令，则打开 SPI_NOR_QUAD_READ</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/qspi.png" src="../../../_images/qspi.png" />
+</div>
+<ul class="simple">
+<li><p>如果有 Status Register，则打开 USE_FSR，是一种状态呈现，非必须</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/fsr.png" src="../../../_images/fsr.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">5.3.2.4. </span>总结<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>U-Boot 中移植一款 SPI NOR，最重要的是 JEDEC ID，通过在数据手册中查找 0x9F 命令获得</p></li>
+<li><p>其他的参数都可以默认设置，INFO(0xa14017, 0, 64 * 1024, n_sectors, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="linux_port.html" class="btn btn-neutral float-right" title="5.3.3. Linux 移植" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="config_guide.html" class="btn btn-neutral float-left" title="5.3.1. 配置指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

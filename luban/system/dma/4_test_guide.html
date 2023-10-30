@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>4.3.4. 测试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="4.3.5. 设计说明" href="5_design_guide.html" />
+    <link rel="prev" title="4.3.3. 调试指南" href="3_debug_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">4. 系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bwm/index.html">4.1. BWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cmu/index.html">4.2. CMU 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4.3. DMA 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">4.3.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">4.3.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">4.3.3. 调试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.3.4. 测试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">4.3.4.1. 测试环境</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">4.3.4.1.1. 硬件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">4.3.4.1.2. 软件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">4.3.4.1.3. 软件配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dmatest">4.3.4.2. dmatest 测试</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">4.3.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">4.3.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../rtc/index.html">4.4. RTC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tsensor/index.html">4.5. TSensor 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">4.6. Watchdog 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wri/index.html">4.7. WRI 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">4. </span>系统</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">4.3. </span>DMA 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">4.3.4. </span>测试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">4.3.4. </span>测试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">4.3.4.1. </span>测试环境<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">4.3.4.1.1. </span>硬件<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>开发板，或FPGA板</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">4.3.4.1.2. </span>软件<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>PC端的串口终端软件，用于PC和开发板进行串口通信</p></li>
+<li><p>Linux内核原生的dmatest模块</p></li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">4.3.4.1.3. </span>软件配置<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="section" id="dmttest">
+<h4><span class="section-number">4.3.4.1.3.1. </span>dmttest<a class="headerlink" href="#dmttest" title="永久链接至标题">¶</a></h4>
+<p>dmatest是 Linux 内核中原生的一个模块，在luban的根目录下通过make kernel-menuconfig，按如下选择：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Linux
+    Device Drivers
+        [*] DMA Engine support
+             &lt;*&gt;   DMA Test client
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>dmatest模块只限于测试 Mem To Mem 的数据传输操作。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dmatest">
+<span id="ref-dma-dmatest"></span><h2><span class="section-number">4.3.4.2. </span>dmatest 测试<a class="headerlink" href="#dmatest" title="永久链接至标题">¶</a></h2>
+<p>dmatest模块初始化成功后，会在Sysfs目录创建一些节点，测试过程就是通过这些节点配置参数、启动测试。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># cd /sys/module/dmatest/parameters/</span>
+<span class="o">[</span>aic@parameters<span class="o">]</span> <span class="c1"># ls</span>
+alignment         max_channels      run               transfer_size
+channel           norandom          test_buf_size     verbose
+device            noverify          test_list         <span class="nb">wait</span>
+dmatest           polled            threads_per_chan  xor_sources
+iterations        pq_sources        timeout
+
+<span class="o">[</span>aic@parameters<span class="o">]</span> <span class="c1"># echo 30 &gt; iterations</span>
+<span class="o">[</span>aic@parameters<span class="o">]</span> <span class="c1"># echo 8 &gt; max_channels</span>
+<span class="o">[</span>aic@parameters<span class="o">]</span> <span class="c1"># echo Y &gt; polled</span>
+<span class="o">[</span>aic@parameters<span class="o">]</span> <span class="c1"># echo Y &gt; run</span>
+<span class="o">[</span>  <span class="m">104</span>.696480<span class="o">]</span> dmatest: No channels configured, <span class="k">continue</span> with any
+<span class="o">[</span>  <span class="m">104</span>.697377<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan2
+<span class="o">[</span>  <span class="m">104</span>.698061<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan3
+<span class="o">[</span>  <span class="m">104</span>.698695<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan4
+<span class="o">[</span>  <span class="m">104</span>.699334<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan5
+<span class="o">[</span>  <span class="m">104</span>.699964<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan6
+<span class="o">[</span>  <span class="m">104</span>.700599<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan7
+<span class="o">[</span>  <span class="m">104</span>.701248<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan8
+<span class="o">[</span>  <span class="m">104</span>.701883<span class="o">]</span> dmatest: Added <span class="m">1</span> threads using dma0chan9
+<span class="o">[</span>  <span class="m">104</span>.702328<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan2
+<span class="o">[</span>  <span class="m">104</span>.702776<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan3
+<span class="o">[</span>  <span class="m">104</span>.703223<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan4
+<span class="o">[</span>  <span class="m">104</span>.703671<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan5
+<span class="o">[</span>  <span class="m">104</span>.704118<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan6
+<span class="o">[</span>  <span class="m">104</span>.704564<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan7
+<span class="o">[</span>  <span class="m">104</span>.705011<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan8
+<span class="o">[</span>  <span class="m">104</span>.705457<span class="o">]</span> dmatest: Started <span class="m">1</span> threads using dma0chan9
+<span class="o">[</span>  <span class="m">105</span>.006038<span class="o">]</span> dmatest: dma0chan4-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.28 iops <span class="m">836</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">105</span>.306046<span class="o">]</span> dmatest: dma0chan2-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.58 iops <span class="m">884</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">105</span>.606055<span class="o">]</span> dmatest: dma0chan3-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.60 iops <span class="m">1044</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">105</span>.906057<span class="o">]</span> dmatest: dma0chan5-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.59 iops <span class="m">835</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">106</span>.206050<span class="o">]</span> dmatest: dma0chan6-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.59 iops <span class="m">792</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">106</span>.506034<span class="o">]</span> dmatest: dma0chan7-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.61 iops <span class="m">856</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">106</span>.806048<span class="o">]</span> dmatest: dma0chan8-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">107</span>.64 iops <span class="m">843</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="o">[</span>  <span class="m">107</span>.106044<span class="o">]</span> dmatest: dma0chan9-copy0: summary <span class="m">30</span> tests, <span class="m">0</span> failures <span class="m">106</span>.81 iops <span class="m">993</span> KB/s <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="5_design_guide.html" class="btn btn-neutral float-right" title="4.3.5. 设计说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3_debug_guide.html" class="btn btn-neutral float-left" title="4.3.3. 调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>14.1. PWMCS &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="14.1.1. 概述" href="overview.html" />
+    <link rel="prev" title="14. 伺服系统" href="../index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">14. 伺服系统</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">14.1. Pulse Width Modulation Control System (PWMCS)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="overview.html">14.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">14.1.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="register.html">14.1.3. 寄存器描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../psadc/index.html">14.2. PWM System ADC (PSADC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">14. </span>伺服系统</a> &raquo;</li>
+        
+      <li><span class="section-number">14.1. </span>PWMCS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pwmcs">
+<h1><span class="section-number">14.1. </span>PWMCS<a class="headerlink" href="#pwmcs" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">14.1.1. 概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id2">14.1.1.1. 特性说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id3">14.1.1.2. 原理框图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id4">14.1.1.3. 伺服原理框图</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="function.html">14.1.2. 功能描述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function.html#pwm">14.1.2.1. PWM子模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id2">14.1.2.1.1. 结构框图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id3">14.1.2.1.2. 计数器功能模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id4">14.1.2.1.3. PWM生成模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#pwm-chopper">14.1.2.1.4. PWM Chopper模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id5">14.1.2.1.5. PWM保护模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#adc">14.1.2.1.6. ADC采样触发和中断模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id6">14.1.2.1.7. 输入信号过滤</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#cap">14.1.2.2. CAP子模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id7">14.1.2.2.1. 结构框图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id8">14.1.2.2.2. 计数器功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id9">14.1.2.2.3. 捕捉输入功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id10">14.1.2.2.4. 简单PWM输出功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id11">14.1.2.2.5. 中断信号</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#qep">14.1.2.3. QEP子模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id12">14.1.2.3.1. 结构框图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id13">14.1.2.3.2. 正交解码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id14">14.1.2.3.3. 正交位置计数功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id15">14.1.2.3.4. 正交时间捕捉功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#qep-timer">14.1.2.3.5. QEP Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#qep-watchdog-timer">14.1.2.3.6. QEP Watchdog Timer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#qep-hall-monitor">14.1.2.3.7. QEP Hall Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id16">14.1.2.3.8. 中断</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#id17">14.1.2.4. 全局控制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id18">14.1.2.4.1. 全局时钟控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="function.html#id19">14.1.2.4.2. 全局中断</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="register.html">14.1.3. 寄存器描述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="register.html#id2">14.1.3.1. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#id3">14.1.3.2. 寄存器列表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#pwm">14.1.3.3. PWM子模块寄存器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0000-pwm-cnt-prdv">14.1.3.4. 0x0000 PWM_CNT_PRDV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0004-pwm-cnt-phv">14.1.3.5. 0x0004 PWM_CNT_PHV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0008-pwm-cnt-v">14.1.3.6. 0x0008 PWM_CNT_V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x000c-pwm-cnt-conf">14.1.3.7. 0x000C PWM_CNT_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0010-pwm-cnt-sts">14.1.3.8. 0x0010 PWM_CNT_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0014-pwm-cnt-av">14.1.3.9. 0x0014 PWM_CNT_AV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0018-pwm-cnt-bv">14.1.3.10. 0x0018 PWM_CNT_BV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x001c-pwm-updt-mod">14.1.3.11. 0x001C PWM_UPDT_MOD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0020-pwma-act">14.1.3.12. 0x0020 PWMA_ACT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0024-pwmb-act">14.1.3.13. 0x0024 PWMB_ACT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0028-pwm-sw-act">14.1.3.14. 0x0028 PWM_SW_ACT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x002c-pwm-act-sw-ct">14.1.3.15. 0x002C PWM_ACT_SW_CT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0030-pwm-out-conf">14.1.3.16. 0x0030 PWM_OUT_CONF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="register.html#id4">14.1.3.16.1. 附典型配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0034-pwm-re-dzctl">14.1.3.17. 0x0034 PWM_RE_DZCTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0038-pwm-fe-dzctl">14.1.3.18. 0x0038 PWM_FE_DZCTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x003c-pwm-chop-conf">14.1.3.19. 0x003C PWM_CHOP_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0040-pwm-flt-input">14.1.3.20. 0x0040 PWM_FLT_INPUT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0044-pwm-flt-prtct">14.1.3.21. 0x0044 PWM_FLT_PRTCT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0048-pwm-flt-int-en">14.1.3.22. 0x0048 PWM_FLT_INT_EN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x004c-pwm-flt-int-flg">14.1.3.23. 0x004C PWM_FLT_INT_FLG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0050-pwm-flt-int-clr">14.1.3.24. 0x0050 PWM_FLT_INT_CLR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0054-pwm-swfrc-flt-int">14.1.3.25. 0x0054 PWM_SWFRC_FLT_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0058-pwm-adc-int-ctl">14.1.3.26. 0x0058 PWM_ADC_INT_CTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x005c-pwm-adc-int-pre">14.1.3.27. 0x005C PWM_ADC_INT_PRE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0060-pwm-evnt-flag">14.1.3.28. 0x0060 PWM_EVNT_FLAG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0064-pwm-evnt-clr">14.1.3.29. 0x0064 PWM_EVNT_CLR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0068-pwm-sw-frc-evnt">14.1.3.30. 0x0068 PWM_SW_FRC_EVNT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x006c-pwm-falt-in-flt1">14.1.3.31. 0x006C PWM_FALT_IN_FLT1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0070-pwm-falt-in-flt2">14.1.3.32. 0x0070 PWM_FALT_IN_FLT2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0074-pwm-falt-in-flt3">14.1.3.33. 0x0074 PWM_FALT_IN_FLT3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0fc-pwm-ver">14.1.3.34. 0x0FC PWM_VER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#cap">14.1.3.35. CAP子模块寄存器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0000-cap-cnt-v">14.1.3.36. 0x0000 CAP_CNT_V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0004-cap-cnt-ph">14.1.3.37. 0x0004 CAP_CNT_PH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0008-cap-reg0">14.1.3.38. 0x0008 CAP_REG0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x000c-cap-reg1">14.1.3.39. 0x000C CAP_REG1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0010-cap-reg2">14.1.3.40. 0x0010 CAP_REG2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0014-cap-reg3">14.1.3.41. 0x0014 CAP_REG3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0018-cap-conf1">14.1.3.42. 0x0018 CAP_CONF1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x001c-cap-conf2">14.1.3.43. 0x001C CAP_CONF2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0020-cap-int-en">14.1.3.44. 0x0020 CAP_INT_EN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0024-cap-flg">14.1.3.45. 0x0024 CAP_FLG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0028-cap-flg-clr">14.1.3.46. 0x0028 CAP_FLG_CLR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x002c-cap-sw-frc">14.1.3.47. 0x002C CAP_SW_FRC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0030-cap-in-flt">14.1.3.48. 0x0030 CAP_IN_FLT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x00fc-cap-ver">14.1.3.49. 0x00FC CAP_VER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#qep">14.1.3.50. QEP子模块寄存器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0000-qep-pos-cnt-v">14.1.3.51. 0x0000 QEP_POS_CNT_V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0004-qep-pos-cnt-sp">14.1.3.52. 0x0004 QEP_POS_CNT_SP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0008-qep-pos-cnt-ep">14.1.3.53. 0x0008 QEP_POS_CNT_EP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x000c-qep-pos-cnt-cmpv">14.1.3.54. 0x000C QEP_POS_CNT_CMPV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0010-qep-pos-cnt-icapv">14.1.3.55. 0x0010 QEP_POS_CNT_ICAPV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0014-qep-pos-cnt-scapv">14.1.3.56. 0x0014 QEP_POS_CNT_SCAPV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0018-qep-pos-cnt-tocapv">14.1.3.57. 0x0018 QEP_POS_CNT_TOCAPV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x001c-qep-tmr-v">14.1.3.58. 0x001C QEP_TMR_V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0020-qep-tmr-prd-v">14.1.3.59. 0x0020 QEP_TMR_PRD_V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0024-qep-wd-tmrv">14.1.3.60. 0x0024 QEP_WD_TMRV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0028-qep-wd-prdv">14.1.3.61. 0x0028 QEP_WD_PRDV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x002c-qep-dec-conf">14.1.3.62. 0x002C QEP_DEC_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0030-qep-pos-cnt-conf">14.1.3.63. 0x0030 QEP_POS_CNT_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0034-qep-cap-tmr-conf">14.1.3.64. 0x0034 QEP_CAP_TMR_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0038-qep-pos-cntcmp-conf">14.1.3.65. 0x0038 QEP_POS_CNTCMP_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x003c-qep-int-en">14.1.3.66. 0x003C QEP_INT_EN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0040-qep-int-flg">14.1.3.67. 0x0040 QEP_INT_FLG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0044-qep-int-clr">14.1.3.68. 0x0044 QEP_INT_CLR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0048-qep-sw-frc-int">14.1.3.69. 0x0048 QEP_SW_FRC_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x004c-qep-sts">14.1.3.70. 0x004C QEP_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0050-qep-cap-tmrv">14.1.3.71. 0x0050 QEP_CAP_TMRV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0054-qep-cap-delt">14.1.3.72. 0x0054 QEP_CAP_DELT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0058-qep-cap-tmr-lh">14.1.3.73. 0x0058 QEP_CAP_TMR_LH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x005c-qep-cap-delt-lh">14.1.3.74. 0x005C QEP_CAP_DELT_LH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0060-qep-in-flt1">14.1.3.75. 0x0060 QEP_IN_FLT1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0064-qep-in-flt2">14.1.3.76. 0x0064 QEP_IN_FLT2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0068-qep-in-ctl">14.1.3.77. 0x0068 QEP_IN_CTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x006c-qep-hall-in-conf">14.1.3.78. 0x006c QEP_HALL_IN_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0070-qep-hall-in-sts">14.1.3.79. 0x0070 QEP_HALL_IN_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0074-qep-hall-chg-flg">14.1.3.80. 0x0074 QEP_HALL_CHG_FLG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0078-qep-hall0-in-flt">14.1.3.81. 0x0078 QEP_HALL0_IN_FLT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x007c-qep-hall1-in-flt">14.1.3.82. 0x007c QEP_HALL1_IN_FLT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0080-qep-hall2-in-flt">14.1.3.83. 0x0080 QEP_HALL2_IN_FLT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x00fc-qep-ver">14.1.3.84. 0x00FC QEP_VER</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#global-control">14.1.3.85. Global Control寄存器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0000-glb-clk-ctl">14.1.3.86. 0x0000 GLB_CLK_CTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0004-glb-pwm-int-sts">14.1.3.87. 0x0004 GLB_PWM_INT_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0008-glb-flt-int">14.1.3.88. 0x0008 GLB_FLT_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x000c-glb-cap-int-sts">14.1.3.89. 0x000C GLB_CAP_INT_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0010-glb-qep-int-sts">14.1.3.90. 0x0010 GLB_QEP_INT_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0014-glb-pwm-en">14.1.3.91. 0x0014 GLB_PWM_EN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0018-glb-pwm0-sync-in-flt">14.1.3.92. 0x0018 GLB_PWM0_SYNC_IN_FLT</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="overview.html" class="btn btn-neutral float-right" title="14.1.1. 概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="14. 伺服系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

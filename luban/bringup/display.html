@@ -1,0 +1,1217 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>11.6. 屏幕配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="11.7. 示例程序" href="samples.html" />
+    <link rel="prev" title="11.5. IC 配置" href="chips.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">11. Bringup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="prepare.html">11.1. 准备工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="storage.html">11.2. 存储配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="console.html">11.3. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">11.4. 刷机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chips.html">11.5. IC 配置</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">11.6. 屏幕配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rgb">11.6.1. RGB</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#uboot">11.6.1.1. uboot 配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#kernel">11.6.1.2. kernel 配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#uboot-dts">11.6.1.3. uboot dts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id2">11.6.1.3.1. 声明通路</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">11.6.1.3.2. 声明屏幕参数</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">11.6.1.3.3. 声明屏幕引脚</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dts">11.6.1.4. 系统dts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">11.6.1.4.1. 配置通路</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">11.6.1.4.2. 配置屏幕参数</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">11.6.1.4.3. 配置引脚</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#lvds">11.6.2. LVDS</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id8">11.6.2.1. uboot 配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">11.6.2.2. kernel 配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">11.6.2.3. uboot dts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id11">11.6.2.3.1. 声明通路</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id12">11.6.2.3.2. 声明屏幕参数</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id13">11.6.2.3.3. 声明屏幕引脚</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id14">11.6.2.4. 系统dts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id15">11.6.2.4.1. 配置通路</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id16">11.6.2.4.2. 配置屏幕参数</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id17">11.6.2.4.3. 配置引脚</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#mipi">11.6.3. MIPI</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id18">11.6.3.1. uboot 配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id19">11.6.3.2. kernel 配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id20">11.6.3.3. uboot dts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id21">11.6.3.3.1. 声明通路</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id22">11.6.3.3.2. 声明屏幕参数</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id23">11.6.3.3.3. 声明屏幕引脚</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id24">11.6.3.4. 系统dts</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id25">11.6.3.4.1. 配置通路</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id26">11.6.3.4.2. 配置屏幕参数</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id27">11.6.3.4.3. 配置引脚</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id28">11.6.4. 背光配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#gpio">11.6.4.1. GPIO控制背光</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pwm">11.6.4.2. PWM控制背光</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id29">11.6.4.3. PWM背光测试调试</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">11.6.5. 调试建议</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="samples.html">11.7. 示例程序</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">11. </span>Bringup</a> &raquo;</li>
+        
+      <li><span class="section-number">11.6. </span>屏幕配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">11.6. </span>屏幕配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="rgb">
+<h2><span class="section-number">11.6.1. </span>RGB<a class="headerlink" href="#rgb" title="永久链接至标题">¶</a></h2>
+<p>RGB屏的调试相对简单，只需要把规格书中所描述的时序和规格参数加入相应的配置文件即可，不需要额外的驱动程序。</p>
+<div class="section" id="uboot">
+<h3><span class="section-number">11.6.1.1. </span>uboot 配置<a class="headerlink" href="#uboot" title="永久链接至标题">¶</a></h3>
+<p>在 luban 根目录下执行 make um，进入 uboot 的功能配置界面，使能显示模块驱动：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers
+    Graphics support
+        ArtInChip Graphics  ---&gt;
+            [*]   Enable ArtInChip Video Support
+            [*]   ArtInChip display rgb support
+            [ ]   ArtInChip display lvds support
+            [ ]   ArtInChip display mipi-dsi support
+            &lt;*&gt;   ArtInChip Panel Drivers <span class="p">(</span>ArtInChip general RGB panel)  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="kernel">
+<h3><span class="section-number">11.6.1.2. </span>kernel 配置<a class="headerlink" href="#kernel" title="永久链接至标题">¶</a></h3>
+<p>在 luban 根目录下执行 make km，进入 kernel 的功能配置界面，使能显示模块驱动：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers
+    Graphics support
+        ArtInChip Graphics  ---&gt;
+            &lt;*&gt; ArtInChip Framebuffer support
+            [*]   ArtInChip display rgb support
+            [ ]   ArtInChip display lvds support
+            [ ]   ArtInChip display mipi-dsi support
+            &lt;*&gt;   ArtInChip Panel Drivers <span class="p">(</span>ArtInChip general RGB panel)  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="uboot-dts">
+<h3><span class="section-number">11.6.1.3. </span>uboot dts<a class="headerlink" href="#uboot-dts" title="永久链接至标题">¶</a></h3>
+<p>uboot 如果要进行显示，则声明相应的配置为预加载，以 demo88_nand 工程为例，文件为 target/d211/demo88_nand/board-u-boot.dtsi</p>
+<div class="section" id="id2">
+<h4><span class="section-number">11.6.1.3.1. </span>声明通路<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&amp;disp {
+    u-boot,dm-pre-reloc;
+    fb0: fb@0 {
+        u-boot,dm-pre-reloc;
+        port {
+            fb0_out: endpoint {
+                u-boot,dm-pre-reloc;
+            }
+        };
+    };
+};
+
+&amp;de0 {
+    u-boot,dm-pre-reloc;
+    port@0 {
+        de0_in: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    port@1 {
+        de0_out: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+};
+&amp;rgb0 {                             //RGB
+    u-boot,dm-pre-reloc;
+    port@0 {
+        rgb0_in: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    port@1 {
+        rgb0_out: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4><span class="section-number">11.6.1.3.2. </span>声明屏幕参数<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_rgb</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_rgb_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">display-timings</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="nl">timing0</span><span class="p">:</span> <span class="nf">1024x600</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4><span class="section-number">11.6.1.3.3. </span>声明屏幕引脚<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nl">lcd_rgb565_ld_pins</span><span class="p">:</span> <span class="na">lcd</span><span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+    <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">pins</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dts">
+<h3><span class="section-number">11.6.1.4. </span>系统dts<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h3>
+<p>系统的 dts 将进行完整的功能配置，以 demo88_nand 工程为例，文件为 target/d211/demo88_nand/board.dts 中</p>
+<div class="section" id="id5">
+<h4><span class="section-number">11.6.1.4.1. </span>配置通路<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<p>通过 port 和 status 结点，定义了一条数据通道</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fb       |      de    |     |     rgb    |     panel
+port  --&gt; port0   port1 --&gt;  port0   port1 --&gt;  port
+</pre></div>
+</div>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">fb0</span> <span class="p">{</span>
+    <span class="na">port</span> <span class="p">{</span>
+        <span class="nl">fb0_out</span><span class="p">:</span> <span class="na">endpoint</span> <span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="na">de0</span> <span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">fb0_out</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">rgb0_in</span><span class="o">&gt;</span><span class="p">;</span>   <span class="c1">//RGB</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">rgb0</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">,</span> <span class="s">&quot;sleep&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lcd_rgb565_ld_pins</span><span class="o">&gt;</span><span class="p">;</span>          <span class="c1">//RGB</span>
+    <span class="n">pinctrl-1</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lcd_rgb565_ld_sleep_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">rgb0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">rgb0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_rgb_in</span><span class="o">&gt;</span><span class="p">;</span>  <span class="c1">//RGB</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h4><span class="section-number">11.6.1.4.2. </span>配置屏幕参数<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_rgb</span><span class="cm"> </span><span class="p">{</span>
+<span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;artinchip,aic-general-rgb-panel&quot;</span><span class="p">;</span>
+<span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+<span class="n">enable-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_e</span> <span class="mi">19</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">sleep-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_e</span> <span class="mi">15</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">rgb-mode</span> <span class="o">=</span> <span class="o">&lt;</span><span class="na">PRGB</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">interface-format</span> <span class="o">=</span> <span class="o">&lt;</span><span class="na">PRGB_16BIT_LD</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">clock-phase</span> <span class="o">=</span> <span class="o">&lt;</span><span class="na">DEGREE_0</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">data-order</span> <span class="o">=</span> <span class="o">&lt;</span><span class="na">RGB</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">disp-dither</span> <span class="o">=</span> <span class="o">&lt;</span><span class="na">DITHER_RGB565</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+    <span class="nl">panel_rgb_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">rgb0_out</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="nf">display-timings</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">native-mode</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">timing0</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="nl">timing0</span><span class="p">:</span> <span class="nf">1024x600</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">lock-frequency</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">52000000</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">hactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">vactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">600</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">hback-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">160</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">hfront-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">160</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">hsync-len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">vback-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">12</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">vfront-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">vsync-len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">de-active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">pixelclk-active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中类似 <code class="docutils literal notranslate"><span class="pre">enable-gpios</span></code> 控制引脚需要根据实际显示屏的需要增加或减少，驱动中做相应修改，
+<code class="docutils literal notranslate"><span class="pre">rgb-mode</span></code> <code class="docutils literal notranslate"><span class="pre">interface-format</span></code> 需要从规格书中获取， <code class="docutils literal notranslate"><span class="pre">data-order</span></code> <code class="docutils literal notranslate"><span class="pre">data-mirror</span></code> 需要根据板级走线的顺序设置相关参数。
+<code class="docutils literal notranslate"><span class="pre">clock-phase</span></code> 需要根据最终实际的显示效果做相应调整。
+关于参数详细的解析请参考 <a class="reference internal" href="../media/display/02_config_guide/device_tree/index.html#ref-to-panel-dts"><span class="std std-ref">显示部分章节DTS关于pannel_rgb的配置说明</span></a></p>
+</div>
+<div class="section" id="id7">
+<h4><span class="section-number">11.6.1.4.3. </span>配置引脚<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
+<p>引脚的配置统一在 d211-pinctrl.dtsi 中完成，在 rgb0 节点中直接进行了引用</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">rgb0</span> <span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">,</span> <span class="s">&quot;sleep&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lcd_rgb565_ld_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">pinctrl-1</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lcd_rgb565_ld_sleep_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="p">......</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="lvds">
+<h2><span class="section-number">11.6.2. </span>LVDS<a class="headerlink" href="#lvds" title="永久链接至标题">¶</a></h2>
+<p>LVDS 屏的调试和 RGB 类似，只需要把规格书中所描述的时序和规格参数加入相应的配置文件即可，也不需要额外的驱动程序。</p>
+<div class="section" id="id8">
+<h3><span class="section-number">11.6.2.1. </span>uboot 配置<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>在 luban 根目录下执行 make um，进入 uboot 的功能配置界面，使能显示模块驱动：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers
+    Graphics support
+        ArtInChip Graphics  ---&gt;
+            [*]   Enable ArtInChip Video Support
+            [ ]   ArtInChip display rgb support
+            [*]   ArtInChip display lvds support
+            [ ]   ArtInChip display mipi-dsi support
+            &lt;*&gt;   ArtInChip Panel Drivers <span class="p">(</span>ArtInChip general LVDS panel)  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">11.6.2.2. </span>kernel 配置<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>在 luban 根目录下执行 make km，进入 kernel 的功能配置界面，使能显示模块驱动：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers
+    Graphics support
+        ArtInChip Graphics  ---&gt;
+            &lt;*&gt; ArtInChip Framebuffer support
+            [ ]   ArtInChip display rgb support
+            [*]   ArtInChip display lvds support
+            [ ]   ArtInChip display mipi-dsi support
+            &lt;*&gt;   ArtInChip Panel Drivers <span class="p">(</span>ArtInChip general LVDS panel)  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">11.6.2.3. </span>uboot dts<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>uboot 如果要进行显示，则声明相应的配置为预加载，以 demo128_nand 工程为例，文件为 target/d211/demo128_nand/board-u-boot.dtsi</p>
+<div class="section" id="id11">
+<h4><span class="section-number">11.6.2.3.1. </span>声明通路<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&amp;disp {
+    u-boot,dm-pre-reloc;
+    fb0: fb@0 {
+        u-boot,dm-pre-reloc;
+        port {
+            fb0_out: endpoint {
+                u-boot,dm-pre-reloc;
+            }
+        };
+    };
+};
+
+&amp;de0 {
+    u-boot,dm-pre-reloc;
+    port@0 {
+        de0_in: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    port@1 {
+        de0_out: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+};
+&amp;lvds0 {                            //lvds
+    u-boot,dm-pre-reloc;
+    port@0 {
+        lvds0_in: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    port@1 {
+        lvds0_out: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4><span class="section-number">11.6.2.3.2. </span>声明屏幕参数<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_lvds</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_lvds_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">display-timings</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="nl">timing1</span><span class="p">:</span> <span class="nf">1024x600</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4><span class="section-number">11.6.2.3.3. </span>声明屏幕引脚<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nl">lvds1_pins</span><span class="p">:</span> <span class="na">lvds1</span><span class="o">-</span><span class="mi">0</span> <span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">pins</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id14">
+<h3><span class="section-number">11.6.2.4. </span>系统dts<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>系统的 dts 将进行完整的功能配置，以 demo128_nand 工程为例，文件为 target/d211/demo128_nand/board.dts 中</p>
+<div class="section" id="id15">
+<h4><span class="section-number">11.6.2.4.1. </span>配置通路<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h4>
+<p>通过 port 和 status 结点，定义了一条数据通道</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fb       |      de    |     |     lvds    |     panel
+port  --&gt; port0   port1 --&gt;  port0   port1 --&gt;  port
+</pre></div>
+</div>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">fb0</span> <span class="p">{</span>
+    <span class="na">port</span> <span class="p">{</span>
+        <span class="nl">fb0_out</span><span class="p">:</span> <span class="na">endpoint</span> <span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="na">de0</span> <span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">fb0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_in</span><span class="o">&gt;</span><span class="p">;</span>   <span class="c1">//LVDS</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">lvds0</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds1_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">lvds0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">lvds0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_lvds_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h4><span class="section-number">11.6.2.4.2. </span>配置屏幕参数<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span>    <span class="nf">panel_lvds</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;artinchip,aic-general-lvds-panel&quot;</span><span class="p">;</span>
+    <span class="n">data-mapping</span> <span class="o">=</span> <span class="s">&quot;vesa-24&quot;</span><span class="p">;</span>
+    <span class="n">data-channel</span> <span class="o">=</span> <span class="s">&quot;single-link1&quot;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="n">enable-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_c</span> <span class="mi">7</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_lvds_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">display-timings</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">native-mode</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">timing1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">timing1</span><span class="p">:</span> <span class="nf">1024x600</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">clock-frequency</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">52000000</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">600</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hback-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">160</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hfront-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">160</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hsync-len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vback-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vfront-porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">12</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vsync-len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">de-active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">pixelclk-active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h4><span class="section-number">11.6.2.4.3. </span>配置引脚<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h4>
+<p>引脚的配置统一在 d211-pinctrl.dtsi 中完成，在 rgb0 节点中直接进行了引用</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">lvds0</span> <span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds1_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="p">......</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="mipi">
+<h2><span class="section-number">11.6.3. </span>MIPI<a class="headerlink" href="#mipi" title="永久链接至标题">¶</a></h2>
+<p>相比RGB和LVDS屏的调试，MIPI屏的调试相对稍微繁琐，因为每一款MIPI屏几乎都需要一个独立的驱动程序，因此不仅需要在DTS中设置参数，还需要在kernel和uboot中添加屏幕所对应的驱动</p>
+<div class="section" id="id18">
+<h3><span class="section-number">11.6.3.1. </span>uboot 配置<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<p>在 luban 根目录下执行 make um，进入 uboot 的功能配置界面，使能显示模块驱动：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers
+    Graphics support
+        ArtInChip Graphics  ---&gt;
+            [*]   Enable ArtInChip Video Support
+            [ ]   ArtInChip display rgb support
+            [ ]   ArtInChip display lvds support
+            [ ]   ArtInChip display mipi-dsi support
+            &lt;*&gt;   ArtInChip Panel Drivers <span class="p">(</span>ArtInChip panel driver for B080XAN)  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3><span class="section-number">11.6.3.2. </span>kernel 配置<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<p>在 luban 根目录下执行 make km，进入 kernel 的功能配置界面，使能显示模块驱动：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers
+    Graphics support
+        ArtInChip Graphics  ---&gt;
+            &lt;*&gt; ArtInChip Framebuffer support
+            [ ]   ArtInChip display rgb support
+            [ ]   ArtInChip display lvds support
+            [*]   ArtInChip display mipi-dsi support
+            &lt;*&gt;   ArtInChip Panel Drivers <span class="p">(</span>ArtInChip panel driver for B080XAN)  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h3><span class="section-number">11.6.3.3. </span>uboot dts<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<p>uboot 如果要进行显示，则声明相应的配置为预加载，系统中目前没有配置 MIPI 的标案，可以参考如下配置</p>
+<div class="section" id="id21">
+<h4><span class="section-number">11.6.3.3.1. </span>声明通路<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&amp;disp {
+    u-boot,dm-pre-reloc;
+    fb0: fb@0 {
+        u-boot,dm-pre-reloc;
+        port {
+            fb0_out: endpoint {
+                u-boot,dm-pre-reloc;
+            };
+        };
+    };
+};
+&amp;de0 {
+    u-boot,dm-pre-reloc;
+    port@0 {
+        de0_in: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    port@1 {
+        de0_out: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+};
+&amp;dsi0 {                     //mipi dsi
+    u-boot,dm-pre-reloc;
+    port@0 {
+        dsi0_in: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+
+    port@1 {
+        dsi0_out: endpoint {
+            u-boot,dm-pre-reloc;
+        };
+    };
+};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id22">
+<h4><span class="section-number">11.6.3.3.2. </span>声明屏幕参数<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_dsi</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_dsi_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id23">
+<h4><span class="section-number">11.6.3.3.3. </span>声明屏幕引脚<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nl">dsi_pins</span><span class="p">:</span> <span class="na">dsi</span><span class="o">-</span><span class="mi">0</span> <span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">pins</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id24">
+<h3><span class="section-number">11.6.3.4. </span>系统dts<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h3>
+<p>系统的 dts 将进行完整的功能配置，以 demo128_nand 工程为例，文件为 target/d211/demo128_nand/board.dts 中</p>
+<div class="section" id="id25">
+<h4><span class="section-number">11.6.3.4.1. </span>配置通路<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h4>
+<p>通过 port 和 status 结点，定义了一条数据通道</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="na">fb</span>       <span class="o">|</span>      <span class="na">de</span>    <span class="o">|</span>     <span class="o">|</span>     <span class="na">mipi</span>    <span class="o">|</span>     <span class="na">panel</span>
+<span class="na">port</span>  <span class="o">--&gt;</span> <span class="na">port0</span>   <span class="na">port1</span> <span class="o">--&gt;</span>  <span class="na">port0</span>   <span class="na">port1</span> <span class="o">--&gt;</span>  <span class="na">port</span>
+</pre></div>
+</div>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">fb0</span> <span class="p">{</span>
+    <span class="na">port</span> <span class="p">{</span>
+        <span class="nl">fb0_out</span><span class="p">:</span> <span class="na">endpoint</span> <span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="na">de0</span> <span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">fb0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">dsi0_in</span><span class="o">&gt;</span><span class="p">;</span>   <span class="c1">//mipi dsi</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">dsi0</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">dsi_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="n">data-clk-inverse</span><span class="p">;</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">dsi0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">dsi0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_dsi_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id26">
+<h4><span class="section-number">11.6.3.4.2. </span>配置屏幕参数<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h4>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span>    <span class="nf">panel_dsi</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;artinchip,aic-dsi-panel-simple&quot;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="n">enable-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_c</span> <span class="mi">6</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_dsi_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">dsi0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id27">
+<h4><span class="section-number">11.6.3.4.3. </span>配置引脚<a class="headerlink" href="#id27" title="永久链接至标题">¶</a></h4>
+<p>引脚的配置统一在 d211-pinctrl.dtsi 中完成，在 rgb0 节点中直接进行了引用</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">dsi0</span> <span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">dsi_pins</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="p">......</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id28">
+<h2><span class="section-number">11.6.4. </span>背光配置<a class="headerlink" href="#id28" title="永久链接至标题">¶</a></h2>
+<div class="section" id="gpio">
+<h3><span class="section-number">11.6.4.1. </span>GPIO控制背光<a class="headerlink" href="#gpio" title="永久链接至标题">¶</a></h3>
+<p>如果没有调节背光亮度需求，仅仅是亮或黑屏，则用GPIO控制较为简单，只需要在dts panel节点中一个地方配置好就可以，如下；</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_xxx</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;artinchip,aic-general-lvds-panel&quot;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="n">enable-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_c</span> <span class="mi">7</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">//背光控制引脚，须和原理图一致</span>
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_lvds_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pwm">
+<h3><span class="section-number">11.6.4.2. </span>PWM控制背光<a class="headerlink" href="#pwm" title="永久链接至标题">¶</a></h3>
+<p>如果有调节背光亮度的需求，则需要使用PWM来控制背光， 有以下步骤配置：</p>
+<p>1.board.dts panel节点中需添加backlight节点，如下：</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">panel_xxx</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;artinchip,aic-general-lvds-panel&quot;</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="c1">//enable-gpios = &lt;&amp;gpio_c 7 GPIO_ACTIVE_HIGH&gt;;</span>
+    <span class="n">backlight</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">backlight</span><span class="o">&gt;</span><span class="p">;</span><span class="c1">//添加backlight</span>
+    <span class="nf">port</span><span class="cm"> </span><span class="p">{</span>
+        <span class="nl">panel_lvds_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>2.board.dts中使能backlight节点</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nl">backlight</span><span class="p">:</span> <span class="na">backlight</span> <span class="p">{</span>
+     <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;pwm-backlight&quot;</span><span class="p">;</span>
+     <span class="cm">/* pwm node name; pwm device No.; period_ns; pwm_polarity */</span>
+     <span class="n">pwms</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">pwm</span> <span class="mi">0</span> <span class="mi">1000000</span> <span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">//硬件对应的哪一路PWM接口，需要和原理图确认</span>
+     <span class="n">brightness-levels</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span> <span class="mi">10</span> <span class="mi">20</span> <span class="mi">30</span> <span class="mi">40</span> <span class="mi">50</span> <span class="mi">60</span> <span class="mi">70</span> <span class="mi">80</span> <span class="mi">90</span> <span class="mi">100</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">//每一级对应的占空百分比</span>
+     <span class="n">default-brightness-level</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">6</span><span class="o">&gt;</span><span class="p">;</span>
+     <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>3.board.dts中使能对应的PWM</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">pwm</span> <span class="p">{</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>    <span class="o">//</span><span class="n">PWM节点总开关</span>
+    <span class="n">pinctrl</span><span class="o">-</span><span class="n">names</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl</span><span class="o">-</span><span class="mi">0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">pwm0_pins_d</span><span class="o">&gt;</span><span class="p">;</span>    <span class="o">//</span><span class="n">添加背光控制pinmux引脚</span>
+    <span class="o">/*</span> <span class="n">mode</span><span class="p">:</span> <span class="n">up</span><span class="o">-</span><span class="n">count</span><span class="p">,</span> <span class="n">down</span><span class="o">-</span><span class="n">count</span><span class="p">,</span> <span class="n">up</span><span class="o">-</span><span class="n">down</span><span class="o">-</span><span class="n">count</span>
+       <span class="n">action</span><span class="p">:</span> <span class="n">none</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">inverse</span> <span class="o">*/</span>
+    <span class="n">pwm0</span> <span class="p">{</span>
+        <span class="n">aic</span><span class="p">,</span><span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;up-count&quot;</span><span class="p">;</span>
+        <span class="n">aic</span><span class="p">,</span><span class="n">tb</span><span class="o">-</span><span class="n">clk</span><span class="o">-</span><span class="n">rate</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">24000000</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">aic</span><span class="p">,</span><span class="n">rise</span><span class="o">-</span><span class="n">edge</span><span class="o">-</span><span class="n">delay</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">10</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">aic</span><span class="p">,</span><span class="n">fall</span><span class="o">-</span><span class="n">edge</span><span class="o">-</span><span class="n">delay</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">10</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="o">/*</span>            <span class="n">CBD</span><span class="p">,</span>    <span class="n">CBU</span><span class="p">,</span>    <span class="n">CAD</span><span class="p">,</span>    <span class="n">CAU</span><span class="p">,</span>    <span class="n">PRD</span><span class="p">,</span>   <span class="n">ZRO</span> <span class="o">*/</span>
+        <span class="n">aic</span><span class="p">,</span><span class="n">action0</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">;</span>
+        <span class="n">aic</span><span class="p">,</span><span class="n">action1</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>    <span class="o">//</span><span class="n">使能硬件对应那一路的PWM子节点</span>
+    <span class="p">};</span>
+    <span class="o">......</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>4.board-u-boot.dtsi添加对应的PWM节点</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">/</span><span class="cm"> </span><span class="p">{</span>
+    <span class="p">......</span>
+    <span class="nl">backlight</span><span class="p">:</span> <span class="nf">backlight</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">pwm</span><span class="cm"> </span><span class="p">{</span>
+    <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="nf">pwm0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="p">......</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">pinctrl</span><span class="cm"> </span><span class="p">{</span>
+    <span class="p">......</span>
+    <span class="nl">pwm0_pins_d</span><span class="p">:</span> <span class="nf">pwm0-3</span><span class="cm"> </span><span class="p">{</span>
+        <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="nf">pins</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">u-boot</span><span class="p">,</span><span class="n">dm-pre-reloc</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+    <span class="p">......</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>5.确认内核中打开如下配置</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_PWM=y
+CONFIG_PWM_ARTINCHIP=y
+CONFIG_BACKLIGHT_PWM=y
+</pre></div>
+</div>
+<p>6.确认uboot中打开如下配置</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_PWM_ARTINCHIP=y
+CONFIG_BACKLIGHT_PWM=y
+</pre></div>
+</div>
+</div>
+<div class="section" id="id29">
+<h3><span class="section-number">11.6.4.3. </span>PWM背光测试调试<a class="headerlink" href="#id29" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>确认硬件信号的连通性</p></li>
+<li><p>查看启动log是否有异常</p></li>
+<li><p>查看如下命令节点是否存在，并通过命令调节背光或测试PWM输出信号</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="m">5</span> &gt; /sys/class/backlight/backlight/brightness //设置brightness级数, 对应到backlight节点设置的占空百分比。
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id30">
+<h2><span class="section-number">11.6.5. </span>调试建议<a class="headerlink" href="#id30" title="永久链接至标题">¶</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>屏幕的调试尽量在 kernel 中完成，然后再移植到 uboot 中</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="samples.html" class="btn btn-neutral float-right" title="11.7. 示例程序" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="chips.html" class="btn btn-neutral float-left" title="11.5. IC 配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

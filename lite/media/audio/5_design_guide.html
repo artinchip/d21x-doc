@@ -1,0 +1,1045 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.1.5. 设计指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.1.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.1.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.1. Audio 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure.html">6.1.2. Audio配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.1.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.1.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.1.5. 设计指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.1.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.1.5.2. 模块架构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#rt-thread-audio">6.1.5.2.1. RT-Thread audio框架</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">6.1.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.1.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#playback">6.1.5.3.2. playback流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#record">6.1.5.3.3. record流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id11">6.1.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#hal">6.1.5.4.1. hal层数据结构</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#driver">6.1.5.4.2. driver层数据结构</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id12">6.1.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id13">6.1.5.5.1. driver层接口设计</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.1.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.2. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.7. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.8. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvgl/index.html">6.9. LVGL 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.1. </span>Audio 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.1.5. </span>设计指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.1.5. </span>设计指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.1.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于：</p>
+<ul class="simple">
+<li><p>bsp/artinchip/drv/audio/drv_audio.c: Playback的driver层驱动</p></li>
+<li><p>bsp/artinchip/drv/audio/drv_dmic.c: DMIC的driver层驱动</p></li>
+<li><p>bsp/artinchip/drv/audio/drv_amic.c: AMIC的driver层驱动</p></li>
+<li><p>bsp/artinchip/hal/audio/hal_audio.c: audio模块的hal层驱动</p></li>
+<li><p>bsp/artinchip/include/hal/hal_audio.h: audio模块的hal层头文件</p></li>
+<li><p>bsp/artinchip/include/hal/hal_audio_reg.h: audio模块的hal层头文件，用于寄存器定义</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.1.5.2. </span>模块架构设计<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="rt-thread-audio">
+<h3><span class="section-number">6.1.5.2.1. </span>RT-Thread audio框架<a class="headerlink" href="#rt-thread-audio" title="永久链接至标题">¶</a></h3>
+<p>RT-Thread定义了一套音频框架，driver层的驱动就是为了对接该音频框架。该框架在录音端和播放端采用了两种不同的机制，现对录音端和播放端的框架进行简单说明。</p>
+<div class="section" id="id4">
+<h4><span class="section-number">6.1.5.2.1.1. </span>播放端框架<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<div class="figure align-center">
+<img alt="../../../_images/playback_arch.png" src="../../../_images/playback_arch.png" />
+</div>
+<p>如上图所示，应用层读取的音频数据写入到内存池的block中，并用数据队列对内存池的block数据进行管理。从数据队列中依次取出音频数据，写入到audio buffer中，audio buffer在原理上是一个环形缓冲区，最后通过DMA将音频数据写入到硬件的TXFIFO中。所以，playback端的driver层驱动主要是负责audio buffer环形缓冲区的管理，及时写入音频数据，并用DMA搬运到audio硬件。</p>
+</div>
+<div class="section" id="id5">
+<h4><span class="section-number">6.1.5.2.1.2. </span>录音端框架<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<div class="figure align-center">
+<img alt="../../../_images/record_arch.png" src="../../../_images/record_arch.png" />
+</div>
+<p>如上图所示，RT-Thread audio框架在录音端的设计与播放端不同。在录音端框架虚拟了一个pipe设备，其实就是一个ringbuffer，读写pipe设备就是对ringbuffer的读写。driver层驱动负责管理一个RX buffer，RX buffer在逻辑上也是一个环形缓冲区。DMA负责将MIC端接收到的数据搬运到RX buffer，再通过写pipe设备将音频数据写入到pipe的ringbuffer中。应用层代码则通过 <code class="docutils literal notranslate"><span class="pre">rt_device_read</span></code> 每次从pipe设备中读取音频数据，再将音频数据写入到wav文件。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">6.1.5.3. </span>关键流程设计<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h3><span class="section-number">6.1.5.3.1. </span>初始化流程<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li><p>初始化audio模块时钟频率</p></li>
+<li><p>释放reset和clock信号</p></li>
+<li><p>注册音频设备，playback端注册为 <code class="docutils literal notranslate"><span class="pre">sound0</span></code> 设备，DMIC注册为 <code class="docutils literal notranslate"><span class="pre">dmic0</span></code> 设备，AMIC注册为 <code class="docutils literal notranslate"><span class="pre">amic0</span></code> 设备</p></li>
+</ol>
+</div>
+<div class="section" id="playback">
+<h3><span class="section-number">6.1.5.3.2. </span>playback流程<a class="headerlink" href="#playback" title="永久链接至标题">¶</a></h3>
+<div class="section" id="init">
+<h4><span class="section-number">6.1.5.3.2.1. </span>init流程<a class="headerlink" href="#init" title="永久链接至标题">¶</a></h4>
+<ol class="arabic simple">
+<li><p>初始化DMA传输的起始地址，buf_len以及period_len</p></li>
+<li><p>注册hal层的回调函数</p></li>
+</ol>
+<p>audio模块使用DMA传输音频数据，DMA采用环形链表形式，依次将音频数据传送到硬件。所以需要配置DMA传输时的起始地址（即TX buffer地址）以及buf_len，period_len。在driver层驱动，将buf_len配置为period_len的4倍，DMA每传输period_len长度的数据，触发一次DMA中断，通知CPU向TX buffer中写入数据。</p>
+</div>
+<div class="section" id="start">
+<h4><span class="section-number">6.1.5.3.2.2. </span>start流程<a class="headerlink" href="#start" title="永久链接至标题">¶</a></h4>
+<ol class="arabic simple">
+<li><p>根据menuconfig配置音频通路</p></li>
+<li><p>填充TX buffer</p></li>
+<li><p>设置DMA传输的参数，调用 <code class="docutils literal notranslate"><span class="pre">hal_audio_playback_start</span></code> 开始音频数据传输</p></li>
+<li><p>使能PA</p></li>
+</ol>
+<p>为保证DMA传输音频数据的连续性，需要在DMA开始传输前，先向TX buffer中填充数据。在playback的driver层驱动，是将TX buffer填充满后，才开始DMA的传输。</p>
+</div>
+<div class="section" id="dma">
+<h4><span class="section-number">6.1.5.3.2.3. </span>DMA中断流程<a class="headerlink" href="#dma" title="永久链接至标题">¶</a></h4>
+<p>DMA每传输完period_len长度的数据后，触发一次DMA中断，然后通过DMA回调函数的逐级调用，最终调用 <code class="docutils literal notranslate"><span class="pre">rt_audio_tx_complete</span></code> 对TX buffer进行填充，每次填充period_len长度的音频数据。</p>
+</div>
+</div>
+<div class="section" id="record">
+<h3><span class="section-number">6.1.5.3.3. </span>record流程<a class="headerlink" href="#record" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id8">
+<h4><span class="section-number">6.1.5.3.3.1. </span>init流程<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h4>
+<ol class="arabic simple">
+<li><p>初始化DMA传输的起始地址，buf_len以及period_len</p></li>
+<li><p>注册hal层的回调函数</p></li>
+</ol>
+<p>audio模块使用DMA传输音频数据，DMA采用环形链表形式，依次将音频数据传送到硬件。所以需要配置DMA传输时的起始地址（即RX buffer地址）以及buf_len，period_len。在driver层驱动，将buf_len配置为period_len的2倍，DMA每传输period_len长度的数据，触发一次DMA中断，通知CPU向pipe设备写入数据。</p>
+</div>
+<div class="section" id="id9">
+<h4><span class="section-number">6.1.5.3.3.2. </span>start流程<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h4>
+<p>按照RT-Thread audio的框架，在执行 <code class="docutils literal notranslate"><span class="pre">rt_device_open</span></code> 时，就会调用start流程，开始音频的录制，然后再通过 <code class="docutils literal notranslate"><span class="pre">rt_device_control</span></code> 设置音频的格式（采样率，通道数等）。按照这个流程，最开始可能会录制一段不符合设置的音频格式的数据，这显然是不合理的。所以，在driver层的驱动实现中，start流程并未做任何处理，而是在设置完音频格式后才开始音频的录制。</p>
+</div>
+<div class="section" id="id10">
+<h4><span class="section-number">6.1.5.3.3.3. </span>DMA中断流程<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h4>
+<p>DMA每传输完period_len长度的数据后，触发一次DMA中断，然后通过DMA回调函数的逐级调用，最终调用 <code class="docutils literal notranslate"><span class="pre">rt_audio_rx_done</span></code> ，将RX buffer的数据写入到pipe设备，每次写入period_len长度的音频数据。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">6.1.5.4. </span>数据结构设计<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<div class="section" id="hal">
+<h3><span class="section-number">6.1.5.4.1. </span>hal层数据结构<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_audio_buf_info</span>
+<span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">buf_len</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">period_len</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_audio_transfer_info</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">dma_chan</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_audio_buf_info</span> <span class="n">buf_info</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">transfer_type</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_audio_ctrl</span>
+<span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">reg_base</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">irq_num</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">clk_id</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_audio_transfer_info</span> <span class="n">tx_info</span><span class="p">;</span>   <span class="c1">//TX buffer的参数</span>
+    <span class="k">struct</span> <span class="nc">aic_audio_transfer_info</span> <span class="n">dmic_info</span><span class="p">;</span> <span class="c1">//DMIC RX buffer的参数</span>
+    <span class="k">struct</span> <span class="nc">aic_audio_transfer_info</span> <span class="n">amic_info</span><span class="p">;</span> <span class="c1">//AMIC RX buffer的参数</span>
+    <span class="n">audio_callback</span> <span class="n">callback</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_audio_config</span> <span class="n">config</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="driver">
+<h3><span class="section-number">6.1.5.4.2. </span>driver层数据结构<a class="headerlink" href="#driver" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_audio</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">rt_audio_device</span> <span class="n">audio</span><span class="p">;</span>
+    <span class="n">aic_audio_ctrl</span> <span class="n">codec</span><span class="p">;</span>
+    <span class="n">rt_uint8_t</span> <span class="n">volume</span><span class="p">;</span>      <span class="c1">//playback音量</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">pa_name</span><span class="p">;</span>          <span class="c1">//PA引脚的名字</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">gpio_pa</span><span class="p">;</span>   <span class="c1">//PA引脚的IO口号</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_dmic</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">rt_audio_device</span> <span class="n">audio</span><span class="p">;</span>
+    <span class="n">aic_audio_ctrl</span> <span class="n">codec</span><span class="p">;</span>
+    <span class="n">rt_uint8_t</span> <span class="n">volume</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">index</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">6.1.5.5. </span>接口设计<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id13">
+<h3><span class="section-number">6.1.5.5.1. </span>driver层接口设计<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>driver层将audio定义为 <code class="docutils literal notranslate"><span class="pre">sound0</span></code> ， <code class="docutils literal notranslate"><span class="pre">dmic0</span></code> , <code class="docutils literal notranslate"><span class="pre">amic0</span></code> 三个设备，三个设备在driver层的接口基本相同，下面以playback端的接口进行说明。</p>
+<div class="section" id="drv-audio-init">
+<h4><span class="section-number">6.1.5.5.1.1. </span>drv_audio_init<a class="headerlink" href="#drv-audio-init" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_audio_init(struct rt_audio_device *audio)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>playback端的初始化函数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>audio：指向playback设备的指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>RT_EOK：执行成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-buffer-info">
+<h4><span class="section-number">6.1.5.5.1.2. </span>drv_audio_buffer_info<a class="headerlink" href="#drv-audio-buffer-info" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void drv_audio_buffer_info(struct rt_audio_device *audio, struct rt_audio_buf_info *info)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取playback端的TX buffer参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+<div class="line">info：用于获取TX buffer参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-start">
+<h4><span class="section-number">6.1.5.5.1.3. </span>drv_audio_start<a class="headerlink" href="#drv-audio-start" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_audio_start(struct rt_audio_device *audio, int stream)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>开始playback端播放</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+<div class="line">stream：音频数据流方向</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">RT_EOK：执行成功</div>
+<div class="line">-RT_EINVAL：参数非法</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-stop">
+<h4><span class="section-number">6.1.5.5.1.4. </span>drv_audio_stop<a class="headerlink" href="#drv-audio-stop" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_audio_stop(struct rt_audio_device *audio, int stream)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>结束playback端播放</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+<div class="line">stream：音频数据流方向</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">RT_EOK：执行成功</div>
+<div class="line">-RT_EINVAL：参数非法</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-pause">
+<h4><span class="section-number">6.1.5.5.1.5. </span>drv_audio_pause<a class="headerlink" href="#drv-audio-pause" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_audio_pause(struct rt_audio_device *audio, int enable)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>暂停/恢复playback端播放</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+<div class="line">enable：playback端暂停和恢复播放使能位(0为恢复，非0为暂停)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">RT_EOK：执行成功</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-configure">
+<h4><span class="section-number">6.1.5.5.1.6. </span>drv_audio_configure<a class="headerlink" href="#drv-audio-configure" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_audio_configure(struct rt_audio_device *audio, struct rt_audio_caps *caps)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能原型</p></td>
+<td><p>音频设备配置接口，用于配置采样格式，采样率，通道数等接口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+<div class="line">caps：指向配置参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">RT_EOK：执行成功</div>
+<div class="line">-RT_ERROR：参数不支持</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-getcaps">
+<h4><span class="section-number">6.1.5.5.1.7. </span>drv_audio_getcaps<a class="headerlink" href="#drv-audio-getcaps" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_audio_getcaps(struct rt_audio_device *audio, struct rt_audio_caps *caps)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取音频设备的参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+<div class="line">caps：指向配置参数的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">RT_EOK：执行成功</div>
+<div class="line">-RT_ERROR：参数不支持</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-audio-get-playback-avail">
+<h4><span class="section-number">6.1.5.5.1.8. </span>drv_audio_get_playback_avail<a class="headerlink" href="#drv-audio-get-playback-avail" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_size_t drv_audio_get_playback_avail(struct rt_audio_device *audio)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取playback端缓存的数据大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">audio：指向playback设备的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">缓存数据的大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id14">
+<h4><span class="section-number">6.1.5.5.1.9. </span>hal层接口设计<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h4>
+<p>hal层接口也是分playback、DMIC、AMIC三部分进行设计，下面以playback端的接口进行说明。</p>
+</div>
+<div class="section" id="hal-audio-set-samplerate">
+<h4><span class="section-number">6.1.5.5.1.10. </span>hal_audio_set_samplerate<a class="headerlink" href="#hal-audio-set-samplerate" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void hal_audio_set_samplerate(aic_audio_ctrl *codec, uint32_t samplerate)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置采样率</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">codec：指向aic_audio_ctrl的指针</div>
+<div class="line">samplerate：采样率</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-audio-set-playback-channel">
+<h4><span class="section-number">6.1.5.5.1.11. </span>hal_audio_set_playback_channel<a class="headerlink" href="#hal-audio-set-playback-channel" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void hal_audio_set_playback_channel(aic_audio_ctrl *codec, uint32_t ch)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置playback端的通道数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">codec：指向aic_audio_ctrl的指针</div>
+<div class="line">ch：通道数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-audio-set-playback-by-spk0">
+<h4><span class="section-number">6.1.5.5.1.12. </span>hal_audio_set_playback_by_spk0<a class="headerlink" href="#hal-audio-set-playback-by-spk0" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void hal_audio_set_playback_by_spk0(aic_audio_ctrl *codec)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>配置SPK0音频通路</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">codec：指向aic_audio_ctrl的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-audio-set-playback-by-spk1">
+<h4><span class="section-number">6.1.5.5.1.13. </span>hal_audio_set_playback_by_spk1<a class="headerlink" href="#hal-audio-set-playback-by-spk1" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void hal_audio_set_playback_by_spk1(aic_audio_ctrl *codec)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>配置SPK1音频通路</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">codec：指向aic_audio_ctrl的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-audio-playback-start">
+<h4><span class="section-number">6.1.5.5.1.14. </span>hal_audio_playback_start<a class="headerlink" href="#hal-audio-playback-start" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void hal_audio_playback_start(aic_audio_ctrl *codec)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>开始播放</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">codec：指向aic_audio_ctrl的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-audio-playback-stop">
+<h4><span class="section-number">6.1.5.5.1.15. </span>hal_audio_playback_stop<a class="headerlink" href="#hal-audio-playback-stop" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void hal_audio_playback_stop(aic_audio_ctrl *codec)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>结束播放</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">codec：指向aic_audio_ctrl的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.1.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.1.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

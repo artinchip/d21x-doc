@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.1. USBDEV &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.1.1. 概述" href="overview.html" />
+    <link rel="prev" title="12. 接口" href="../index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">12.1. USB Device (USBDEV)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.1.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="register.html">12.1.3. 寄存器描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+      <li><span class="section-number">12.1. </span>USBDEV</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usbdev">
+<h1><span class="section-number">12.1. </span>USBDEV<a class="headerlink" href="#usbdev" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">12.1.1. 概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id2">12.1.1.1. 特性说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id3">12.1.1.2. 原理框图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#usb-dual-role">12.1.1.3. USB Dual Role实现方式</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="function.html">12.1.2. 功能描述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function.html#phy">12.1.2.1. PHY接口选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#fs-hs">12.1.2.2. FS/HS设备选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#id2">12.1.2.3. 枚举地址设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#id3">12.1.2.4. 中断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#dma">12.1.2.5. DMA控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#fifo">12.1.2.6. 数据FIFO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#id4">12.1.2.7. 接收控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#id5">12.1.2.8. 发送控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="function.html#id6">12.1.2.9. 端点控制</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="register.html">12.1.3. 寄存器描述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x000-ahb-basic">12.1.3.1. 0x000 AHB_BASIC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x004-usb-dev-init">12.1.3.2. 0x004 USB_DEV_INIT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x008-usb-phy-if">12.1.3.3. 0x008 USB_PHY_IF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x00c-usb-ulpi-phy">12.1.3.4. 0x00C USB_ULPI_PHY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x010-usb-int-sts">12.1.3.5. 0x010 USB_INT_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x014-usb-int-msk">12.1.3.6. 0x014 USB_INT_MSK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x018-rxfifo-siz">12.1.3.7. 0x018 RXFIFO_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x01c-rxfifo-sts-pop">12.1.3.8. 0x01C RXFIFO_STS_POP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x020-nptxfifo-siz">12.1.3.9. 0x020 NPTXFIFO_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x024-nptxfifo-sts">12.1.3.10. 0x024 NPTXFIFO_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x028-txfifo1-siz">12.1.3.11. 0x028 TXFIFO1_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x02c-txfifo-siz2">12.1.3.12. 0x02C TXFIFO_SIZ2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x030-rxfifo-sts">12.1.3.13. 0x030 RXFIFO_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x040-phy-clk-ctl">12.1.3.14. 0x040 PHY_CLK_CTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x050-usb-version">12.1.3.15. 0x050 USB_VERSION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x200-usb-dev-conf">12.1.3.16. 0x200 USB_DEV_CONF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x204-usb-dev-func">12.1.3.17. 0x204 USB_DEV_FUNC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x208-usb-line-sts">12.1.3.18. 0x208 USB_LINE_STS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x20c-inep-int-msk">12.1.3.19. 0x20C INEP_INT_MSK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x210-outep-int-msk">12.1.3.20. 0x210 OUTEP_INT_MSK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x214-usb-ep-int">12.1.3.21. 0x214 USB_EP_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x218-usb-ep-int-msk">12.1.3.22. 0x218 USB_EP_INT_MSK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x220-in-ep0-cfg">12.1.3.23. 0x220 IN_EP0_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0224-in-ep1-cfg">12.1.3.24. 0x0224 IN_EP1_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0228-in-ep2-cfg">12.1.3.25. 0x0228 IN_EP2_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x022c-in-ep3-cfg">12.1.3.26. 0x022C IN_EP3_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x0230-in-ep4-cfg">12.1.3.27. 0x0230 IN_EP4_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x240-out-ep0-cfg">12.1.3.28. 0x240 OUT_EP0_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x244-out-ep1-cfg">12.1.3.29. 0x244 OUT_EP1_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x248-out-ep2-cfg">12.1.3.30. 0x248 OUT_EP2_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x24c-out-ep3-cfg">12.1.3.31. 0x24C OUT_EP3_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x250-out-ep4-cfg">12.1.3.32. 0x250 OUT_EP4_CFG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x260-in-ep0-int">12.1.3.33. 0x260 IN_EP0_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x264-in-ep1-int">12.1.3.34. 0x264 IN_EP1_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x268-in-ep2-int">12.1.3.35. 0x268 IN_EP2_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x26c-in-ep3-int">12.1.3.36. 0x26C IN_EP3_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x270-in-ep4-int">12.1.3.37. 0x270 IN_EP4_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x280-out-ep0-int">12.1.3.38. 0x280 OUT_EP0_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x284-out-ep1-int">12.1.3.39. 0x284 OUT_EP1_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x288-out-ep2-int">12.1.3.40. 0x288 OUT_EP2_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x28c-out-ep3-int">12.1.3.41. 0x28C OUT_EP3_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x290-out-ep4-int">12.1.3.42. 0x290 OUT_EP4_INT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2a0-in-ep0-tsf-siz">12.1.3.43. 0x2A0 IN_EP0_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2a4-in-ep1-tsf-siz">12.1.3.44. 0x2A4 IN_EP1_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2a8-in-ep2-tsf-siz">12.1.3.45. 0x2A8 IN_EP2_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2ac-in-ep3-tsf-siz">12.1.3.46. 0x2AC IN_EP3_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2b0-in-ep4-tsf-siz">12.1.3.47. 0x2B0 IN_EP4_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2c0-out-ep0-tsf-siz">12.1.3.48. 0x2C0 OUT_EP0_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2c4-out-ep1-tsf-siz">12.1.3.49. 0x2C4 OUT_EP1_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2c8-out-ep2-tsf-siz">12.1.3.50. 0x2C8 OUT_EP2_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2cc-out-ep3-tsf-siz">12.1.3.51. 0x2CC OUT_EP3_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x2d0-out-ep4-tsf-siz">12.1.3.52. 0x2D0 OUT_EP4_TSF_SIZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x300-n-0x4-n-0-1-2-3-4-in-epn-dma">12.1.3.53. 0x300+n*0x4(n=0/1/2/3/4) IN_EPn_DMA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x320-n-0x4-n-0-1-2-3-4-out-epn-dma">12.1.3.54. 0x320+n*0x4(n=0/1/2/3/4) OUT_EPn_DMA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x340-n-0x4-n-0-1-2-3-4-in-epn-txfifo-sta">12.1.3.55. 0x340+n*0x4(n=0/1/2/3/4) IN_EPn_TXFIFO_STA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x360-n-1-0x4-n-1-2-3-4-tkn-queuen">12.1.3.56. 0x360+(n-1)*0x4(n=1/2/3/4) TKN_QUEUEn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x8010-phy-ctl">12.1.3.57. 0x8010 PHY_CTL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x8014-phy-test">12.1.3.58. 0x8014 PHY_TEST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x8018-phy-tune">12.1.3.59. 0x8018 PHY_TUNE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html#x8024-phy-sts">12.1.3.60. 0x8024 PHY_STS</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="overview.html" class="btn btn-neutral float-right" title="12.1.1. 概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="12. 接口" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

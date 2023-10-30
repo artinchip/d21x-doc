@@ -1,0 +1,4407 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.2.3. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.3. GMAC" href="../mac/index.html" />
+    <link rel="prev" title="12.2.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.2. USB Host (USBHOST)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.2.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.2.2. 功能描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.2.3. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-caplength-ehci">12.2.3.1. 0x000 CAPLENGTH(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-hcsparams-ehci">12.2.3.2. 0x004 HCSPARAMS(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-hccparams-ehci">12.2.3.3. 0x008 HCCPARAMS(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-usbcmd-ehci">12.2.3.4. 0x010 USBCMD(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-usbsts-ehci">12.2.3.5. 0x014 USBSTS(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-usbintr-ehci">12.2.3.6. 0x018 USBINTR(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-frindex-ehci">12.2.3.7. 0x01C FRINDEX(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-periodiclistbase-ehci">12.2.3.8. 0x024 PERIODICLISTBASE(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-asynclistaddr-ehci">12.2.3.9. 0x028 ASYNCLISTADDR(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-configflag-ehci">12.2.3.10. 0x050 CONFIGFLAG(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-portsc-ehci">12.2.3.11. 0x054 PORTSC(EHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x400-hcrevision-ohci">12.2.3.12. 0x400 HcRevision(OHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x404-hccontrol-ohci">12.2.3.13. 0x404 HcControl(OHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x408-hccommandstatus-ohci">12.2.3.14. 0x408 HcCommandStatus(OHCI)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x40c-hcinterruptstatus">12.2.3.15. 0x40C HcInterruptStatus</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x410-hcinterruptenable">12.2.3.16. 0x410 HcInterruptEnable</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x414-hcinterruptdisable">12.2.3.17. 0x414 HcInterruptDisable</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x418-hchcca">12.2.3.18. 0x418 HcHCCA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x41c-hcperiodcurrented">12.2.3.19. 0x41C HcPeriodCurrentED</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x420-hccontrolheaded">12.2.3.20. 0x420 HcControlHeadED</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0424-hccontrolcurrented">12.2.3.21. 0x0424 HcControlCurrentED</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0428-hcbulkheaded">12.2.3.22. 0x0428 HcBulkHeadED</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x042c-hcbulkcurrented">12.2.3.23. 0x042C HcBulkCurrentED</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0430-hcdonehead">12.2.3.24. 0x0430 HcDoneHead</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0434-hcfminterval">12.2.3.25. 0x0434 HcFmInterval</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0438-hcfmremaining">12.2.3.26. 0x0438 HcFmRemaining</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x043c-hcfmnumber">12.2.3.27. 0x043C HcFmNumber</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x440-hcperiodicstart">12.2.3.28. 0x440 HcPeriodicStart</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x444-hclsthreshold">12.2.3.29. 0x444 HcLSThreshold</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x448-hcrhdescriptora">12.2.3.30. 0x448 HcRhDescriptorA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x44c-hcrhdescriptorb">12.2.3.31. 0x44C HcRhDescriptorB</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x450-hcrhstatus">12.2.3.32. 0x450 HcRhStatus</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x454-hcrhportstatus">12.2.3.33. 0x454 HcRhPortStatus</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x800-usb-host-ctl">12.2.3.34. 0x800 USB_HOST_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x810-phy-ctl">12.2.3.35. 0x810 PHY_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x814-phy-test">12.2.3.36. 0x814 PHY_TEST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x818-phy-tune">12.2.3.37. 0x818 PHY_TUNE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x824-phy-sts">12.2.3.38. 0x824 PHY_STS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.2. </span>USBHOST</a> &raquo;</li>
+        
+      <li><span class="section-number">12.2.3. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.2.3. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-caplength-ehci">
+<h2><span class="section-number">12.2.3.1. </span>0x000 CAPLENGTH(EHCI)<a class="headerlink" href="#x000-caplength-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x01000010</p></th>
+<th class="head"><p>CAPLENGTH寄存器（CAPLENGTH）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R</p></td>
+<td><p>0x0100</p></td>
+<td><div class="line-block">
+<div class="line">EHCI接口版本号，高八位代表EHCI的主版本号，低八位位EHCI的次版本</div>
+<div class="line">号。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x10</p></td>
+<td><div class="line-block">
+<div class="line">指示USB Host工作寄存器的偏移地址。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-hcsparams-ehci">
+<h2><span class="section-number">12.2.3.2. </span>0x004 HCSPARAMS(EHCI)<a class="headerlink" href="#x004-hcsparams-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001111</p></th>
+<th class="head"><p>HCSPARAMS寄存器（HCSPARAMS）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:20</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Debug Port Number (Optional)</div>
+<div class="line">此域用于表示Debug Port Number。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">P_INDICATOR</div>
+<div class="line">Port Indicators</div>
+<div class="line">This bit indicates whether the ports support port indicator</div>
+<div class="line">control. When this bit is a one, the port status and control</div>
+<div class="line">registers include a read/writeable field for controlling</div>
+<div class="line">the state of the port indicator.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">N_CC</div>
+<div class="line">Number of Companion Controller，表示此USB 2.0 Host Controller</div>
+<div class="line">包括了多少个Companion Controller，这里只有一个OHCI Host</div>
+<div class="line">Controlller。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">N_PCC</div>
+<div class="line">Number of ports supported per companion host controller，</div>
+<div class="line">表示每个Companion Controller支持的端口数，这里只有一个端口。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Routing Rules</div>
+<div class="line">表示端口与Companion Controller的映射方式</div>
+<div class="line">0x0：The first N_PCC ports are routed to the lowest numbered</div>
+<div class="line-block">
+<div class="line">function companion host controller, the next N_PCC port</div>
+<div class="line">are routed to the next lowest function companion controller</div>
+<div class="line">, and so on. 第一个Port对应低号的companion Controller。</div>
+</div>
+<div class="line">0x1：The port routing is explicitly enumerated by the first</div>
+<div class="line-block">
+<div class="line">N_PORTS elements of the HCSP-PORTROUTE array.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">PPC</div>
+<div class="line">Port Power Control，此位指示此Host Controller是否实现端口</div>
+<div class="line">电源控制开关。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">N_PORTS</div>
+<div class="line">Number of physical downstream ports，此域表示此Host</div>
+<div class="line">Controller具有多少个下行的物理端口。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-hccparams-ehci">
+<h2><span class="section-number">12.2.3.3. </span>0x008 HCCPARAMS(EHCI)<a class="headerlink" href="#x008-hccparams-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001400</p></th>
+<th class="head"><p>USB PHY接口寄存器（USB PHY Interface）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R</p></td>
+<td><p>0xA0</p></td>
+<td><div class="line-block">
+<div class="line">EECP</div>
+<div class="line">EHCI Extended Capabilities Pointer，此域用于指示capabilities</div>
+<div class="line">清单。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">Isochronous Scheduling Threshold，同步调度阈值</div>
+<div class="line">When bit [7] is zero, the value of the least significant</div>
+<div class="line">3 bits indicates the number of micro-frames a host controller</div>
+<div class="line">can hold a set of isochronous data structures (one or more)</div>
+<div class="line">before flushing the state.</div>
+<div class="line">When bit [7] is a one, then host software assumes the host</div>
+<div class="line">controller may cache an isochronous data structure for an</div>
+<div class="line">entire frame.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Asynchronous Schedule Park Capability，此位表示是否支持</div>
+<div class="line">Asynchronous Schedule Park功能</div>
+<div class="line">0x0：the host controller doesn’t support the park feature</div>
+<div class="line-block">
+<div class="line">for high-speed queue heads in the Asynchronous Schedule.</div>
+</div>
+<div class="line">0x1：the host controller supports the park feature for</div>
+<div class="line-block">
+<div class="line">high-speed queue heads in the Asynchronous Schedule.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Programmable Frame List Flag，此位表示是否支持可Frame List</div>
+<div class="line">Size是否可编程</div>
+<div class="line">0x0：System software must use a frame list length of 1024</div>
+<div class="line-block">
+<div class="line">elements with this host controller. The USBCMD register</div>
+<div class="line">Frame List Size field is a read-only register and should</div>
+<div class="line">be set to zero.</div>
+</div>
+<div class="line">0x1：System software can specify and use a smaller frame list</div>
+<div class="line-block">
+<div class="line">and configure the host controller via the USBCMD register</div>
+<div class="line">Frame List Size field. The frame list must always be aligned</div>
+<div class="line">on a 4K page boundary. This requirement ensures that the</div>
+<div class="line">frame list is always physically contiguous.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">64-bit Addressing Capability，此位表示32bit地址还是64bit地址。</div>
+<div class="line">0x0：data structures using 32-bit address memory pointers</div>
+<div class="line">0x1：data structures using 64-bit address memory pointers</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-usbcmd-ehci">
+<h2><span class="section-number">12.2.3.4. </span>0x010 USBCMD(EHCI)<a class="headerlink" href="#x010-usbcmd-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00080000</p></th>
+<th class="head"><p>USBCMD寄存器（USBCMD）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x08</p></td>
+<td><div class="line-block">
+<div class="line">Interrupt Threshold Control，中断阈值控制</div>
+<div class="line">This field is used by system software to select the maximum</div>
+<div class="line">rate at which the host controller will issue interrupts.</div>
+<div class="line">The only valid values are defined below. If software writes</div>
+<div class="line">an invalid value to this register, the results are undefined.</div>
+<div class="line">0x00：Reserved</div>
+<div class="line">0x01：1 micro-frame</div>
+<div class="line">0x02：2 micro-frames</div>
+<div class="line">0x04：4 micro-frames</div>
+<div class="line">0x08：8 micro-frames</div>
+<div class="line">0x10：16 micro-frames</div>
+<div class="line">0x20：32 micro-frames</div>
+<div class="line">0x40：64 micro-frames</div>
+<div class="line">Any other value in this register yields undefined results.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Asynchronous Schedule Park Mode Enable</div>
+<div class="line">不支持此功能</div>
+<div class="line">If the Asynchronous Park Capability bit in the HCCPARAMS</div>
+<div class="line">register is a one, then this bit defaults to a 1h and is</div>
+<div class="line">R/W. Otherwise the bit must be a zero and is RO. Software</div>
+<div class="line">uses this bit to enable or disable Park mode.</div>
+<div class="line">When this bit is one, Park mode is enabled.</div>
+<div class="line">When this bit is a zero, Park mode is disabled.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Asynchronous Schedule Park Mode Count (OPTIONAL)</div>
+<div class="line">不支持此功能</div>
+<div class="line">If the Asynchronous Park Capability bit in the HCCPARAMS</div>
+<div class="line">register is a one, then this field defaults to 3h and is</div>
+<div class="line">R/W. Otherwise it defaults to zero and is RO.</div>
+<div class="line">It contains a count of the number of successive transactions</div>
+<div class="line">the host controller is allowed to execute from a high-speed</div>
+<div class="line">queue head on the Asynchronous schedule before continuing</div>
+<div class="line">traversal of the Asynchronous schedule.</div>
+<div class="line">Valid values are 1h to 3h. Software must not write a zero to</div>
+<div class="line">this bit when Park Mode Enable is a one as this will result</div>
+<div class="line">in undefined behavior.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Light Host Controller Reset (OPTIONAL)</div>
+<div class="line">EHCI控制器轻复位</div>
+<div class="line">This control bit is not required. If implemented, it allows</div>
+<div class="line">the driver to reset the EHCI controller without affecting the</div>
+<div class="line">state of the ports or the relationship to the companion host</div>
+<div class="line">controllers. For example, the PORSTC registers should not be</div>
+<div class="line">reset to their default values and the CF bit setting should</div>
+<div class="line">not go to zero (retaining port ownership relationships).</div>
+<div class="line">A host software read of this bit as zero indicates the Light</div>
+<div class="line">Host Controller Reset has completed and it is safe for host</div>
+<div class="line">software to re-initialize the host controller. A host software</div>
+<div class="line">read of this bit as a one indicates the Light Host Controller</div>
+<div class="line">Reset has not yet completed.</div>
+<div class="line">If not implemented a read of this field will always return a zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Interrupt on Async Advance Doorbell</div>
+<div class="line">使能产生异步调度器向前中断（对应USBSTS的中断状态位Interrupt on</div>
+<div class="line">Async Advance ）</div>
+<div class="line">0：不产生中断</div>
+<div class="line">1：产生中断</div>
+<div class="line">This bit is used as a doorbell by software to tell the host</div>
+<div class="line">controller to issue an interrupt the next time it advances</div>
+<div class="line">asynchronous schedule. Software must write a 1 to this bit</div>
+<div class="line">to ring the doorbell.</div>
+<div class="line">When the host controller has evicted all appropriate cached</div>
+<div class="line">schedule state, it sets the Interrupt on Async Advance status</div>
+<div class="line">bit in the USBSTS register. If the Interrupt on Async Advance</div>
+<div class="line">Enable bit in the USBINTR register is a one then the host</div>
+<div class="line">controller will assert an interrupt at the next interrupt</div>
+<div class="line">threshold.</div>
+<div class="line">The host controller sets this bit to a zero after it has set</div>
+<div class="line">the Interrupt on Async Advance status bit in the USBSTS</div>
+<div class="line">register to a one.</div>
+<div class="line">Software should not write a one to this bit when the asynchronous</div>
+<div class="line">schedule is disabled. Doing so will yield undefined results.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Asynchronous Schedule Enable，异步调度使能</div>
+<div class="line">This bit controls whether the host controller skips processing</div>
+<div class="line">the Asynchronous Schedule.</div>
+<div class="line">0x0：Do not process the Asynchronous Schedule</div>
+<div class="line">0x1：Use the ASYNCLISTADDR register to access the Asynchronous</div>
+<div class="line-block">
+<div class="line">Schedule.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Periodic Schedule Enable，周期调度使能</div>
+<div class="line">This bit controls whether the host controller skips processing</div>
+<div class="line">the Periodic Schedule.</div>
+<div class="line">0x0：Do not process the Periodic Schedule</div>
+<div class="line">0x1：Use the PERIODICLISTBASE register to access the Periodic</div>
+<div class="line-block">
+<div class="line">Schedule.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Frame List Size</div>
+<div class="line">此功能不支持</div>
+<div class="line">This field is R/W only if Programmable Frame List Flag in the</div>
+<div class="line">HCCPARAMS registers is set to a one. This field specifies the</div>
+<div class="line">size of the frame list. The size the frame list controls which</div>
+<div class="line">bits in the Frame Index Register should be used for the Frame</div>
+<div class="line">List Current index. Values mean:</div>
+<div class="line">0b00：1024 elements (4096 bytes) Default value</div>
+<div class="line">0b01：512 elements (2048 bytes)</div>
+<div class="line">0b10：256 elements (1024 bytes) – for resource-constrained environments</div>
+<div class="line">0b11：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Host Controller Reset (HCRESET)</div>
+<div class="line">EHCI控制复位，复位完成后会自动清0</div>
+<div class="line">This control bit is used by software to reset the host controller.</div>
+<div class="line">The effects of this on Root Hub registers are similar to a Chip</div>
+<div class="line">Hardware Reset.</div>
+<div class="line">When software writes a one to this bit, the Host Controller resets</div>
+<div class="line">its internal pipelines, timers, counters, state machines, etc. to</div>
+<div class="line">their initial value. Any transaction currently in progress on USB</div>
+<div class="line">is immediately terminated. A USB reset is not driven on downstream ports.</div>
+<div class="line">PCI Configuration registers are not affected by this reset. All</div>
+<div class="line">operational registers, including port registers and port state</div>
+<div class="line">machines are set to their initial values. Port ownership reverts</div>
+<div class="line">to the companion host controller(s), with the side effects. Software</div>
+<div class="line">must reinitialize the host controller in order to return the host</div>
+<div class="line">controller to an operational state.</div>
+<div class="line">This bit is set to zero by the Host Controller when the reset process</div>
+<div class="line">is complete. Software cannot terminate the reset process early by</div>
+<div class="line">writing a zero to this register.</div>
+<div class="line">Software should not set this bit to a one when the HCHalted bit</div>
+<div class="line">in the USBSTS register is a zero. Attempting to reset an actively</div>
+<div class="line">running host controller will result in undefined behavior.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Run/Stop (RS)</div>
+<div class="line">0x1：Run，EHCI调度器工作</div>
+<div class="line">0x0：Stop，EHCI调度器停止</div>
+<div class="line">When set to a 1, the Host Controller proceeds with execution of</div>
+<div class="line">the schedule. The Host Controller continues execution as long</div>
+<div class="line">as this bit is set to a 1.</div>
+<div class="line">When this bit is set to 0, the Host Controller completes the</div>
+<div class="line">current and any actively pipelined transactions on the USB</div>
+<div class="line">and then halts. The Host Controller must halt within 16</div>
+<div class="line">micro-frames after software clears the Run bit. The HC Halted</div>
+<div class="line">bit in the status register indicates when the Host Controller</div>
+<div class="line">has finished its pending pipelined transactions and has</div>
+<div class="line">entered the stopped state. Software must not write a one to</div>
+<div class="line">this field unless the host controller is in the Halted state</div>
+<div class="line">(i.e. HCHalted in the USBSTS register is a one). Doing so</div>
+<div class="line">will yield undefined results.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-usbsts-ehci">
+<h2><span class="section-number">12.2.3.5. </span>0x014 USBSTS(EHCI)<a class="headerlink" href="#x014-usbsts-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001000</p></th>
+<th class="head"><p>USBSTS寄存器（USBSTS）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Asynchronous Schedule Status</div>
+<div class="line">此位指示当前异步调度的状态</div>
+<div class="line">0x0：异步调度未使能</div>
+<div class="line">0x1：异步调度使能</div>
+<div class="line">The Host Controller is not required to immediately disable</div>
+<div class="line">or enable the Asynchronous Schedule when software transitions</div>
+<div class="line">the Asynchronous Schedule Enable bit in the USBCMD register.</div>
+<div class="line">When this bit and the Asynchronous Schedule Enable bit are</div>
+<div class="line">the same value, the Asynchronous Schedule is either enabled</div>
+<div class="line">(1) or disabled (0).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Periodic Schedule Status</div>
+<div class="line">此位指示当前周期调度的状态</div>
+<div class="line">0x0：同步调度未使能</div>
+<div class="line">0x1：同步调度使能</div>
+<div class="line">The Host Controller is not required to immediately disable</div>
+<div class="line">or enable the Periodic Schedule when software transitions</div>
+<div class="line">the Periodic Schedule Enable bit in the USBCMD register.</div>
+<div class="line">When this bit and the Periodic Schedule Enable bit are the</div>
+<div class="line">same value, the Periodic Schedule is either enabled (1)</div>
+<div class="line">or disabled (0).</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Reclamation</div>
+<div class="line">此位用于检测异步调度是否为空。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">HCHalted</div>
+<div class="line">此位用于指示EHCI的调度器是否停止。</div>
+<div class="line">0x0：EHCI的调度器工作</div>
+<div class="line">0x1：EHCI的调度器停止</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:6</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Interrupt on Async Advance</div>
+<div class="line">异步调度器向前中断</div>
+<div class="line">System software can force the host controller to issue an</div>
+<div class="line">interrupt the next time the host controller advances the</div>
+<div class="line">asynchronous schedule by writing a one to the Interrupt on</div>
+<div class="line">Async Advance Doorbell bit in the USBCMD register. This status</div>
+<div class="line">bit indicates the assertion of that interrupt source.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Host System Error</div>
+<div class="line">EHCI系统错误中断</div>
+<div class="line">0x0：无中断</div>
+<div class="line">0x1：出现中断，此时EHCI会将Run/Stop Bit清0，停止调度器的工作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Frame List Rollover</div>
+<div class="line">帧链表溢出中断</div>
+<div class="line">0x0：无中断</div>
+<div class="line">0x1：出现中断，帧链表溢出</div>
+<div class="line">The Host Controller sets this bit to a one when the Frame</div>
+<div class="line">List Index rolls over from its maximum value to zero. The</div>
+<div class="line">exact value at which the rollover occurs depends on the</div>
+<div class="line">frame list size. For example, if the frame list size</div>
+<div class="line">(as programmed in the Frame List Size field of the USBCMD</div>
+<div class="line">register) is 1024, the Frame Index Register rolls over every</div>
+<div class="line">time FRINDEX[13] toggles. Similarly, if the size is 512,</div>
+<div class="line">the Host Controller sets this bit to a one every time</div>
+<div class="line">FRINDEX[12] toggles.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Change Detect</div>
+<div class="line">端口归属变化中断</div>
+<div class="line">0x0：无中断</div>
+<div class="line">0x1：出现中断，端口归属出现变化</div>
+<div class="line">The Host Controller sets this bit to a one when any port</div>
+<div class="line">for which the Port Owner bit is set to zero (see Section</div>
+<div class="line">2.3.9) has a change bit transition from a zero to a one</div>
+<div class="line">or a Force Port Resume bit transition from a zero to a</div>
+<div class="line">one as a result of a J-K transition detected on a suspended</div>
+<div class="line">port. This bit will also be set as a result of the Connect</div>
+<div class="line">Status Change being set to a one after system software has</div>
+<div class="line">relinquished ownership of a connected port by writing a one</div>
+<div class="line">to a port’s Port Owner bit.</div>
+<div class="line">This bit is allowed to be maintained in the Auxiliary power</div>
+<div class="line">well. Alternatively, it is also acceptable that on a D3 to</div>
+<div class="line">D0 transition of the EHCI HC device, this bit is loaded with</div>
+<div class="line">the OR of all of the PORTSC change bits (including: Force</div>
+<div class="line">port resume, over-current change, enable/disable change and</div>
+<div class="line">connect status change).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">USB Error Interrupt (USBERRINT)</div>
+<div class="line">USB错误中断</div>
+<div class="line">0x0：无中断</div>
+<div class="line">0x1：出现中断</div>
+<div class="line">The Host Controller sets this bit to 1 when completion of a</div>
+<div class="line">USB transaction results in an error condition (e.g., error</div>
+<div class="line">counter underflow). If the TD on which the error interrupt</div>
+<div class="line">occurred also had its IOC bit set, both this bit and USBINT</div>
+<div class="line">bit are set.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">USB Interrupt (USBINT)</div>
+<div class="line">0x0：无中断</div>
+<div class="line">0x1：出现中断</div>
+<div class="line">The Host Controller sets this bit to 1 on the completion of</div>
+<div class="line">a USB transaction, which results in the retirement of a</div>
+<div class="line">Transfer Descriptor that had its IOC bit set.</div>
+<div class="line">The Host Controller also sets this bit to 1 when a short</div>
+<div class="line">packet is detected (actual number of bytes received was</div>
+<div class="line">less than the expected number of bytes).</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-usbintr-ehci">
+<h2><span class="section-number">12.2.3.6. </span>0x018 USBINTR(EHCI)<a class="headerlink" href="#x018-usbintr-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>FRINDEX寄存器（FRINDEX）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Interrupt on Async Advance Enable</div>
+<div class="line">异步调度器向前中断使能</div>
+<div class="line">When this bit is a one, and the Interrupt on Async Advance</div>
+<div class="line">bit in the USBSTS register is a one, the host controller</div>
+<div class="line">will issue an interrupt at the next interrupt threshold.</div>
+<div class="line">The interrupt is acknowledged by software clearing the</div>
+<div class="line">Interrupt on Async Advance bit</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Host System Error Enable</div>
+<div class="line">EHCI系统错误中断使能</div>
+<div class="line">When this bit is a one, and the Host System Error Status</div>
+<div class="line">bit in the USBSTS register is a one, the host controller</div>
+<div class="line">will issue an interrupt. The interrupt is acknowledged by</div>
+<div class="line">software clearing the Host System Error bit.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Frame List Rollover Enable</div>
+<div class="line">帧链表溢出中断使能</div>
+<div class="line">When this bit is a one, and the Frame List Rollover bit in</div>
+<div class="line">the USBSTS register is a one, the host controller will issue</div>
+<div class="line">an interrupt. The interrupt is acknowledged by software</div>
+<div class="line">clearing the Frame List Rollover bit.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Change Interrupt Enable.</div>
+<div class="line">端口归属变化中断使能</div>
+<div class="line">When this bit is a one, and the Port Change Detect bit in</div>
+<div class="line">the USBSTS register is a one, the host controller will</div>
+<div class="line">issue an interrupt.</div>
+<div class="line">The interrupt is acknowledged by software clearing the</div>
+<div class="line">Port Change Detect bit.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">USB Error Interrupt Enable</div>
+<div class="line">USB错误中断使能</div>
+<div class="line">When this bit is a one, and the USBERRINT bit in the</div>
+<div class="line">USBSTS register is a one, the host controller will issue</div>
+<div class="line">an interrupt at the next interrupt threshold. The interrupt</div>
+<div class="line">is acknowledged by software clearing the USBERRINT bit.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">USB Interrupt Enable</div>
+<div class="line">USB中断使能</div>
+<div class="line">When this bit is a one, and the USBINT bit in the USBSTS</div>
+<div class="line">register is a one, the host controller will issue an</div>
+<div class="line">interrupt at the next interrupt threshold. The interrupt</div>
+<div class="line">is acknowledged by software clearing the USBINT bit.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-frindex-ehci">
+<h2><span class="section-number">12.2.3.7. </span>0x01C FRINDEX(EHCI)<a class="headerlink" href="#x01c-frindex-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>FRINDEX寄存器（FRINDEX）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Frame Index</div>
+<div class="line">帧索引号</div>
+<div class="line">The value in this register increments at the end of each</div>
+<div class="line">time frame (e.g.micro-frame). Bits [12:3] are used for</div>
+<div class="line">the Frame List current index. This means that each location</div>
+<div class="line">of the frame list is accessed 8 times (frames or micro-frames)</div>
+<div class="line">before moving to the next index. The following illustrates</div>
+<div class="line">values of N based on the value of the Frame List</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-periodiclistbase-ehci">
+<h2><span class="section-number">12.2.3.8. </span>0x024 PERIODICLISTBASE(EHCI)<a class="headerlink" href="#x024-periodiclistbase-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PERIODICLISTBASE寄存器（PERIODICLISTBASE）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Base Address</div>
+<div class="line">此域对应空间地址的Bit[31:12]</div>
+<div class="line">This 32-bit register contains the beginning address of</div>
+<div class="line">the Periodic Frame List in the system memory.</div>
+<div class="line">These bits correspond to memory address signals [31:12],</div>
+<div class="line">respectively.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Reserved</div>
+<div class="line">Must be written as 0s.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-asynclistaddr-ehci">
+<h2><span class="section-number">12.2.3.9. </span>0x028 ASYNCLISTADDR(EHCI)<a class="headerlink" href="#x028-asynclistaddr-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ASYNCLISTADDR寄存器（ASYNCLISTADDR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Link Pointer Low (LPL).</div>
+<div class="line">此域为下一个将要被执行的异步QH的地址。</div>
+<div class="line">This 32-bit register contains the address of the next</div>
+<div class="line">asynchronous queue head to be executed.</div>
+<div class="line">These bits correspond to memory address signals [31:5],</div>
+<div class="line">respectively. This field may only reference a Queue Head</div>
+<div class="line">(QH).</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4:0</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-configflag-ehci">
+<h2><span class="section-number">12.2.3.10. </span>0x050 CONFIGFLAG(EHCI)<a class="headerlink" href="#x050-configflag-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CONFIGFLAG寄存器（CONFIGFLAG）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Configure Flag (CF)</div>
+<div class="line">配置标志位</div>
+<div class="line">Host software sets this bit as the last action in its</div>
+<div class="line">process of configuring the Host Controller. This bit</div>
+<div class="line">controls the default port-routing control logic. Bit</div>
+<div class="line">values and side-effects are listed below.</div>
+<div class="line">0x0：Port0选择OHCI</div>
+<div class="line">0x1：Port0选择EHCI</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-portsc-ehci">
+<h2><span class="section-number">12.2.3.11. </span>0x054 PORTSC(EHCI)<a class="headerlink" href="#x054-portsc-ehci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00002000</p></th>
+<th class="head"><p>PORTSC寄存器（PORTSC）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:23</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Wake on Over-current Enable</div>
+<div class="line">使能过流唤醒</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能，出现过流的情况将唤醒HOST</div>
+<div class="line">Writing this bit to a one enables the port to be sensitive</div>
+<div class="line">to over-current conditions as wake-up events.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Wake on Disconnect Enable (WKDSCNNT_E)</div>
+<div class="line">使能断开唤醒</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能，出现端口断开的情况将唤醒HOST</div>
+<div class="line">Writing this bit to a one enables the port to be sensitive</div>
+<div class="line">to device disconnects as wake-up events.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Wake on Connect Enable (WKCNNT_E)</div>
+<div class="line">使能连接唤醒</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能，出现端口连接的情况将唤醒HOST</div>
+<div class="line">Writing this bit to a one enables the port to be sensitive</div>
+<div class="line">to device connects as wake-up events.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Test Control</div>
+<div class="line">端口测试控制</div>
+<div class="line">0x0：Test mode未使能</div>
+<div class="line">0x1：Test J_STATE</div>
+<div class="line">0x2：Test K_STATE</div>
+<div class="line">0x3：Test SE0_NAK</div>
+<div class="line">0x4：Test Packet</div>
+<div class="line">0x5：Test FORCE_ENABLE</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">Port Owner</div>
+<div class="line">端口归属</div>
+<div class="line">This bit unconditionally goes to a 0b when the Configured bit</div>
+<div class="line">in the CONFIGFLAG register makes a 0b to 1b transition. This</div>
+<div class="line">bit unconditionally goes to 1b whenever the Configured bit is</div>
+<div class="line">zero.</div>
+<div class="line">System software uses this field to release ownership of the</div>
+<div class="line">port to a selected host controller (in the event that the</div>
+<div class="line">attached device is not a high-speed device). Software writes</div>
+<div class="line">a one to this bit when the attached device is not a high-speed</div>
+<div class="line">device. A one in this bit means that a companion host</div>
+<div class="line">controller owns and controls the port.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Power (PP)</div>
+<div class="line">端口电源控制</div>
+<div class="line">0x0：电源开关断开</div>
+<div class="line">0x1：电源开关闭合</div>
+<div class="line">When power is not available on a port (i.e. PP equals a 0),</div>
+<div class="line">the port is non- functional and will not report attaches,</div>
+<div class="line">detaches, etc.</div>
+<div class="line">When an over-current condition is detected on a powered port</div>
+<div class="line">and the PP bit in each affected port may be transitioned by</div>
+<div class="line">the host controller from a 1 to 0 (removing power from the</div>
+<div class="line">port).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Line Status</div>
+<div class="line">These bits reflect the current logical levels of the D+</div>
+<div class="line">(bit 11) and D- (bit 10) signal lines. These bits are used</div>
+<div class="line">for detection of low-speed USB devices prior to the port</div>
+<div class="line">reset and enable sequence.</div>
+<div class="line">This field is valid only when the port enable bit is zero</div>
+<div class="line">and the current connect status bit is set to a one.</div>
+<div class="line">0x0：SE0 Not Low-speed device, perform EHCI reset</div>
+<div class="line">0x1：K-state Low-speed device, release ownership of port</div>
+<div class="line">0x2：J-state Not Low-speed device, perform EHCI reset</div>
+<div class="line">0x3：Undefined Not Low-speed device, perform EHCI reset.</div>
+<div class="line">This value of this field is undefined if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Reset</div>
+<div class="line">端口复位</div>
+<div class="line">0x0：端口不处于复位状态</div>
+<div class="line">0x1：使能端口进行复位</div>
+<div class="line">When software writes a one to this bit (from a zero), the bus</div>
+<div class="line">reset sequence as defined in the USB Specification Revision</div>
+<div class="line">2.0 is started. Software writes a zero to this bit to terminate</div>
+<div class="line">the bus reset sequence. Software must keep this bit at a one</div>
+<div class="line">long enough to ensure the reset sequence, as specified in the</div>
+<div class="line">USB Specification Revision 2.0, completes. Note: when software</div>
+<div class="line">writes this bit to a one, it must also write a zero to the Port</div>
+<div class="line">Enable bit.</div>
+<div class="line">Note that when software writes a zero to this bit there may be</div>
+<div class="line">a delay before the bit status changes to a zero. The bit status</div>
+<div class="line">will not read as a zero until after the reset has completed. If</div>
+<div class="line">the port is in high-speed mode after reset is complete, the host</div>
+<div class="line">controller will automatically enable this port (e.g. set the Port</div>
+<div class="line">Enable bit to a one). A host controller must terminate the reset</div>
+<div class="line">and stabilize the state of the port within 2 milliseconds of</div>
+<div class="line">software transitioning this bit from a one to a zero. For</div>
+<div class="line">example: if the port detects that the attached device is</div>
+<div class="line">high-speed during reset, then the host controller must have the</div>
+<div class="line">port in the enabled state within 2ms of software writing this</div>
+<div class="line">bit to a zero.</div>
+<div class="line">The HCHalted bit in the USBSTS register should be a zero before</div>
+<div class="line">software attempts to use this bit. The host controller may hold</div>
+<div class="line">Port Reset asserted to a one when the HCHalted bit is a one.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Suspend</div>
+<div class="line">0x0：端口不处于Suspend状态</div>
+<div class="line">0x1：使能端口进入Suspend状态</div>
+<div class="line">Port Enabled Bit and Suspend bit of this register define the</div>
+<div class="line">port states as follows:</div>
+<div class="line">Bits [Port Enabled, Suspend] Port State</div>
+<div class="line">0x0X:Disable</div>
+<div class="line">0x10:Enable</div>
+<div class="line">0x11:Suspend</div>
+<div class="line">When in suspend state, downstream propagation of data is blocked</div>
+<div class="line">on this port, except for port reset. The blocking occurs at the</div>
+<div class="line">end of the current transaction, if a transaction was in progress</div>
+<div class="line">when this bit was written to 1. In the suspend state, the port is</div>
+<div class="line">sensitive to resume detection. Note that the bit status does not</div>
+<div class="line">change until the port is suspended and that there may be a delay</div>
+<div class="line">in suspending a port if there is a transaction currently in</div>
+<div class="line">progress on the USB.</div>
+<div class="line">A write of zero to this bit is ignored by the host controller.</div>
+<div class="line">The host controller will unconditionally set this bit to a zero</div>
+<div class="line">when:</div>
+<div class="line">• Software sets the Force Port Resume bit to a zero (from a one).</div>
+<div class="line">• Software sets the Port Reset bit to a one (from a zero).</div>
+<div class="line">If host software sets this bit to a one when the port is not</div>
+<div class="line">enabled (i.e. Port enabled bit is a zero) the results are</div>
+<div class="line">undefined.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Force Port Resume</div>
+<div class="line">强制端口Resume</div>
+<div class="line">0x0：无操作</div>
+<div class="line">0x1：强制端口Resume</div>
+<div class="line">This functionality defined for manipulating this bit depends on</div>
+<div class="line">the value of the Suspend bit. For example, if the port is not</div>
+<div class="line">suspended (Suspend and Enabled bits are a one) and software</div>
+<div class="line">transitions this bit to a one, then the effects on the bus are</div>
+<div class="line">undefined.</div>
+<div class="line">Software sets this bit to a 1 to drive resume signaling. The</div>
+<div class="line">Host Controller sets this bit to a 1 if a J-to-K transition is</div>
+<div class="line">detected while the port is in the Suspend state. When this bit</div>
+<div class="line">transitions to a one because a J-to-K transition is detected,</div>
+<div class="line">the Port Change Detect bit in the USBSTS register is also set</div>
+<div class="line">to a one. If software sets this bit to a one, the host controller</div>
+<div class="line">must not set the Port Change Detect bit.</div>
+<div class="line">Note that when the EHCI controller owns the port, the resume</div>
+<div class="line">sequence follows the defined sequence documented in the USB</div>
+<div class="line">Specification Revision 2.0. The resume signaling (Full-speed</div>
+<div class="line">‘K’) is driven on the port as long as this bit remains a one.</div>
+<div class="line">Software must appropriately time the Resume and set this bit</div>
+<div class="line">to a zero when the appropriate amount of time has elapsed.</div>
+<div class="line">Writing a zero (from one) causes the port to return to high-</div>
+<div class="line">speed mode (forcing the bus below the port into a high-speed</div>
+<div class="line">idle). This bit will remain a one until the port has switched</div>
+<div class="line">to the high-speed idle. The host controller must complete this</div>
+<div class="line">transition within 2 milliseconds of software setting this bit</div>
+<div class="line">to a zero.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Over-current Change</div>
+<div class="line">端口过流状态变化</div>
+<div class="line">0x0：端口过流状态为变化</div>
+<div class="line">0x1：端口出现过流状态变化</div>
+<div class="line">Software clears this bit by writing a one to this bit position.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Over-current Active</div>
+<div class="line">端口过流</div>
+<div class="line">0x1：This port currently has an over-current condition.</div>
+<div class="line">0x0：This port does not have an over-current condition.</div>
+<div class="line">This bit will automatically transition from a one to a zero</div>
+<div class="line">when the over current condition is removed.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Enable/Disable Change</div>
+<div class="line">端口使能/禁止变化</div>
+<div class="line">0x1：Port enabled/disabled status has changed.</div>
+<div class="line">0x0：No change.</div>
+<div class="line">For the root hub, this bit gets set to a one only when a port</div>
+<div class="line">is disabled due to the appropriate conditions existing at the</div>
+<div class="line">EOF2 point. Software clears this bit by writing a 1 to it.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Port Enabled/Disabled</div>
+<div class="line">端口使能/禁止</div>
+<div class="line">0x1：Enable，只有在端口实现RESET后，设备枚举完成为HS设备时，此位置1，</div>
+<div class="line-block">
+<div class="line">软件不能对此位写1。</div>
+</div>
+<div class="line">0x0：Disable，端口RESET后，设备枚举完成为非HS设备。</div>
+<div class="line">Ports can only be enabled by the host controller as a part</div>
+<div class="line">of the reset and enable. Software cannot enable a port by</div>
+<div class="line">writing a one to this field. The host controller will only</div>
+<div class="line">set this bit to a one when the reset sequence determines</div>
+<div class="line">that the attached device is a high-speed device.</div>
+<div class="line">Ports can be disabled by either a fault condition (disconnect</div>
+<div class="line">event or other fault condition) or by host software. Note</div>
+<div class="line">that the bit status does not change until the port state</div>
+<div class="line">actually changes. There may be a delay in disabling or enabling</div>
+<div class="line">a port due to other host controller and bus events.</div>
+<div class="line">When the port is disabled (0b) downstream propagation of</div>
+<div class="line">data is blocked on this port, except for reset.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/WC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Connect Status Change</div>
+<div class="line">端口连接状态发生变化</div>
+<div class="line">0x1：Change in Current Connect Status.</div>
+<div class="line">0x0：No change.</div>
+<div class="line">Indicates a change has occurred in the port’s Current Connect</div>
+<div class="line">Status. The host controller sets this bit for all changes to</div>
+<div class="line">the port device connect status, even if system software has</div>
+<div class="line">not cleared an existing connect status change. For example,</div>
+<div class="line">the insertion status changes twice before system software has</div>
+<div class="line">cleared the changed condition, hub hardware will be “setting”</div>
+<div class="line">an already-set bit (i.e., the bit will remain set). Software</div>
+<div class="line">sets this bit to 0 by writing a 1 to it.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Current Connect Status</div>
+<div class="line">当前端口连接状态</div>
+<div class="line">0x1：Device is present on port</div>
+<div class="line">0x0：No device is present.</div>
+<div class="line">This value reflects the current state of the port, and may</div>
+<div class="line">not correspond directly to the event that caused the Connect</div>
+<div class="line">Status Change bit (Bit 1) to be set.</div>
+<div class="line">This field is zero if Port Power is zero.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x400-hcrevision-ohci">
+<h2><span class="section-number">12.2.3.12. </span>0x400 HcRevision(OHCI)<a class="headerlink" href="#x400-hcrevision-ohci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000110</p></th>
+<th class="head"><p>HcRevision寄存器（HcRevision）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">LEGACY_SUPPORT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x10</p></td>
+<td><div class="line-block">
+<div class="line">Revision</div>
+<div class="line">OHCI版本</div>
+<div class="line">This read-only field contains the BCD representation of</div>
+<div class="line">the version of the HCI specification that is implemented</div>
+<div class="line">by this HC. For example, a value of 11h corresponds to</div>
+<div class="line">version 1.1. All of the HC implementations that are</div>
+<div class="line">compliant with this specification will have a value of 10h.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x404-hccontrol-ohci">
+<h2><span class="section-number">12.2.3.13. </span>0x404 HcControl(OHCI)<a class="headerlink" href="#x404-hccontrol-ohci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcControl寄存器（HcControl）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RWE</div>
+<div class="line">RemoteWakeupEnable</div>
+<div class="line">远程唤醒使能</div>
+<div class="line">This bit is used by HCD to enable or disable the remote</div>
+<div class="line">wakeup feature upon the detection of upstream resume signaling.</div>
+<div class="line">When this bit is set and the ResumeDetected bit in</div>
+<div class="line">HcInterruptStatus is set, a remote wakeup is signaled to</div>
+<div class="line">the host system. Setting this bit has no impact on the</div>
+<div class="line">generation of hardware interrupt.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RWC</div>
+<div class="line">RemoteWakeupConnected</div>
+<div class="line">This bit indicates whether HC supports remote wakeup</div>
+<div class="line">signaling. If remote wakeup is supported and used by the</div>
+<div class="line">system it is the responsibility of system firmware to set</div>
+<div class="line">this bit during POST. HC clears the bit upon a hardware</div>
+<div class="line">reset but does not alter it upon a software reset. Remote</div>
+<div class="line">wakeup signaling of the host system is host-bus-specific</div>
+<div class="line">and is not described in this specification.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IR</div>
+<div class="line">InterruptRouting，中断通路</div>
+<div class="line">0x0：all interrupts are routed to the normal host bus interrupt</div>
+<div class="line-block">
+<div class="line">mechanism</div>
+</div>
+<div class="line">0x1：all interrupts are routed to the System Management Interrupt</div>
+<div class="line">This bit determines the routing of interrupts generated by</div>
+<div class="line">events registered in HcInterruptStatus. If clear, all interrupts</div>
+<div class="line">are routed to the normal host bus interrupt mechanism. If set,</div>
+<div class="line">interrupts are routed to the System Management Interrupt. HCD</div>
+<div class="line">clears this bit upon a hardware reset, but it does not alter</div>
+<div class="line">this bit upon a software reset. HCD uses this bit as a tag to</div>
+<div class="line">indicate the ownership of HC.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HCFS</div>
+<div class="line">HostControllerFunctionalState for USB</div>
+<div class="line">USB Host控制器的功能状态</div>
+<div class="line">0x0: USB RESET</div>
+<div class="line">0x1: USB RESUME</div>
+<div class="line">0x2: USB OPERATIONAL</div>
+<div class="line">0x3: USB SUSPEND</div>
+<div class="line">A transition to USB OPERATIONAL from another state causes SOF</div>
+<div class="line">generation to begin 1 ms later. HCD may determine whether HC</div>
+<div class="line">has begun sending SOFs by reading the StartofFrame field of</div>
+<div class="line">HcInterruptStatus.</div>
+<div class="line">This field may be changed by HC only when in the USBSUSPEND</div>
+<div class="line">state. HC may move from the USBSUSPEND state to the USBRESUME</div>
+<div class="line">state after detecting the resume signaling from a downstream</div>
+<div class="line">port.</div>
+<div class="line">HC enters USBSUSPEND after a software reset, whereas it enters</div>
+<div class="line">USBRESET after a hardware reset. The latter also resets the</div>
+<div class="line">Root Hub and asserts subsequent reset signaling to downstream</div>
+<div class="line">ports.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BLE</div>
+<div class="line">BulkListEnable，Bulk链表使能</div>
+<div class="line">This bit is set to enable the processing of the Bulk list in</div>
+<div class="line">the next Frame. If cleared by HCD, processing of the Bulk list</div>
+<div class="line">does not occur after the next SOF. HC checks this bit whenever</div>
+<div class="line">it determines to process the list. When disabled, HCD may</div>
+<div class="line">modify the list. If HcBulkCurrentED is pointing to an ED to</div>
+<div class="line">be removed,</div>
+<div class="line">HCD must advance the pointer by updating HcBulkCurrentED before</div>
+<div class="line">re-enabling processing of the list.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLE</div>
+<div class="line">ControlListEnable，控制链表使能</div>
+<div class="line">This bit is set to enable the processing of the Control list</div>
+<div class="line">in the next Frame. If cleared by HCD, processing of the Control</div>
+<div class="line">list does not occur after the next SOF. HC must check this bit</div>
+<div class="line">whenever it determines to process the list. When disabled, HCD</div>
+<div class="line">may modify the list. If HcControlCurrentED is pointing to an</div>
+<div class="line">ED to be removed, HCD must advance the pointer by updating</div>
+<div class="line">HcControlCurrentED before re-enabling processing of the list.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IE</div>
+<div class="line">IsochronousEnable，同步端点描述符使能</div>
+<div class="line">This bit is used by HCD to enable/disable processing of</div>
+<div class="line">isochronous EDs. While processing the periodic list in a</div>
+<div class="line">Frame, HC checks the status of this bit when it finds an</div>
+<div class="line">Isochronous ED (F=1). If set (enabled), HC continues processing</div>
+<div class="line">the EDs. If cleared (disabled), HC halts processing of the</div>
+<div class="line">periodic list (which now contains only isochronous EDs) and</div>
+<div class="line">begins processing the Bulk/Control lists. Setting this bit</div>
+<div class="line">is guaranteed to take effect in the next Frame (not the</div>
+<div class="line">current Frame).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PLE</div>
+<div class="line">PeriodicListEnable，周期链表使能</div>
+<div class="line">This bit is set to enable the processing of the periodic</div>
+<div class="line">list in the next Frame. If cleared by HCD, processing of</div>
+<div class="line">the periodic list does not occur after the next SOF. HC</div>
+<div class="line">must check this bit before it starts processing the list.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CBSR</div>
+<div class="line">ControlBulkServiceRatio，Control Bulk服务比</div>
+<div class="line">This specifies the service ratio between Control and Bulk</div>
+<div class="line">EDs. Before processing any of the nonperiodic lists, HC</div>
+<div class="line">must compare the ratio specified with its internal count</div>
+<div class="line">on how many nonempty Control EDs have been processed, in</div>
+<div class="line">determining whether to continue serving another Control</div>
+<div class="line">ED or switching to Bulk EDs.</div>
+<div class="line">The internal count will be retained when crossing the</div>
+<div class="line">frame boundary. In case of reset, HCD is responsible for</div>
+<div class="line">restoring this value.</div>
+<div class="line">（Control EP描述符与Bulk EP描述符之比）</div>
+<div class="line">0x0：(1:1)</div>
+<div class="line">0x1：(2:1)</div>
+<div class="line">0x2：(3:1)</div>
+<div class="line">0x3：(4:1)</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x408-hccommandstatus-ohci">
+<h2><span class="section-number">12.2.3.14. </span>0x408 HcCommandStatus(OHCI)<a class="headerlink" href="#x408-hccommandstatus-ohci" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcCommandStatus寄存器（HcCommandStatus）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>17:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SOC</div>
+<div class="line">SchedulingOverrunCount，调度器溢出计数</div>
+<div class="line">These bits are incremented on each scheduling overrun error.</div>
+<div class="line">It is initialized to 00b and wraps around at 11b. This will</div>
+<div class="line">be incremented when a scheduling overrun is detected even</div>
+<div class="line">if SchedulingOverrun in HcInterruptStatus has already been</div>
+<div class="line">set.  This is used by HCD to monitor any persistent scheduling</div>
+<div class="line">problems.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OCR</div>
+<div class="line">OwnershipChangeRequest，归属变化请求信号</div>
+<div class="line">This bit is set by an OS HCD to request a change of control</div>
+<div class="line">of the HC. When set HC will set the OwnershipChange field in</div>
+<div class="line">HcInterruptStatus. After the changeover, this bit is cleared</div>
+<div class="line">and remains so until the next request from OS HCD.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BLF</div>
+<div class="line">BulkListFilled，Bulk链表填入TD</div>
+<div class="line">This bit is used to indicate whether there are any TDs on the</div>
+<div class="line">Bulk list. It is set by HCD whenever it adds a TD to an ED in</div>
+<div class="line">the Bulk list.</div>
+<div class="line">When HC begins to process the head of the Bulk list, it checks</div>
+<div class="line">BF. As long as BulkListFilled is 0, HC will not start processing</div>
+<div class="line">the Bulk list. If BulkListFilled is 1, HC will start processing</div>
+<div class="line">the Bulk list and will set BF to 0. If HC finds a TD on the list,</div>
+<div class="line">then HC will set BulkListFilled to 1 causing the Bulk list</div>
+<div class="line">processing to continue. If no TD is found on the Bulk list, and</div>
+<div class="line">if HCD does not set BulkListFilled, then BulkListFilled will</div>
+<div class="line">still be 0 when HC completes processing the Bulk list and Bulk</div>
+<div class="line">list processing will stop.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLF</div>
+<div class="line">ControlListFilled，控制链表填入TD</div>
+<div class="line">This bit is used to indicate whether there are any TDs on the</div>
+<div class="line">Control list. It is set by HCD whenever it adds a TD to an ED</div>
+<div class="line">in the Control list. When HC begins to process the head of the</div>
+<div class="line">Control list, it checks CLF. As long as ControlListFilled is 0,</div>
+<div class="line">HC will not start rocessing the Control list. If CF is 1, HC</div>
+<div class="line">will start processing he Control list and will set</div>
+<div class="line">ControlListFilled to 0. If HC finds a D on the list, then HC</div>
+<div class="line">will set ControlListFilled to 1 causing the Control list</div>
+<div class="line">processing to continue. If no TD is found on the Control list,</div>
+<div class="line">and if the HCD does not set ControlListFilled, then</div>
+<div class="line">ControlListFilled will still be 0 when HC completes processing</div>
+<div class="line">the Control list and Control list processing will stop.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HCR</div>
+<div class="line">HostControllerReset，OHCI软复位</div>
+<div class="line">This bit is set by HCD to initiate a software reset of HC.</div>
+<div class="line">Regardless of the functional state of HC, it moves to the</div>
+<div class="line">USBSUSPEND state in which most of the operational registers</div>
+<div class="line">are reset except those stated otherwise; e.g., the</div>
+<div class="line">InterruptRouting field of HcControl, and no Host bus accesses</div>
+<div class="line">are allowed. This it is cleared by HC upon the completion of</div>
+<div class="line">the reset operation. The reset operation must be completed</div>
+<div class="line">within 10 ms. This bit, when set, should not cause a reset</div>
+<div class="line">to the Root Hub and no subsequent reset signaling should</div>
+<div class="line">be asserted to its downstream ports.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x40c-hcinterruptstatus">
+<h2><span class="section-number">12.2.3.15. </span>0x40C HcInterruptStatus<a class="headerlink" href="#x40c-hcinterruptstatus" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcInterruptStatus寄存器（HcInterruptStatus）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OC</div>
+<div class="line">OwnershipChange，归属状态变化</div>
+<div class="line">This bit is set by HC when HCD sets the OwnershipChangeRequest</div>
+<div class="line">field in HcCommandStatus. This event, when unmasked, will</div>
+<div class="line">always generate an System Management Interrupt (SMI) immediately.</div>
+<div class="line">This bit is tied to 0b when the SMI pin is not implemented.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RHSC</div>
+<div class="line">RootHubStatusChange</div>
+<div class="line">This bit is set when the content of HcRhStatus or the</div>
+<div class="line">content of any of HcRhPortStatus[NumberofDownstreamPort]</div>
+<div class="line">has changed.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FNO</div>
+<div class="line">FrameNumberOverflow</div>
+<div class="line">This bit is set when the MSb of HcFmNumber (bit 15) changes</div>
+<div class="line">value, from 0 to 1 or from 1 to 0, and after HccaFrameNumber</div>
+<div class="line">has been updated.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UE</div>
+<div class="line">UnrecoverableError</div>
+<div class="line">This bit is set when HC detects a system error not related</div>
+<div class="line">to USB. HC should not proceed with any processing nor signaling</div>
+<div class="line">before the system error has been corrected. HCD clears this</div>
+<div class="line">bit after HC has been reset.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RD</div>
+<div class="line">ResumeDetected</div>
+<div class="line">This bit is set when HC detects that a device on the USB is</div>
+<div class="line">asserting resume signaling. It is the transition from no</div>
+<div class="line">resume signaling to resume signaling causing this bit to be</div>
+<div class="line">set. This bit is not set when HCD sets the USBRESUME state.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SF</div>
+<div class="line">StartofFrame</div>
+<div class="line">This bit is set by HC at each start of a frame and after</div>
+<div class="line">the update of HccaFrameNumber. HC also generates a SOF token</div>
+<div class="line">at the same time.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WDH</div>
+<div class="line">WritebackDoneHead</div>
+<div class="line">This bit is set immediately after HC has written HcDoneHead</div>
+<div class="line">to HccaDoneHead. Further updates of the HccaDoneHead will</div>
+<div class="line">not occur until this bit has been cleared. HCD should only</div>
+<div class="line">clear this bit after it has saved the content of HccaDoneHead.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SO</div>
+<div class="line">SchedulingOverrun</div>
+<div class="line">This bit is set when the USB schedule for the current Frame</div>
+<div class="line">overruns and after the update of HccaFrameNumber.</div>
+<div class="line">A scheduling overrun will also cause the SchedulingOverrunCount</div>
+<div class="line">of HcCommandStatus to be incremented.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x410-hcinterruptenable">
+<h2><span class="section-number">12.2.3.16. </span>0x410 HcInterruptEnable<a class="headerlink" href="#x410-hcinterruptenable" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcInterruptEnable寄存器（HcInterruptEnable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIE</div>
+<div class="line">A ‘0’ written to this field is ignored by HC. A ‘1’ written</div>
+<div class="line">to this field enables interrupt generation due to events</div>
+<div class="line">specified in the other bits of this register. This is used</div>
+<div class="line">by HCD as a Master Interrupt Enable.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OC</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Ownership Change.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RHSC</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Root Hub Status Change.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FNO</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Frame Number Overflow.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UE</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Unrecoverable Error.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RD</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Resume Detect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SF</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Start of Frame.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WDH</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to HcDoneHead Writeback.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SO</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Enable interrupt generation due to Scheduling Overrun.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x414-hcinterruptdisable">
+<h2><span class="section-number">12.2.3.17. </span>0x414 HcInterruptDisable<a class="headerlink" href="#x414-hcinterruptdisable" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcInterruptDisable寄存器（HcInterruptDisable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIE</div>
+<div class="line">A ‘0’ written to this field is ignored by HC. A ‘1’ written</div>
+<div class="line">to this field disables interrupt generation due to events</div>
+<div class="line">specified in the other bits of this register. This field is</div>
+<div class="line">set after a hardware or software reset.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OC</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Ownership Change.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RHSC</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Root Hub Status Change.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FNO</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Frame Number Overflow.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UE</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Unrecoverable Error.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RD</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Resume Detect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SF</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Start of Frame.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WDH</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to HcDoneHead Writeback.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SO</div>
+<div class="line">0x0：Ignore</div>
+<div class="line">0x1：Disable interrupt generation due to Scheduling Overrun.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x418-hchcca">
+<h2><span class="section-number">12.2.3.18. </span>0x418 HcHCCA<a class="headerlink" href="#x418-hchcca" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcHCCA寄存器（HcHCCA）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HCCA[31:8]</div>
+<div class="line">This is the base address of the Host Controller Communication</div>
+<div class="line">Area.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HCCA[7:0]</div>
+<div class="line">The alignment is evaluated by examining the number of zeroes</div>
+<div class="line">in the lower order bits. The minimum alignment is 256 bytes;</div>
+<div class="line">therefore, bits 0 through 7 must always return ‘0’ when read.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x41c-hcperiodcurrented">
+<h2><span class="section-number">12.2.3.19. </span>0x41C HcPeriodCurrentED<a class="headerlink" href="#x41c-hcperiodcurrented" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcPeriodCurrentED寄存器（HcPeriodCurrentED）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PCED[31:4]</div>
+<div class="line">PeriodCurrentED</div>
+<div class="line">This is used by HC to point to the head of one of the</div>
+<div class="line">Periodic lists which will be processed in the current Frame.</div>
+<div class="line">The content of this register is updated by HC after a</div>
+<div class="line">periodic ED has been processed. HCD may read the content</div>
+<div class="line">in determining which ED is currently being processed at</div>
+<div class="line">the time of reading.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PCED[3:0]</div>
+<div class="line">Because the general TD length is 16 bytes, the memory</div>
+<div class="line">structure for the TD must be aligned to a 16-byte boundary.</div>
+<div class="line">So the lower bits in the PCED, through bit 0 to bit 3 must</div>
+<div class="line">be zero in this field.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x420-hccontrolheaded">
+<h2><span class="section-number">12.2.3.20. </span>0x420 HcControlHeadED<a class="headerlink" href="#x420-hccontrolheaded" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcControlHeadED寄存器（HcControlHeadED）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CHED[31:4]</div>
+<div class="line">ControlHeadED</div>
+<div class="line">HC traverses the Control list starting with the HcControlHeadED</div>
+<div class="line">pointer. The content is loaded from HCCA during the</div>
+<div class="line">initialization of HC.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CHED[3:0]</div>
+<div class="line">Because the general TD length is 16 bytes, the memory structure</div>
+<div class="line">for the TD must be aligned to a 16-byte boundary. So the lower</div>
+<div class="line">bits in the CHED, through bit 0 to bit 3 must be zero in this</div>
+<div class="line">field.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0424-hccontrolcurrented">
+<h2><span class="section-number">12.2.3.21. </span>0x0424 HcControlCurrentED<a class="headerlink" href="#x0424-hccontrolcurrented" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcControlCurrentED寄存器（HcControlCurrentED）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CCED[31:4]</div>
+<div class="line">ControlCurrentED</div>
+<div class="line">This pointer is advanced to the next ED after serving the</div>
+<div class="line">present one. HC will continue processing the list from where</div>
+<div class="line">it left off in the last Frame. When it reaches the end of</div>
+<div class="line">the Control list, HC checks the ControlListFilled of in</div>
+<div class="line">HcCommandStatus. If set, it copies the content of</div>
+<div class="line">HcControlHeadED to HcControlCurrentED and clears the bit.</div>
+<div class="line">If not set, it does nothing. HCD is allowed to modify this</div>
+<div class="line">register only when the ControlListEnable of HcControl is</div>
+<div class="line">cleared. When set, HCD only reads the instantaneous value</div>
+<div class="line">of this register. Initially, this is set to zero to indicate</div>
+<div class="line">the end of the Control list.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CCED[3:0]</div>
+<div class="line">Because the general TD length is 16 bytes, the memory</div>
+<div class="line">structure for the TD must be aligned to a 16-byte boundary.</div>
+<div class="line">So the lower bits in the CCED, through bit 0 to bit 3 must</div>
+<div class="line">be zero in this field.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0428-hcbulkheaded">
+<h2><span class="section-number">12.2.3.22. </span>0x0428 HcBulkHeadED<a class="headerlink" href="#x0428-hcbulkheaded" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcBulkHeadED寄存器（HcBulkHeadED）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BHED[31:4]</div>
+<div class="line">BulkHeadED</div>
+<div class="line">HC traverses the Bulk list starting with the HcBulkHeadED</div>
+<div class="line">pointer. The content is loaded from HCCA during the</div>
+<div class="line">initialization of HC.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BHED [3:0]</div>
+<div class="line">Because the general TD length is 16 bytes, the memory</div>
+<div class="line">structure for the TD must be aligned to a 16-byte boundary.</div>
+<div class="line">So the lower bits in the BHED, through bit 0 to bit 3 must</div>
+<div class="line">be zero in this field.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x042c-hcbulkcurrented">
+<h2><span class="section-number">12.2.3.23. </span>0x042C HcBulkCurrentED<a class="headerlink" href="#x042c-hcbulkcurrented" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcBulkCurrentED寄存器（HcBulkCurrentED）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BCED[31:4]</div>
+<div class="line">BulkCurrentED</div>
+<div class="line">This is advanced to the next ED after the HC has served the</div>
+<div class="line">present one. HC continues processing the list from where it</div>
+<div class="line">left off in the last Frame. When it reaches the end of the</div>
+<div class="line">Bulk list,  HC checks the ControlListFilled of HcControl.</div>
+<div class="line">If set, it copies the content of HcBulkHeadED to HcBulkCurrentED</div>
+<div class="line">and clears the bit. If it is not set, it does nothing. HCD</div>
+<div class="line">is only allowed to modify this register when the BulkListEnable</div>
+<div class="line">of HcControl is cleared. When set, the HCD only reads the</div>
+<div class="line">instantaneous value of this register. This is initially set</div>
+<div class="line">to zero to indicate the end of the Bulk list.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BCED [3:0]</div>
+<div class="line">Because the general TD length is 16 bytes, the memory structure</div>
+<div class="line">for the TD must be aligned to a 16-byte boundary. So the lower</div>
+<div class="line">bits in the BCED, through bit 0 to bit 3 must be zero in this</div>
+<div class="line">field.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0430-hcdonehead">
+<h2><span class="section-number">12.2.3.24. </span>0x0430 HcDoneHead<a class="headerlink" href="#x0430-hcdonehead" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcDoneHead寄存器（HcDoneHead）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DH[31:4]</div>
+<div class="line">DoneHead</div>
+<div class="line">When a TD is completed, HC writes the content of HcDoneHead</div>
+<div class="line">to the NextTD field of the TD. HC then overwrites the content</div>
+<div class="line">of HcDoneHead with the address of this TD.  This is set to</div>
+<div class="line">zero whenever HC writes the content of this register to HCCA.</div>
+<div class="line">It also sets the WritebackDoneHead of HcInterruptStatus.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DH [3:0]</div>
+<div class="line">Because the general TD length is 16 bytes, the memory structure</div>
+<div class="line">for the TD must be aligned to a 16-byte boundary. So the lower</div>
+<div class="line">bits in the DH, through bit 0 to bit 3 must be zero in this</div>
+<div class="line">field.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0434-hcfminterval">
+<h2><span class="section-number">12.2.3.25. </span>0x0434 HcFmInterval<a class="headerlink" href="#x0434-hcfminterval" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00002EDF</p></th>
+<th class="head"><p>HcFmInterval寄存器（HcFmInterval）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIT</div>
+<div class="line">FrameIntervalToggle</div>
+<div class="line">HCD toggles this bit whenever it loads a new value to</div>
+<div class="line">FrameInterval.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FSMPS</div>
+<div class="line">FSLargestDataPacket</div>
+<div class="line">This field specifies a value which is loaded into the</div>
+<div class="line">Largest Data Packet Counter at the beginning of each frame.</div>
+<div class="line">The counter value represents the largest amount of data in</div>
+<div class="line">bits which can be sent or received by the HC in a single</div>
+<div class="line">transaction at any given time without causing scheduling</div>
+<div class="line">overrun. The field value is calculated by the HCD.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2EDF</p></td>
+<td><div class="line-block">
+<div class="line">FI</div>
+<div class="line">FrameInterval</div>
+<div class="line">This specifies the interval between two consecutive SOFs</div>
+<div class="line">in bit times. The nominal value is set to be 11,999.  HCD</div>
+<div class="line">should store the current value of this field before resetting</div>
+<div class="line">HC. By setting the HostControllerReset field of HcCommandStatus</div>
+<div class="line">as this will cause the HC to reset this field to its nominal</div>
+<div class="line">value. HCD may choose to restore the stored value upon the</div>
+<div class="line">completion of the Reset sequence.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0438-hcfmremaining">
+<h2><span class="section-number">12.2.3.26. </span>0x0438 HcFmRemaining<a class="headerlink" href="#x0438-hcfmremaining" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcFmRemaining寄存器（HcFmRemaining）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FRT</div>
+<div class="line">FrameRemainingToggle</div>
+<div class="line">This bit is loaded from the FrameIntervalToggle field of</div>
+<div class="line">HcFmInterval whenever FrameRemaining reaches 0. This bit is</div>
+<div class="line">used by HCD for the synchronization between FrameInterval</div>
+<div class="line">and FrameRemaining.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>13:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FR</div>
+<div class="line">FrameRemaining</div>
+<div class="line">This counter is decremented at each bit time. When it reaches</div>
+<div class="line">zero, it is reset by loading the FrameInterval value</div>
+<div class="line">specified in HcFmInterval at the next bit time boundary.</div>
+<div class="line">When entering the USBOPERATIONAL state, HC re-loads the</div>
+<div class="line">content with the FrameInterval of HcFmInterval and uses</div>
+<div class="line">the updated value from the next SOF.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x043c-hcfmnumber">
+<h2><span class="section-number">12.2.3.27. </span>0x043C HcFmNumber<a class="headerlink" href="#x043c-hcfmnumber" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcFmNumber寄存器（HcFmNumber）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FN</div>
+<div class="line">FrameNumber</div>
+<div class="line">This is incremented when HcFmRemaining is re-loaded. It will</div>
+<div class="line">be rolled over to 0h after ffffh. When entering the</div>
+<div class="line">USBOPERATIONAL state, this will be incremented automatically.</div>
+<div class="line">The content will be written to HCCA after HC has incremented</div>
+<div class="line">the FrameNumber at each frame boundary and sent a SOF but</div>
+<div class="line">before HC reads the first ED in that Frame. After writing</div>
+<div class="line">to HCCA, HC will set the StartofFrame in HcInterruptStatus.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x440-hcperiodicstart">
+<h2><span class="section-number">12.2.3.28. </span>0x440 HcPeriodicStart<a class="headerlink" href="#x440-hcperiodicstart" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcPeriodicStart寄存器（HcPeriodicStart）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PS</div>
+<div class="line">PeriodicStart</div>
+<div class="line">After a hardware reset, this field is cleared. This is then</div>
+<div class="line">set by HCD during the HC initialization. The value is</div>
+<div class="line">calculated roughly as 10% off from HcFmInterval. A typical</div>
+<div class="line">value will be 3E67h. When HcFmRemaining reaches the value</div>
+<div class="line">specified,  processing of the periodic lists will have</div>
+<div class="line">priority over Control/Bulk processing. HC will therefore</div>
+<div class="line">start processing the Interrupt list after completing the</div>
+<div class="line">current Control or Bulk transaction that is in progress.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x444-hclsthreshold">
+<h2><span class="section-number">12.2.3.29. </span>0x444 HcLSThreshold<a class="headerlink" href="#x444-hclsthreshold" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000628</p></th>
+<th class="head"><p>HcLSThreshold寄存器（HcLSThreshold）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x628</p></td>
+<td><div class="line-block">
+<div class="line">LST</div>
+<div class="line">LSThreshold</div>
+<div class="line">This field contains a value which is compared to the</div>
+<div class="line">FrameRemaining field prior to initiating a Low Speed</div>
+<div class="line">transaction. The transaction is started only if FrameRemaining</div>
+<div class="line">this field. The value is calculated by HCD with the</div>
+<div class="line">consideration of transmission and setup overhead.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x448-hcrhdescriptora">
+<h2><span class="section-number">12.2.3.30. </span>0x448 HcRhDescriptorA<a class="headerlink" href="#x448-hcrhdescriptora" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x02000001</p></th>
+<th class="head"><p>HcRhDescriptorA寄存器（HcRhDescriptorA）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">POTPGT</div>
+<div class="line">PowerOnToPowerGoodTime</div>
+<div class="line">POWER启动时间</div>
+<div class="line">This byte specifies the duration HCD has to wait before</div>
+<div class="line">accessing a powered-on port of the Root Hub. It is</div>
+<div class="line">implementation-specific. The unit of time is 2 ms. The</div>
+<div class="line">duration is calculated as POTPGT * 2 ms.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">NOCP</div>
+<div class="line">NoOverCurrentProtection</div>
+<div class="line">不支持过流保护</div>
+<div class="line">This bit describes how the overcurrent status for the Root</div>
+<div class="line">Hub ports are reported. When this bit is cleared, the</div>
+<div class="line">OverCurrentProtectionMode field specifies global or per-port</div>
+<div class="line">reporting.</div>
+<div class="line">0x0：Over-current status is reported collectively for all</div>
+<div class="line-block">
+<div class="line">downstream ports</div>
+</div>
+<div class="line">0x1：No overcurrent protection supported</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OCPM</div>
+<div class="line">OverCurrentProtectionMode</div>
+<div class="line">过流保护模式</div>
+<div class="line">This bit describes how the overcurrent status for the Root</div>
+<div class="line">Hub ports are reported. At reset, this fields should reflect</div>
+<div class="line">the same mode as PowerSwitchingMode. This field is valid only</div>
+<div class="line">if the NoOverCurrentProtection field is cleared.</div>
+<div class="line">0x0: over-current status is reported collectively for all downstream</div>
+<div class="line-block">
+<div class="line">ports</div>
+</div>
+<div class="line">0x1: over-current status is reported on a per-port basis</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DT</div>
+<div class="line">DeviceType</div>
+<div class="line">This bit specifies that the Root Hub is not a compound device.</div>
+<div class="line">The Root Hub is not permitted to be a compound device. This</div>
+<div class="line">field should always read/write 0.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">NPS</div>
+<div class="line">NoPowerSwitching</div>
+<div class="line">不支持电源开关</div>
+<div class="line">These bits are used to specify whether power switching is</div>
+<div class="line">supported or port are always powered. It is implementationspecific.</div>
+<div class="line">When this bit is cleared, the PowerSwitchingMode specifies global</div>
+<div class="line">or per-port switching.</div>
+<div class="line">0x0: Ports are power switched，电源可通过开关打开</div>
+<div class="line">0x1: Ports are always powered on when the HC is powered on</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSM</div>
+<div class="line">PowerSwitchingMode</div>
+<div class="line">电源开关模式</div>
+<div class="line">This bit is used to specify how the power switching of the Root</div>
+<div class="line">Hub ports is controlled. It is implementation-specific. This</div>
+<div class="line">field is only valid if the NoPowerSwitching field is cleared.</div>
+<div class="line">0x0: all ports are powered at the same time.</div>
+<div class="line">0x1: each port is powered individually.</div>
+<div class="line">This mode allows port power to be controlled by either the</div>
+<div class="line">global switch or perport switching. If the PortPowerControlMask</div>
+<div class="line">bit is set, the port responds only to port power commands</div>
+<div class="line">(Set/ClearPortPower). If the port mask is cleared, then the port</div>
+<div class="line">is controlled only by the global power switch (Set/ClearGlobalPower).</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">NDP</div>
+<div class="line">NumberDownstreamPorts</div>
+<div class="line">下行端口的数目</div>
+<div class="line">These bits specify the number of downstream ports supported by</div>
+<div class="line">the Root Hub. It is implementation-specific. The minimum number</div>
+<div class="line">of ports is 1. The maximum number of ports supported by OpenHCI</div>
+<div class="line">is 15.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x44c-hcrhdescriptorb">
+<h2><span class="section-number">12.2.3.31. </span>0x44C HcRhDescriptorB<a class="headerlink" href="#x44c-hcrhdescriptorb" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcRhDescriptorB寄存器（HcRhDescriptorB）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PPCM</div>
+<div class="line">PortPowerControlMask</div>
+<div class="line">端口电源控制屏蔽</div>
+<div class="line">Each bit indicates if a port is affected by a global power</div>
+<div class="line">control command when PowerSwitchingMode is set. When set,</div>
+<div class="line">the port’s power state is only affected by per-port power</div>
+<div class="line">control  (Set/ClearPortPower). When cleared, the port is</div>
+<div class="line">controlled by the global power switch (Set/ClearGlobalPower).</div>
+<div class="line">If the device is configured to global switching mode</div>
+<div class="line">(PowerSwitchingMode=0), this field is not valid.</div>
+<div class="line">bit 0: Reserved</div>
+<div class="line">bit 1: Ganged-power mask on Port #1</div>
+<div class="line">bit 2: Ganged-power mask on Port #2</div>
+<div class="line">…</div>
+<div class="line">bit15: Ganged-power mask on Port #15</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DR</div>
+<div class="line">DeviceRemovable</div>
+<div class="line">Device可移除设置</div>
+<div class="line">Each bit is dedicated to a port of the Root Hub. When cleared,</div>
+<div class="line">the attached device is removable. When set, the attached device</div>
+<div class="line">is not removable.</div>
+<div class="line">bit 0: Reserved</div>
+<div class="line">bit 1: Device attached to Port #1</div>
+<div class="line">bit 2: Device attached to Port #2</div>
+<div class="line">…</div>
+<div class="line">bit15: Device attached to Port #15</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x450-hcrhstatus">
+<h2><span class="section-number">12.2.3.32. </span>0x450 HcRhStatus<a class="headerlink" href="#x450-hcrhstatus" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>HcRhStatus寄存器（HcRhStatus）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CRWE</div>
+<div class="line">ClearRemoteWakeupEnable</div>
+<div class="line">清除远程唤醒使能</div>
+<div class="line">Writing a ‘1’ clears DeviceRemoveWakeupEnable. Writing a</div>
+<div class="line">‘0’ has no effect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OCIC</div>
+<div class="line">OverCurrentIndicatorChange</div>
+<div class="line">过流状态出现变化</div>
+<div class="line">0x0：无变化</div>
+<div class="line">0x1：电源的过流状态出现变化，写1清0</div>
+<div class="line">This bit is set by hardware when a change has occurred to</div>
+<div class="line">the OCI field of this register. The HCD clears this bit by</div>
+<div class="line">writing a ‘1’. Writing a ‘0’ has no effect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SetGlobalPower</div>
+<div class="line">全局电源使能</div>
+<div class="line">在全局电源模式下</div>
+<div class="line">0x0：无操作</div>
+<div class="line">0x1：所有端口电源闭合</div>
+<div class="line">在端口电源模式下，需要配合PortPowerControlMask使用</div>
+<div class="line">0x0：无操作</div>
+<div class="line">0x1：非屏蔽的端口电源闭合</div>
+<div class="line">In global power mode (PowerSwitchingMode=0), This bit is</div>
+<div class="line">written to ‘1’ to turn on power to all ports (clear</div>
+<div class="line">PortPowerStatus). In per-port power mode, it sets PortPowerStatus</div>
+<div class="line">only on ports whose PortPowerControlMask bit is not set. Writing</div>
+<div class="line">a ‘0’ has no effect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DRWE</div>
+<div class="line">(read) DeviceRemoteWakeupEnable</div>
+<div class="line">This bit enables a ConnectStatusChange bit as a resume event,</div>
+<div class="line">causing a USBSUSPEND to USBRESUME state transition and setting</div>
+<div class="line">the ResumeDetected interrupt.</div>
+<div class="line">0x0：ConnectStatusChange is not a remote wakeup event.</div>
+<div class="line">0x1：ConnectStatusChange is a remote wakeup event.</div>
+<div class="line">(write) SetRemoteWakeupEnable</div>
+<div class="line">Writing a ‘1’ sets DeviceRemoveWakeupEnable. Writing a ‘0’ has</div>
+<div class="line">no effect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OCI</div>
+<div class="line">OverCurrentIndicator</div>
+<div class="line">过流指示位</div>
+<div class="line">0x0：电源工作正常</div>
+<div class="line">0x1：电源出现过流的状态</div>
+<div class="line">This bit reports overcurrent conditions when the global reporting</div>
+<div class="line">is implemented. When set, an overcurrent condition exists. When</div>
+<div class="line">cleared, all power operations are normal. If per-port overcurrent</div>
+<div class="line">protection is implemented this bit is always ‘0’</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ClearGlobalPower</div>
+<div class="line">全局电源断开</div>
+<div class="line">在全局电源模式下</div>
+<div class="line">0x0：无操作</div>
+<div class="line">0x1：所有端口电源断开</div>
+<div class="line">在端口电源模式下，需要配合PortPowerControlMask使用</div>
+<div class="line">0x0：无操作</div>
+<div class="line">0x1：非屏蔽的端口电源断开</div>
+<div class="line">In global power mode (PowerSwitchingMode=0), This bit is written</div>
+<div class="line">to ‘1’ to turn off power to all ports (clear PortPowerStatus).</div>
+<div class="line">In per-port power mode, it clears PortPowerStatus only on ports</div>
+<div class="line">whose PortPowerControlMask bit is not set. Writing a ‘0’ has no</div>
+<div class="line">effect.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x454-hcrhportstatus">
+<h2><span class="section-number">12.2.3.33. </span>0x454 HcRhPortStatus<a class="headerlink" href="#x454-hcrhportstatus" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000080</p></th>
+<th class="head"><p>HcRhPortStatus寄存器（HcRhPortStatus）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PRSC</div>
+<div class="line">PortResetStatusChange</div>
+<div class="line">端口RESET状态改变</div>
+<div class="line">This bit is set at the end of the 10-ms port reset signal.</div>
+<div class="line">The HCD writes a ‘1’ to clear this bit. Writing a ‘0’ has</div>
+<div class="line">no effect.</div>
+<div class="line">0x0：port reset is not complete</div>
+<div class="line">0x1：port reset is complete</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OCIC</div>
+<div class="line">PortOverCurrentIndicatorChange</div>
+<div class="line">This bit is valid only if overcurrent conditions are reported</div>
+<div class="line">on a per-port basis. This bit is set when Root Hub changes</div>
+<div class="line">the PortOverCurrentIndicator bit. The HCD writes a ‘1’ to</div>
+<div class="line">clear this bit. Writing a ‘0’ has no effect.</div>
+<div class="line">0x0：no change in PortOverCurrentIndicator</div>
+<div class="line">0x1：PortOverCurrentIndicator has changed</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSSC</div>
+<div class="line">PortSuspendStatusChange</div>
+<div class="line">This bit is set when the full resume sequence has been</div>
+<div class="line">completed. This sequence includes the 20-s resume pulse, LS</div>
+<div class="line">EOP, and 3-ms resychronization delay. The HCD writes a ‘1’ to</div>
+<div class="line">clear this bit. Writing a ‘0’ has no effect. This bit is also</div>
+<div class="line">cleared when ResetStatusChange is set.</div>
+<div class="line">0x0：resume is not completed</div>
+<div class="line">0x1：resume completed</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PESC</div>
+<div class="line">PortEnableStatusChange</div>
+<div class="line">This bit is set when hardware events cause the PortEnableStatus</div>
+<div class="line">bit to be cleared. Changes from HCD writes do not set this bit.</div>
+<div class="line">The HCD writes a ‘1’ to clear this bit. Writing a ‘0’ has no</div>
+<div class="line">effect.</div>
+<div class="line">0x0：no change in PortEnableStatus</div>
+<div class="line">0x1：change in PortEnableStatus</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CSC</div>
+<div class="line">ConnectStatusChange</div>
+<div class="line">This bit is set whenever a connect or disconnect event occurs.</div>
+<div class="line">The HCD writes a ‘1’ to clear this bit. Writing a ‘0’ has no</div>
+<div class="line">effect. If CurrentConnectStatus is cleared when a SetPortReset,</div>
+<div class="line">SetPortEnable, or SetPortSuspend write occurs, this bit is set</div>
+<div class="line">to force the driver to re-evaluate the connection status since</div>
+<div class="line">these writes should not occur if the port is disconnected.</div>
+<div class="line">0x0：no change in CurrentConnectStatus</div>
+<div class="line">0x1：change in CurrentConnectStatus</div>
+<div class="line">Note: If the DeviceRemovable[NDP] bit is set, this bit is set</div>
+<div class="line">only after a Root Hub reset to inform the system that the</div>
+<div class="line">device is attached.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LSDA</div>
+<div class="line">(read) LowSpeedDeviceAttached</div>
+<div class="line">This bit indicates the speed of the device attached to this</div>
+<div class="line">port. When set, a Low Speed device is attached to this port.</div>
+<div class="line">When clear, a Full Speed device is attached to this port. This</div>
+<div class="line">field is valid only when the CurrentConnectStatus is set.</div>
+<div class="line">0x0：full speed device attached</div>
+<div class="line">0x1：low speed device attached</div>
+<div class="line">(write) ClearPortPower</div>
+<div class="line">The HCD clears the PortPowerStatus bit by writing a ‘1’ to this</div>
+<div class="line">bit. Writing a ‘0’ has no effect.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PPS</div>
+<div class="line">(read) PortPowerStatus</div>
+<div class="line">This bit reflects the port’s power status, regardless of the</div>
+<div class="line">type of power switching implemented. This bit is cleared if an</div>
+<div class="line">overcurrent condition is detected. HCD sets this bit by writing</div>
+<div class="line">SetPortPower or SetGlobalPower. HCD clears this bit by writing</div>
+<div class="line">ClearPortPower or ClearGlobalPower. Which power control switches</div>
+<div class="line">are enabled is determined by PowerSwitchingMode and PortPort-</div>
+<div class="line">ControlMask[NDP]. In global switching mode (PowerSwitchingMode=0),</div>
+<div class="line">only Set/ClearGlobalPower controls this bit. In per-port power</div>
+<div class="line">switching (PowerSwitchingMode=1), if the PortPowerControlMask[NDP]</div>
+<div class="line">bit for the port is set, only Set/ClearPortPower commands are</div>
+<div class="line">enabled. If the mask is not set, only Set/ClearGlobalPower</div>
+<div class="line">commands are enabled. When port power is disabled, Current-</div>
+<div class="line">ConnectStatus,PortEnableStatus, PortSuspendStatus, and Port-</div>
+<div class="line">ResetStatus should be reset.</div>
+<div class="line">0x0：port power is off</div>
+<div class="line">0x1：port power is on</div>
+<div class="line">(write) SetPortPower</div>
+<div class="line">The HCD writes a ‘1’ to set the PortPowerStatus bit. Writing a</div>
+<div class="line">‘0’ has no effect.</div>
+<div class="line">Note: This bit is always reads ‘1b’ if power switching is not</div>
+<div class="line">supported.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PRS</div>
+<div class="line">(read) PortResetStatus</div>
+<div class="line">When this bit is set by a write to SetPortReset, port reset</div>
+<div class="line">signaling is asserted. When reset is completed, this bit is</div>
+<div class="line">cleared when PortResetStatusChange is set. This bit cannot be</div>
+<div class="line">set if CurrentConnectStatus is cleared.</div>
+<div class="line">0x0：port reset signal is not active</div>
+<div class="line">0x1：port reset signal is active</div>
+<div class="line">(write) SetPortReset</div>
+<div class="line">The HCD sets the port reset signaling by writing a ‘1’ to this</div>
+<div class="line">bit. Writing a ‘0’ has no effect. If CurrentConnectStatus is</div>
+<div class="line">cleared, this write does not set PortResetStatus, but instead</div>
+<div class="line">sets ConnectStatusChange. This informs the driver that it</div>
+<div class="line">attempted to reset a disconnected port.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">POCI</div>
+<div class="line">(read) PortOverCurrentIndicator</div>
+<div class="line">This bit is only valid when the Root Hub is configured in such</div>
+<div class="line">a way that overcurrent conditions are reported on a per-port</div>
+<div class="line">basis. If per-port overcurrent reporting is not supported, this</div>
+<div class="line">bit is set to 0. If cleared, all power operations are normal for</div>
+<div class="line">this port. If set, an overcurrent condition exists on this port.</div>
+<div class="line">This bit always reflects the overcurrent input signal</div>
+<div class="line">0x0：no overcurrent condition.</div>
+<div class="line">0x1：overcurrent condition detected.</div>
+<div class="line">(write) ClearSuspendStatus</div>
+<div class="line">The HCD writes a ‘1’ to initiate a resume. Writing a ‘0’ has no</div>
+<div class="line">effect. A resume is initiated only if PortSuspendStatus is set.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PSS</div>
+<div class="line">(read) PortSuspendStatus</div>
+<div class="line">This bit indicates the port is suspended or in the resume sequence.</div>
+<div class="line">It is set by a SetSuspendState write and cleared when PortSuspend-</div>
+<div class="line">StatusChange is set at the end of the resume interval. This bit</div>
+<div class="line">cannot be set if CurrentConnectStatus is cleared. This bit is also</div>
+<div class="line">cleared when PortResetStatusChange is set at the end of the port</div>
+<div class="line">reset or when the HC is placed in the USBRESUME state. If an upstream</div>
+<div class="line">resume is in progress, it should propagate to the HC.</div>
+<div class="line">0x0：port is not suspended</div>
+<div class="line">0x1：port is suspended</div>
+<div class="line">(write) SetPortSuspend</div>
+<div class="line">The HCD sets the PortSuspendStatus bit by writing a ‘1’ to this bit.</div>
+<div class="line">Writing a ‘0’ has no effect. If CurrentConnectStatus is cleared,</div>
+<div class="line">this write does not set PortSuspendStatus; instead it sets Connect-</div>
+<div class="line">StatusChange. This informs the driver that it attempted to suspend</div>
+<div class="line">a disconnected port.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PES</div>
+<div class="line">(read) PortEnableStatus</div>
+<div class="line">This bit indicates whether the port is enabled or disabled. The</div>
+<div class="line">Root Hub may clear this bit when an overcurrent condition,</div>
+<div class="line">disconnect event, switched-off power, or operational bus error</div>
+<div class="line">such as babble is detected. This change also causes PortEnabled-</div>
+<div class="line">StatusChange to be set. HCD sets this bit by writing SetPortEnable</div>
+<div class="line">and clears it by writing ClearPortEnable.</div>
+<div class="line">This bit cannot be set when CurrentConnectStatus is cleared.</div>
+<div class="line">This bit is also set, if not already, at the completion of a</div>
+<div class="line">port reset when ResetStatusChange is set or port suspend when</div>
+<div class="line">SuspendStatusChange is set.</div>
+<div class="line">0x0：port is disabled</div>
+<div class="line">0x1：port is enabled</div>
+<div class="line">(write) SetPortEnable</div>
+<div class="line">The HCD sets PortEnableStatus by writing a ‘1’. Writing a ‘0’ has</div>
+<div class="line">no effect. If CurrentConnectStatus is cleared, this write does not</div>
+<div class="line">set PortEnableStatus, but instead sets ConnectStatusChange. This</div>
+<div class="line">informs the driver that it attempted to enable a disconnected port.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CCS</div>
+<div class="line">(read) CurrentConnectStatus</div>
+<div class="line">This bit reflects the current state of the downstream port.</div>
+<div class="line">0x0：no device connected</div>
+<div class="line">0x1：device connected</div>
+<div class="line">(write) ClearPortEnable</div>
+<div class="line">The HCD writes a ‘1’ to this bit to clear the PortEnableStatus bit.</div>
+<div class="line">Writing a ‘0’ has no effect. The CurrentConnectStatus is not</div>
+<div class="line">affected by any write.</div>
+<div class="line">Note: This bit is always read ‘1b’ when the attached device is</div>
+<div class="line">nonremovable (DeviceRemoveable[NDP]).</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x800-usb-host-ctl">
+<h2><span class="section-number">12.2.3.34. </span>0x800 USB_HOST_CTL<a class="headerlink" href="#x800-usb-host-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>USB HOST控制寄存器（USB Host Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ohci_0_cntsel_i_n</div>
+<div class="line">OHCI count select</div>
+<div class="line">0x0：Normal mode, the counters will count full time</div>
+<div class="line">0x1：Simulation mode, the counters will be much shorter than</div>
+<div class="line">real time</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_simulation_mode_i</div>
+<div class="line">Simulation Mode</div>
+<div class="line">0x0：No effect</div>
+<div class="line">0x1：this bit sets the PHY in a non-driving mode so the EHCI</div>
+<div class="line">can detect device connection. This signal is used only for</div>
+<div class="line">simulation.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">App_prt_ovrcur_i</div>
+<div class="line">Port Overcurrent Indication From Application</div>
+<div class="line">When asserted by the application, the corresponding port</div>
+<div class="line">enters Disable state. This signal controls both EHCI and</div>
+<div class="line">OHCI controller port state machines. Depending on ownership</div>
+<div class="line">of the port, the corresponding EHCI or OHCI controller</div>
+<div class="line">generates an Overcurrent Detect interrupt.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ohci_susp_lgcy_i</div>
+<div class="line">This is a static strap signal.</div>
+<div class="line">• When tied HIGH and the USB port is owned by OHCI, the</div>
+<div class="line">signal utmi_suspend_o_n reflects the status of the USB port:</div>
+<div class="line">(suspended or not suspended).</div>
+<div class="line">• When tied LOW and the USB port is owned by OHCI, then</div>
+<div class="line">- utmi_suspend_o_n asserts (0) if all the OHCI ports are</div>
+<div class="line">suspended, or if the OHCI is in global suspend state</div>
+<div class="line">(HCFS=USBSUSOPEND).</div>
+<div class="line">- utmi_suspend_o_n deasserts (1) if any of the OHCI ports</div>
+<div class="line">are not suspended and OHCI is not in global suspend.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">App_start_clk_i</div>
+<div class="line">This is an asynchronous primary input to the host core.</div>
+<div class="line">When the OHCI clocks are suspended, the system has to assert</div>
+<div class="line">this signal to start the clocks (12 and 48 MHz). This should</div>
+<div class="line">be deasserted after the clocks are started and before the</div>
+<div class="line">host is suspended again. (Host is suspended means HCFS =</div>
+<div class="line">SUSPEND or all the OHCI ports are suspended).</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_autoppd_on_overcur_en_i</div>
+<div class="line">0x0：No effect</div>
+<div class="line">0x1：This strap signal enables automatic port power disable</div>
+<div class="line">in the host controller. When this signal is active, if an</div>
+<div class="line">over-current condition is detected on a powered port and</div>
+<div class="line">PPC is 1, the PP bit in each affected port is automatically</div>
+<div class="line">transitioned by the host controller from a 1 to 0, removing</div>
+<div class="line">power from the port.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_ulpi_pp2vbus_i</div>
+<div class="line">0x0：No effect</div>
+<div class="line">0x1：This strap signal enables the function to automatically</div>
+<div class="line">set/clear the PHY’s port power setting to reflect the Host’s</div>
+<div class="line">port power setting</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_ena_incr16_i</div>
+<div class="line">AHB Burst Type INCR16 Enable</div>
+<div class="line">0x0：Do not use INCR16; use other enabled INCRX bursts or</div>
+<div class="line-block">
+<div class="line">unspecified length burst INCR</div>
+</div>
+<div class="line">0x1：Use INCR16 when appropriate</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_ena_incr8_i</div>
+<div class="line">AHB Burst Type INCR8 Enable</div>
+<div class="line">0x0：Do not use INCR8; use other enabled INCRX bursts or</div>
+<div class="line-block">
+<div class="line">unspecified length burst INCR</div>
+</div>
+<div class="line">0x1：Use INCR8 when appropriate</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_ena_incr4_i</div>
+<div class="line">AHB Burst Type INCR4 Enable</div>
+<div class="line">0x0：Do not use INCR4; use other enabled INCRX bursts or</div>
+<div class="line-block">
+<div class="line">unspecified length burst INCR</div>
+</div>
+<div class="line">0x1：Use INCR4 when appropriate</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Ss_ena_incrx_align_i</div>
+<div class="line">Burst Alignment Enable</div>
+<div class="line">0x0：Start INCRX burst only on burst x-aligned address</div>
+<div class="line">0x1：Normal AHB operation; start bursts on any double word boundary</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Utmi_word_if</div>
+<div class="line">0x0: 8bit</div>
+<div class="line">0x1: 16bit</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">ULPI bypass enable</div>
+<div class="line">0x0：ULPI enable</div>
+<div class="line">0x1：ULPI Disable，use UTMI</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x810-phy-ctl">
+<h2><span class="section-number">12.2.3.35. </span>0x810 PHY_CTL<a class="headerlink" href="#x810-phy-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>USB PHY控制寄存器（USB PHY Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BIST_PRE_EN</div>
+<div class="line">Enable BIST Preparation</div>
+<div class="line">0x0：no effect</div>
+<div class="line">0x1：txvalid = 0</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Loopbackenb</div>
+<div class="line">Loopback Test Enable</div>
+<div class="line">0x0：During data transmission, the receive logic is disabled.</div>
+<div class="line">0x1：During data transmission, the receive logic is enabled.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Idpullup</div>
+<div class="line">Analog ID Input Sample Enable</div>
+<div class="line">0x0：ID pin sampling is disabled, and the IDDIG0 output is not valid.</div>
+<div class="line">0x1：ID pin sampling is enabled, and the IDDIG0 output is valid.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Vbusvldext</div>
+<div class="line">External VBUS Valid Indicator（对于HOST无影响）</div>
+<div class="line">0x0：Vbus invalid</div>
+<div class="line">0x1：Vbus valid</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Siddq</div>
+<div class="line">IDDQ Test Enable</div>
+<div class="line">0x0：enable internal phy</div>
+<div class="line">0x1：disable internal phy</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Commononn</div>
+<div class="line">Common Block Power-Down Control</div>
+<div class="line">0x0：In Suspend or Sleep mode, the XO, Bias, and PLL blocks</div>
+<div class="line-block">
+<div class="line">remain powered.</div>
+</div>
+<div class="line">0x1：In Suspend mode, the XO, Bias, and PLL blocks are powered</div>
+<div class="line-block">
+<div class="line">down. In Sleep mode, the Bias and PLL blocks are powered</div>
+<div class="line">down.</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Vatestenb</div>
+<div class="line">Analog Test Pin Select</div>
+<div class="line">0x0：Analog test voltages cannot be viewed or applied on either ANALOGTEST or ID0.</div>
+<div class="line">0x1：Analog test voltages can be viewed or applied on ID0.</div>
+<div class="line">0x2：Analog test voltages can be viewed or applied on ANALOGTEST.</div>
+<div class="line">0x3：Reserved. Invalid setting.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x814-phy-test">
+<h2><span class="section-number">12.2.3.36. </span>0x814 PHY_TEST<a class="headerlink" href="#x814-phy-test" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>USB PHY测试寄存器（USB PHY Test）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Testburnin</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Testdataoutsel</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Testclk</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Testaddr</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RW</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Testdatain</div>
+<div class="line">Test Data Write Bus</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x818-phy-tune">
+<h2><span class="section-number">12.2.3.37. </span>0x818 PHY_TUNE<a class="headerlink" href="#x818-phy-tune" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x023438E4</p></th>
+<th class="head"><p>USB PHY调节寄存器（USB PHY Tune）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>25:23</p></td>
+<td><p>R/W</p></td>
+<td><p>0x4</p></td>
+<td><div class="line-block">
+<div class="line">Compdistune</div>
+<div class="line">Disconnect Threshold Adjustment</div>
+<div class="line">This bus adjusts the voltage level for the threshold used</div>
+<div class="line">to detect a disconnect event at the host.</div>
+<div class="line">0x7：+ 4.5%</div>
+<div class="line">0x6：+ 3%</div>
+<div class="line">0x5：+ 1.5%</div>
+<div class="line">0x4：Design default</div>
+<div class="line">0x3：–1.5%</div>
+<div class="line">0x2：–3%</div>
+<div class="line">0x1：–4.5%</div>
+<div class="line">0x0：–6%</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">Sqrxtune</div>
+<div class="line">Squelch Threshold Adjustment</div>
+<div class="line">This bus adjusts the voltage level for the threshold used</div>
+<div class="line">to detect valid high-speed data.</div>
+<div class="line">0x7：–20%</div>
+<div class="line">0x6：–15%</div>
+<div class="line">0x5：–10%</div>
+<div class="line">0x4：–5%</div>
+<div class="line">0x3：Design default</div>
+<div class="line">0x2：+ 5%</div>
+<div class="line">0x1：+ 10%</div>
+<div class="line">0x0: + 15%</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Txpreemppulsetune</div>
+<div class="line">This signal controls the duration for which the HS pre-emphasis</div>
+<div class="line">current is sourced onto DP0 or DM0. The HS Transmitter pre-</div>
+<div class="line">emphasis duration is defined in terms of unit amounts.</div>
+<div class="line">One unit of pre-emphasis duration is approximately 580 ps and</div>
+<div class="line">is defined as 1X pre-emphasis duration. This signal is valid</div>
+<div class="line">only if either TXPREEMPAMPTUNE0[1] or TXPREEMPAMPTUNE0[0] is</div>
+<div class="line">set to 1’b1.</div>
+<div class="line">0 (design default)：2X, long pre-emphasis current duration</div>
+<div class="line">1：1X, short pre-emphasis current duration</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x4</p></td>
+<td><div class="line-block">
+<div class="line">Otgtune</div>
+<div class="line">VBUS Valid Threshold Adjustment</div>
+<div class="line">This bus adjusts the voltage level for the VBUS Valid threshold.</div>
+<div class="line">0x7：+ 9%</div>
+<div class="line">0x6：+ 6%</div>
+<div class="line">0x5：+ 3%</div>
+<div class="line">0x4：Design default</div>
+<div class="line">0x3：–3%</div>
+<div class="line">0x2：–6%</div>
+<div class="line">0x1：–9%</div>
+<div class="line">0x0：–12%</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">Txfslstune</div>
+<div class="line">FS/LS Source Impedance Adjustment</div>
+<div class="line">This bus adjusts the low- and full-speed single-ended source</div>
+<div class="line">impedance while driving high. The following adjustment values</div>
+<div class="line">are based on nominal process, voltage, and temperature.</div>
+<div class="line">0xf：–5%</div>
+<div class="line">0x7：–2.5%</div>
+<div class="line">0x3：Design default</div>
+<div class="line">0x1：+ 2.5%</div>
+<div class="line">0x0：+ 5%</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x8</p></td>
+<td><div class="line-block">
+<div class="line">Txvreftune</div>
+<div class="line">This bus adjusts the high-speed DC level voltage.</div>
+<div class="line">0xf：+ 24%</div>
+<div class="line">0xe：+ 22%</div>
+<div class="line">0xd：+ 20%</div>
+<div class="line">0xc：+ 18%</div>
+<div class="line">0xb：+ 16%</div>
+<div class="line">0xa：+ 14%</div>
+<div class="line">0x9：+ 12%</div>
+<div class="line">0x8：+ 10%</div>
+<div class="line">0x7：+ 8%</div>
+<div class="line">0x6：+ 6%</div>
+<div class="line">0x5：+ 4%</div>
+<div class="line">0x4：+ 2%</div>
+<div class="line">0x3：Design default</div>
+<div class="line">0x2：–2%</div>
+<div class="line">0x1：–4%</div>
+<div class="line">0x0：–6%</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">Txhsxvtune</div>
+<div class="line">Transmitter High-Speed Crossover Adjustment</div>
+<div class="line">This bus adjusts the voltage at which the DP0 and DM0 signals</div>
+<div class="line">cross while transmitting in HS mode.</div>
+<div class="line">0x0：Reserved</div>
+<div class="line">0x1：–15 mV</div>
+<div class="line">0x2：+ 15 mV</div>
+<div class="line">0x3：Default setting</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">Txrisetune</div>
+<div class="line">HS Transmitter Rise/Fall Time Adjustment</div>
+<div class="line">This bus adjusts the rise/fall times of the high-speed waveform.</div>
+<div class="line">0x0：+ 10%</div>
+<div class="line">0x1：Design default</div>
+<div class="line">0x2：–20%</div>
+<div class="line">0x3：–40%</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">Txrestune</div>
+<div class="line">USB Source Impedance Adjustment</div>
+<div class="line">In some applications, there can be significant series resistance</div>
+<div class="line">on the D+ and D– paths between the transceiver and cable. This</div>
+<div class="line">bus adjusts the driver source impedance to compensate for added</div>
+<div class="line">series resistance on the USB.</div>
+<div class="line">Note: Any setting other than the default can result in source</div>
+<div class="line">impedance variation across process, voltage, and temperature</div>
+<div class="line">conditions that does not meet USB 2.0 specification limits.</div>
+<div class="line">0x0：Source impedance is increased by approximately 1.5 Ω.</div>
+<div class="line">0x1：Design default</div>
+<div class="line">0x2：Source impedance is decreased by approximately 2 Ω.</div>
+<div class="line">0x3：Source impedance is decreased by approximately 4 Ω.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Txpreempamptune</div>
+<div class="line">HS Transmitter Pre-Emphasis Current Control</div>
+<div class="line">This signal controls the amount of current sourced to DP0 and DM0</div>
+<div class="line">after a J-to-K or K-to-J transition. The HS Transmitter pre-</div>
+<div class="line">emphasis current is defined in terms of unit amounts.</div>
+<div class="line">One unit amount is approximately 600 μA and is defined as 1X</div>
+<div class="line">pre-emphasis current.</div>
+<div class="line">0x0 (design default): HS Transmitter pre-emphasis is disabled.</div>
+<div class="line">0x1: HS Transmitter pre-emphasis circuit sources 1X pre-emphasis current.</div>
+<div class="line">0x2: HS Transmitter pre-emphasis circuit sources 2X pre-emphasis current.</div>
+<div class="line">0x3: HS Transmitter pre-emphasis circuit sources 3X pre-emphasis current.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x824-phy-sts">
+<h2><span class="section-number">12.2.3.38. </span>0x824 PHY_STS<a class="headerlink" href="#x824-phy-sts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000008</p></th>
+<th class="head"><p>USB PHY状态寄存器（USB PHY Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x8</p></td>
+<td><div class="line-block">
+<div class="line">Testdataout</div>
+<div class="line">Test Data Read Bus</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../mac/index.html" class="btn btn-neutral float-right" title="12.3. GMAC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="12.2.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

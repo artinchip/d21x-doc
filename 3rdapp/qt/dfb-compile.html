@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1.6. Directfb Cross Compile &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="1.7. QT + Directfb + GE" href="dfb-ge.html" />
+    <link rel="prev" title="1.5. QT 应用开发" href="qt-develop.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">三方应用</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. QT 使用</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="qt-compile.html">1.1. QT Cross Compile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-luban.html">1.2. QT Luban</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-accel.html">1.3. QT 性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-ide.html">1.4. QT Windows IDE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-develop.html">1.5. QT 应用开发</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.6. Directfb Cross Compile</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.6.1. 环境变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pkg-config">1.6.2. 编译pkg config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zlib">1.6.3. 编译zlib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#libpng">1.6.4. 编译libpng</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#freetype">1.6.5. 编译freetype</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#directcb">1.6.6. 编译directcb</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dfb-ge.html">1.7. QT + Directfb + GE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lvgl/index.html">2. LVGL移植</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">三方应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">1. </span>QT 使用</a> &raquo;</li>
+        
+      <li><span class="section-number">1.6. </span>Directfb Cross Compile</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="directfb-cross-compile">
+<h1><span class="section-number">1.6. </span>Directfb Cross Compile<a class="headerlink" href="#directfb-cross-compile" title="永久链接至标题">¶</a></h1>
+<p>Directfb的编译要依赖于libz，libpng，freetype 等，pkgconfig虽然不是强依赖，但其提供的强大的包管理能力，
+会让后续的编译容易很多，因此强烈建议编译。</p>
+<div class="section" id="id1">
+<h2><span class="section-number">1.6.1. </span>环境变量<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Directfb及其相关的依赖的编译采用Makefile的方式，因此环境变量的设置采用通用做法</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PRFIX</span><span class="o">=</span>/xxx/QT/install
+<span class="nb">export</span> <span class="nv">CROSS_COMPILE</span><span class="o">=</span>riscv64-unknown-linux-gnu
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>/xxx/toolchain/d211/bin/:<span class="nv">$PATH</span>
+<span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PRFIX</span><span class="si">}</span><span class="s2">/lib/pkgconfig&quot;</span>
+
+<span class="nb">export</span> <span class="nv">ARCH</span><span class="o">=</span>riscv
+<span class="nb">export</span> <span class="nv">AS</span><span class="o">=</span>riscv64-unknown-linux-gnu-as
+<span class="nb">export</span> <span class="nv">LD</span><span class="o">=</span>riscv64-unknown-linux-gnu-ld
+<span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span>riscv64-unknown-linux-gnu-gcc
+<span class="nb">export</span> <span class="nv">GCC</span><span class="o">=</span>riscv64-unknown-linux-gnu-gcc
+<span class="nb">export</span> <span class="nv">CPP</span><span class="o">=</span>riscv64-unknown-linux-gnu-cpp
+<span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>riscv64-unknown-linux-gnu-g++
+<span class="nb">export</span> <span class="nv">RANLIB</span><span class="o">=</span>riscv64-unknown-linux-gnu-ranlib
+<span class="nb">export</span> <span class="nv">NM</span><span class="o">=</span>riscv64-unknown-linux-gnu-nm
+<span class="nb">export</span> <span class="nv">STRIP</span><span class="o">=</span>riscv64-unknown-linux-gnu-strip
+<span class="nb">export</span> <span class="nv">OBJCOPY</span><span class="o">=</span>riscv64-unknown-linux-gnu-objcopy
+<span class="nb">export</span> <span class="nv">OBJDUMP</span><span class="o">=</span>riscv64-unknown-linux-gnu-objdump
+
+<span class="nb">export</span> <span class="nv">CPPFLAGS</span><span class="o">=</span><span class="s2">&quot;-I</span><span class="si">${</span><span class="nv">PRFIX</span><span class="si">}</span><span class="s2">/include&quot;</span>
+<span class="nb">export</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I</span><span class="si">${</span><span class="nv">PRFIX</span><span class="si">}</span><span class="s2">/include&quot;</span>
+<span class="nb">export</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L</span><span class="si">${</span><span class="nv">PRFIX</span><span class="si">}</span><span class="s2">/lib&quot;</span>
+<span class="nb">export</span> <span class="nv">LIBPNG_LIBS</span><span class="o">=</span>-lpng16
+</pre></div>
+</div>
+</div>
+<div class="section" id="pkg-config">
+<h2><span class="section-number">1.6.2. </span>编译pkg config<a class="headerlink" href="#pkg-config" title="永久链接至标题">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./configure --host<span class="o">=</span>riscv64-unknown-linux-gnu  --prefix<span class="o">=</span><span class="nv">$PRFIX</span>
+make
+make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="zlib">
+<h2><span class="section-number">1.6.3. </span>编译zlib<a class="headerlink" href="#zlib" title="永久链接至标题">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> zlib-1.2.11
+./configure --prefix<span class="o">=</span><span class="nv">$PRFIX</span>
+make
+make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="libpng">
+<h2><span class="section-number">1.6.4. </span>编译libpng<a class="headerlink" href="#libpng" title="永久链接至标题">¶</a></h2>
+<p>本次使用的libpng版本是1.6，而directfb自己的代码的比较老，因此需要通过上面的LIBPNG_LIBS=-lpng16 指定一下png的版本</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> libpng-1.6.37
+./configure --target<span class="o">=</span>riscv64-unknown-linux-gnu --host<span class="o">=</span>riscv64-unknown-linux-gnu  --prefix<span class="o">=</span><span class="nv">$PRFIX</span>
+make
+make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="freetype">
+<h2><span class="section-number">1.6.5. </span>编译freetype<a class="headerlink" href="#freetype" title="永久链接至标题">¶</a></h2>
+<p>freetype是一个字体库引擎，需要libz进行自体库的解码，需要libpng进行自体的渲染，但默认支持的是png1.2版本，因此需要LIBPNG_LIBS=-lpng16 指定使用1.6版本</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> freetype-2.10.4
+<span class="nb">export</span> <span class="nv">LIBPNG_LIBS</span><span class="o">=</span>-lpng16
+./configure --target<span class="o">=</span>riscv64-unknown-linux-gnu --host<span class="o">=</span>riscv64-linux-gnu  --prefix<span class="o">=</span><span class="nv">$PRFIX</span>
+make
+make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="directcb">
+<h2><span class="section-number">1.6.6. </span>编译directcb<a class="headerlink" href="#directcb" title="永久链接至标题">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd DirectFB-1.7.7
+export LIBS=-lz
+./configure  --host=riscv64-unknown-linux-gnu  --prefix=$PRFIX --disable-gtk-doc \
+--disable-gtk-doc-html --disable-docs --disable-documentation \
+--with-xmlto=no --with-fop=no --disable-dependency-tracking --enable-ipv6 \
+--disable-nls --enable-static --enable-shared --enable-zlib --enable-freetype \
+--enable-fbdev --disable-sdl --disable-vnc --disable-osx --disable-video4linux \
+--disable-video4linux2 --without-tools --disable-x11 --disable-multi \
+--disable-multi-kernel --enable-debug-support --disable-divine --disable-sawman \
+--with-gfxdrivers=none --with-inputdrivers=none --disable-gif --disable-tiff \
+--disable-png --disable-jpeg --disable-svg --disable-imlib2 --with-dither-rgb16=none
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dfb-ge.html" class="btn btn-neutral float-right" title="1.7. QT + Directfb + GE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="qt-develop.html" class="btn btn-neutral float-left" title="1.5. QT 应用开发" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

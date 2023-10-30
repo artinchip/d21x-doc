@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.9.3. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.10. GPIO" href="../gpio/index.html" />
+    <link rel="prev" title="12.9.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.9. Parallel Bus (PBUS)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.9.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.9.2. 功能描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.9.3. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-pbus-cfg0">12.9.3.1. 0x000 PBUS_CFG0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-pbus-cfg1">12.9.3.2. 0x004 PBUS_CFG1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-pbus-cfg2">12.9.3.3. 0x008 PBUS_CFG2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-version">12.9.3.4. 0xFFC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.9. </span>PBUS</a> &raquo;</li>
+        
+      <li><span class="section-number">12.9.3. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.9.3. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-pbus-cfg0">
+<h2><span class="section-number">12.9.3.1. </span>0x000 PBUS_CFG0<a class="headerlink" href="#x000-pbus-cfg0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>PBUS配置0（PBUS_Configuration_0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">NOE_POL（外设输出使能极性控制）</div>
+<div class="line">此字段用于控制外设输出使能NOE的输出极性。</div>
+<div class="line">0: NOE低电平有效；</div>
+<div class="line">1: NOE高电平有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">NWE_POL（读写指示信号极性控制）</div>
+<div class="line">此字段用于控制读写指示NWE的输出极性。</div>
+<div class="line">0: NWE低电平为写，高电平为读；</div>
+<div class="line">1: NWE高电平为写，低电平为读。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">NADV_POL（地址有效信号极性控制）</div>
+<div class="line">此字段用于控制地址有效NADV的输出极性。</div>
+<div class="line">0: NADV低电平有效；</div>
+<div class="line">1: NADV高电平有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">NCS_POL（外设片选信号极性控制）</div>
+<div class="line">此字段用于控制外设片选NCS的输出极性。</div>
+<div class="line">0: NCS低电平有效；</div>
+<div class="line">1: NCS高电平有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_POL（总线时钟极性控制）</div>
+<div class="line">此字段用于控制PBUS CLK的输出极性。</div>
+<div class="line">0: 控制信号与地址/数据总线在下降沿发生跳变；</div>
+<div class="line">1: 控制信号与地址/数据总线在上升沿发生跳变。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CLK_OE（总线时钟输出使能）</div>
+<div class="line">当总线工作在同步模式（Sync）时，需要通过此字段使能总线时钟</div>
+<div class="line">信号输出。</div>
+<div class="line">0：禁止时钟信号输出，被访问外设不需要时钟信号，工作在异步模式；</div>
+<div class="line">1：使能时钟信号输出，被访问外设需要时钟信号，工作在同步模式。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CLK_DIV（总线时钟分频）</div>
+<div class="line">总线时钟（PBUS CLK）从模块AHB总线的HCLK经过分频产生，此</div>
+<div class="line">字段控制总线时钟的分频系数。</div>
+<div class="line">0: 未定义；</div>
+<div class="line">1: HCLK/2；</div>
+<div class="line">2: HCLK/4；</div>
+<div class="line">3: HCLK/8。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-pbus-cfg1">
+<h2><span class="section-number">12.9.3.2. </span>0x004 PBUS_CFG1<a class="headerlink" href="#x004-pbus-cfg1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x26310802</p></th>
+<th class="head"><p>PBUS配置1（PBUS_Configuration_1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">TH_WD（写数据输出保持时间）</div>
+<div class="line">此字段规定了写数据输出（WDAT）每次有效的保持时间，单位为</div>
+<div class="line">PBUS CLK的周期数。此字段有效值为0~15，分别表示THwd参数</div>
+<div class="line">为0~15个PBUS CLK周期。</div>
+<div class="line"><strong>注意：此字段配置可以设为0，但使用上时序的要求不允许设为0</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x6</p></td>
+<td><div class="line-block">
+<div class="line">TD_WD（写数据输出延迟时间）</div>
+<div class="line">此字段规定了写数据输出（WDAT）相对于NCS有效时刻的延迟时</div>
+<div class="line">间，单位为PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示TDwd参数为0~15个PBUS CLK周期。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">TH_AD（地址输出保持时间）</div>
+<div class="line">此字段规定了地址输出（ADDR）每次有效的保持时间，单位为</div>
+<div class="line">PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示THad参数为0~15个PBUS CLK周期。</div>
+<div class="line"><strong>注意：此字段配置可以设为0，但使用上时序的要求不允许设为0</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TD_AD（地址输出延迟时间）</div>
+<div class="line">此字段规定了地址输出（ADDR）相对于NCS有效时刻的延迟时</div>
+<div class="line">间，单位为PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示TDad参数为0~15个PBUS CLK周期。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x8</p></td>
+<td><div class="line-block">
+<div class="line">TH_CS（外设片选信号的有效保持时间）</div>
+<div class="line">此字段规定了外设片选信号（NCS）每次有效的保持时间，单位为</div>
+<div class="line">PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~31，分别表示TDcs参数为0~31个PBUS CLK周期。</div>
+<div class="line"><strong>注意：此字段配置可以设为0，但使用上时序的要求不允许设为0</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>4:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">TD_CS（外设片选信号的有效最小间隔）</div>
+<div class="line">此字段规定了外设片选信号（NCS）连续两次有效的最小间隔，</div>
+<div class="line">单位为PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~31，分别表示TDcs参数为0~31个PBUS CLK周期。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-pbus-cfg2">
+<h2><span class="section-number">12.9.3.3. </span>0x008 PBUS_CFG2<a class="headerlink" href="#x008-pbus-cfg2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00256121</p></th>
+<th class="head"><p>PBUS配置2（PBUS_Configuration_2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">TH_OE（外设输出使能保持时间）</div>
+<div class="line">此字段规定了外设输出使能（NOE）每次有效的保持时间，单位为</div>
+<div class="line">PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示THoe参数为0~15个PBUS CLK周期。</div>
+<div class="line"><strong>注意：此字段配置可以设为0，但使用上时序的要求不允许设为0</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x5</p></td>
+<td><div class="line-block">
+<div class="line">TD_OE（外设输出使能延迟时间）</div>
+<div class="line">此字段规定了外设输出使能（NOE）相对于NCS有效时刻的延迟时</div>
+<div class="line">间，单位为PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示TDoe参数为0~15个PBUS CLK周期。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x6</p></td>
+<td><div class="line-block">
+<div class="line">TH_WE（读写控制信号保持时间）</div>
+<div class="line">此字段规定了读写控制信号（NWE）每次有效的保持时间，单位为</div>
+<div class="line">PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示THwe参数为0~15个PBUS CLK周期。</div>
+<div class="line"><strong>注意：此字段配置可以设为0，但使用上时序的要求不允许设为0</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TD_WE（读写控制信号延迟时间）</div>
+<div class="line">此字段规定了地址有效信号（NWE）相对于NCS有效时刻的延迟时</div>
+<div class="line">间，单位为PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示TDwe参数为0~15个PBUS CLK周期。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">TH_ADV（地址有效信号保持时间）</div>
+<div class="line">此字段规定了地址有效信号（NCS）每次有效的保持时间，单位为</div>
+<div class="line">PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示THadv参数为0~15个PBUS CLK周期。</div>
+<div class="line"><strong>注意：此字段配置可以设为0，但使用上时序的要求不允许设为0</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TD_ADV（地址有效信号延迟时间）</div>
+<div class="line">此字段规定了地址有效信号（NADV）相对于NCS有效时刻的延迟</div>
+<div class="line">时间，单位为PBUS CLK的周期数。</div>
+<div class="line">此字段有效值为0~15，分别表示TDadv参数为0~15个PBUS CLK周期。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-version">
+<h2><span class="section-number">12.9.3.4. </span>0xFFC VERSION<a class="headerlink" href="#xffc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>PBUS版本号（VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version（模块版本号）</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../gpio/index.html" class="btn btn-neutral float-right" title="12.10. GPIO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="12.9.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

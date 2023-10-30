@@ -1,0 +1,1147 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.10.5. 源码说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.10.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.10.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">7.4. GPIO 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.5. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../psadc/index.html">7.6. PSADC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.7. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.8. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.9. QSPI 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.10. UART 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.10.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.10.2. 使用指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.10.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.10.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.10.5. 源码说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.10.5.1. 信息配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#soc">7.10.5.1.1. SOC 配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">7.10.5.1.2. 开发板配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#pinmux">7.10.5.1.3. Pinmux</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">7.10.5.1.4. 设备配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">7.10.5.2. 源码说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#hal">7.10.5.2.1. HAL 层</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id9">7.10.5.2.2. 驱动层</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id13">7.10.5.2.3. 应用层</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id14">7.10.5.2.4. 使用示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.10.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.11. MAC 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.10. </span>UART 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.10.5. </span>源码说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.10.5. </span>源码说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.10.5.1. </span>信息配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>SDK 中 UART 的配置信息包括</p>
+<ul class="simple">
+<li><p>SOC 配置： Kconfig.chip</p></li>
+<li><p>开发板配置：Kconfig.board</p></li>
+<li><p>Pimux配置：pinmux.c</p></li>
+<li><p>设备配置：Kconfig.dev</p></li>
+</ul>
+<div class="section" id="soc">
+<h3><span class="section-number">7.10.5.1.1. </span>SOC 配置<a class="headerlink" href="#soc" title="永久链接至标题">¶</a></h3>
+<p>SOC 的 UART 模块的基础信息配置在 bsp/artinchip/sys/soc name/Kconfig.chip 中设置</p>
+<ul class="simple">
+<li><p>驱动版本信息</p></li>
+<li><p>UART 数目信息</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="n">AIC_UART_DRV</span>
+<span class="nb">bool</span>
+<span class="n">default</span> <span class="n">n</span>
+
+<span class="n">config</span> <span class="n">AIC_UART_DRV_V10</span>
+<span class="nb">bool</span>
+<span class="n">default</span> <span class="n">y</span> <span class="k">if</span> <span class="n">AIC_UART_DRV</span>
+
+<span class="n">config</span> <span class="n">AIC_UART_DRV_VER</span>
+<span class="n">string</span>
+<span class="n">default</span> <span class="s2">&quot;10&quot;</span> <span class="k">if</span> <span class="n">AIC_UART_DRV_V10</span>
+
+<span class="n">config</span> <span class="n">AIC_UART_DEV_NUM</span>
+<span class="nb">int</span>
+<span class="n">default</span> <span class="mi">8</span> <span class="k">if</span> <span class="n">AIC_UART_DRV</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">7.10.5.1.2. </span>开发板配置<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>在 target/soc name/board name/Kconfig.board 中完成某一开发板中 UART 的相关信息设置， 一般会配置需要的 UART 端口</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="n">AIC_USING_UART0</span>
+<span class="nb">bool</span> <span class="s2">&quot;Using uart0&quot;</span>
+<span class="n">default</span> <span class="n">n</span>
+<span class="n">select</span> <span class="n">AIC_UART_DRV</span>
+
+<span class="n">config</span> <span class="n">AIC_USING_UART1</span>
+<span class="nb">bool</span> <span class="s2">&quot;Using uart1&quot;</span>
+<span class="n">default</span> <span class="n">n</span>
+<span class="n">select</span> <span class="n">AIC_UART_DRV</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pinmux">
+<h3><span class="section-number">7.10.5.1.3. </span>Pinmux<a class="headerlink" href="#pinmux" title="永久链接至标题">¶</a></h3>
+<p>在 target/soc name/board name/pinmux.c 中配置 UART 端口的 pinmux</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">aic_pinmux</span> <span class="n">aic_pinmux_config</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="o">...</span>
+<span class="c1">#ifdef AIC_USING_UART0</span>
+    <span class="o">/*</span> <span class="n">uart0</span> <span class="o">*/</span>
+    <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;PA.0&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;PA.1&quot;</span><span class="p">},</span>
+<span class="c1">#endif</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">7.10.5.1.4. </span>设备配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在 bsp/artinchip/drv/uart/Kconfig.dev 中设置设备的工作参数</p>
+<ul class="simple">
+<li><p>clock</p></li>
+<li><p>baudrate</p></li>
+<li><p>data bites</p></li>
+<li><p>stop bits</p></li>
+<li><p>parity</p></li>
+<li><p>function</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="n">AIC_DEV_UART0_BAUDRATE</span>
+<span class="nb">int</span> <span class="s2">&quot;uart0 baudrate&quot;</span>
+<span class="n">default</span> <span class="mi">115200</span>
+
+<span class="n">config</span> <span class="n">AIC_DEV_UART0_DATABITS</span>
+<span class="nb">int</span> <span class="s2">&quot;uart0 data bits&quot;</span>
+<span class="nb">range</span> <span class="mi">0</span> <span class="mi">15</span>
+<span class="n">default</span> <span class="mi">8</span>
+
+<span class="n">config</span> <span class="n">AIC_DEV_UART0_STOPBITS</span>
+<span class="nb">int</span> <span class="s2">&quot;uart0 stop bits&quot;</span>
+<span class="nb">range</span> <span class="mi">0</span> <span class="mi">3</span>
+<span class="n">default</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">7.10.5.2. </span>源码说明<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>UART 的功能通过三层包装实现：
+- HAL 层： bsp/artinchip/hal/uart/aic_hal_uart.c
+- 驱动层： bsp/artinchip/drv/uart/aic_drv_uart.c
+- 应用层： kernel/rt-thread/components/drivers/serial/serial.c</p>
+<div class="section" id="hal">
+<h3><span class="section-number">7.10.5.2.1. </span>HAL 层<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h3>
+<p>HAL 层主要完成对寄存的操作，对基础功能块的封装</p>
+<div class="section" id="id6">
+<h4><span class="section-number">7.10.5.2.1.1. </span>寄存器<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p>代码中通过一个数据结构来完整的保存寄存器的数据，对数据结构变量的操作将直接操作到对寄存器</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="k">union</span>
+    <span class="p">{</span>
+        <span class="n">__IM</span> <span class="kt">uint32_t</span> <span class="n">RBR</span><span class="p">;</span>              <span class="cm">/* Offset: 0x000 (R/ )  Receive buffer register */</span>
+        <span class="n">__OM</span> <span class="kt">uint32_t</span> <span class="n">THR</span><span class="p">;</span>              <span class="cm">/* Offset: 0x000 ( /W)  Transmission hold register */</span>
+        <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">DLL</span><span class="p">;</span>             <span class="cm">/* Offset: 0x000 (R/W)  Clock frequency division low section register */</span>
+    <span class="p">};</span>
+    <span class="k">union</span>
+    <span class="p">{</span>
+        <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">DLH</span><span class="p">;</span>             <span class="cm">/* Offset: 0x004 (R/W)  Clock frequency division high section register */</span>
+        <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">IER</span><span class="p">;</span>             <span class="cm">/* Offset: 0x004 (R/W)  Interrupt enable register */</span>
+    <span class="p">};</span>
+    <span class="k">union</span>
+    <span class="p">{</span>
+        <span class="n">__IM</span> <span class="kt">uint32_t</span> <span class="n">IIR</span><span class="p">;</span>              <span class="cm">/* Offset: 0x008 (R/ )  Interrupt indicia register */</span>
+        <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">FCR</span><span class="p">;</span>             <span class="cm">/* Offset: 0x008 (W)    FIFO control register */</span>
+    <span class="p">};</span>
+    <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">LCR</span><span class="p">;</span>                 <span class="cm">/* Offset: 0x00C (R/W)  Transmission control register */</span>
+    <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">MCR</span><span class="p">;</span>                 <span class="cm">/* Offset: 0x010 (R/W)  Modem Control register */</span>
+    <span class="n">__IM</span> <span class="kt">uint32_t</span> <span class="n">LSR</span><span class="p">;</span>                  <span class="cm">/* Offset: 0x014 (R/ )  Transmission state register */</span>
+    <span class="n">__IM</span> <span class="kt">uint32_t</span> <span class="n">MSR</span><span class="p">;</span>                  <span class="cm">/* Offset: 0x018 (R/ )  Modem state register */</span>
+    <span class="kt">uint32_t</span> <span class="n">RESERVED1</span><span class="p">[</span><span class="mi">24</span><span class="p">];</span>             <span class="cm">/**/</span>
+    <span class="n">__IM</span> <span class="kt">uint32_t</span> <span class="n">USR</span><span class="p">;</span>                  <span class="cm">/* Offset: 0x07c (R/ )  UART state register */</span>
+<span class="p">}</span> <span class="n">aic_usart_reg_t</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h4><span class="section-number">7.10.5.2.1.2. </span>扩展寄存器<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
+<p>扩展寄存器是 ArtInChip 的特殊寄存器，从 0XB8 地址开始，采用和寄存一样的使用方式</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span>
+<span class="p">{</span>
+    <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">RS485DE</span><span class="p">;</span>             <span class="cm">/* Offset: 0x0B8 (R/W ) RS485 DE Time register*/</span>
+    <span class="kt">uint32_t</span> <span class="n">RESERVED0</span><span class="p">;</span>
+    <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">RS485CTL</span><span class="p">;</span>            <span class="cm">/* Offset: 0x0C0 (R/W ) RS485 Control and Status register*/</span>
+    <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">RS485AM</span><span class="p">;</span>            <span class="cm">/* Offset: 0x0C4 (R/W ) RS485 Address Match register*/</span>
+    <span class="n">__IOM</span> <span class="kt">uint32_t</span> <span class="n">RS485BIC</span><span class="p">;</span>            <span class="cm">/* Offset: 0x0C8 (R/W ) RS485 Bus Idle Check register*/</span>
+<span class="p">}</span> <span class="n">aic_usart_exreg_t</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4><span class="section-number">7.10.5.2.1.3. </span>接口设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h4>
+<div class="section" id="hal-usart-initialize">
+<h5><span class="section-number">7.10.5.2.1.3.1. </span>hal_usart_initialize<a class="headerlink" href="#hal-usart-initialize" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int hal_usart_initialize(int32_t idx, usart_event_cb_t cb_event, void *handler)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化 uart 端口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">index - uart 端口号</div>
+<div class="line">cb_event - event call back</div>
+<div class="line">handler - 生成的工作句柄</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-uninitialize">
+<h5><span class="section-number">7.10.5.2.1.3.2. </span>hal_usart_uninitialize<a class="headerlink" href="#hal-usart-uninitialize" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_usart_uninitialize(void *handler)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>关闭 uart 端口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handler - uart 句柄</div>
+<div class="line">cb_event - event call back</div>
+<div class="line">handler - 生产的工作句柄</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-config">
+<h5><span class="section-number">7.10.5.2.1.3.3. </span>hal_usart_config<a class="headerlink" href="#hal-usart-config" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_usart_config(usart_handle_t handle, ……)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>配置 uart 的工作参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handle - uart 句柄</div>
+<div class="line">baud   - 波特率</div>
+<div class="line">mode   -  工作模式，同步还是异步</div>
+<div class="line">parity -  极性</div>
+<div class="line">stopbits - 停止位</div>
+<div class="line">bits     - 数据位</div>
+<div class="line">func     - 功能，RS232，RF485等</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-send">
+<h5><span class="section-number">7.10.5.2.1.3.4. </span>hal_usart_send<a class="headerlink" href="#hal-usart-send" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int32_t al_usart_send(usart_handle_t handle, const void *data, uint32_t num)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>发送数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handle - uart 句柄</div>
+<div class="line">data   - 待发送数据</div>
+<div class="line">num   -  数据长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-receive">
+<h5><span class="section-number">7.10.5.2.1.3.5. </span>hal_usart_receive<a class="headerlink" href="#hal-usart-receive" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int32_t hal_usart_receive(usart_handle_t handle, void *data, uint32_t num)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>接收数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handle - uart 句柄</div>
+<div class="line">data   - 接收数据buffer</div>
+<div class="line">num   -  要接收的数据长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-receive-query">
+<h5><span class="section-number">7.10.5.2.1.3.6. </span>hal_usart_receive_query<a class="headerlink" href="#hal-usart-receive-query" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int32_t hal_usart_receive_query(usart_handle_t handle, void *data, uint32_t num)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>查询要接收的数据的长度</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handle - uart 句柄</div>
+<div class="line">data   - 接收数据buffer</div>
+<div class="line">num   -  buffer的大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>长度</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-get-status">
+<h5><span class="section-number">7.10.5.2.1.3.7. </span>hal_usart_get_status<a class="headerlink" href="#hal-usart-get-status" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>usart_status_t hal_usart_get_status(usart_handle_t handle)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取 uart 的状态</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>handle - uart 句柄</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>状态值</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-usart-flush">
+<h5><span class="section-number">7.10.5.2.1.3.8. </span>hal_usart_flush<a class="headerlink" href="#hal-usart-flush" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int32_t hal_usart_flush(usart_handle_t handle, usart_flush_type_e type)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>flush 发送或接收的数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handle - uart 句柄</div>
+<div class="line">type   - 发送或者接收</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>int32_t hal_usart_config_flowctrl(usart_handle_t handle,</dt><dd><p>usart_flowctrl_type_e flowctrl_type)</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="hal-usart-config-flowctrl">
+<h5><span class="section-number">7.10.5.2.1.3.9. </span>hal_usart_config_flowctrl<a class="headerlink" href="#hal-usart-config-flowctrl" title="永久链接至标题">¶</a></h5>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int32_t hal_usart_config_flowctrl(usart_handle_t handle， usart_flowctrl_type_e flowctrl_type)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>配置 uart 的流控</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">handle - uart 句柄</div>
+<div class="line">flowctrl_type   - 流控类型</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">7.10.5.2.2. </span>驱动层<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>驱动层通过调用 HAL 层的接口，完成对 UART 设备的驱动实现, 代码在 bsp/artinchip/drv/uart/aic_drv_uart.c</p>
+<div class="section" id="id10">
+<h4><span class="section-number">7.10.5.2.2.1. </span>驱动参数<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h4>
+<p>驱动的参数配置通过在 Kconfig 中的宏来初始化</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">drv_uart_dev_para</span>
+<span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="nl">index</span>                   <span class="p">:</span><span class="mi">4</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="nl">data_bits</span>               <span class="p">:</span><span class="mi">4</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="nl">stop_bits</span>               <span class="p">:</span><span class="mi">2</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="nl">parity</span>                  <span class="p">:</span><span class="mi">2</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">baud_rate</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">clk_freq</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">function</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">const</span> <span class="k">struct</span> <span class="nc">drv_uart_dev_para</span> <span class="n">uart_dev_paras</span><span class="p">[]</span> <span class="o">=</span>
+<span class="p">{</span>
+<span class="cp">#ifdef AIC_USING_UART0</span>
+    <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="n">AIC_DEV_UART0_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART0_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART0_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART0_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART0_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART0_MODE</span><span class="p">,</span> <span class="s">&quot;uart0&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART1</span>
+    <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="n">AIC_DEV_UART1_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART1_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART1_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART1_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART1_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART1_MODE</span><span class="p">,</span> <span class="s">&quot;uart1&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART2</span>
+    <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="n">AIC_DEV_UART2_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART2_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART2_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART2_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART2_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART2_MODE</span><span class="p">,</span> <span class="s">&quot;uart2&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART3</span>
+    <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="n">AIC_DEV_UART3_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART3_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART3_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART3_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART3_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART3_MODE</span><span class="p">,</span> <span class="s">&quot;uart3&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART4</span>
+    <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="n">AIC_DEV_UART4_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART4_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART4_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART4_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART4_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART4_MODE</span><span class="p">,</span> <span class="s">&quot;uart4&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART5</span>
+    <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="n">AIC_DEV_UART5_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART5_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART5_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART5_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART5_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART5_MODE</span><span class="p">,</span> <span class="s">&quot;uart5&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART6</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">AIC_DEV_UART6_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART6_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART6_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART6_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART6_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART6_MODE</span><span class="p">,</span> <span class="s">&quot;uart6&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_USING_UART7</span>
+    <span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="n">AIC_DEV_UART7_DATABITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART7_STOPBITS</span><span class="p">,</span> <span class="n">AIC_DEV_UART7_PARITY</span><span class="p">,</span> <span class="n">AIC_DEV_UART7_BAUDRATE</span><span class="p">,</span> <span class="n">AIC_CLK_UART7_FREQ</span><span class="p">,</span> <span class="n">AIC_DEV_UART7_MODE</span><span class="p">,</span> <span class="s">&quot;uart7&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h4><span class="section-number">7.10.5.2.2.2. </span>初始化<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h4>
+<p>初始化工作通过调用 RT-Thread 的标准初始化接口实现</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">INIT_BOARD_EXPORT</span><span class="p">(</span><span class="n">drv_usart_init</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">drv_usart_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">serial_configure</span> <span class="n">config</span> <span class="o">=</span> <span class="n">RT_SERIAL_CONFIG_DEFAULT</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">u</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uart_dev_paras</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">drv_uart_dev_para</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">index</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">ops</span>                 <span class="o">=</span> <span class="o">&amp;</span> <span class="n">drv_uart_ops</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span>              <span class="o">=</span> <span class="n">config</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span><span class="p">.</span><span class="n">bufsz</span>        <span class="o">=</span> <span class="mi">2048</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span><span class="p">.</span><span class="n">baud_rate</span>    <span class="o">=</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">baud_rate</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span><span class="p">.</span><span class="n">data_bits</span>    <span class="o">=</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data_bits</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span><span class="p">.</span><span class="n">stop_bits</span>    <span class="o">=</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">stop_bits</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span><span class="p">.</span><span class="n">parity</span>       <span class="o">=</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">parity</span><span class="p">;</span>
+        <span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">].</span><span class="n">config</span><span class="p">.</span><span class="n">function</span>     <span class="o">=</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">function</span><span class="p">;</span>
+
+        <span class="n">hal_clk_set_freq</span><span class="p">(</span><span class="n">CLK_UART0</span> <span class="o">+</span> <span class="n">u</span><span class="p">,</span> <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">clk_freq</span><span class="p">);</span>
+        <span class="n">hal_clk_enable</span><span class="p">(</span><span class="n">CLK_UART0</span> <span class="o">+</span> <span class="n">u</span><span class="p">);</span>
+        <span class="n">hal_reset_assert</span><span class="p">(</span><span class="n">RESET_UART0</span> <span class="o">+</span> <span class="n">u</span><span class="p">);</span>
+        <span class="n">aic_udelay</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+        <span class="n">hal_reset_deassert</span><span class="p">(</span><span class="n">RESET_UART0</span> <span class="o">+</span> <span class="n">u</span><span class="p">);</span>
+        <span class="n">uart_handle</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="n">hal_usart_initialize</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">drv_usart_irqhandler</span><span class="p">);</span>
+
+        <span class="n">rt_hw_serial_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">serial</span><span class="p">[</span><span class="n">u</span><span class="p">],</span>
+                            <span class="n">uart_dev_paras</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">name</span><span class="p">,</span>
+                            <span class="n">RT_DEVICE_FLAG_RDWR</span> <span class="o">|</span> <span class="n">RT_DEVICE_FLAG_INT_RX</span><span class="p">,</span>
+                            <span class="n">uart_handle</span><span class="p">[</span><span class="n">u</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4><span class="section-number">7.10.5.2.2.3. </span>对外接口<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<p>UART 驱动对外的接口主要是实现了 rt_uart_ops 的四个标准接口， dma_transmit 传输没有实现</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="k">struct</span> <span class="nc">rt_uart_ops</span> <span class="n">drv_uart_ops</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="n">drv_uart_configure</span><span class="p">,</span>
+    <span class="n">drv_uart_control</span><span class="p">,</span>
+    <span class="n">drv_uart_putc</span><span class="p">,</span>
+    <span class="n">drv_uart_getc</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">7.10.5.2.3. </span>应用层<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>UART 在应用层被封装成了一个标准的设备，通过读写进行数据的发送和接收</p>
+<p>设备实现代码：kernel/rt-thread/components/drivers/serial/serial.c
+使用示例代码：bsp/examples/test-uart/test_uart.c</p>
+<div class="section" id="rt-device-find">
+<h4><span class="section-number">7.10.5.2.3.1. </span>rt_device_find<a class="headerlink" href="#rt-device-find" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_device_t rt_device_find(const char *name);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>找到相应的设备</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>name - 设备名</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>设备变量或者NULL</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rt-device-open">
+<h4><span class="section-number">7.10.5.2.3.2. </span>rt_device_open<a class="headerlink" href="#rt-device-open" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t  rt_device_open (rt_device_t dev, rt_uint16_t oflag);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>打开设备</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - uart device</div>
+<div class="line">oflag - 打开参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； 其他，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rt-device-close">
+<h4><span class="section-number">7.10.5.2.3.3. </span>rt_device_close<a class="headerlink" href="#rt-device-close" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t  rt_device_close(rt_device_t dev);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>关闭设备</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>dev - 设备名</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； 其他，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rt-device-read">
+<h4><span class="section-number">7.10.5.2.3.4. </span>rt_device_read<a class="headerlink" href="#rt-device-read" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_size_t rt_device_read (rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>接收信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - uart device</div>
+<div class="line">pos - 起始位置</div>
+<div class="line">buffer - 数据存储区</div>
+<div class="line">size - 大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>接收数据的大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rt-device-write">
+<h4><span class="section-number">7.10.5.2.3.5. </span>rt_device_write<a class="headerlink" href="#rt-device-write" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_size_t rt_device_write (rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>发送信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - uart device</div>
+<div class="line">pos - 起始位置</div>
+<div class="line">buffer - 数据存储区</div>
+<div class="line">size - 大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>发送数据的大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id14">
+<h3><span class="section-number">7.10.5.2.4. </span>使用示例<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>示例可以参考 bsp/examples/test-uart/test_uart.c</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">rt_device_t</span> <span class="n">serial</span> <span class="o">=</span> <span class="n">rt_device_find</span><span class="p">(</span><span class="s">&quot;uart1&quot;</span><span class="p">);</span>
+<span class="n">rt_device_open</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span> <span class="n">RT_DEVICE_FLAG_RDONLY</span><span class="p">);</span>
+<span class="n">rt_device_write</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">str_send</span><span class="p">,</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">str_send</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+<span class="n">rt_device_read</span><span class="p">(</span><span class="n">serial</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">str_send</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.10.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="7.10.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

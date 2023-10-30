@@ -1,0 +1,3252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.8.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.9. I2S" href="../i2s/index.html" />
+    <link rel="prev" title="10.8.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../de/index.html">10.1. Display Engine (DE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">10.3. Video Engine (VE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsi/index.html">10.6. MIPI DSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.8. AUDIO</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.8.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">10.8.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id7">10.8.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.8.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-rx-dmic-if-ctl">10.8.4.1. 0x000 RX_DMIC_IF_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-rx-hpf1-2-ctl">10.8.4.2. 0x004 RX_HPF1&amp;2_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-rx-hpf1-coeff">10.8.4.3. 0x008 RX_HPF1_COEFF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-rx-hpf2-coeff">10.8.4.4. 0x00C RX_HPF2_COEFF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-rx-hpf1-gain">10.8.4.5. 0x010 RX_HPF1_GAIN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-rx-hpf2-gain">10.8.4.6. 0x014 RX_HPF2_GAIN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-rx-dvc1-2-ctl">10.8.4.7. 0x018 RX_DVC1&amp;2_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-tx-mixer-ctl">10.8.4.8. 0x01C TX_MIXER_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-tx-dvc3-4-ctl">10.8.4.9. 0x020 TX_DVC3&amp;4_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-tx-playback-ctl">10.8.4.10. 0x024 TX_PLAYBACK_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-tx-sdm-ctl">10.8.4.11. 0x028 TX_SDM_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x02c-tx-pwm-ctl">10.8.4.12. 0x02C TX_PWM_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-dmic-rxfifo-ctl">10.8.4.13. 0x030 DMIC_RXFIFO_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-txfifo-ctl">10.8.4.14. 0x034 TXFIFO_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x038-fifo-int-en">10.8.4.15. 0x038 FIFO_INT_EN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x03c-fifo-sta">10.8.4.16. 0x03C FIFO_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-dmic-rxfifo-data">10.8.4.17. 0x040 DMIC_RXFIFO_DATA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-dmic-rx-cnt">10.8.4.18. 0x044 DMIC_RX_CNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-txfifo-data">10.8.4.19. 0x048 TXFIFO_DATA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-tx-cnt">10.8.4.20. 0x04C TX_CNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x058-fade-ctl0">10.8.4.21. 0x058 FADE_CTL0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x05c-fade-ctl1">10.8.4.22. 0x05C FADE_CTL1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x060-globe-ctl">10.8.4.23. 0x060 GLOBE_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x070-adc-if-ctl">10.8.4.24. 0x070 ADC_IF_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x074-adc-hpf0-ctl">10.8.4.25. 0x074 ADC_HPF0_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x078-adc-hpf0-coeff">10.8.4.26. 0x078 ADC_HPF0_COEFF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x07c-adc-hpf0-gain">10.8.4.27. 0x07C ADC_HPF0_GAIN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-adc-dvc0-ctl">10.8.4.28. 0x080 ADC_DVC0_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x084-adc-rxfifo-ctl">10.8.4.29. 0x084 ADC_RXFIFO_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x088-adc-rxfifo-int-en">10.8.4.30. 0x088 ADC_RXFIFO_INT_EN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x08c-adc-rxfifo-sta">10.8.4.31. 0x08C ADC_RXFIFO_STA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x090-adc-rxfifo-data">10.8.4.32. 0x090 ADC_RXFIFO_DATA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x094-adc-rx-cnt">10.8.4.33. 0x094 ADC_RX_CNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a0-adc-ctl1">10.8.4.34. 0x0A0 ADC_CTL1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a4-adc-ctl2">10.8.4.35. 0x0A4 ADC_CTL2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a8-adc-tst-ctl">10.8.4.36. 0x0A8 ADC_TST_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0fc-version">10.8.4.37. 0x0FC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">10.9. Integrated Interchip Sound (I2S)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.8. </span>AUDIO</a> &raquo;</li>
+        
+      <li><span class="section-number">10.8.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">10.8.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-rx-dmic-if-ctl">
+<h2><span class="section-number">10.8.4.1. </span>0x000 RX_DMIC_IF_CTL<a class="headerlink" href="#x000-rx-dmic-if-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DMIC接口控制（RX DMIC Interface Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADOUT_SHIFT_EN</div>
+<div class="line">ADOUT SHIFT ENABLE，下采样数据偏移使能。</div>
+<div class="line">0x0：禁用</div>
+<div class="line">0x1：使能，Bit[14:12]有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADOUT_SHIFT</div>
+<div class="line">ADOUT SHIFT，下采样数据偏移。</div>
+<div class="line">0x0：数据无偏移</div>
+<div class="line">0x1：数据偏移1位</div>
+<div class="line">0x2：数据偏移2位</div>
+<div class="line">0x3：数据偏移3位</div>
+<div class="line">0x4：数据偏移4位</div>
+<div class="line">0x5~0x7：数据偏移5位</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RX_DLT</div>
+<div class="line">DMIC通路的RXFIFO在打开抽取滤波器后，接收数据的延迟时间。</div>
+<div class="line">0x0：5ms</div>
+<div class="line">0x1：10ms</div>
+<div class="line">0x2：20ms</div>
+<div class="line">0x3：30ms</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RX_DLT_EN</div>
+<div class="line">使能DMIC通路的RXFIFO在打开抽取滤波器后，延迟接收数据的功能。</div>
+<div class="line">0x0：禁用</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_OSR</div>
+<div class="line">DMIC过采样率选择，对应的就是抽取滤波器1、2的下采样率。</div>
+<div class="line">0x0: 128</div>
+<div class="line">0x1: 64</div>
+<div class="line">DMIC_OSR * FS_DMIC_IN决定了DMIC-CLK的输出。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_DEC2_FLT</div>
+<div class="line">抽取滤波器2控制位</div>
+<div class="line">0x0：关闭抽取滤波器</div>
+<div class="line">0x1：使能抽取滤波器</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_DEC1_FLT</div>
+<div class="line">抽取滤波器1控制位</div>
+<div class="line">0x0：关闭抽取滤波器</div>
+<div class="line">0x1：使能抽取滤波器</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_DATA_SWAP</div>
+<div class="line">DMIC左右通道数据通道的交换</div>
+<div class="line">0x0: 通道不交换</div>
+<div class="line">0x1: 通道交换</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_IF_EN</div>
+<div class="line">DMIC接口使能控制位</div>
+<div class="line">0x0：DMIC不工作；</div>
+<div class="line">0x1：DMIC使能，输出DMIC-CLK；</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FS_DMIC_IN</div>
+<div class="line">DMIC采样频率</div>
+<div class="line">当AUD_CLK =24.576MHz时:</div>
+<div class="line">0x0：48kHz</div>
+<div class="line">0x1：32kHz</div>
+<div class="line">0x2：24kHz</div>
+<div class="line">0x3：16kHz</div>
+<div class="line">0x4：12kHz</div>
+<div class="line">0x5：8kHz</div>
+<div class="line">0x6：Reserved</div>
+<div class="line">0x7：Reserved</div>
+<div class="line">当AUD_CLK=22.5792MHz时:</div>
+<div class="line">0x0：44.1kHz</div>
+<div class="line">0x2：22.05kHz</div>
+<div class="line">0x4：11.025kHz</div>
+<div class="line">Others：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_CLK_FRE</div>
+<div class="line">RX模块所选用的工作主时钟</div>
+<div class="line">0x0：24.576MHz</div>
+<div class="line">0x1：22.5792MHz</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-rx-hpf1-2-ctl">
+<h2><span class="section-number">10.8.4.2. </span>0x004 RX_HPF1&amp;2_CTL<a class="headerlink" href="#x004-rx-hpf1-2-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RX HPF控制寄存器（RX HPF Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HPF2_EN</div>
+<div class="line">高通滤波器使能位</div>
+<div class="line">0x0：关闭高通滤波器</div>
+<div class="line">0x1：使能高通滤波器</div>
+<div class="line">若关闭高通滤波器，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HPF1_EN</div>
+<div class="line">高通滤波器使能位</div>
+<div class="line">0x0：关闭高通滤波器</div>
+<div class="line">0x1：使能高通滤波器</div>
+<div class="line">若关闭高通滤波器，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-rx-hpf1-coeff">
+<h2><span class="section-number">10.8.4.3. </span>0x008 RX_HPF1_COEFF<a class="headerlink" href="#x008-rx-hpf1-coeff" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FFAA45</p></th>
+<th class="head"><p>RX HPF1系数寄存器（RX HPF1 Coefficient）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FFAA45</p></td>
+<td><div class="line-block">
+<div class="line">HPF1_Coefficient</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-rx-hpf2-coeff">
+<h2><span class="section-number">10.8.4.4. </span>0x00C RX_HPF2_COEFF<a class="headerlink" href="#x00c-rx-hpf2-coeff" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FFAA45</p></th>
+<th class="head"><p>RX HPF2系数寄存器（RX HPF2 Coefficient）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FFAA45</p></td>
+<td><div class="line-block">
+<div class="line">HPF2_Coefficient</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-rx-hpf1-gain">
+<h2><span class="section-number">10.8.4.5. </span>0x010 RX_HPF1_GAIN<a class="headerlink" href="#x010-rx-hpf1-gain" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FFD522</p></th>
+<th class="head"><p>RX HPF1增益寄存器（RX HPF1 GAIN）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FFD522</p></td>
+<td><div class="line-block">
+<div class="line">HPF1_Gain</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-rx-hpf2-gain">
+<h2><span class="section-number">10.8.4.6. </span>0x014 RX_HPF2_GAIN<a class="headerlink" href="#x014-rx-hpf2-gain" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FFD522</p></th>
+<th class="head"><p>RX HPF2增益寄存器（RX HPF2 GAIN）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FFD522</p></td>
+<td><div class="line-block">
+<div class="line">HPF2_Gain</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-rx-dvc1-2-ctl">
+<h2><span class="section-number">10.8.4.7. </span>0x018 RX_DVC1&amp;2_CTL<a class="headerlink" href="#x018-rx-dvc1-2-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xA0A00000</p></th>
+<th class="head"><p>RX 数字音量控制1寄存器（RX DVC1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0xA0</p></td>
+<td><div class="line-block">
+<div class="line">DVC2</div>
+<div class="line">数字音量控制模块DVC2的增益</div>
+<div class="line">BIT[31:27] = N, BIT [26:24] = K，</div>
+<div class="line">delta_dB = 0.75*K+6.02*(N-20)</div>
+<div class="line">（-119.25dB to 71.25dB，0.75dB/Step）</div>
+<div class="line">0x00：静音</div>
+<div class="line">0x01：-119.25dB</div>
+<div class="line">…</div>
+<div class="line">0x9F：-0.75dB</div>
+<div class="line">0xA0：0dB</div>
+<div class="line">0xA1：0.75dB</div>
+<div class="line">…</div>
+<div class="line">0xFF：71. 25dB</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0xA0</p></td>
+<td><div class="line-block">
+<div class="line">DVC1</div>
+<div class="line">数字音量控制模块DVC1的增益</div>
+<div class="line">BIT [23:19] = N, BIT [18:16] = K，</div>
+<div class="line">delta_dB = 0.75*K+6.02*(N-20)</div>
+<div class="line">（-119.25dB to 71.25dB，0.75dB/Step）</div>
+<div class="line">0x00：静音</div>
+<div class="line">0x01：-119.25dB</div>
+<div class="line">…</div>
+<div class="line">0x9F：-0.75dB</div>
+<div class="line">0xA0：0dB</div>
+<div class="line">0xA1：0.75dB</div>
+<div class="line">…</div>
+<div class="line">0xFF：71. 25dB</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DVC2_EN</div>
+<div class="line">DVC2使能控制位</div>
+<div class="line">0x0：关闭DVC</div>
+<div class="line">0x1：使能DVC</div>
+<div class="line">若关闭DVC，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DVC1_EN</div>
+<div class="line">DVC1使能控制位</div>
+<div class="line">0x0：关闭DVC</div>
+<div class="line">0x1：使能DVC</div>
+<div class="line">若关闭DVC，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-tx-mixer-ctl">
+<h2><span class="section-number">10.8.4.8. </span>0x01C TX_MIXER_CTL<a class="headerlink" href="#x01c-tx-mixer-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>TX Mixer控制寄存器（TX Mixer Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIX0_EN</div>
+<div class="line">MIX0使能控制信号</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">若MIX0_EN = 0，MIX0则为通路选择，MIX0_SRC_SEL只有0x1/0x2/0x4/0x8/0x10有效，</div>
+<div class="line">旁路通过所选择的信号到下一个模块。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIX1_EN</div>
+<div class="line">MIX1使能控制信号</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">若MIX1_EN = 0，MIX1则为通路选择，MIX1_SRC_SEL只有0x1/0x2/0x4/0x8/0x10有效，</div>
+<div class="line">旁路通过所选择的信号到下一个模块。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIX1_GAIN_CTL</div>
+<div class="line">Mixer1混频源的增益控制，相应BIT置1表示-6dB增益使能，相应BIT清0表示无增益使能。</div>
+<div class="line">BIT24：AUD_OUT_L</div>
+<div class="line">BIT25：AUD_OUT_R</div>
+<div class="line">BIT26：DMIC _OUT_L</div>
+<div class="line">BIT27：DMIC _OUT_R</div>
+<div class="line">BIT28：ADC_OUT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIX0_GAIN_CTL</div>
+<div class="line">Mixer0混频源的增益控制，相应BIT置1表示-6dB增益使能，相应BIT清0表示无增益使能。</div>
+<div class="line">BIT16：AUD_OUT_L</div>
+<div class="line">BIT17：AUD_OUT_R</div>
+<div class="line">BIT18：DMIC _OUT_L</div>
+<div class="line">BIT19：DMIC _OUT_R</div>
+<div class="line">BIT20：ADC_OUT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIX1_SRC_SEL</div>
+<div class="line">Mixer1混音源选择，相应BIT置1表示使能。</div>
+<div class="line">BIT8：AUD_OUT_L</div>
+<div class="line">BIT9：AUD_OUT_R</div>
+<div class="line">BIT10：DMIC _OUT_L</div>
+<div class="line">BIT11：DMIC _OUT_R</div>
+<div class="line">BIT12：ADC_OUT</div>
+<div class="line">在旁通模式下，低bit的优先级最高，例如此域为0xF，那么则旁通AUD_OUT_L。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>4:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MIX0_SRC_SEL</div>
+<div class="line">Mixer0混音源选择，相应BIT置1表示使能。</div>
+<div class="line">BIT0：AUD_OUT_L</div>
+<div class="line">BIT1：AUD_OUT_R</div>
+<div class="line">BIT2：DMIC _OUT_L</div>
+<div class="line">BIT3：DMIC _OUT_R</div>
+<div class="line">BIT4：ADC_OUT</div>
+<div class="line">在旁通模式下，低bit的优先级最高，例如此域为0xF，那么则旁通AUD_OUT_L。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-tx-dvc3-4-ctl">
+<h2><span class="section-number">10.8.4.9. </span>0x020 TX_DVC3&amp;4_CTL<a class="headerlink" href="#x020-tx-dvc3-4-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xA0A00000</p></th>
+<th class="head"><p>TX 数字音量控制3寄存器（TX DVC3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0xA0</p></td>
+<td><div class="line-block">
+<div class="line">DVC4</div>
+<div class="line">数字音量控制模块DVC4的增益</div>
+<div class="line">BIT[31:27] = N, BIT [26:24] = K，</div>
+<div class="line">delta_dB = 0.75*K+6.02*(N-20)</div>
+<div class="line">（-119.25dB to 71.25dB，0.75dB/Step）</div>
+<div class="line">0x00：静音</div>
+<div class="line">0x01：-119.25dB</div>
+<div class="line">…</div>
+<div class="line">0x9F：-0.75dB</div>
+<div class="line">0xA0：0dB</div>
+<div class="line">0xA1：0.75dB</div>
+<div class="line">…</div>
+<div class="line">0xFF：71. 25dB</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0xA0</p></td>
+<td><div class="line-block">
+<div class="line">DVC3</div>
+<div class="line">数字音量控制模块DVC3的增益</div>
+<div class="line">BIT [23:19] = N, BIT [18:16] = K，</div>
+<div class="line">（-119.25dB to 71.25dB，0.75dB/Step）</div>
+<div class="line">0x00：静音</div>
+<div class="line">0x01：-119.25dB</div>
+<div class="line">…</div>
+<div class="line">0x9F：-0.75dB</div>
+<div class="line">0xA0：0dB</div>
+<div class="line">0xA1：0.75dB</div>
+<div class="line">…</div>
+<div class="line">0xFF：71. 25dB</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DVC4_EN</div>
+<div class="line">DVC4使能控制位</div>
+<div class="line">0x0：关闭DVC</div>
+<div class="line">0x1：使能DVC</div>
+<div class="line">若关闭DVC，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DVC3_EN</div>
+<div class="line">DVC3使能控制位</div>
+<div class="line">0x0：关闭DVC</div>
+<div class="line">0x1：使能DVC</div>
+<div class="line">若关闭DVC，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-tx-playback-ctl">
+<h2><span class="section-number">10.8.4.10. </span>0x024 TX_PLAYBACK_CTL<a class="headerlink" href="#x024-tx-playback-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000300</p></th>
+<th class="head"><p>播放控制寄存器（TX Playback Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14:13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_DLT</div>
+<div class="line">TX上采样滤波输出的延迟时间</div>
+<div class="line">0x0：5ms</div>
+<div class="line">0x1：10ms</div>
+<div class="line">0x2：20ms</div>
+<div class="line">0x3：30ms</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_DLT_EN</div>
+<div class="line">TX上采样滤波输出延迟功能使能控制</div>
+<div class="line">0x0：禁用</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>10:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">FLTOUT_SHIFTN</div>
+<div class="line">滤波输出Shift比特数</div>
+<div class="line">0x0：10比特</div>
+<div class="line">0x1：11比特</div>
+<div class="line">…</div>
+<div class="line">0x7：17比特</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_TX_CH1</div>
+<div class="line">Playback发送通道1插值滤波器控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_TX_CH0</div>
+<div class="line">Playback发送通道0插值滤波器控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PLAYBACK_INTRE_EN</div>
+<div class="line">Playback插值滤波器使能</div>
+<div class="line">0x0：关闭</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FS_OUT</div>
+<div class="line">音频回放输出的采样频率</div>
+<div class="line">当AUD_CLK=24.576MHz时：</div>
+<div class="line">0x0：48kHz</div>
+<div class="line">0x1：32kHz</div>
+<div class="line">0x2：24kHz</div>
+<div class="line">0x3：16kHz</div>
+<div class="line">0x4：12kHz</div>
+<div class="line">0x5：8kHz</div>
+<div class="line">0x6：Reserved</div>
+<div class="line">0x7：Reserved</div>
+<div class="line">当AUD_CLK=22.5792MHz时：</div>
+<div class="line">0x0：44.1kHz</div>
+<div class="line">0x2：22.05kHz</div>
+<div class="line">0x4：11.025kHz</div>
+<div class="line">Others：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CLK_FRE</div>
+<div class="line">TX模块所选用的工作主时钟</div>
+<div class="line">0x0：24.576MHz</div>
+<div class="line">0x1：22.5792MHz</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-tx-sdm-ctl">
+<h2><span class="section-number">10.8.4.11. </span>0x028 TX_SDM_CTL<a class="headerlink" href="#x028-tx-sdm-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x01101100</p></th>
+<th class="head"><p>TX Sigma-Delta控制寄存器（TX Sigma-Delta Module Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_GAIN_C1</div>
+<div class="line">TX Channel1的SDM增益C1设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_GAIN_B1</div>
+<div class="line">TX Channel1的SDM增益B1设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:26</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_GAIN_A1</div>
+<div class="line">TX Channel1的SDM增益A1设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>25:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_GAIN_C0</div>
+<div class="line">TX Channel1的SDM增益C0设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_GAIN_B0</div>
+<div class="line">TX Channel1的SDM增益B0设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21:20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_GAIN_A0</div>
+<div class="line">TX Channel1的SDM增益A0设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19:18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_GAIN_C1</div>
+<div class="line">TX Channel0的SDM增益C1设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_GAIN_B1</div>
+<div class="line">TX Channel0的SDM增益B1设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_GAIN_A1</div>
+<div class="line">TX Channel0的SDM增益A1设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_GAIN_C0</div>
+<div class="line">TX Channel0的SDM增益C0设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_GAIN_B0</div>
+<div class="line">TX Channel0的SDM增益B0设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_GAIN_A0</div>
+<div class="line">TX Channel0的SDM增益A0设置</div>
+<div class="line">0x0：增益为1</div>
+<div class="line">0x1：增益为0.5</div>
+<div class="line">0x2：增益为0.25</div>
+<div class="line">0x3：增益为0.125</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH1_SDM_EN</div>
+<div class="line">发送CH1的Sigma-Delta Modulate模块使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CH0_SDM_EN</div>
+<div class="line">发送CH0的Sigma-Delta Modulate模块使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x02c-tx-pwm-ctl">
+<h2><span class="section-number">10.8.4.12. </span>0x02C TX_PWM_CTL<a class="headerlink" href="#x02c-tx-pwm-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00130700</p></th>
+<th class="head"><p>TX PWM控制寄存器（TX PWM Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM_FADE_FLOOR</div>
+<div class="line">PWM FADE占空比最小值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x13</p></td>
+<td><div class="line-block">
+<div class="line">PWM_FADE_TARGET</div>
+<div class="line">PWM FADE占空比目标值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14:13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM_FADE_MODE</div>
+<div class="line">PWM FADE模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM_FADE_STEP</div>
+<div class="line">PWM FADE步进</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x7</p></td>
+<td><div class="line-block">
+<div class="line">PWM_FADE_SPEED</div>
+<div class="line">PWM FADE速度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1_FADE_EN</div>
+<div class="line">PWM1模块的渐变功能使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1_MODE</div>
+<div class="line">PWM1模式选择</div>
+<div class="line">0x0：输出PWM调制信号，高电平调制输出75%占空比的PWM信号，</div>
+<div class="line-block">
+<div class="line">低电平调制输出25%占空比的PWM信号，PWM频率为PDM输入</div>
+<div class="line">的采样频率。</div>
+</div>
+<div class="line">0x1：直接输出PDM信号。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1_DIF_EN</div>
+<div class="line">PWM1差分输出使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">使能PWM1的差分功能后，SPK_OUT1输出PWM1信号，SPK_OUT0</div>
+<div class="line">输出PWM1的反相信号（此时PWM0_EN应设置为0）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1_EN</div>
+<div class="line">PWM1模块使能位</div>
+<div class="line">0x0：PWM模块禁止</div>
+<div class="line">0x1：PWM模块使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0_FADE_EN</div>
+<div class="line">PWM0模块的渐变功能使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0_MODE</div>
+<div class="line">PWM0模式选择</div>
+<div class="line">0x0：输出PWM调制信号，高电平调制输出75%占空比的PWM信号，</div>
+<div class="line-block">
+<div class="line">低电平调制输出25%占空比的PWM信号，PWM频率为PDM输入</div>
+<div class="line">的采样频率。</div>
+</div>
+<div class="line">0x1：直接输出PDM信号。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0_DIF_EN</div>
+<div class="line">PWM0差分输出使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">使能PWM0的差分功能后，SPK_OUT0输出PWM0信号，SPK_OUT1输出</div>
+<div class="line">PWM0的反相信号（此时PWM1_EN应设置为0）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0_EN</div>
+<div class="line">PWM0模块使能位</div>
+<div class="line">0x0：PWM模块禁止</div>
+<div class="line">0x1：PWM模块使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-dmic-rxfifo-ctl">
+<h2><span class="section-number">10.8.4.13. </span>0x030 DMIC_RXFIFO_CTL<a class="headerlink" href="#x030-dmic-rxfifo-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00004000</p></th>
+<th class="head"><p>DMIC RXFIFO控制寄存器（DMIC RXFIFO Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W1AC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">擦除RXFIFO数据，写1擦除RXFIFO数据，完成自动清0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x40</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RXTH</div>
+<div class="line">DMIC RX FIFO Threshold</div>
+<div class="line">DMIC通路的RXFIFO的阈值设置（单位32bit word），当RXFIFO的接</div>
+<div class="line">收的数据大于阈值，将触发中断和DRQ请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RXFIFO_CH1_EN</div>
+<div class="line">DMIC的RXFIFO通道1的使能控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">DMIC_RXFIFO_CH1_EN = 0，此时RXFIFO的高16位数据则为0x0000。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RXFIFO_CH0_EN</div>
+<div class="line">DMIC的RXFIFO通道0的使能控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">DMIC_RXFIFO_CH0_EN = 0，此时RXFIFO的低16位数据则为0x0000。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-txfifo-ctl">
+<h2><span class="section-number">10.8.4.14. </span>0x034 TXFIFO_CTL<a class="headerlink" href="#x034-txfifo-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00004000</p></th>
+<th class="head"><p>TXFIFO控制寄存器（TXFIFO Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W1AC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_FLUSH</div>
+<div class="line">擦除TXFIFO数据，写1擦除TXFIFO数据，完成自动清0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x40</p></td>
+<td><div class="line-block">
+<div class="line">TXFIFO_TH</div>
+<div class="line">TX FIFO Threshold，TX FIFO的阈值，这里的值表示TXFIFO剩余可用</div>
+<div class="line">空间值（单位32bit word），当TXFIFO的剩余可用空间值小于</div>
+<div class="line">TXFIFO_TH时，则认为TXFIFO空，产生空中断以及DRQ请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_UR_DATA</div>
+<div class="line">在TXFIFO出现下溢出的时候，选择发送的数据形式</div>
+<div class="line">0x0：发送上一次的音频数据</div>
+<div class="line">0x1：发送全0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_CH1_EN</div>
+<div class="line">TXFIFO通道1的使能控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_CH0_EN</div>
+<div class="line">TXFIFO通道0的使能控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x038-fifo-int-en">
+<h2><span class="section-number">10.8.4.15. </span>0x038 FIFO_INT_EN<a class="headerlink" href="#x038-fifo-int-en" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>FIFO中断使能寄存器（FIFO Interrupt Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_DRQ_EN</div>
+<div class="line">TXFIFO空状态请求DMA使能位</div>
+<div class="line">0x0: 禁止DRQ请求</div>
+<div class="line">0x1: 使能DRQ请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_UDRN_IRQ_EN</div>
+<div class="line">TXFIFO下溢出中断使能位</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_OVRN_IRQ_EN</div>
+<div class="line">TXFIFO上溢出中断使能位</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_IRQ_EN</div>
+<div class="line">TXFIFO空状态中断使能位</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_DRQ_EN</div>
+<div class="line">DMIC通路的RXFIFO接收到有效数据的DRQ请求使能位</div>
+<div class="line">0x0: 禁止DRQ请求</div>
+<div class="line">0x1: 使能DRQ请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_UDRN_IRQ_EN</div>
+<div class="line">DMIC通路的RXFIFO的下溢出中断使能</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_OVRN_IRQ_EN</div>
+<div class="line">DMIC通路的RXFIFO的上溢出中断使能</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_IRQ_EN</div>
+<div class="line">DMIC通路的RXFIFO接收有效数据中断使能</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x03c-fifo-sta">
+<h2><span class="section-number">10.8.4.16. </span>0x03C FIFO_STA<a class="headerlink" href="#x03c-fifo-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x01800000</p></th>
+<th class="head"><p>FIFO状态寄存器（FIFO Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:27</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>26</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_UDRN_IRQ_STA</div>
+<div class="line">TXFIFO下溢出产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>25</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_OVRN_IRQ_STA</div>
+<div class="line">TXFIFO上溢出产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>24</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">AUDOUT_IRQ_STA</div>
+<div class="line">TXFIFO空状态产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:16</p></td>
+<td><p>R</p></td>
+<td><p>0x80</p></td>
+<td><div class="line-block">
+<div class="line">TXFIFO_SPACE_CNT</div>
+<div class="line">TXFIFO可用空间计数器，表示TX FIFO未使用的空间大小</div>
+<div class="line">（单位32bit word）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_UDRN_IRQ_STA</div>
+<div class="line">DMIC RXFIFO数据上溢出产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_OVRN_IRQ_STA</div>
+<div class="line">DMIC RXFIFO数据上溢出产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMICIN_IRQ_STA</div>
+<div class="line">DMIC RXFIFO 收到有效数据产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RXFIFO_SPACE_CNT</div>
+<div class="line">DMIC RX FIFO占用深度，表示RXFIFO已使用的空间大小</div>
+<div class="line">（单位32bit word）。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-dmic-rxfifo-data">
+<h2><span class="section-number">10.8.4.17. </span>0x040 DMIC_RXFIFO_DATA<a class="headerlink" href="#x040-dmic-rxfifo-data" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RXFIFO数据寄存器（RXFIFO Data）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RXFIFO_DATA</div>
+<div class="line">RXFIFO接收到的采样点数据，从此地址可以读取接收的音频数据。</div>
+<div class="line">RX Channel0(默认为左声道)的16-bit为低16位，</div>
+<div class="line">RX Channel1(默认为右声道)的16-bit为高16位。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-dmic-rx-cnt">
+<h2><span class="section-number">10.8.4.18. </span>0x044 DMIC_RX_CNT<a class="headerlink" href="#x044-dmic-rx-cnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>RX数据计数器寄存器（RX Data Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMIC_RXFIFO_DATA_CNT</div>
+<div class="line">DMIC RXFIFO接收到的采样点的数量的统计。每当有一个采样点</div>
+<div class="line">（32bit）从RXFIFO读出，这里的计数自加1。这里的初始值可以</div>
+<div class="line">在任意时间写入任意值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-txfifo-data">
+<h2><span class="section-number">10.8.4.19. </span>0x048 TXFIFO_DATA<a class="headerlink" href="#x048-txfifo-data" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>TXFIFO数据寄存器（TXFIFO Data）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXFIFO_DATA</div>
+<div class="line">TXFIFO发送的采样点数据，往此地址写数据进行发送。低16位为TX</div>
+<div class="line">Channel0的16-bit，高16位为TX Channel1的16-bit。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-tx-cnt">
+<h2><span class="section-number">10.8.4.20. </span>0x04C TX_CNT<a class="headerlink" href="#x04c-tx-cnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>TX数据计数器寄存器（TX Data Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXFIFO_DATA_CNT</div>
+<div class="line">TX FIFO发送的采样点数据的数量统计。每当有一个采样点写入</div>
+<div class="line">TXFIFO_DATA，这里的计数自加1。这里的初始值可以在任意时间</div>
+<div class="line">写入任意值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x058-fade-ctl0">
+<h2><span class="section-number">10.8.4.21. </span>0x058 FADE_CTL0<a class="headerlink" href="#x058-fade-ctl0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00804007</p></th>
+<th class="head"><p>渐变控制0寄存器（Fade Control 0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x80</p></td>
+<td><div class="line-block">
+<div class="line">FADE_STEP</div>
+<div class="line">音量变化步进，配合TARGET_VOL计算渐变总时间。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x4</p></td>
+<td><div class="line-block">
+<div class="line">FADE_SPEED</div>
+<div class="line">音量变化速度，2^FADE_SPEED（us），配合TARGET_VOL计算渐变</div>
+<div class="line">总时间。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">FADE_CH1_EN</div>
+<div class="line">FADE使能通道1控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">FADE_CH0_EN</div>
+<div class="line">FADE使能通道0控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">FADE _EN</div>
+<div class="line">FADE功能使能控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x05c-fade-ctl1">
+<h2><span class="section-number">10.8.4.22. </span>0x05C FADE_CTL1<a class="headerlink" href="#x05c-fade-ctl1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x7FFF7FFF</p></th>
+<th class="head"><p>渐变控制1寄存器（Fade Control 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x7FFF</p></td>
+<td><div class="line-block">
+<div class="line">MAX_VOL</div>
+<div class="line">最大音量，这里配置为默认值即可。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x7FFF</p></td>
+<td><div class="line-block">
+<div class="line">TARGET_VOL</div>
+<div class="line">目标音量，目标音量≤最大音量，目标音量是音量渐变的目标值，打开</div>
+<div class="line">播放通路时需要实现渐变，那么这里配置为0x7FFF，关闭播放通路时</div>
+<div class="line">需要实现渐变，那么这里配置为0x0000。</div>
+<div class="line">渐变过程的总时间计算为：</div>
+<div class="line">(（TARGET_VOL – 当前值）/FADE_STEP) * FADE_SPEED</div>
+<div class="line">例如，在当前默认之下，FADE_STEP = 0x80，FADE_SPEED = 0x4，</div>
+<div class="line">那么打开播放通路的渐变过程的总时间为</div>
+<div class="line">(（0x7FFF-0）/0x80) * 2^4 = 4096 us。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x060-globe-ctl">
+<h2><span class="section-number">10.8.4.23. </span>0x060 GLOBE_CTL<a class="headerlink" href="#x060-globe-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>全局控制寄存器（Global Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBG_SIGNAL</div>
+<div class="line">Debug信号选择，选择的信号通过PWM_OUT输出</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEBUG_MOD</div>
+<div class="line">DEBUG模式</div>
+<div class="line">0x0：DEBUG模式不使能</div>
+<div class="line">0x1：TX发送一个正弦信号</div>
+<div class="line">0x2：反馈环路测试，反馈ch0信号进入DMIC</div>
+<div class="line">0x3：反馈环路测试，反馈ch1信号进入DMIC</div>
+<div class="line">0x4：RX通路测试，发送全0数据</div>
+<div class="line">0x5：RX通路测试，发送全1数据</div>
+<div class="line">0x6：RX通路测试，接hpf，发送一个正弦信号1.5kHz</div>
+<div class="line">0x7：根据dbg_signal选择输出信号</div>
+<div class="line">0x8：TX发送差分正弦波信号</div>
+<div class="line">Others：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GLB_RST</div>
+<div class="line">全局复位控制信号，此位写1进行复位，复位完成自动清0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_GLBEN</div>
+<div class="line">发送端全局使能控制信号</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_GLBEN</div>
+<div class="line">接收端全局使能控制信号</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x070-adc-if-ctl">
+<h2><span class="section-number">10.8.4.24. </span>0x070 ADC_IF_CTL<a class="headerlink" href="#x070-adc-if-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC接口控制寄存器（ADC Interface Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_FILT_SEL</div>
+<div class="line">ADC Filter Select，ADC滤波器选择</div>
+<div class="line">0x0：ADC为Mash2-2结构</div>
+<div class="line">0x1：ADC为2阶1bit结构</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADOUT_SHIFT_EN</div>
+<div class="line">ADOUT SHIFT使能</div>
+<div class="line">0x0：未使能</div>
+<div class="line">0x1：使能，Bit[14:12]有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADOUT_SHIFT</div>
+<div class="line">ADOUT SHIFT，下采样数据偏移</div>
+<div class="line">0x0：数据无偏移</div>
+<div class="line">0x1：数据偏移1位</div>
+<div class="line">0x2：数据偏移2位</div>
+<div class="line">0x3：数据偏移3位</div>
+<div class="line">0x4：数据偏移4位</div>
+<div class="line">0x5~0x7：数据偏移5位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RX_DLT</div>
+<div class="line">ADC通路的RXFIFO在打开抽取滤波器后，接收数据的延迟时间。</div>
+<div class="line">0x0：5ms</div>
+<div class="line">0x1：10ms</div>
+<div class="line">0x2：20ms</div>
+<div class="line">0x3：30ms</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RX_DLT_EN</div>
+<div class="line">使能ADC通路的RXFIFO在打开抽取滤波器后，延迟接收数据的功能。</div>
+<div class="line">0x0：禁用</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN_DEC0_FLT</div>
+<div class="line">抽取滤波器0控制位</div>
+<div class="line">0x0：关闭抽取滤波器</div>
+<div class="line">0x1：使能抽取滤波器</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FS_ADC_IN</div>
+<div class="line">ADC采样频率</div>
+<div class="line">当AUD_CLK=24.576MHz时：</div>
+<div class="line">0x0：48kHz</div>
+<div class="line">0x1：32kHz</div>
+<div class="line">0x2：24kHz</div>
+<div class="line">0x3：16kHz</div>
+<div class="line">0x4：12kHz</div>
+<div class="line">0x5：8kHz</div>
+<div class="line">0x6：Reserved</div>
+<div class="line">0x7：Reserved</div>
+<div class="line">当AUD_CLK=22.5792MHz时:</div>
+<div class="line">0x0：44.1kHz</div>
+<div class="line">0x2：22.05kHz</div>
+<div class="line">0x4：11.025kHz</div>
+<div class="line">Others：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_CLK_FRE</div>
+<div class="line">RX模块所选用的工作主时钟为</div>
+<div class="line">0x0：24.576MHz</div>
+<div class="line">0x1：22.5792MHz</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x074-adc-hpf0-ctl">
+<h2><span class="section-number">10.8.4.25. </span>0x074 ADC_HPF0_CTL<a class="headerlink" href="#x074-adc-hpf0-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC高通滤波器控制寄存器（ADC HPF0 Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">HPF0_EN</div>
+<div class="line">高通滤波器使能位</div>
+<div class="line">0x0：关闭高通滤波器</div>
+<div class="line">0x1：使能高通滤波器</div>
+<div class="line">若关闭高通滤波器，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x078-adc-hpf0-coeff">
+<h2><span class="section-number">10.8.4.26. </span>0x078 ADC_HPF0_COEFF<a class="headerlink" href="#x078-adc-hpf0-coeff" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FFAA45</p></th>
+<th class="head"><p>ADC高通滤波器系数寄存器（ADC HPF0 Coefficient）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FFAA45</p></td>
+<td><div class="line-block">
+<div class="line">HPF0_Coefficient</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x07c-adc-hpf0-gain">
+<h2><span class="section-number">10.8.4.27. </span>0x07C ADC_HPF0_GAIN<a class="headerlink" href="#x07c-adc-hpf0-gain" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00FFD522</p></th>
+<th class="head"><p>ADC高通滤波器增益寄存器（ADC HPF0 Gain）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00FFD522</p></td>
+<td><div class="line-block">
+<div class="line">HPF0_Gain</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-adc-dvc0-ctl">
+<h2><span class="section-number">10.8.4.28. </span>0x080 ADC_DVC0_CTL<a class="headerlink" href="#x080-adc-dvc0-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00A00000</p></th>
+<th class="head"><p>ADC的音量控制寄存器（ADC DVC Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0xA0</p></td>
+<td><div class="line-block">
+<div class="line">DVC0</div>
+<div class="line">数字音量控制模块DVC0的增益</div>
+<div class="line">BIT [23:19] = N, BIT [18:16] = K，</div>
+<div class="line">delta_dB = 0.75*K+6.02*(N-20)</div>
+<div class="line">（-119.25dB to 71.25dB，0.75dB/Step）</div>
+<div class="line">0x00：静音</div>
+<div class="line">0x01：-119.25dB</div>
+<div class="line">…</div>
+<div class="line">0x9F：-0.75dB</div>
+<div class="line">0xA0：0dB</div>
+<div class="line">0xA1：0.75dB</div>
+<div class="line">…</div>
+<div class="line">0xFF：71. 25dB</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DVC0_EN</div>
+<div class="line">DVC0使能控制位</div>
+<div class="line">0x0：关闭DVC</div>
+<div class="line">0x1：使能DVC</div>
+<div class="line">若关闭DVC，数据信号不经过处理，旁通到下一个模块。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x084-adc-rxfifo-ctl">
+<h2><span class="section-number">10.8.4.29. </span>0x084 ADC_RXFIFO_CTL<a class="headerlink" href="#x084-adc-rxfifo-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00004000</p></th>
+<th class="head"><p>ADC RXFIFO控制寄存器（ADC RXFIFO Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W1AC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RXFIFO_FLUSH</div>
+<div class="line">擦除RXFIFO数据，写1擦除RXFIFO数据，完成自动清0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x40</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RXTH</div>
+<div class="line">ADC RX FIFO Threshold</div>
+<div class="line">ADC通路的RXFIFO的阈值设置（单位32bit word），当RXFIFO的接收</div>
+<div class="line">的数据大于阈值，将触发中断和DRQ请求。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RXFIFO_EN</div>
+<div class="line">ADC的RXFIFO使能控制位</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+<div class="line">ADC_RXFIFO接收到的数据高16bit为0，低16bit为ADC数据。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x088-adc-rxfifo-int-en">
+<h2><span class="section-number">10.8.4.30. </span>0x088 ADC_RXFIFO_INT_EN<a class="headerlink" href="#x088-adc-rxfifo-int-en" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC RXFIFO中断使能寄存器（ADC RXFIFO Interrupt Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN_DRQ_EN</div>
+<div class="line">ADC通路的RXFIFO接收到有效数据的DRQ请求使能位</div>
+<div class="line">0x0: 禁止DRQ请求</div>
+<div class="line">0x1: 使能DRQ请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN _UDRN_IRQ_EN</div>
+<div class="line">ADC通路的RXFIFO的下溢出中断使能</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN _OVRN_IRQ_EN</div>
+<div class="line">ADC通路的RXFIFO的上溢出中断使能</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN _IRQ_EN</div>
+<div class="line">ADC通路的RXFIFO接收有效数据中断使能</div>
+<div class="line">0x0: 禁止中断请求</div>
+<div class="line">0x1: 使能中断请求</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x08c-adc-rxfifo-sta">
+<h2><span class="section-number">10.8.4.31. </span>0x08C ADC_RXFIFO_STA<a class="headerlink" href="#x08c-adc-rxfifo-sta" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC RXFIFO状态寄存器（ADC RXFIFO Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN_UDRN_IRQ_STA</div>
+<div class="line">ADC RXFIFO数据下溢出产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN_OVRN_IRQ_STA</div>
+<div class="line">ADC RXFIFO数据上溢出产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADCIN_IRQ_STA</div>
+<div class="line">ADC RXFIFO收到有效数据产生中断的状态</div>
+<div class="line">0x0：无中断请求</div>
+<div class="line">0x1：有中断请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RXFIFO_SPACE_CNT</div>
+<div class="line">ADC RX FIFO占用深度，表示RXFIFO已使用的空间大小（单位32bit word）。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x090-adc-rxfifo-data">
+<h2><span class="section-number">10.8.4.32. </span>0x090 ADC_RXFIFO_DATA<a class="headerlink" href="#x090-adc-rxfifo-data" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC RXFIFO数据寄存器（ADC RXFIFO数据）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RXFIFO_DATA</div>
+<div class="line">RXFIFO接收到的采样点数据，从此地址可以读取接收的音频数据。ADC</div>
+<div class="line">的16-bit为低16位，高16位为全0。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x094-adc-rx-cnt">
+<h2><span class="section-number">10.8.4.33. </span>0x094 ADC_RX_CNT<a class="headerlink" href="#x094-adc-rx-cnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC RX数据计数器寄存器（ADC RX Data Counter）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_RXFIFO_DATA_CNT</div>
+<div class="line">RXFIFO接收到的采样点的数量的统计。每当有一个采样点（32bit）从</div>
+<div class="line">RXFIFO读出，这里的计数自加1。这里的初始值可以在任意时间写入任</div>
+<div class="line">意值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a0-adc-ctl1">
+<h2><span class="section-number">10.8.4.34. </span>0x0A0 ADC_CTL1<a class="headerlink" href="#x0a0-adc-ctl1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC控制1寄存器（ADC Control 1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MBIAS_EN</div>
+<div class="line">MBIAS使能，使能MBIAS偏置电压</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PGA_EN</div>
+<div class="line">PGA使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_EN</div>
+<div class="line">ADC使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a4-adc-ctl2">
+<h2><span class="section-number">10.8.4.35. </span>0x0A4 ADC_CTL2<a class="headerlink" href="#x0a4-adc-ctl2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC控制2寄存器（ADC Control 2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MBIAS_CTL</div>
+<div class="line">MBias Control，偏值电压Mbias控制</div>
+<div class="line">0x0：1.8V</div>
+<div class="line">0x1：2.2V</div>
+<div class="line">0x2：2.0V</div>
+<div class="line">0x3：2.4V</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PGA_GAIN_SEL</div>
+<div class="line">PGA Gain Select，PGA增益选择</div>
+<div class="line">0x0：0dB</div>
+<div class="line">0x1：2dB</div>
+<div class="line">0x2：4dB</div>
+<div class="line">…</div>
+<div class="line">0xF：30dB</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a8-adc-tst-ctl">
+<h2><span class="section-number">10.8.4.36. </span>0x0A8 ADC_TST_CTL<a class="headerlink" href="#x0a8-adc-tst-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>ADC测试控制寄存器（ADC Test Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VIN_BUF_IBIAS_CFG</div>
+<div class="line">Vin Buffer Ibias Cfg</div>
+<div class="line">0x0：2.5uA</div>
+<div class="line">0x1：2.0uA</div>
+<div class="line">0x2：3.5uA</div>
+<div class="line">0x3：3.0uA</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PGA_IBIAS_CFG</div>
+<div class="line">PGA Ibias Cfg</div>
+<div class="line">0x0：2.5uA</div>
+<div class="line">0x1：2.0uA</div>
+<div class="line">0x2：3.5uA</div>
+<div class="line">0x3：3.0uA</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CFG_OP2_BIAS</div>
+<div class="line">OPAMP2 Ibias Cfg</div>
+<div class="line">0x0：2.5uA</div>
+<div class="line">0x1：2.0uA</div>
+<div class="line">0x2：3.5uA</div>
+<div class="line">0x3：3.0uA</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CFG_OP1_BIAS</div>
+<div class="line">OPAMP1 Ibias Cfg</div>
+<div class="line">0x0：5uA</div>
+<div class="line">0x1：6uA</div>
+<div class="line">0x2：4uA</div>
+<div class="line">0x3：3uA</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_SEL</div>
+<div class="line">ATB选择</div>
+<div class="line">0x0：Vinn</div>
+<div class="line">0x1：Vipp</div>
+<div class="line">0x2：Vrefp</div>
+<div class="line">0x3：Vcm</div>
+<div class="line">0x4：Voutn</div>
+<div class="line">0x5：Voutp</div>
+<div class="line">Others：Reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ATB_EN</div>
+<div class="line">ATB使能</div>
+<div class="line">0x0：不使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0fc-version">
+<h2><span class="section-number">10.8.4.37. </span>0x0FC VERSION<a class="headerlink" href="#x0fc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>Codec 版本号（VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">Version(模块版本号)</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../i2s/index.html" class="btn btn-neutral float-right" title="10.9. I2S" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="10.8.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

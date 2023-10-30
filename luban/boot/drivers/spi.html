@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.8.4. SPI 驱动 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.8.5. SPI NAND 驱动" href="spinand.html" />
+    <link rel="prev" title="3.8.3. DMA 驱动" href="dma.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3.8. 驱动支持</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="clock.html">3.8.1. Clock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reset.html">3.8.2. Reset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dma.html">3.8.3. DMA</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.8.4. SPI</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">3.8.4.1. 驱动框架</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">3.8.4.2. 驱动接口</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">3.8.4.3. 初始化流程</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dma">3.8.4.4. DMA 的支持</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#quad-spi">3.8.4.5. QUAD SPI 的支持</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="spinand.html">3.8.5. SPI NAND</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spinor.html">3.8.6. SPI NOR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mmc.html">3.8.7. MMC</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">3.8. </span>驱动支持</a> &raquo;</li>
+        
+      <li><span class="section-number">3.8.4. </span>SPI 驱动</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spi">
+<h1><span class="section-number">3.8.4. </span>SPI 驱动<a class="headerlink" href="#spi" title="永久链接至标题">¶</a></h1>
+<p>SPI 在 U-Boot 中主要用于支持 SPI NAND/NOR 存储设备。目前 ArtInChip 平台上 SPI
+的实现只支持半双工模式(Half-duplex)。</p>
+<div class="section" id="id1">
+<h2><span class="section-number">3.8.4.1. </span>驱动框架<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>U-Boot 驱动模型支持 SPI，ArtInChip 平台中 SPI 驱动基于该框架进行实现。
+相关配置为：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CONFIG_DM_SPI</p></li>
+<li><p>CONFIG_SPI</p></li>
+<li><p>CONFIG_SPL_SPI_SUPPORT</p></li>
+<li><p>CONFIG_ARTINCHIP_SPI</p></li>
+</ul>
+</div></blockquote>
+<p>相关源码有：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">drivers/spi/spi-uclass.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">include/spi.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drivers/spi/artinchip_spi.c</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">3.8.4.2. </span>驱动接口<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>常用接口：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">dm_spi_claim_bus</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">dm_spi_release_bus</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">dm_spi_xfer</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bitlen</span><span class="p">,</span>
+                <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">dout</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">din</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">spi_claim_bus</span><span class="p">(</span><span class="k">struct</span> <span class="nc">spi_slave</span> <span class="o">*</span><span class="n">slave</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">spi_release_bus</span><span class="p">(</span><span class="k">struct</span> <span class="nc">spi_slave</span> <span class="o">*</span><span class="n">slave</span><span class="p">);</span>
+<span class="kt">int</span>  <span class="nf">spi_xfer</span><span class="p">(</span><span class="k">struct</span> <span class="nc">spi_slave</span> <span class="o">*</span><span class="n">slave</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bitlen</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">dout</span><span class="p">,</span>
+              <span class="kt">void</span> <span class="o">*</span><span class="n">din</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">3.8.4.3. </span>初始化流程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>SPI 设备挂载在 SPI 总线上，当 SPI 设备初始化时，如果父设备还没有被初始化，
+则会自动触发父设备的初始化。下面是 SPI NAND 初始化时触发 SPI 初始化的流程。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">mtd_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+    <span class="o">|</span>   <span class="c1">// 此时 SPI 还没有 probe，则先 probe SPI</span>
+    <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">dev</span><span class="o">-&gt;</span><span class="n">parent</span><span class="p">);</span> <span class="c1">// drivers/core/device.c</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+    <span class="o">|</span>       <span class="n">aic_spi_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/spi/artinchip_spi.c</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+        <span class="n">spinand_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span> <span class="c1">// drivers/mtd/nand/spi/core.c</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dma">
+<h2><span class="section-number">3.8.4.4. </span>DMA 的支持<a class="headerlink" href="#dma" title="永久链接至标题">¶</a></h2>
+<p>ArtInChip SPI 驱动支持使用 DMA 收发数据和使用 FIFO 通过 CPU 读写的方式收发数据，
+在 DMA 使能的情况下，对于数据长度大于等于 <code class="docutils literal notranslate"><span class="pre">SPI_FIFO_DEPTH</span></code> 的传输，驱动自动切换使用 DMA
+进行传输，否则默认使用 FIFO 模式。</p>
+<p>如果系统没有使能 DMA，则所有传输都使用 FIFO 模式。</p>
+<p>使能 DMA 的 Kconfig 配置为：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CONFIG_ARTINCHIP_DMA</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="quad-spi">
+<h2><span class="section-number">3.8.4.5. </span>QUAD SPI 的支持<a class="headerlink" href="#quad-spi" title="永久链接至标题">¶</a></h2>
+<p>对于非存储 SPI 设备，SPI 驱动只支持标准 SPI 模式，即 Single Mode，数据传输都使用一根线进行(MOSI 和 MISO)。
+对于 SPI 存储设备(SPI NAND/SPI NOR)，通过对接 <code class="docutils literal notranslate"><span class="pre">spi-mem</span></code> 框架，可以支持 DUAL SPI 和 QUAD SPI。</p>
+<p>相关代码：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">spi_controller_mem_ops</span> <span class="n">aic_spi_mem_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">supports_op</span> <span class="o">=</span> <span class="n">aic_spi_mem_supports_op</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">exec_op</span> <span class="o">=</span> <span class="n">aic_spi_mem_exec_op</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">dm_spi_ops</span> <span class="n">aic_spi_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">claim_bus</span>   <span class="o">=</span> <span class="n">aic_spi_claim_bus</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">release_bus</span> <span class="o">=</span> <span class="n">aic_spi_release_bus</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">xfer</span>        <span class="o">=</span> <span class="n">aic_spi_xfer</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">set_speed</span>   <span class="o">=</span> <span class="n">aic_spi_set_speed</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">set_mode</span>    <span class="o">=</span> <span class="n">aic_spi_set_mode</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">mem_ops</span>     <span class="o">=</span> <span class="o">&amp;</span><span class="n">aic_spi_mem_ops</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>通过设置 <code class="docutils literal notranslate"><span class="pre">.exec_op</span></code> ，SPI MEM 设备的所有操作都由 <code class="docutils literal notranslate"><span class="pre">aic_spi_mem_exec_op</span></code> 进行处理。
+由于该接口可以获取到 SPI 操作的数据位宽等详细信息，驱动可以为每一个传输操作设置准确的模式(Single/Dual/Quad)。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="spinand.html" class="btn btn-neutral float-right" title="3.8.5. SPI NAND 驱动" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dma.html" class="btn btn-neutral float-left" title="3.8.3. DMA 驱动" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

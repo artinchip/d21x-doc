@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.3.5.3.1. 初始化流程 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="6.3.5.4.1. uapi/video/artinchip_video.h" href="data_structure.html" />
+    <link rel="prev" title="6.3.5.2.1. fbdev框架" href="framework.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6.3. Display 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../01_introduction/index.html">6.3.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../02_config_guide/index.html">6.3.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../03_debug_guide/index.html">6.3.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../04_test_guide/index.html">6.3.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">6.3.5. 设计说明</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="index.html#id2">6.3.5.1. 源码和文档说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id3">6.3.5.2. 模块架构</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="index.html#id4">6.3.5.3. 关键流程设计</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">6.3.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">6.3.5.3.2. 预留内存管理流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#backlight">6.3.5.3.3. Backlight</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id5">6.3.5.4. 数据结构设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id6">6.3.5.5. 接口设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#app-demo">6.3.5.6. APP Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../06_panel_port/index.html">6.3.6. 屏配置指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../07_fb_rotation/index.html">6.3.7. 竖屏横用、横屏竖用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../08_disp_property/index.html">6.3.8. 色彩调整</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../09_boot_logo/index.html">6.3.9. Boot LOGO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../10_faq/index.html">6.3.10. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6.3. </span>Display 使用指南</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.3.5. </span>设计说明</a> &raquo;</li>
+        
+      <li><span class="section-number">6.3.5.3.1. </span>初始化流程</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.3.5.3.1. </span>初始化流程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="probebind">
+<h2><span class="section-number">6.3.5.3.1.1. </span>probe和bind过程<a class="headerlink" href="#probebind" title="永久链接至标题">¶</a></h2>
+<p>为了约束初始化顺序，AICFB 为 component 的 master 设备，DE、DI 和 panel 为 slave 设备，component 框架保证 master 的初始化顺序在所有 slave 之后。各模块的初始化顺序如下：</p>
+<div class="figure align-center" id="id4">
+<img alt="../../../../_images/driver_bind.png" src="../../../../_images/driver_bind.png" />
+<p class="caption"><span class="caption-number">图 6.22 </span><span class="caption-text">显示模块的初始化顺序</span><a class="headerlink" href="#id4" title="永久链接至图片">¶</a></p>
+</div>
+<p>其中：</p>
+<ol class="arabic simple">
+<li><p>master 调用 component_match_add() 接口声明一个 match 队列。</p></li>
+<li><p>master 调用 component_master_add_with_match() 将自己注册进 component 框架。</p></li>
+<li><p>slave 调用 component_add()完成 slave 注册。</p></li>
+<li><p>各模块的 probe 顺序没有约束，设备的注册和声明在 probe 函数中进行。</p></li>
+<li><p>每个子设备都要实现自己的 bind() 和 unbind() 接口（struct component_ops），当 match 队列中的模块都完成 probe 后，component 框架会调用模块的 bind() 接口。</p></li>
+<li><p>各 slave 按 match 队列顺序执行 bind()，Component 框架保证 master 最后执行。</p></li>
+<li><p>aicfb-&gt;bind() 主要完成 framebuffer 申请、fb 设备注册、使能 UI 图层、使能 panel 等动作。</p></li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">6.3.5.3.1.2. </span>硬件时序要求<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>DE、DI、panel 三个硬件模块在初始化时有一些时序要求，包含先后顺序、延迟大小，主要约束来自于 panel 侧。
+为了应对这样的硬件特性，驱动设计中使用 callback 方式来实现多个模块间的互相调用。</p>
+<div class="figure align-center">
+<img alt="../../../../_images/callbacks1.png" src="../../../../_images/callbacks1.png" />
+</div>
+<p>在fb的bind()中，会调用这些回调来完成初始化，如下图（其中关系比较绕的是 panel 初始化逻辑）：</p>
+<div class="figure align-center">
+<img alt="../../../../_images/fb_bind1.png" src="../../../../_images/fb_bind1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h1><span class="section-number">6.3.5.3.2. </span>预留内存管理流程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h1>
+<div class="section" id="cma">
+<h2><span class="section-number">6.3.5.3.2.1. </span>CMA<a class="headerlink" href="#cma" title="永久链接至标题">¶</a></h2>
+<p>Linux-3.5 引入了一套 Contiguous Memory Allocator，简称 CMA，基于 DMA 映射框架为内核提供连续大块内存的申请和释放。CMA 主要思路是将预留内存纳入 DMA 映射管理，可以给系统内所有设备共享使用，这样就既解决了为 GPU、Camera、显示等图像处理类模块预留大块的连续内存，又解决了预留内存被空置的问题，提升内存使用率。</p>
+<p>CMA 本身不是一套分配内存的算法，它的底层仍然要依赖伙伴算法系统来支持，可以理解为 CMA 是介于 DMA mapping 和内存管理之间的中间层。</p>
+<div class="figure align-center">
+<img alt="../../../../_images/cma.png" src="../../../../_images/cma.png" />
+</div>
+<p>CMA的具体功能有：</p>
+<ol class="arabic simple">
+<li><p>在系统的启动过程中，根据内核编译配置、或者 DTS 配置将内存中某块区域用于 CMA，然后内核中其他模块可以通过 DMA 的接口 API 申请连续内存，这块区域我们称之为 CMA area。</p></li>
+<li><p>提供 cma_alloc()和 cma_release()两个接口函数用于分配和释放 CMA pages。</p></li>
+<li><p>记录和跟踪 CMA area 中各个 pages 的状态。</p></li>
+<li><p>调用伙伴系统接口，进行真正的内存分配。</p></li>
+</ol>
+<p><strong>CMA 主要接口</strong></p>
+<ol class="arabic">
+<li><p>CNA area 的声明</p>
+<blockquote>
+<div><p>setup_bootmem() -&gt; dma_contiguous_reserve()，定义在 kernel/dma/contiguous.c，其中有确定 CMA area size 的代码如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifdef CONFIG_CMA_SIZE_SEL_MBYTES</span>
+       <span class="n">selected_size</span> <span class="o">=</span> <span class="n">size_bytes</span><span class="p">;</span>
+<span class="cp">#elif defined(CONFIG_CMA_SIZE_SEL_PERCENTAGE)</span>
+       <span class="n">selected_size</span> <span class="o">=</span> <span class="n">cma_early_percent_memory</span><span class="p">();</span>
+<span class="cp">#elif defined(CONFIG_CMA_SIZE_SEL_MIN)</span>
+       <span class="n">selected_size</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">size_bytes</span><span class="p">,</span> <span class="n">cma_early_percent_memory</span><span class="p">());</span>
+<span class="cp">#elif defined(CONFIG_CMA_SIZE_SEL_MAX)</span>
+       <span class="n">selected_size</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">size_bytes</span><span class="p">,</span> <span class="n">cma_early_percent_memory</span><span class="p">());</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>然后会调用 dma_contiguous_reserve_area() -&gt; cma_declare_contiguous() 去初始化 CMA 的配置参数。</p>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>计算 CMA 内存大小的过程中，size_bytes 来源于内核编译配置中 CONFIG_CMA_SIZE_MBYTES，通过计算将 size 限定在 4MB 对齐。 参考 <a class="reference internal" href="../02_config_guide/menuconfig/index.html#ref-to-cma-config"><span class="std std-ref">CMA配置</span></a> 进行设置。</p>
+</div>
+<ol class="arabic" start="2">
+<li><p>CMA 初始化</p>
+<blockquote>
+<div><p>见 mm/cma.c 中的 cma_init_reserved_areas() -&gt; init_cma_reserved_pageblock()，其中会设置 page 属性为 MIGRATE_CMA。</p>
+</div></blockquote>
+</li>
+<li><p>申请 CMA</p>
+<blockquote>
+<div><p>使用 DMA 标准接口 dma_alloc_coherent() 和 dma_alloc_wc()，会间接调用 dma_alloc_from_contiguous()。</p>
+</div></blockquote>
+</li>
+<li><p>释放 CMA</p>
+<blockquote>
+<div><p>使用 DMA 标准接口 dma_free_coherent()。</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="dma-buf">
+<h2><span class="section-number">6.3.5.3.2.2. </span>DMA-BUF<a class="headerlink" href="#dma-buf" title="永久链接至标题">¶</a></h2>
+<p>CMA 解决的是预留内存空闲期间如何给其他设备共享的问题，DMA-BUF 解决的是使用期间多个设备共享的问题、以及内核态和用户态如何共享内存的问题。DMA-BUF 可减少多余的拷贝，提升系统运行效率。</p>
+<p>DMA-BUF 最初原型是s hrbuf，于 2011 年首次提出，实现了 “Buffer Sharing” 的概念验证。shrbuf 被社区重构变身为 DMA-BUF，2012年合入 Linux-3.3 主线版本。</p>
+<p>DMA-BUF 被广泛用在多媒体驱动中，尤其在 V4L2、DRM 子系统中经常用到。</p>
+<p><strong>DMA-BUF vs ION</strong></p>
+<p>从 Linux-5.6 开始，DMA-BUF 正式合入了原来 ION 的 heap 管理功能，社区的主分支是打算抛弃 ION 了。在Linux-5.11，主分支已经删除了 drivers/staging/android/ion 代码，原因是“原厂对ION的支持在社区中不太活跃，很难持续更新ION”，而且ION还带来了几个ABI break。</p>
+<ol class="arabic simple">
+<li><p>ION 有大量的 heap 逻辑管理，而 DMA-BUF 的 heap 更多是分配接口上的管理（社区更容易接受）；</p></li>
+<li><p>ION 是生产一个字符设备 /dev/ion，而 DMA-BUF 为每个 heap 生成一个字符设备，便于用户态的heap区分和权限管理；</p></li>
+<li><p>ION 限制最多32个 heap，DMA-BUF 没有这个限制；</p></li>
+<li><p>DMA-BUF中实现了两个初始的 heap：system heap 和 cma heap，与原 ION 中的功能类似，但做了很大简化（为了方便社区 review），删掉原来 ION 中针对 system、cma 做过的一些优化，涉及 uncached buffers、large page allocation、page pooling和deferred freeing。 DMA-BUF 中的 CMA，只添加了default CMA 区域。原 ION 中的 CMA 是添加了所有 DMA 区域。</p></li>
+</ol>
+<p><strong>工作机制</strong></p>
+<p>为了解决各个驱动之间的 buffer 共享问题，DMA-BUF 将 buffer 与 file 结合使用，让 DMA-BUF 既是一块物理 buffer，同时也是个 Linux 标准 file。典型的应用框图如下：</p>
+<div class="figure align-center">
+<img alt="../../../../_images/dma_buf1.png" src="../../../../_images/dma_buf1.png" />
+</div>
+<p>分配 buffer 的模块为 exporter，使用该 buffer 的模块为 importer。</p>
+<p>DMA-BUF 支持连续物理内存、散列物理内存的 buffer 管理。ArtInChip 平台目前只支持连续物理内存的 DMA-BUF。</p>
+<p><strong>主要接口</strong></p>
+<p>内核空间</p>
+<blockquote>
+<div><dl class="simple">
+<dt>作为 exporter</dt><dd><p>注册接口 <code class="docutils literal notranslate"><span class="pre">dma_buf_export()</span></code></p>
+</dd>
+<dt>作为 importer</dt><dd><p>获取buf的接口：<code class="docutils literal notranslate"><span class="pre">dma_buf_get</span></code>,``dma_buf_attach()``,``dma_buf_map_attachment``。</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>用户空间</p>
+<blockquote>
+<div><p>通过 ioctl 来管理 DMA-BUF。</p>
+</div></blockquote>
+<p><strong>基于 DMA-BUF 的 Video Layer buffer 管理</strong></p>
+<p>UI Layer的 buffer，由 driver 申请，通过 /dev/fb0 透传到用户态，用户态使用 mmap() 实现 buffer 共享。</p>
+<p>但对于 Video Layer 的 buffer，情况有所不同，申请多大 buffer、多少个 buffer 都是由应用场景确定，所以应该是用户态发起申请。同时这个 buffer 还要满足物理连续的特性，DE 硬件才能用来做图层叠加处理。</p>
+<div class="figure align-center">
+<img alt="../../../../_images/dma_buf_heap.png" src="../../../../_images/dma_buf_heap.png" />
+</div>
+<p>左图，是 ION 时代的使用方法，新版 Linux（Linux-5.6以后）的 DMA-BUF 已经支持了 heap 功能，从功能上完全可以替代 ION。对用户态来说，看到的差别不再是单一的 /dev/ion 设备节点，而是有多个 /dev/* 设备节点，比如 CMA heap 会生成 /dev/dma_heap/reserved，System heap 会生成 /dev/dma_heap/system。</p>
+<p>使用 DMA-BUF 的情况下，APP 和 fb 驱动共享 buffer 的初始化流程如下图所示：</p>
+<div class="figure align-center">
+<img alt="../../../../_images/dma_buf_app.png" src="../../../../_images/dma_buf_app.png" />
+</div>
+<p>其中第3步的操作比较啰嗦，fb 驱动根据 APP 传来的一组fd[]，逐个去向 DMA-BUF 模块申请以下资源：dma_buf -&gt; attatch -&gt; sg_table -&gt; dma_addr_t，并将这组资源保存在本地（struct aic_de_dmabuf），用于释放 DMA-BUF。</p>
+<p>这里面有一个假设：sg_table 中只有一个 sg。也就是说单个 DMA-BUF 必须是物理连续的，不能是多块 buf 拼起来的，否则物理地址 dma_addr_t 就不能代表多块 buf 的起始地址。</p>
+<p>对于释放过程，APP需要先通知FB驱动要释放的fb[]，然后再使用用户态文件接口close()逐个关闭fb[]。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>之所以申请“一组fd[]”，是因为video播放过程中为了边显示边解码，至少需要两套 Buffer 来实现乒乓效果（实际应用中为了更流畅，可能还需要申请多套 Buffer 构成循环 Buffer）。这里说的“一套Buffer”对应视频的一帧数据，而一帧视频数据往往分成YUV三个分量，每个分量在解码过程中是需要分别处理（对应DE寄存器中addr0、addr1、addr2），所以“一套Buffer”应该是 Y、U、V 共3个Buffer。对于乒乓结构的 Buffer，就需要申请 3*2=6 个DMA-BUF的fd。</p>
+</div>
+<p>UI Layer 的 buffer 申请，是直接调用通用 DMA 接口 <code class="docutils literal notranslate"><span class="pre">dma_alloc_coherent()</span></code>，最终在 CMA 内存中分配。这样并不影响 Video Layer的 buffer 走 DMA-BUF 申请，CMA 模块内部会处理好来自各种接口的 Buffer 申请。</p>
+</div>
+</div>
+<div class="section" id="backlight">
+<h1><span class="section-number">6.3.5.3.3. </span>Backlight<a class="headerlink" href="#backlight" title="永久链接至标题">¶</a></h1>
+<p>Backlight 使用内核中 pwm-backlight 背光驱动，代码见 <cite>linux-5.10driversvideobacklightpwm_bl.c</cite>。</p>
+<p>panel 驱动可以通过 DTS 获取背光驱动的 device node , 然后 backlight API 控制背光。</p>
+<ul class="simple">
+<li><p>backlight_enable() 使能背光</p></li>
+<li><p>backlight_update_status() 对背光状态进行更新</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>backlight {
+   compatible = &quot;pwm-backlight&quot;;
+   /* pwm node name; pwm device No.; period_ns; pwm_polarity */
+   pwms = &lt;&amp;pwm 0 1000000 PWM_POLARITY_INVERTED&gt;;
+   brightness-levels = &lt;0 10 20 30 40 50 60 70 80 90 100&gt;;
+   default-brightness-level = &lt;8&gt;;
+   status = &quot;okay&quot;;
+};
+
+panel_rgb {
+   compatible = &quot;artinchip,aic-general-rgb-panel&quot;;
+
+   backlight = &lt;&amp;backlight&gt;;
+
+};  // 为节省篇幅，已省略无关配置
+</pre></div>
+</div>
+<p>应用程序对背光进行操作：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="m">2</span> &gt; /sys/class/backlight/backlight/brightness
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="data_structure.html" class="btn btn-neutral float-right" title="6.3.5.4.1. uapi/video/artinchip_video.h" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="framework.html" class="btn btn-neutral float-left" title="6.3.5.2.1. fbdev框架" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

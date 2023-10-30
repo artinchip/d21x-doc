@@ -1,0 +1,622 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1.2. 环境搭建 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2. 使用指南" href="../sdk/index.html" />
+    <link rel="prev" title="1.1. VMWare 安装" href="vmware.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 编译准备</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="vmware.html">1.1. VMWare 安装</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2. 环境搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu">1.2.1. 关于 Ubuntu 系统</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.2.2. 安装 Ubuntu 系统</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#luban">1.2.3. 下载 Luban</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.2.4. 编译环境准备</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id4">1.2.4.1. 一键安装</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">1.2.4.2. 手动安装</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#deb">1.2.4.2.1. deb 文件安装</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">1.2.4.2.2. 依赖包获取下载</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#python">1.2.4.3. Python 相关安装</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id7">1.2.4.3.1. 编译安装</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">1.2.4.3.2. 压缩包安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">1.2.5. Luban 编译</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id10">1.2.5.1. 常规编译</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id11">1.2.5.2. 一步直达</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#emmc">1.2.5.3. eMMC 固件</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#spi-nand">1.2.5.4. SPI NAND 固件</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">1. </span>编译准备</a> &raquo;</li>
+        
+      <li><span class="section-number">1.2. </span>环境搭建</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ref-luban-env-ubuntu">
+<span id="id1"></span><h1><span class="section-number">1.2. </span>环境搭建<a class="headerlink" href="#ref-luban-env-ubuntu" title="永久链接至标题">¶</a></h1>
+<p>Luban SDK 的开发需要在 Linux 系统中进行，所以首先需要有一台运行着 Linux 系统的计算机。</p>
+<p>ArtInChip 推荐的 Linux 发行版为 Ubuntu 20.04 LTS（Long Term Support）版本，其他版本也可行，只是安装软件包的依赖和版本不同。</p>
+<div class="section" id="ubuntu">
+<h2><span class="section-number">1.2.1. </span>关于 Ubuntu 系统<a class="headerlink" href="#ubuntu" title="永久链接至标题">¶</a></h2>
+<p>Ubuntu（乌班图）是一个以桌面应用为主的 Linux 操作系统，作为 Linux 发行版中的后起之秀，Ubuntu 在短短几年时间里便迅速成长为从 Linux 初学者到实验室用计算机/务器都适合使用的发行版。</p>
+<p>Ubuntu 在中国有非常高的知名度，具有庞大的社区力量支持，和最新最全的开放源代码的自由软件支持，开发者可以方便地获得帮助。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">1.2.2. </span>安装 Ubuntu 系统<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Ubuntu 的安装教程在网上有很多可参考，以及相关常见问题也可以通过搜索查找解决方案。</p>
+<ul class="simple">
+<li><p>Ubuntu 官方网站： <a class="reference external" href="http://www.ubuntu.com">http://www.ubuntu.com</a></p></li>
+<li><p>中文地址为： <a class="reference external" href="http://www.ubuntu.org.cn/index_kylin">http://www.ubuntu.org.cn/index_kylin</a></p></li>
+<li><p>桌面版下载地址： <a class="reference external" href="http://www.ubuntu.com/download/desktop">http://www.ubuntu.com/download/desktop</a></p></li>
+</ul>
+</div>
+<div class="section" id="luban">
+<h2><span class="section-number">1.2.3. </span>下载 Luban<a class="headerlink" href="#luban" title="永久链接至标题">¶</a></h2>
+<p>Luban SDK 的代码托管于 Gitee 服务器中，为开源代码，可以直接从下面的仓库地址中下载：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://gitee.com/artinchip/d211.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.2.4. </span>编译环境准备<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Luban SDK 的开发环境中，还需要安装一些依赖包，并对几个关键工具有版本要求：</p>
+<ul class="simple">
+<li><p>GCC 版本 &gt;= 6.4</p></li>
+<li><p>GLIBCXX 版本 &gt;= 3.4.22（在libstd++.so.6库文件中查看该版本号）</p></li>
+<li><p>Python3 版本 &gt;= 3.5</p></li>
+</ul>
+<p>决定 Ubuntu 系统是否能自动完成一键安装的关键条件： <strong>是否有可以访问的软件源。</strong></p>
+<ul class="simple">
+<li><p>有软件源，无论是外网的源、还是内网搭建的源，就可以完成一键安装。</p></li>
+<li><p>没有软件源，就需要手动逐个的下载安装包、执行安装。</p></li>
+</ul>
+<div class="section" id="id4">
+<h3><span class="section-number">1.2.4.1. </span>一键安装<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>Luban SDK 提供了一键安装脚本 <code class="docutils literal notranslate"><span class="pre">oneclick.sh</span></code>，方便用户 <strong>最快1分钟搭建好开发环境</strong>。</p>
+<p>有可用软件源的网络环境中，Ubuntu 系统是用 apt-get 工具完成软件安装，“一键安装” 脚本也需要用到此 apt-get 工具。</p>
+<p>在命令行中执行一键安装脚本的方法：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> Luban_SDK_Root_Directory/
+./tools/scripts/oneclick.sh quiet
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">oneclick.sh</span></code> 会自动检查当前系统的版本、环境，在软件源可以正常访问的情况下，逐个安装 Luban 需要的软件工具，安装成功后会有提示信息：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>...
+fdt        0.3.2
+                                                                [OK]
+
+&gt;&gt;&gt; Congratulations! All the package is ready.
+&gt;&gt;&gt; Enjoy the LubanOS!
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>执行 <code class="docutils literal notranslate"><span class="pre">oneclick.sh</span></code> 时的“quiet”参数会隐藏所有需要用户确认的环节，如果去掉“quiet”参数，会在以下几个软件包的安装时提问是否继续：</p>
+<ul class="simple">
+<li><p>GCC</p></li>
+<li><p>Python3</p></li>
+<li><p>Python3-dev</p></li>
+<li><p>Python3-pip</p></li>
+</ul>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">oneclick.sh</span></code> 目前已支持的系统有：</p>
+<ul class="simple">
+<li><p>Ubuntu 14.04、16.04、18.04、20.04、22.04</p></li>
+<li><p>CentOS 7.x、8.x</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>Ubuntu 14.04、16.04 和 CentOS 7.x 自带的GCC 版本太低， <code class="docutils literal notranslate"><span class="pre">oneclick.sh</span></code> 会自动编译安装一份GCC 6.4</p>
+</div>
+<p>当然，用户如果需要也可以通过手动执行 apt-get 来逐个安装依赖，方法：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt-get update
+sudo apt-get install build-essential python3 python3-pip
+sudo pip install pycrypto
+sudo pip install fdt
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">1.2.4.2. </span>手动安装<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>如果使用的 Ubuntu 系统上没有网络环境，则可以离线安装，可以使用 ArtInChip 提供的离线包进行安装，deb 离线包分三类：</p>
+<ul class="simple">
+<li><p>tools包</p></li>
+<li><p>python包</p></li>
+<li><p>vim 包</p></li>
+</ul>
+<div class="section" id="deb">
+<h4><span class="section-number">1.2.4.2.1. </span>deb 文件安装<a class="headerlink" href="#deb" title="永久链接至标题">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>. <span class="nb">cd</span> tools
+    sudo dpkg -i *.deb
+<span class="m">2</span>. <span class="nb">cd</span> python
+    sudo dpkg -i *.deb
+<span class="m">3</span>. <span class="nb">cd</span> vim
+    sudo dpkg -i vim-tiny_2%3a8.1.2269-1ubuntu5.7_amd64.deb
+    sudo dpkg -i *.deb
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h4><span class="section-number">1.2.4.2.2. </span>依赖包获取下载<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p>但是不同的系统的依赖可能会不一样，如果使用离线包安装依然有依赖缺失的话，可以采用如下方式解决</p>
+<ul class="simple">
+<li><p>单独安装某一deb安装包，获取缺失的依赖</p></li>
+<li><p>在另外一有网络环境的计算机上下载缺失的依赖包</p></li>
+<li><p>复制所下载的依赖包到本服务器，安装依赖包</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>aic@aic-virtual-machine:~/work/test$ sudo dpkg -i libgcc-9-dev_9.3.0-17ubuntu1~20.04_amd64.deb
+......
+dpkg: dependency problems prevent configuration of libgcc-9-dev:amd64:
+libgcc-9-dev:amd64 depends on libitm1 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package libitm1 is not installed.
+libgcc-9-dev:amd64 depends on libatomic1 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package libatomic1 is not installed.
+libgcc-9-dev:amd64 depends on libasan5 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package libasan5 is not installed.
+libgcc-9-dev:amd64 depends on liblsan0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package liblsan0 is not installed.
+libgcc-9-dev:amd64 depends on libtsan0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package libtsan0 is not installed.
+libgcc-9-dev:amd64 depends on libubsan1 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package libubsan1 is not installed.
+libgcc-9-dev:amd64 depends on libquadmath0 <span class="o">(</span>&gt;<span class="o">=</span> <span class="m">9</span>.3.0-17ubuntu1~20.04<span class="o">)</span><span class="p">;</span> however:
+    Package libquadmath0 is not installed.
+
+dpkg: error processing package libgcc-9-dev:amd64 <span class="o">(</span>--install<span class="o">)</span>:
+dependency problems - leaving unconfigured
+Errors were encountered <span class="k">while</span> processing:
+    libgcc-9-dev:amd64
+
+aic@aic-virtual-machine:~/work/test$ apt-get download libitm1 libatomic1 libasan5 liblsan0 libtsan0 libubsan1 libquadmath0
+    Get:1 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 libasan5 amd64 <span class="m">9</span>.3.0-17ubuntu1~20.04 <span class="o">[</span><span class="m">394</span> kB<span class="o">]</span>
+    Get:2 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 libatomic1 amd64 <span class="m">10</span>.3.0-1ubuntu1~20.04 <span class="o">[</span><span class="m">9</span>,284 B<span class="o">]</span>
+    Get:3 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 libitm1 amd64 <span class="m">10</span>.3.0-1ubuntu1~20.04 <span class="o">[</span><span class="m">26</span>.2 kB<span class="o">]</span>
+    Get:4 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 liblsan0 amd64 <span class="m">10</span>.3.0-1ubuntu1~20.04 <span class="o">[</span><span class="m">835</span> kB<span class="o">]</span>
+    Get:5 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 libquadmath0 amd64 <span class="m">10</span>.3.0-1ubuntu1~20.04 <span class="o">[</span><span class="m">146</span> kB<span class="o">]</span>
+    Get:6 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 libtsan0 amd64 <span class="m">10</span>.3.0-1ubuntu1~20.04 <span class="o">[</span><span class="m">2</span>,009 kB<span class="o">]</span>
+    Get:7 http://cn.archive.ubuntu.com/ubuntu focal-updates/main amd64 libubsan1 amd64 <span class="m">10</span>.3.0-1ubuntu1~20.04 <span class="o">[</span><span class="m">784</span> kB<span class="o">]</span>
+    Fetched <span class="m">4</span>,204 kB <span class="k">in</span> 18s <span class="o">(</span><span class="m">231</span> kB/s<span class="o">)</span>
+
+aic@aic-virtual-machine:~/work/test$ cp *.deb /media/aic/SDCARD/
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="python">
+<h3><span class="section-number">1.2.4.3. </span>Python 相关安装<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
+<p>Python 目录中即包含Python 的deb 安装文件，和普通的deb文件安装类似，如果有依赖，则继续依赖下载的策略；Python 的工具有两种安装方式：</p>
+<div class="section" id="id7">
+<h4><span class="section-number">1.2.4.3.1. </span>编译安装<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
+<p>可以下载源码进行安装，www.pypi.org 上有很多Python 工具，最通用的pip 等，可以通过源码build安装，以pip-22.0.3 为例：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> pip-22.0.3/
+python3 setup.py  build
+sudo python3 setup.py  install
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4><span class="section-number">1.2.4.3.2. </span>压缩包安装<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h4>
+<p>Python 的打包格式有Wheel(.whl) 和Egg(.egg) 两种格式，目的是支持不需要编译的安装过程，它们实际上也是一种压缩文件。
+Wheel 文件可以使用pip 直接安装。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo pip install pycryptodome-3.14.1-cp27-cp27mu-manylinux2010.whl
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">1.2.5. </span>Luban 编译<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>编译环境准备好后，即可进行系统编译</p>
+<div class="section" id="id10">
+<h3><span class="section-number">1.2.5.1. </span>常规编译<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make list                              --&gt; 列出当前可用的项目配置
+make d211_demo_defconfig            --&gt; 应用具体的项目配置
+make                                   --&gt; 编译打包
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">1.2.5.2. </span>一步直达<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> tools/onestep.sh                --&gt; 一步直达命令
+lunch d211_demo_defconfig           --&gt; 选择 d211_per_spinand_defconfig
+m                                      --&gt; 编译打包
+</pre></div>
+</div>
+</div>
+<div class="section" id="emmc">
+<h3><span class="section-number">1.2.5.3. </span>eMMC 固件<a class="headerlink" href="#emmc" title="永久链接至标题">¶</a></h3>
+<p>如果开发板使用的是 eMMC （eNand）编译后的固件名称为 d211_demo_v1.0.0.img</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>Image file is generated: /xxx/d211/luban/output/d211_demo/images/d211_demo_v1.0.0.img
+</pre></div>
+</div>
+</div>
+<div class="section" id="spi-nand">
+<h3><span class="section-number">1.2.5.4. </span>SPI NAND 固件<a class="headerlink" href="#spi-nand" title="永久链接至标题">¶</a></h3>
+<p>如果开发板使用的是 SPI NAND，则编译后会生成两个固件：</p>
+<ul class="simple">
+<li><p>d211_xxx_page_2k_block_128k_v1.0.0.img： SPI NAND 的 Page Size 为 2K， Block Size 为 128k</p></li>
+<li><p>d211_xxx_page_4k_block_256k_v1.0.0.img： SPI NAND 的 Page Size 为 4K， Block Size 为 256k</p></li>
+</ul>
+<p>一般选择 d211_xxx_page_2k_block_128k_v1.0.0.img 即可</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../sdk/index.html" class="btn btn-neutral float-right" title="2. 使用指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="vmware.html" class="btn btn-neutral float-left" title="1.1. VMWare 安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

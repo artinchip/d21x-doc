@@ -1,0 +1,1489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>13.2.7. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="13.3. RTP" href="../rtp/index.html" />
+    <link rel="prev" title="13.2.6. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">13. 模拟</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../adcim/index.html">13.1. ADC Interface Module (ADCIM)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">13.2. General Purpose Analog Input (GPAI)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">13.2.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">13.2.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id3">13.2.3. 中断产生机制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id4">13.2.4. 高/低电平报警阈值描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id5">13.2.5. 高/低/正常电平数据界定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">13.2.6. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">13.2.7. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-gpai-mcr">13.2.7.1. 0x000 GPAI_MCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-gpai-intr">13.2.7.2. 0x004 GPAI_INTR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x100-0x40-n-gpai-chncr">13.2.7.3. 0x100+0x40*n GPAI_CHnCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x104-0x40-n-gpai-chnint">13.2.7.4. 0x104+0x40*n GPAI_CHnINT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x108-0x40-n-gpai-chnpsi">13.2.7.5. 0x108+0x40*n GPAI_CHnPSI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x110-0x40-n-gpai-chnhlat">13.2.7.6. 0x110+0x40*n GPAI_CHnHLAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x114-0x40-n-gpai-chnllat">13.2.7.7. 0x114+0x40*n GPAI_CHnLLAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x118-0x40-n-gpai-chnacr">13.2.7.8. 0x118+0x40*n GPAI_CHnACR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x120-0x40-n-gpai-chnfcr">13.2.7.9. 0x120+0x40*n GPAI_CHnFCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x124-0x40-n-gpai-chndata">13.2.7.10. 0x124+0x40*n GPAI_CHnDATA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-version">13.2.7.11. 0xFFC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">13.3. Resistance Touch Panel (RTP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ths/index.html">13.4. Thermal Sensor (THS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">13. </span>模拟</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">13.2. </span>GPAI</a> &raquo;</li>
+        
+      <li><span class="section-number">13.2.7. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">13.2.7. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>n=0~7为GPAI通道号</strong></p>
+<div class="section" id="x000-gpai-mcr">
+<h2><span class="section-number">13.2.7.1. </span>0x000 GPAI_MCR<a class="headerlink" href="#x000-gpai-mcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI模块控制(GPAI Module Control Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">CHEN（Channel Enable，通道使能控制）</div>
+<div class="line">本字段8bits分别对应8个通道的独立使能控制，具体如下：</div>
+<div class="line">Bit8：0 – 禁止通道0，1 – 使能通道0；</div>
+<div class="line">Bit9：0 – 禁止通道1，1 – 使能通道1；</div>
+<div class="line">Bit10：0 – 禁止通道2，1 – 使能通道2；</div>
+<div class="line">Bit11：0 – 禁止通道3，1 – 使能通道3；</div>
+<div class="line">Bit12：0 – 禁止通道4，1 – 使能通道4；</div>
+<div class="line">Bit13：0 – 禁止通道5，1 – 使能通道5；</div>
+<div class="line">Bit14：0 – 禁止通道6，1 – 使能通道6；</div>
+<div class="line">Bit15：0 – 禁止通道7，1 – 使能通道7。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">EN（Module Enable, 模块使能）</div>
+<div class="line">0 ： 本模块被禁止，本模块停止工作；</div>
+<div class="line">1 :本模块被使能。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-gpai-intr">
+<h2><span class="section-number">13.2.7.2. </span>0x004 GPAI_INTR<a class="headerlink" href="#x004-gpai-intr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI中断控制与状态(GPAI Interrupt Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH7_FLG（Channel 7 Flag，通道7事件更新标志）</div>
+<div class="line">本字段表示通道7是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道7无新的待处理事件；</div>
+<div class="line">1 – 通道7有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH6_FLG（Channel 6 Flag，通道6事件更新标志）</div>
+<div class="line">本字段表示通道6是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道6无新的待处理事件；</div>
+<div class="line">1 – 通道6有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH5_FLG（Channel 5 Flag，通道5事件更新标志）</div>
+<div class="line">本字段表示通道5是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道5无新的待处理事件；</div>
+<div class="line">1 – 通道5有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH4_FLG（Channel 4 Flag，通道4事件更新标志）</div>
+<div class="line">本字段表示通道4是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道4无新的待处理事件；</div>
+<div class="line">1 – 通道4有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH3_FLG（Channel 3 Flag，通道3事件更新标志）</div>
+<div class="line">本字段表示通道3是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道3无新的待处理事件；</div>
+<div class="line">1 – 通道3有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH2_FLG（Channel 2 Flag，通道2事件更新标志）</div>
+<div class="line">本字段表示通道2是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道2无新的待处理事件；</div>
+<div class="line">1 – 通道2有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH1_FLG（Channel 1 Flag，通道1事件更新标志）</div>
+<div class="line">本字段表示通道1是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道1无新的待处理事件；</div>
+<div class="line">1 – 通道1有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH0_FLG（Channel 0 Flag，通道0事件更新标志）</div>
+<div class="line">本字段表示通道0是否有新的事件发生，例如高/低电平报警事件，</div>
+<div class="line">数据有效事件，FIFO错误事件等等。</div>
+<div class="line">0 – 通道0无新的待处理事件；</div>
+<div class="line">1 – 通道0有新的待处理事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH7_INTEN（Channel 7 Interrupt Enable，通道7中断使能）</div>
+<div class="line">0 – 禁止通道7中断；</div>
+<div class="line">1 – 使能通道7中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH6_INTEN（Channel 6 Interrupt Enable，通道6中断使能）</div>
+<div class="line">0 – 禁止通道6中断；</div>
+<div class="line">1 – 使能通道6中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH5_INTEN（Channel 5 Interrupt Enable，通道5中断使能）</div>
+<div class="line">0 – 禁止通道5中断；</div>
+<div class="line">1 – 使能通道5中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH4_INTEN（Channel 4 Interrupt Enable，通道4中断使能）</div>
+<div class="line">0 – 禁止通道4中断；</div>
+<div class="line">1 – 使能通道4中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH3_INTEN（Channel 3 Interrupt Enable，通道3中断使能）</div>
+<div class="line">0 – 禁止通道3中断；</div>
+<div class="line">1 – 使能通道3中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH2_INTEN（Channel 2 Interrupt Enable，通道2中断使能）</div>
+<div class="line">0 – 禁止通道2中断；</div>
+<div class="line">1 – 使能通道2中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH1_INTEN（Channel 1 Interrupt Enable，通道1中断使能）</div>
+<div class="line">0 – 禁止通道1中断；</div>
+<div class="line">1 – 使能通道1中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">CH0_INTEN（Channel 0 Interrupt Enable，通道0中断使能）</div>
+<div class="line">0 – 禁止通道0中断；</div>
+<div class="line">1 – 使能通道0中断。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x100-0x40-n-gpai-chncr">
+<h2><span class="section-number">13.2.7.3. </span>0x100+0x40*n GPAI_CHnCR<a class="headerlink" href="#x100-0x40-n-gpai-chncr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000n2F00</p></th>
+<th class="head"><p>GPAI 通道控制（GPAI Channel N Control Register）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>25:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SBC（Sample Burst Count，采样突发次数）</div>
+<div class="line">本字段定义了单点采样（或者周期采样模式中的每点采样）中包含的采样次数。</div>
+<div class="line">每点采样的突发次数 = 2^SBC。SBC=0~3分别对应突发次数1/2/4/8。</div>
+<div class="line"><br /></div>
+<div class="line">每次SSEN=1，或者当PSEN=1的每个周期，本模块就会连续突发向ADC模块发</div>
+<div class="line">出2^SBC个采样命令，对应地就会返回2^SBC个采样数据。</div>
+<div class="line"><br /></div>
+<div class="line">2^SBC个采样数据经过简单的算数平均计算之后，合并为一个采样数据后，存入FIFO，</div>
+<div class="line">并等待软件进行后续处理。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>RO</p></td>
+<td><p>0xn</p></td>
+<td><div class="line-block">
+<div class="line">ADC_CHN（ADC Channel Number, ADC通道号）</div>
+<div class="line">本字段显示系统分配的ADC通道号，硬件会根据此通道号匹配ADC并获取返回</div>
+<div class="line">的数据，软件驱动不需要使用，本字段仅作Debug用。n=0~7。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2F</p></td>
+<td><div class="line-block">
+<div class="line">ADC_ACQ（ADC Acquisition Time, ADC捕获时间）</div>
+<div class="line">本字段定义了本ADC通道的捕获时间长度。本计数值单位为ADC_CLK的周期数，</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">TADCACQ</span> <span class="pre">=（ADC_ACQ+1）*TADC_CLK</span></code>。假设 <code class="docutils literal notranslate"><span class="pre">ADC_CLK=24MHz</span></code>， <code class="docutils literal notranslate"><span class="pre">ADC_ACQ=0x2F</span></code>，</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">TADCACQ</span> <span class="pre">=</span> <span class="pre">(47+1)*41.67ns</span> <span class="pre">=</span> <span class="pre">2us</span></code>。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADC_PRI（ADC Priority, ADC采样优先级）</div>
+<div class="line">本字段定义了本次ADC采样的优先级控制。</div>
+<div class="line">0 ： 表示低优先级非实时采样，采样命令会与其他非实时采样命令进入采样队列</div>
+<div class="line">1 ：表示高优先级实时采样，采样命令会被直接处理，不进入采样队列</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CHn_State(Channel N State,通道工作状态）</div>
+<div class="line">0：空闲；</div>
+<div class="line">1: 忙碌。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PSEN（Periodic Sample Enable，周期采样使能）</div>
+<div class="line">本字段功能为使能GPAI通道周期采样。由软件置位，表示启动相应GPAI</div>
+<div class="line">通道的周期性采样，采样间隔由GPAI_CHnPSI寄存器设定。</div>
+<div class="line"><br /></div>
+<div class="line">软件清零表示停止周期性采样，如果在软件清零之前硬件已经启动了一次新的采样，</div>
+<div class="line">那么这次采样会继续完成，并最终返回数据。</div>
+<div class="line">注意：不允许同时使能周期采样与单次采样，即SSEN与PSEN不可以同时有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">SSEN（Single Sample Enable，单点采样使能）</div>
+<div class="line">本字段功能为使能GPAI通道单点采样。由软件置位，表示启动相应通道信号的采样，</div>
+<div class="line">单点采样完成之后，本字段就会由硬件自动清零。</div>
+<div class="line"><br /></div>
+<div class="line">注意：尽管本字段描述为单点采样，但由于为了避免单次采样误差，</div>
+<div class="line">可能需要通过多次采样后进行算术平均，并得到一个相对稳定的信号电平值，</div>
+<div class="line">所以本“单点”采样实际上会包含“多次”采样，对应的由硬件向ADC接口控制器</div>
+<div class="line">连续发出多个采样命令，连续发出采样命令的个数由SBC设定。</div>
+<div class="line"><br /></div>
+<div class="line">例如SBC配置为0x2，那么每次启动SSEN，硬件会连续发出2^2=4个采样命令，</div>
+<div class="line">4个采样命令发出后，硬件自动清零SSEN。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x104-0x40-n-gpai-chnint">
+<h2><span class="section-number">13.2.7.4. </span>0x104+0x40*n GPAI_CHnINT<a class="headerlink" href="#x104-0x40-n-gpai-chnint" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI 通道中断控制与状态(DMA Channel N Interrupt)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">LLAR_FLG（Low-Level Alarm Removed Flag，低电平警报解除标志）</div>
+<div class="line">本字段高电平有效，表示低电平警报解除，即采样后的数据从低于LLAVV</div>
+<div class="line">（低电平警报有效阈值）到高于LLARV（低电平警报解除阈值）。</div>
+<div class="line">本字段由软件写1清零。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">LLAV_FLG（Low-Level Alarm Valid Flag，低电平警报有效标志）</div>
+<div class="line">本字段高电平有效，表示低电平警报有效，即采样后的数据从高于LLAVR</div>
+<div class="line">（低电平警报解除阈值）到低于LLAVV（低电平警报有效阈值）。</div>
+<div class="line">本字段由软件写1清零。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">HLAR_FLG（High-Level Alarm Removed Flag，高电平警报解除标志）</div>
+<div class="line">本字段高电平有效，表示高电平警报解除，即采样后的数据从高于HLAVV</div>
+<div class="line">（高电平警报有效阈值）到低于HLARV（高电平警报解除阈值）。</div>
+<div class="line">本字段由软件写1清零。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">HLAV_FLG（High-Level Alarm Valid Flag，高电平警报有效标志）</div>
+<div class="line">本字段高电平有效，表示高电平警报有效，即采样后的数据从低于HLARV</div>
+<div class="line">（高电平警报解除阈值）到高于HLAVV（高电平警报有效阈值）。</div>
+<div class="line">本字段由软件写1清零。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>19:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>RO</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_FLG（FIFO Error Flag，FIFO异常标志）</div>
+<div class="line">本字段高电平有效，表示FIFO异常，异常包括Overflow（上溢出）与Underflow（下溢出）。</div>
+<div class="line">本字段只读，可以通过清除FIFO控制寄存器来清除本标志位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DRDY_FLG（Data Ready Flag，数据有效标志）</div>
+<div class="line">本字段高电平有效，表示FIFO数据有效，即FIFO内数据量不少于FIFO数据有效阈值。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">LLAR_INTEN（Low-Level Alarm Removed Interrupt Enable，低电平警报解除中断使能）</div>
+<div class="line">0 – 禁止LLAR中断；</div>
+<div class="line">1 – 使能LLAR中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">LLAV_INTEN（Low-Level Alarm Valid Interrupt Enable，低电平警报有效中断使能）</div>
+<div class="line">0 – 禁止LLAV中断；</div>
+<div class="line">1 – 使能LLAV中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">HLAR_INTEN（High-Level Alarm Removed Interrupt Enable，高电平警报解除中断使能）</div>
+<div class="line">0 – 禁止HLAR中断；</div>
+<div class="line">1 – 使能HLAR中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">HLAV_INTEN（High-Level Alarm Valid Interrupt Enable，高电平警报有效中断使能）</div>
+<div class="line">0 – 禁止HLAV中断；</div>
+<div class="line">1 – 使能HLAV中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_INTEN（FIFO Error Interrupt Enable，FIFO异常中断使能）</div>
+<div class="line">0 – 禁止FIFO异常中断；</div>
+<div class="line">1 – 使能FIFO异常中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">DRDY_INTEN（Data Ready Interrupt Enable，数据有效中断使能）</div>
+<div class="line">0 – 禁止数据有效中断；</div>
+<div class="line">1 – 使能数据有效中断。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x108-0x40-n-gpai-chnpsi">
+<h2><span class="section-number">13.2.7.5. </span>0x108+0x40*n GPAI_CHnPSI<a class="headerlink" href="#x108-0x40-n-gpai-chnpsi" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00005DC0</p></th>
+<th class="head"><p>GPAI 通道采样间隔配置(GPAI Channel N Periodic Sample Interval)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0005DC0</p></td>
+<td><div class="line-block">
+<div class="line">PSI（Periodic Sample Interval，周期性采样间隔）</div>
+<div class="line">本字段为0表示连续采样，两次采样循环之间没有Delay。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+<div class="line"><br /></div>
+<div class="line">此字段定义周期性采样的采样间隔，采样间隔为PSI*TPCLK。</div>
+<div class="line">举例，假设 <code class="docutils literal notranslate"><span class="pre">PCLK=24MHz</span></code>， <code class="docutils literal notranslate"><span class="pre">PSI</span> <span class="pre">=</span> <span class="pre">0x5DC0</span> <span class="pre">=</span> <span class="pre">24000</span></code>，</div>
+<div class="line">采样周期 <code class="docutils literal notranslate"><span class="pre">TPSI</span> <span class="pre">=</span> <span class="pre">24000/24000000</span> <span class="pre">=</span> <span class="pre">0.001s</span> <span class="pre">=</span> <span class="pre">1ms</span></code>。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x110-0x40-n-gpai-chnhlat">
+<h2><span class="section-number">13.2.7.6. </span>0x110+0x40*n GPAI_CHnHLAT<a class="headerlink" href="#x110-0x40-n-gpai-chnhlat" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI 高电平报警阈值(Channel N High-Level Alarm Threshold)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">HLARV（High-Level Alarm Removed Value，高电平报警解除阈值）</div>
+<div class="line">本字段定义了高电平报警解除的比较阈值，当采样值从高于HLAVV到低于HLARV，</div>
+<div class="line">表示高电平报警解除。</div>
+<div class="line">HLAVV必须保证不小于HLARV，(HLAVV-HLARV)就是高电平报警的迟滞值。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">HLAVV（High-Level Alarm Valid Value，高电平报警有效阈值）</div>
+<div class="line">本字段定义了高电平报警有效的比较阈值，当采样值从低于HLARV到高于HLAVV，</div>
+<div class="line">表示高电平报警有效。</div>
+<div class="line">HLAVV必须保证不小于HLARV，(HLAVV-HLARV)就是高电平报警的迟滞值。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x114-0x40-n-gpai-chnllat">
+<h2><span class="section-number">13.2.7.7. </span>0x114+0x40*n GPAI_CHnLLAT<a class="headerlink" href="#x114-0x40-n-gpai-chnllat" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI 低电平报警阈值(Channel N Low-Level Alarm Threshold)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">LLARV（Low-Level Alarm Removed Value，低电平报警解除阈值）</div>
+<div class="line">本字段定义了低电平报警解除的比较阈值，当采样值从低于LLAVV到高于LLARV，</div>
+<div class="line">表示低电平报警解除。</div>
+<div class="line">LLAVV必须保证不大于LLARV，(LLARV-LLAVV)就是低电平报警的迟滞值。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">LLAVV（Low-Level Alarm Valid Value，低电平报警有效阈值）</div>
+<div class="line">本字段定义了低电平报警有效的比较阈值，当采样值从高于LLARV到低于LLAVV，</div>
+<div class="line">表示低电平报警有效。</div>
+<div class="line">LLAVV必须保证不大于LLARV，(LLARV-LLAVV)就是低电平报警的回滞值。</div>
+<div class="line">本字段仅周期采样模式（PSEN==1）下有效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x118-0x40-n-gpai-chnacr">
+<h2><span class="section-number">13.2.7.8. </span>0x118+0x40*n GPAI_CHnACR<a class="headerlink" href="#x118-0x40-n-gpai-chnacr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI 报警控制(GPAI Alarm Control Register )</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">NLD_DIS（Discard Normal-Level Data，丢弃正常电平的采样数据）</div>
+<div class="line">在高/低电平报警使能 （(HLA_EN==1) || (LLA_EN==1)）情况下，</div>
+<div class="line">本字段控制是否丢弃保留正常电平的采样数据，</div>
+<div class="line">如果丢弃则意味着这期间的采样数据不会存入FIFO，否则就会仍然存入FIFO。</div>
+<div class="line">0 – 保留正常电平采样数据；</div>
+<div class="line">1 – 丢弃正常电平采样数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">LLD_DIS（Discard Low-Level Data，丢弃低电平的采样数据）</div>
+<div class="line">在低电平报警使能（LLA_EN==1）情况下，本字段控制是否丢弃保留低电平</div>
+<div class="line">报警有效之后至低电平报警解除之前的采样数据，</div>
+<div class="line">如果丢弃则意味着这期间的采样数据不会存入FIFO，否则就会仍然存入FIFO。</div>
+<div class="line">0 – 保留低电平采样数据；</div>
+<div class="line">1 – 丢弃低电平采样数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">HLD_DIS（Discard High-Level Data，丢弃高电平的采样数据）</div>
+<div class="line">在高电平报警使能（HLA_EN==1）情况下，本字段控制是否丢弃保留高电平</div>
+<div class="line">报警有效之后至高电平报警解除之前的采样数据，</div>
+<div class="line">如果丢弃则意味着这期间的采样数据不会存入FIFO，否则就会仍然存入FIFO。</div>
+<div class="line">0 – 保留高电平采样数据；</div>
+<div class="line">1 – 丢弃高电平采样数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">LLA_EN（Low-Level Alarm Enable，低电平报警使能）</div>
+<div class="line">0 – 禁止低电平报警功能；低温警报阈值无效；</div>
+<div class="line">1 – 使能低电平报警功能，仅在周期采样模式有效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">HLA_EN（High-Level Alarm Enable，高电平报警使能）</div>
+<div class="line">0 – 禁止高电平报警功能；高温警报阈值无效；</div>
+<div class="line">1 – 使能高电平报警功能，仅在周期采样模式有效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x120-0x40-n-gpai-chnfcr">
+<h2><span class="section-number">13.2.7.9. </span>0x120+0x40*n GPAI_CHnFCR<a class="headerlink" href="#x120-0x40-n-gpai-chnfcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI FIFO控制(GPAI Channel N FIFO Control Register)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:24</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_DCNT（FIFO Data Count，FIFO有效数据量）</div>
+<div class="line">本字段定义了当前FIFO有效数据量，</div>
+<div class="line">对于CH0~CH1，0x0~0x40为合法值；</div>
+<div class="line">对于CH2~CH7，0x0~0x8为合法值。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_UFS（FIFO Underflow Status，FIFO下溢出状态）</div>
+<div class="line">本字段定义了当前FIFO下溢出状态，高电平有效。本字段由硬件置位，并由软件写1清零。</div>
+<div class="line">当本字段有效，会导致GPAI_CHnINT.FIFO_FLG置位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_OFS（FIFO Overflow Status，FIFO上溢出状态）</div>
+<div class="line">本字段定义了当前FIFO上溢出状态，高电平有效。本字段由硬件置位，并由软件写1清零。</div>
+<div class="line">当本字段有效，会导致GPAI_CHnINT.FIFO_FLG置位。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_DRTH（FIFO Data Ready Threshold，FIFO数据有效阈值）</div>
+<div class="line">本字段定义了FIFO数据有效的阈值，当FIFO的数据量达到了本阈值后，</div>
+<div class="line">就会置位GPAI_CHnINT.DRDY_FLG标志位，</div>
+<div class="line">如果同时GPAI_CHnINT.DRDY_INTEN也有效，就会产生中断。</div>
+<div class="line"><br /></div>
+<div class="line">对于CH0~CH1：</div>
+<div class="line">0x00表示不设置有效阈值，导致不会产生DRDY_FLG标志；</div>
+<div class="line">0x01~0x20表示有效阈值范围，当FIFO数据量达到了对应数值后，就会置位DRDY_FLG标志；</div>
+<div class="line">0x21~0x7F为非法配置，效果等同于0x00。</div>
+<div class="line"><br /></div>
+<div class="line">对于CH2~CH7：</div>
+<div class="line">0x00表示不设置有效阈值，导致不会产生DRDY_FLG标志；</div>
+<div class="line">0x01~0x08表示有效阈值范围，当FIFO数据量达到了对应数值后，就会置位DRDY_FLG标志；</div>
+<div class="line">0x09~0x7F为非法配置，效果等同于0x00。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/WAC</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">FIFO_FLUSH（FIFO Flush，FIFO清空操作）</div>
+<div class="line">本字段定义了FIFO清空操作，本字段由软件置位硬件清零。软件置位</div>
+<div class="line">启动FIFO清空操作，FIFO清空操作完成后，由硬件清零。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x124-0x40-n-gpai-chndata">
+<h2><span class="section-number">13.2.7.10. </span>0x124+0x40*n GPAI_CHnDATA<a class="headerlink" href="#x124-0x40-n-gpai-chndata" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>GPAI 通道数据(GPAI Channel N Data)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">DATA（Sample Data，采样数据）</div>
+<div class="line">FIFO数据读取访问入口。</div>
+<div class="line">如果SBC不为0，则本寄存器返回的数据，均为经过算术平均之后的计算值。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-version">
+<h2><span class="section-number">13.2.7.11. </span>0xFFC VERSION<a class="headerlink" href="#xffc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>GPAI 版本寄存器(GPAI Version)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version（Module Version（模块版本号）模块版本号）</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../rtp/index.html" class="btn btn-neutral float-right" title="13.3. RTP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="13.2.6. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

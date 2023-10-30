@@ -1,0 +1,2469 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.7.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.7.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.7.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.1. Audio 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.2. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.7. MPP 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.7.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.7.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.7.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.7.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.7.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.7.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.7.5.2. 软件架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-decoder">6.7.5.3. MPP Decoder 设计及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#packet">6.7.5.3.1. packet 管理机制</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#frame">6.7.5.3.2. frame 管理机制</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">6.7.5.3.3. 物理连续内存使用情况</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">6.7.5.3.4. MPP Decoder 调用流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.7.5.3.5. MPP Decoder 数据结构</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.7.5.3.6. MPP Decoder 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-decoder-demo">6.7.5.3.7. MPP Decoder 参考Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-encoder">6.7.5.4. MPP Encoder 设计及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id8">6.7.5.4.1. 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-encoder-demo">6.7.5.4.2. MPP Encoder 参考Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-zlib">6.7.5.5. MPP zlib 设计及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id9">6.7.5.5.1. 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#demo">6.7.5.5.2. 参考Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-ge">6.7.5.6. MPP GE 设计及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-open">6.7.5.6.1. mpp_ge_open</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-close">6.7.5.6.2. mpp_ge_close</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-get-mode">6.7.5.6.3. mpp_ge_get_mode</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-fillrect">6.7.5.6.4. mpp_ge_fillrect</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-bitblt">6.7.5.6.5. mpp_ge_bitblt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-rotate">6.7.5.6.6. mpp_ge_rotate</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-emit">6.7.5.6.7. mpp_ge_emit</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-ge-sync">6.7.5.6.8. mpp_ge_sync</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-vin">6.7.5.7. MPP VIN 设计及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#buf">6.7.5.7.1. Buf队列管理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id10">6.7.5.7.2. 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ref-lite-mpp-vin-demo">6.7.5.7.3. 参考Demo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.7.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.8. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvgl/index.html">6.9. LVGL 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.7. </span>MPP 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.7.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.7.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.7.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源文件目录：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aic-mpp$ tree
+.
+├── base             // 公共模块：包括内存分配和链表等基础功能
+│   ├── memory
+├── ge              // 2D 图形加速模块
+├── ve              // 编解码器模块
+|   ├── include     // ve 模块头文件
+│   ├── common      // 编解码器公共组件
+|   ├── decoder
+│        ├── h264   // h.264 解码模块
+│        ├── jpeg   // jpg 解码模块
+│        └── png    // png 解码模块
+├── vin             // video input模块
+├── include         // mpp 对外头文件
+├── mpp_test        // mpp 测试用例
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.7.5.2. </span>软件架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>mpp 软件框图如下所示：</p>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/mpp_framework.png" src="../../../_images/mpp_framework.png" />
+<p class="caption"><span class="caption-number">图 6.72 </span><span class="caption-text">MPP 软件的系统框图</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+<p>总体上，分为三层：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>应用层：Luban-Lite提供了MPP player（播放器）、MPP测试、LVGL Demo，也支持增加其他App</p></li>
+<li><p>MPP中间件：从功能上可以划分为4大块</p>
+<ul>
+<li><p>MPP Decoder，实现h264、jpeg、png等解码功能</p></li>
+<li><p>MPP Encoder，实现jpeg编码。</p></li>
+<li><p>MPP GE，实现2D图形加速功能</p></li>
+<li><p>MPP VIN，实现视频输入采集的功能</p></li>
+</ul>
+</li>
+<li><p>Driver层：MPP需要用到的驱动有VE、GE、DVP、Camera驱动</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="mpp-decoder">
+<h2><span class="section-number">6.7.5.3. </span>MPP Decoder 设计及接口说明<a class="headerlink" href="#mpp-decoder" title="永久链接至标题">¶</a></h2>
+<p>MPP Decoder 由三个主要模块组成：</p>
+<ul class="simple">
+<li><p>解码模块（H264、JPEG、PNG等）：负责将码流数据解码成视频图像</p></li>
+<li><p>输入码流数据管理模块（Packet manager）：负责视频、图片码流数据和 buffer 的管理</p></li>
+<li><p>显示帧管理模块（Frame manager）：负责解码图像 buffer 的管理</p></li>
+</ul>
+<div class="section" id="packet">
+<h3><span class="section-number">6.7.5.3.1. </span>packet 管理机制<a class="headerlink" href="#packet" title="永久链接至标题">¶</a></h3>
+<p>Packet manager 负责管理码流数据和 buffer。初始化时，该模块申请一块物理连续的内存（buffer大小可由外部配置），用于存放视频/图片码流数据。</p>
+<p>Packet manager 管理的数据单元为 packet，packet 表示一笔码流数据，它可以是完整的一帧数据，也支持不是完整的一帧数据。
+每个 packet 与物理内存中的码流数据一一对应，它记录了每一笔码流的物理内存基地址、物理内存结束地址、物理内存偏移、虚拟内存地址、码流数据长度等信息。</p>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/packet_manager.png" src="../../../_images/packet_manager.png" />
+<p class="caption"><span class="caption-number">图 6.73 </span><span class="caption-text">packet管理</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<p>packet 通过 empty list 和 ready list 两个链表进行管理。
+其中，empty list 用于存放空闲的 packet，ready list 用于存放待解码的 packet。</p>
+<p>送码流数据时，从 empty list 获取一个空闲 packet，填充数据后，再把 packet 放入 ready list；</p>
+<p>解码前，解码器从 ready list 获取一个填充数据的 packet，使用完后再把该 packet 放入 empty list。</p>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/pm_flow.png" src="../../../_images/pm_flow.png" />
+<p class="caption"><span class="caption-number">图 6.74 </span><span class="caption-text">packet manager 调用流程</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="frame">
+<h3><span class="section-number">6.7.5.3.2. </span>frame 管理机制<a class="headerlink" href="#frame" title="永久链接至标题">¶</a></h3>
+<p>Frame manager 负责管理图像 buffer。Frame manager 内部通过两个链表来管理图像 buffer：empty list 和 render list。
+其中，empty list 存放可以给解码输出使用的图像 buffer，render list 存放解码完成但还未显示的图像 buffer。
+在运行过程中，正在显示的图像 buffer 和用于参考的图像 buffer 可能不在这两个 list 中。</p>
+<ol class="arabic simple">
+<li><p>frame 状态迁移</p></li>
+</ol>
+<p>初始化时，该模块申请指定个数的图像 buffer（个数可由外部配置），每个图像 buffer 的信息存放在内部数组中。
+每个图像 buffer 有4种状态：</p>
+<ul class="simple">
+<li><p>Decoding: 该帧正在被解码器使用（用于解码输出或作为参考帧）</p></li>
+<li><p>wait_render: 该帧在 render list 中，等待显示</p></li>
+<li><p>Rendering: 该帧正在被显示占用</p></li>
+<li><p>IDLE: 该帧处于空闲状态（既没有被显示占用，也没有被解码器用作参考帧）</p></li>
+</ul>
+<p>其状态转移如下图所示：</p>
+<ul class="simple">
+<li><p>初始化时，所有图像 buffer 都在 empty list 中，此时处于 IDLE 状态；</p></li>
+<li><p>解码模块从 empty list 链表头部获取一个空图像 buffer，此时 buffer 被解码模块占用，从 IDLE 状态变为 Decoding 状态;</p></li>
+<li><p>解码完成后，解码模块还图像数据。此时分两种情况：</p>
+<ul>
+<li><p>1）如果当前帧还未被显示，该帧加入 render list 链表尾部，从 Decoding 状态变为 wait render 状态；</p></li>
+<li><p>2）该帧不再用做参考帧且已显示完成，此时该帧加入 empty list 链表尾部，由 Decoding 状态进入 IDLE 状态；</p></li>
+</ul>
+</li>
+<li><p>显示模块从 render list 链表头部取一帧图像，此时当前帧由 wait render 状态进入 Rendering 状态；</p></li>
+<li><p>显示模块还图像 buffer，分两种情况：</p>
+<ul>
+<li><p>1）如果当前帧不用于参考，此时由 Rendering 状态回到IDLE状态，该帧加入 empty list 链表尾部；</p></li>
+<li><p>2）如果当前帧用于参考，此时由 Rendering 状态进入Decoding状态，该图像 buffer 不进入任何队列，等待解码器还参考帧；</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/frame_status.png" src="../../../_images/frame_status.png" />
+<p class="caption"><span class="caption-number">图 6.75 </span><span class="caption-text">frame状态迁移</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>frame manager 调用流程</p></li>
+</ol>
+<p>对于 JPEG、PNG 这类没有参考帧概念的编码格式，每一帧的状态是唯一的，解码后的数据帧可直接送 render list</p>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/frame_manager_jpeg.png" src="../../../_images/frame_manager_jpeg.png" />
+<p class="caption"><span class="caption-number">图 6.76 </span><span class="caption-text">frame manager 调用流程（JPEG/PNG）</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>但对于 H264 这类有参考帧的编码格式，解码后的视频帧可能既被显示占用也会被解码器用作参考帧，并且由于双向参考帧的存在，
+视频帧需要重排序后才能送显示。 不同于JPG，H264 解码库内部存在一个 delay list 用于为显示帧重排序。</p>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/frame_manager_264.png" src="../../../_images/frame_manager_264.png" />
+<p class="caption"><span class="caption-number">图 6.77 </span><span class="caption-text">frame manager 调用流程（H264）</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">6.7.5.3.3. </span>物理连续内存使用情况<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>H264 解码所需的物理连续内存如下所示：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 33%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>内存占用模块</p></th>
+<th class="head"><p>计算方式</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>输入码流</p></td>
+<td></td>
+<td><p>大小由应用层配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>输出帧</p></td>
+<td><p>width*height*3/2*frame_num</p></td>
+<td><div class="line-block">
+<div class="line">frame_num至少需要（参考帧个数+1）个</div>
+<div class="line">显示占用个数可由应用层通过struct decode_config</div>
+<div class="line">结构体中的extra_frame_num 配置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>帧内预测(需要上一行数据)</p></td>
+<td><div class="line-block">
+<div class="line">帧格式：width*2</div>
+<div class="line">MBAFF：width*4</div>
+</div>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>宏块信息</p></td>
+<td><p>固定12K</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>dblk模块(上一个宏块行最后4行数据)</p></td>
+<td><div class="line-block">
+<div class="line">帧格式：width*8</div>
+<div class="line">MBAFF：width*16</div>
+</div>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>co-located信息</p></td>
+<td><p>固定68K</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>每一帧co-located数据缓存</p></td>
+<td><div class="line-block">
+<div class="line">(width/16)*(height/16)*32*frame_num</div>
+</div>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>co-located 两个buffer，I、P帧解码时会往buffer里写数据，B 帧解码时从buffer读数据。
+如果当前码流中没有 B 帧，这两块内存也需要申请。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">6.7.5.3.4. </span>MPP Decoder 调用流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>在调用 MPP Decoder 的解码函数时，解码模块从 Packet manager 取一笔码流，同时从 Frame maneger 取一个空闲图像 buffer，对码流进行解码
+并输出图像到图像 buffer。</p>
+<p>解码后，解码模块将码流 buffer 归还 Packet manager，将解码图像 buffer 归还 Frame maneger。</p>
+<p>为保证解码效率，建议调用者创建3个线程实现解码功能：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>send data thread</dt><dd><p>通过 mpp_decoder_get_packet 和 mpp_decoder_put_packet 这两个接口把码流数据送到 packet 管理模块</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>decode thread</dt><dd><p>通过调用 mpp_decoder_decode 控制解码，解码库从 packet 管理模块取一笔码流数据，解码完成后，将视频帧送入 frame 管理模块</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>render thread</dt><dd><p>通过 mpp_decoder_get_frame 和 mpp_decoder_put_frame 两个接口从 frame 管理模块获取视频帧，并控制该帧显示时机</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/mpp_decoder_flow.png" src="../../../_images/mpp_decoder_flow.png" />
+<p class="caption"><span class="caption-number">图 6.78 </span><span class="caption-text">MPP Decoder 调用流程</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.7.5.3.5. </span>MPP Decoder 数据结构<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="section" id="struct-decode-config">
+<h4><span class="section-number">6.7.5.3.5.1. </span>struct decode_config<a class="headerlink" href="#struct-decode-config" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">decode_config</span> <span class="p">{</span>
+    <span class="n">enum</span> <span class="n">mpp_pixel_format</span> <span class="n">pix_fmt</span><span class="p">;</span>  <span class="o">//</span> <span class="n">output</span> <span class="n">pixel</span> <span class="nb">format</span>
+    <span class="nb">int</span> <span class="n">bitstream_buffer_size</span><span class="p">;</span>      <span class="o">//</span> <span class="n">bitstream</span> <span class="n">buffer</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">packet_count</span><span class="p">;</span>               <span class="o">//</span> <span class="n">packet</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">extra_frame_num</span><span class="p">;</span>            <span class="o">//</span> <span class="n">extra</span> <span class="n">frame</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">fm</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>decode_config 结构体用于配置解码器初始化使用的参数。</p>
+<ul class="simple">
+<li><p>pix_fmt 表示解码输出的颜色格式</p></li>
+<li><p>bitstream_buffer_size 表示存放输入码流缓存的总长度</p></li>
+<li><p>packet_count 表示 packet manager 中 packet 的最大个数</p></li>
+<li><p>extra_frame_num 表示解码器额外分配的帧个数，主要用于缓存显示帧以保证显示平滑。</p></li>
+</ul>
+</div>
+<div class="section" id="struct-mpp-packet">
+<h4><span class="section-number">6.7.5.3.5.2. </span>struct mpp_packet<a class="headerlink" href="#struct-mpp-packet" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">mpp_packet</span> <span class="p">{</span>
+    <span class="n">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">long</span> <span class="n">long</span> <span class="n">pts</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">flag</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>mpp_packet 结构体用于表示输入码流信息。</p>
+<ul class="simple">
+<li><p>data 表示码流数据存放的起始地址</p></li>
+<li><p>size 表示该笔码流数据长度</p></li>
+<li><p>pts 表示该笔码流的时间戳</p></li>
+<li><p>flag 表示该笔码流的标记位，目前仅用于确定该码流是否为最后一笔码流（PACKET_FLAG_EOS）</p></li>
+</ul>
+</div>
+<div class="section" id="struct-mpp-frame">
+<h4><span class="section-number">6.7.5.3.5.3. </span>struct mpp_frame<a class="headerlink" href="#struct-mpp-frame" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">mpp_size</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">struct</span> <span class="n">mpp_rect</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">y</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">enum</span> <span class="n">mpp_buf_type</span> <span class="p">{</span>
+    <span class="n">MPP_DMA_BUF_FD</span><span class="p">,</span>
+    <span class="n">MPP_PHY_ADDR</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">mpp_buf</span> <span class="p">{</span>
+    <span class="n">enum</span> <span class="n">mpp_buf_type</span>       <span class="n">buf_type</span><span class="p">;</span>
+    <span class="n">union</span> <span class="p">{</span>
+            <span class="nb">int</span>             <span class="n">fd</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+            <span class="n">unsigned</span> <span class="nb">int</span>    <span class="n">phy_addr</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="p">};</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">stride</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="n">struct</span> <span class="n">mpp_size</span>         <span class="n">size</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">crop_en</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="n">mpp_rect</span>         <span class="n">crop</span><span class="p">;</span>
+    <span class="n">enum</span> <span class="n">mpp_pixel_format</span>   <span class="nb">format</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>buf_type：表示 mpp_buf 类型，以 fd 方式 MPP_DMA_BUF_FD 或 以物理地址方式 MPP_PHY_ADDR；</p></li>
+<li><p>fd[3]：表示 buffer 三个分量的 fd</p></li>
+<li><p>phy_addr[3]：表示 buffer 三个分量的物理地址</p></li>
+<li><p>stride[3]：表示 buffer 三个分量的 stride</p></li>
+<li><p>size：表示 buffer 的宽、高</p></li>
+<li><p>crop_en： 表示该 buffer 是否需要 crop</p></li>
+<li><p>crop：表示该 buffer 的 crop 信息</p></li>
+<li><p>format： 表示该 buffer 的颜色格式类型</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">mpp_frame</span> <span class="p">{</span>
+    <span class="n">struct</span> <span class="n">mpp_buf</span>          <span class="n">buf</span><span class="p">;</span>
+    <span class="n">long</span> <span class="n">long</span>               <span class="n">pts</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="nb">id</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>buf：表示 mpp_frame 的 buffer 信息</p></li>
+<li><p>pts：表示 mpp_frame 的时间戳</p></li>
+<li><p>id：表示 mpp_frame 的唯一标识</p></li>
+<li><p>flags：表示 mpp_frame 的标志位</p></li>
+</ul>
+</div>
+<div class="section" id="enum-mpp-dec-errno">
+<h4><span class="section-number">6.7.5.3.5.4. </span>enum mpp_dec_errno<a class="headerlink" href="#enum-mpp-dec-errno" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">mpp_dec_errno</span> <span class="p">{</span>
+    <span class="n">DEC_ERR_NOT_SUPPORT</span>         <span class="o">=</span> <span class="mh">0x90000001</span><span class="p">,</span>
+    <span class="n">DEC_ERR_NO_EMPTY_PACKET</span>     <span class="o">=</span> <span class="mh">0x90000002</span><span class="p">,</span> <span class="o">//</span> <span class="n">no</span> <span class="n">packet</span> <span class="ow">in</span> <span class="n">empty</span> <span class="nb">list</span>
+    <span class="n">DEC_ERR_NO_READY_PACKET</span>     <span class="o">=</span> <span class="mh">0x90000003</span><span class="p">,</span> <span class="o">//</span>
+    <span class="n">DEC_ERR_NO_EMPTY_FRAME</span>      <span class="o">=</span> <span class="mh">0x90000004</span><span class="p">,</span> <span class="o">//</span>
+    <span class="n">DEC_ERR_NO_RENDER_FRAME</span>     <span class="o">=</span> <span class="mh">0x90000005</span><span class="p">,</span> <span class="o">//</span>
+    <span class="n">DEC_ERR_NULL_PTR</span>            <span class="o">=</span> <span class="mh">0x90000006</span><span class="p">,</span>
+    <span class="n">DEC_ERR_FM_NOT_CREATE</span>       <span class="o">=</span> <span class="mh">0x90000006</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>DEC_ERR_NOT_SUPPORT：该码流不支持</p></li>
+<li><p>DEC_ERR_NO_EMPTY_PACKET：packet manager 中缺少空闲的 packet，可能是解码速度小于送 packet 速度，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NO_READY_PACKET：packet manager 中缺少填好码流数据的 packet，可能是送 packet 速度小于解码速度，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NO_EMPTY_FRAME：frame manager 中缺少空闲的 frame，表示所有帧都处于使用状态，通常是解码速度大于显示速度导致，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NO_RENDER_FRAME：frame manager 中缺少待显示的 frame，表示所有帧都处于空闲状态，通常是解码速度小于显示速度导致，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NULL_PTR：表示接口函数输入参数存在空指针</p></li>
+<li><p>DEC_ERR_FM_NOT_CREATE：表示在获取待显示 frame 时 frame manager 还未创建</p></li>
+</ul>
+</div>
+<div class="section" id="enum-mpp-codec-type">
+<h4><span class="section-number">6.7.5.3.5.5. </span>enum mpp_codec_type<a class="headerlink" href="#enum-mpp-codec-type" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">mpp_codec_type</span> <span class="p">{</span>
+    <span class="n">MPP_CODEC_VIDEO_DECODER_H264</span> <span class="o">=</span> <span class="mh">0x1000</span><span class="p">,</span>         <span class="o">//</span> <span class="n">decoder</span>
+    <span class="n">MPP_CODEC_VIDEO_DECODER_MJPEG</span><span class="p">,</span>
+    <span class="n">MPP_CODEC_VIDEO_DECODER_PNG</span><span class="p">,</span>
+
+    <span class="n">MPP_CODEC_VIDEO_ENCODER_H264</span> <span class="o">=</span> <span class="mh">0x2000</span><span class="p">,</span>         <span class="o">//</span> <span class="n">encoder</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>mpp_codec_type 枚举类型表示支持的编解码格式。</p>
+</div>
+<div class="section" id="enum-mpp-dec-cmd">
+<h4><span class="section-number">6.7.5.3.5.6. </span>enum mpp_dec_cmd<a class="headerlink" href="#enum-mpp-dec-cmd" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">mpp_dec_cmd</span> <span class="p">{</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_EXT_FRAME_ALLOCATOR</span><span class="p">,</span>            <span class="o">//</span> <span class="n">frame</span> <span class="n">buffer</span> <span class="n">allocator</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_ROT_FLIP_FLAG</span><span class="p">,</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_SCALE</span><span class="p">,</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_CROP_INFO</span><span class="p">,</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_OUTPUT_POS</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>MPP_DEC_INIT_CMD_SET_EXT_FRAME_ALLOCATOR：表示由外部设置帧 buffer 分配器</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_ROT_FLIP_FLAG: 表示设置旋转、镜像后处理，只用于JPEG</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_SCALE： 表示设置缩放系数，只用于JPEG</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_CROP_INFO：表示设置输出 crop 信息</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_OUTPUT_POS：表示设置解码图像在输出缓存的位置</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.7.5.3.6. </span>MPP Decoder 接口设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>接口如下 :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">decode_config</span> <span class="p">{</span>
+    <span class="n">enum</span> <span class="n">mpp_pixel_format</span> <span class="n">pix_fmt</span><span class="p">;</span>  <span class="o">//</span> <span class="n">output</span> <span class="n">pixel</span> <span class="nb">format</span>
+    <span class="nb">int</span> <span class="n">bitstream_buffer_size</span><span class="p">;</span>      <span class="o">//</span> <span class="n">bitstream</span> <span class="n">buffer</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">packet_count</span><span class="p">;</span>               <span class="o">//</span> <span class="n">packet</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">extra_frame_num</span><span class="p">;</span>            <span class="o">//</span> <span class="n">extra</span> <span class="n">frame</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">fm</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">create_mpp_decoder</span><span class="p">(</span><span class="n">enum</span> <span class="n">mpp_codec_type</span> <span class="nb">type</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">destory_mpp_decoder</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_init</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span> <span class="o">*</span><span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">decode_config</span> <span class="o">*</span><span class="n">config</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_decode</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_control</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="nb">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">param</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_reset</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_get_packet</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_packet</span><span class="o">*</span> <span class="n">packet</span><span class="p">,</span> <span class="nb">int</span> <span class="n">size</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_put_packet</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_packet</span><span class="o">*</span> <span class="n">packet</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_get_frame</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_frame</span><span class="o">*</span> <span class="n">frame</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_put_frame</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_frame</span><span class="o">*</span> <span class="n">frame</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="mpp-decoder-create">
+<h4><span class="section-number">6.7.5.3.6.1. </span>mpp_decoder_create<a class="headerlink" href="#mpp-decoder-create" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct mpp_decoder* mpp_decoder_create(enum mpp_codec_type type)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>创建mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>type: 解码器类型</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-destory">
+<h4><span class="section-number">6.7.5.3.6.2. </span>mpp_decoder_destory<a class="headerlink" href="#mpp-decoder-destory" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void mpp_decoder_destory(struct mpp_decoder* decoder)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>销毁mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>decoder: mpp_decoder对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-init">
+<h4><span class="section-number">6.7.5.3.6.3. </span>mpp_decoder_init<a class="headerlink" href="#mpp-decoder-init" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_init(struct mpp_decoder *decoder, struct decode_config *config)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化解码器</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">config：解码器的配置参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-decode">
+<h4><span class="section-number">6.7.5.3.6.4. </span>mpp_decoder_decode<a class="headerlink" href="#mpp-decoder-decode" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_decode(struct mpp_decoder* decoder)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>解码一笔数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>decoder: mpp_decoder对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-control">
+<h4><span class="section-number">6.7.5.3.6.5. </span>mpp_decoder_control<a class="headerlink" href="#mpp-decoder-control" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_control(struct mpp_decoder* decoder, int cmd, void* param)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>向mpp_decoder对象发送控制命令</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">cmd: 控制命令类型</div>
+<div class="line">param: 控制参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-reset">
+<h4><span class="section-number">6.7.5.3.6.6. </span>mpp_decoder_reset<a class="headerlink" href="#mpp-decoder-reset" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_reset(struct mpp_decoder* decoder)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>重置mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-get-packet">
+<h4><span class="section-number">6.7.5.3.6.7. </span>mpp_decoder_get_packet<a class="headerlink" href="#mpp-decoder-get-packet" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_get_packet(struct mpp_decoder* decoder, struct mpp_packet* packet, int size)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取一个写码流数据的packet</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">packet:码流数据结构指针</div>
+<div class="line">size:上层应用申请packet的buffer大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-put-packet">
+<h4><span class="section-number">6.7.5.3.6.8. </span>mpp_decoder_put_packet<a class="headerlink" href="#mpp-decoder-put-packet" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_put_packet(struct mpp_decoder* decoder, struct mpp_packet* packet)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>归还码流数据的packet对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">packet:码流数据结构指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-get-frame">
+<h4><span class="section-number">6.7.5.3.6.9. </span>mpp_decoder_get_frame<a class="headerlink" href="#mpp-decoder-get-frame" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_get_frame(struct mpp_decoder* decoder, struct mpp_frame* frame)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取一个视频帧对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">frame:视频帧数据结构指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-put-frame">
+<h4><span class="section-number">6.7.5.3.6.10. </span>mpp_decoder_put_frame<a class="headerlink" href="#mpp-decoder-put-frame" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_put_frame(struct mpp_decoder* decoder, struct mpp_frame* frame)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>归还视频帧对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">frame:视频帧数据结构指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="mpp-decoder-demo">
+<h3><span class="section-number">6.7.5.3.7. </span>MPP Decoder 参考Demo<a class="headerlink" href="#mpp-decoder-demo" title="永久链接至标题">¶</a></h3>
+<p id="ref-picture-decoder-test">以下 Demo 为基本流程调用，具体实现可以参考代码 mpp/mpp_test/picture_decoder_test.c</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*</span> <span class="mf">1.</span><span class="n">创建</span> <span class="n">mpp_decoder</span> <span class="n">对象</span>
+<span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">dec</span> <span class="o">=</span> <span class="n">mpp_decoder_create</span><span class="p">(</span><span class="nb">type</span><span class="p">);</span>
+
+<span class="n">struct</span> <span class="n">decode_config</span> <span class="n">config</span><span class="p">;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">bitstream_buffer_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_len</span> <span class="o">+</span> <span class="mi">1023</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="mi">1023</span><span class="p">);</span>
+<span class="n">config</span><span class="o">.</span><span class="n">extra_frame_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">packet_count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">=</span> <span class="n">MPP_FMT_ARGB_8888</span><span class="p">;</span>
+
+<span class="o">//*</span> <span class="mf">2.</span> <span class="n">初始化</span> <span class="n">mpp_decoder</span>
+<span class="n">mpp_decoder_init</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">config</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">3.</span> <span class="n">获取一个空的packet</span>
+<span class="n">struct</span> <span class="n">mpp_packet</span> <span class="n">packet</span><span class="p">;</span>
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">packet</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_packet</span><span class="p">));</span>
+<span class="n">mpp_decoder_get_packet</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">packet</span><span class="p">,</span> <span class="n">file_len</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">4.</span> <span class="n">把视频码流数据拷贝到</span> <span class="n">packet</span>
+<span class="n">fread</span><span class="p">(</span><span class="n">packet</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">file_len</span><span class="p">,</span> <span class="n">fp</span><span class="p">);</span>
+<span class="n">packet</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">file_len</span><span class="p">;</span>
+<span class="n">packet</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="n">PACKET_FLAG_EOS</span><span class="p">;</span>
+
+<span class="o">//*</span> <span class="mf">5.</span> <span class="n">归还</span> <span class="n">packet</span>
+<span class="n">mpp_decoder_put_packet</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">packet</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">6.</span> <span class="n">解码该笔码流数据</span>
+<span class="n">mpp_decoder_decode</span><span class="p">(</span><span class="n">dec</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">7.</span> <span class="n">获取解码后视频帧数据</span>
+<span class="n">struct</span> <span class="n">mpp_frame</span> <span class="n">frame</span><span class="p">;</span>
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">frame</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_frame</span><span class="p">));</span>
+<span class="n">mpp_decoder_get_frame</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">8.</span> <span class="n">显示该视频帧</span>
+<span class="o">//</span> <span class="n">render_frame</span><span class="o">...</span>
+
+<span class="o">//*</span> <span class="mf">9.</span> <span class="n">归还该视频帧</span>
+<span class="n">mpp_decoder_put_frame</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">10.</span> <span class="n">销毁</span> <span class="n">mpp_decoder</span>
+<span class="n">mpp_decoder_destory</span><span class="p">(</span><span class="n">dec</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-encoder">
+<h2><span class="section-number">6.7.5.4. </span>MPP Encoder 设计及接口说明<a class="headerlink" href="#mpp-encoder" title="永久链接至标题">¶</a></h2>
+<p>MPP Encoder 目前只支持 JPEG 图片编码。</p>
+<div class="section" id="id8">
+<h3><span class="section-number">6.7.5.4.1. </span>接口设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="section" id="mpp-encode-jpeg">
+<h4><span class="section-number">6.7.5.4.1.1. </span>mpp_encode_jpeg<a class="headerlink" href="#mpp-encode-jpeg" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_encode_jpeg(struct mpp_frame* frame, int quality, int dma_buf_fd, int buf_len, int* len)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>编码一帧 JPEG 图片</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">frame: 待编码的原始 YUV 数据</div>
+<div class="line">quality: 编码质量，取值范围1~100，1表示编码图片质量最差，100表示最好</div>
+<div class="line">dma_buf_fd：输出 JPEG 图片存放的 dma-buf fd</div>
+<div class="line">buf_len：输出 JPEG 图片 dma-buf 的长度</div>
+<div class="line">len: 输出 JPEG 图片的真实大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>输出 JPEG 图片的缓存 buffer 由调用者申请，但调用者并不知道编码后图片的实际大小，
+为避免 VE 写输出数据时越界，该 buffer 需要预先申请较大的内存。</p>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-encoder-demo">
+<h3><span class="section-number">6.7.5.4.2. </span>MPP Encoder 参考Demo<a class="headerlink" href="#mpp-encoder-demo" title="永久链接至标题">¶</a></h3>
+<p>以下 Demo 为基本流程调用，具体实现可以参考代码 mpp/mpp_test/jpeg_encoder_test.c</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//* 1. 获取 dma-buf device 句柄
+int dma_fd = dmabuf_device_open();
+
+//* 2. 设置输入 YUV 数据结构体
+struct mpp_frame frame;
+// ....
+
+//* 3. 申请编码输出 buffer
+int len = 0;
+int buf_len = width * height * 4/5 * quality / 100;
+int jpeg_data_fd = dmabuf_alloc(dma_fd, buf_len);
+
+//* 4. 编码 JPEG 图片
+mpp_encode_jpeg(&amp;frame, quality, jpeg_data_fd, buf_len, &amp;len)；
+
+//* 5. 保存编码后 JPEG 图片
+unsigned char* jpeg_vir_addr = dmabuf_mmap(jpeg_data_fd, buf_len);
+FILE* fp_save = fopen(&quot;/save.jpg&quot;, &quot;wb&quot;);
+fwrite(jpeg_vir_addr, 1, len, fp_save);
+fclose(fp_save);
+
+//* 6. 释放资源
+dmabuf_munmap(jpeg_vir_addr, buf_len);
+dmabuf_free(jpeg_data_fd);
+dmabuf_device_close(dma_fd);
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-zlib">
+<h2><span class="section-number">6.7.5.5. </span>MPP zlib 设计及接口说明<a class="headerlink" href="#mpp-zlib" title="永久链接至标题">¶</a></h2>
+<p>MPP zlib 的功能：利用硬件加速解压 zlib 文件。</p>
+<div class="section" id="id9">
+<h3><span class="section-number">6.7.5.5.1. </span>接口设计<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="section" id="mpp-zlib-uncompressed">
+<h4><span class="section-number">6.7.5.5.1.1. </span>mpp_zlib_uncompressed<a class="headerlink" href="#mpp-zlib-uncompressed" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">int mpp_zlib_uncompressed(unsigned char *compressed_data,unsigned int compressed_len，</div>
+<div class="line">unsigned char *uncompressed_data,unsigned int uncompressed_len);</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>解压zlib文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">compressed_data - 压缩数据起始地址</div>
+<div class="line">compressed_len - 压缩数据长度</div>
+<div class="line">uncompressed_data - 存放解压数据 buffer 的起始地址</div>
+<div class="line">uncompressed_len - 存放解压数据 buffer 的长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>&gt;0，解压数据实际长度； &lt;0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">compressed_data - 16 byte 对齐，填充数据后，需要刷 cache</div>
+<div class="line">compressed_len - 实际有效数据长度</div>
+<div class="line">uncompressed_data - 8 byte 对齐，获取数据前，先清掉 cache</div>
+<div class="line">uncompressed_len - 8 byte 对齐，必须大于等于解压数据实际长度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="demo">
+<h3><span class="section-number">6.7.5.5.2. </span>参考Demo<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;dfs.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;unistd.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_zlib.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_mem.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_log.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;console.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;aic_core.h&quot;</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">print_help</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">program</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Compile time: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">__TIME__</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;usage:%s input_file out_file out_put_buffer_len </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">program</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;note:out_put_buffer_len &gt;= out_file_size </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;exsample:%s readme.zlib  readme.txt 204800</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">program</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">zlib_test</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">fd_in</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">fd_out</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">file_len</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">in_len_align</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">out_len</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">out_len_align</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">r_len</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">w_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">uncompress_len</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">in_buff</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">in_buff_align</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">out_buff</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">out_buff_align</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">align</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">before</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">after</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">print_help</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">fd_in</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">O_RDONLY</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fd_in</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;open %s fail</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">file_len</span> <span class="o">=</span> <span class="n">lseek</span><span class="p">(</span><span class="n">fd_in</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SEEK_END</span><span class="p">);</span>
+    <span class="n">lseek</span><span class="p">(</span><span class="n">fd_in</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SEEK_SET</span><span class="p">);</span>
+
+    <span class="cp">#define INPUT_BUFFER_ALIGN 16</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">CACHE_LINE_SIZE</span> <span class="o">&gt;</span> <span class="n">INPUT_BUFFER_ALIGN</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">align</span> <span class="o">=</span> <span class="n">CACHE_LINE_SIZE</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">align</span> <span class="o">=</span> <span class="n">INPUT_BUFFER_ALIGN</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//input buffer len align max of {CACHE_LINE_SIZE,INPUT_BUFFER_ALIGN}</span>
+    <span class="n">in_len_align</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_len</span><span class="o">+</span><span class="n">align</span><span class="mi">-1</span><span class="p">)</span><span class="o">/</span><span class="n">align</span><span class="o">*</span><span class="n">align</span><span class="p">;</span>
+    <span class="n">in_buff</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">aicos_malloc</span><span class="p">(</span><span class="n">MEM_CMA</span><span class="p">,</span> <span class="n">in_len_align</span><span class="o">+</span><span class="n">align</span><span class="mi">-1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">in_buff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;mpp_alloc fail</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">_exit</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//input buffer addr align max of {CACHE_LINE_SIZE,INPUT_BUFFER_ALIGN}</span>
+    <span class="n">in_buff_align</span> <span class="o">=</span> <span class="p">((</span><span class="n">in_buff</span><span class="o">+</span><span class="n">align</span><span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">align</span><span class="mi">-1</span><span class="p">)));</span>
+    <span class="n">r_len</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd_in</span><span class="p">,(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">in_buff_align</span><span class="p">,</span> <span class="n">file_len</span><span class="p">);</span>
+    <span class="n">logd</span><span class="p">(</span><span class="s">&quot;r_len:%d,in_len:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">r_len</span><span class="p">,</span><span class="n">file_len</span><span class="p">);</span>
+    <span class="c1">//flush cache*</span>
+    <span class="n">aicos_dcache_clean_range</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">in_buff_align</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span><span class="n">in_len_align</span><span class="p">);</span>
+
+    <span class="n">out_len</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">out_len</span> <span class="o">&lt;</span> <span class="n">file_len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;param error :%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">out_len</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">_exit</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//  out buffer len align  CACHE_LINE_SIZE</span>
+    <span class="n">out_len_align</span> <span class="o">=</span> <span class="p">(</span><span class="n">out_len</span> <span class="o">+</span> <span class="n">CACHE_LINE_SIZE</span> <span class="mi">-1</span><span class="p">)</span><span class="o">/</span><span class="n">CACHE_LINE_SIZE</span><span class="o">*</span><span class="n">CACHE_LINE_SIZE</span><span class="p">;</span>
+    <span class="n">out_buff</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">aicos_malloc</span><span class="p">(</span><span class="n">MEM_CMA</span><span class="p">,</span> <span class="n">out_len_align</span><span class="o">+</span><span class="p">(</span><span class="n">CACHE_LINE_SIZE</span> <span class="mi">-1</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">out_buff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;mpp_alloc fail</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">_exit</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">//out buffer addr align CACHE_LINE_SIZE</span>
+    <span class="n">out_buff_align</span> <span class="o">=</span> <span class="p">((</span><span class="n">out_buff</span><span class="o">+</span><span class="n">CACHE_LINE_SIZE</span> <span class="mi">-1</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">CACHE_LINE_SIZE</span><span class="mi">-1</span><span class="p">)));</span>
+    <span class="c1">// uncompressed</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">aic_get_time_us</span><span class="p">();</span>
+    <span class="n">uncompress_len</span> <span class="o">=</span>  <span class="n">mpp_zlib_uncompressed</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">in_buff_align</span><span class="p">,</span> <span class="n">file_len</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">out_buff_align</span><span class="p">,</span> <span class="n">out_len_align</span><span class="p">);</span>
+    <span class="n">after</span> <span class="o">=</span>  <span class="n">aic_get_time_us</span><span class="p">();</span>
+
+    <span class="n">logd</span><span class="p">(</span><span class="s">&quot;diff:%u</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">after</span><span class="o">-</span><span class="n">before</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">uncompress_len</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;mpp_zlib_uncompressed fail</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">_exit</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">//save uncompressed data</span>
+    <span class="n">fd_out</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">O_RDWR</span><span class="o">|</span><span class="n">O_CREAT</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fd_out</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;open %s fail</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">goto</span> <span class="n">_exit</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// invalid cache</span>
+    <span class="n">aicos_dcache_invalid_range</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">out_buff_align</span><span class="p">,</span> <span class="p">(</span><span class="kt">int64_t</span><span class="p">)</span><span class="n">out_len_align</span><span class="p">);</span>
+
+    <span class="n">w_len</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">fd_out</span><span class="p">,(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">out_buff_align</span><span class="p">,</span> <span class="n">uncompress_len</span><span class="p">);</span>
+
+    <span class="n">logd</span><span class="p">(</span><span class="s">&quot;w_len:%d,uncompress_len:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">w_len</span><span class="p">,</span><span class="n">uncompress_len</span><span class="p">);</span>
+
+    <span class="n">close</span><span class="p">(</span><span class="n">fd_out</span><span class="p">);</span>
+
+<span class="nl">_exit</span><span class="p">:</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">out_buff</span><span class="p">)</span>
+        <span class="n">aicos_free</span><span class="p">(</span><span class="n">MEM_CMA</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">out_buff</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">in_buff</span><span class="p">)</span>
+        <span class="n">aicos_free</span><span class="p">(</span><span class="n">MEM_CMA</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">in_buff</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">fd_in</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">fd_in</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-ge">
+<span id="ref-luban-lite-mpp-ge"></span><h2><span class="section-number">6.7.5.6. </span>MPP GE 设计及接口说明<a class="headerlink" href="#mpp-ge" title="永久链接至标题">¶</a></h2>
+<p><a class="reference internal" href="../ge/5_design_guide.html#ref-luban-lite-ge-cmdq"><span class="std std-ref">MPP GE设计说明请参考</span></a></p>
+<p>由于驱动支持非命令队列和命令队列两种模式，在提供的用户MPP接口中，对调用驱动的接口进行了封装，保持了统一的调用API，
+建议用户统一使用MPP中间层API。在命令队列模式下，task会先缓存在用户的cmd buffer中，当调用mpp_ge_emit后，
+会通过write接口把命令写入内核的ring buffer。</p>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/ge_function_cmdq_5.png" src="../../../_images/ge_function_cmdq_5.png" />
+<p class="caption"><span class="caption-number">图 6.79 </span><span class="caption-text">应用调用MPP框架</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<div class="section" id="mpp-ge-open">
+<h3><span class="section-number">6.7.5.6.1. </span>mpp_ge_open<a class="headerlink" href="#mpp-ge-open" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">mpp_ge_open</span><span class="p">();</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>打开ge设备</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">struct mpp_ge 结构体指针</div>
+<div class="line">NULL：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-close">
+<h3><span class="section-number">6.7.5.6.2. </span>mpp_ge_close<a class="headerlink" href="#mpp-ge-close" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">mpp_ge_close</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>关闭ge设备</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge 结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-get-mode">
+<h3><span class="section-number">6.7.5.6.3. </span>mpp_ge_get_mode<a class="headerlink" href="#mpp-ge-get-mode" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">ge_mode</span> <span class="n">mpp_ge_get_mode</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取GE模式</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge 结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">enum ge_mode枚举类型</div>
+<div class="line">通过返回值可以获取GE是否工作在命令队列</div>
+<div class="line">模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">无</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-fillrect">
+<h3><span class="section-number">6.7.5.6.4. </span>mpp_ge_fillrect<a class="headerlink" href="#mpp-ge-fillrect" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_fillrect</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_fillrect</span> <span class="o">*</span><span class="n">fillrect</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>矩形填充</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+<div class="line">fillrect:struct ge_fillrect结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口是同步</div>
+<div class="line">的。</div>
+<div class="line">命令队列模式此接口是异步的：</div>
+<div class="line">（1）当用户的缓存buffer足够时候仅把</div>
+<div class="line-block">
+<div class="line">命令缓存在用户</div>
+</div>
+<div class="line">（2）当用户的缓存空间不够的时候，先</div>
+<div class="line-block">
+<div class="line">通过write接口，把缓存的命令全部</div>
+<div class="line">写入驱动，然后再把当前命令缓存到</div>
+<div class="line">用户buffer</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>矩形填充在目标图像中指定一块矩形区域，填充颜色格式只能为ARGB8888格式，
+在进行固定颜色填充的时候，不支持scaler，不支持90/180/270度旋转，不支持镜像，
+填充的颜色可以和目标层进行alpha blending和color key。</p>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/ge_function_fill1.png" src="../../../_images/ge_function_fill1.png" />
+<p class="caption"><span class="caption-number">图 6.80 </span><span class="caption-text">矩形填充</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="mpp-ge-bitblt">
+<h3><span class="section-number">6.7.5.6.5. </span>mpp_ge_bitblt<a class="headerlink" href="#mpp-ge-bitblt" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_bitblt</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_bitblt</span> <span class="o">*</span><span class="n">blt</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>位块搬移</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+<div class="line">blt:struct ge_bitblt结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口是同步</div>
+<div class="line">的。</div>
+<div class="line">命令队列模式此接口是异步的：</div>
+<div class="line">（1）当用户的缓存buffer足够时候仅把</div>
+<div class="line-block">
+<div class="line">命令缓存在用户</div>
+</div>
+<div class="line">（2）当用户的缓存空间不够的时候，先</div>
+<div class="line-block">
+<div class="line">通过write接口，把缓存的命令全部</div>
+<div class="line">写入驱动，然后再把当前命令缓存到</div>
+<div class="line">用户buffer</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>位块搬移可以分两种情况：</p>
+<ol class="arabic simple">
+<li><p>原图的矩形区域搬移到目标图的矩形区域中不进行缩放</p></li>
+</ol>
+<div class="figure align-center" id="id21">
+<img alt="../../../_images/ge_function_blit1.png" src="../../../_images/ge_function_blit1.png" />
+<p class="caption"><span class="caption-number">图 6.81 </span><span class="caption-text">不进行缩放</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>原图的矩形区域搬移到目标图的矩形区域中同时进行放大或者缩小</p></li>
+</ol>
+<div class="figure align-center" id="id22">
+<img alt="../../../_images/ge_function_stretchblit1.png" src="../../../_images/ge_function_stretchblit1.png" />
+<p class="caption"><span class="caption-number">图 6.82 </span><span class="caption-text">进行缩放</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
+</div>
+<p>在进行位块搬移的同时可以进行alpha blending和color key，同时也支持90/180/270度旋转和镜像。</p>
+</div>
+<div class="section" id="mpp-ge-rotate">
+<h3><span class="section-number">6.7.5.6.6. </span>mpp_ge_rotate<a class="headerlink" href="#mpp-ge-rotate" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">mpp_ge_rotate</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ge_rotation</span> <span class="o">*</span><span class="n">rot</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>任意角度旋转</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+<div class="line">rot:struct ge_rotation结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口是同步</div>
+<div class="line">的。</div>
+<div class="line">命令队列模式此接口是异步的：</div>
+<div class="line">（1）当用户的缓存buffer足够时候仅把</div>
+<div class="line-block">
+<div class="line">命令缓存在用户</div>
+</div>
+<div class="line">（2）当用户的缓存空间不够的时候，先</div>
+<div class="line-block">
+<div class="line">通过write接口，把缓存的命令全部</div>
+<div class="line">写入驱动，然后再把当前命令缓存到</div>
+<div class="line">用户buffer</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>进行任意角度旋转的时候可以进行alpha blending，并且可以指定原图和目标图的旋转中心，任意角度旋转原图和目标图都只支持RGB格式。
+其中旋转角度传给驱动的是旋转角度的sin和cos值，为2.12定点数，其中小数部分12bits ，则应用程序计算sin和cos值的方法如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/ge_function_rot11.png" src="../../../_images/ge_function_rot11.png" />
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#define PI 3.14159265</span>
+
+<span class="cp">#define SIN(x) (sin(x* PI / 180.0))</span>
+<span class="cp">#define COS(x) (cos(x* PI / 180.0))</span>
+
+<span class="kt">double</span> <span class="n">degree</span> <span class="o">=</span> <span class="mf">30.0</span>  <span class="c1">// (0 &lt;= degree &lt; 360)</span>
+<span class="n">angle_sin</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">SIN</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4096</span><span class="p">);</span>
+<span class="n">angle_cos</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">COS</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4096</span><span class="p">);</span>
+<span class="c1">// 应用程序也可以预先生成需要的角度的sin和cos值列表，通过查表减小计算量</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mpp-ge-emit">
+<h3><span class="section-number">6.7.5.6.7. </span>mpp_ge_emit<a class="headerlink" href="#mpp-ge-emit" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">iint</span> <span class="nf">mpp_ge_emit</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>向驱动发送命令</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口为空，</div>
+<div class="line">不产生任何作用</div>
+<div class="line">命令队列模式此接口通过write接口，</div>
+<div class="line">把用户buffer中缓存的命令都写入驱动</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-ge-sync">
+<h3><span class="section-number">6.7.5.6.8. </span>mpp_ge_sync<a class="headerlink" href="#mpp-ge-sync" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">iint</span> <span class="nf">mpp_ge_sync</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mpp_ge</span> <span class="o">*</span><span class="n">ge</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>阻塞等待所有任务执行完成</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ge: struct mpp_ge结构体指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><div class="line-block">
+<div class="line">normal（非命令队列）模式此接口为空，</div>
+<div class="line">不产生任何作用</div>
+<div class="line">命令队列模式此接口通过调用IOC_GE_SYNC</div>
+<div class="line">接口，等待所有任务都完成</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="mpp-vin">
+<h2><span class="section-number">6.7.5.7. </span>MPP VIN 设计及接口说明<a class="headerlink" href="#mpp-vin" title="永久链接至标题">¶</a></h2>
+<p>MPP VIN模块主要实现两个功能：</p>
+<ol class="arabic simple">
+<li><p>对上封装了DVP、Camera驱动的ioctl接口（尽量做到和Linux MPP VIN保持一致）</p></li>
+<li><p>对视频Buf队列的管理，实现了DVP应用、DVP驱动之间的Buf轮转管理</p></li>
+</ol>
+<div class="figure align-center" id="id23">
+<img alt="../../../_images/vin_structure.png" src="../../../_images/vin_structure.png" />
+<p class="caption"><span class="caption-number">图 6.83 </span><span class="caption-text">MPP VIN模块的软件框架</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
+</div>
+<div class="section" id="buf">
+<span id="ref-lite-mpp-vin-buf"></span><h3><span class="section-number">6.7.5.7.1. </span>Buf队列管理<a class="headerlink" href="#buf" title="永久链接至标题">¶</a></h3>
+<p>VIN模块中的队列管理，参考了Linux的V4L2框架，通过 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">vb_queue</span></code> 结构中的两个Buf队列来管理，DVP驱动中还需要维护一个buf_list来配合DVP控制器的地址更新。
+整个Buf流转的过程如下图：</p>
+<div class="figure align-center" id="id24">
+<img alt="../../../_images/vin_buf_list.jpg" src="../../../_images/vin_buf_list.jpg" />
+<p class="caption"><span class="caption-number">图 6.84 </span><span class="caption-text">MPP VIN中的Buf队列管理</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>queued_list：是一些空闲Buf，等待Sensor的数据到来后，DVP驱动会从这个队列中找可用Buf来保存下一帧数据。</p></li>
+<li><p>done_list：是一些填了视频数据的Buf，等待用户来处理这些数据，一般用户处理完后需要将Buf还给驱动，也就是通过Q_BUF命令还给queued_list。</p></li>
+<li><p>从图中的流转过程看，运行期间，在某一时刻，DVP需要使用一个Buf，APP需要使用一个Buf，QBuf需要有一个Buf在等待（否则DVP的done中断来了后发现没有等待的Qbuf会发生丢帧），一共 <strong>至少要有3个Buf</strong>。</p></li>
+<li><p>以YUV422格式计算，有两个plane，在V4L2框架中这一组plane算一个Buf，3个Buf就需要申请6个plane，<code class="docutils literal notranslate"><span class="pre">总大小</span> <span class="pre">=</span> <span class="pre">长</span> <span class="pre">*</span> <span class="pre">宽</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span></code>。</p></li>
+</ul>
+<p>对于每一帧图像数据来说，DVP的输出有两个plane：Y和UV。针对DVP的两种输出格式：YUV422_COMBINED_NV16和YUV420_COMBINED_NV12，两个plane的空间大小如下表：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 40%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>YUV422_COMBINED_NV16</p></th>
+<th class="head"><p>YUV420_COMBINED_NV12</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Plane Y</p></td>
+<td><p>Width * height</p></td>
+<td><p>Width * height</p></td>
+</tr>
+<tr class="row-odd"><td><p>Plane UV</p></td>
+<td><p>Width * height</p></td>
+<td><p>Width * height / 2</p></td>
+</tr>
+</tbody>
+</table>
+<p>根据前面对“Buf队列管理”的分析可知：我们要分配的内存空间 <strong>至少要有3个Buf，每个Buf包含两个Plane</strong>。</p>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">6.7.5.7.2. </span>接口设计<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<div class="section" id="mpp-vin-init">
+<h4><span class="section-number">6.7.5.7.2.1. </span>mpp_vin_init<a class="headerlink" href="#mpp-vin-init" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_vin_init(char *camera)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化VIN模块，包括打开Camera设备、DVP设备、为Video Buf分配内存池</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>camera - 摄像头的设备名称</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功；&lt;0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>内存池默认配置8MB，需要根据实际的应用场景来修改</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-vin-deinit">
+<h4><span class="section-number">6.7.5.7.2.2. </span>mpp_vin_deinit<a class="headerlink" href="#mpp-vin-deinit" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_vin_deinit(void)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>释放VIN模块的资源，包括关闭Camera设备和DVP设备，释放Video Buf内存池</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-dvp-ioctl">
+<h4><span class="section-number">6.7.5.7.2.3. </span>mpp_dvp_ioctl<a class="headerlink" href="#mpp-dvp-ioctl" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_dvp_ioctl(int cmd, void *arg)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>DVP 设备的ioctl接口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">cmd - ioctl 命令码</div>
+<div class="line">arg - ioctl 命令相应的参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功；&lt;0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="ref-lite-mpp-vin-demo">
+<span id="id11"></span><h3><span class="section-number">6.7.5.7.3. </span>参考Demo<a class="headerlink" href="#ref-lite-mpp-vin-demo" title="永久链接至标题">¶</a></h3>
+<p>命令行工具test_dvp实现了一个完整的 <code class="docutils literal notranslate"><span class="pre">Sensor</span> <span class="pre">-&gt;</span> <span class="pre">DVP</span> <span class="pre">-&gt;</span> <span class="pre">DE</span></code> 数据通路，从Camera采集数据、然后会显到DE 的Video layer。 整体的处理流程如下图（图中按照访问对象分为三列，实际上整体是串行执行）：</p>
+<div class="figure align-center" id="id25">
+<img alt="../../../_images/vin_demo_flow.png" src="../../../_images/vin_demo_flow.png" />
+<p class="caption"><span class="caption-number">图 6.85 </span><span class="caption-text">MPP VIN Demo 中的处理流程</span><a class="headerlink" href="#id25" title="永久链接至图片">¶</a></p>
+</div>
+<p>此Demo的代码实现可作为MPP VIN的APP设计参考：（详见test_dvp.c）</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define VID_BUF_NUM             3</span>
+<span class="cp">#define VID_BUF_PLANE_NUM       2</span>
+<span class="cp">#define VID_SCALE_OFFSET        20</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">sopts</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;f:c:h&quot;</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">option</span> <span class="n">lopts</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">&quot;format&quot;</span><span class="p">,</span>        <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;f&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;capture&quot;</span><span class="p">,</span>       <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;usage&quot;</span><span class="p">,</span>               <span class="n">no_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;h&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_dvp_data</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">w</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">h</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">frame_size</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">frame_cnt</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">dst_fmt</span><span class="p">;</span>  <span class="c1">// output format</span>
+    <span class="k">struct</span> <span class="nc">mpp_video_fmt</span> <span class="n">src_fmt</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">num_buffers</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">vin_video_buf</span> <span class="n">binfo</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">aic_dvp_data</span> <span class="n">g_vdata</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="cp">#ifdef AIC_DISPLAY_DRV</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">mpp_fb</span> <span class="o">*</span><span class="n">g_fb</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">aicfb_screeninfo</span> <span class="n">g_fb_info</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="cp">#endif</span>
+
+<span class="cm">/* Functions */</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">usage</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">program</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s [options]: </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">program</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -f, --format</span><span class="se">\t\t</span><span class="s">format of input video, NV16/NV12 etc</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -c, --count</span><span class="se">\t\t</span><span class="s">the number of capture frame </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -u, --usage </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Example: %s -f nv16 -c 1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">program</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">long</span> <span class="kt">long</span> <span class="kt">int</span> <span class="n">str2int</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">_str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_str</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;The string is empty!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">strncmp</span><span class="p">(</span><span class="n">_str</span><span class="p">,</span> <span class="s">&quot;0x&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">atoi</span><span class="p">(</span><span class="n">_str</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="n">strtoll</span><span class="p">(</span><span class="n">_str</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">get_fb_info</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#ifdef AIC_DISPLAY_DRV</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_fb_ioctl</span><span class="p">(</span><span class="n">g_fb</span><span class="p">,</span> <span class="n">AICFB_GET_SCREENINFO</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">g_fb_info</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! errno: -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+<span class="cp">#endif</span>
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;Screen width: %d, height %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">g_fb_info</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">g_fb_info</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">set_ui_layer_alpha</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#ifdef AIC_DISPLAY_DRV</span>
+    <span class="k">struct</span> <span class="nc">aicfb_alpha_config</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">alpha</span><span class="p">.</span><span class="n">layer_id</span> <span class="o">=</span> <span class="n">AICFB_LAYER_TYPE_UI</span><span class="p">;</span>
+    <span class="n">alpha</span><span class="p">.</span><span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">alpha</span><span class="p">.</span><span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">alpha</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_fb_ioctl</span><span class="p">(</span><span class="n">g_fb</span><span class="p">,</span> <span class="n">AICFB_UPDATE_ALPHA_CONFIG</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">alpha</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! errno: -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+<span class="cp">#endif</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">sensor_get_fmt</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mpp_video_fmt</span> <span class="n">f</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_IN_G_FMT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+        <span class="c1">// return -1;</span>
+    <span class="p">}</span>
+
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;Sensor format: w %d h %d, code 0x%x, bus 0x%x, colorspace 0x%x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">height</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">code</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">bus_type</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">colorspace</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_subdev_set_fmt</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_IN_S_FMT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_cfg</span><span class="p">(</span><span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">height</span><span class="p">,</span> <span class="kt">int</span> <span class="n">format</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">dvp_out_fmt</span> <span class="n">f</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">pixelformat</span> <span class="o">=</span> <span class="n">format</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">num_planes</span> <span class="o">=</span> <span class="n">VID_BUF_PLANE_NUM</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_OUT_S_FMT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_request_buf</span><span class="p">(</span><span class="k">struct</span> <span class="nc">vin_video_buf</span> <span class="o">*</span><span class="n">vbuf</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_REQ_BUF</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">vbuf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;Buf   Plane[0]     size   Plane[1]     size</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">num_buffers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;%3d 0x%x %8d 0x%x %8d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
+            <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">num_planes</span><span class="p">].</span><span class="n">buf</span><span class="p">,</span>
+            <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">num_planes</span><span class="p">].</span><span class="n">len</span><span class="p">,</span>
+            <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">num_planes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="n">buf</span><span class="p">,</span>
+            <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">vbuf</span><span class="o">-&gt;</span><span class="n">num_planes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="n">len</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">dvp_release_buf</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#if 0</span><span class="c"></span>
+<span class="c">    int i;</span>
+<span class="c">    struct video_buf_info *binfo = NULL;</span>
+
+<span class="c">    for (i = 0; i &lt; num; i++) {</span>
+<span class="c">        binfo = &amp;g_vdata.binfo[i];</span>
+<span class="c">        if (binfo-&gt;vaddr) {</span>
+<span class="c">            munmap(binfo-&gt;vaddr, binfo-&gt;len);</span>
+<span class="c">            binfo-&gt;vaddr = NULL;</span>
+<span class="c">        }</span>
+<span class="c">    }</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_queue_buf</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_Q_BUF</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)(</span><span class="n">ptr_t</span><span class="p">)</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_dequeue_buf</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_DQ_BUF</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">index</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_start</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_STREAM_ON</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">dvp_stop</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">mpp_dvp_ioctl</span><span class="p">(</span><span class="n">DVP_STREAM_OFF</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err -%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">-</span><span class="n">ret</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#define DVP_SCALE       0</span>
+
+<span class="kt">int</span> <span class="n">video_layer_set</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dvp_data</span> <span class="o">*</span><span class="n">vdata</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#ifdef AIC_DISPLAY_DRV</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_layer_data</span> <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">vin_video_buf</span> <span class="o">*</span><span class="n">binfo</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">vdata</span><span class="o">-&gt;</span><span class="n">binfo</span><span class="p">;</span>
+
+    <span class="n">layer</span><span class="p">.</span><span class="n">layer_id</span> <span class="o">=</span> <span class="n">AICFB_LAYER_TYPE_VIDEO</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="cp">#if DVP_SCALE</span>
+<span class="cp">#if 0</span><span class="c"></span>
+<span class="c">    layer.scale_size.width = g_fb_info.width - VID_SCALE_OFFSET * 2;</span>
+<span class="c">    layer.scale_size.height = g_fb_info.height - VID_SCALE_OFFSET * 2;</span>
+<span class="c">    layer.pos.x = VID_SCALE_OFFSET;</span>
+<span class="c">    layer.pos.y = VID_SCALE_OFFSET;</span>
+<span class="cp">#else</span>
+    <span class="cm">/* Reduce the size to fb0*1/2 */</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">g_fb_info</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">g_fb_info</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">g_fb_info</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">VID_SCALE_OFFSET</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">g_fb_info</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">VID_SCALE_OFFSET</span><span class="p">;</span>
+<span class="cp">#endif</span>
+<span class="cp">#else</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">g_fb_info</span><span class="p">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#endif</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">vdata</span><span class="o">-&gt;</span><span class="n">dst_fmt</span> <span class="o">==</span> <span class="n">MPP_FMT_NV16</span><span class="p">)</span>
+        <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">MPP_FMT_NV16</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">MPP_FMT_NV12</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">buf_type</span> <span class="o">=</span> <span class="n">MPP_PHY_ADDR</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">VID_BUF_PLANE_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">stride</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+        <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">phy_addr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">binfo</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="n">index</span> <span class="o">*</span> <span class="n">VID_BUF_PLANE_NUM</span> <span class="o">+</span> <span class="n">i</span><span class="p">].</span><span class="n">buf</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">mpp_fb_ioctl</span><span class="p">(</span><span class="n">g_fb</span><span class="p">,</span> <span class="n">AICFB_UPDATE_LAYER_CONFIG</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">layer</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ioctl() failed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">#endif</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#define NS_PER_SEC      1000000000</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">show_fps</span><span class="p">(</span><span class="k">struct</span> <span class="nc">timespec</span> <span class="o">*</span><span class="n">start</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">timespec</span> <span class="o">*</span><span class="n">end</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cnt</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="kt">double</span> <span class="n">diff</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">end</span><span class="o">-&gt;</span><span class="n">tv_nsec</span> <span class="o">&lt;</span> <span class="n">start</span><span class="o">-&gt;</span><span class="n">tv_nsec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">NS_PER_SEC</span> <span class="o">+</span> <span class="n">end</span><span class="o">-&gt;</span><span class="n">tv_nsec</span> <span class="o">-</span> <span class="n">start</span><span class="o">-&gt;</span><span class="n">tv_nsec</span><span class="p">)</span><span class="o">/</span><span class="n">NS_PER_SEC</span><span class="p">;</span>
+        <span class="n">diff</span> <span class="o">+=</span> <span class="n">end</span><span class="o">-&gt;</span><span class="n">tv_sec</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">start</span><span class="o">-&gt;</span><span class="n">tv_sec</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">end</span><span class="o">-&gt;</span><span class="n">tv_nsec</span> <span class="o">-</span> <span class="n">start</span><span class="o">-&gt;</span><span class="n">tv_nsec</span><span class="p">)</span><span class="o">/</span><span class="n">NS_PER_SEC</span><span class="p">;</span>
+        <span class="n">diff</span> <span class="o">+=</span> <span class="n">end</span><span class="o">-&gt;</span><span class="n">tv_sec</span> <span class="o">-</span> <span class="n">start</span><span class="o">-&gt;</span><span class="n">tv_sec</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">DVP frame rate: %d.%d, frame %d / %d.%d seconds</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+           <span class="p">(</span><span class="n">u32</span><span class="p">)(</span><span class="n">cnt</span> <span class="o">/</span> <span class="n">diff</span><span class="p">),</span> <span class="p">(</span><span class="n">u32</span><span class="p">)(</span><span class="n">cnt</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">/</span> <span class="n">diff</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span><span class="p">,</span> <span class="n">cnt</span><span class="p">,</span>
+           <span class="p">(</span><span class="n">u32</span><span class="p">)</span><span class="n">diff</span><span class="p">,</span> <span class="p">(</span><span class="n">u32</span><span class="p">)(</span><span class="n">diff</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">test_dvp_thread</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">timespec</span> <span class="n">begin</span><span class="p">,</span> <span class="n">now</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_request_buf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">binfo</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">binfo</span><span class="p">.</span><span class="n">num_buffers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dvp_queue_buf</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_start</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+
+<span class="cp">#if DVP_SCALE</span>
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;DVP scale is enable</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="cp">#else</span>
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;DVP scale is disable</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="cp">#endif</span>
+
+    <span class="n">clock_gettime</span><span class="p">(</span><span class="n">CLOCK_REALTIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">begin</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_cnt</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dvp_dequeue_buf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="c1">// pr_debug(&quot;Set the buf %d to video layer\n&quot;, index);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">video_layer_set</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="n">dvp_queue_buf</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">clock_gettime</span><span class="p">(</span><span class="n">CLOCK_REALTIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">now</span><span class="p">);</span>
+            <span class="n">show_fps</span><span class="p">(</span><span class="o">&amp;</span><span class="n">begin</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">now</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">clock_gettime</span><span class="p">(</span><span class="n">CLOCK_REALTIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">now</span><span class="p">);</span>
+        <span class="n">show_fps</span><span class="p">(</span><span class="o">&amp;</span><span class="n">begin</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">now</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">dvp_stop</span><span class="p">();</span>
+    <span class="n">dvp_release_buf</span><span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">binfo</span><span class="p">.</span><span class="n">num_buffers</span><span class="p">);</span>
+    <span class="n">mpp_vin_deinit</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb</span><span class="p">)</span>
+        <span class="n">mpp_fb_close</span><span class="p">(</span><span class="n">g_fb</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">cmd_test_dvp</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">aicos_thread_t</span> <span class="n">thid</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dvp_data</span><span class="p">));</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">dst_fmt</span> <span class="o">=</span> <span class="n">MPP_FMT_NV16</span><span class="p">;</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_cnt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">optind</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">getopt_long</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">sopts</span><span class="p">,</span> <span class="n">lopts</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;f&#39;</span><span class="o">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">strncasecmp</span><span class="p">(</span><span class="s">&quot;nv12&quot;</span><span class="p">,</span> <span class="n">optarg</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">optarg</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">g_vdata</span><span class="p">.</span><span class="n">dst_fmt</span> <span class="o">=</span> <span class="n">DVP_OUT_FMT_NV12</span><span class="p">;</span>
+            <span class="k">continue</span><span class="p">;</span>
+
+        <span class="k">case</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span>
+            <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_cnt</span> <span class="o">=</span> <span class="n">str2int</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+            <span class="k">continue</span><span class="p">;</span>
+
+        <span class="k">case</span> <span class="sc">&#39;h&#39;</span><span class="o">:</span>
+            <span class="n">usage</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+            <span class="k">return</span><span class="p">;</span>
+
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;Capture %d frames from camera</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_cnt</span><span class="p">);</span>
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;DVP out format: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">g_vdata</span><span class="p">.</span><span class="n">dst_fmt</span> <span class="o">==</span> <span class="n">MPP_FMT_NV16</span> <span class="o">?</span> <span class="s">&quot;NV16&quot;</span> <span class="o">:</span> <span class="s">&quot;NV12&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">mpp_vin_init</span><span class="p">(</span><span class="n">CAMERA_NAME_OV</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">sensor_get_fmt</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">error_out</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_subdev_set_fmt</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">error_out</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">dst_fmt</span> <span class="o">==</span> <span class="n">MPP_FMT_NV16</span><span class="p">)</span>
+        <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">dst_fmt</span> <span class="o">==</span> <span class="n">DVP_OUT_FMT_NV12</span><span class="p">)</span>
+        <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">g_fb</span> <span class="o">=</span> <span class="n">mpp_fb_open</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">g_fb</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Failed to open FB</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">error_out</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">get_fb_info</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">error_out</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">set_ui_layer_alpha</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">error_out</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_cfg</span><span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span><span class="p">,</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span><span class="p">,</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">dst_fmt</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">error_out</span><span class="p">;</span>
+
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">num_buffers</span> <span class="o">=</span> <span class="n">VID_BUF_NUM</span><span class="p">;</span>
+
+    <span class="n">thid</span> <span class="o">=</span> <span class="n">aicos_thread_create</span><span class="p">(</span><span class="s">&quot;test_dvp&quot;</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">test_dvp_thread</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">thid</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Failed to create DVP thread</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span><span class="p">;</span>
+
+<span class="nl">error_out</span><span class="p">:</span>
+    <span class="n">mpp_vin_deinit</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb</span><span class="p">)</span>
+        <span class="n">mpp_fb_close</span><span class="p">(</span><span class="n">g_fb</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">MSH_CMD_EXPORT_ALIAS</span><span class="p">(</span><span class="n">cmd_test_dvp</span><span class="p">,</span> <span class="n">test_dvp</span><span class="p">,</span>
+                     <span class="n">Test</span> <span class="n">DVP</span> <span class="n">and</span> <span class="n">camera</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.7.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.7.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.4.3. 系统分区 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.4.4. 系统镜像" href="new_image.html" />
+    <link rel="prev" title="5.4.2. 开机启动" href="boot_script.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../sdmc/index.html">5.1. SDMC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinor/index.html">5.3. SPI NOR 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.4. 文件系统使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rootfs.html">5.4.1. RootFS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="boot_script.html">5.4.2. 开机启动</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.4.3. 系统分区</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">5.4.3.1. 配置说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#emmc">5.4.3.1.1. eMMC</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#spi-nor">5.4.3.1.2. SPI NOR</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#spi-nand">5.4.3.1.3. SPI NAND</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">5.4.3.2. 启动相关分区</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#u-boot">5.4.3.2.1. U-Boot 所在的分区修改</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#env">5.4.3.2.2. ENV 所在的分区修改</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rootfs">5.4.3.2.3. RootFS 所在的分区位置变化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="new_image.html">5.4.4. 系统镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="update_image.html">5.4.5. 分区修改</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.4. </span>文件系统使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.4.3. </span>系统分区</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">5.4.3. </span>系统分区<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>分区表的配置在 <code class="docutils literal notranslate"><span class="pre">image_cfg.json</span></code> 文件中完成，可以很容易的进行增删改查操作</p>
+<div class="section" id="id2">
+<h2><span class="section-number">5.4.3.1. </span>配置说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">image_cfg.json</span></code> 是 <code class="docutils literal notranslate"><span class="pre">SDK/target/&lt;chip&gt;/&lt;board&gt;</span></code> 目录下描述如何生成烧录镜像的文件，其中的第一部分就是描述烧录的目标存储介质的分区设置。</p>
+<div class="section" id="emmc">
+<h3><span class="section-number">5.4.3.1.1. </span>eMMC<a class="headerlink" href="#emmc" title="永久链接至标题">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;mmc&quot;: { // Media type
+        &quot;size&quot;: &quot;8G&quot;, // Size of SD/eMMC
+        &quot;partitions&quot;: { // Partition table apply to device
+                &quot;spl_1&quot;:  { &quot;offset&quot;: &quot;0x4400&quot;, &quot;size&quot;: &quot;128k&quot; },
+                &quot;spl_2&quot;:  { &quot;size&quot;: &quot;367k&quot; },
+                &quot;uboot&quot;:  { &quot;size&quot;: &quot;1m&quot; },
+                &quot;env&quot;:    { &quot;size&quot;: &quot;512k&quot; },
+                &quot;kernel&quot;: { &quot;size&quot;: &quot;16m&quot; },
+                &quot;rootfs&quot;: { &quot;size&quot;: &quot;64m&quot; },
+                &quot;user&quot;:   { &quot;size&quot;: &quot;64m&quot; },
+                &quot;data&quot;:   { &quot;size&quot;: &quot;-&quot; },
+        },
+},
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">mmc</span></code> 有两个属性：</p>
+<blockquote>
+<div><ul>
+<li><p>size</p>
+<p>eMMC 存储设备的总大小(User Data Area)。</p>
+</li>
+<li><p>partitions</p>
+<p>在该对象下，可以根据需要，按顺序添加分区，并且设置分区的开始位置和大小。</p>
+<ul class="simple">
+<li><p>offset: 分区的开始地址，相对 eMMC 0 地址的偏移。值应使用16进制字符串表示。如果 offset 没有出现，表示紧接上一个分区。</p></li>
+<li><p>size: 分区的大小，可使用 <code class="docutils literal notranslate"><span class="pre">K,</span> <span class="pre">M,</span> <span class="pre">G</span></code> 单位。最后一个分区可以使用 “-” 代替，表示剩余所有的空间都分配给该分区。</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>eMMC 的第一个分区，从 0x4400 开始，前面的 34 个 LBA 是保留给 GPT 分区表头用的。
+SPL 分区，可以设置两个备份。从 0x4400 开始，每个分区大小 为 128KB。</p>
+</div>
+</div>
+<div class="section" id="spi-nor">
+<h3><span class="section-number">5.4.3.1.2. </span>SPI NOR<a class="headerlink" href="#spi-nor" title="永久链接至标题">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;spi-nor&quot;: { // Media type
+        &quot;size&quot;: &quot;16m&quot;, // Size of NOR
+        &quot;partitions&quot;: {
+                &quot;spl&quot;:  { &quot;size&quot;: &quot;128k&quot; },
+                &quot;uboot&quot;:  { &quot;size&quot;: &quot;768k&quot; },
+                &quot;env&quot;:    { &quot;size&quot;: &quot;128k&quot; },
+                &quot;kernel&quot;: { &quot;size&quot;: &quot;6m&quot; },
+                &quot;rootfs&quot;: { &quot;size&quot;: &quot;5m&quot; },
+                &quot;user&quot;:   { &quot;size&quot;: &quot;4m&quot; },
+                &quot;data&quot;:   { &quot;size&quot;: &quot;-&quot; },
+        }
+},
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">spi-nor</span></code> 有两个属性：</p>
+<blockquote>
+<div><ul>
+<li><p>size</p>
+<p>SPI NOR 设备的总大小。</p>
+</li>
+<li><p>partitions</p>
+<p>在该对象下，可以根据需要，按顺序添加 MTD 分区，并且设置分区的开始位置和大小。</p>
+<ul class="simple">
+<li><p>offset: 分区的开始地址，相对设备 0 地址的偏移。值应使用16进制字符串表示。如果 offset 没有出现，表示紧接上一个分区。</p></li>
+<li><p>size: 分区的大小，可使用 <code class="docutils literal notranslate"><span class="pre">K,</span> <span class="pre">M,</span> <span class="pre">G</span></code> 单位。最后一个分区可以使用 “-” 代替，表示剩余所有的空间都分配给该分区。</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>SPI NOR 的 SPL 可以设置两个备份分区。从 0 开始，每个大小128KB。
+第二个备份分区可以不设置。</p>
+</div>
+</div>
+<div class="section" id="spi-nand">
+<h3><span class="section-number">5.4.3.1.3. </span>SPI NAND<a class="headerlink" href="#spi-nand" title="永久链接至标题">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;spi-nand&quot;: { // Device, The name should be the same with string in image:info:media:type
+        &quot;size&quot;: &quot;128m&quot;, // Size of SPI NAND
+        &quot;partitions&quot;: {
+                &quot;spl&quot;:    { &quot;size&quot;: &quot;1m&quot; },
+                &quot;uboot&quot;:  { &quot;size&quot;: &quot;1m&quot; },
+                &quot;env&quot;:    { &quot;size&quot;: &quot;256k&quot; },
+                &quot;kernel&quot;: { &quot;size&quot;: &quot;12m&quot; },
+                &quot;ubiroot&quot;: {
+                        &quot;size&quot;: &quot;32m&quot;,
+                        &quot;ubi&quot;: { // Volume in UBI device
+                                &quot;rootfs&quot;: { &quot;size&quot;: &quot;-&quot; },
+                        },
+                },
+                &quot;ubisystem&quot;: {
+                        &quot;size&quot;: &quot;-&quot;,
+                        &quot;ubi&quot;: { // Volume in UBI device
+                                &quot;user&quot;:   { &quot;size&quot;: &quot;64m&quot; },
+                        },
+                        &quot;ubi&quot;: { // Volume in UBI device
+                                &quot;data&quot;:   { &quot;size&quot;: &quot;-&quot; },
+                        },
+                },
+        }
+},
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">spi-nand</span></code> 有两个属性：</p>
+<blockquote>
+<div><ul>
+<li><p>size</p>
+<p>SPI NAND 设备的总大小。</p>
+</li>
+<li><p>partitions</p>
+<p>在该对象下，可以根据需要，按顺序添加 MTD 分区，设置分区的开始位置和大小，以及设置该 MTD 分区是否为 UBI 设备：</p>
+<ul>
+<li><p>offset: 分区的开始地址，相对设备 0 地址的偏移。值应使用16进制字符串表示。如果 offset 没有出现，表示紧接上一个分区。</p></li>
+<li><p>size: 分区的大小，可使用 <code class="docutils literal notranslate"><span class="pre">K,</span> <span class="pre">M,</span> <span class="pre">G</span></code> 单位。最后一个分区可以使用 “-” 代替，表示剩余所有的空间都分配给该分区。</p></li>
+<li><p>ubi</p>
+<p>如果设置了该对象，则说明该 MTD 分区是一个 UBI 设备，可以进一步描述 UBI Volume 的划分。</p>
+<p>在该对象下，可以根据需要，按顺序添加该 UBI 设备中的 Volume 描述，每一个 Volume 拥有下列属性：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>offset: Volume 的开始地址，相对 UBI 设备 0 地址的偏移。值应使用16进制字符串表示。如果 offset 没有出现，表示紧接上一个 Volume。</p></li>
+<li><p>size: Volume 的大小，可使用 <code class="docutils literal notranslate"><span class="pre">K,</span> <span class="pre">M,</span> <span class="pre">G</span></code> 单位。最后一个 Volume 可以使用 “-” 代替，表示 UBI 设备剩余所有的空间都分配给该 Volume。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>SPI NAND 的 <code class="docutils literal notranslate"><span class="pre">spl</span></code> 分区大小，固定为1MB。里面包含 4 个 SPL 备份。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">5.4.3.2. </span>启动相关分区<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>启动相关的分区，修改之后要注意同步修改 U-Boot 和 env.txt 中的配置。</p>
+<div class="section" id="u-boot">
+<h3><span class="section-number">5.4.3.2.1. </span>U-Boot 所在的分区修改<a class="headerlink" href="#u-boot" title="永久链接至标题">¶</a></h3>
+<p>U-Boot 所在的分区修改之后，对应 defconfig 中的位置也应该同步更新。</p>
+<table class="docutils align-center" style="width: 100%">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 31%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>eMMC</p></th>
+<th class="head"><p>SPI NOR</p></th>
+<th class="head"><p>SPI NAND</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR</p></td>
+<td><p>CONFIG_SYS_SPI_U_BOOT_OFFS</p></td>
+<td><p>CONFIG_SYS_SPI_NAND_U_BOOT_OFFS</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="env">
+<h3><span class="section-number">5.4.3.2.2. </span>ENV 所在的分区修改<a class="headerlink" href="#env" title="永久链接至标题">¶</a></h3>
+<p>ENV 所在的分区修改之后，对应 defconfig 中的位置也应该同步更新。</p>
+<table class="docutils align-center" style="width: 100%">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 31%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>eMMC</p></th>
+<th class="head"><p>SPI NOR</p></th>
+<th class="head"><p>SPI NAND</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONFIG_ENV_OFFSET</p></td>
+<td><p>CONFIG_ENV_OFFSET</p></td>
+<td><p>CONFIG_ENV_OFFSET</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONFIG_ENV_OFFSET_REDUND</p></td>
+<td><p>CONFIG_ENV_OFFSET_REDUND</p></td>
+<td><p>CONFIG_ENV_RANGE</p></td>
+</tr>
+<tr class="row-even"><td><p>CONFIG_ENV_SIZE</p></td>
+<td><p>CONFIG_ENV_SIZE</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>CONFIG_ENV_SECT_SIZE</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rootfs">
+<h3><span class="section-number">5.4.3.2.3. </span>RootFS 所在的分区位置变化<a class="headerlink" href="#rootfs" title="永久链接至标题">¶</a></h3>
+<p>RootFS 所在的分区位置发生变化之后，需要修改 bootargs 相关的配置。相关的文件通常在</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/&lt;</span><span class="n">chip</span><span class="o">&gt;/</span><span class="n">common</span><span class="o">/</span><span class="n">env</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">target</span><span class="o">/&lt;</span><span class="n">chip</span><span class="o">&gt;/&lt;</span><span class="n">board</span><span class="o">&gt;/</span><span class="n">env</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>eMMC 的 <code class="docutils literal notranslate"><span class="pre">root=</span></code> 参数是自动生成的，但前提条件是 RootFS 分区名字要为 <code class="docutils literal notranslate"><span class="pre">rootfs</span></code> 。如果 RootFS 分区名字发生了改变，
+应同步修改：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set_mmc_root=part number mmc ${boot_devnum} rootfs rootfs_part; \
+         setexpr rootfs_part ${rootfs_part} + 0; \
+         setenv mmc_root &quot;/dev/mmcblk${boot_devnum}p${rootfs_part}&quot;;
+</pre></div>
+</div>
+<p>SPI NOR 中的 RootFS 分区位置发生变化时，应同步修改：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nor_root=/dev/mtdblock4
+</pre></div>
+</div>
+<p>SPI NAND 中的 RootFS 通常放在 UBI 中，如果相应的位置发生变化，需要同步修改：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nand_root=ubi0:rootfs
+ubi_rootfs_mtd=4
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="new_image.html" class="btn btn-neutral float-right" title="5.4.4. 系统镜像" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="boot_script.html" class="btn btn-neutral float-left" title="5.4.2. 开机启动" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

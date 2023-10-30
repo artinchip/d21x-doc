@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.11.2. 参数配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.11.3. 调试指南" href="3_debugguide.html" />
+    <link rel="prev" title="7.11.1. 模块介绍" href="1_introduction.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">7.4. GPIO 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.5. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../psadc/index.html">7.6. PSADC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.7. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.8. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.9. QSPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.10. UART 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.11. MAC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.11.1. 模块介绍</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.11.2. 参数配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.11.2.1. 以太网配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mac">7.11.2.1.1. MAC参数配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#lwip">7.11.2.1.2. LwIP协议配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#pinmux">7.11.2.1.3. pinmux配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.11.2.2. 时钟</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id4">7.11.2.2.1. MAC 工作时钟</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mdc">7.11.2.2.2. MDC 时钟</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#phy">7.11.2.2.3. PHY 工作时钟</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mdata">7.11.2.2.4. MDATA 时钟</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="3_debugguide.html">7.11.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_testguide.html">7.11.4. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_codeguide.html">7.11.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.11.6. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.11. </span>MAC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.11.2. </span>参数配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.11.2. </span>参数配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.11.2.1. </span>以太网配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>内核配置主要是通过 <code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">--menuconfig</span></code> 命令进行 以太网的功能配置，
+配置完成后的项目存储在 “target/configs/xxx_defconfig” 文件中</p>
+<div class="section" id="mac">
+<h3><span class="section-number">7.11.2.1.1. </span>MAC参数配置<a class="headerlink" href="#mac" title="永久链接至标题">¶</a></h3>
+<p>内核中要使用以太网功能，首先需要配置 MAC 的属性参数。MAC 的参数随着板卡的不同而不同</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Board</span> <span class="n">options</span> <span class="o">---&gt;</span>
+    <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Using</span> <span class="n">Gmac0</span>
+        <span class="n">gmac0</span> <span class="n">parameter</span> <span class="o">---&gt;</span>
+            <span class="p">(</span><span class="n">PE</span><span class="o">.</span><span class="mi">6</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">phy</span> <span class="n">reset</span> <span class="n">gpio</span>
+               <span class="n">Select</span> <span class="n">gmac0</span> <span class="n">bus</span> <span class="p">(</span><span class="n">RMII</span><span class="p">)</span> <span class="o">---&gt;</span>
+               <span class="n">Select</span> <span class="n">phy</span> <span class="n">clk</span> <span class="p">(</span><span class="n">external</span> <span class="n">clk</span><span class="p">)</span> <span class="o">---&gt;</span>
+            <span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">rx</span> <span class="n">delay</span>
+            <span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">tx</span> <span class="n">delay</span>
+            <span class="p">(</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.2</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">IPv4</span> <span class="n">addr</span>
+            <span class="p">(</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.1</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">Gateway</span>
+            <span class="p">(</span><span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">Subnet</span> <span class="n">Mask</span>
+            <span class="p">(</span><span class="mi">002244887766</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">MAC</span> <span class="n">addr</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">gmac0</span> <span class="n">PHY</span> <span class="n">MDIO</span> <span class="n">addr</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>gmac0 phy reset gpio</dt><dd><p>外部 PHY 芯片的复位脚相连接的IO引脚，根据板卡设计决定</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Select gmac0 bus</dt><dd><p>选择 MAC 与 PHY 相连接的接口类型，根据板卡决定是 RGMII 还是 RMII</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Select phy clk</dt><dd><p>选择MAC使用的总线参考时钟类型是 external clk (外部时钟)还是 internal clk
+(内部时钟)。如果选用的是 RGMII 接口，且硬件没有连接 GMAC_CLKIN 引脚的前提下，只能使用
+internal clk ，除此之外，建议全部选用 <code class="docutils literal notranslate"><span class="pre">external</span> <span class="pre">clk</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 rx delay</dt><dd><p>gmac 的接收时延，适用于 RGMII 接口模式下， MAC 匹配 PHY 芯片的数据建立时间和保留时
+间(单位：0.17ns)， 需要根据外部使用的PHY芯片调整。一般情况下，设置为 12 ，即 2.04ns</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 tx delay</dt><dd><p>gmac0的发送时延，适用于RGMII接口模式下，MAC 匹配 PHY 芯片的数据建立时间和保留时间
+(单位：0.17ns)，需要根据外部使用的PHY芯片调整。一般情况下，可设置为12，即2.04ns</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 IPv4 addr</dt><dd><p>当前网卡的初始静态IP地址，如打开DHCP功能，此处设置无效</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 Gateway</dt><dd><p>当前网卡的初始静态网关地址，如打开DHCP功能，此处设置无效</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 Subnet Mask</dt><dd><p>当前网卡初始静态子网掩码，如打开DHCP功能，此处设置无效</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 MAC addr</dt><dd><p>gmac0默认MAC地址</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>gmac0 PHY MDIO addr</dt><dd><p>PHY 在 总线上的挂载地址，PHY芯片地址一般取决于PHY芯片外部电路设计，请根据板卡设计决定</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="lwip">
+<h3><span class="section-number">7.11.2.1.2. </span>LwIP协议配置<a class="headerlink" href="#lwip" title="永久链接至标题">¶</a></h3>
+<p>Luban-lite内置LwIP2.1.3协议栈，用户可以根据自身需求通过 <code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">--menuconfig</span></code> 进行裁剪。
+Luban-lite提供的可裁剪属性如下，如有其他特别需求，可自行配置 “packages/third-party/lwip/lwipopts.h”
+配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Local</span> <span class="n">packages</span> <span class="n">options</span> <span class="o">---&gt;</span>
+    <span class="n">Third</span><span class="o">-</span><span class="n">party</span> <span class="n">packages</span> <span class="n">options</span> <span class="o">---&gt;</span>
+        <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">LwIP</span><span class="p">:</span> <span class="n">light</span> <span class="n">weight</span> <span class="n">TCP</span><span class="o">/</span><span class="n">IP</span> <span class="n">stack</span> <span class="o">---&gt;</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">IPV6</span> <span class="n">protocol</span>
+            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">LwIP</span> <span class="n">Example</span> <span class="o">---&gt;</span>
+                <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">example</span> <span class="n">test</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">IGMP</span> <span class="n">protocol</span>
+            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">ICMP</span> <span class="n">protocol</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">SNMP</span> <span class="n">protocol</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">DNS</span> <span class="k">for</span> <span class="n">name</span> <span class="n">resolution</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">alloc</span> <span class="n">ip</span> <span class="n">address</span> <span class="n">through</span> <span class="n">DHCP</span>
+            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">UDP</span> <span class="n">protocol</span>
+            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">TCP</span> <span class="n">protocol</span>
+            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">RAW</span> <span class="n">protocol</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">PPP</span> <span class="n">protocol</span>
+            <span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">struct</span> <span class="n">netconns</span>
+            <span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">PBUF</span>
+            <span class="p">(</span><span class="mi">15360</span><span class="p">)</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">LwIP</span><span class="s1">&#39;s dynamic memory</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">raw</span> <span class="n">connection</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">UDP</span> <span class="n">socket</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">TCP</span> <span class="n">socket</span>
+            <span class="p">(</span><span class="mi">40</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">TCP</span> <span class="n">segment</span>
+            <span class="p">(</span><span class="mi">8196</span><span class="p">)</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">send</span> <span class="n">buffer</span>
+            <span class="p">(</span><span class="mi">8196</span><span class="p">)</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">TCP</span> <span class="n">send</span> <span class="n">window</span>
+            <span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="n">the</span> <span class="n">priority</span> <span class="n">level</span> <span class="n">value</span> <span class="n">of</span> <span class="n">lwIP</span> <span class="n">thread</span>
+            <span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">mail</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">lwIP</span> <span class="n">thread</span> <span class="n">mailbox</span>
+            <span class="p">(</span><span class="mi">3072</span><span class="p">)</span> <span class="n">the</span> <span class="n">stack</span> <span class="n">size</span> <span class="n">of</span> <span class="n">lwIP</span> <span class="n">thread</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">IP</span> <span class="n">reassembly</span> <span class="ow">and</span> <span class="n">frag</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">lwIP</span> <span class="n">statistics</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">tx</span> <span class="n">hardware</span> <span class="n">generate</span> <span class="n">checksum</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">rx</span> <span class="n">hardware</span> <span class="n">check</span> <span class="n">checksum</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">ping</span> <span class="n">features</span>  <span class="o">----</span>
+                <span class="p">[</span> <span class="p">]</span> <span class="n">Using</span> <span class="n">socket</span> <span class="n">interface</span> <span class="n">during</span> <span class="n">ping</span> <span class="n">requests</span>
+                    <span class="p">(</span> <span class="p">)</span> <span class="n">the</span> <span class="n">priority</span> <span class="n">level</span> <span class="n">value</span> <span class="n">of</span> <span class="n">ping</span> <span class="n">thread</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Using</span> <span class="n">MQTT</span> <span class="n">protocol</span>
+            <span class="p">[</span> <span class="p">]</span> <span class="n">Enable</span> <span class="n">lwIP</span> <span class="n">Debugging</span> <span class="n">Options</span>  <span class="o">----</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>IPV6 protocol</dt><dd><p>LwIP支持IPV6协议</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>LwIP Example</dt><dd><p>SDK 提供的初始化以太网示例，示例程序源码在“packages/third-party/lwip/contrib/examples/example_app/”
+目录下的 <code class="docutils literal notranslate"><span class="pre">test.c</span></code> <code class="docutils literal notranslate"><span class="pre">netif_start.c</span></code> <code class="docutils literal notranslate"><span class="pre">netif_start.h</span></code>。打开此选项后，SDK会在启动过程中自动
+初始化以太网。用户可根据自身需求定义以太网初始化流程</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>IGMP protocol</dt><dd><p>以太网支持IGMP协议，使用组播功能时打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>ICMP protocol</dt><dd><p>以太网支持ICMP协议，使用ping命令时打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SNMP protocol</dt><dd><p>以太网支持SNMP协议，需要时打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable DNS for name resolution</dt><dd><p>支持DNS客户端功能，需要时打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable alloc ip address through DHCP</dt><dd><p>支持DHCP客户端功能，需要时打开。如果打开DHCP选项，默认IP地址会失效，如果IP申请失败，则此时IP地址为0.0.0.0</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>UDP protocol</dt><dd><p>支持UDP协议，默认打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>TCP protocol</dt><dd><p>支持TCP协议，默认打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>RAW protocol</dt><dd><p>支持原始套接字接口，如需要编写基于RAW套接字的程序时，需要打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PPP protocol</dt><dd><p>支持PPP协议，需要时打开</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of struct netconns</dt><dd><p>struct netconns接口的数量，默认为8个，可根据需求自行修改</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of PBUF</dt><dd><p>pbuf 结构的数量，如果需要发送较多的ROM类型消息，可自行修改</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the size of LwIP’s dynamic memory</dt><dd><p>LwIP堆空间大小，与数据发送有关，不建议修改</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of raw connection</dt><dd><p>RAW 控制块数量，根据需求修改</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of UDP socket</dt><dd><p>UDP 控制块数量，根据需求修改</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of TCP socket</dt><dd><p>TCP 控制块数量，根据需求修改</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of TCP segment</dt><dd><p>TCP等待队列的个数，这个值应该不小于TCP的发送队列的个数</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the size of send buffer</dt><dd><p>TCP发送缓存大小，如无特别需求，请保持默认值</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the size of TCP send window</dt><dd><p>TCP滑动窗口大小，如无特别需求，请保持默认值</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the priority level value of lwIP thread</dt><dd><p>LwIP协议栈任务优先级，为防止网络丢包，建议保持较高优先级</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the number of mail in the lwIP thread mailbox</dt><dd><p>消息邮箱数量，如无特别需求，不建议修改此数量</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>the stack size of lwIP thread</dt><dd><p>LwIP协议栈任务的栈空间大小，如没有添加基于RAW接口的应用程序，不建议修改任务栈。
+否则，应该加大协议栈任务的栈空间</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable IP reassembly and frag</dt><dd><p>使能IP包的分片重装功能</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable lwIP statistics</dt><dd><p>使能LwIP统计信息</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable tx hardware generate checksum</dt><dd><p>使能发送时自动生成硬件校验和</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable rx hardware check checksum</dt><dd><p>使能接收时硬件检查校验和</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable ping features  —-</dt><dd><p>ping命令支持，使能此选项后，可在终端中使用ping命令</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Using MQTT protocol</dt><dd><p>支持MQTT协议</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Enable lwIP Debugging Options  —-</dt><dd><p>LwIP调试信息选项，可根据自身需求进行打开</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="pinmux">
+<h3><span class="section-number">7.11.2.1.3. </span>pinmux配置<a class="headerlink" href="#pinmux" title="永久链接至标题">¶</a></h3>
+<p>在 target/soc name/board name/pinmux.c 中设置 MAC 端口的 pinmux，
+需要根据开发板板的不同进行不同的设置</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifdef AIC_USING_GMAC0</span>
+    <span class="cm">/* gmac0 */</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.0&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.1&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.2&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.3&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.4&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.5&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.7&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.8&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.9&quot;</span><span class="p">},</span>
+    <span class="cm">/* phy0 reset gpio */</span>
+    <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.6&quot;</span><span class="p">},</span>
+    <span class="cm">/* clk_out2 */</span>
+    <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="n">PIN_PULL_DIS</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&quot;PE.10&quot;</span><span class="p">},</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.11.2.2. </span>时钟<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>MAC 和 PHY 的协同工作共牵涉到四组时钟， Luban-lite已将时钟部分处理完整，不需要用户除
+<code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">--menuconfig</span></code> 配置MAC使用 <code class="docutils literal notranslate"><span class="pre">external</span> <span class="pre">clk</span></code> 或 <code class="docutils literal notranslate"><span class="pre">internal</span> <span class="pre">clk</span></code> 之外的其
+他任何修改</p>
+<div class="section" id="id4">
+<h3><span class="section-number">7.11.2.2.1. </span>MAC 工作时钟<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>MAC 的内部工作时钟通过 PLL 分频获得，为 50M， 工作时钟不会因为方案的不同而不同，为一固定值
+配置代码在 “packages/third-party/lwip/contrib/ports/drv/aic/aic_mac_ll.c” 中。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">aicmac_low_level_init</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">port</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">en</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">id</span> <span class="o">=</span> <span class="n">CLK_GMAC0</span> <span class="o">+</span> <span class="n">port</span><span class="p">;</span>
+
+    <span class="cm">/* pin-mux */</span>
+
+    <span class="cm">/* mac clock */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">en</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cm">/* Set clock frequence = 50M */</span>
+        <span class="n">hal_clk_set_freq</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="mi">50000000</span><span class="p">);</span>
+        <span class="cm">/* clock enable &amp; reset deassert */</span>
+        <span class="n">hal_clk_enable_deassertrst_iter</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="cm">/* clock enable &amp; reset deassert */</span>
+        <span class="n">hal_clk_disable_assertrst</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mdc">
+<h3><span class="section-number">7.11.2.2.2. </span>MDC 时钟<a class="headerlink" href="#mdc" title="永久链接至标题">¶</a></h3>
+<p>MDC 时钟是 mdio 的工作时钟，是 MAC 和 PHY 进行配置的工作时钟，双方在使用初期会有一个协
+商，一般是 MAC 通知 PHY，该时钟为 MAC 通过模块的内部工作时钟处理生成，也不会因为方案的
+不同而不同，为一固定值。MDIO时钟初始化在 “packages/third-party/lwip/contrib/ports/drv/aic/aicmac.c”
+文件的aicmac_init函数中</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">aicmac_init</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">port</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="cm">/* MDCIO Internal Clock Select */</span>
+    <span class="n">tmpreg</span> <span class="o">=</span> <span class="n">readl</span><span class="p">(</span><span class="n">MAC</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">mdioctl</span><span class="p">));</span>
+    <span class="n">tmpreg</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="n">ETH_MDIOCTL_CR_MSK</span><span class="p">);</span>
+    <span class="n">ahbclk</span> <span class="o">=</span> <span class="n">hal_clk_get_freq</span><span class="p">(</span><span class="n">CLK_AHB0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">ahbclk</span> <span class="o">&gt;=</span> <span class="mi">20000000</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">ahbclk</span> <span class="o">&lt;</span> <span class="mi">35000000</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">tmpreg</span> <span class="o">|=</span> <span class="n">ETH_MDIOCTL_CR_Div16</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">ahbclk</span> <span class="o">&gt;=</span> <span class="mi">35000000</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">ahbclk</span> <span class="o">&lt;</span> <span class="mi">60000000</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">tmpreg</span> <span class="o">|=</span> <span class="n">ETH_MDIOCTL_CR_Div26</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">ahbclk</span> <span class="o">&gt;=</span> <span class="mi">60000000</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">ahbclk</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">tmpreg</span> <span class="o">|=</span> <span class="n">ETH_MDIOCTL_CR_Div42</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">ahbclk</span> <span class="o">&gt;=</span> <span class="mi">100000000</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">ahbclk</span> <span class="o">&lt;</span> <span class="mi">150000000</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">tmpreg</span> <span class="o">|=</span> <span class="n">ETH_MDIOCTL_CR_Div62</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="n">ahbclk</span> <span class="o">&gt;=</span> <span class="mi">150000000</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">ahbclk</span> <span class="o">&lt;</span> <span class="mi">250000000</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">tmpreg</span> <span class="o">|=</span> <span class="n">ETH_MDIOCTL_CR_Div102</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="cm">/* ((ahbclk &gt;= 250000000)&amp;&amp;(ahbclk &lt;= 300000000)) */</span>
+    <span class="p">{</span>
+        <span class="n">tmpreg</span> <span class="o">|=</span> <span class="n">ETH_MDIOCTL_CR_Div124</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">writel</span><span class="p">(</span><span class="n">tmpreg</span><span class="p">,</span> <span class="n">MAC</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">mdioctl</span><span class="p">));</span>
+    <span class="p">...</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>MDC 时钟配置错误，则 MAC 和 PHY 的通信不通，呈现的现象是 MAC 无法发现 PHY 设备</p>
+</div>
+<div class="section" id="phy">
+<h3><span class="section-number">7.11.2.2.3. </span>PHY 工作时钟<a class="headerlink" href="#phy" title="永久链接至标题">¶</a></h3>
+<p>一般 PHY 的工作时钟是 25M， 一般的设计是外挂一个晶振提供时钟给 PHY 模组，
+AIC不同型号芯片都对外提供几组时钟，也可以使用该时钟供给 PHY 模块工作。</p>
+<p>该时钟 (clk-out2) 使能在 “target/soc name/board name/sys_clk.c” 中配置。如果需要可以打开</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_sysclk</span> <span class="n">aic_sysclk_config</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="p">{</span><span class="mi">25000000</span><span class="p">,</span> <span class="n">CLK_OUT2</span><span class="p">},</span>
+    <span class="p">...</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">aic_board_sysclk_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="k">sizeof</span><span class="p">(</span><span class="n">aic_sysclk_config</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_sysclk</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">hal_clk_set_freq</span><span class="p">(</span><span class="n">aic_sysclk_config</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">clk_id</span><span class="p">,</span> <span class="n">aic_sysclk_config</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">freq</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Enable sys clk */</span>
+    <span class="n">hal_clk_enable_deassertrst_iter</span><span class="p">(</span><span class="n">CLK_GPIO</span><span class="p">);</span>
+    <span class="n">hal_clk_enable_deassertrst_iter</span><span class="p">(</span><span class="n">CLK_GTC</span><span class="p">);</span>
+<span class="cp">#ifdef AIC_USING_GMAC0</span>
+    <span class="n">hal_clk_enable_deassertrst_iter</span><span class="p">(</span><span class="n">CLK_OUT2</span><span class="p">);</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mdata">
+<h3><span class="section-number">7.11.2.2.4. </span>MDATA 时钟<a class="headerlink" href="#mdata" title="永久链接至标题">¶</a></h3>
+<p>MDATA 时钟 为 MAC 和 PHY 进行数据传输的时钟，对于百兆和千兆有不同的使用方式</p>
+<ul class="simple">
+<li><p>百兆网络：可以是 MAC 供给 PHY， 也可以是 PHY 供给 MAC</p></li>
+<li><p>千兆网络：只能是 MAC 供给 PHY，RGMII0-TXCK 端口</p></li>
+</ul>
+<p>代码中会根据 <code class="docutils literal notranslate"><span class="pre">scons</span> <span class="pre">--menuconfig</span></code> 中的配置来决定MAC使用的时钟来源是内部时钟还是外部时钟</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">s32</span> <span class="n">syscfg_gmac_init</span><span class="p">(</span><span class="n">u32</span> <span class="n">ch</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="cp">#ifdef AIC_SYSCFG_DRV_V10</span>
+    <span class="n">u32</span> <span class="n">cfg_reg</span> <span class="o">=</span> <span class="n">ch</span> <span class="o">?</span> <span class="nl">SYSCFG_GMAC1_CFG</span> <span class="p">:</span> <span class="n">SYSCFG_GMAC0_CFG</span><span class="p">;</span>
+    <span class="cp">#else</span>
+    <span class="n">u32</span> <span class="n">cfg_reg</span> <span class="o">=</span>  <span class="n">SYSCFG_GMAC0_CFG</span><span class="p">;</span>
+    <span class="cp">#endif</span>
+    <span class="n">s32</span> <span class="n">cfg</span><span class="p">;</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">syscfg_readl</span><span class="p">(</span><span class="n">cfg_reg</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cp">#ifdef AIC_SYSCFG_DRV_V10</span>
+        <span class="cp">#ifdef AIC_DEV_GMAC0_RGMII</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="n">SYSCFG_GMAC_PHY_RGMII_1000M</span><span class="p">;</span>
+        <span class="cp">#else</span>
+        <span class="n">cfg</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">SYSCFG_GMAC_PHY_RGMII_1000M</span><span class="p">;</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#ifdef AIC_DEV_GMAC0_PHY_EXTCLK</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="n">SYSCFG_GMAC_RMII_EXTCLK_SEL</span><span class="p">;</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#if AIC_DEV_GMAC0_TXDELAY</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="p">(</span><span class="n">AIC_DEV_GMAC0_TXDELAY</span> <span class="o">&lt;&lt;</span> <span class="n">SYSCFG_GMAC_TXDLY_SEL_SHIFT</span><span class="p">);</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#if AIC_DEV_GMAC0_RXDELAY</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="p">(</span><span class="n">AIC_DEV_GMAC0_RXDELAY</span> <span class="o">&lt;&lt;</span> <span class="n">SYSCFG_GMAC_RXDLY_SEL_SHIFT</span><span class="p">);</span>
+        <span class="cp">#endif</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="cp">#ifdef AIC_SYSCFG_DRV_V10</span>
+        <span class="cp">#ifdef AIC_DEV_GMAC1_RGMII</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="n">SYSCFG_GMAC_PHY_RGMII_1000M</span><span class="p">;</span>
+        <span class="cp">#else</span>
+        <span class="n">cfg</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">SYSCFG_GMAC_PHY_RGMII_1000M</span><span class="p">;</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#ifdef AIC_DEV_GMAC1_PHY_EXTCLK</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="n">SYSCFG_GMAC_RMII_EXTCLK_SEL</span><span class="p">;</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#if AIC_DEV_GMAC1_TXDELAY</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="p">(</span><span class="n">AIC_DEV_GMAC1_TXDELAY</span> <span class="o">&lt;&lt;</span> <span class="n">SYSCFG_GMAC_TXDLY_SEL_SHIFT</span><span class="p">);</span>
+        <span class="cp">#endif</span>
+        <span class="cp">#if AIC_DEV_GMAC1_RXDELAY</span>
+        <span class="n">cfg</span> <span class="o">|=</span> <span class="p">(</span><span class="n">AIC_DEV_GMAC1_RXDELAY</span> <span class="o">&lt;&lt;</span> <span class="n">SYSCFG_GMAC_RXDLY_SEL_SHIFT</span><span class="p">);</span>
+        <span class="cp">#endif</span>
+    <span class="p">}</span>
+
+    <span class="n">syscfg_writel</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">cfg_reg</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="3_debugguide.html" class="btn btn-neutral float-right" title="7.11.3. 调试指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="1_introduction.html" class="btn btn-neutral float-left" title="7.11.1. 模块介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

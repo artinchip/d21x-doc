@@ -1,0 +1,2530 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.7.4. 寄存器定义 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.8. CIR" href="../cir/index.html" />
+    <link rel="prev" title="12.7.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.7. Controller Area Network (CAN)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.7.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.7.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">12.7.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.7.4. 寄存器定义</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-can-mode">12.7.4.1. 0x000 CAN_MODE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-can-mcr">12.7.4.2. 0x004 CAN_MCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-can-stat">12.7.4.3. 0x008 CAN_STAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-can-intr">12.7.4.4. 0x00C CAN_INTR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-can-inten">12.7.4.5. 0x010 CAN_INTEN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-can-btr0">12.7.4.6. 0x018 CAN_BTR0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-can-btr1">12.7.4.7. 0x01C CAN_BTR1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x02c-can-arblost">12.7.4.8. 0x02C CAN_ARBLOST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-can-errcode">12.7.4.9. 0x030 CAN_ERRCODE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-can-errwt">12.7.4.10. 0x034 CAN_ERRWT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x038-can-rxerr">12.7.4.11. 0x038 CAN_RXERR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x03c-can-txerr">12.7.4.12. 0x03C CAN_TXERR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-can-buf0">12.7.4.13. 0x040 CAN_BUF0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-can-buf1">12.7.4.14. 0x044 CAN_BUF1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-can-buf2">12.7.4.15. 0x048 CAN_BUF2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-can-buf3">12.7.4.16. 0x04C CAN_BUF3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-can-buf4">12.7.4.17. 0x050 CAN_BUF4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-can-buf5">12.7.4.18. 0x054 CAN_BUF5</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x058-can-buf6">12.7.4.19. 0x058 CAN_BUF6</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x05c-can-buf7">12.7.4.20. 0x05C CAN_BUF7</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x060-can-buf8">12.7.4.21. 0x060 CAN_BUF8</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x064-can-buf9">12.7.4.22. 0x064 CAN_BUF9</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x068-can-buf10">12.7.4.23. 0x068 CAN_BUF10</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x06c-can-buf11">12.7.4.24. 0x06C CAN_BUF11</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x070-can-buf12">12.7.4.25. 0x070 CAN_BUF12</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-can-rxcode0">12.7.4.26. 0x040 CAN_RXCODE0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-can-rxcode1">12.7.4.27. 0x044 CAN_RXCODE1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-can-rxcode2">12.7.4.28. 0x048 CAN_RXCODE2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-can-rxcode3">12.7.4.29. 0x04C CAN_RXCODE3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-can-rxmask0">12.7.4.30. 0x050 CAN_RXMASK0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-can-rxmask1">12.7.4.31. 0x054 CAN_RXMASK1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x058-can-rxmask2">12.7.4.32. 0x058 CAN_RXMASK2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x05c-can-rxmask3">12.7.4.33. 0x05C CAN_RXMASK3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x074-can-rxc">12.7.4.34. 0x074 CAN_RXC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x078-can-rsaddr">12.7.4.35. 0x078 CAN_RSADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-can-rxfifo">12.7.4.36. 0x080 CAN_RXFIFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x180-can-txb-ro">12.7.4.37. 0x180 CAN_TXB_RO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-can-version">12.7.4.38. 0xFFC CAN_VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.7. </span>CAN</a> &raquo;</li>
+        
+      <li><span class="section-number">12.7.4. </span>寄存器定义</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.7.4. </span>寄存器定义<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>寄存器列表</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>寄存器名</p></th>
+<th class="head"><p>偏移地址</p></th>
+<th class="head"><p>寄存器功能描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CAN_MODE</p></td>
+<td><p>0x000</p></td>
+<td><p>CAN模式寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_MCR</p></td>
+<td><p>0x004</p></td>
+<td><p>CAN控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_STAT</p></td>
+<td><p>0x008</p></td>
+<td><p>CAN状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_INTR</p></td>
+<td><p>0x00C</p></td>
+<td><p>CAN中断寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_INTEN</p></td>
+<td><p>0x010</p></td>
+<td><p>CAN中断使能寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BTR0</p></td>
+<td><p>0x018</p></td>
+<td><p>CAN总线时序0寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BTR1</p></td>
+<td><p>0x01C</p></td>
+<td><p>CAN总线时序1寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_ARBLOST</p></td>
+<td><p>0x02C</p></td>
+<td><p>CAN仲裁丢失捕获寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_ERRCODE</p></td>
+<td><p>0x030</p></td>
+<td><p>CAN错误代码捕获寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_ERRWT</p></td>
+<td><p>0x034</p></td>
+<td><p>CAN错误报警阈值寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_RXERR</p></td>
+<td><p>0x038</p></td>
+<td><p>CAN接收错误计数寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_TXERR</p></td>
+<td><p>0x03C</p></td>
+<td><p>CAN发送错误计数寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF0</p></td>
+<td><p>0x040</p></td>
+<td><p>CAN缓冲0寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BUF1</p></td>
+<td><p>0x044</p></td>
+<td><p>CAN缓冲1寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF2</p></td>
+<td><p>0x048</p></td>
+<td><p>CAN缓冲2寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BUF3</p></td>
+<td><p>0x04C</p></td>
+<td><p>CAN缓冲3寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF4</p></td>
+<td><p>0x050</p></td>
+<td><p>CAN缓冲4寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BUF5</p></td>
+<td><p>0x054</p></td>
+<td><p>CAN缓冲5寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF6</p></td>
+<td><p>0x058</p></td>
+<td><p>CAN缓冲6寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BUF7</p></td>
+<td><p>0x05C</p></td>
+<td><p>CAN缓冲7寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF8</p></td>
+<td><p>0x060</p></td>
+<td><p>CAN缓冲8寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BUF9</p></td>
+<td><p>0x064</p></td>
+<td><p>CAN缓冲9寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF10</p></td>
+<td><p>0x068</p></td>
+<td><p>CAN缓冲10寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_BUF11</p></td>
+<td><p>0x06C</p></td>
+<td><p>CAN缓冲11寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_BUF12</p></td>
+<td><p>0x070</p></td>
+<td><p>CAN缓冲12寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_RXCODE0</p></td>
+<td><p>0x040</p></td>
+<td><p>CAN接收代码0寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_RXCODE1</p></td>
+<td><p>0x044</p></td>
+<td><p>CAN接收代码1寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_RXCODE2</p></td>
+<td><p>0x048</p></td>
+<td><p>CAN接收代码2寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_RXCODE3</p></td>
+<td><p>0x04C</p></td>
+<td><p>CAN接收代码3寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_RXMASK0</p></td>
+<td><p>0x050</p></td>
+<td><p>CAN接收屏蔽0寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_RXMASK1</p></td>
+<td><p>0x054</p></td>
+<td><p>CAN接收屏蔽1寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_RXMASK2</p></td>
+<td><p>0x058</p></td>
+<td><p>CAN接收屏蔽2寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_RXMASK3</p></td>
+<td><p>0x05C</p></td>
+<td><p>CAN接收屏蔽3寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_RXC</p></td>
+<td><p>0x074</p></td>
+<td><p>CAN接收数据计数寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_RSADDR</p></td>
+<td><p>0x078</p></td>
+<td><p>CAN接收缓冲起始地址寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_RXFIFO</p></td>
+<td><p>0x080~17C</p></td>
+<td><p>CAN接收FIFO</p></td>
+</tr>
+<tr class="row-even"><td><p>CAN_TXB_RO</p></td>
+<td><p>0x180~1B0</p></td>
+<td><p>CAN发送缓冲只读寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CAN_VERSION</p></td>
+<td><p>0xFFC</p></td>
+<td><p>版本寄存器</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>寄存器描述</strong></p>
+<div class="section" id="x000-can-mode">
+<h2><span class="section-number">12.7.4.1. </span>0x000 CAN_MODE<a class="headerlink" href="#x000-can-mode" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>CAN模式寄存器（CAN_MODE）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:5</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLEEP_MOD：Sleep Mode，休眠模式，只在复位模式可写</div>
+<div class="line">0x0：正常操作。控制器唤醒。</div>
+<div class="line">0x1：休眠模式。CAN无总线活动和无中断发生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FILTER_MOD：Acceptance Filter Mode，接收过滤器模式</div>
+<div class="line">0x0：双过滤模式。使用两个过滤器。</div>
+<div class="line">0x1：单过滤模式。使用一个4字节过滤器。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SELFTEST_MOD：Self Test Mode，自测模式</div>
+<div class="line">0x0：正常操作。发送成功需有应答。</div>
+<div class="line">0x1：自测模式。在SELF_REQ自接收请求指令下，无需其它节点</div>
+<div class="line-block">
+<div class="line">参与也能完成整个节点测试，发送成功无需应答。</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LISTEN_MOD：Listen Only Mode，只听模式</div>
+<div class="line">0x0：正常操作。错误计数停止于当前值 。</div>
+<div class="line">0x1：只听模式。只接收总线上数据，不产生应答信号，</div>
+<div class="line-block">
+<div class="line">也不更新接收错误计数。</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RST_MOD：Reset Mode，复位模式</div>
+<div class="line">0x0：正常操作。控制器返回正常操作模式。</div>
+<div class="line">0x1：复位模式。发送或接收中止，控制器处于可配置状态。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-can-mcr">
+<h2><span class="section-number">12.7.4.2. </span>0x004 CAN_MCR<a class="headerlink" href="#x004-can-mcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN控制寄存器（CAN_MCR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:6</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SELF_REQ：Self Reception Request，自接收请求</div>
+<div class="line">0x0：无动作</div>
+<div class="line">0x1：允许发送数据的同时接收总线上的数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR_OVF_FLAG：Clear Overflow Flag，清除溢出标志</div>
+<div class="line">0x0：无动作</div>
+<div class="line">0x1：清除数据溢出标志位</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXB_REL：Release Receive Buffer，释放接收缓冲器</div>
+<div class="line">0x0：无动作</div>
+<div class="line">0x1：释放，缓冲器中存放信息的内存空间被释放</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABORT_REQ：Abort Transmission，中止发送</div>
+<div class="line">0x0：无动作</div>
+<div class="line">0x1：中止当前未开始的发送任务</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>WO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_REQ：Transmission Request，发送请求</div>
+<div class="line">0x0：无动作</div>
+<div class="line">0x1：信息被发送</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-can-stat">
+<h2><span class="section-number">12.7.4.3. </span>0x008 CAN_STAT<a class="headerlink" href="#x008-can-stat" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000003C</p></th>
+<th class="head"><p>CAN状态寄存器（CAN_STAT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUS_STAT：Bus Status，总线状态</div>
+<div class="line">0x0：正常状态。控制器参与总线活动。</div>
+<div class="line">0x1：Bus Off离线状态。控制器不参与总线活动。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERR_STAT：Error Status，错误状态</div>
+<div class="line">0x0：所有错误计数器低于警报限制值。</div>
+<div class="line">0x1：至少一个错误计数器高于警报限制值。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TX_STAT：Transmit Status，发送状态</div>
+<div class="line">0x0：无任何发送。</div>
+<div class="line">0x1：正在发送数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RX_STAT：Receive Status，接收状态</div>
+<div class="line">0x0：无任何接收。</div>
+<div class="line">0x1：正在接收数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TXC_STAT：Transmission Complete Status，发送完成状态</div>
+<div class="line">0x0：没有完成发送。</div>
+<div class="line">0x1：成功完成发送。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TXB_STAT：Transmit Buffer Status，发送缓冲状态</div>
+<div class="line">0x0：发送缓冲不可用。发送缓冲已锁定，不可访问。</div>
+<div class="line">0x1：发送缓冲可用。发送缓冲已释放，可写入数据。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OVF_FLAG：Overflow Flag，溢出状态标志</div>
+<div class="line">0x0：数据没有溢出。</div>
+<div class="line">0x1：数据溢出。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXB_STAT：Receive Buffer Status，接收缓冲状态</div>
+<div class="line">0x0：接收缓冲为空。无数据可读。</div>
+<div class="line">0x1：接收缓冲不为空。有数据可读。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-can-intr">
+<h2><span class="section-number">12.7.4.4. </span>0x00C CAN_INTR<a class="headerlink" href="#x00c-can-intr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN中断寄存器（CAN_INTR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERRB_INT：Bus Error Interrupt，总线错误中断</div>
+<div class="line">节点检测到总线上发生了错误。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ARBLOST_INT：Arbitration Lost Interrupt，仲裁丢失中断</div>
+<div class="line">发送节点仲裁丢失。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERRP_INT：Error Passive Interrupt，被动错误中断</div>
+<div class="line">节点在主动错误与被动错误状态间发生了切换，触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>RC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WAKEUP：Wake-Up Interrupt，唤醒中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OVF_INT：Overflow Interrupt，溢出中断</div>
+<div class="line">当前接收缓冲中存储的报文为溢出失效报文，触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERRW_INT：Error Warning Interrupt，错误报警中断</div>
+<div class="line">错误状态和总线状态发生变化，触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_INT：Transmit Interrupt，发送中断</div>
+<div class="line">数据发送任务结束，可以执行新的数据发送任务，触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_INT：Receive Interrupt，接收中断</div>
+<div class="line">RXB_STAT=1接收缓冲不为空时触发，有数据待处理。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-can-inten">
+<h2><span class="section-number">12.7.4.5. </span>0x010 CAN_INTEN<a class="headerlink" href="#x010-can-inten" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN中断使能寄存器（CAN_INTEN）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERRB_EN：Bus Error Interrupt Enable，总线错误中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ARBLOST_EN：Arbitration Lost Interrupt Enable，仲裁丢失中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERRP_EN：Error Passive Interrupt Enable，被动错误中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WAKEUP_EN：Wake-Up Interrupt Enable，唤醒中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OVF_EN：Overflow Interrupt Enable，溢出中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERRW_EN：Error Warning Interrupt Enable，错误报警中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXI_EN：Transmit Interrupt Enable，发送中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXI_EN：Receive Interrupt Enable，接收中断使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-can-btr0">
+<h2><span class="section-number">12.7.4.6. </span>0x018 CAN_BTR0<a class="headerlink" href="#x018-can-btr0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN总线时序0寄存器（CAN_BTR0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>30:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SJW：Synchronization Jump Width，重新同步跳转宽度</div>
+<div class="line">只在复位模式可写</div>
+<div class="line">0x0：1Tq</div>
+<div class="line">0x1：2Tq</div>
+<div class="line">0x2：3Tq</div>
+<div class="line">0x3：4Tq</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BRP：Baud Rate Prescaler，波特率预分频</div>
+<div class="line">只在复位模式可写</div>
+<div class="line">时间定额Tq = 2*(BRP[5:0]+1)*Tpclk</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-can-btr1">
+<h2><span class="section-number">12.7.4.7. </span>0x01C CAN_BTR1<a class="headerlink" href="#x01c-can-btr1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN总线时序1寄存器（CAN_BTR1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>30:24</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SAM：Sample Time，采样次数，只在复位模式可写</div>
+<div class="line">0x0：采样1次。用于高速总线。</div>
+<div class="line">0x1：采样3次。用于低/中速总线。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TS2：缓冲时间段2的宽度，只在复位模式可写</div>
+<div class="line">[0x0~0x7]：1~8Tq</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TS1：缓冲时间段1的宽度，只在复位模式可写</div>
+<div class="line">[0x0~0xF]：1~16Tq</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x02c-can-arblost">
+<h2><span class="section-number">12.7.4.8. </span>0x02C CAN_ARBLOST<a class="headerlink" href="#x02c-can-arblost" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN仲裁丢失捕获寄存器（CAN_ARBLOST）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:5</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">ARBLOST_CAP：Arbitration Lost Capture，仲裁丢失捕获，</div>
+<div class="line">记录丢失bit的位置</div>
+<div class="line">0x00~0x0A：1~11位标识符ID28~ID18仲裁丢失</div>
+<div class="line">0x0B：SRTR仲裁丢失</div>
+<div class="line">0x0C：IDE仲裁丢失</div>
+<div class="line">0x0D~0x1E：12~29位标识符ID17~ID0仲裁丢失</div>
+<div class="line">0x1F：RTR仲裁丢失</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-can-errcode">
+<h2><span class="section-number">12.7.4.9. </span>0x030 CAN_ERRCODE<a class="headerlink" href="#x030-can-errcode" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN错误代码捕获寄存器（CAN_ERRCODE）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERR_TYPE：Error Type，错误类型</div>
+<div class="line">0x0：位错误。</div>
+<div class="line">0x1：格式错误。</div>
+<div class="line">0x2：填充错误。</div>
+<div class="line">0x3：其它类型错误。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ERR_DIR：Error Direction，错误发生时数据传输方向</div>
+<div class="line">0x0：错误发生于发送。</div>
+<div class="line">0x1：错误发生于接收。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">ERR_CODE：Error Segment Code，错误发生段代码</div>
+<div class="line">0x03：SOF，帧起始</div>
+<div class="line">0x02：ID28~ID21，标识符</div>
+<div class="line">0x06：ID20~ID18，标识符</div>
+<div class="line">0x04：SRTR，代替远程发送请求位</div>
+<div class="line">0x05：IDE，标识符扩展位</div>
+<div class="line">0x07：ID17~ID13，标识符</div>
+<div class="line">0x0F：ID12~ID5，标识符</div>
+<div class="line">0x0E：ID4~ID0，标识符</div>
+<div class="line">0x0C：RTR，远程发送请求位</div>
+<div class="line">0x0D：R1，保留位</div>
+<div class="line">0x09：R0，保留位</div>
+<div class="line">0x0B：DLC，数据长度代码</div>
+<div class="line">0x0A：数据场</div>
+<div class="line">0x08：CRC，CRC序列</div>
+<div class="line">0x18：CRC分界符</div>
+<div class="line">0x19：ASK，应答槽</div>
+<div class="line">0x1B：ASK分界符</div>
+<div class="line">0x1A：EOF，帧结尾</div>
+<div class="line">0x12：间隔帧</div>
+<div class="line">0x11：主动错误标志</div>
+<div class="line">0x16：被动错误标志</div>
+<div class="line">0x13：兼容显性位</div>
+<div class="line">0x17：错误分界符</div>
+<div class="line">0x1C：过载标志</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-can-errwt">
+<h2><span class="section-number">12.7.4.10. </span>0x034 CAN_ERRWT<a class="headerlink" href="#x034-can-errwt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000060</p></th>
+<th class="head"><p>CAN错误报警阈值寄存器（CAN_ERRWT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x60</p></td>
+<td><div class="line-block">
+<div class="line">ERRWT：Error Warning Threshold，错误报警阈值，</div>
+<div class="line">默认值0x60（即96），正常模式只读，复位模式时R/W</div>
+<div class="line">任一错误计数值超过该阈值，触发错误报警中断（使能信号有效情况下）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x038-can-rxerr">
+<h2><span class="section-number">12.7.4.11. </span>0x038 CAN_RXERR<a class="headerlink" href="#x038-can-rxerr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收错误计数寄存器（CAN_RXERR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">REC：Receive Error Counter，接收错误计数</div>
+<div class="line">正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x03c-can-txerr">
+<h2><span class="section-number">12.7.4.12. </span>0x03C CAN_TXERR<a class="headerlink" href="#x03c-can-txerr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN发送错误计数寄存器（CAN_TXERR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TEC：Transmit Error Counter，发送错误计数</div>
+<div class="line">正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-can-buf0">
+<h2><span class="section-number">12.7.4.13. </span>0x040 CAN_BUF0<a class="headerlink" href="#x040-can-buf0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲0寄存器（CAN_BUF0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IDE：Identifier Extended，标识符扩展位，用于明确报文格式</div>
+<div class="line">0x0：标准格式，SFF</div>
+<div class="line">0x1：扩展格式，EFF</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RTR：Remote Transmit Request，远程发送请求位</div>
+<div class="line">0x0：数据帧</div>
+<div class="line">0x1：远程帧</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DLC：Data Length Code，数据长度代码</div>
+<div class="line">0x0：无数据字节</div>
+<div class="line">0x1~0x8：数据帧对应包含1~8byte数据</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-can-buf1">
+<h2><span class="section-number">12.7.4.14. </span>0x044 CAN_BUF1<a class="headerlink" href="#x044-can-buf1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲1寄存器（CAN_BUF1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ID：</div>
+<div class="line">标准格式标识符[10:3]</div>
+<div class="line">扩展格式标识符[28:21]</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-can-buf2">
+<h2><span class="section-number">12.7.4.15. </span>0x048 CAN_BUF2<a class="headerlink" href="#x048-can-buf2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲2寄存器（CAN_BUF2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STID_EXID：</div>
+<div class="line">标准格式标识符[2:0]</div>
+<div class="line">扩展格式标识符[20:18]</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EXID：扩展格式标识符[17:13]</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-can-buf3">
+<h2><span class="section-number">12.7.4.16. </span>0x04C CAN_BUF3<a class="headerlink" href="#x04c-can-buf3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲3寄存器（CAN_BUF3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA1_EXID：</div>
+<div class="line">EXID[12:5]，扩展格式标识符[12:5]</div>
+<div class="line">STDATA1[7:0]，标准格式数据字节1</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-can-buf4">
+<h2><span class="section-number">12.7.4.17. </span>0x050 CAN_BUF4<a class="headerlink" href="#x050-can-buf4" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲4寄存器（CAN_BUF4）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA2_EXID：</div>
+<div class="line">EXID[4:0]，扩展格式标识符[4:0]</div>
+<div class="line">STDATA2[7:3] ，标准格式数据字节2[7:3]</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA2：</div>
+<div class="line">STDATA2[2:0]，标准格式数据字节2[2:0]</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-can-buf5">
+<h2><span class="section-number">12.7.4.18. </span>0x054 CAN_BUF5<a class="headerlink" href="#x054-can-buf5" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲5寄存器（CAN_BUF5）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA3_EXDATA1：</div>
+<div class="line">STDATA3[7:0]，标准格式数据字节3</div>
+<div class="line">EXDATA1[7:0]，扩展格式数据字节1</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x058-can-buf6">
+<h2><span class="section-number">12.7.4.19. </span>0x058 CAN_BUF6<a class="headerlink" href="#x058-can-buf6" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲6寄存器（CAN_BUF6）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA4_EXDATA2：</div>
+<div class="line">STDATA4[7:0]，标准格式数据字节4</div>
+<div class="line">EXDATA2[7:0]，扩展格式数据字节2</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x05c-can-buf7">
+<h2><span class="section-number">12.7.4.20. </span>0x05C CAN_BUF7<a class="headerlink" href="#x05c-can-buf7" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲7寄存器（CAN_BUF7）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA5_EXDATA3：</div>
+<div class="line">STDATA5[7:0]，标准格式数据字节5</div>
+<div class="line">EXDATA3[7:0]，扩展格式数据字节3</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x060-can-buf8">
+<h2><span class="section-number">12.7.4.21. </span>0x060 CAN_BUF8<a class="headerlink" href="#x060-can-buf8" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲8寄存器（CAN_BUF8）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA6_EXDATA4：</div>
+<div class="line">STDATA6[7:0]，标准格式数据字节6</div>
+<div class="line">EXDATA4[7:0]，扩展格式数据字节4</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x064-can-buf9">
+<h2><span class="section-number">12.7.4.22. </span>0x064 CAN_BUF9<a class="headerlink" href="#x064-can-buf9" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲9寄存器（CAN_BUF9）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA7_EXDATA5：</div>
+<div class="line">STDATA7[7:0]，标准格式数据字节7</div>
+<div class="line">EXDATA5[7:0]，扩展格式数据字节5</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x068-can-buf10">
+<h2><span class="section-number">12.7.4.23. </span>0x068 CAN_BUF10<a class="headerlink" href="#x068-can-buf10" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲10寄存器（CAN_BUF10）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STDATA8_EXDATA6：</div>
+<div class="line">STDATA8[7:0]，标准格式数据字节8</div>
+<div class="line">EXDATA6[7:0]，扩展格式数据字节6</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x06c-can-buf11">
+<h2><span class="section-number">12.7.4.24. </span>0x06C CAN_BUF11<a class="headerlink" href="#x06c-can-buf11" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲11寄存器（CAN_BUF11）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EXDATA7：EXDATA7[7:0]，扩展格式数据字节7</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x070-can-buf12">
+<h2><span class="section-number">12.7.4.25. </span>0x070 CAN_BUF12<a class="headerlink" href="#x070-can-buf12" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN缓冲12寄存器（CAN_BUF12）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EXDATA8：EXDATA8[7:0]，扩展格式数据字节8</div>
+<div class="line">RX缓冲时只读，TX缓冲时只写，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-can-rxcode0">
+<h2><span class="section-number">12.7.4.26. </span>0x040 CAN_RXCODE0<a class="headerlink" href="#x040-can-rxcode0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收代码0寄存器（CAN_RXCODE0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXCODE0：Acceptance Code0，接收过滤代码0</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-can-rxcode1">
+<h2><span class="section-number">12.7.4.27. </span>0x044 CAN_RXCODE1<a class="headerlink" href="#x044-can-rxcode1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收代码1寄存器（CAN_RXCODE1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXCODE1：Acceptance Code1，接收过滤代码1</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-can-rxcode2">
+<h2><span class="section-number">12.7.4.28. </span>0x048 CAN_RXCODE2<a class="headerlink" href="#x048-can-rxcode2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收代码2寄存器（CAN_RXCODE2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXCODE2：Acceptance Code2，接收过滤代码2</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-can-rxcode3">
+<h2><span class="section-number">12.7.4.29. </span>0x04C CAN_RXCODE3<a class="headerlink" href="#x04c-can-rxcode3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收代码3寄存器（CAN_RXCODE3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXCODE3：Acceptance Code3，接收过滤代码3</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-can-rxmask0">
+<h2><span class="section-number">12.7.4.30. </span>0x050 CAN_RXMASK0<a class="headerlink" href="#x050-can-rxmask0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收屏蔽0寄存器（CAN_RXMASK0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXMASK0：Acceptance Mask3，接收屏蔽0</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-can-rxmask1">
+<h2><span class="section-number">12.7.4.31. </span>0x054 CAN_RXMASK1<a class="headerlink" href="#x054-can-rxmask1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收屏蔽1寄存器（CAN_RXMASK1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXMASK1：Acceptance Mask1，接收屏蔽1</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x058-can-rxmask2">
+<h2><span class="section-number">12.7.4.32. </span>0x058 CAN_RXMASK2<a class="headerlink" href="#x058-can-rxmask2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收屏蔽2寄存器（CAN_RXMASK2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXMASK2：Acceptance Mask2，接收屏蔽2</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x05c-can-rxmask3">
+<h2><span class="section-number">12.7.4.33. </span>0x05C CAN_RXMASK3<a class="headerlink" href="#x05c-can-rxmask3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收屏蔽3寄存器（CAN_RXMASK3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXMASK3：Acceptance Mask3，接收屏蔽3</div>
+<div class="line">详细描述见 <a class="reference internal" href="function.html#ref-to-filter"><span class="std std-ref">接收过滤器</span></a>，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x074-can-rxc">
+<h2><span class="section-number">12.7.4.34. </span>0x074 CAN_RXC<a class="headerlink" href="#x074-can-rxc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收数据计数寄存器（CAN_RXC）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXC：Receive Message Counter，</div>
+<div class="line">接收数据计数，存储接收缓冲中数据包个数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x078-can-rsaddr">
+<h2><span class="section-number">12.7.4.35. </span>0x078 CAN_RSADDR<a class="headerlink" href="#x078-can-rsaddr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收缓冲起始地址寄存器（CAN_RSADDR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:6</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RSADDR：Receive Buffer Start Address，</div>
+<div class="line">接收缓冲器起始地址，正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-can-rxfifo">
+<h2><span class="section-number">12.7.4.36. </span>0x080 CAN_RXFIFO<a class="headerlink" href="#x080-can-rxfifo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN接收FIFO寄存器（RX FIFO）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXFIFO：Receive FIFO，0x80~17C共 64bytes</div>
+<div class="line">正常模式只读，复位模式时R/W</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x180-can-txb-ro">
+<h2><span class="section-number">12.7.4.37. </span>0x180 CAN_TXB_RO<a class="headerlink" href="#x180-can-txb-ro" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CAN发送缓冲只读寄存器（TX Buffer Read Only）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXB_RO：Transmit Buffer Read Only</div>
+<div class="line">每个寄存器只有低8位可有效访问，其余高位被读时返回0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-can-version">
+<h2><span class="section-number">12.7.4.38. </span>0xFFC CAN_VERSION<a class="headerlink" href="#xffc-can-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>CAN版本寄存器（VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version （版本号），采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../cir/index.html" class="btn btn-neutral float-right" title="12.8. CIR" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="12.7.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

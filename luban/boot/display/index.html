@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.14. 图像显示 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.15. 调试配置" href="../debug/index.html" />
+    <link rel="prev" title="3.13.4. 常见问题" href="../userid/6_faq.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers/index.html">3.8. 驱动支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.14. 图像显示</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.14.1. 相关术语</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.14.2. 驱动框架</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.14.3. 预留内存</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.14.4. 初始化流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logo">3.14.5. LOGO加载</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.14.6. 硬件时序要求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.14.7. LOGO保持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.14.8. 更换LOGO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#falcon-logo">3.14.9. falcon 模式 logo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#faq">3.14.10. FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+      <li><span class="section-number">3.14. </span>图像显示</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">3.14. </span>图像显示<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>本章节主要介绍U-Boot 阶段LOGO显示的相关内容。</p>
+<p>U-Boot 驱动模型支持 Graphics，Artinchip 平台中的显示驱动基于该框架进行实现。
+但驱动内部逻辑参考了Kernel中的显示驱动，对新屏适配可参考SDK指南中的显示模块使用指南。</p>
+<div class="section" id="id2">
+<h2><span class="section-number">3.14.1. </span>相关术语<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 45%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>术语</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>注释说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DE</p></td>
+<td><p>Display Engine</p></td>
+<td><p>显示引擎</p></td>
+</tr>
+<tr class="row-odd"><td><p>DI</p></td>
+<td><p>Display Interface</p></td>
+<td><p>显示接口，包括RGB/LVDS/DSI等</p></td>
+</tr>
+<tr class="row-even"><td><p>PANEL</p></td>
+<td><p>panel</p></td>
+<td><p>外接屏幕驱动</p></td>
+</tr>
+<tr class="row-odd"><td><p>RGB</p></td>
+<td><p>Red Green Blue</p></td>
+<td><p>按红绿蓝三原色编码的显示接口标准</p></td>
+</tr>
+<tr class="row-even"><td><p>LVDS</p></td>
+<td><p>Low Voltage Differential Signaling</p></td>
+<td><p>低压差分信号的显示接口标准</p></td>
+</tr>
+<tr class="row-odd"><td><p>MIPI-DSI</p></td>
+<td><p>Mipi Display Serial Interface</p></td>
+<td><p>Mipi组织定义的一个显示接口标准</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">3.14.2. </span>驱动框架<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>相关配置为：</p>
+<ul class="simple">
+<li><p>CONFIG_DM_VIDEO</p></li>
+<li><p>CONFIG_DISPLAY</p></li>
+<li><p>CONFIG_VIDEO_ARTINCHIP</p></li>
+</ul>
+<p>相关源码有：</p>
+<ul class="simple">
+<li><p>drivers/video/artinchip/</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">board/artinchip/d211/d211.c</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">3.14.3. </span>预留内存<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>U-Boot 会在代码重定位前在 DRAM 的顶部预留出一块连续内存 <code class="docutils literal notranslate"><span class="pre">video</span> <span class="pre">buffer</span></code> ，用于保存 LOGO 信息。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">board_init_f</span><span class="p">();</span> <span class="c1">// common/board_f.c</span>
+    <span class="o">|-&gt;</span> <span class="n">reserve_video</span><span class="p">()</span>  <span class="c1">// reserve video buffer</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">reserve_video()</span></code> 会遍历 <code class="docutils literal notranslate"><span class="pre">uclass_video</span></code> 链表，解析 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">video_uc_platdata</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">size</span></code> 属性是否被设置，如果不为零，即在DRAM顶部预留一块大小为 <code class="docutils literal notranslate"><span class="pre">size</span></code> 的 buffer，并将这块 buffer 的起始地址和结束地址存入 <code class="docutils literal notranslate"><span class="pre">gd-&gt;video_bottom</span></code> 和 <code class="docutils literal notranslate"><span class="pre">gd-&gt;video_top</span></code> 。随后U-Boot重置 DRAM 中可用内存的起始地址，减去这块 buffer。</p>
+<p>预留内存的大小在 U-Boot DM 驱动模型第一次初始化时设定。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">board_init_f</span><span class="p">();</span> <span class="c1">// common/board_f.c</span>
+    <span class="o">|-&gt;</span> <span class="n">initf_dm</span><span class="p">();</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">()</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+    <span class="o">|</span>       <span class="n">aicfb_bind</span><span class="p">()</span> <span class="c1">// drivers/video/artinchip/aic_fb.c</span>
+    <span class="o">|</span>                    <span class="c1">// 为struct video_uc_platdata 中的 size 赋值</span>
+    <span class="o">|</span>   <span class="p">...</span>
+    <span class="o">|-&gt;</span> <span class="n">reserve_video</span><span class="p">()</span>  <span class="c1">// reserve video buffer</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">3.14.4. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>显示驱动的初始化发生在 U-Boot 重定位之后，LOGO 加载之前，probe流程如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="o">|-&gt;</span> <span class="n">board_init_r</span><span class="p">();</span> <span class="c1">// common/board_r.c</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">board_late_init</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">board_show_logo</span> <span class="c1">//board/artinchip/d211/d211.c</span>
+<span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">uclass_first_device</span>
+<span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">()</span>
+<span class="o">|</span>              <span class="o">|-&gt;</span> <span class="n">aicfb_probe</span><span class="p">()</span> <span class="c1">// drivers/video/artinchip/aic_fb.c</span>
+<span class="o">|</span>                       <span class="o">|</span>
+<span class="o">|</span>       <span class="o">+---------------+</span>
+<span class="o">|</span>       <span class="o">|</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">aicfb_find_de</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="o">-&gt;</span> <span class="n">uclass_get_device_by_ofnode</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_get_device_tail</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>               <span class="n">aic_de_probe</span><span class="p">()</span> <span class="c1">// drivers/video/artinchip/aic_de.c</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">aicfb_find_di</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="o">-&gt;</span> <span class="n">uclass_get_device_by_ofnode</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_get_device_tail</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>               <span class="n">aic_rgb_probe</span><span class="p">()</span> <span class="o">/</span> <span class="n">lvds_probe</span><span class="p">()</span> <span class="o">/</span> <span class="n">aic_dsi_probe</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="c1">// 这三个函数的关系为三选一，分别位于</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="c1">// drivers/video/artinchip/aic_rgb.c</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="c1">// drivers/video/artinchip/aic_lvds.c</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="c1">// drivers/video/artinchip/aic_dsi.c</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">aicfb_find_panel</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span> <span class="o">-&gt;</span> <span class="n">uclass_get_device_by_ofnode</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_get_device_tail</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">panel_probe</span><span class="p">()</span> <span class="c1">// drivers/video/artinchip/panel_xxx.c</span>
+<span class="o">|</span>   <span class="p">...</span>
+    <span class="o">|-&gt;</span> <span class="n">board_prepare_logo</span> <span class="c1">// 加载logo</span>
+    <span class="o">|-&gt;</span> <span class="n">aicfb_enable_panel</span>
+</pre></div>
+</div>
+<p>在probe过程中并没有开启显示模块，只是设置了相关参数。在 LOGO 加载进 video buffer 后，U-Boot 才会调用 <code class="docutils literal notranslate"><span class="pre">aicfb_enable_panel</span></code> 执行显示模块的 enable 操作。</p>
+</div>
+<div class="section" id="logo">
+<h2><span class="section-number">3.14.5. </span>LOGO加载<a class="headerlink" href="#logo" title="永久链接至标题">¶</a></h2>
+<p>ArtInChip 平台支持从 <code class="docutils literal notranslate"><span class="pre">mmc</span></code>, <code class="docutils literal notranslate"><span class="pre">spinand</span></code>, <code class="docutils literal notranslate"><span class="pre">spinor</span></code> 等启动介质中加载 <code class="docutils literal notranslate"><span class="pre">png/jpg</span></code> 图片进行硬解码并居中显示。</p>
+<p>加载的过程为：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="o">|-&gt;</span> <span class="n">board_late_init</span> <span class="c1">// common/board_r.c</span>
+    <span class="o">|-&gt;</span> <span class="n">board_show_logo</span> <span class="c1">// board/artinchip/d211/d211.c</span>
+        <span class="o">|-&gt;</span> <span class="n">board_prepare_logo</span><span class="p">()</span>
+        <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">mmc_load_logo</span><span class="p">()</span>    <span class="c1">// mmc 启动</span>
+        <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spinand_load_logo</span><span class="p">()</span> <span class="c1">// spinand 启动</span>
+        <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spinor_load_logo</span><span class="p">()</span>    <span class="c1">// spinor 启动</span>
+        <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">aic_logo_decode</span><span class="p">()</span>  <span class="c1">// 对 boot logo image 进行解码</span>
+        <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">aicfb_enable_panel</span><span class="p">()</span>  <span class="c1">// 开启显示模块</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">3.14.6. </span>硬件时序要求<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>DE、DI、panel三个硬件模块在初始化时有一些时序上的要求，包含先后顺序、延迟大小，主要约束来自于panel侧。所以，当接入新的panel型号，必须要严格按照手册来完成硬件的初始化。
+为了应对这样的硬件特性，驱动设计中使用callback方式来实现多个模块间的互相调用。</p>
+<div class="figure align-center">
+<img alt="../../../_images/callbacks.png" src="../../../_images/callbacks.png" />
+</div>
+<p>在显示模块的enable操作中，会调用这些回调来完成初始化，如下图（其中关系比较绕的是panel初始化逻辑）</p>
+<div class="figure align-center">
+<img alt="../../../_images/fb_bind.png" src="../../../_images/fb_bind.png" />
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>该部分逻辑与kernel中的显示驱动保持一致，不同点在与panel enable的调用时间不同。详情可参考SDK指南中的显示模块使用指南</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">3.14.7. </span>LOGO保持<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>U-Boot 在显示 LOGO 后，会把 video buffer 的信息，包括 buffer 起始地址，大小等添加到 kernel 解析的dtb文件中。
+具体的方式为：在 dtb 文件的 reserved momory 结点中插入一个子节点，子节点中保存有 address 和 size 信息。
+过程如下所示：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="o">|-&gt;</span> <span class="n">image_setup_libfdt</span><span class="p">()</span>
+<span class="o">|-&gt;</span> <span class="n">ft_board_setup</span><span class="p">()</span>
+    <span class="o">|-&gt;</span> <span class="n">fdtdec_add_reserved_memory</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Kernel 在启动时不会修改这块内存，kernel 中的显示驱动在初始化时，会将 video buffer 中的内容 <code class="docutils literal notranslate"><span class="pre">memcopy</span></code> 到 <code class="docutils literal notranslate"><span class="pre">fb0</span></code> 中，从而保证 LOGO 可以从 U-Boot 保持到 kernel 启动，直到应用程序修改 <code class="docutils literal notranslate"><span class="pre">fb0</span></code> 文件。kernel 在 memcopy 操作之后，会将 video buffer 释放。</p>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">3.14.8. </span>更换LOGO<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>ArtInChip 平台支持 png/jpg 格式的 logo 文件，uboot 会自动解析 logo 文件的文件头，以此来判断 logo 是 png 文件还是 jpeg 文件。ArtInChip 平台不仅支持开机 logo，还支持在 usb 烧录，SD 卡升级和U盘升级时显示 logo，并且允许不同场景显示不同的 logo 图片。</p>
+<p>Luban SDK 使用 itb(uboot FIT image) 文件格式来管理不同的 logo 图片，相关的 its(image tree source) 配置文件位于：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/common/logo.its</span></code></p></li>
+</ul>
+<p>Luban SDK 在编译时，会把配置文件中指定的图片打包成 <code class="docutils literal notranslate"><span class="pre">logo.itb</span></code> 文件。 <code class="docutils literal notranslate"><span class="pre">logo.itb</span></code> 文件在烧录时会被加载进 logo 分区。</p>
+<p>如果想为某块单板维护一个 its 文件，可以将配置文件拷贝一份到板级目录，再进行修改：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/&lt;Board&gt;/logo.its</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果板级 its 文件存在， Luban SDK 优先链接板级配置文件。</p>
+</div>
+<p><strong>PNG LOGO</strong></p>
+<p>ArtInChip 平台默认使用 png 格式 logo，图片保存路径如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/&lt;Board&gt;/logo/boot_logo.png</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>图片必须命名为 <code class="docutils literal notranslate"><span class="pre">boot_logo.png</span></code>。</p>
+</div>
+<p>Luban SDK 编译时，编译脚本会在 logo 目录下检索 <code class="docutils literal notranslate"><span class="pre">boot_logo.png</span></code> 文件，如果文件存在，就把它打包进 logo.itb 文件。</p>
+<p>logo 分区 size 默认 768K，打包后的 <code class="docutils literal notranslate"><span class="pre">logo.itb</span></code> 文件 size 需小于 logo 分区。</p>
+<p>以 spi-nand 启动为例，</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// target/&lt;IC&gt;/&lt;Board&gt;/image_cfg.json</span>
+<span class="s">&quot;spi-nand&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;128m&quot;</span><span class="p">,</span> <span class="c1">// Size of SPI NAND</span>
+    <span class="s">&quot;partitions&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s">&quot;spl&quot;</span><span class="o">:</span>    <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;1m&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;uboot&quot;</span><span class="o">:</span>  <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;1m&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;userid&quot;</span><span class="o">:</span>   <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;bbt&quot;</span><span class="o">:</span>      <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;env&quot;</span><span class="o">:</span>    <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;env_r&quot;</span><span class="o">:</span>    <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;falcon&quot;</span><span class="o">:</span>   <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;256k&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;logo&quot;</span><span class="o">:</span>     <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;768K&quot;</span> <span class="p">},</span>   <span class="c1">// 默认配置 768K，需要大于 logo.itb 文件</span>
+        <span class="s">&quot;kernel&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;12m&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;recovery&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;10m&quot;</span> <span class="p">},</span>
+        <span class="s">&quot;ubiroot&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;32m&quot;</span><span class="p">,</span>
+            <span class="s">&quot;ubi&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// Volume in UBI device</span>
+                <span class="s">&quot;rootfs&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;-&quot;</span> <span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s">&quot;ubisystem&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+            <span class="s">&quot;ubi&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// Volume in UBI device</span>
+                <span class="s">&quot;user&quot;</span><span class="o">:</span>   <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;-&quot;</span> <span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>更换 logo 图片，需要注意以下几点：</p>
+<ol class="arabic simple">
+<li><p><strong>用作 logo 的 png 图片必须只包含一个 IDAT 数据块</strong></p></li>
+<li><p>png 图片的宽高不能大于当前 LCD panel 的宽高</p></li>
+<li><p>image_cfg.json 文件中 logo 分区 size（默认 768K）需要大于 logo.itb 文件</p></li>
+</ol>
+<p>ArtInChip 平台基于 ffmpeg 进行精简，提供一个专门的 png 转换工具，确保用作 logo 的 png 图片只包含一个 <code class="docutils literal notranslate"><span class="pre">IDAT</span></code> 数据块。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>当前暂不支持 32 位带 alpha 信息的 png 图片。</p>
+</div>
+<p>png 硬解码输出的格式默认为 ARGB8888, 如果想更换输出格式，需要修改 uboot 源码。源码以及支持的格式如下所示：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// drivers/video/artinchip/decoder/aic_ve_png.c</span>
+
+<span class="cm">/* output type */</span>
+<span class="cp">#define ARGB8888   0</span>
+<span class="cp">#define ABGR8888   1</span>
+<span class="cp">#define RGBA8888   2</span>
+<span class="cp">#define BGRA8888   3</span>
+<span class="cp">#define RGB888     4</span>
+<span class="cp">#define BGR888     5</span>
+
+<span class="cp">#define OUTPUT_FORMAT ARGB8888</span>
+</pre></div>
+</div>
+<p><strong>JPG LOGO</strong></p>
+<p>更换 jpg 格式的 logo 图片，將图片存放于以下路徑：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/&lt;</span><span class="n">IC</span><span class="o">&gt;/&lt;</span><span class="n">Board</span><span class="o">&gt;/</span><span class="n">logo</span><span class="o">/</span><span class="n">boot_logo</span><span class="p">.</span><span class="n">jpg</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>图片必须命名为 boot_logo.jpg</p>
+</div>
+<p>更换 jpg logo 图片，需要注意以下几点</p>
+<ol class="arabic simple">
+<li><p>jpg 图片的宽高不能大于当前 LCD panel 的宽高</p></li>
+<li><p>修改 logo.its 文件， 将 boot_logo.jpg 打包进 logo.itb 文件</p></li>
+<li><p>image_cfg.json 文件中 logo 分区 size （默认 768K）需要大于 logo.itb 文件</p></li>
+</ol>
+<p>logo.its 文件修改，以 spi-nand 启动为例：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// target/&lt;IC&gt;/&lt;Board&gt;/logo.its 板级配置，如果存在，优先修改</span>
+<span class="c1">// target/&lt;IC&gt;/common/logo.its 默认配置</span>
+
+<span class="o">/</span><span class="n">dts</span><span class="o">-</span><span class="n">v1</span><span class="o">/</span><span class="p">;</span>
+
+<span class="o">/</span> <span class="p">{</span>
+ <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;ArtInChip LOGO&quot;</span><span class="p">;</span>
+ <span class="cp">#address-cells = &lt;1&gt;;</span>
+
+ <span class="n">images</span> <span class="p">{</span>
+  <span class="n">boot</span> <span class="p">{</span>
+   <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;ArtInChip boot logo&quot;</span><span class="p">;</span>
+   <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;multi&quot;</span><span class="p">;</span>
+   <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+   <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;logo/boot_logo.jpg&quot;</span><span class="p">);</span>   <span class="c1">// 修改为 jpg 图片</span>
+  <span class="p">};</span>
+
+  <span class="n">usbburn</span> <span class="p">{</span>
+   <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;USB burn logo&quot;</span><span class="p">;</span>
+   <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;multi&quot;</span><span class="p">;</span>
+   <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+   <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;logo/usb_burn.png&quot;</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="n">udiskburn</span> <span class="p">{</span>
+   <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;udisk burn logo&quot;</span><span class="p">;</span>
+   <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;multi&quot;</span><span class="p">;</span>
+   <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+   <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;logo/udisk_burn.png&quot;</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="n">sdburn</span> <span class="p">{</span>
+   <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;SDCard burn logo&quot;</span><span class="p">;</span>
+   <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;multi&quot;</span><span class="p">;</span>
+   <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+   <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;logo/sd_burn.png&quot;</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="n">burn_done</span> <span class="p">{</span>
+   <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;burn done logo&quot;</span><span class="p">;</span>
+   <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;multi&quot;</span><span class="p">;</span>
+   <span class="n">compression</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">;</span>
+   <span class="n">data</span> <span class="o">=</span> <span class="o">/</span><span class="n">incbin</span><span class="o">/</span><span class="p">(</span><span class="s">&quot;logo/burn_done.png&quot;</span><span class="p">);</span>
+  <span class="p">};</span>
+ <span class="p">};</span>
+
+ <span class="n">configurations</span> <span class="p">{</span>
+  <span class="k">default</span> <span class="o">=</span> <span class="s">&quot;conf-1&quot;</span><span class="p">;</span>
+
+  <span class="n">conf</span><span class="mi">-1</span> <span class="p">{</span>
+   <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;ArtInChip logo image&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+ <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>jpeg 硬解码输出的是 YUV 数据, 需要 GE 进行一次数据格式转换，GE 默认转换的格式为 ARGB8888。
+如果想修改转换格式，需要修改 uboot 源码。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// drivers/video/artinchip/decoder/aic_ve_jpeg.c</span>
+
+<span class="cm">/* GE output format */</span>
+<span class="cp">#define CONVER_FORMAT MPP_FMT_ARGB_8888</span>
+
+<span class="c1">// include/artinchip/mpp_types.h</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="falcon-logo">
+<h2><span class="section-number">3.14.9. </span>falcon 模式 logo<a class="headerlink" href="#falcon-logo" title="永久链接至标题">¶</a></h2>
+<p>ArtInChip 平台支持在 falcon 启动时显示 logo。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>目前仅支持 <code class="docutils literal notranslate"><span class="pre">spinand</span></code> falcon 启动显示 logo，且只能显示 png 格式的 logo。</p>
+</div>
+</div>
+<div class="section" id="faq">
+<h2><span class="section-number">3.14.10. </span>FAQ<a class="headerlink" href="#faq" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>新屏支持</p></li>
+</ul>
+<p>参考SDK指南中的显示模块使用指南，两者思路相同。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../debug/index.html" class="btn btn-neutral float-right" title="3.15. 调试配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../userid/6_faq.html" class="btn btn-neutral float-left" title="3.13.4. 常见问题" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

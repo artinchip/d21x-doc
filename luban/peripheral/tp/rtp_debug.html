@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.1.1. RTP调试配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.1.2. CTP调试配置" href="ctp_debug.html" />
+    <link rel="prev" title="10.1. 触摸屏调试指南" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 外设</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.1. 触摸屏调试指南</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.1.1. RTP调试配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">10.1.1.1. 概述</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">10.1.1.2. 内核配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#dts">10.1.1.3. DTS参数配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">10.1.1.4. 调试</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ctp_debug.html">10.1.2. CTP调试配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.2. 显示屏调试指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifi/index.html">10.3. WiFi调试指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keyadc/index.html">10.4. 按键矩阵使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>外设</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.1. </span>触摸屏调试指南</a> &raquo;</li>
+        
+      <li><span class="section-number">10.1.1. </span>RTP调试配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rtp">
+<h1><span class="section-number">10.1.1. </span>RTP调试配置<a class="headerlink" href="#rtp" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">10.1.1.1. </span>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>相比CTP电容触摸屏，RTP电阻触摸屏的配置和调试稍微简单，因为不需要额外的触摸屏驱动，只需要根据原理图设置对应的dts参数，然后把系统自带的RTP控制器驱动加载即可。</p>
+<p>详细的原理介绍请参考 <a class="reference internal" href="../../interface/rtp/index.html#ref-luban-rtp"><span class="std std-ref">接口部分关于RTP的说明</span></a></p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">10.1.1.2. </span>内核配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在luban根目录下执行 make km (make kernel-menuconfig)，进入kernel的功能配置，按如下选择：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Linux
+    Device Drivers
+        Input device support
+            [*] Touchscreens
+                &lt;*&gt; Artinchip resistive touchscreen controller support
+</pre></div>
+</div>
+</div>
+<div class="section" id="dts">
+<h2><span class="section-number">10.1.1.3. </span>DTS参数配置<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h2>
+<p>board.dts中的参数配置时请确保硬件连线和所配置参数一致，示例如下：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&amp;rtp {
+    aic,max-pressure = &lt;800&gt;;       //最大压感值，超过此值的坐标事件被忽略，按压力度越小该值越大，即值越大触摸越敏感
+    aic,x-plate = &lt;235&gt;;            //用万用表测量触摸板X+ 和 X-之间的电阻值获得
+    pinctrl-names = &quot;default&quot;;      //默认
+    pinctrl-0 = &lt;&amp;rtp_pins&gt;;        //RTP触摸板接线对应的PIN脚
+    status = &quot;okay&quot;;                //RTP驱动使能标志
+};
+</pre></div>
+</div>
+<p>其中rtp_pins定义在d211-pinctrl.dtsi,4个pin脚需要分别对应RTP屏的X+ 、Y+ 、X- 、Y- 需要硬件确认无误。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rtp_pins: rtp-0 {
+    pins {
+        pinmux = &lt;AIC_PINMUX(&#39;A&#39;, 8, 2)&gt;,
+                 &lt;AIC_PINMUX(&#39;A&#39;, 9, 2)&gt;,
+                 &lt;AIC_PINMUX(&#39;A&#39;, 10, 2)&gt;,
+                 &lt;AIC_PINMUX(&#39;A&#39;, 11, 2)&gt;;
+    };
+};
+</pre></div>
+</div>
+<p>硬件接线示例图如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/rtp1.png" src="../../../_images/rtp1.png" />
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>请务必确保dts所配置的参数和引脚与硬件原理图一致</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">10.1.1.4. </span>调试<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>测量硬件通路</p>
+<p>测量硬件通路是否正常，测量电压信号是否正常</p>
+</li>
+<li><p>查看打印信息</p>
+<p>打开调试选项，系统启动时看是否有异常打印</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Linux
+    Kernel hacking
+        Artinchip Debug
+            [*] RTP driver debug
+</pre></div>
+</div>
+</li>
+<li><p>查看节点信息</p>
+<p>在RTP初始化成功后，会在sysfs中注册生成一个status节点，其中打印了当前的RTP配置及状态信息：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># cat /sys/devices/platform/soc/19252000.rtp/status</span>
+In RTP controller V1.00:
+Mode <span class="m">0</span>/2, RTP enale <span class="m">0</span>, Press detect <span class="nb">enable</span> <span class="m">0</span>
+Manual mode status <span class="m">0</span>
+Pressure <span class="nb">enable</span> <span class="m">1</span>, max <span class="m">800</span>, x-plate <span class="m">235</span>, y-plate <span class="m">0</span>
+Point num: <span class="m">1</span>, Sample period: <span class="m">0</span>, Fuzz: <span class="m">0</span>
+</pre></div>
+</div>
+</li>
+<li><p>获取坐标信息</p>
+<p>如果系统有编译getevent工具，触摸屏有触摸时进行坐标的打印</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># getevent</span>
+</pre></div>
+</div>
+</li>
+<li><p>获取设备信息</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># cat /proc/bus/input/devices</span>
+
+例如：
+I: <span class="nv">Bus</span><span class="o">=</span><span class="m">0019</span> <span class="nv">Vendor</span><span class="o">=</span><span class="m">0000</span> <span class="nv">Product</span><span class="o">=</span><span class="m">0001</span> <span class="nv">Version</span><span class="o">=</span><span class="m">0000</span>
+N: <span class="nv">Name</span><span class="o">=</span><span class="s2">&quot;Power Button&quot;</span>
+P: <span class="nv">Phys</span><span class="o">=</span>LNXPWRBN/button/input0
+S: <span class="nv">Sysfs</span><span class="o">=</span>/devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
+U: <span class="nv">Uniq</span><span class="o">=</span>
+H: <span class="nv">Handlers</span><span class="o">=</span>kbd event0
+B: <span class="nv">PROP</span><span class="o">=</span><span class="m">0</span>
+B: <span class="nv">EV</span><span class="o">=</span><span class="m">3</span>
+B: <span class="nv">KEY</span><span class="o">=</span><span class="m">10000000000000</span> <span class="m">0</span>
+
+I: <span class="nv">Bus</span><span class="o">=</span><span class="m">0011</span> <span class="nv">Vendor</span><span class="o">=</span><span class="m">0001</span> <span class="nv">Product</span><span class="o">=</span><span class="m">0001</span> <span class="nv">Version</span><span class="o">=</span>ab41
+N: <span class="nv">Name</span><span class="o">=</span><span class="s2">&quot;AT Translated Set 2 keyboard&quot;</span>
+P: <span class="nv">Phys</span><span class="o">=</span>isa0060/serio0/input0
+S: <span class="nv">Sysfs</span><span class="o">=</span>/devices/platform/i8042/serio0/input/input1
+U: <span class="nv">Uniq</span><span class="o">=</span>
+H: <span class="nv">Handlers</span><span class="o">=</span>sysrq kbd event1 leds
+B: <span class="nv">PROP</span><span class="o">=</span><span class="m">0</span>
+B: <span class="nv">EV</span><span class="o">=</span><span class="m">120013</span>
+B: <span class="nv">KEY</span><span class="o">=</span><span class="m">402000000</span> 3803078f800d001 feffffdfffefffff fffffffffffffffe
+B: <span class="nv">MSC</span><span class="o">=</span><span class="m">10</span>
+B: <span class="nv">LED</span><span class="o">=</span><span class="m">7</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ctp_debug.html" class="btn btn-neutral float-right" title="10.1.2. CTP调试配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="10.1. 触摸屏调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

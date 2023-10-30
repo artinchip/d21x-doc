@@ -1,0 +1,1560 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.4.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.4.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.4.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.4. DVP 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.4.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.4.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.4.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.4.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.4.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.4.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.4.5.2. 模块架构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2">6.4.5.2.1. V4L2 软件框架</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">6.4.5.2.2. V4L2 的实例管理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2-media">6.4.5.2.3. V4L2 的 Media 管理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2-ioctl">6.4.5.2.4. V4L2 的 ioctl 调用关系</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2-buf">6.4.5.2.5. V4L2 的 Buf 队列管理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dvp">6.4.5.2.6. DVP 驱动的子模块结构</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">6.4.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.4.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#buf">6.4.5.3.2. Buf 管理</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#stream">6.4.5.3.3. Stream 启动流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.4.5.3.4. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">6.4.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-dvp">6.4.5.4.1. aic_dvp</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-dvp-config">6.4.5.4.2. aic_dvp_config</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-dvp-buf">6.4.5.4.3. aic_dvp_buf</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id9">6.4.5.4.4. 输入输出的数据格式</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">6.4.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2-device">6.4.5.5.1. V4l2 device 的外部接口</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2-subdev">6.4.5.5.2. V4l2 subdev 的外部接口</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#app-demo">6.4.5.6. APP Demo</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#app">6.4.5.6.1. APP层的处理流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">6.4.5.6.2. APP Demo参考实现</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.4.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.4. </span>DVP 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.4.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.4.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.4.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本模块源代码在内核目录linux-5.4/drivers/media/platform/artinchip下，目录结构如下：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>drivers/media/platform/artinchip/
+├── aic_buf.c  // 和buf管理相关的处理代码
+├── aic_dvp.c  // DVP驱动的初始化入口，主要实现了probe、Notifier接口
+├── aic_dvp.h  // DVP驱动共用的头文件，其中定义了寄存器、共用数据结构、全局函数等
+├── aic_dvp_hw.c  // 对寄存器的访问封装
+├── aic_video.c // 和V4L2框架强相关的一些接口定义，如file_ops、ioctl_ops的接口实现等
+├── Kconfig
+└── Makefile
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.4.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="v4l2">
+<h3><span class="section-number">6.4.5.2.1. </span>V4L2 软件框架<a class="headerlink" href="#v4l2" title="永久链接至标题">¶</a></h3>
+<p>Linux中的V4L2框架是一个专门为视频输入输出设备而设计的成熟方案，DVP驱动需要基于V4L2。</p>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/v4l2_system.jpg" src="../../../_images/v4l2_system.jpg" />
+<p class="caption"><span class="caption-number">图 6.25 </span><span class="caption-text">Linux V4L2子系统架构图</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple">
+<li><p>V4L2，Video For Linux 第2版，最早出现在1998年，一个针对无线广播（收音机）、视频捕获、视频输出设备的通用框架，源码目录drivers/media/v4l2-core。V4L2中支持的5大类接口设备：</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Video capture interface：影像捕获接口；</p></li>
+<li><p>Video output interface：视频输出接口，主要用于电视信号类；</p></li>
+<li><p>Video overlay interface：视频覆盖接口，方便视频显示设备直接从捕获设备上获取数据；</p></li>
+<li><p>VBI interface：垂直消隐接口，可提供垂直消隐区的数据接入，包括raw和sliced两种；</p></li>
+<li><p>Radio interface：广播接口，主要是从AM或FM调谐器中获取音频数据。</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic" start="2">
+<li><p>V4L2为用户空间提供了字符设备的通用接口，设备节点/dev/videoX，主设备号81，次设备号的分配跟设备类型有关，规则定义如下：</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>设备类型</p></th>
+<th class="head"><p>次设备号</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>视频设备</p></td>
+<td><p>0~63</p></td>
+</tr>
+<tr class="row-odd"><td><p>Radio设备</p></td>
+<td><p>64~127</p></td>
+</tr>
+<tr class="row-even"><td><p>Teletext设备</p></td>
+<td><p>192~233</p></td>
+</tr>
+<tr class="row-odd"><td><p>VBI设备</p></td>
+<td><p>224~255</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+</ol>
+<blockquote>
+<div><p>用户态APP通过ioctl控制video设备，通过mmap进行内存映射。在/dev目录中会产生videoX、radioX和vbiX设备节点。</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>在V4L2框架中，将每一个Sensor、DVP硬件设备都看作一个subdev，相应的有一个字符设备节点/dev/v4l-subdevX，用户态通过这些节点的ioctl接口可以完成subdev的格式协商、时序配置等功能。</p></li>
+<li><p>Notifier子模块是为了解决多个设备之间的初始化顺序、以及媒体流对接的匹配检查，如DVP需要等Sensor初始化完成后，才能去真正完成video device的注册。可见，DVP和Sensor要有一个绑定的关系，这个关系是由DTS中的remote-endpoint来指定的。Notifier会调用Fwnode系列接口来解析和获取remote-endpoint的属性字段。</p></li>
+<li><p>为了进行数据流的管理，V4l2维护了一个Media device链表，每一个video device、v4l2 device、v4l2-subdev都是一个Media device实例，这些Media device在数据结构的设计上第一个成员变量都是一个struct media_entity，其中有list_head成员，借此互相链接起来。见下一节详述。</p></li>
+</ol>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">6.4.5.2.2. </span>V4L2 的实例管理<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>一个完整的V4L2驱动涉及4种设备实例：V4l2 device、Video device、V4l2 subdev、Media device，这4个实例都需要在DVP驱动中去定义。它们的引用关系如下图：</p>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/v4l2_instance.jpg" src="../../../_images/v4l2_instance.jpg" />
+<p class="caption"><span class="caption-number">图 6.26 </span><span class="caption-text">Linux V4L2的实例关系示意图</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>V4l2 device</dt><dd><p>可以理解为最高统帅，它纵览全局，用成员指针指向以下其他实例，只服务于内核态，不包含面向用户态的接口。 <strong>整个内核中只有一个v4l2 device实例。</strong></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>V4l2 subdev</dt><dd><p>V4L2将每一个硬件模块都看作一个subdev，如DVP、Sensor都各自注册一个subdev，并且每个subdev会向用户态透出一个/dev/v4l-subdevX设备节点（该设备节点的编号X取决于注册顺序）。这些subdev会形成一个链表，都挂在v4l2 device下面的subdevs链表中。在subdev的ops数据接口v4l2_subdev_ops将回调按设备类型进行划分（这里区分设备类型）</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">v4l2_subdev_ops</span> <span class="p">{</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_core_ops</span>   <span class="o">*</span><span class="n">core</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_tuner_ops</span>  <span class="o">*</span><span class="n">tuner</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_audio_ops</span>  <span class="o">*</span><span class="n">audio</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_video_ops</span>  <span class="o">*</span><span class="n">video</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_vbi_ops</span>    <span class="o">*</span><span class="n">vbi</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_ir_ops</span>     <span class="o">*</span><span class="n">ir</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_sensor_ops</span> <span class="o">*</span><span class="n">sensor</span><span class="p">;</span>
+    <span class="n">const</span> <span class="n">struct</span> <span class="n">v4l2_subdev_pad_ops</span>    <span class="o">*</span><span class="n">pad</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>对于DVP控制器来说，它对应的ops只提供pad_ops即可；对于Sensor设备来说，要提供pad_ops和video_ops。</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Video device</dt><dd><p>是给用户态提供/dev/videoX接口的设备实例，这里不区分设备类型，统一使用V4L2标准的80+个ioctl命令接口。video device更像是逻辑功能，如果未来我们的DVP增加了ISP功能，就需要注册两个video device，但是DVP对应的subdev只需要一个。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Media device</dt><dd><p>主要作用是为了将有上下游关系的entity串联起来（通过连接各entity的pad或interface属性），形成一个媒体流（V4L2启动/停止命令称作start/stop stream）。并且会透出一个/dev/mediaX设备节点，目前用户态还没有用到，所以在上图中未体现。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Media entity</dt><dd><p>以上实例除了最高统帅V4l2 device其他都可以看作一个media entity，都挂在Media device维护的一个media entity链表。</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>实际上，在上图中的每个subdev，注册的时候也是生成一个Video device，由Video device向用户态透一个/dev/v4l-subdevX设备过去，这样做的好处是由Video device统一处理对接用户态的接口。所以完整的实例关系图应该再加一层Video device，如下图：</p>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/v4l2_instance_full.jpg" src="../../../_images/v4l2_instance_full.jpg" />
+<p class="caption"><span class="caption-number">图 6.27 </span><span class="caption-text">Linux V4L2的完整实例关系示意图</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="v4l2-media">
+<h3><span class="section-number">6.4.5.2.3. </span>V4L2 的 Media 管理<a class="headerlink" href="#v4l2-media" title="永久链接至标题">¶</a></h3>
+<p>V4L2提供了一个Media Framework来管理Media数据组成pipeline，在运行过程中可以调整pipeline中各个节点的配置，达到“运行时设备控制”的效果。</p>
+<p>需要用到5个关键数据结构：media_device、media_entity、media_link、media_pad、media interface。</p>
+<ul class="simple">
+<li><p>Media device是框架管理者，下面维护4个链表：entity、pad、link、interface。</p></li>
+<li><p>将每个硬件设备、或者一个软件模块抽象成一个entity，如DVP控制器、Sensor、DMA通道、连接器</p></li>
+<li><p>Entity之间通过link来连接，link的两端是pad。数据流是从一个source pad（源）到一个sink pad（目的/接收端）。Pad：硬件设备上的端口抽象，类似于芯片上面的管脚pad概念。</p></li>
+</ul>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/v4l2_pad.png" src="../../../_images/v4l2_pad.png" />
+<p class="caption"><span class="caption-number">图 6.28 </span><span class="caption-text">Linux V4L2的pad和link关系示意图</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>另外还有一个media_interface结构，表示提供给用户态什么接口，目前只有一种类型：device node</p></li>
+<li><p>link有两种：pad to pad、Interface to entity（暂未用到）。从media_link的定义看它们的连接关系：</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">media_link</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">media_gobj</span> <span class="n">graph_obj</span><span class="p">;</span> <span class="c1">// 是对entity、pad、link、Interface的抽象，它们的公共头数据</span>
+    <span class="k">struct</span> <span class="nc">list_head</span> <span class="n">list</span><span class="p">;</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">media_gobj</span> <span class="o">*</span><span class="n">gobj0</span><span class="p">;</span> <span class="c1">// 是pad和Interface头部的公共数据</span>
+        <span class="k">struct</span> <span class="nc">media_pad</span> <span class="o">*</span><span class="n">source</span><span class="p">;</span> <span class="c1">// 源pad</span>
+        <span class="k">struct</span> <span class="nc">media_interface</span> <span class="o">*</span><span class="n">intf</span><span class="p">;</span> <span class="c1">// 需要连接到entity的interface</span>
+    <span class="p">};</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">media_gobj</span> <span class="o">*</span><span class="n">gobj1</span><span class="p">;</span> <span class="c1">// 同上，是pad和entity头部的公共数据</span>
+        <span class="k">struct</span> <span class="nc">media_pad</span> <span class="o">*</span><span class="n">sink</span><span class="p">;</span> <span class="c1">// 目的pad</span>
+        <span class="k">struct</span> <span class="nc">media_entity</span> <span class="o">*</span><span class="n">entity</span><span class="p">;</span> <span class="c1">// 需要连接到Interface的entity</span>
+    <span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">media_link</span> <span class="o">*</span><span class="n">reverse</span><span class="p">;</span> <span class="c1">// 指向对称（两端pad相同方向相反）的那个media_link</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">flags</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">is_backlink</span><span class="p">;</span> <span class="c1">// 是否逆方向（相对于数据流方向）</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>从数据结构定义来看一个entity，可以有多个pad（注意其中的pads成员是个指针，指向的实例需要DVP驱动先定义好），当然随之而来会有多个link，定义如下：</p></li>
+</ul>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/v4l2_media_entity.jpg" src="../../../_images/v4l2_media_entity.jpg" />
+<p class="caption"><span class="caption-number">图 6.29 </span><span class="caption-text">Linux V4L2的Media entity和pad的引用关系</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>结合我们的DVP硬件结构，media entity、pad和link的关系如下：</p>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/dvp_media_entity.png" src="../../../_images/dvp_media_entity.png" />
+<p class="caption"><span class="caption-number">图 6.30 </span><span class="caption-text">DVP驱动中的Media entity设计</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+<p>从上图中可以看到，如果要设置DVP的 <strong>输入</strong> 格式，就通过DVP subdev；如果要设置DVP的 <strong>输出</strong> 格式，则通过Video device。</p>
+</div>
+<div class="section" id="v4l2-ioctl">
+<h3><span class="section-number">6.4.5.2.4. </span>V4L2 的 ioctl 调用关系<a class="headerlink" href="#v4l2-ioctl" title="永久链接至标题">¶</a></h3>
+<p>在“实例管理”中已经知道，用户态看到的/dev/videoX和 /dev/v4l-subdevX两个设备节点，进入内核态后都是直接先跟Video device设备实例对接，那么当用户调用ioctl命令时，是如何传给下面V4L2 subdev呢？依靠注册时传入的参数struct v4l2_file_operations *fops。</p>
+<ul class="simple">
+<li><p>V4L2 subdev在为自己注册Video device时（见v4l2-device.c中的v4l2_device_register_subdev_nodes()）传入的fops是预定义好的v4l2_subdev_fops（定义见v4l2-subdev.c），其中的ioctl接口指向框架中提供的接口subdev_ioctl()。而subdev_ioctl会逐层调用到“实例管理”中提到的 v4l2_subdev_ops。</p></li>
+<li><p>而DVP驱动在为自己注册Video device时，传入的fops是自己定义的aic_dvp_fops，其中ioctl接口指向框架中的公共接口video_ioctl2()。</p></li>
+<li><p>为解决不同硬件设备有不同的ioctl处理需求，DVP驱动还需要另外提供一个专门为ioctl定义的扩展ops：aic_dvp_ioctl_ops（数据结构定义见struct v4l2_ioctl_ops）。</p></li>
+</ul>
+<p>针对一个从用户态传来的ioctl()命令，其内部调用关系如下图：</p>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/v4l2_ioctl.jpg" src="../../../_images/v4l2_ioctl.jpg" />
+<p class="caption"><span class="caption-number">图 6.31 </span><span class="caption-text">Linux V4L2的ioctl处理关系图</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="v4l2-buf">
+<h3><span class="section-number">6.4.5.2.5. </span>V4L2 的 Buf 队列管理<a class="headerlink" href="#v4l2-buf" title="永久链接至标题">¶</a></h3>
+<p>V4L2的Buffer管理由videobuf子模块实现，从源头看分为两种方式的Buffer：</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>驱动申请Buffer</dt><dd><p>用户态通过VIDIOC_REQBUFS ioctl命令触发Buffer申请，然后使用mmap接口来获取用户态的Buffer地址。这种方式，Buffer个数一般有个最大值32 VIDEO_MAX_FRAME。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>用户态申请Buffer</dt><dd><p>用户态根据实际需要知道要申请多少Buffer，然后借助其他机制（可以是dma-buf）在用户态完成Buffer（当然必须是物理连续的）申请，并将物理地址告诉Video驱动。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>按照Buffer的物理连续，又可以分为三种情况：（详见Documentationmediakapiv4l2-videobuf.rst）</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>物理连续、不连续的Buffer混用</dt><dd><p>几乎所有用户空间的Buffer都属于这种情况，这样最大可能的发挥虚拟内存管理的灵活性。缺点也很明显，这些Buffer给硬件的话需要有支持scatter的DMA。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>物理不连续、虚拟地址连续的Buffer</dt><dd><p>它们由vmalloc()分配，也用于支持scatter接口的DMA硬件。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>物理连续的Buffer</dt><dd><p>非常适合DMA类硬件的访问。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>驱动开发者必须三选一，对于我们的DVP模块来说，要选择3。并且底层用到dma-buf。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>V4L第二版不再支持Overlay类型，而V4L第一版不支持DMABUF类型。</p>
+</div>
+<p>V4L2在数据流传输的时候需要多个Buf切换，通过struct vb2_queue结构中的Qbuf两个Buf队列来管理，DVP驱动中还需要维护一个buf_list来配合DVP控制器的地址更新。整个Buf流转的过程如下图：</p>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/dvp_buf_list.jpg" src="../../../_images/dvp_buf_list.jpg" />
+<p class="caption"><span class="caption-number">图 6.32 </span><span class="caption-text">DVP 驱动中的 Buf 队列管理</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>Qbuf队列（在代码中见struct vb2_queue-&gt;queued_list）：是一些空闲Buf，等待Sensor的数据到来后，DVP驱动会从这个队列中找可用Buf来保存下一帧数据。</p></li>
+<li><p>DQbuf队列（在代码中见struct vb2_queue-&gt;done_list）：是一些填了视频数据的Buf，等待用户来处理这些数据，一般用户处理完后需要将Buf还给驱动，也就是还给Qbuf。</p></li>
+<li><p>从Qbuf和DQbuf来的buf格式是struct vb2_buffer，其中没有字段可以保存物理地址（DVP控制器需要），同时还需要为每个buf记录一个是否正在被DVP使用的状态，所以DVP驱动中定义了基于vb2_buffer结构的封装vb2_v4l2_buffer，并且维护一个和Qbuf几乎同步的队列。</p></li>
+<li><p>从图中的流转过程看，运行期间，在某一时刻，DVP需要使用一个Buf，APP需要使用一个Buf，QBuf需要有一个Buf在等待（否则DVP的done中断来了后发现没有等待的Qbuf会发生丢帧），一共至少要有3个Buf。</p></li>
+<li><p>以YUV422格式计算，有两个plane，在V4L2框架中这一组plane算一个Buf，3个Buf就需要申请6个plane，<code class="docutils literal notranslate"><span class="pre">总大小</span> <span class="pre">=</span> <span class="pre">长</span> <span class="pre">*</span> <span class="pre">宽</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span></code>。</p></li>
+<li><p>DVP驱动中需要定义一个struct vb2_queue实例，Video device中会有一个指针*queue指向该实例。</p></li>
+</ul>
+</div>
+<div class="section" id="dvp">
+<h3><span class="section-number">6.4.5.2.6. </span>DVP 驱动的子模块结构<a class="headerlink" href="#dvp" title="永久链接至标题">¶</a></h3>
+<p>基于以上对V4L2框架的分析，DVP驱动内部可以分为以下5个子模块：</p>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/dvp_drv_structure.jpg" src="../../../_images/dvp_drv_structure.jpg" />
+<p class="caption"><span class="caption-number">图 6.33 </span><span class="caption-text">DVP 驱动的子模块结构</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>Video Dvice管理，主要实现和Video device相关的注册、ioctl处理；</p></li>
+<li><p>Notifier管理，主要处理和Sensor设备的初始化次序的依赖关系；</p></li>
+<li><p>Buf管理，主要实现Buf的入队、出队，以及在中断响应时切换DVP控制器的输出地址等；</p></li>
+<li><p>Subdev管理，主要实现输入格式相关的接口；</p></li>
+<li><p>寄存器访问，封装了对DVP控制器寄存器的读写访问。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">6.4.5.3. </span>关键流程设计<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id6">
+<h3><span class="section-number">6.4.5.3.1. </span>初始化流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>总体上看，DVP驱动的初始化过程分为两大段：</p>
+<ol class="arabic simple">
+<li><p>阶段一：由probe()接口完成，完成资源申请、注册subdev、注册buf、注册notifier等；</p></li>
+<li><p>阶段二：由notifier的complete()接口完成，是需要等Sensor执行完初始化（其probe()接口）后才能执行，完成的操作有：注册video device、注册media device、配置link等。</p></li>
+</ol>
+<div class="section" id="probe">
+<h4><span class="section-number">6.4.5.3.1.1. </span>probe 过程<a class="headerlink" href="#probe" title="永久链接至标题">¶</a></h4>
+<p>注册DVP控制器的注册过程：</p>
+<div class="figure align-center" id="id21">
+<img alt="../../../_images/dvp_probe_flow.png" src="../../../_images/dvp_probe_flow.png" />
+<p class="caption"><span class="caption-number">图 6.34 </span><span class="caption-text">DVP 驱动的注册过程</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>初始化media device，</p></li>
+<li><p>注册subdev，提供subdev_ops（其中定义了pad_ops）；</p></li>
+<li><p>注册pad，包括为subdev注册两个pad：source + sink；为video device注册一个sink pad。</p></li>
+<li><p>注册buf，初始化vb2_queue，需要提供vb2_ops（驱动相关）和vb2_mem_ops（内存分配的回调）</p></li>
+<li><p>注册v4l2 device，主要是将DVP的dev关联到v4l2_device-&gt;dev</p></li>
+<li><p>注册notifier，为了解决sensor和DVP控制器之间的初始化顺序依赖问题，需要dts中定义好endpoint，并提供notifier_ops。</p></li>
+</ul>
+<p>初始化notifier的时候，会去调用v4l2_fwnode_endpoint_parse
+()解析DTS中关于endpoint中的配置，包括bus-type（BT656等）、极性等，将这些信息保存在vep-&gt;bus中（在aic_dvp-&gt;bus需要有备份）。</p>
+</div>
+<div class="section" id="notifier">
+<h4><span class="section-number">6.4.5.3.1.2. </span>notifier 初始化过程<a class="headerlink" href="#notifier" title="永久链接至标题">¶</a></h4>
+<p>在Sensor的probe()过程中也会调用Notifier注册，因为DTS中两个设备用remote-endpoint已经有关联，DVP驱动注册过的notifier_ops-&gt;bound()接口首先会被触发，对方（Sensor）会传过来一个pad编号，DVP将其记录下来方便后续使用（调用Sensor的subdev接口完成stream启动、停止操作）。</p>
+<div class="figure align-center" id="id22">
+<img alt="../../../_images/v4l2_notify_call.png" src="../../../_images/v4l2_notify_call.png" />
+<p class="caption"><span class="caption-number">图 6.35 </span><span class="caption-text">V4L2 中notify的调用过程</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
+</div>
+<p>随后，DVP的notifier_ops-&gt;complete()接口也会被触发调用，DVP驱动中完成后续的初始化，包括：</p>
+<div class="figure align-center" id="id23">
+<img alt="../../../_images/v4l2_notify_complete.png" src="../../../_images/v4l2_notify_complete.png" />
+<p class="caption"><span class="caption-number">图 6.36 </span><span class="caption-text">V4L2 中notify的complete处理流程</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>关联v4l2_device 和subdev</p></li>
+<li><p>注册video device，</p></li>
+<li><p>注册media device</p></li>
+<li><p>创建pad之间的link，会用到media_link结构</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>media device出现了两次，是为了在所有media graph完全初始化之前就可以提供media device给用户态空间。所以一开始先用一部分entity初始化media device。</p>
+</div>
+<p>其中：</p>
+<ul class="simple">
+<li><p>Master设备执行probe函数的时候，先使用component_match_add()接口声明一个match队列。</p></li>
+<li><p>然后，使用component_master_add_with_match函数将自己作为master注册到component框架。</p></li>
+<li><p>各component slave设备执行probe函数的时候，仅使用component_add()完成slave注册。</p></li>
+<li><p>以上各模块的probe()函数调用先后顺序并不影响。</p></li>
+<li><p>各个component都要实现自己的bind()和unbind()接口（struct component_ops），component框架在判断所有match队列中的模块都完成了probe，就会按 <strong>先slave、后master</strong> 的去调用他们的bind()接口。而各模块真正的初始化动作都是在各自的bind()中去实现。</p></li>
+<li><p>在执行各bind()接口时，各slave间的先后顺序和match队列一致。Component保证master最后执行。</p></li>
+<li><p>aicfb-&gt;bind()中，主要完成framebuffer申请、fb设备注册、使能UI图层、使能panel等动作。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="buf">
+<h3><span class="section-number">6.4.5.3.2. </span>Buf 管理<a class="headerlink" href="#buf" title="永久链接至标题">¶</a></h3>
+<p>DVP的Buf管理需要用到V4L2框架提供的Video queue机制外，还需要用到dma-buf和CMA（详见DE设计文档中的描述）。</p>
+<p>对于每一帧图像数据来说，DVP的输出有两个plane：Y和UV。针对DVP的两种输出格式：YUV422_COMBINED_NV16和YUV420_COMBINED_NV12，两个plane的空间大小如下表：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 40%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>YUV422_COMBINED_NV16</p></th>
+<th class="head"><p>YUV420_COMBINED_NV12</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Plane Y</p></td>
+<td><p>Width * height</p></td>
+<td><p>Width * height</p></td>
+</tr>
+<tr class="row-odd"><td><p>Plane UV</p></td>
+<td><p>Width * height</p></td>
+<td><p>Width * height / 2</p></td>
+</tr>
+</tbody>
+</table>
+<p>根据前面对“Buf队列管理”的分析可知：我们要分配的内存空间 <strong>至少要有3个Buf，每个Buf有两个Plane</strong>。</p>
+<p>对应到Buf的ioctl接口，我们要用到*_MPLANE结尾的接口。</p>
+<p>注册video queue时提需要提供vb2_ops，其中需要DVP驱动实现的有五个接口：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>queue_setup</dt><dd><p>在APP发起申请buf时调用，这里面主要设置plane个数、各plane的大小；</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>buf_prepare和buf_queue</dt><dd><p>在APP每次调用QBuf时会调用，分别完成获取Buf物理地址、同步Qbuf list的处理；</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Stream start和stream stop</dt><dd><p>启动和停止媒体数据（处理流程详见下节描述）。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="stream">
+<h3><span class="section-number">6.4.5.3.3. </span>Stream 启动流程<a class="headerlink" href="#stream" title="永久链接至标题">¶</a></h3>
+<p>Stream的启动是由APP发起的，APP通过ioctl接口传入命令VIDIOC_STREAMON（相应的，停止的命令是VIDIOC_STREAMOFF）。</p>
+<div class="figure align-center" id="id24">
+<img alt="../../../_images/dvp_stream_on.png" src="../../../_images/dvp_stream_on.png" />
+<p class="caption"><span class="caption-number">图 6.37 </span><span class="caption-text">DVP 驱动中Stream启动过程</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
+</div>
+<p>Stream的停止流程相对简单很多，会调用到Sensor的停止传输接口：</p>
+<div class="figure align-center" id="id25">
+<img alt="../../../_images/dvp_stream_off.png" src="../../../_images/dvp_stream_off.png" />
+<p class="caption"><span class="caption-number">图 6.38 </span><span class="caption-text">DVP 驱动中Stream停止过程</span><a class="headerlink" href="#id25" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.4.5.3.4. </span>中断处理流程<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>DVP的中断处理函数中主要处理Buf的队列切换操作。
+DVP硬件提供的中断可以反映出多个状态（包括出错状态），其中有两个比较重要：</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Update done</dt><dd><p>表示硬件已经读走了当前的Register值（影子寄存器），软件可以为下一帧去修改了；</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Frame done</dt><dd><p>表示当前帧的数据传输完成。</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>可见，Update done会先于Frame done发生，驱动中用Update done判断当前Register是否可以修改，用Frame done判断当前buf是否完成（done状态），该buf就可以从QBuf list切换到DQbuf list了。</p>
+<p>按照DVP硬件设计的逻辑，Update done和Frame done会间隔着产生（不会连续两个Update done）：
+<code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">done</span> <span class="pre">-&gt;</span> <span class="pre">Frame</span> <span class="pre">done</span> <span class="pre">-&gt;</span> <span class="pre">Update</span> <span class="pre">done</span> <span class="pre">-&gt;</span> <span class="pre">Frame</span> <span class="pre">done</span> <span class="pre">-&gt;</span> <span class="pre">Update</span> <span class="pre">done</span> <span class="pre">-&gt;</span> <span class="pre">Frame</span> <span class="pre">done</span> <span class="pre">...</span></code></p>
+<div class="figure align-center" id="id26">
+<img alt="../../../_images/dvp_irq_flow1.png" src="../../../_images/dvp_irq_flow1.png" />
+<p class="caption"><span class="caption-number">图 6.39 </span><span class="caption-text">DVP 驱动中IRQ处理流程</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
+</div>
+<p>“处理Frame done事件”的子流程如下：</p>
+<div class="figure align-center" id="id27">
+<img alt="../../../_images/dvp_frame_done_flow1.png" src="../../../_images/dvp_frame_done_flow1.png" />
+<p class="caption"><span class="caption-number">图 6.40 </span><span class="caption-text">DVP 驱动中Frame done处理流程</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
+</div>
+<p>“处理Update done事件”的子流程如下：</p>
+<div class="figure align-center" id="id28">
+<img alt="../../../_images/dvp_update_done_flow1.png" src="../../../_images/dvp_update_done_flow1.png" />
+<p class="caption"><span class="caption-number">图 6.41 </span><span class="caption-text">DVP 驱动中Update done处理流程</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>“异常！DVP同时使用了两个Buf”</dt><dd><p>理论上不应该发生，可认为是DVP硬件异常，但因为DVP还在向Buf写数据，所以先不执行stop，软件上报错。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“DVP在使用”</dt><dd><p>表示“DVP控制器硬件正在使用”。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">6.4.5.4. </span>数据结构设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>DVP自定义的数据结构都在aic_dvp.h中。</p>
+<div class="section" id="aic-dvp">
+<h3><span class="section-number">6.4.5.4.1. </span>aic_dvp<a class="headerlink" href="#aic-dvp" title="永久链接至标题">¶</a></h3>
+<p>定义了DVP控制器的设备管理信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_dvp</span> <span class="p">{</span>
+    <span class="cm">/* Device resources */</span>
+    <span class="k">struct</span> <span class="nc">device</span>           <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">__iomem</span>            <span class="o">*</span><span class="n">regs</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span>          <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">reset_control</span>        <span class="o">*</span><span class="n">rst</span><span class="p">;</span>
+    <span class="n">u32</span>             <span class="n">clk_rate</span><span class="p">;</span>
+    <span class="kt">int</span>             <span class="n">irq</span><span class="p">;</span>
+    <span class="kt">int</span>             <span class="n">ch</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">vb2_v4l2_buffer</span>      <span class="o">*</span><span class="n">vbuf</span><span class="p">[</span><span class="n">DVP_MAX_BUF</span><span class="p">];</span>
+
+    <span class="k">struct</span> <span class="nc">aic_dvp_config</span>       <span class="n">cfg</span><span class="p">;</span> <span class="cm">/* The configuration of DVP HW */</span>
+    <span class="k">struct</span> <span class="nc">v4l2_fwnode_bus_parallel</span> <span class="n">bus</span><span class="p">;</span> <span class="cm">/* The format of input data */</span>
+    <span class="k">struct</span> <span class="nc">v4l2_pix_format_mplane</span>   <span class="n">fmt</span><span class="p">;</span> <span class="cm">/* The format of output data */</span>
+
+    <span class="cm">/* Main Device */</span>
+    <span class="k">struct</span> <span class="nc">v4l2_device</span>      <span class="n">v4l2</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">media_device</span>     <span class="n">mdev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">video_device</span>     <span class="n">vdev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">media_pad</span>        <span class="n">vdev_pad</span><span class="p">;</span>
+
+    <span class="cm">/* Local subdev */</span>
+    <span class="k">struct</span> <span class="nc">v4l2_subdev</span>      <span class="n">subdev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">media_pad</span>        <span class="n">subdev_pads</span><span class="p">[</span><span class="n">DVP_SUBDEV_PAD_NUM</span><span class="p">];</span>
+    <span class="k">struct</span> <span class="nc">v4l2_mbus_framefmt</span>   <span class="n">subdev_fmt</span><span class="p">;</span>
+
+    <span class="cm">/* V4L2 Async variables */</span>
+    <span class="k">struct</span> <span class="nc">v4l2_async_subdev</span>    <span class="n">asd</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">v4l2_async_notifier</span>  <span class="n">notifier</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">v4l2_subdev</span>      <span class="o">*</span><span class="n">src_subdev</span><span class="p">;</span>
+    <span class="kt">int</span>             <span class="n">src_pad</span><span class="p">;</span>
+
+    <span class="cm">/* V4L2 variables */</span>
+    <span class="k">struct</span> <span class="nc">mutex</span>            <span class="n">lock</span><span class="p">;</span>
+
+    <span class="cm">/* Videobuf2 */</span>
+    <span class="k">struct</span> <span class="nc">vb2_queue</span>        <span class="n">queue</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">list_head</span>        <span class="n">buf_list</span><span class="p">;</span>
+    <span class="n">spinlock_t</span>          <span class="n">qlock</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>            <span class="n">sequence</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-dvp-config">
+<h3><span class="section-number">6.4.5.4.2. </span>aic_dvp_config<a class="headerlink" href="#aic-dvp-config" title="永久链接至标题">¶</a></h3>
+<p>定义了V4L2媒体数据的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Save the configuration information for DVP controller.</span>
+<span class="cm"> * @code:   media bus format code (MEDIA_BUS_FMT_*, in media-bus-format.h)</span>
+<span class="cm"> * @field:  used interlacing type (enum v4l2_field)</span>
+<span class="cm"> * @width:  frame width</span>
+<span class="cm"> * @height: frame height</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aic_dvp_config</span> <span class="p">{</span>
+    <span class="cm">/* Input format */</span>
+    <span class="k">enum</span> <span class="n">dvp_input</span>      <span class="n">input</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">dvp_input_yuv_seq</span>  <span class="n">input_seq</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">v4l2_field</span>     <span class="n">field</span><span class="p">;</span>
+
+    <span class="cm">/* Output format */</span>
+    <span class="k">enum</span> <span class="n">dvp_output</span> <span class="n">output</span><span class="p">;</span>
+    <span class="n">u32</span>     <span class="n">width</span><span class="p">;</span>
+    <span class="n">u32</span>     <span class="n">height</span><span class="p">;</span>
+    <span class="n">u32</span>     <span class="n">stride</span><span class="p">[</span><span class="n">DVP_MAX_PLANE</span><span class="p">];</span>
+    <span class="n">u32</span>     <span class="n">sizeimage</span><span class="p">[</span><span class="n">DVP_MAX_PLANE</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aic-dvp-buf">
+<h3><span class="section-number">6.4.5.4.3. </span>aic_dvp_buf<a class="headerlink" href="#aic-dvp-buf" title="永久链接至标题">¶</a></h3>
+<p>定义了DVP驱动的Buf管理信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_dvp_buf</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">vb2_v4l2_buffer</span>  <span class="n">vb</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">list_head</span>    <span class="n">list</span><span class="p">;</span>
+    <span class="n">dma_addr_t</span>      <span class="n">paddr</span><span class="p">[</span><span class="n">DVP_MAX_PLANE</span><span class="p">];</span>
+    <span class="kt">bool</span>            <span class="n">dvp_using</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">6.4.5.4.4. </span>输入输出的数据格式<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="section" id="enum-dvp-input">
+<h4><span class="section-number">6.4.5.4.4.1. </span>enum dvp_input<a class="headerlink" href="#enum-dvp-input" title="永久链接至标题">¶</a></h4>
+<p>定义了DVP输入数据的格式：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">dvp_input</span> <span class="p">{</span>
+    <span class="n">DVP_IN_RAW</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">DVP_IN_YUV422</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">DVP_IN_BT656</span>    <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enum-dvp-input-yuv-seq">
+<h4><span class="section-number">6.4.5.4.4.2. </span>enum dvp_input_yuv_seq<a class="headerlink" href="#enum-dvp-input-yuv-seq" title="永久链接至标题">¶</a></h4>
+<p>定义了DVP输入数据的YUV格式：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">dvp_input_yuv_seq</span> <span class="p">{</span>
+    <span class="n">DVP_YUV_DATA_SEQ_YUYV</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">DVP_YUV_DATA_SEQ_YVYU</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">DVP_YUV_DATA_SEQ_UYVY</span>   <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">DVP_YUV_DATA_SEQ_VYUY</span>   <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enum-dvp-output">
+<h4><span class="section-number">6.4.5.4.4.3. </span>enum dvp_output<a class="headerlink" href="#enum-dvp-output" title="永久链接至标题">¶</a></h4>
+<p>定义了DVP输出数据的格式：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">dvp_output</span> <span class="p">{</span>
+    <span class="n">DVP_OUT_RAW_PASSTHROUGH</span>     <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">DVP_OUT_YUV422_COMBINED_NV16</span>    <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">DVP_OUT_YUV420_COMBINED_NV12</span>    <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">6.4.5.5. </span>接口设计<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="v4l2-device">
+<h3><span class="section-number">6.4.5.5.1. </span>V4l2 device 的外部接口<a class="headerlink" href="#v4l2-device" title="永久链接至标题">¶</a></h3>
+<div class="section" id="ioctl">
+<h4><span class="section-number">6.4.5.5.1.1. </span>ioctl 接口<a class="headerlink" href="#ioctl" title="永久链接至标题">¶</a></h4>
+<p>用户态通过/dev/videoX节点的ioctl()接口与内核态V4L2框架、DVP驱动进行交互。主要功能有：</p>
+<ul class="simple">
+<li><p>获取、设置格式</p></li>
+<li><p>申请、释放Buf</p></li>
+<li><p>QBuf、DQBuf</p></li>
+<li><p>导出dma-buf文件描述符</p></li>
+<li><p>启动、停止Stream</p></li>
+</ul>
+<p>定义在include/uapi/linux/videodev2.h：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define VIDIOC_QUERYCAP      _IOR(&#39;V&#39;,  0, struct v4l2_capability)</span>
+<span class="cp">#define VIDIOC_ENUM_FMT         _IOWR(&#39;V&#39;,  2, struct v4l2_fmtdesc)</span>
+<span class="cp">#define VIDIOC_G_FMT        _IOWR(&#39;V&#39;,  4, struct v4l2_format)</span>
+<span class="cp">#define VIDIOC_S_FMT        _IOWR(&#39;V&#39;,  5, struct v4l2_format)</span>
+<span class="cp">#define VIDIOC_REQBUFS      _IOWR(&#39;V&#39;,  8, struct v4l2_requestbuffers)</span>
+<span class="cp">#define VIDIOC_QUERYBUF     _IOWR(&#39;V&#39;,  9, struct v4l2_buffer)</span>
+<span class="cp">#define VIDIOC_G_FBUF        _IOR(&#39;V&#39;, 10, struct v4l2_framebuffer)</span>
+<span class="cp">#define VIDIOC_S_FBUF        _IOW(&#39;V&#39;, 11, struct v4l2_framebuffer)</span>
+<span class="cp">#define VIDIOC_OVERLAY       _IOW(&#39;V&#39;, 14, int)</span>
+<span class="cp">#define VIDIOC_QBUF     _IOWR(&#39;V&#39;, 15, struct v4l2_buffer)</span>
+<span class="cp">#define VIDIOC_EXPBUF       _IOWR(&#39;V&#39;, 16, struct v4l2_exportbuffer)</span>
+<span class="cp">#define VIDIOC_DQBUF        _IOWR(&#39;V&#39;, 17, struct v4l2_buffer)</span>
+<span class="cp">#define VIDIOC_STREAMON      _IOW(&#39;V&#39;, 18, int)</span>
+<span class="cp">#define VIDIOC_STREAMOFF     _IOW(&#39;V&#39;, 19, int)</span>
+<span class="cp">#define VIDIOC_G_PARM       _IOWR(&#39;V&#39;, 21, struct v4l2_streamparm)</span>
+<span class="cp">#define VIDIOC_S_PARM       _IOWR(&#39;V&#39;, 22, struct v4l2_streamparm)</span>
+<span class="cp">#define VIDIOC_G_STD         _IOR(&#39;V&#39;, 23, v4l2_std_id)</span>
+<span class="cp">#define VIDIOC_S_STD         _IOW(&#39;V&#39;, 24, v4l2_std_id)</span>
+<span class="cp">#define VIDIOC_ENUMSTD      _IOWR(&#39;V&#39;, 25, struct v4l2_standard)</span>
+<span class="cp">#define VIDIOC_ENUMINPUT    _IOWR(&#39;V&#39;, 26, struct v4l2_input)</span>
+<span class="cp">#define VIDIOC_G_CTRL       _IOWR(&#39;V&#39;, 27, struct v4l2_control)</span>
+<span class="cp">#define VIDIOC_S_CTRL       _IOWR(&#39;V&#39;, 28, struct v4l2_control)</span>
+<span class="cp">#define VIDIOC_QUERYCTRL    _IOWR(&#39;V&#39;, 36, struct v4l2_queryctrl)</span>
+<span class="cp">#define VIDIOC_QUERYMENU    _IOWR(&#39;V&#39;, 37, struct v4l2_querymenu)</span>
+<span class="cp">#define VIDIOC_G_INPUT       _IOR(&#39;V&#39;, 38, int)</span>
+<span class="cp">#define VIDIOC_S_INPUT      _IOWR(&#39;V&#39;, 39, int)</span>
+<span class="cp">#define VIDIOC_G_OUTPUT      _IOR(&#39;V&#39;, 46, int)</span>
+<span class="cp">#define VIDIOC_S_OUTPUT     _IOWR(&#39;V&#39;, 47, int)</span>
+<span class="cp">#define VIDIOC_ENUMOUTPUT   _IOWR(&#39;V&#39;, 48, struct v4l2_output)</span>
+<span class="cp">#define VIDIOC_G_FREQUENCY  _IOWR(&#39;V&#39;, 56, struct v4l2_frequency)</span>
+<span class="cp">#define VIDIOC_S_FREQUENCY   _IOW(&#39;V&#39;, 57, struct v4l2_frequency)</span>
+<span class="cp">#define VIDIOC_CROPCAP      _IOWR(&#39;V&#39;, 58, struct v4l2_cropcap)</span>
+<span class="cp">#define VIDIOC_G_CROP       _IOWR(&#39;V&#39;, 59, struct v4l2_crop)</span>
+<span class="cp">#define VIDIOC_S_CROP        _IOW(&#39;V&#39;, 60, struct v4l2_crop)</span>
+<span class="cp">#define VIDIOC_G_JPEGCOMP    _IOR(&#39;V&#39;, 61, struct v4l2_jpegcompression)</span>
+<span class="cp">#define VIDIOC_S_JPEGCOMP    _IOW(&#39;V&#39;, 62, struct v4l2_jpegcompression)</span>
+<span class="cp">#define VIDIOC_QUERYSTD      _IOR(&#39;V&#39;, 63, v4l2_std_id)</span>
+<span class="cp">#define VIDIOC_TRY_FMT      _IOWR(&#39;V&#39;, 64, struct v4l2_format)</span>
+<span class="cp">#define VIDIOC_G_PRIORITY    _IOR(&#39;V&#39;, 67, __u32) </span><span class="cm">/* enum v4l2_priority */</span><span class="cp"></span>
+<span class="cp">#define VIDIOC_S_PRIORITY    _IOW(&#39;V&#39;, 68, __u32) </span><span class="cm">/* enum v4l2_priority */</span><span class="cp"></span>
+<span class="cp">#define VIDIOC_G_SLICED_VBI_CAP _IOWR(&#39;V&#39;, 69, struct v4l2_sliced_vbi_cap)</span>
+<span class="cp">#define VIDIOC_LOG_STATUS         _IO(&#39;V&#39;, 70)</span>
+<span class="cp">#define VIDIOC_G_EXT_CTRLS  _IOWR(&#39;V&#39;, 71, struct v4l2_ext_controls)</span>
+<span class="cp">#define VIDIOC_S_EXT_CTRLS  _IOWR(&#39;V&#39;, 72, struct v4l2_ext_controls)</span>
+<span class="cp">#define VIDIOC_TRY_EXT_CTRLS    _IOWR(&#39;V&#39;, 73, struct v4l2_ext_controls)</span>
+<span class="cp">#define VIDIOC_ENUM_FRAMESIZES  _IOWR(&#39;V&#39;, 74, struct v4l2_frmsizeenum)</span>
+<span class="cp">#define VIDIOC_ENUM_FRAMEINTERVALS _IOWR(&#39;V&#39;, 75, struct v4l2_frmivalenum)</span>
+<span class="cp">#define VIDIOC_G_ENC_INDEX       _IOR(&#39;V&#39;, 76, struct v4l2_enc_idx)</span>
+<span class="cp">#define VIDIOC_ENCODER_CMD      _IOWR(&#39;V&#39;, 77, struct v4l2_encoder_cmd)</span>
+<span class="cp">#define VIDIOC_TRY_ENCODER_CMD  _IOWR(&#39;V&#39;, 78, struct v4l2_encoder_cmd)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="v4l2-subdev">
+<h3><span class="section-number">6.4.5.5.2. </span>V4l2 subdev 的外部接口<a class="headerlink" href="#v4l2-subdev" title="永久链接至标题">¶</a></h3>
+<p>用户态通过/dev/v4l-subdevX节点的ioctl()接口与内核态V4L2框架、DVP驱动、Sensor驱动进行交互。主要功能有：</p>
+<ul class="simple">
+<li><p>获取、设置格式</p></li>
+<li><p>获取、设置帧间隔</p></li>
+<li><p>枚举支持的mbus类型</p></li>
+<li><p>枚举支持的分辨率</p></li>
+<li><p>获取、设置区域裁剪</p></li>
+</ul>
+<p>定义在 include/uapi/linux/v4l2-subdev.h：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define VIDIOC_SUBDEV_G_FMT         _IOWR(&#39;V&#39;,  4, struct v4l2_subdev_format)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_FMT         _IOWR(&#39;V&#39;,  5, struct v4l2_subdev_format)</span>
+<span class="cp">#define VIDIOC_SUBDEV_G_FRAME_INTERVAL      _IOWR(&#39;V&#39;, 21, struct v4l2_subdev_frame_interval)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_FRAME_INTERVAL      _IOWR(&#39;V&#39;, 22, struct v4l2_subdev_frame_interval)</span>
+<span class="cp">#define VIDIOC_SUBDEV_ENUM_MBUS_CODE        _IOWR(&#39;V&#39;,  2, struct v4l2_subdev_mbus_code_enum)</span>
+<span class="cp">#define VIDIOC_SUBDEV_ENUM_FRAME_SIZE       _IOWR(&#39;V&#39;, 74, struct v4l2_subdev_frame_size_enum)</span>
+<span class="cp">#define VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL   _IOWR(&#39;V&#39;, 75, struct v4l2_subdev_frame_interval_enum)</span>
+<span class="cp">#define VIDIOC_SUBDEV_G_CROP            _IOWR(&#39;V&#39;, 59, struct v4l2_subdev_crop)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_CROP            _IOWR(&#39;V&#39;, 60, struct v4l2_subdev_crop)</span>
+<span class="cp">#define VIDIOC_SUBDEV_G_SELECTION       _IOWR(&#39;V&#39;, 61, struct v4l2_subdev_selection)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_SELECTION       _IOWR(&#39;V&#39;, 62, struct v4l2_subdev_selection)</span>
+<span class="cm">/* The following ioctls are identical to the ioctls in videodev2.h */</span>
+<span class="cp">#define VIDIOC_SUBDEV_G_STD         _IOR(&#39;V&#39;, 23, v4l2_std_id)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_STD         _IOW(&#39;V&#39;, 24, v4l2_std_id)</span>
+<span class="cp">#define VIDIOC_SUBDEV_ENUMSTD           _IOWR(&#39;V&#39;, 25, struct v4l2_standard)</span>
+<span class="cp">#define VIDIOC_SUBDEV_G_EDID            _IOWR(&#39;V&#39;, 40, struct v4l2_edid)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_EDID            _IOWR(&#39;V&#39;, 41, struct v4l2_edid)</span>
+<span class="cp">#define VIDIOC_SUBDEV_QUERYSTD          _IOR(&#39;V&#39;, 63, v4l2_std_id)</span>
+<span class="cp">#define VIDIOC_SUBDEV_S_DV_TIMINGS      _IOWR(&#39;V&#39;, 87, struct v4l2_dv_timings)</span>
+<span class="cp">#define VIDIOC_SUBDEV_G_DV_TIMINGS      _IOWR(&#39;V&#39;, 88, struct v4l2_dv_timings)</span>
+<span class="cp">#define VIDIOC_SUBDEV_ENUM_DV_TIMINGS       _IOWR(&#39;V&#39;, 98, struct v4l2_enum_dv_timings)</span>
+<span class="cp">#define VIDIOC_SUBDEV_QUERY_DV_TIMINGS      _IOR(&#39;V&#39;, 99, struct v4l2_dv_timings)</span>
+<span class="cp">#define VIDIOC_SUBDEV_DV_TIMINGS_CAP        _IOWR(&#39;V&#39;, 100, struct v4l2_dv_timings_cap)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="app-demo">
+<span id="ref-dvp-demo"></span><h2><span class="section-number">6.4.5.6. </span>APP Demo<a class="headerlink" href="#app-demo" title="永久链接至标题">¶</a></h2>
+<div class="section" id="app">
+<h3><span class="section-number">6.4.5.6.1. </span>APP层的处理流程<a class="headerlink" href="#app" title="永久链接至标题">¶</a></h3>
+<p>APP 中实现从Sensor -&gt; DVP -&gt; DE的数据通路，整体的处理流程如下图（图中按照访问对象分为三列，实际上整体是串行执行）：</p>
+<div class="figure align-center" id="id29">
+<img alt="../../../_images/demo_flow.png" src="../../../_images/demo_flow.png" />
+<p class="caption"><span class="caption-number">图 6.42 </span><span class="caption-text">APP 中的处理流程</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">6.4.5.6.2. </span>APP Demo参考实现<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>Demo代码见test_dvp/dvp_test.c，如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;linux/dma-buf.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/dma-heap.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/videodev2.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;linux/v4l2-subdev.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;video/artinchip_fb.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;artinchip/sample_base.h&gt;</span><span class="cp"></span>
+
+<span class="cm">/* Global macro and variables */</span>
+
+<span class="cp">#define VID_BUF_NUM     3</span>
+<span class="cp">#define DVP_PLANE_NUM       2</span>
+<span class="cp">#define CMA_BUF_MAX     (8 * 1024 * 1024)</span>
+<span class="cp">#define DMA_HEAP_DEV        &quot;/dev/dma_heap/reserved&quot;</span>
+<span class="cp">#define FB_DEV          &quot;/dev/fb0&quot;</span>
+<span class="cp">#define VIDEO_DEV       &quot;/dev/video0&quot;</span>
+<span class="cp">#define SENSOR_DEV      &quot;/dev/v4l-subdev0&quot;</span>
+<span class="cp">#define DVP_SUBDEV_DEV      &quot;/dev/v4l-subdev1&quot;</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="n">sopts</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;f:c:u&quot;</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">option</span> <span class="n">lopts</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span><span class="s">&quot;format&quot;</span><span class="p">,</span>    <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;f&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;capture&quot;</span><span class="p">,</span>   <span class="n">required_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&quot;usage&quot;</span><span class="p">,</span>       <span class="n">no_argument</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="sc">&#39;u&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">video_plane</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">buf</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">len</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">video_buf_info</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">vaddr</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">len</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">video_plane</span> <span class="n">planes</span><span class="p">[</span><span class="n">DVP_PLANE_NUM</span><span class="p">];</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_video_data</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">w</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">h</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">frame_size</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">frame_cnt</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">fmt</span><span class="p">;</span>  <span class="c1">// output format</span>
+    <span class="k">struct</span> <span class="nc">v4l2_subdev_format</span> <span class="n">src_fmt</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">video_buf_info</span> <span class="n">binfo</span><span class="p">[</span><span class="n">VID_BUF_NUM</span><span class="p">];</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_fb_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_video_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_sensor_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_dvp_subdev_fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">aic_video_data</span> <span class="n">g_vdata</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="cm">/* Functions */</span>
+
+<span class="kt">void</span> <span class="nf">usage</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">program</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: %s [options]: </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">program</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -f, --format</span><span class="se">\t\t</span><span class="s">format of input video, NV16/NV12 etc</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -c, --count</span><span class="se">\t\t</span><span class="s">the number of capture frame </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> -u, --usage </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Example: %s -f yuv422 -c 1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">program</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/* Open a device file to be needed. */</span>
+<span class="kt">int</span> <span class="nf">device_open</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">_fname</span><span class="p">,</span> <span class="kt">int</span> <span class="n">_flag</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">s32</span> <span class="n">fd</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">_fname</span><span class="p">,</span> <span class="n">_flag</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Failed to open %s errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">_fname</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">fd</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">set_ui_layer_alpha</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_alpha_config</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">alpha</span><span class="p">.</span><span class="n">layer_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">alpha</span><span class="p">.</span><span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">alpha</span><span class="p">.</span><span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">alpha</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">AICFB_UPDATE_ALPHA_CONFIG</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">alpha</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! errno: %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">vidbuf_dmabuf_begin</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_video_data</span> <span class="o">*</span><span class="n">vdata</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_dmabuf_fd</span> <span class="n">fds</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">VID_BUF_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">video_plane</span> <span class="o">*</span><span class="n">plane</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">video_plane</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">vdata</span><span class="o">-&gt;</span><span class="n">binfo</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">plane</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fds</span><span class="p">.</span><span class="n">fd</span> <span class="o">=</span> <span class="n">plane</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">AICFB_GET_DMABUF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fds</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+                    <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">vidbuf_dmabuf_end</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_video_data</span> <span class="o">*</span><span class="n">vdata</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_dmabuf_fd</span> <span class="n">fds</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">VID_BUF_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">video_plane</span> <span class="o">*</span><span class="n">plane</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">video_plane</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">vdata</span><span class="o">-&gt;</span><span class="n">binfo</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">,</span> <span class="n">plane</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fds</span><span class="p">.</span><span class="n">fd</span> <span class="o">=</span> <span class="n">plane</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">AICFB_PUT_DMABUF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fds</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+                    <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">sensor_get_fmt</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">v4l2_subdev_format</span> <span class="n">f</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">g_sensor_fd</span> <span class="o">=</span> <span class="n">device_open</span><span class="p">(</span><span class="n">SENSOR_DEV</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_sensor_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">pad</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">which</span> <span class="o">=</span> <span class="n">V4L2_SUBDEV_FORMAT_ACTIVE</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_sensor_fd</span><span class="p">,</span> <span class="n">VIDIOC_SUBDEV_G_FMT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">#if 0</span><span class="c"></span>
+<span class="c">    f.format.code = MEDIA_BUS_FMT_YUYV8_2X8;</span>
+<span class="c">    if (ioctl(g_sensor_fd, VIDIOC_SUBDEV_S_FMT, &amp;f) &lt; 0) {</span>
+<span class="c">        ERR(&quot;ioctl() failed! err %d[%s]\n&quot;, errno, strerror(errno));</span>
+<span class="c">        return -1;</span>
+<span class="c">    }</span>
+<span class="cp">#endif</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">format</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">format</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_subdev_set_fmt</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">v4l2_subdev_format</span> <span class="n">f</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">;</span>
+
+    <span class="n">g_dvp_subdev_fd</span> <span class="o">=</span> <span class="n">device_open</span><span class="p">(</span><span class="n">DVP_SUBDEV_DEV</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_dvp_subdev_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">pad</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">which</span> <span class="o">=</span> <span class="n">V4L2_SUBDEV_FORMAT_ACTIVE</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_dvp_subdev_fd</span><span class="p">,</span> <span class="n">VIDIOC_SUBDEV_S_FMT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_cfg</span><span class="p">(</span><span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">height</span><span class="p">,</span> <span class="kt">int</span> <span class="n">format</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">v4l2_format</span> <span class="n">f</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">fmt</span><span class="p">.</span><span class="n">pix_mp</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">format</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">fmt</span><span class="p">.</span><span class="n">pix_mp</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">src_fmt</span><span class="p">.</span><span class="n">format</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">fmt</span><span class="p">.</span><span class="n">pix_mp</span><span class="p">.</span><span class="n">pixelformat</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">fmt</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">fmt</span><span class="p">.</span><span class="n">pix_mp</span><span class="p">.</span><span class="n">num_planes</span> <span class="o">=</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_S_FMT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_expbuf</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">video_buf_info</span> <span class="o">*</span><span class="n">binfo</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">binfo</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+    <span class="k">struct</span> <span class="nc">v4l2_exportbuffer</span> <span class="n">expbuf</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">expbuf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">v4l2_exportbuffer</span><span class="p">));</span>
+        <span class="n">expbuf</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+        <span class="n">expbuf</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">;</span>
+        <span class="n">expbuf</span><span class="p">.</span><span class="n">plane</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_EXPBUF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">expbuf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+                <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+            <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">binfo</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">fd</span> <span class="o">=</span> <span class="n">expbuf</span><span class="p">.</span><span class="n">fd</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_request_buf</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">v4l2_buffer</span> <span class="n">buf</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">v4l2_requestbuffers</span> <span class="n">req</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">v4l2_plane</span> <span class="n">planes</span><span class="p">[</span><span class="n">DVP_PLANE_NUM</span><span class="p">];</span>
+
+    <span class="n">req</span><span class="p">.</span><span class="n">count</span>  <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+    <span class="n">req</span><span class="p">.</span><span class="n">type</span>   <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+    <span class="n">req</span><span class="p">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">V4L2_MEMORY_MMAP</span><span class="p">;</span> <span class="c1">// Only MMAP will do alloc memory</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_REQBUFS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">req</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">dvp_expbuf</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+
+            <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">v4l2_buffer</span><span class="p">));</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">V4L2_MEMORY_DMABUF</span><span class="p">;</span>
+            <span class="n">buf</span><span class="p">.</span><span class="n">m</span><span class="p">.</span><span class="n">planes</span> <span class="o">=</span> <span class="n">planes</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_QUERYBUF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+                <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+            <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">dvp_release_buf</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">video_buf_info</span> <span class="o">*</span><span class="n">binfo</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">binfo</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">binfo</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">binfo</span><span class="o">-&gt;</span><span class="n">vaddr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">munmap</span><span class="p">(</span><span class="n">binfo</span><span class="o">-&gt;</span><span class="n">vaddr</span><span class="p">,</span> <span class="n">binfo</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">);</span>
+            <span class="n">binfo</span><span class="o">-&gt;</span><span class="n">vaddr</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_queue_buf</span><span class="p">(</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">v4l2_buffer</span> <span class="n">buf</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">v4l2_plane</span> <span class="n">planes</span><span class="p">[</span><span class="n">DVP_PLANE_NUM</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">buf</span><span class="p">.</span><span class="n">type</span>   <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">V4L2_MEMORY_MMAP</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">index</span>  <span class="o">=</span> <span class="n">index</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">m</span><span class="p">.</span><span class="n">planes</span> <span class="o">=</span> <span class="n">planes</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_QBUF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_dequeue_buf</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">v4l2_buffer</span> <span class="n">buf</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">v4l2_plane</span> <span class="n">planes</span><span class="p">[</span><span class="n">DVP_PLANE_NUM</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+    <span class="n">buf</span><span class="p">.</span><span class="n">type</span>   <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">memory</span> <span class="o">=</span> <span class="n">V4L2_MEMORY_MMAP</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">DVP_PLANE_NUM</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">.</span><span class="n">m</span><span class="p">.</span><span class="n">planes</span> <span class="o">=</span> <span class="n">planes</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_DQBUF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="o">*</span><span class="n">index</span> <span class="o">=</span> <span class="n">buf</span><span class="p">.</span><span class="n">index</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_start</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">enum</span> <span class="n">v4l2_buf_type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_STREAMON</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dvp_stop</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">enum</span> <span class="n">v4l2_buf_type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">,</span> <span class="n">VIDIOC_STREAMOFF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">video_layer_set</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_video_data</span> <span class="o">*</span><span class="n">vdata</span><span class="p">,</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aicfb_layer_data</span> <span class="n">layer</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">struct</span> <span class="nc">video_buf_info</span> <span class="o">*</span><span class="n">binfo</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">vdata</span><span class="o">-&gt;</span><span class="n">binfo</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+
+    <span class="n">layer</span><span class="p">.</span><span class="n">layer_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="cp">#if 1</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">;</span>
+<span class="cp">#else</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">780</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">scale_size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+<span class="cp">#endif</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">h</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">AIC_FMT_NV16</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">dmabuf_fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">binfo</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">fd</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">dmabuf_fd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">binfo</span><span class="o">-&gt;</span><span class="n">planes</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">fd</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+    <span class="n">layer</span><span class="p">.</span><span class="n">buf</span><span class="p">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">-&gt;</span><span class="n">w</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ioctl</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">,</span> <span class="n">AICFB_UPDATE_LAYER_CONFIG</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">layer</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;ioctl() failed! err %d[%s]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">errno</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="n">frame_cnt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Compile time: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">__TIME__</span><span class="p">);</span>
+    <span class="n">g_vdata</span><span class="p">.</span><span class="n">fmt</span> <span class="o">=</span> <span class="n">V4L2_PIX_FMT_NV16</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">getopt_long</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">sopts</span><span class="p">,</span> <span class="n">lopts</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="sc">&#39;f&#39;</span><span class="o">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">strncasecmp</span><span class="p">(</span><span class="s">&quot;nv12&quot;</span><span class="p">,</span> <span class="n">optarg</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">optarg</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">g_vdata</span><span class="p">.</span><span class="n">fmt</span> <span class="o">=</span> <span class="n">V4L2_PIX_FMT_NV12</span><span class="p">;</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span>
+            <span class="n">frame_cnt</span> <span class="o">=</span> <span class="n">str2int</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="k">case</span> <span class="sc">&#39;u&#39;</span><span class="o">:</span>
+            <span class="n">usage</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">sensor_get_fmt</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_subdev_set_fmt</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">fmt</span> <span class="o">==</span> <span class="n">V4L2_PIX_FMT_NV16</span><span class="p">)</span>
+        <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">fmt</span> <span class="o">==</span> <span class="n">V4L2_PIX_FMT_NV12</span><span class="p">)</span>
+        <span class="n">g_vdata</span><span class="p">.</span><span class="n">frame_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span> <span class="o">*</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">g_fb_fd</span> <span class="o">=</span> <span class="n">device_open</span><span class="p">(</span><span class="n">FB_DEV</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">set_ui_layer_alpha</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+
+    <span class="n">g_video_fd</span> <span class="o">=</span> <span class="n">device_open</span><span class="p">(</span><span class="n">VIDEO_DEV</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_video_fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_cfg</span><span class="p">(</span><span class="n">g_vdata</span><span class="p">.</span><span class="n">w</span><span class="p">,</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">h</span><span class="p">,</span> <span class="n">g_vdata</span><span class="p">.</span><span class="n">fmt</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_request_buf</span><span class="p">(</span><span class="n">VID_BUF_NUM</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+
+    <span class="n">vidbuf_dmabuf_begin</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">VID_BUF_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dvp_queue_buf</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">dvp_start</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">goto</span> <span class="n">end</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">frame_cnt</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dvp_dequeue_buf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Set the buf %d to video layer</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">video_layer_set</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="n">dvp_queue_buf</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">dvp_stop</span><span class="p">();</span>
+    <span class="n">vidbuf_dmabuf_end</span><span class="p">(</span><span class="o">&amp;</span><span class="n">g_vdata</span><span class="p">);</span>
+    <span class="n">dvp_release_buf</span><span class="p">(</span><span class="n">VID_BUF_NUM</span><span class="p">);</span>
+
+<span class="nl">end</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_fb_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_fb_fd</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_video_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_video_fd</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_sensor_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_sensor_fd</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g_dvp_subdev_fd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">g_dvp_subdev_fd</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.4.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.4.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

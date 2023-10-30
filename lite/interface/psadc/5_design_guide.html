@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.6.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.6.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.6.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">7.4. GPIO 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.5. I2C 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.6. PSADC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.6.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.6.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.6.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.6.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.6.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.6.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.6.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.6.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.6.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.6.5.3.2. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">7.6.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#struct-aic-psadc-dev">7.6.5.4.1. struct aic_psadc_dev</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-aic-psadc-ch">7.6.5.4.2. struct aic_psadc_ch</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#driver">7.6.5.5. Driver 层接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#drv-psadc-enabled">7.6.5.5.1. drv_psadc_enabled</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-psadc-convert">7.6.5.5.2. drv_psadc_convert</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-psadc-resolution">7.6.5.5.3. drv_psadc_resolution</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hal">7.6.5.6. HAL 层接口设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#demo">7.6.5.7. Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.6.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.7. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.8. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.9. QSPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.10. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.11. MAC 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.6. </span>PSADC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.6.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.6.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.6.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于 <code class="docutils literal notranslate"><span class="pre">bsp/artinchip/</span></code>：</p>
+<ul class="simple">
+<li><p>bsp/artinchip/drv/psadc/drv_psadc.c，PSADC Driver 层实现</p></li>
+<li><p>bsp/artinchip/hal/psadc/hal_psadc.c，PSADC HAL 层实现</p></li>
+<li><p>bsp/artinchip/include/hal/hal_psadc.h，PSADC HAL 层接口头文件</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.6.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>PSADC 驱动 Driver 层采用 RT-Thread 的 ADC 设备驱动框架，如果只使用HAL层也可以支持 baremetal 方式的应用场景。</p>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/sw_system2.png" src="../../../_images/sw_system2.png" />
+<p class="caption"><span class="caption-number">图 7.43 </span><span class="caption-text">PSADC 模块驱动的软件框架</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.6.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">7.6.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>PSADC 驱动的初始化接口通过 <code class="docutils literal notranslate"><span class="pre">INIT_DEVICE_EXPORT(drv_psadc_init)</span></code> 完成，会通过调用 ADC子系统的接口 rt_hw_adc_register() 注册一个 ADC设备。</p>
+<p>PSADC 控制器的初始化过程，主要步骤有：</p>
+<ol class="arabic simple">
+<li><p>初始化模块的clk</p></li>
+<li><p>注册中断</p></li>
+<li><p>初始化默认参数</p></li>
+<li><p>向设备框架中注册ADC设备</p></li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.6.5.3.2. </span>中断处理流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>PSADC支持使用中断方式来读取数据，这样避免应用层的忙等待。</p>
+<div class="figure align-center" id="id9">
+<img alt="../../../_images/psadc_irq_flow.png" src="../../../_images/psadc_irq_flow.png" />
+<p class="caption"><span class="caption-number">图 7.44 </span><span class="caption-text">PSADC 单次采样模式的数据采集流程</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<ul class="simple">
+<li><p>对于单次采样模式：当用户层触发convert()接口，就会启动一次硬件去读数据</p></li>
+<li><p>当硬件准备好数据，会产生一个中断</p></li>
+<li><p>在中断处理函数中，用flag来区分是哪个通道有数据，逐个通道扫描将数据读出，会缓存到一个全局变量中</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.6.5.4. </span>数据结构设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="struct-aic-psadc-dev">
+<h3><span class="section-number">7.6.5.4.1. </span>struct aic_psadc_dev<a class="headerlink" href="#struct-aic-psadc-dev" title="永久链接至标题">¶</a></h3>
+<p>属于 Driver 层内部使用的数据结构，管理PSADC控制器的设备资源：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_psadc_dev</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_psadc_ch</span> <span class="o">*</span><span class="n">chan</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aic-psadc-ch">
+<h3><span class="section-number">7.6.5.4.2. </span>struct aic_psadc_ch<a class="headerlink" href="#struct-aic-psadc-ch" title="永久链接至标题">¶</a></h3>
+<p>属于 HAL 层接口，记录单个ADC通道的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_psadc_ch</span> <span class="p">{</span>
+    <span class="n">u8</span> <span class="n">id</span><span class="p">;</span>
+    <span class="n">u8</span> <span class="n">available</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">aic_psadc_mode</span> <span class="n">mode</span><span class="p">;</span>
+    <span class="n">u8</span> <span class="n">fifo_depth</span><span class="p">;</span>
+
+    <span class="n">aicos_sem_t</span> <span class="n">complete</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="driver">
+<h2><span class="section-number">7.6.5.5. </span>Driver 层接口设计<a class="headerlink" href="#driver" title="永久链接至标题">¶</a></h2>
+<p>以下接口是 PSADC 设备驱动框架的标准接口。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">rt_adc_ops</span>
+<span class="p">{</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">enabled</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="n">channel</span><span class="p">,</span> <span class="n">rt_bool_t</span> <span class="n">enabled</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">convert</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="n">channel</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="o">*</span><span class="n">value</span><span class="p">);</span>
+    <span class="n">rt_uint8_t</span> <span class="p">(</span><span class="o">*</span><span class="n">get_resolution</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="n">device</span><span class="p">);</span>
+    <span class="n">rt_int16_t</span> <span class="p">(</span><span class="o">*</span><span class="n">get_vref</span><span class="p">)</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="n">device</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中的 get_vref()暂未支持。</p>
+<div class="section" id="drv-psadc-enabled">
+<h3><span class="section-number">7.6.5.5.1. </span>drv_psadc_enabled<a class="headerlink" href="#drv-psadc-enabled" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">rt_err_t drv_psadc_enabled(struct rt_adc_device *dev, rt_uint32_t ch, rt_bool_t enabled)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>使能一个ADC通道</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向ADC设备</div>
+<div class="line">ch - 指定ADC通道的通道编号</div>
+<div class="line">enabled - 使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-psadc-convert">
+<h3><span class="section-number">7.6.5.5.2. </span>drv_psadc_convert<a class="headerlink" href="#drv-psadc-convert" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">rt_err_t drv_psadc_convert(struct rt_adc_device *dev, rt_uint32_t ch, rt_uint32_t *value)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>读取一个ADC通道的当前数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向ADC设备</div>
+<div class="line">ch - 指定ADC通道的通道编号</div>
+<div class="line">value - 用于保存返回的ADC数据</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-psadc-resolution">
+<h3><span class="section-number">7.6.5.5.3. </span>drv_psadc_resolution<a class="headerlink" href="#drv-psadc-resolution" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">rt_err_t drv_psadc_resolution(struct rt_adc_device *dev)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取PSADC控制器的采样精度</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dev - 指向ADC设备</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>12，表示 12bit 的采样精度</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hal">
+<h2><span class="section-number">7.6.5.6. </span>HAL 层接口设计<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h2>
+<p>HAL 层的函数接口声明存放在 hal_psadc.h 中，主要接口有：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">aich_psadc_enable</span><span class="p">(</span><span class="nb">int</span> <span class="n">enable</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">aic_psadc_single_queue_mode</span><span class="p">(</span><span class="nb">int</span> <span class="n">enable</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">aich_psadc_qc_irq_enable</span><span class="p">(</span><span class="nb">int</span> <span class="n">enable</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">aich_psadc_ch_init</span><span class="p">(</span><span class="n">struct</span> <span class="n">aic_psadc_ch</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span> <span class="n">u32</span> <span class="n">pclk</span><span class="p">);</span>
+<span class="n">irqreturn_t</span> <span class="n">aich_psadc_isr</span><span class="p">(</span><span class="nb">int</span> <span class="n">irq</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">aich_psadc_read</span><span class="p">(</span><span class="n">struct</span> <span class="n">aic_psadc_ch</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span> <span class="n">u32</span> <span class="o">*</span><span class="n">val</span><span class="p">,</span> <span class="n">u32</span> <span class="n">timeout</span><span class="p">);</span>
+<span class="n">struct</span> <span class="n">aic_psadc_ch</span> <span class="o">*</span><span class="n">hal_psadc_ch_is_valid</span><span class="p">(</span><span class="n">u32</span> <span class="n">ch</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">hal_psadc_set_ch_num</span><span class="p">(</span><span class="n">u32</span> <span class="n">num</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">aich_psadc_status_show</span><span class="p">(</span><span class="n">struct</span> <span class="n">aic_psadc_ch</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="demo">
+<h2><span class="section-number">7.6.5.7. </span>Demo<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h2>
+<p>此Demo是 <code class="docutils literal notranslate"><span class="pre">psadc</span></code> 命令的部分代码（详见drv_psadc.c），可以作为 PSADC设备的使用参考：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">u32</span> <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="n">dev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+<span class="n">dev</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">rt_adc_device</span> <span class="o">*</span><span class="p">)</span><span class="n">rt_device_find</span><span class="p">(</span><span class="s">&quot;psadc&quot;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dev</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LOG_E</span><span class="p">(</span><span class="s">&quot;Failed to open %s device</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;psadc&quot;</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">rt_adc_enable</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ret</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">rt_adc_read</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;PSADC ch%d: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">rt_adc_disable</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.6.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="7.6.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

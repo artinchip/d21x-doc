@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.8.7. MMC 驱动 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.9. 分区配置" href="../partition/index.html" />
+    <link rel="prev" title="3.8.6. SPI NOR 驱动" href="spinor.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3.8. 驱动支持</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="clock.html">3.8.1. Clock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reset.html">3.8.2. Reset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dma.html">3.8.3. DMA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spi.html">3.8.4. SPI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spinand.html">3.8.5. SPI NAND</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spinor.html">3.8.6. SPI NOR</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.8.7. MMC</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">3.8.7.1. 驱动框架</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">3.8.7.2. 驱动接口</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">3.8.7.3. 初始化和使用</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id4">3.8.7.3.1. 绑定阶段</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#probe">3.8.7.3.2. Probe 流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">3.8.7.3.3. 读写流程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">3.8. </span>驱动支持</a> &raquo;</li>
+        
+      <li><span class="section-number">3.8.7. </span>MMC 驱动</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mmc">
+<h1><span class="section-number">3.8.7. </span>MMC 驱动<a class="headerlink" href="#mmc" title="永久链接至标题">¶</a></h1>
+<p>本章节描述 MMC 驱动的相关配置和使用。</p>
+<div class="section" id="id1">
+<h2><span class="section-number">3.8.7.1. </span>驱动框架<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>U-Boot 驱动模型支持 MMC，并且通过块设备接口对 MMC 进行访问。ArtInChip 平台中，
+SPL 和 U-Boot 阶段都支持 MMC 已经块设备接口。
+相关配置为：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>CONFIG_MMC</p></li>
+<li><p>CONFIG_DM_MMC</p></li>
+<li><p>CONFIG_SPL_DM_MMC</p></li>
+<li><p>CONFIG_BLK</p></li>
+<li><p>CONFIG_SPL_BLK</p></li>
+<li><p>CONFIG_MMC_ARTINCHIP</p></li>
+</ul>
+</div></blockquote>
+<p>相关源码有：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">include/mmc.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">include/blk.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drivers/block/blk-uclass.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drivers/mmc/mmc-uclass.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drivers/mmc/artinchip_mmc.c</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">3.8.7.2. </span>驱动接口<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>常用驱动接口：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">blk_dread</span><span class="p">(</span><span class="k">struct</span> <span class="nc">blk_desc</span> <span class="o">*</span><span class="n">block_dev</span><span class="p">,</span> <span class="n">lbaint_t</span> <span class="n">start</span><span class="p">,</span>
+            <span class="n">lbaint_t</span> <span class="n">blkcnt</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">);</span>
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">blk_dwrite</span><span class="p">(</span><span class="k">struct</span> <span class="nc">blk_desc</span> <span class="o">*</span><span class="n">block_dev</span><span class="p">,</span> <span class="n">lbaint_t</span> <span class="n">start</span><span class="p">,</span>
+             <span class="n">lbaint_t</span> <span class="n">blkcnt</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">);</span>
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">blk_derase</span><span class="p">(</span><span class="k">struct</span> <span class="nc">blk_desc</span> <span class="o">*</span><span class="n">block_dev</span><span class="p">,</span> <span class="n">lbaint_t</span> <span class="n">start</span><span class="p">,</span>
+             <span class="n">lbaint_t</span> <span class="n">blkcnt</span><span class="p">);</span>
+
+<span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc_create</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="nc">mmc_config</span> <span class="o">*</span><span class="n">cfg</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">priv</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_bind</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc</span><span class="p">,</span>
+         <span class="k">const</span> <span class="k">struct</span> <span class="nc">mmc_config</span> <span class="o">*</span><span class="n">cfg</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">mmc_destroy</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_unbind</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_initialize</span><span class="p">(</span><span class="n">bd_t</span> <span class="o">*</span><span class="n">bis</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_init</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_send_tuning</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc</span><span class="p">,</span> <span class="n">u32</span> <span class="n">opcode</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">cmd_error</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_of_parse</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">mmc_config</span> <span class="o">*</span><span class="n">cfg</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_read</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc</span><span class="p">,</span> <span class="n">u64</span> <span class="n">src</span><span class="p">,</span> <span class="n">uchar</span> <span class="o">*</span><span class="n">dst</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">mmc_set_clock</span><span class="p">(</span><span class="k">struct</span> <span class="nc">mmc</span> <span class="o">*</span><span class="n">mmc</span><span class="p">,</span> <span class="n">uint</span> <span class="n">clock</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">disable</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">3.8.7.3. </span>初始化和使用<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>本章节主要介绍 MMC 以及对应的 BLK 设备的初始化流程，以及读写流程。</p>
+<div class="section" id="id4">
+<h3><span class="section-number">3.8.7.3.1. </span>绑定阶段<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>使用时，MMC 设备通过 BLK 块设备接口进行使用。MMC 设备与 BLK 设备之间的关系如
+<a class="reference internal" href="#ref-mmc-blk"><span class="std std-numref">图 3.4</span></a> 所示。</p>
+<div class="figure align-center" id="id6">
+<span id="ref-mmc-blk"></span><img alt="../../../_images/mmc_relation.png" src="../../../_images/mmc_relation.png" />
+<p class="caption"><span class="caption-number">图 3.4 </span><span class="caption-text">MMC 与 BLK 设备的关系</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
+</div>
+<p>对于每一个 MMC 设备，在绑定阶段，都会创建一个对应的 MMC_BLK 块设备，并且 MMC_BLK
+设备的 <code class="docutils literal notranslate"><span class="pre">parent</span></code> 指向当前 MMC 设备。 ArtInChip MMC 设备绑定对应的 MMC 设备驱动，
+MMC_BLK 设备绑定 <code class="docutils literal notranslate"><span class="pre">mmc-uclass</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">mmc_blk</span></code> 驱动。</p>
+<p>读写操作时，通过 <code class="docutils literal notranslate"><span class="pre">mmc_blk</span></code> 驱动的读写函数，转为对 mmc 的操作。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">blk_ops</span> <span class="n">mmc_blk_ops</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// drivers/mmc/mmc-uclass.c</span>
+    <span class="p">.</span><span class="n">read</span>   <span class="o">=</span> <span class="n">mmc_bread</span><span class="p">,</span>
+<span class="cp">#if CONFIG_IS_ENABLED(MMC_WRITE)</span>
+    <span class="p">.</span><span class="n">write</span>  <span class="o">=</span> <span class="n">mmc_bwrite</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">erase</span>  <span class="o">=</span> <span class="n">mmc_berase</span><span class="p">,</span>
+<span class="cp">#endif</span>
+    <span class="p">.</span><span class="n">select_hwpart</span>  <span class="o">=</span> <span class="n">mmc_select_hwpart</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>下面的绑定流程演示了创建 MMC_BLK 设备，并且进行关联的过程。</p>
+<p><strong>使用 PLATDATA 时</strong></p>
+<p>在 SPL 中，使能 PLATDATA 时的绑定流程如下。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">reset</span> <span class="c1">// arch/arm/cpu/armv7/start.S</span>
+<span class="o">|-&gt;</span> <span class="n">_main</span>   <span class="c1">// arch/arm/lib/crt0.S</span>
+    <span class="o">|-&gt;</span> <span class="n">board_init_f</span><span class="p">();</span> <span class="c1">// arch/arm/mach-artinchip/spl.c</span>
+        <span class="o">|-&gt;</span> <span class="n">spl_early_init</span><span class="p">()</span> <span class="c1">// common/spl/spl.c</span>
+            <span class="o">|-&gt;</span> <span class="n">spl_common_init</span><span class="p">(</span><span class="n">setup_malloc</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="c1">// common/spl/spl.c</span>
+                <span class="o">|-&gt;</span> <span class="n">dm_init_and_scan</span><span class="p">(</span><span class="o">!</span><span class="n">CONFIG_IS_ENABLED</span><span class="p">(</span><span class="n">OF_PLATDATA</span><span class="p">));</span>
+                    <span class="o">|-&gt;</span> <span class="n">dm_scan_platdata</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+                        <span class="o">|-&gt;</span> <span class="n">lists_bind_drivers</span><span class="p">();</span>
+                            <span class="o">|-&gt;</span> <span class="n">device_bind_by_name</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dev</span><span class="p">);</span>
+                                <span class="o">|-&gt;</span> <span class="n">drv</span> <span class="o">=</span> <span class="n">lists_driver_lookup_name</span><span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+                                <span class="o">|</span>   <span class="c1">// 搜索 U_BOOT_DRIVER(name) 声明的 driver</span>
+                                <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">();</span> <span class="c1">// drivers/core/device.c</span>
+                                    <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uc</span><span class="p">);</span>
+                                    <span class="o">|-&gt;</span> <span class="n">uclass_bind_device</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+                                    <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+                                        <span class="n">aic_dwmmc_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+                                            <span class="o">|</span>
+         <span class="o">+----------------------------------+</span>
+         <span class="o">|</span>
+<span class="n">aic_dwmmc_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/mmc/artinchip_dw_mmc.c</span>
+<span class="o">|-&gt;</span> <span class="n">dwmci_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="p">...);</span> <span class="c1">// drivers/mmc/dw_mmc.c</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">mmc_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">plat</span><span class="o">-&gt;</span><span class="n">mmc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">plat</span><span class="o">-&gt;</span><span class="n">cfg</span><span class="p">)</span> <span class="c1">// drivers/mmc/mmc-uclass.c</span>
+        <span class="o">|</span>  <span class="c1">// 绑定一个 IF_TYPE_MMC 的 Block 子设备，这样可以通过块设备的接口</span>
+        <span class="o">|</span>  <span class="c1">// 使用 MMC。</span>
+        <span class="o">|</span>
+        <span class="o">|-&gt;</span> <span class="n">blk_create_devicef</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="s">&quot;mmc_blk&quot;</span><span class="p">,</span> <span class="s">&quot;blk&quot;</span><span class="p">,</span><span class="n">IF_TYPE_MMC</span><span class="p">,</span> <span class="n">devnum</span><span class="p">,</span>
+        <span class="o">|</span>   <span class="o">|</span>                   <span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bdev</span><span class="p">);</span> <span class="c1">// drivers/block/blk-uclass.c</span>
+        <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">blk_create_device</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s">&quot;mmc_blk&quot;</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">,</span> <span class="n">if_type</span><span class="p">,</span>
+        <span class="o">|</span>       <span class="o">|</span>                 <span class="n">devnum</span><span class="p">,</span> <span class="n">blksz</span><span class="p">,</span> <span class="n">lba</span><span class="p">,</span> <span class="n">devp</span><span class="p">);</span>
+        <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">device_bind_driver</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">drv_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dev</span><span class="p">);</span>
+        <span class="o">|</span>           <span class="o">|</span>   <span class="c1">// drivers/core/lists.c</span>
+        <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="p">....</span>
+        <span class="o">|</span>               <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">(</span><span class="n">dm_root</span><span class="p">,</span> <span class="p">...);</span>
+        <span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="n">drv</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">uc</span><span class="p">);</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UCLASS_BLK</span>
+        <span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span><span class="p">));</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="c1">// 块设备名字</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span> <span class="c1">// 指向 MMC 设备</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">driver</span> <span class="o">=</span> <span class="n">drv</span> <span class="c1">// &quot;mmc_blk&quot; driver</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">uclass</span> <span class="o">=</span> <span class="n">uc</span> <span class="c1">// UCLASS_BLK</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="c1">// 创建设备 mmc_blk</span>
+        <span class="o">|</span>                   <span class="o">|</span>
+        <span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">uclass_bind_device</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+        <span class="o">|</span>                       <span class="c1">// 将设备添加到 UCLASS_BLK 列表中</span>
+        <span class="o">|</span>
+        <span class="o">|-&gt;</span> <span class="n">dev_get_uclass_platdata</span><span class="p">(</span><span class="n">bdev</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>使用 DTS 时</strong></p>
+<p>使用 DTS 时，SPL 和 U-Boot 中的绑定流程如下。在 DTS 中，MMC 控制器是 <code class="docutils literal notranslate"><span class="pre">soc</span></code> 的子节点，
+挂载到 <code class="docutils literal notranslate"><span class="pre">simple-bus</span></code> 中，因此相关绑定在 <code class="docutils literal notranslate"><span class="pre">soc</span></code> 设备绑定 <code class="docutils literal notranslate"><span class="pre">simple-bus</span></code> 驱动后被触发，
+因此在 <code class="docutils literal notranslate"><span class="pre">simple_bus_post_build()</span></code> 中处理。</p>
+<p>U-Boot 阶段的 MMC 绑定在 <code class="docutils literal notranslate"><span class="pre">initf_dm</span></code> 中进行。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">simple_bus_post_bind</span><span class="p">();</span> <span class="c1">// drivers/core/simple-bus.c</span>
+<span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_dev</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/core/root.c</span>
+    <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_node</span><span class="p">();</span>
+        <span class="o">|-&gt;</span> <span class="n">lists_bind_fdt</span><span class="p">();</span> <span class="c1">// drivers/core/lists.c</span>
+            <span class="o">|</span>   <span class="c1">// 通过 compatible 匹配设备和驱动</span>
+            <span class="o">|-&gt;</span> <span class="n">device_bind_with_driver_data</span><span class="p">();</span>
+                <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">();</span> <span class="c1">// drivers/core/device.c</span>
+                    <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uc</span><span class="p">)</span>
+                    <span class="o">|-&gt;</span> <span class="n">uclass_bind_device</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+                    <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+                        <span class="n">aic_dwmmc_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+                            <span class="o">|</span>
+         <span class="o">+------------------+</span>
+         <span class="o">|</span>
+<span class="n">aic_dwmmc_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/mmc/artinchip_dw_mmc.c</span>
+<span class="o">|-&gt;</span> <span class="n">dwmci_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="p">...);</span> <span class="c1">// drivers/mmc/dw_mmc.c</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">mmc_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">plat</span><span class="o">-&gt;</span><span class="n">mmc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">plat</span><span class="o">-&gt;</span><span class="n">cfg</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc-uclass.c</span>
+        <span class="o">|</span>  <span class="c1">// 绑定一个 IF_TYPE_MMC 的 Block 子设备，这样可以通过块设备的接口</span>
+        <span class="o">|</span>  <span class="c1">// 使用 MMC。</span>
+        <span class="o">|</span>
+        <span class="o">|-&gt;</span> <span class="n">blk_create_devicef</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="s">&quot;mmc_blk&quot;</span><span class="p">,</span> <span class="s">&quot;blk&quot;</span><span class="p">,</span><span class="n">IF_TYPE_MMC</span><span class="p">,</span> <span class="n">devnum</span><span class="p">,</span>
+        <span class="o">|</span>   <span class="o">|</span>                   <span class="mi">512</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bdev</span><span class="p">);</span> <span class="c1">// drivers/block/blk-uclass.c</span>
+        <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">blk_create_device</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s">&quot;mmc_blk&quot;</span><span class="p">,</span> <span class="n">dev_name</span><span class="p">,</span> <span class="n">if_type</span><span class="p">,</span>
+        <span class="o">|</span>       <span class="o">|</span>                   <span class="n">devnum</span><span class="p">,</span> <span class="n">blksz</span><span class="p">,</span> <span class="n">lba</span><span class="p">,</span> <span class="n">devp</span><span class="p">);</span>
+        <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">device_bind_driver</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">drv_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dev</span><span class="p">);</span>
+        <span class="o">|</span>           <span class="o">|</span>   <span class="c1">// drivers/core/lists.c</span>
+        <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="p">....</span>
+        <span class="o">|</span>               <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">(</span><span class="n">dm_root</span><span class="p">,</span> <span class="p">...);</span>
+        <span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="n">drv</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">uc</span><span class="p">);</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UCLASS_BLK</span>
+        <span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span><span class="p">));</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span> <span class="c1">// 块设备名字</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="p">;</span> <span class="c1">// 指向 MMC 设备</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">driver</span> <span class="o">=</span> <span class="n">drv</span><span class="p">;</span> <span class="c1">// &quot;mmc_blk&quot; driver</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="n">dev</span><span class="o">-&gt;</span><span class="n">uclass</span> <span class="o">=</span> <span class="n">uc</span><span class="p">;</span> <span class="c1">// UCLASS_BLK</span>
+        <span class="o">|</span>                   <span class="o">|</span>   <span class="c1">// 创建设备 mmc_blk</span>
+        <span class="o">|</span>                   <span class="o">|</span>
+        <span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">uclass_bind_device</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+        <span class="o">|</span>                       <span class="c1">// 将设备添加到 UCLASS_BLK 列表中</span>
+        <span class="o">|</span>
+        <span class="o">|-&gt;</span> <span class="n">dev_get_uclass_platdata</span><span class="p">(</span><span class="n">bdev</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="probe">
+<h3><span class="section-number">3.8.7.3.2. </span>Probe 流程<a class="headerlink" href="#probe" title="永久链接至标题">¶</a></h3>
+<p>SPL 中的 Probe 流程如下。由于 BLK 设备的 probe 的目的是调用 <code class="docutils literal notranslate"><span class="pre">mmc_init()</span></code> ，
+这里直接调用，所以不需要单独的 Probe 了。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spl_mmc_load</span><span class="p">();</span> <span class="c1">// common/spl/spl_mmc.c</span>
+<span class="o">|-&gt;</span> <span class="n">spl_mmc_find_device</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mmc</span><span class="p">,</span> <span class="n">bootdev</span><span class="o">-&gt;</span><span class="n">boot_device</span><span class="p">);</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">mmc_initialize</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc.c</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">mmc_probe</span><span class="p">(</span><span class="n">bis</span><span class="p">);</span>
+<span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="n">UCLASS_MMC</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">uc</span><span class="p">);</span>
+<span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>               <span class="o">|</span>  <span class="c1">// 这里对 UCLASS_MMC 列表中的设备逐个调用</span>
+<span class="o">|</span>               <span class="o">|</span>  <span class="c1">// device_probe(dev)</span>
+<span class="o">|</span>               <span class="o">|</span>
+<span class="o">|</span>               <span class="o">|--&gt;</span> <span class="n">aic_dwmmc_probe</span><span class="p">(...)</span> <span class="c1">// 具体驱动的 probe</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">mmc_init</span><span class="p">(</span><span class="n">mmc</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>U-Boot 中 MMC 设备和对应的 BLK 设备 Probe 流程如下。</p>
+<p>MMC 设备的 Probe 在 <code class="docutils literal notranslate"><span class="pre">board_init_r()</span></code> 调用 <code class="docutils literal notranslate"><span class="pre">initr_mmc()</span></code> 时进行。对应的 BLK
+设备的 Probe 在第一次使用时进行，通常是 <code class="docutils literal notranslate"><span class="pre">initr_env()</span></code> ，该函数加载 MMC 上的环境变量。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">board_init_r</span><span class="p">(</span><span class="n">gd_t</span> <span class="o">*</span><span class="n">new_gd</span><span class="p">,</span> <span class="n">ulong</span> <span class="n">dest_addr</span><span class="p">)</span>
+<span class="o">|-&gt;</span> <span class="p">...</span>
+<span class="o">|-&gt;</span> <span class="n">initr_dm</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="o">|-&gt;</span> <span class="p">...</span>
+<span class="o">|-&gt;</span> <span class="n">initr_mmc</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="o">|-&gt;</span> <span class="n">initr_env</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">initr_mmc</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="o">|-&gt;</span> <span class="n">mmc_initialize</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">bd</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc.c</span>
+    <span class="o">|-&gt;</span> <span class="n">mmc_probe</span><span class="p">(</span><span class="n">bis</span> <span class="o">=</span> <span class="n">gd</span><span class="o">-&gt;</span><span class="n">bd</span><span class="p">);</span>
+        <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="n">UCLASS_MMC</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">uc</span><span class="p">);</span>
+        <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/core/device.c</span>
+            <span class="o">|</span>  <span class="c1">// 这里对 UCLASS_MMC 列表中的设备逐个调用</span>
+            <span class="o">|</span>  <span class="c1">// device_probe(dev)</span>
+            <span class="o">|</span>
+            <span class="o">|--&gt;</span> <span class="n">aic_dwmmc_probe</span><span class="p">(...)</span> <span class="c1">// 具体驱动的 probe</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">initr_env</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="c1">// common/board_r.c</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">env_relocate</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="c1">// env/common.c</span>
+    <span class="o">|-&gt;</span> <span class="n">env_load</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="c1">// env/env.c</span>
+        <span class="o">|</span> <span class="c1">// 这个函数执行读取环境变量的动作</span>
+        <span class="o">|</span>
+        <span class="o">|-&gt;</span> <span class="n">drv</span> <span class="o">=</span> <span class="n">env_driver_lookup</span><span class="p">(</span><span class="n">ENVOP_LOAD</span><span class="p">,</span> <span class="n">prio</span><span class="p">)</span>
+        <span class="o">|</span>   <span class="c1">// u-boot 通过 U_BOOT_ENV_LOCATION 宏定义了各种可以用于加载</span>
+        <span class="o">|</span>   <span class="c1">// 环境变量的驱动 (struct env_driver)，并且在 lds 中将这些</span>
+        <span class="o">|</span>   <span class="c1">// 驱动收集到一个固定的段中，这里遍历各个驱动，尝试加载 ENV</span>
+        <span class="o">|</span>
+        <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">()</span><span class="o">/</span><span class="n">env_mmc_load</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="c1">// env/mmc.c</span>
+            <span class="n">env_mmc_load</span><span class="p">();</span>
+                    <span class="o">|</span>
+    <span class="o">+---------------+</span>
+    <span class="o">|</span>
+<span class="n">env_mmc_load</span><span class="p">();</span> <span class="c1">// env/mmc.c</span>
+<span class="o">|--&gt;</span> <span class="n">devno</span> <span class="o">=</span> <span class="n">mmc_get_env_dev</span><span class="p">();</span>
+<span class="o">|--&gt;</span> <span class="n">mmc</span> <span class="o">=</span> <span class="n">find_mmc_device</span><span class="p">(</span><span class="n">devno</span><span class="p">);</span>
+     <span class="o">|--&gt;</span> <span class="n">init_mmc_for_env</span><span class="p">(</span><span class="n">mmc</span><span class="p">)</span>
+          <span class="o">|--&gt;</span> <span class="n">blk_get_from_parent</span><span class="p">(</span><span class="n">mmc</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dev</span><span class="p">)</span>
+               <span class="o">|--&gt;</span> <span class="n">device_find_first_child</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blkdev</span><span class="p">);</span>
+               <span class="o">|</span>    <span class="c1">// 获取 mmc_blk 设备</span>
+               <span class="o">|</span>
+               <span class="o">|--&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">blkdev</span><span class="p">)</span>
+                    <span class="o">|--&gt;</span> <span class="n">mmc_blk_probe</span><span class="p">(...)</span> <span class="c1">// drivers/mmc/mmc-uclass.c</span>
+                         <span class="o">|--&gt;</span> <span class="n">mmc_init</span><span class="p">(</span><span class="n">mmc</span><span class="p">)</span> <span class="c1">// drivers/mmc/mmc.c</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">3.8.7.3.3. </span>读写流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>通过 BLK 接口对 MMC 进行读写的调用流程如下。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">blk_dread</span><span class="p">(</span><span class="n">mmc_get_blk_desc</span><span class="p">(</span><span class="n">mmc</span><span class="p">),</span> <span class="n">blk</span><span class="p">,</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">addr</span><span class="p">);</span>
+<span class="o">|</span>    <span class="c1">// drivers/block/blk-uclass.c</span>
+<span class="o">|</span>
+<span class="o">|--&gt;</span> <span class="n">ops</span><span class="o">-&gt;</span><span class="n">read</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">blkcnt</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+     <span class="n">mmc_bread</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">blkcnt</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc.c</span>
+     <span class="o">|--&gt;</span> <span class="n">mmc_read_blocks</span><span class="p">(</span><span class="n">mmc</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">cur</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc.c</span>
+          <span class="o">|--&gt;</span> <span class="n">mmc_send_cmd</span><span class="p">(</span><span class="n">mmc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cmd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="c1">//drivers/mmc/mmc-uclass.c</span>
+               <span class="o">|--&gt;</span> <span class="n">ops</span><span class="o">-&gt;</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+                    <span class="n">dwmci_send_cmd</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span> <span class="c1">// drivers/mmc/dw_mmc.c</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">blk_dwrite</span><span class="p">(</span><span class="n">mmc_get_blk_desc</span><span class="p">(</span><span class="n">mmc</span><span class="p">),</span> <span class="n">blk</span><span class="p">,</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">addr</span><span class="p">);</span>
+<span class="o">|</span>    <span class="c1">// drivers/block/blk-uclass.c</span>
+<span class="o">|</span>
+<span class="o">|--&gt;</span> <span class="n">ops</span><span class="o">-&gt;</span><span class="n">write</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">blkcnt</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+     <span class="n">mmc_bwrite</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">blkcnt</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc_write.c</span>
+     <span class="o">|-&gt;</span> <span class="n">mmc_write_blocks</span><span class="p">(</span><span class="n">mmc</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span> <span class="c1">// drivers/mmc/mmc_write.c</span>
+          <span class="o">|--&gt;</span> <span class="n">mmc_send_cmd</span><span class="p">(</span><span class="n">mmc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cmd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="c1">//drivers/mmc/mmc-uclass.c</span>
+               <span class="o">|--&gt;</span> <span class="n">ops</span><span class="o">-&gt;</span><span class="n">send_cmd</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+                    <span class="n">dwmci_send_cmd</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span> <span class="c1">// drivers/mmc/dw_mmc.c</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../partition/index.html" class="btn btn-neutral float-right" title="3.9. 分区配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="spinor.html" class="btn btn-neutral float-left" title="3.8.6. SPI NOR 驱动" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,723 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.1.4. 测试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.1.5. 设计说明" href="5_design_guide.html" />
+    <link rel="prev" title="5.1.3. 调试指南" href="3_debug_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.1. SDMC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">5.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">5.1.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">5.1.3. 调试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.1.4. 测试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">5.1.4.1. 测试环境</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">5.1.4.1.1. 硬件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">5.1.4.1.2. 软件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ref-mmc-test">5.1.4.1.3. 软件配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">5.1.4.2. mmc_test 测试</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">5.1.4.3. iozone测试</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">5.1.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">5.1.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinor/index.html">5.3. SPI NOR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/index.html">5.4. 文件系统使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.1. </span>SDMC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.1.4. </span>测试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">5.1.4. </span>测试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">5.1.4.1. </span>测试环境<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">5.1.4.1.1. </span>硬件<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>开发板，或者FPGA板子</p></li>
+<li><p>板子上必须要接有eMMC/SDCard</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">5.1.4.1.2. </span>软件<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>PC端的串口终端软件，用于PC和开发板进行串口通信</p></li>
+<li><p>Linux内核原生的mmc_test工具，用于MMC Host驱动的功能测试</p></li>
+<li><p>Luban自带的iozone工具，用于块设备的性能测试</p></li>
+</ul>
+</div>
+<div class="section" id="ref-mmc-test">
+<span id="id5"></span><h3><span class="section-number">5.1.4.1.3. </span>软件配置<a class="headerlink" href="#ref-mmc-test" title="永久链接至标题">¶</a></h3>
+<div class="section" id="mmc-test">
+<h4><span class="section-number">5.1.4.1.3.1. </span>mmc_test<a class="headerlink" href="#mmc-test" title="永久链接至标题">¶</a></h4>
+<p>在luban根目录下执行 make kernel-menuconfig，进入kernel的功能配置，按如下选择：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Linux
+    Device Drivers
+        &lt;*&gt; MMC/SD/SDIO card support
+            &lt; &gt;   MMC block device driver
+            &lt;*&gt;   MMC host test driver
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>mmc_test必须要关闭MMC Block选项，否则mmc_test模块不会被内核加载。</p>
+</div>
+</div>
+<div class="section" id="iozone">
+<h4><span class="section-number">5.1.4.1.3.2. </span>iozone<a class="headerlink" href="#iozone" title="永久链接至标题">¶</a></h4>
+<p>在luban根目录，运行make menuconfig，按如下选择：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Third-party packages
+    [*] iozone
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">5.1.4.2. </span>mmc_test 测试<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>mmc_test的主要功能是测试符合MMC子系统的Host驱动功能，源码详见 driversmmccoremmc_test.c。</p>
+<p>板子在启动到shell后，首先要挂载debugfs文件系统，然后可以查看mmc_test的测试节点：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># mount -t debugfs none /sys/kernel/debug/</span>
+<span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># cd /sys/kernel/debug/mmc0/mmc0\:0001/</span>
+<span class="o">[</span>aic@mmc0:0001<span class="o">]</span> <span class="c1"># ls</span>
+state     <span class="nb">test</span>      testlist
+<span class="o">[</span>aic@mmc0:0001<span class="o">]</span> <span class="c1"># cat testlist # 此时会打印测试选项</span>
+<span class="m">0</span>:      Run all tests
+<span class="m">1</span>:      Basic write <span class="o">(</span>no data verification<span class="o">)</span>
+<span class="m">2</span>:      Basic <span class="nb">read</span> <span class="o">(</span>no data verification<span class="o">)</span>
+<span class="m">3</span>:      Basic write <span class="o">(</span>with data verification<span class="o">)</span>
+<span class="m">4</span>:      Basic <span class="nb">read</span> <span class="o">(</span>with data verification<span class="o">)</span>
+<span class="m">5</span>:      Multi-block write
+<span class="m">6</span>:      Multi-block <span class="nb">read</span>
+<span class="m">7</span>:      Power of two block writes
+<span class="m">8</span>:      Power of two block reads
+<span class="m">9</span>:      Weird sized block writes
+<span class="m">10</span>:     Weird sized block reads
+<span class="m">11</span>:     Badly aligned write
+<span class="m">12</span>:     Badly aligned <span class="nb">read</span>
+<span class="m">13</span>:     Badly aligned multi-block write
+<span class="m">14</span>:     Badly aligned multi-block <span class="nb">read</span>
+<span class="m">15</span>:     Correct xfer_size at write <span class="o">(</span>start failure<span class="o">)</span>
+<span class="m">16</span>:     Correct xfer_size at <span class="nb">read</span> <span class="o">(</span>start failure<span class="o">)</span>
+<span class="m">17</span>:     Correct xfer_size at write <span class="o">(</span>midway failure<span class="o">)</span>
+<span class="m">18</span>:     Correct xfer_size at <span class="nb">read</span> <span class="o">(</span>midway failure<span class="o">)</span>
+<span class="m">19</span>:     Highmem write
+<span class="m">20</span>:     Highmem <span class="nb">read</span>
+<span class="m">21</span>:     Multi-block highmem write
+<span class="m">22</span>:     Multi-block highmem <span class="nb">read</span>
+<span class="m">23</span>:     Best-case <span class="nb">read</span> performance
+<span class="m">24</span>:     Best-case write performance
+<span class="m">25</span>:     Best-case <span class="nb">read</span> performance into scattered pages
+<span class="m">26</span>:     Best-case write performance from scattered pages
+<span class="m">27</span>:     Single <span class="nb">read</span> performance by transfer size
+<span class="m">28</span>:     Single write performance by transfer size
+<span class="m">29</span>:     Single trim performance by transfer size
+<span class="m">30</span>:     Consecutive <span class="nb">read</span> performance by transfer size
+<span class="m">31</span>:     Consecutive write performance by transfer size
+<span class="m">32</span>:     Consecutive trim performance by transfer size
+<span class="m">33</span>:     Random <span class="nb">read</span> performance by transfer size
+<span class="m">34</span>:     Random write performance by transfer size
+<span class="m">35</span>:     Large sequential <span class="nb">read</span> into scattered pages
+<span class="m">36</span>:     Large sequential write from scattered pages
+<span class="m">37</span>:     Write performance with blocking req 4k to 4MB
+<span class="m">38</span>:     Write performance with non-blocking req 4k to 4MB
+<span class="m">39</span>:     Read performance with blocking req 4k to 4MB
+<span class="m">40</span>:     Read performance with non-blocking req 4k to 4MB
+<span class="m">41</span>:     Write performance blocking req <span class="m">1</span> to <span class="m">512</span> sg elems
+<span class="m">42</span>:     Write performance non-blocking req <span class="m">1</span> to <span class="m">512</span> sg elems
+<span class="m">43</span>:     Read performance blocking req <span class="m">1</span> to <span class="m">512</span> sg elems
+<span class="m">44</span>:     Read performance non-blocking req <span class="m">1</span> to <span class="m">512</span> sg elems
+<span class="m">45</span>:     Reset <span class="nb">test</span>
+<span class="m">46</span>:     Commands during <span class="nb">read</span> - no Set Block Count <span class="o">(</span>CMD23<span class="o">)</span>
+<span class="m">47</span>:     Commands during write - no Set Block Count <span class="o">(</span>CMD23<span class="o">)</span>
+<span class="m">48</span>:     Commands during <span class="nb">read</span> - use Set Block Count <span class="o">(</span>CMD23<span class="o">)</span>
+<span class="m">49</span>:     Commands during write - use Set Block Count <span class="o">(</span>CMD23<span class="o">)</span>
+<span class="m">50</span>:     Commands during non-blocking <span class="nb">read</span> - use Set Block Count <span class="o">(</span>CMD23<span class="o">)</span>
+<span class="m">51</span>:     Commands during non-blocking write - use Set Block Count <span class="o">(</span>CMD23<span class="o">)</span>us
+</pre></div>
+</div>
+<p>根据需求，选一个测试项，将其编号写入test节点，如使用测试项1：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@mmc0:0001<span class="o">]</span> <span class="c1"># echo 1 &gt; test</span>
+<span class="o">[</span>  <span class="m">162</span>.185679<span class="o">]</span> mmc0: Starting tests of card mmc0:0001...
+<span class="o">[</span>  <span class="m">162</span>.190820<span class="o">]</span> mmc0: Test <span class="k">case</span> <span class="m">1</span>. Basic write <span class="o">(</span>no data verification<span class="o">)</span>...
+<span class="o">[</span>  <span class="m">162</span>.209563<span class="o">]</span> mmc0: Result: OK
+<span class="o">[</span>  <span class="m">162</span>.212462<span class="o">]</span> mmc0: Tests completed.
+</pre></div>
+</div>
+<p>为了方便测试，可以通过以下脚本 批量运行完所有的mmc_test测试项：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+run_one_testcase<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nb">echo</span> <span class="nv">$1</span> &gt; <span class="nb">test</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> ERROR: Testcase <span class="nv">$i</span> failed!
+        <span class="nb">exit</span> <span class="m">110</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+run_memtest<span class="o">()</span>
+<span class="o">{</span>
+
+    <span class="nb">echo</span> Prepare the debugfs ...
+    mount -t debugfs none /sys/kernel/debug/
+    <span class="nb">cd</span> /sys/kernel/debug/mmc0/mmc0:0001
+
+    <span class="nb">echo</span>
+    <span class="nb">echo</span> Run memtest ...
+    <span class="nb">echo</span>
+
+    <span class="nv">CNT</span><span class="o">=</span><span class="m">1</span>
+    <span class="k">while</span> <span class="nb">true</span>
+    <span class="k">do</span>
+        <span class="nb">echo</span>
+        <span class="nb">echo</span> ----------------------------------------------------------
+        <span class="nb">echo</span> Run all the testcase, count <span class="nv">$CNT</span> ...
+        <span class="nb">echo</span> ----------------------------------------------------------
+
+        <span class="nb">echo</span>
+        <span class="nb">echo</span> Run <span class="k">in</span> order sequence ...
+        <span class="nb">echo</span>
+
+        <span class="k">for</span> i <span class="k">in</span> <span class="sb">`</span>seq <span class="m">0</span> <span class="m">51</span><span class="sb">`</span><span class="p">;</span>
+        <span class="k">do</span>
+            run_one_testcase <span class="nv">$i</span>
+        <span class="k">done</span>
+
+        <span class="nb">echo</span>
+        <span class="nb">echo</span> Run <span class="k">in</span> random sequence ...
+        <span class="nb">echo</span>
+
+        <span class="k">for</span> i <span class="k">in</span> <span class="sb">`</span>seq <span class="m">0</span> <span class="m">51</span><span class="sb">`</span><span class="p">;</span>
+        <span class="k">do</span>
+            <span class="nv">$TMP</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$RANDOM</span> % <span class="m">52</span><span class="sb">`</span>
+            run_one_testcase <span class="nv">$TMP</span>
+        <span class="k">done</span>
+
+        <span class="nv">CNT</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$CNT</span> + <span class="m">1</span><span class="sb">`</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+
+run_memtest<span class="o">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">5.1.4.3. </span>iozone测试<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>iozone测试需要用到块设备，必须要将内核中的MMC Block打开：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Linux
+    Device Drivers
+        &lt;*&gt; MMC/SD/SDIO card support
+            &lt;*&gt;   MMC block device driver
+</pre></div>
+</div>
+<p>iozone本身是用来做性能测试，如果使用脚本长时间的循环运行就可用于稳定性测试。</p>
+<p>测试步骤：</p>
+<ol class="arabic simple">
+<li><p>格式化MMC块设备/SDCard块设备为ext4文件系统；</p></li>
+<li><p>将格式化后的块设备挂载到某个路径；</p></li>
+<li><p>在上述路径中运行iozone工具即可。</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<ol class="arabic simple">
+<li><p>iozone运行过程中会在当前目录下创建一个临时文件，该文件的大小会根据测试数据粒度而自动调整。</p></li>
+<li><p>iozone支持将性能数据作为结果存储到一个Excel文件中，方便查看。</p></li>
+</ol>
+</div>
+<p>以下是调用iozone的循环测试脚本：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$1</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> ! -z <span class="nv">$2</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">FILE_MIN_SIZE</span><span class="o">=</span><span class="nv">$1</span>
+    <span class="nv">FILE_MAX_SIZE</span><span class="o">=</span><span class="nv">$2</span>
+<span class="k">else</span>
+    <span class="nv">FILE_MIN_SIZE</span><span class="o">=</span>16m
+    <span class="nv">FILE_MAX_SIZE</span><span class="o">=</span>128m
+<span class="k">fi</span>
+
+<span class="nv">RESULT_FILE</span><span class="o">=</span>iozone_result.xls
+<span class="nv">TMP_FILE</span><span class="o">=</span>iozone.tmp
+
+run_cmd<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nb">echo</span>
+    <span class="nb">echo</span> <span class="nv">$1</span>
+    <span class="nb">echo</span>
+    <span class="nb">eval</span> <span class="nv">$1</span>
+<span class="o">}</span>
+
+mount_mmc<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nv">HOSTNAME</span><span class="o">=</span><span class="sb">`</span>hostname<span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$HOSTNAME</span> <span class="o">=</span> <span class="s2">&quot;Artinchip&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">WORKSPACE_DIR</span><span class="o">=</span>/mnt/sdcard
+        <span class="nv">MMC_DEV</span><span class="o">=</span>/dev/mmcblk0p9
+
+        <span class="nb">echo</span> Mount <span class="nv">$MMC_DEV</span> ...
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;debug&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            <span class="c1"># mkfs.vfat $MMC_DEV 2048000</span>
+            mount -t vfat <span class="nv">$MMC_DEV</span> <span class="nv">$WORKSPACE_DIR</span>
+        <span class="k">fi</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            <span class="nb">echo</span> ERR: Failed to mount <span class="nv">$MMC_DEV</span>
+            <span class="nb">exit</span> <span class="m">100</span>
+        <span class="k">fi</span>
+    <span class="k">else</span>
+        <span class="nv">WORKSPACE_DIR</span><span class="o">=</span>./mnt/sdcard
+        <span class="nb">echo</span> Use the <span class="nb">local</span> path: <span class="nv">$WORKSPACE_DIR</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+mount_udisk<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nv">WORKSPACE_DIR</span><span class="o">=</span>/mnt/usb
+    <span class="nv">UDISK_DEV</span><span class="o">=</span>/dev/sda1
+
+    <span class="nb">echo</span> Mount <span class="nv">$UDISK_DEV</span> ...
+    mount -t vfat <span class="nv">$UDISK_DEV</span> <span class="nv">$WORKSPACE_DIR</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> ERR: Failed to mount <span class="nv">$UDISK_DEV</span>
+        <span class="nb">exit</span> <span class="m">100</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+mount_mtd<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nv">WORKSPACE_DIR</span><span class="o">=</span>/mnt/mtd
+    <span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$WORKSPACE_DIR</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        mkdir -p <span class="nv">$WORKSPACE_DIR</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+umount_all<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nb">cd</span> -
+    umount -f <span class="nv">$WORKSPACE_DIR</span>
+<span class="o">}</span>
+
+check_stop<span class="o">()</span>
+<span class="o">{</span>
+    <span class="nb">echo</span>
+    <span class="nb">echo</span> Press <span class="se">\&#39;</span>any key<span class="se">\&#39;</span> + <span class="se">\&#39;</span>EnterKey<span class="se">\&#39;</span> to stop testing
+    <span class="nb">read</span> -t <span class="m">5</span> CMD
+    <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$CMD</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        umount_all
+        <span class="nb">exit</span> <span class="m">100</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">if</span> <span class="o">[</span> -b /dev/sda <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    mount_udisk
+<span class="k">elif</span> <span class="o">[</span> -b /dev/mmcblk0 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    mount_mmc <span class="nv">$1</span>
+<span class="k">elif</span> <span class="o">[</span> -c /dev/mtd0 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    mount_mtd
+<span class="k">else</span>
+    <span class="nb">echo</span> There is no block device <span class="k">in</span> the board!
+    <span class="nb">exit</span> <span class="m">110</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span> Enter workspace <span class="nv">$WORKSPACE_DIR</span>
+<span class="nb">cd</span> <span class="nv">$WORKSPACE_DIR</span>
+
+<span class="nv">CNT</span><span class="o">=</span><span class="m">1</span>
+<span class="k">while</span> <span class="nb">true</span>
+<span class="k">do</span>
+    <span class="nb">echo</span>
+    <span class="nb">echo</span> ----------------------------------------------------------
+    <span class="nb">echo</span> iozone test, count <span class="nv">$CNT</span>
+    <span class="nb">echo</span> ----------------------------------------------------------
+    date
+
+    run_cmd <span class="s2">&quot;iozone -a -V -n </span><span class="nv">$FILE_MIN_SIZE</span><span class="s2"> -g </span><span class="nv">$FILE_MAX_SIZE</span><span class="s2"> -q 16m -w -b </span><span class="nv">$RESULT_FILE</span><span class="s2"> -f </span><span class="nv">$TMP_FILE</span><span class="s2">&quot;</span>
+
+    check_stop
+
+    <span class="nv">CNT</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$CNT</span> + <span class="m">1</span><span class="sb">`</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="5_design_guide.html" class="btn btn-neutral float-right" title="5.1.5. 设计说明" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3_debug_guide.html" class="btn btn-neutral float-left" title="5.1.3. 调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

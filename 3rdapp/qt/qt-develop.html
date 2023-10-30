@@ -1,0 +1,568 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1.5. QT 应用开发 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="1.6. Directfb Cross Compile" href="dfb-compile.html" />
+    <link rel="prev" title="1.4. QT Windows IDE" href="qt-ide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">三方应用</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. QT 使用</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="qt-compile.html">1.1. QT Cross Compile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-luban.html">1.2. QT Luban</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-accel.html">1.3. QT 性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-ide.html">1.4. QT Windows IDE</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.5. QT 应用开发</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qtlauncher">1.5.1. QtLauncher</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">1.5.1.1. 编译</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">1.5.1.2. 分区调整</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">1.5.1.2.1. 分区大小调整</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">1.5.1.2.2. 镜像大小调整</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">1.5.1.3. 自动运行</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#g2d">1.5.1.4. G2D</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.5.2. 应用开发</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#qtcreator">1.5.2.1. QtCreator</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#project">1.5.2.2. Project 文件</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">1.5.2.3. 编译文件</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#config-in">1.5.2.3.1. Config.in</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#qtlauncher-mk">1.5.2.3.2. qtlauncher.mk</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#s99qtlauncher">1.5.2.3.3. S99qtlauncher</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dfb-compile.html">1.6. Directfb Cross Compile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dfb-ge.html">1.7. QT + Directfb + GE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lvgl/index.html">2. LVGL移植</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">三方应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">1. </span>QT 使用</a> &raquo;</li>
+        
+      <li><span class="section-number">1.5. </span>QT 应用开发</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qt">
+<h1><span class="section-number">1.5. </span>QT 应用开发<a class="headerlink" href="#qt" title="永久链接至标题">¶</a></h1>
+<div class="section" id="qtlauncher">
+<h2><span class="section-number">1.5.1. </span>QtLauncher<a class="headerlink" href="#qtlauncher" title="永久链接至标题">¶</a></h2>
+<p>QtLauncher 是 ArtInChip 基于 QT4.8.7 开发的一款应用程序，也是 QT 应用开发的一个典型示例，可以直接在Luban系统上运行</p>
+<div class="section" id="id1">
+<h3><span class="section-number">1.5.1.1. </span>编译<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在SDK 根目录执行 make menuconfig打开 Luban 配置界面</p></li>
+<li><p>选择ArtInChip packages-&gt;Launchers-&gt;qtlauncher</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/qtlauncher_menuconfig.png" src="../../_images/qtlauncher_menuconfig.png" />
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ul class="simple">
+<li><p>因为要开机运行，所以不能有其他的开机运行界面存在，如 test-lvgl</p></li>
+<li><p>打开 qtlauncher 后默认会自动选择qt4.8.7等依赖</p></li>
+<li><p>最好 make clean；make； 全编译一次SDK</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h3><span class="section-number">1.5.1.2. </span>分区调整<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>因为 QT 库比较大，开发板原始为了演示更多功能，分区设置的比较保守，因此打开 QT 支持后一般需要调整一下分区大小，否则会报告如下错误：</p>
+<p>Error: max_leb_cnt too low (266 needed)</p>
+<p>目前SDK中分区调整有两块工作：</p>
+<div class="section" id="id3">
+<h4><span class="section-number">1.5.1.2.1. </span>分区大小调整<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<p>以 demo100_nand 为例，通过修改 target/d211/demo100_nand/image_cfg.json 调整</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>--- a/d211/demo100_nand/image_cfg.json
++++ b/d211/demo100_nand/image_cfg.json
+@@ -13,7 +13,7 @@
+                        &quot;kernel&quot;:   { &quot;size&quot;: &quot;12m&quot; },
+                        &quot;recovery&quot;: { &quot;size&quot;: &quot;10m&quot; },
+                        &quot;ubiroot&quot;:  {
+-                               &quot;size&quot;: &quot;32m&quot;,
++                               &quot;size&quot;: &quot;64m&quot;, //由32m增加到64m
+                                &quot;ubi&quot;: { // Volume in UBI device
+                                        &quot;rootfs&quot;: { &quot;size&quot;: &quot;-&quot; },
+                                },
+@@ -21,7 +21,6 @@
+                        &quot;ubisystem&quot;: {
+                                &quot;size&quot;: &quot;-&quot;,
+                                &quot;ubi&quot;: { // Volume in UBI device
+-                                       &quot;ota&quot;:   { &quot;size&quot;: &quot;48m&quot; }, //删除ota分区，因为总大小只有128m
+                                        &quot;user&quot;:   { &quot;size&quot;: &quot;-&quot; },
+                                },
+                        },
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4><span class="section-number">1.5.1.2.2. </span>镜像大小调整<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<p>通过 make menuconfig 调整，在 Filesystem images-&gt;RootFS images 中修改，ubifs size 调整为0x4000000（64m）</p>
+<div class="figure align-center">
+<img alt="../../_images/ubifs_size.png" src="../../_images/ubifs_size.png" />
+</div>
+<p>修改后target/configs/d211_demo100_nand_defconfig 中有体现</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_demo100_nand_defconfig</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_demo100_nand_defconfig</span>
+<span class="o">-</span><span class="n">BR2_TARGET_ROOTFS_UBIFS_MAX_SIZE</span><span class="o">=</span><span class="mh">0x2000000</span>
+<span class="o">+</span><span class="n">BR2_TARGET_ROOTFS_UBIFS_MAX_SIZE</span><span class="o">=</span><span class="mh">0x4000000</span>
+</pre></div>
+</div>
+<p>上述两项修改后，重新编译系统，刷机后应该有 qtlauncher 运行界面</p>
+<div class="figure align-center">
+<img alt="../../_images/qtlauncher.jpg" src="../../_images/qtlauncher.jpg" />
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">1.5.1.3. </span>自动运行<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>Luban 的开机自动运行使用的是 init.d 机制，qtlauncher 的自动运行是通过 package/artinchip/qtlauncher/S99qtlauncher 实现的，
+编译时 S99qtlauncher 会被复制到目标机的 /etc/init.d/ 下</p>
+</div>
+<div class="section" id="g2d">
+<h3><span class="section-number">1.5.1.4. </span>G2D<a class="headerlink" href="#g2d" title="永久链接至标题">¶</a></h3>
+<p>QT 中集成了 G2D 的演示示例，代码在 source/artinchip/qtlauncher/views/aicdashboardview.cpp 中，
+G2D 示例中主要用到了 png 解码和 blit，rotate 等功能。</p>
+<p>为了在 Windows 上也可以编译和调试该 qtlauncher 程序，代码中对 G2D 的代码进行了宏屏蔽。</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">1.5.2. </span>应用开发<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>以 QTLauncher 为例，讲解一下 Luban 的 QT 应用开发方式</p>
+<div class="section" id="qtcreator">
+<h3><span class="section-number">1.5.2.1. </span>QtCreator<a class="headerlink" href="#qtcreator" title="永久链接至标题">¶</a></h3>
+<p>推荐使用 QtCreator 在 Windows 上开发，可以单步调试和模拟。使用 QtCreator 打开 source/artinchip/qtlauncher/QtLauncher.pro
+文件即可编译、调试和运行 qtlauncher 应用。</p>
+<p>QtCreator 的搭建参考 <a class="reference internal" href="qt-ide.html#ref-qt-windows-ide"><span class="std std-ref">QT Windows IDE</span></a></p>
+</div>
+<div class="section" id="project">
+<h3><span class="section-number">1.5.2.2. </span>Project 文件<a class="headerlink" href="#project" title="永久链接至标题">¶</a></h3>
+<p>QtCreator 会创建一个 Project 文件来组织代码编译和最终应用程序的生成，Luban 也要依赖该 Project 文件进行交叉编译。</p>
+<p>QtLauncher 的源码和 Project（QtLauncher.pro） 均在 source/artinchip/qtlauncher 目录下</p>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">1.5.2.3. </span>编译文件<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>编译文件是 Luban 用来描述代码如何编译，文件如何安装，宏定义如何使用的机制，在 package/artinchip/qtlauncher 目录下，qtlauncher 中总共有三个文件</p>
+<div class="section" id="config-in">
+<h4><span class="section-number">1.5.2.3.1. </span>Config.in<a class="headerlink" href="#config-in" title="永久链接至标题">¶</a></h4>
+<p>配置是否打开该模块，配置其他宏定义等，宏的定义方式为 BR2_PACKAGE_PACKAGENAME 大写</p>
+<p>该 Config.in 文件被上一级 Config.in 文件引用</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">menuconfig</span> <span class="n">BR2_PACKAGE_QTLAUNCHER</span>
+    <span class="nb">bool</span> <span class="s2">&quot;qtlauncher&quot;</span>
+    <span class="n">default</span> <span class="n">n</span>
+    <span class="n">select</span> <span class="n">BR2_PACKAGE_QT</span>
+    <span class="n">select</span> <span class="n">BR2_PACKAGE_DIRECTFB</span>
+    <span class="n">help</span>
+    <span class="n">ArtInChip</span><span class="s1">&#39;s Launcher App Developed with QT.</span>
+
+<span class="k">if</span> <span class="n">BR2_PACKAGE_QTLAUNCHER</span>
+<span class="n">config</span> <span class="n">BR2_QTLAUNCHER_GE_SUPPORT</span>
+    <span class="nb">bool</span> <span class="s2">&quot;use GE to render image&quot;</span>
+    <span class="n">default</span> <span class="n">y</span>
+<span class="n">config</span> <span class="n">BR2_QTLAUNCHER_SMALL_MEMORY</span>
+    <span class="nb">bool</span> <span class="s2">&quot;small memory device&quot;</span>
+    <span class="n">default</span> <span class="n">y</span>
+<span class="n">endif</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qtlauncher-mk">
+<h4><span class="section-number">1.5.2.3.2. </span>qtlauncher.mk<a class="headerlink" href="#qtlauncher-mk" title="永久链接至标题">¶</a></h4>
+<p>mk 文件，用于描述如何使用source/artinchip/qtlauncher 下的源码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QTLAUNCHER_ENABLE_TARBALL = NO   //源码方式
+QTLAUNCHER_ENABLE_PATCH = NO     //是否有patch
+
+QTLAUNCHER_DEPENDENCIES += qt directfb  //需要qt 和 directfb的支持
+
+QTLAUNCHER_CONF_OPTS = $(QTLAUNCHER_SRCDIR)/QtLauncher.pro //project 文件的名字
+
+ifeq ($(BR2_QTLAUNCHER_GE_SUPPORT),y)
+export QTLAUNCHER_GE_SUPPORT = YES  //Luban 的宏转为 QT的宏
+endif
+ifeq ($(BR2_QTLAUNCHER_SMALL_MEMORY),y)
+export QTLAUNCHER_SMALL_MEMORY = YES
+endif
+
+define QTLAUNCHER_INSTALL_TARGET_CMDS、、
+    mkdir -p $(TARGET_DIR)/usr/local/launcher/
+    cp -a $(@D)/qtlauncher $(TARGET_DIR)/usr/local/launcher/  //安装编译后的文件
+
+    $(INSTALL) -m 0755 -D package/artinchip/qtlauncher/S99qtlauncher \
+        $(TARGET_DIR)/etc/init.d/S99qtlaunche  //安装自动启动脚本
+endef
+
+$(eval $(qmake-package)) //使用qmake编译源码
+</pre></div>
+</div>
+</div>
+<div class="section" id="s99qtlauncher">
+<h4><span class="section-number">1.5.2.3.3. </span>S99qtlauncher<a class="headerlink" href="#s99qtlauncher" title="永久链接至标题">¶</a></h4>
+<p>qtlauncher 应用的自启动脚本，S99 为启动顺序，属于比较低的等级，S00 为最高等级</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dfb-compile.html" class="btn btn-neutral float-right" title="1.6. Directfb Cross Compile" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="qt-ide.html" class="btn btn-neutral float-left" title="1.4. QT Windows IDE" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

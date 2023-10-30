@@ -1,0 +1,981 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.4.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.4.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.4.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.4. I2C 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.4.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure_guide.html">7.4.2. I2C配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.4.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.4.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.4.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.4.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.4.5.2. 模块架构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-master">7.4.5.2.1. I2C master</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-slave">7.4.5.2.2. I2C slave</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.4.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.4.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.4.5.3.2. 传输流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c">7.4.5.3.3. I2C模块总线信号</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">7.4.5.3.4. 中断流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">7.4.5.4. 数据结构设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">7.4.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-handle-tx-abort">7.4.5.5.1. i2c_handle_tx_abort</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-scl-cnt">7.4.5.5.2. i2c_scl_cnt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-set-timmings-master">7.4.5.5.3. i2c_set_timmings_master</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-init-master">7.4.5.5.4. i2c_init_master</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-xfer-msg-init">7.4.5.5.5. i2c_xfer_msg_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-xfer-msg">7.4.5.5.6. i2c_xfer_msg</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-xfer">7.4.5.5.7. i2c_xfer</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-handle-read">7.4.5.5.8. i2c_handle_read</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-handle-write">7.4.5.5.9. i2c_handle_write</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-init-slave">7.4.5.5.10. i2c_init_slave</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-reg-slave">7.4.5.5.11. i2c_reg_slave</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#i2c-unreg-slave">7.4.5.5.12. i2c_unreg_slave</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.4.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.4. </span>I2C 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.4.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.4.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.4.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于：linux-5.10/drivers/i2c/busses/</p>
+<p>I2C的驱动文件如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>i2c-artinchip.h</p></td>
+<td><p>aic I2C公用头文件，I2C模块的寄存器定义，结构体定义等</p></td>
+</tr>
+<tr class="row-odd"><td><p>i2c-artinchip-master.c</p></td>
+<td><p>I2C作为master时的驱动文件</p></td>
+</tr>
+<tr class="row-even"><td><p>i2c-artinchip-slave.c</p></td>
+<td><p>I2C作为slave时的驱动文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>i2c-artinchip-common.c</p></td>
+<td><p>I2C一些公用寄存器读写函数的实现，以及plaform_driver的定义</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.4.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>linux中I2C子系统的体系结构如下图所示</p>
+<div class="figure align-center">
+<img alt="../../../_images/subsystem_arch.png" src="../../../_images/subsystem_arch.png" />
+</div>
+<p>在I2C子系统中，SOC厂商需要实现的就是I2C adapter部分的驱动，I2C adapter是对I2C controller的软件抽象。具体到上图，就是实现I2C adapter的algorithm以及特定SOC的I2C代码部分。I2C模块支持master和slave两种模式，所以I2C adapter的驱动实现也就分为两部分：I2C master驱动和I2C slave驱动。</p>
+<div class="section" id="i2c-master">
+<h3><span class="section-number">7.4.5.2.1. </span>I2C master<a class="headerlink" href="#i2c-master" title="永久链接至标题">¶</a></h3>
+<p>I2C作为master时，驱动的实现主要包括4个部分：</p>
+<ol class="arabic simple">
+<li><p>硬件参数配置：主要是设置I2C工作的主机模式，7bit或10bit寻址，寻址的从机地址设置，FIFO设置以及总线传输速率等。</p></li>
+<li><p>SCL时序参数设置：根据设置的总线传输速率，设置SCL的高低电平时间。</p></li>
+<li><p>i2c_algorithm的实现：作为主机端，主要是master_xfer的实现。在驱动实现中，以message为单位进行数据的收发，数据的传输采用中断的方式。</p></li>
+<li><p>中断的处理：处理master端的数据收发，并产生相应的start、ack、nack、restart、stop信号。</p></li>
+</ol>
+</div>
+<div class="section" id="i2c-slave">
+<h3><span class="section-number">7.4.5.2.2. </span>I2C slave<a class="headerlink" href="#i2c-slave" title="永久链接至标题">¶</a></h3>
+<p>I2C作为从机时，需要一个相应的后端软件(对I2C从设备的软件模拟)，该后端软件与I2C adapter驱动，组合成具有相应功能的I2C从设备。内核的I2C子系统框架中提供了一个EEPROM的软件后端，与I2C slave驱动一起，可以作为一个具有I2C接口的EEPROM使用。</p>
+<div class="figure align-center">
+<img alt="../../../_images/twi_slave.png" src="../../../_images/twi_slave.png" />
+</div>
+<p>I2C作为slave时，驱动的实现主要包括3个部分：</p>
+<ol class="arabic simple">
+<li><p>硬件参数配置：设置I2C工作的从模式，FIFO设置等。</p></li>
+<li><p>i2c_algorithm的实现：作为从机端，主要是reg_slave和unreg_slave的实现。reg_slave用于将一个i2c_client注册到从模式的i2c adapter上，unreg_slave的功能与reg_slave相反。</p></li>
+<li><p>中断的处理：处理I2C从机接收到的各种中断信号，并调用相应的回调函数进行数据的读写。</p></li>
+</ol>
+<p>综上，I2C模块的驱动实现，主要的工作有：</p>
+<ul class="simple">
+<li><p>提供I2C控制器的platform驱动，初始化I2C适配器，判断I2C模块工作的主从模式，执行不同的初始化流程。</p></li>
+<li><p>I2C模块作为主机时，提供I2C适配器的algorithm，并用具体适配器的xxx_xfer函数填充i2c_algorithm的master_xfer指针，并把i2c_algorithm指针赋值给i2c_adapter的algo指针。处理master端时序的设置以及I2C作为主机时的各种中断信号处理。</p></li>
+<li><p>I2C模块作为从机时，提供I2C适配器的algorithm，实现具体适配器的reg_slave和unreg_slave函数，并把i2c_algorithm指针赋值给i2c_adapter的algo指针。处理I2C作为从机时的各种中断信号处理。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.4.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">7.4.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>I2C模块驱动的初始化流程如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/design_11.png" src="../../../_images/design_11.png" />
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.4.5.3.2. </span>传输流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>在I2C master驱动中，数据的传输由i2c_xfer发起，可以完成多个i2c_msg的传输。传输流程如下：</p>
+<div class="figure align-center">
+<img alt="../../../_images/design_21.png" src="../../../_images/design_21.png" />
+</div>
+</div>
+<div class="section" id="i2c">
+<h3><span class="section-number">7.4.5.3.3. </span>I2C模块总线信号<a class="headerlink" href="#i2c" title="永久链接至标题">¶</a></h3>
+<p>在I2C总线的数据传输过程，由start/restart/stop作为总线的控制信号。了解I2C模块中start/restart/stop信号的生成方式，有助于了解驱动的源码实现。</p>
+<div class="section" id="master-transmitter">
+<h4><span class="section-number">7.4.5.3.3.1. </span>master transmitter<a class="headerlink" href="#master-transmitter" title="永久链接至标题">¶</a></h4>
+<div class="figure align-center">
+<img alt="../../../_images/design_31.png" src="../../../_images/design_31.png" />
+</div>
+<p>对图中3个关键点的解释：</p>
+<ol class="arabic simple">
+<li><p>I2C作为master transmitter时，当向TXFIFO中写入数据时，I2C模块会自动发出start信号</p></li>
+<li><p>若stop位未置位，则当TXFIFO中的数据全部发送，TXFIFO为空时，会保持SCL为低电平，直到再次向TXFIFO中写入数据</p></li>
+<li><p>再次向TXFIFO写入数据时，将stop位置1，则在完成该字节的发送后，master会自动发送stop信号</p></li>
+</ol>
+</div>
+<div class="section" id="master-receiver">
+<h4><span class="section-number">7.4.5.3.3.2. </span>master receiver<a class="headerlink" href="#master-receiver" title="永久链接至标题">¶</a></h4>
+<div class="figure align-center">
+<img alt="../../../_images/design_41.png" src="../../../_images/design_41.png" />
+</div>
+<p>对图中3个关键点的解释：</p>
+<ol class="arabic simple">
+<li><p>I2C作为master receiver时，当向TXFIFO写入读命令(即向I2C_DATA_CMD写入读命令)时，I2C模块会自动发送start信号</p></li>
+<li><p>当接收到slave端发送的数据后，只有再次发送一次读命令，才会对本次收到的数据恢复ACK确认信号</p></li>
+<li><p>master在接收到最后一个数据后，回复NACK，slave端才会结束数据的传送。在发送最后一个读命令时，同时将stop位置位，则master在接收到slave发送的数据后，I2C模块会自动发送NACK信号</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>I2C模块的数据传输，无论是transmitter还是receiver，都会用到TXFIFO，transmitter时用来发送数据，receiver时用来发送命令。所以，中断处理中，触发TXFIFO_EMPTY中断的，可能是read msg，也可能是write msg</p>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">7.4.5.3.4. </span>中断流程<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../../_images/design_51.png" src="../../../_images/design_51.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">7.4.5.4. </span>数据结构设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>管理I2C控制器资源的顶层结构体</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_i2c_dev</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+        <span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">i2c_adapter</span> <span class="n">adap</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">completion</span> <span class="n">cmd_complete</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">clk</span> <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">reset_control</span> <span class="o">*</span><span class="n">rst</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">irq</span><span class="p">;</span>
+        <span class="k">enum</span> <span class="n">aic_i2c_speed</span> <span class="n">i2c_speed</span><span class="p">;</span>
+        <span class="n">u16</span> <span class="n">scl_hcnt</span><span class="p">;</span>
+        <span class="n">u16</span> <span class="n">scl_lcnt</span><span class="p">;</span>
+        <span class="n">u32</span> <span class="n">abort_source</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">i2c_msg</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+        <span class="k">enum</span> <span class="n">aic_msg_status</span> <span class="n">msg_status</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">buf_write_idx</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">buf_read_idx</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">is_first_message</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">is_last_message</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">msg_err</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">i2c_timings</span> <span class="n">timings</span><span class="p">;</span>
+        <span class="n">u32</span> <span class="n">master_cfg</span><span class="p">;</span>
+        <span class="n">u32</span> <span class="n">slave_cfg</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">i2c_client</span> <span class="o">*</span><span class="n">slave</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>部分变量说明：</p>
+<ul class="simple">
+<li><p>cmd_complete：完成量，用于指示一个message是否传输完成</p></li>
+<li><p>scl_hcnt：SCL时钟高电平时钟数</p></li>
+<li><p>scl_lcnt：SCL时钟低电平时钟数</p></li>
+<li><p>msg：指向当前传输的message</p></li>
+<li><p>buf_write_idx：当前message为write msg时，buf_write_idx为写数据的计数。当前message为read msg时，buf_write_idx为写命令的计数(I2C模块需要每次写read命令，才能读出数据)。</p></li>
+<li><p>buf_read_idx：读数据的计数</p></li>
+<li><p>is_first_message：是否是第一个message</p></li>
+<li><p>is_last_message：是否是最后一个message</p></li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">7.4.5.5. </span>接口设计<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<div class="section" id="i2c-handle-tx-abort">
+<h3><span class="section-number">7.4.5.5.1. </span>i2c_handle_tx_abort<a class="headerlink" href="#i2c-handle-tx-abort" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int i2c_handle_tx_abort(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>打印i2c发生abort的原因，并返回相应的error值</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>根据不同的abort原因，返回不同的error值</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-scl-cnt">
+<h3><span class="section-number">7.4.5.5.2. </span>i2c_scl_cnt<a class="headerlink" href="#i2c-scl-cnt" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int i2c_scl_cnt(u32 ic_clk, enum aic_i2c_speed aic_speed, u16 *hcnt, u16 *lcnt)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>根据i2c模块工作的时钟频率和i2c的传输速率，返回需要设置的hcnt值和lcnt值</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">ic_clk：i2c模块工作的时钟频率，以KHz为单位</div>
+<div class="line">aic_speed：表示i2c的传输速率，是标准模式还是快速模式</div>
+<div class="line">hcnt：指向需要设置的hcnt值的指针</div>
+<div class="line">lcnt：指向需要设置的lcnt值的指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：函数执行成功</div>
+<div class="line">-EINVAL：hcnt或lcnt为空指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-set-timmings-master">
+<h3><span class="section-number">7.4.5.5.3. </span>i2c_set_timmings_master<a class="headerlink" href="#i2c-set-timmings-master" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int i2c_set_timmings_master(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置master产生SCL时钟的时序参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：函数执行成功</div>
+<div class="line">-EINVAL：参数非法</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>若在DTS中有设置i2c的时序参数scl_raise_ns或scl_fall_ns，则会由i2c_parse_fw_timings对DTS进行解析，在此函数中不再调用i2c_scl_cnt进行设置</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-init-master">
+<h3><span class="section-number">7.4.5.5.4. </span>i2c_init_master<a class="headerlink" href="#i2c-init-master" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void i2c_init_master(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化master模式下的参数设置，写入hcnt和lcnt，配置TXFIFO和RXFIFO阈值，将i2c配置为主模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-xfer-msg-init">
+<h3><span class="section-number">7.4.5.5.5. </span>i2c_xfer_msg_init<a class="headerlink" href="#i2c-xfer-msg-init" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void i2c_xfer_msg_init(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>在传输每个msg前进行的初始化，主要是将指示每个msg状态的变量设置为初始值，并设置传输的从地址设置，使能中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-xfer-msg">
+<h3><span class="section-number">7.4.5.5.6. </span>i2c_xfer_msg<a class="headerlink" href="#i2c-xfer-msg" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int i2c_xfer_msg(struct aic_i2c_dev *i2c_dev, struct i2c_msg *msg, bool is_first, bool is_last)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>单个msg的传输函数，若当前msg是第一个msg，则会等待总线空闲，然后执行i2c_xfer_msg_init进行msg传输前的初始化工作，等待当前msg传输完成</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">i2c_dev：指向自定义的struct aic_i2c_dev结构体</div>
+<div class="line">msg：指向当前将要传输的msg</div>
+<div class="line">is_first：指示当前msg是否是第一个msg</div>
+<div class="line">is_last：指示当前msg是否是最后一个msg</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：执行成功</div>
+<div class="line">&lt;0：执行过程中发生错误</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-xfer">
+<h3><span class="section-number">7.4.5.5.7. </span>i2c_xfer<a class="headerlink" href="#i2c-xfer" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int i2c_xfer(struct i2c_adapter *i2c_adap, struct i2c_msg msgs[], int num)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>i2c的传输函数，该函数可完成多个msg的传输，使用该函数完成对i2c_algorithm中master_xfer函数指针的填充</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">i2c_dev：指向自定义的struct aic_i2c_dev结构体</div>
+<div class="line">msgs：指向msg数组的指针</div>
+<div class="line">num：需要传输的msg个数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：执行成功</div>
+<div class="line">&lt;0：执行过程中发生错误</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-handle-read">
+<h3><span class="section-number">7.4.5.5.8. </span>i2c_handle_read<a class="headerlink" href="#i2c-handle-read" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void i2c_handle_read(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>当触发RX_FULL中断时，调用该函数读取接收到的数据，若完成当前msg的接收，则释放完成量。该函数在中断中调用</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-handle-write">
+<h3><span class="section-number">7.4.5.5.9. </span>i2c_handle_write<a class="headerlink" href="#i2c-handle-write" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void i2c_handle_write(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>当触发TX_EMPTY中断时，调用该函数。若是读msg，则调用该函数发送读命令，若是写msg，则调用该函数发送数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-init-slave">
+<h3><span class="section-number">7.4.5.5.10. </span>i2c_init_slave<a class="headerlink" href="#i2c-init-slave" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void i2c_init_slave(struct aic_i2c_dev *i2c_dev)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化slave模式下的参数设置，配置TXFIFO和RXFIFO阈值，设置i2c为slave模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-reg-slave">
+<h3><span class="section-number">7.4.5.5.11. </span>i2c_reg_slave<a class="headerlink" href="#i2c-reg-slave" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int i2c_reg_slave(struct i2c_client *slave)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化slave模式下的参数设置，配置slave是10bit寻址还是7bit寻址，设置从机的地址</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：执行成功</div>
+<div class="line">-EBUSY：忙等待</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="i2c-unreg-slave">
+<h3><span class="section-number">7.4.5.5.12. </span>i2c_unreg_slave<a class="headerlink" href="#i2c-unreg-slave" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int i2c_unreg_slave(struct i2c_client *slave)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>与i2c_reg_slave功能相反</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>i2c_dev：指向自定义的struct aic_i2c_dev结构体</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：执行成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.4.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="7.4.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

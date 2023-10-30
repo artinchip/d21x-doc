@@ -1,0 +1,1708 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>11.4.3. 寄存器定义 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12. 接口" href="../../interface/index.html" />
+    <link rel="prev" title="11.4.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">11. 计时器</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../gtc/index.html">11.1. Generic Timer Controller (GTC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wdog/index.html">11.2. Watch Dog (WDOG)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtc/index.html">11.3. Real Time Clock (RTC)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">11.4. Pulse Width Modulation (PWM)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">11.4.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">11.4.2. 功能描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">11.4.3. 寄存器定义</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-pwm-ctl">11.4.3.1. 0x000 PWM_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-pwm-mctl">11.4.3.2. 0x004 PWM_MCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-pwm-ckctl">11.4.3.3. 0x008 PWM_CKCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-pwm-intctl">11.4.3.4. 0x00C PWM_INTCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-pwm-intsts">11.4.3.5. 0x010 PWM_INTSTS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x000-pwm-tbctl">11.4.3.6. 0X300+0X100*n+0x000 PWM_TBCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x004-pwm-tbsts">11.4.3.7. 0X300+0X100*n+0x004 PWM_TBSTS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x010-pwm-tbctr">11.4.3.8. 0X300+0X100*n+0x010 PWM_TBCTR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x014-pwm-tbprd">11.4.3.9. 0X300+0X100*n+0x014 PWM_TBPRD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x018-pwm-cmpctl">11.4.3.10. 0X300+0X100*n+0x018 PWM_CMPCTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x020-pwm-cmpa">11.4.3.11. 0X300+0X100*n+0x020 PWM_CMPA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x024-pwm-cmpb">11.4.3.12. 0X300+0X100*n+0x024 PWM_CMPB</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x028-pwm-aqctla">11.4.3.13. 0X300+0X100*n+0x028 PWM_AQCTLA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x02c-pwm-aqctlb">11.4.3.14. 0X300+0X100*n+0x02C PWM_AQCTLB</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x044-pwm-etsel">11.4.3.15. 0X300+0X100*n+0x044 PWM_ETSEL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x300-0x100-n-0x048-pwm-cnt-dis">11.4.3.16. 0X300+0X100*n+0x048 PWM_CNT_DIS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-pwm-version">11.4.3.17. 0xFFC PWM_VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">11. </span>计时器</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">11.4. </span>PWM</a> &raquo;</li>
+        
+      <li><span class="section-number">11.4.3. </span>寄存器定义</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">11.4.3. </span>寄存器定义<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>寄存器列表</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 36%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>寄存器名</p></th>
+<th class="head"><p>偏移地址</p></th>
+<th class="head"><p>寄存器功能描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PWM_CTL</p></td>
+<td><p>0x00</p></td>
+<td><p>PWM模块控制寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_MCTL</p></td>
+<td><p>0x04</p></td>
+<td><p>PWM控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_CKCTL</p></td>
+<td><p>0x08</p></td>
+<td><p>PWM时钟控制寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_INTCTL</p></td>
+<td><p>0x0C</p></td>
+<td><p>PWM中断控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_INTSTS</p></td>
+<td><p>0x10</p></td>
+<td><p>PWM中断状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_TBCTL</p></td>
+<td><p>0x300+0x100*n+0x00</p></td>
+<td><p>PWM时基控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_TBSTS</p></td>
+<td><p>0x300+0x100*n+0x04</p></td>
+<td><p>PWM时基状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_TBCTR</p></td>
+<td><p>0x300+0x100*n+0x10</p></td>
+<td><p>PWM时基计数器寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_TBPRD</p></td>
+<td><p>0x300+0x100*n+0x14</p></td>
+<td><p>PWM时基周期寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_CMPCTL</p></td>
+<td><p>0x300+0x100*n+0x18</p></td>
+<td><p>PWM比较器控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_CMPA</p></td>
+<td><p>0x300+0x100*n+0x20</p></td>
+<td><p>PWM比较器A寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_CMPB</p></td>
+<td><p>0x300+0x100*n+0x24</p></td>
+<td><p>PWM比较器B寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_AQCTLA</p></td>
+<td><p>0x300+0x100*n+0x28</p></td>
+<td><p>PWM动作器控制A寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_AQCTLB</p></td>
+<td><p>0x300+0x100*n+0x2C</p></td>
+<td><p>PWM动作器控制B寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>PWM_ETSEL</p></td>
+<td><p>0x300+0x100*n+0x44</p></td>
+<td><p>PWM事件触发选择寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM_VERSION</p></td>
+<td><p>0xFFC</p></td>
+<td><p>PWM模块版本寄存器</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>寄存器描述</strong></p>
+<div class="section" id="x000-pwm-ctl">
+<h2><span class="section-number">11.4.3.1. </span>0x000 PWM_CTL<a class="headerlink" href="#x000-pwm-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM模块控制寄存器（PWM_CTL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p>/</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN：PWM Module Enable，PWM模块使能控制</div>
+<div class="line">0：PWM模块未使能</div>
+<div class="line">1：PWM模块使能</div>
+<div class="line">PWM模块使能控制EN有效（为‘1’）时，寄存器才能访问，PWM模块开始</div>
+<div class="line">正常运行；EN无效（为‘0’）时，复位PWM模块，寄存器也不能访问。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-pwm-mctl">
+<h2><span class="section-number">11.4.3.2. </span>0x004 PWM_MCTL<a class="headerlink" href="#x004-pwm-mctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM控制寄存器（PWM_MCTL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:4</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM3EN：PWM3 Enable，PWM3使能控制</div>
+<div class="line">0：PWM3未使能</div>
+<div class="line">1：PWM3使能</div>
+<div class="line">PWM3EN有效（为‘1’）时，PWM信号发生器PWM3开始正常工作；</div>
+<div class="line">PWM3EN无效（为‘0’）时，复位PWM信号发生器PWM3，同时复位PWM3</div>
+<div class="line">相关的寄存器。PWM模块寄存器不受此位影响。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM2EN：PWM2 Enable，PWM2使能控制</div>
+<div class="line">0：PWM2未使能</div>
+<div class="line">1：PWM2使能</div>
+<div class="line">PWM2EN有效（为‘1’）时，PWM信号发生器PWM2开始正常工作；</div>
+<div class="line">PWM2EN无效（为‘0’）时，复位PWM信号发生器PWM2，同时复位PWM2</div>
+<div class="line">相关的寄存器。PWM模块寄存器不受此位影响。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1EN：PWM1 Enable，PWM1使能控制</div>
+<div class="line">0：PWM1未使能</div>
+<div class="line">1：PWM1使能</div>
+<div class="line">PWM1EN有效（为‘1’）时，PWM信号发生器PWM1开始正常工作；</div>
+<div class="line">PWM1EN无效（为‘0’）时，复位PWM信号发生器PWM1，同时复位PWM1</div>
+<div class="line">相关的寄存器。PWM模块寄存器不受此位影响。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0EN：PWM0 Enable，PWM0使能控制</div>
+<div class="line">0：PWM0未使能</div>
+<div class="line">1：PWM0使能</div>
+<div class="line">PWM0EN有效（为‘1’）时，PWM信号发生器PWM0开始正常工作；</div>
+<div class="line">PWM0EN无效（为‘0’）时，复位PWM信号发生器PWM0，同时复位PWM0</div>
+<div class="line">相关的寄存器。PWM模块寄存器不受此位影响。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-pwm-ckctl">
+<h2><span class="section-number">11.4.3.3. </span>0x008 PWM_CKCTL<a class="headerlink" href="#x008-pwm-ckctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM时钟控制寄存器（PWM_CKCTL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:4</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM3CKON：PWM3 Clock On，PWM3工作时钟控制</div>
+<div class="line">0：PWM3时钟关闭</div>
+<div class="line">1：PWM3时钟打开</div>
+<div class="line">此位必须打开时，才能访问PWM信号发生器PWM3的寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM2CKON：PWM2 Clock On，PWM2工作时钟控制</div>
+<div class="line">0：PWM2时钟关闭</div>
+<div class="line">1：PWM2时钟打开</div>
+<div class="line">此位必须打开时，才能访问PWM信号发生器PWM2的寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1CKON：PWM1 Clock On，PWM1工作时钟控制</div>
+<div class="line">0：PWM1时钟关闭</div>
+<div class="line">1：PWM1时钟打开</div>
+<div class="line">此位必须打开时，才能访问PWM信号发生器PWM1的寄存器</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0CKON：PWM0 Clock On，PWM0工作时钟控制</div>
+<div class="line">0：PWM0时钟关闭</div>
+<div class="line">1：PWM0时钟打开</div>
+<div class="line">此位必须打开时，才能访问PWM信号发生器PWM0的寄存器</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-pwm-intctl">
+<h2><span class="section-number">11.4.3.4. </span>0x00C PWM_INTCTL<a class="headerlink" href="#x00c-pwm-intctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM中断控制寄存器（PWM_INTCTL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:4</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM3INTEN：PWM3 Interrupt Enable，PWM3中断使能</div>
+<div class="line">0：PWM3中断关闭</div>
+<div class="line">1：PWM3中断使能</div>
+<div class="line">此位用于控制PWM信号发生器PWM3中断使能。</div>
+<div class="line">当中断使能位置为1时，PWM3有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，中断信号传递给CPU系统，CPU系统响应中断事件。</div>
+<div class="line">当中断使能位置为0时，PWM3有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，没有中断信号给CPU系统，但CPU系统可以通过查询</div>
+<div class="line">状态位来处理PWM3事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM2INTEN：PWM2 Interrupt Enable，PWM2中断使能</div>
+<div class="line">0：PWM2中断关闭</div>
+<div class="line">1：PWM2中断使能</div>
+<div class="line">此位用于控制PWM信号发生器PWM2中断使能。</div>
+<div class="line">当中断使能位置为1时，PWM2有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，中断信号传递给CPU系统，CPU系统响应中断事件。</div>
+<div class="line">当中断使能位置为0时，PWM2有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，没有中断信号给CPU系统，但CPU系统可以通过查询</div>
+<div class="line">状态位来处理PWM2事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1INTEN：PWM1 Interrupt Enable，PWM1中断使能</div>
+<div class="line">0：PWM1中断关闭</div>
+<div class="line">1：PWM1中断使能</div>
+<div class="line">此位用于控制PWM信号发生器PWM1中断使能。</div>
+<div class="line">当中断使能位置为1时，PWM1有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，中断信号传递给CPU系统，CPU系统响应中断事件。</div>
+<div class="line">当中断使能位置为0时，PWM1有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，没有中断信号给CPU系统，但CPU系统可以通过查询</div>
+<div class="line">状态位来处理PWM1事件。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0INTEN：PWM0 Interrupt Enable，PWM0中断使能</div>
+<div class="line">0：PWM0中断关闭</div>
+<div class="line">1：PWM0中断使能</div>
+<div class="line">此位用于控制PWM信号发生器PWM0中断使能。</div>
+<div class="line">当中断使能位置为1时，PWM0有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，中断信号传递给CPU系统，CPU系统响应中断事件。</div>
+<div class="line">当中断使能位置为0时，PWM0有中断产生时，PWM中断状态寄存器</div>
+<div class="line">相应位被置成1，没有中断信号给CPU系统，但CPU系统可以通过查询</div>
+<div class="line">状态位来处理PWM0事件。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-pwm-intsts">
+<h2><span class="section-number">11.4.3.5. </span>0x010 PWM_INTSTS<a class="headerlink" href="#x010-pwm-intsts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM中断状态寄存器（PWM_INTSTS）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:4</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM3INTSTS：PWM3 Interrupt Status，PWM3中断状态</div>
+<div class="line">0：PWM3无中断事件</div>
+<div class="line">1：PWM3有中断事件</div>
+<div class="line">此位用于标志PWM信号发生器PWM3是否有中断事件。</div>
+<div class="line">当此位置为1时，表明PWM3有中断事件产生，CPU系统处理此中断事件，</div>
+<div class="line">处理完成后写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM2INTSTS：PWM2 Interrupt Status，PWM2中断状态</div>
+<div class="line">0：PWM2无中断事件</div>
+<div class="line">1：PWM2有中断事件</div>
+<div class="line">此位用于标志PWM信号发生器PWM2是否有中断事件。</div>
+<div class="line">当此位置为1时，表明PWM2有中断事件产生，CPU系统处理此中断事件，</div>
+<div class="line">处理完成后写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM1INTSTS：PWM1 Interrupt Status，PWM1中断状态</div>
+<div class="line">0：PWM1无中断事件</div>
+<div class="line">1：PWM1有中断事件</div>
+<div class="line">此位用于标志PWM信号发生器PWM1是否有中断事件。</div>
+<div class="line">当此位置为1时，表明PWM1有中断事件产生，CPU系统处理此中断事件，</div>
+<div class="line">处理完成后写1清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWM0INTSTS：PWM0 Interrupt Status，PWM0中断状态</div>
+<div class="line">0：PWM0无中断事件</div>
+<div class="line">1：PWM0有中断事件</div>
+<div class="line">此位用于标志PWM信号发生器PWM0是否有中断事件。</div>
+<div class="line">当此位置为1时，表明PWM0有中断事件产生，CPU系统处理此中断事件，</div>
+<div class="line">处理完成后写1清零。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x000-pwm-tbctl">
+<h2><span class="section-number">11.4.3.6. </span>0X300+0X100*n+0x000 PWM_TBCTL<a class="headerlink" href="#x300-0x100-n-0x000-pwm-tbctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM时基控制寄存器（PWM_TBCTL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">CLKDIV：Time-Base Clock Divider，时基时钟除数</div>
+<div class="line">时基时钟TBCLK=SYSCLKOUT/（CLKDIV+1）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:4</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PRDLD：Period Register Load From Shadow Register Select，</div>
+<div class="line">时基周期寄存器（PRD）操作方式</div>
+<div class="line">0：通过影子寄存器</div>
+<div class="line">1：直接操作，不通过影子寄存器</div>
+<div class="line">此位用于配置时基周期寄存器（PRD）操作方式</div>
+<div class="line">当此位置为0时，时基计数器（TBCTR）等于0时，时基周期寄存器</div>
+<div class="line">（TBPRD）的数值从它的影子寄存器中装载。读写时基寄存器（TBPRD）</div>
+<div class="line">实际上都是操作它的影子寄存器。</div>
+<div class="line">当此位为1时， 时基周期寄存器（TBPRD）的数值不需要通过它的影子</div>
+<div class="line">寄存器进行装载。读写时基周期寄存器（TBPRD），就是立即对TBPRD进行操作。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CTRMODE：Counter Mode，时基计数器模式</div>
+<div class="line">0：递增模式</div>
+<div class="line">1：递减模式</div>
+<div class="line">2: 增减模式</div>
+<div class="line">3:  /</div>
+<div class="line">此位用于配置时基计数器的计数模式，一般情况下计数模式只能配置一次，</div>
+<div class="line">当计数器开始工作时，不可改动。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x004-pwm-tbsts">
+<h2><span class="section-number">11.4.3.7. </span>0X300+0X100*n+0x004 PWM_TBSTS<a class="headerlink" href="#x300-0x100-n-0x004-pwm-tbsts" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM时基状态寄存器（PWM_TBSTS）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CTRMAX：Time-Base Counter Max Latched Status，时基计数器达到最大值0xFFFF状态位</div>
+<div class="line">0：时基计数器没有达到最大值</div>
+<div class="line">1：时基计数器达到最大值</div>
+<div class="line">此位写0无任何效果，写1清除此状态。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CTRDIR：Time-Base Counter Direction Status，时基计数器方向状态位</div>
+<div class="line">0：计数器正在向下计数</div>
+<div class="line">1：计数器正在向上计数</div>
+<div class="line">此位在时基计数器的计数模式被设置且开始计数时才有意义。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x010-pwm-tbctr">
+<h2><span class="section-number">11.4.3.8. </span>0X300+0X100*n+0x010 PWM_TBCTR<a class="headerlink" href="#x300-0x100-n-0x010-pwm-tbctr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM时基计数器寄存器（PWM_TBCTR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TBCTR：Time-Base Counter Value，时基计数器当前数值</div>
+<div class="line">读取此位时，数值表明时基计数器的当前数值。写此位时，数值直接写到</div>
+<div class="line">时基计数器寄存器，该寄存器无影子寄存器且写时没有经过TBCLK同步。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x014-pwm-tbprd">
+<h2><span class="section-number">11.4.3.9. </span>0X300+0X100*n+0x014 PWM_TBPRD<a class="headerlink" href="#x300-0x100-n-0x014-pwm-tbprd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM时基周期寄存器（PWM_TBPRD）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TBPRD：The Period of Time-Base Counter，时基计数器周期</div>
+<div class="line">此位决定时基计数器的周期，用于设定PWM的频率。此寄存器有影子寄存器，</div>
+<div class="line">受PWM_TBCTL寄存器中的PRDLD位控制，缺省时使用影子寄存器。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x018-pwm-cmpctl">
+<h2><span class="section-number">11.4.3.10. </span>0X300+0X100*n+0x018 PWM_CMPCTL<a class="headerlink" href="#x300-0x100-n-0x018-pwm-cmpctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM比较器控制寄存器（PWM_CMPCTL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>６</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SHDWBMODE：CMPB Operating Mode，比较寄存器CMPB的操作模式</div>
+<div class="line">0：影子模式</div>
+<div class="line">1：立即模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SHDWAMODE：CMPA Operating Mode，比较寄存器CMPA的操作模式</div>
+<div class="line">0：影子模式</div>
+<div class="line">1：立即模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOADBMODE：CMPB Load From Shadow Select Mode，CMPB寄存器</div>
+<div class="line">从影子寄存器装载数值模式</div>
+<div class="line">0：当计数器CTR＝＝0时</div>
+<div class="line">1：当计数器CTR＝＝PRD时</div>
+<div class="line">2: 当计数器CTR＝＝0时或CTR＝＝PRD</div>
+<div class="line">3:  冻结</div>
+<div class="line">当SHDWBMODE位为１时，即CMPＢ寄存器不使用影子寄存器时，此位无效。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOADAMODE：CMPA Load From Shadow Select Mode，CMPA寄存器</div>
+<div class="line">从影子寄存器装载数值模式</div>
+<div class="line">0：当计数器CTR＝＝0时</div>
+<div class="line">1：当计数器CTR＝＝PRD时</div>
+<div class="line">2: 当计数器CTR＝＝0时或CTR＝＝PRD</div>
+<div class="line">3:  冻结</div>
+<div class="line">当SHDWAMODE位为１时，即CMPA寄存器不使用影子寄存器时，此位无效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x020-pwm-cmpa">
+<h2><span class="section-number">11.4.3.11. </span>0X300+0X100*n+0x020 PWM_CMPA<a class="headerlink" href="#x300-0x100-n-0x020-pwm-cmpa" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM比较器A寄存器（PWM_CMPA）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CMPA：比较寄存器A的数值</div>
+<div class="line">计数器TBCTR与CMPA进行比，相等时比较器产生一个脉冲给后续的动作器AQ。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x024-pwm-cmpb">
+<h2><span class="section-number">11.4.3.12. </span>0X300+0X100*n+0x024 PWM_CMPB<a class="headerlink" href="#x300-0x100-n-0x024-pwm-cmpb" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM比较器B寄存器（PWM_CMPB）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CMPB：比较寄存器B的数值</div>
+<div class="line">计数器TBCTR与CMPB进行比较，相等时比较器产生一个脉冲给后续的动作器AQ。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x028-pwm-aqctla">
+<h2><span class="section-number">11.4.3.13. </span>0X300+0X100*n+0x028 PWM_AQCTLA<a class="headerlink" href="#x300-0x100-n-0x028-pwm-aqctla" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM动作器控制A寄存器（PWM_AQCTLA）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWMA_INIT：PWMA Initial Value，PWMA初始电平</div>
+<div class="line">0：初始化低电平</div>
+<div class="line">1：初始化高电平</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15：12</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CBD：TBCTR Equal to CMPB and Counter-Down，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPB且计数器正递减时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxA输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxA输出高电平</div>
+<div class="line">3: 反转-反转PWMxA信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CBU：TBCTR Equal to CMPB and Counter-Up，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPB且计数器正递增时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxA输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxA输出高电平</div>
+<div class="line">3: 反转-反转PWMxA信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CAD：TBCTR Equal to CMPA and Counter-Down，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPA且计数器正递减时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxA输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxA输出高电平</div>
+<div class="line">3: 反转-反转PWMxA信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CAU：TBCTR Equal to CMPA and Counter-Up，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPA且计数器正递增时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxA输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxA输出高电平</div>
+<div class="line">3: 反转-反转PWMxA信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PRD：TBCTR Equal to PRD，当时基计数器TBCTR等于周期PRD时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxA输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxA输出高电平</div>
+<div class="line">3: 反转-反转PWMxA信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ZRO：TBCTR Equal to Zero，当时基计数器TBCTR等于0时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxA输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxA输出高电平</div>
+<div class="line">3: 反转-反转PWMxA信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x02c-pwm-aqctlb">
+<h2><span class="section-number">11.4.3.14. </span>0X300+0X100*n+0x02C PWM_AQCTLB<a class="headerlink" href="#x300-0x100-n-0x02c-pwm-aqctlb" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM动作器控制B寄存器（PWM_AQCTLB）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:17</p></td>
+<td><p>/</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PWMB_INIT：PWMB Initial Value，PWMB初始电平</div>
+<div class="line">0：初始化低电平</div>
+<div class="line">1：初始化高电平</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CBD：TBCTR Equal to CMPB and Counter-Down，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPB且计数器正递减时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxB输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxB输出高电平</div>
+<div class="line">3: 反转-反转PWMxB信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CBU：TBCTR Equal to CMPB and Counter-Up，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPB且计数器正递增时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxB输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxB输出高电平</div>
+<div class="line">3: 反转-反转PWMxB信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CAD：TBCTR Equal to CMPA and Counter-Down，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPA且计数器正递减时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxB输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxB输出高电平</div>
+<div class="line">3: 反转-反转PWMxB信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CAU：TBCTR Equal to CMPA and Counter-Up，当时基计数器</div>
+<div class="line">TBCTR等于阈值CMPA且计数器正递增时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxB输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxB输出高电平</div>
+<div class="line">3: 反转-反转PWMxB信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PRD：TBCTR Equal to PRD，当时基计数器TBCTR等于周期PRD时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxB输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxB输出高电平</div>
+<div class="line">3: 反转-反转PWMxB信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ZRO：TBCTR Equal to Zero，当时基计数器TBCTR等于0时动作方式</div>
+<div class="line">0：无动作</div>
+<div class="line">1：置低-强制信号线PWMxB输出低电平</div>
+<div class="line">2: 置高-强制信号线PWMxB输出高电平</div>
+<div class="line">3: 反转-反转PWMxB信号线</div>
+<div class="line">注意：在增减计数模式下，当计数器等于零时，定义计数方向为1（递增方向）。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x044-pwm-etsel">
+<h2><span class="section-number">11.4.3.15. </span>0X300+0X100*n+0x044 PWM_ETSEL<a class="headerlink" href="#x300-0x100-n-0x044-pwm-etsel" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM事件触发选择寄存器（PWM_ETSEL）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INTEN：PWMx Interrupt Enable，PWMx中断使能</div>
+<div class="line">0：禁止PWMx 中断</div>
+<div class="line">1：使能PWMx中断</div>
+<div class="line">此位用来控制PWMx中断产生</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INTSEL：PWMx Interrupt Select，PWMx中断事件选择</div>
+<div class="line">0：/</div>
+<div class="line">1：TBCTR=0时触发事件</div>
+<div class="line">2：TBCTR=PRD时触发事件</div>
+<div class="line">3：/</div>
+<div class="line">4：TBCTR=CMPA且计数器正在递增时触发事件</div>
+<div class="line">5：TBCTR=CMPA且计数器正在递减时触发事件</div>
+<div class="line">6：TBCTR=CMPB且计数器正在递增时触发事件</div>
+<div class="line">7：TBCTR=CMPB且计数器正在递减时触发事件</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x300-0x100-n-0x048-pwm-cnt-dis">
+<h2><span class="section-number">11.4.3.16. </span>0X300+0X100*n+0x048 PWM_CNT_DIS<a class="headerlink" href="#x300-0x100-n-0x048-pwm-cnt-dis" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>PWM调试寄存器（PWM_CNT_DIS）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">PWM_CNT_CK_DIS</div>
+<div class="line">0：没有触发事件产生配置无动作时，时基计数器disable，</div>
+<div class="line">无比较事件发生。CMPA与CMPB可配置相同值，也可不配置默认</div>
+<div class="line">为0，比较动作以配置动作为较高优先级。</div>
+<div class="line">1：配置无动作时，时基计数器enable，有比较事件发生。</div>
+<div class="line">由于优先级原因，CMPA与CMPB不能配置相等，或者CMPA、</div>
+<div class="line">CMPB不能配置为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-pwm-version">
+<h2><span class="section-number">11.4.3.17. </span>0xFFC PWM_VERSION<a class="headerlink" href="#xffc-pwm-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>PWM模块版本寄存器（PWM_VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version （版本号），采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../interface/index.html" class="btn btn-neutral float-right" title="12. 接口" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="11.4.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

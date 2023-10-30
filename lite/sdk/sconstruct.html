@@ -1,0 +1,728 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2.4. SConstruct &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2.5. 编译" href="compile.html" />
+    <link rel="prev" title="2.3. 命令详解" href="commands.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 使用指南</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="architecture.html">2.1. 设计框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sourcecode.html">2.2. 代码结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html">2.3. 命令详解</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.4. SConstruct</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.4.1. 特点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.4.2. 环境安装</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#windows">2.4.2.1. Windows</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#linux">2.4.2.2. Linux</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#scons">2.4.2.2.1. 安装SCons</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#pycryptodomex">2.4.2.2.2. 安装pycryptodomex</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.4.3. 基础用法</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#program">2.4.3.1. Program</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#object">2.4.3.2. Object</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#library">2.4.3.3. Library</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#depends">2.4.3.4. Depends</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.4.4. SConstruct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sconscript">2.4.5. SConscript</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id5">2.4.5.1. 驱动</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">2.4.5.2. 应用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="compile.html">2.5. 编译</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">2.6. 烧录镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gdb.html">2.7. GDB 调试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="driver.html">2.8. 添加驱动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.html">2.9. 添加应用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">2. </span>使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">2.4. </span>SConstruct</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sconstruct">
+<span id="ref-lite-sdk-sconstruct"></span><h1><span class="section-number">2.4. </span>SConstruct<a class="headerlink" href="#sconstruct" title="永久链接至标题">¶</a></h1>
+<p>Luban-Lite 使用 Sconstruct 来进行自动化构建， 它是一种 Python 编写的改进的，跨平台的 gnu make 的替代工具，是一种更简便，更可靠，更高效的编译系统解决方案，一般简称 SCons</p>
+<div class="section" id="id1">
+<h2><span class="section-number">2.4.1. </span>特点<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>SCons 是一种更现代的自动化构建解决方案，相比传统的 gnu make， 其特点更明显：</p>
+<ul class="simple">
+<li><p>使用 Python 脚本做为配置文件，良好的夸平台性</p></li>
+<li><p>内建可靠的自动依赖分析</p></li>
+<li><p>支持 C, C++, D, Java, Fortran, Yacc, Lex, Qt，SWIG 以及 Tex/Latex， 扩展性好，支持用户自扩展编程语言</p></li>
+<li><p>支持 make -j 风格的并行构建，可以同时运行 N 个工作，而 不用担心代码的层次结构</p></li>
+<li><p>使用 Autoconf 风格查找头文件，函数库，函数和类型定义</p></li>
+<li><p>基于MD5识别构建文件的改变，更精准和安全</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">2.4.2. </span>环境安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="windows">
+<h3><span class="section-number">2.4.2.1. </span>Windows<a class="headerlink" href="#windows" title="永久链接至标题">¶</a></h3>
+<p>Luban-Lite 因为其小，兼容性好，快速等特点，因此对于命令行的开发和构建，我们更推荐 Windows 系统</p>
+<p>Windows 下的对应的各种工具已经存放在 <cite>luban-lite/tools/env/tools</cite> 目录当中，<strong>不需要安装</strong></p>
+<div class="figure align-center">
+<img alt="../../_images/win-sdk-tools1.png" src="../../_images/win-sdk-tools1.png" />
+</div>
+</div>
+<div class="section" id="linux">
+<h3><span class="section-number">2.4.2.2. </span>Linux<a class="headerlink" href="#linux" title="永久链接至标题">¶</a></h3>
+<p>Luban-Lite 固件构建需要依赖</p>
+<ul class="simple">
+<li><p>python2 + SCons</p></li>
+<li><p>python3 + pycryptodomex</p></li>
+</ul>
+<p>推荐使用 apt-get 命令直接进行目标软件和依赖的安装</p>
+<div class="section" id="scons">
+<h4><span class="section-number">2.4.2.2.1. </span>安装SCons<a class="headerlink" href="#scons" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">scons</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pycryptodomex">
+<h4><span class="section-number">2.4.2.2.2. </span>安装pycryptodomex<a class="headerlink" href="#pycryptodomex" title="永久链接至标题">¶</a></h4>
+<p>pycryptodomex 是一个 python 编写的加密包，Luban-Lite 中有源码包可以进行编译安装</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">pip</span>
+<span class="n">cd</span> <span class="n">tools</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="n">local_pkgs</span><span class="o">/</span>
+<span class="n">tar</span> <span class="n">xvf</span> <span class="n">pycryptodomex</span><span class="o">-</span><span class="mf">3.11</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">pycryptodomex</span><span class="o">-</span><span class="mf">3.11</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">sudo</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">2.4.3. </span>基础用法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>SCons 使用 SConscript 和 SConstruct 文件来组织源码结构，通常来说一个项目只有一个 SConstruct，但是会有多个 SConscript。</p>
+<p>原则上每个存放有源代码的子目录下都会放置一个 SConscript，但譬如 BSP 的驱动开发等会集合所有的驱动源码到一个 SConscript 中。</p>
+<p>一些常用的 SConscript 方法有：</p>
+<div class="section" id="program">
+<h3><span class="section-number">2.4.3.1. </span>Program<a class="headerlink" href="#program" title="永久链接至标题">¶</a></h3>
+<p>Program 用于生成可执行文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Program(&#39;hello.c&#39;)          编译hello.c可执行文件，根据系统自动生成(hello.exe on Windows; hello on POSIX)
+Program(&#39;hello&#39;,&#39;hello.c&#39;)  指定Output文件名(hello.exe on Windows; hello on POSIX)
+Program([&#39;hello.c&#39;, &#39;file1.c&#39;, &#39;file2.c&#39;]) 编译多个文件，Output文件名以第一个文件命名
+Program(source = &quot;hello.c&quot;,target = &quot;hello&quot;)
+Program(target = &quot;hello&quot; , source = &quot;hello.c&quot;)
+Program(&#39;hello&#39;, Split(&#39;hello.c file1.c file2.c&#39;)) 编译多个文件
+
+Program(Glob(&quot;*.c&quot;))
+src = [&quot;hello.c&quot;,&quot;foo.c&quot;];
+Program(src)
+</pre></div>
+</div>
+</div>
+<div class="section" id="object">
+<h3><span class="section-number">2.4.3.2. </span>Object<a class="headerlink" href="#object" title="永久链接至标题">¶</a></h3>
+<p>Object 用于生成目标文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Object(&#39;hello.c&#39;) 编译hello.c目标文件，根据系统自动生成(hello.obj on Windows; hello.o on POSIX)
+</pre></div>
+</div>
+</div>
+<div class="section" id="library">
+<h3><span class="section-number">2.4.3.3. </span>Library<a class="headerlink" href="#library" title="永久链接至标题">¶</a></h3>
+<p>Library 用于生成静态/动态库文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Library(&#39;foo&#39;, [&#39;f1.c&#39;, &#39;f2.c&#39;, &#39;f3.c&#39;]) 编译library
+SharedLibrary(&#39;foo&#39;, [&#39;f1.c&#39;, &#39;f2.c&#39;, &#39;f3.c&#39;]) 编译 shared library
+StaticLibrary(&#39;bar&#39;, [&#39;f4.c&#39;, &#39;f5.c&#39;, &#39;f6.c&#39;]) 编译 static library
+
+库的使用：
+
+Program(&#39;prog.c&#39;, LIBS=[&#39;foo&#39;, &#39;bar&#39;], LIBPATH=&#39;.&#39;) 连接库，不需加后缀或是前缀
+</pre></div>
+</div>
+</div>
+<div class="section" id="depends">
+<h3><span class="section-number">2.4.3.4. </span>Depends<a class="headerlink" href="#depends" title="永久链接至标题">¶</a></h3>
+<p>Depends 用于明确依赖关系</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Depends</span><span class="p">(</span><span class="n">hello</span><span class="p">,</span> <span class="s1">&#39;other_file&#39;</span><span class="p">)</span>  <span class="o">//</span><span class="n">hello</span> <span class="n">依赖于other_file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">2.4.4. </span>SConstruct<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>Luban-Lite 的 SConstruct 在 SDK 根目录下，主要用来配置编译逻辑和一些全局环境变量的设置，用户可以添加自己的私有的 ENV</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># Luban-Lite root directory</span>
+<span class="n">AIC_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
+<span class="c1"># luban-lite custom scripts</span>
+<span class="n">aic_script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">,</span> <span class="s1">&#39;tools/scripts/&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aic_script_path</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">aic_build</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">chk_prj_config</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">)</span>
+<span class="n">PRJ_CHIP</span><span class="p">,</span><span class="n">PRJ_BOARD</span><span class="p">,</span><span class="n">PRJ_KERNEL</span><span class="p">,</span><span class="n">PRJ_APP</span><span class="p">,</span><span class="n">PRJ_DEFCONFIG_NAME</span><span class="p">,</span><span class="n">PRJ_CUSTOM_LDS</span><span class="p">,</span><span class="n">MKIMAGE_POST_ACTION</span> <span class="o">=</span> <span class="n">get_prj_config</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">)</span>
+<span class="n">PRJ_NAME</span> <span class="o">=</span> <span class="n">PRJ_DEFCONFIG_NAME</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_defconfig&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">PRJ_OUT_DIR</span> <span class="o">=</span> <span class="s1">&#39;output/&#39;</span> <span class="o">+</span> <span class="n">PRJ_NAME</span> <span class="o">+</span> <span class="s1">&#39;/images/&#39;</span>
+<span class="n">AIC_SCRIPT_DIR</span> <span class="o">=</span> <span class="n">aic_script_path</span>
+<span class="n">AIC_COMMON_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">,</span> <span class="s1">&#39;bsp/artinchip/sys/&#39;</span> <span class="o">+</span> <span class="n">PRJ_CHIP</span><span class="p">)</span>
+<span class="n">AIC_PACK_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">,</span> <span class="s1">&#39;target/&#39;</span> <span class="o">+</span> <span class="n">PRJ_CHIP</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">PRJ_BOARD</span> <span class="o">+</span> <span class="s1">&#39;/pack/&#39;</span><span class="p">)</span>
+
+<span class="c1"># Var tranfer to SConscript</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;AIC_ROOT&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;AIC_SCRIPT_DIR&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;AIC_COMMON_DIR&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;AIC_PACK_DIR&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_CHIP&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_BOARD&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_KERNEL&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_APP&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_NAME&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_DEFCONFIG_NAME&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;PRJ_OUT_DIR&#39;</span><span class="p">)</span>
+<span class="c1"># Var tranfer to Kconfig &#39;option env=xxx&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AIC_ROOT&quot;</span><span class="p">]</span>           <span class="o">=</span> <span class="n">AIC_ROOT</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AIC_SCRIPT_DIR&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">AIC_SCRIPT_DIR</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AIC_COMMON_DIR&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">AIC_COMMON_DIR</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;AIC_PACK_DIR&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">AIC_PACK_DIR</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_CHIP&quot;</span><span class="p">]</span>           <span class="o">=</span> <span class="n">PRJ_CHIP</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_BOARD&quot;</span><span class="p">]</span>          <span class="o">=</span> <span class="n">PRJ_BOARD</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_KERNEL&quot;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">PRJ_KERNEL</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_APP&quot;</span><span class="p">]</span>            <span class="o">=</span> <span class="n">PRJ_APP</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_NAME&quot;</span><span class="p">]</span>           <span class="o">=</span> <span class="n">PRJ_NAME</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_DEFCONFIG_NAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PRJ_DEFCONFIG_NAME</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PRJ_OUT_DIR&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">PRJ_OUT_DIR</span>
+
+<span class="c1"># rtconfig</span>
+<span class="n">chip_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">,</span> <span class="s1">&#39;bsp/artinchip/sys/&#39;</span> <span class="o">+</span> <span class="n">PRJ_CHIP</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chip_path</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">rtconfig</span>
+
+<span class="c1"># RTT_ROOT</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;RTT_ROOT&#39;</span><span class="p">):</span>
+    <span class="n">RTT_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;RTT_ROOT&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">RTT_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">AIC_ROOT</span><span class="p">,</span> <span class="s1">&#39;kernel/rt-thread/&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;RTT_ROOT&quot;</span><span class="p">]</span>           <span class="o">=</span> <span class="n">RTT_ROOT</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RTT_ROOT</span><span class="p">,</span> <span class="s1">&#39;tools&#39;</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">building</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># ENV_ROOT</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;ENV_ROOT&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ENV_ROOT</span> <span class="o">=</span> <span class="n">RTT_ROOT</span> <span class="o">+</span> <span class="s1">&#39;/../../tools/env&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ENV_ROOT&quot;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">ENV_ROOT</span>
+
+<span class="c1"># TARGET</span>
+<span class="n">TARGET</span> <span class="o">=</span> <span class="n">PRJ_OUT_DIR</span> <span class="o">+</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">SOC</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">TARGET_EXT</span>
+
+<span class="n">rtconfig</span><span class="o">.</span><span class="n">LFLAGS</span> <span class="o">+=</span> <span class="s1">&#39; -T &#39;</span> <span class="o">+</span> <span class="n">ld</span>
+
+<span class="c1"># add post action</span>
+<span class="n">rtconfig</span><span class="o">.</span><span class="n">POST_ACTION</span> <span class="o">+=</span> <span class="n">MKIMAGE_POST_ACTION</span>
+
+<span class="c1"># create env</span>
+<span class="n">env</span>  <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mingw&#39;</span><span class="p">],</span>
+<span class="n">AS</span>   <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">AS</span><span class="p">,</span>   <span class="n">ASFLAGS</span>   <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">AFLAGS</span><span class="p">,</span>
+<span class="n">CC</span>   <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">CC</span><span class="p">,</span>   <span class="n">CFLAGS</span>   <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">CFLAGS</span><span class="p">,</span>
+<span class="n">CXX</span>  <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">CXX</span><span class="p">,</span>  <span class="n">CXXFLAGS</span>  <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">CXXFLAGS</span><span class="p">,</span>
+<span class="n">AR</span>   <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">AR</span><span class="p">,</span>   <span class="n">ARFLAGS</span>   <span class="o">=</span> <span class="s1">&#39;-rc&#39;</span><span class="p">,</span>
+<span class="n">LINK</span> <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">LINK</span><span class="p">,</span> <span class="n">LINKFLAGS</span> <span class="o">=</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">LFLAGS</span><span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">PrependENVPath</span><span class="p">(</span><span class="s1">&#39;PATH&#39;</span><span class="p">,</span> <span class="n">rtconfig</span><span class="o">.</span><span class="n">EXEC_PATH</span><span class="p">)</span>
+
+<span class="c1"># add --start-group and --end-group for GNU GCC</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;LINKCOM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;$LINK -o $TARGET $LINKFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS -Wl,--start-group $_LIBFLAGS -Wl,--end-group&#39;</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;ASCOM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;ASPPCOM&#39;</span><span class="p">]</span>
+
+<span class="c1"># signature database</span>
+<span class="n">env</span><span class="o">.</span><span class="n">SConsignFile</span><span class="p">(</span><span class="n">PRJ_OUT_DIR</span> <span class="o">+</span> <span class="s2">&quot;.sconsign.dblite&quot;</span><span class="p">)</span>
+
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;RTT_ROOT&#39;</span><span class="p">)</span>
+<span class="n">Export</span><span class="p">(</span><span class="s1">&#39;rtconfig&#39;</span><span class="p">)</span>
+
+<span class="c1"># Var tranfer to building.py</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;AIC_ROOT&#39;</span><span class="p">]</span>                  <span class="o">=</span> <span class="n">AIC_ROOT</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;AIC_SCRIPT_DIR&#39;</span><span class="p">]</span>            <span class="o">=</span> <span class="n">AIC_SCRIPT_DIR</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;AIC_COMMON_DIR&#39;</span><span class="p">]</span>            <span class="o">=</span> <span class="n">AIC_COMMON_DIR</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;AIC_PACK_DIR&#39;</span><span class="p">]</span>              <span class="o">=</span> <span class="n">AIC_PACK_DIR</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_CHIP&#39;</span><span class="p">]</span>                  <span class="o">=</span> <span class="n">PRJ_CHIP</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_BOARD&#39;</span><span class="p">]</span>                 <span class="o">=</span> <span class="n">PRJ_BOARD</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_KERNEL&#39;</span><span class="p">]</span>                <span class="o">=</span> <span class="n">PRJ_KERNEL</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_NAME&#39;</span><span class="p">]</span>                  <span class="o">=</span> <span class="n">PRJ_NAME</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_APP&#39;</span><span class="p">]</span>                   <span class="o">=</span> <span class="n">PRJ_APP</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_DEFCONFIG_NAME&#39;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">PRJ_DEFCONFIG_NAME</span>
+<span class="n">env</span><span class="p">[</span><span class="s1">&#39;PRJ_OUT_DIR&#39;</span><span class="p">]</span>               <span class="o">=</span> <span class="n">PRJ_OUT_DIR</span>
+
+<span class="c1"># prepare building environment</span>
+<span class="n">objs</span> <span class="o">=</span> <span class="n">PrepareBuilding</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">RTT_ROOT</span><span class="p">,</span> <span class="n">has_libcpu</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># make a building</span>
+<span class="n">DoBuilding</span><span class="p">(</span><span class="n">TARGET</span><span class="p">,</span> <span class="n">objs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sconscript">
+<h2><span class="section-number">2.4.5. </span>SConscript<a class="headerlink" href="#sconscript" title="永久链接至标题">¶</a></h2>
+<p>SConscript 是 SCons 构建系统的配置文件</p>
+<div class="section" id="id5">
+<h3><span class="section-number">2.4.5.1. </span>驱动<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>一个典型的驱动程序的 SConscript 示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Import(&#39;AIC_ROOT&#39;)
+Import(&#39;PRJ_KERNEL&#39;)
+from building import *
+
+cwd = GetCurrentDir()
+src = Glob(&#39;*.c&#39;)
+CPPPATH = []
+
+if GetDepend(&#39;DRIVER_DRV_EN&#39;):
+    CPPPATH.append(cwd + &#39;/include/drv&#39;)
+if GetDepend(&#39;DRIVER_HAL_EN&#39;):
+    CPPPATH.append(cwd + &#39;/include/hal&#39;)
+    CPPPATH.append(cwd + &#39;/include/uapi&#39;)
+
+# UART driver
+if GetDepend(&#39;AIC_UART_DRV&#39;):
+    if GetDepend(&#39;DRIVER_DRV_EN&#39;):
+        src += Glob(&#39;drv/uart/*.c&#39;)
+    if GetDepend(&#39;DRIVER_HAL_EN&#39;):
+        src += Glob(&#39;hal/uart/*.c&#39;)
+
+LOCAL_CCFLAGS += &#39; -O0&#39;
+
+//DefineGroup(name， src， depend，**parameters)
+group = DefineGroup(&#39;aic_osal&#39;, src, depend=[&#39;&#39;], CPPPATH=CPPPATH, LOCAL_CCFLAGS=LOCAL_CCFLAGS)
+
+Return(&#39;group&#39;)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">2.4.5.2. </span>应用<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>一个典型的应用程序的 SConscript 示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Import(&#39;AIC_ROOT&#39;)
+Import(&#39;PRJ_KERNEL&#39;)
+from building import *
+
+cwd = GetCurrentDir()
+path = [cwd + &#39;/include&#39;]
+path += [cwd + &#39;/base/include&#39;]
+path += [cwd + &#39;/ge/include&#39;]
+
+path += [cwd + &#39;/ve/include&#39;]
+path += [cwd + &#39;../../../bsp/artinchip/include/uapi&#39;]
+path += [cwd + &#39;/mpp_test&#39;]
+
+if GetDepend([&#39;AIC_MPP_PLAYER_INTERFACE&#39;]):
+    #audio decoder
+    path += [cwd + &#39;/middle_media/audio_decoder/include&#39;]
+    path += [cwd + &#39;/middle_media/audio_decoder/decoder&#39;]
+
+    #base
+    path += [cwd + &#39;/middle_media/base/include&#39;]
+    path += [cwd + &#39;/middle_media/base/parser/mov&#39;]
+    path += [cwd + &#39;/middle_media/base/parser/rawdata&#39;]
+    path += [cwd + &#39;/middle_media/base/stream/file&#39;]
+
+
+src = []
+CPPDEFINES = []
+
+# mpp
+if GetDepend([&#39;LPKG_MPP&#39;]):
+    src += Glob(&#39;./base/memory/*.c&#39;)
+    src += Glob(&#39;./ge/*.c&#39;)
+    src += Glob(&#39;./fb/*.c&#39;)
+    src += Glob(&#39;ve/decoder/*.c&#39;)
+    src += Glob(&#39;ve/common/*.c&#39;)
+    src += Glob(&#39;ve/decoder/jpeg/*.c&#39;)
+    src += Glob(&#39;ve/decoder/png/*.c&#39;)
+    src += Glob(&#39;ve/decoder/h264/*.c&#39;)
+    src += Glob(&#39;./mpp_test/*.c&#39;)
+
+
+if GetDepend([&#39;AIC_MPP_PLAYER_INTERFACE&#39;]):
+    #audio decoder
+    src += Glob(&#39;middle_media/audio_decoder/decoder/*.c&#39;)
+    src += Glob(&#39;middle_media/audio_decoder/decoder/mp3/mp3_decoder.c&#39;)
+
+//DefineGroup(name， src， depend，**parameters)
+group = DefineGroup(&#39;mpp&#39;, src, depend = [&#39;&#39;], CPPPATH = path, CPPDEFINES = CPPDEFINES)
+
+Return(&#39;group&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="compile.html" class="btn btn-neutral float-right" title="2.5. 编译" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="commands.html" class="btn btn-neutral float-left" title="2.3. 命令详解" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

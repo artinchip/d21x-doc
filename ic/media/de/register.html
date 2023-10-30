@@ -1,0 +1,4648 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.1.3. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.2. GE" href="../ge/index.html" />
+    <link rel="prev" title="10.1.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.1. Display Engine (DE)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">10.1.2. 功能描述</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.1.3. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-de-ctrl">10.1.3.1. 0x000 DE_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-de-mode-select">10.1.3.2. 0x004 DE_MODE_SELECT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-de-config-update">10.1.3.3. 0x008 DE_CONFIG_UPDATE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-output-color-depth">10.1.3.4. 0x00C OUTPUT_COLOR_DEPTH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-de-ver-id">10.1.3.5. 0x010 DE_VER_ID</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-dither-rand-seed">10.1.3.6. 0x014 DITHER_RAND_SEED</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-dither-rand-mask-bits">10.1.3.7. 0x018 DITHER_RAND_MASK_BITS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-video-layer-ctrl">10.1.3.8. 0x020 VIDEO_LAYER_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-video-layer-input-size">10.1.3.9. 0x024 VIDEO_LAYER_INPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-video-layer-stride">10.1.3.10. 0x030 VIDEO_LAYER_STRIDE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-video-layer-addr0">10.1.3.11. 0x040 VIDEO_LAYER_ADDR0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x044-video-layer-addr1">10.1.3.12. 0x044 VIDEO_LAYER_ADDR1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-video-layer-addr2">10.1.3.13. 0x048 VIDEO_LAYER_ADDR2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x060-video-layer-tile-offset0">10.1.3.14. 0x060 VIDEO_LAYER_TILE_OFFSET0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x064-video-layer-tile-offset1">10.1.3.15. 0x064 VIDEO_LAYER_TILE_OFFSET1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x070-video-layer-csc0-coef0">10.1.3.16. 0x070 VIDEO_LAYER_CSC0_COEF0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x074-video-layer-csc0-coef1">10.1.3.17. 0x074 VIDEO_LAYER_CSC0_COEF1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x078-video-layer-csc0-coef2">10.1.3.18. 0x078 VIDEO_LAYER_CSC0_COEF2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x07c-video-layer-csc0-coef3">10.1.3.19. 0x07C VIDEO_LAYER_CSC0_COEF3</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-video-layer-csc0-coef4">10.1.3.20. 0x080 VIDEO_LAYER_CSC0_COEF4</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x084-video-layer-csc0-coef5">10.1.3.21. 0x084 VIDEO_LAYER_CSC0_COEF5</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x088-video-layer-csc0-coef6">10.1.3.22. 0x088 VIDEO_LAYER_CSC0_COEF6</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x08c-video-layer-csc0-coef7">10.1.3.23. 0x08C VIDEO_LAYER_CSC0_COEF7</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x090-video-layer-csc0-coef8">10.1.3.24. 0x090 VIDEO_LAYER_CSC0_COEF8</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x094-video-layer-csc0-coef9">10.1.3.25. 0x094 VIDEO_LAYER_CSC0_COEF9</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x098-video-layer-csc0-coef10">10.1.3.26. 0x098 VIDEO_LAYER_CSC0_COEF10</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x09c-video-layer-csc0-coef11">10.1.3.27. 0x09C VIDEO_LAYER_CSC0_COEF11</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a0-ui-layer-ctrl">10.1.3.28. 0x0A0 UI_LAYER_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a4-ui-layer-input-size">10.1.3.29. 0x0A4 UI_LAYER_INPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a8-ui-layer-bg-color">10.1.3.30. 0x0A8 UI_LAYER_BG_COLOR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0ac-ui-layer-color-key">10.1.3.31. 0x0AC UI_LAYER_COLOR_KEY</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0b0-ui-layer-rect-ctrl">10.1.3.32. 0x0B0 UI_LAYER_RECT_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c0-n-0x10-n-0-3-ui-rect-input-size">10.1.3.33. 0x0C0+N*0x10(N=0:3) UI_RECT_INPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c4-n-0x10-n-0-3-ui-rect-offset">10.1.3.34. 0x0C4+N*0x10(N=0:3) UI_RECT_OFFSET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0c8-n-0x10-n-0-3-ui-rect-stride">10.1.3.35. 0x0C8+N*0x10(N=0:3) UI_RECT_STRIDE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0cc-n-0x10-n-0-3-ui-rect-addr">10.1.3.36. 0x0CC+N*0x10(N=0:3) UI_RECT_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x100-blending-bg-color">10.1.3.37. 0x100 BLENDING_BG_COLOR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x104-blending-output-size">10.1.3.38. 0x104 BLENDING_OUTPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x10c-ui-layer-offset">10.1.3.39. 0x10C UI_LAYER_OFFSET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x114-video-layer-offset">10.1.3.40. 0x114 VIDEO_LAYER_OFFSET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x120-video-scaler0-ctrl">10.1.3.41. 0x120 VIDEO_SCALER0_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x130-scaler-ch0-input-size">10.1.3.42. 0x130 SCALER_CH0_INPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x134-scaler-ch0-output-size">10.1.3.43. 0x134 SCALER_CH0_OUTPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x138-scaler0-ch0-h-init-phase">10.1.3.44. 0x138 SCALER0_CH0_H_INIT_PHASE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x13c-scaler0-ch0-h-ratio">10.1.3.45. 0x13C SCALER0_CH0_H_RATIO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x140-scaler0-ch0-v-init-phase">10.1.3.46. 0x140 SCALER0_CH0_V_INIT_PHASE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x144-scaler0-ch0-v-ratio">10.1.3.47. 0x144 SCALER0_CH0_V_RATIO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x150-scaler0-ch1-input-size">10.1.3.48. 0x150 SCALER0_CH1_INPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x154-scaler0-ch1-output-size">10.1.3.49. 0x154 SCALER0_CH1_OUTPUT_SIZE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x158-scaler0-ch1-h-init-phase">10.1.3.50. 0x158 SCALER0_CH1_H_INIT_PHASE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x15c-scaler0-ch1-h-ratio">10.1.3.51. 0x15C SCALER0_CH1_H_RATIO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x160-scaler0-ch1-v-init-phase">10.1.3.52. 0x160 SCALER0_CH1_V_INIT_PHASE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x164-scaler0-ch1-v-ratio">10.1.3.53. 0x164 SCALER0_CH1_V_RATIO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x170-wb-ctrl">10.1.3.54. 0x170 WB_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x174-wb-int">10.1.3.55. 0x174 WB_INT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x178-wb-int-status">10.1.3.56. 0x178 WB_INT_STATUS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x180-wb-stride">10.1.3.57. 0x180 WB_STRIDE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x190-wb-addr">10.1.3.58. 0x190 WB_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x194-crc-check">10.1.3.59. 0x194 CRC_CHECK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x198-input-id">10.1.3.60. 0x198 INPUT_ID</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x19c-output-id">10.1.3.61. 0x19C OUTPUT_ID</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1d0-timing-ctrl">10.1.3.62. 0x1D0 TIMING_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1d4-timing-int">10.1.3.63. 0x1D4 TIMING_INT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1d8-timing-int-status">10.1.3.64. 0x1D8 TIMING_INT_STATUS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1dc-timing-line-set">10.1.3.65. 0x1DC TIMING_LINE_SET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1e0-timing-line-set">10.1.3.66. 0x1E0 TIMING_LINE_SET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1e4-timing-h-porch">10.1.3.67. 0x1E4 TIMING_H_PORCH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1e8-timing-v-porch">10.1.3.68. 0x1E8 TIMING_V_PORCH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1ec-timing-sync-pluse">10.1.3.69. 0x1EC TIMING_SYNC_PLUSE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1f0-timing-pol-set">10.1.3.70. 0x1F0 TIMING_POL_SET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x1f4-timing-debug">10.1.3.71. 0x1F4 TIMING_DEBUG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x400-4-n-n-0-47-scaler0-ch0-h-coef">10.1.3.72. 0x400+4*N(N=0:47) SCALER0_CH0_H_COEF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x500-4-n-n-0-31-scaler0-ch0-v-coef-table">10.1.3.73. 0x500+4*N(N=0:31) SCALER0_CH0_V_COEF_TABLE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x600-4-n-n-0-47-scaler0-ch1-h-coef">10.1.3.74. 0x600+4*N(N=0:47) SCALER0_CH1_H_COEF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x700-4-n-n-0-31-scaler0-ch1-v-coef">10.1.3.75. 0x700+4*N(N=0:31) SCALER0_CH1_V_COEF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x880-qos-v-p0">10.1.3.76. 0x880 QOS_V_P0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x884-qos-v-p1">10.1.3.77. 0x884 QOS_V_P1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x888-qos-v-p2">10.1.3.78. 0x888 QOS_V_P2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x88c-qos-ui">10.1.3.79. 0x88C QOS_UI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x890-qos-urgent">10.1.3.80. 0x890 QOS_URGENT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">10.3. Video Engine (VE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsi/index.html">10.6. MIPI DSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">10.8. AUDIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">10.9. Integrated Interchip Sound (I2S)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.1. </span>DE</a> &raquo;</li>
+        
+      <li><span class="section-number">10.1.3. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">10.1.3. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-de-ctrl">
+<h2><span class="section-number">10.1.3.1. </span>0x000 DE_CTRL<a class="headerlink" href="#x000-de-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DE控制（DE Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DITHER_EN</div>
+<div class="line">Dither开关控制</div>
+<div class="line">0:关闭Dither</div>
+<div class="line">1:打开Dither</div>
+<div class="line">当颜色输出深度寄存器设置的输出小于8bits的时候打开dither功</div>
+<div class="line">能，dither功能有效</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-de-mode-select">
+<h2><span class="section-number">10.1.3.2. </span>0x004 DE_MODE_SELECT<a class="headerlink" href="#x004-de-mode-select" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DE模式选择（DE Mode Select）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>10:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COLOR_BAR_MODE</div>
+<div class="line">0:color bar第一个竖条颜色为0x000000</div>
+<div class="line">1:color bar第一个竖条颜色为0x0000FF</div>
+<div class="line">2:color bar第一个竖条颜色为0x00FF00</div>
+<div class="line">3:color bar第一个竖条颜色为0x00FFFF</div>
+<div class="line">4:color bar第一个竖条颜色为0xFF0000</div>
+<div class="line">5:color bar第一个竖条颜色为0xFF00FF</div>
+<div class="line">6:color bar第一个竖条颜色为0xFFFF00</div>
+<div class="line">7:color bar第一个竖条颜色为0xFFFFFF</div>
+<div class="line">当打开color bar 模式时，可以选择color bar 第一个竖条</div>
+<div class="line">的颜色值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MODE_SELECT</div>
+<div class="line">模式选择</div>
+<div class="line">0:nomal mode 正常模式</div>
+<div class="line">1:color bar 彩色条纹模式</div>
+<div class="line">Nomal mode 模式是DE的默认处理模式，从memory读取数据，完</div>
+<div class="line">成图层叠加后，然后通过timing接口输出</div>
+<div class="line">color bar模式不需要读取外部memory的数据，由DE内部生成一幅</div>
+<div class="line">RGB的彩色条纹图像，通过timing接口或者回写接口输出，主要用</div>
+<div class="line">来debug</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-de-config-update">
+<h2><span class="section-number">10.1.3.3. </span>0x008 DE_CONFIG_UPDATE<a class="headerlink" href="#x008-de-config-update" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>DE配置更新（DE Config Update）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CONFIG_UPDATE</div>
+<div class="line">配置更新控制</div>
+<div class="line">0:配置不更新</div>
+<div class="line">1:配置准备好更新</div>
+<div class="line">软件写“1”后，表示preload register配置信息已经准备好，允许</div>
+<div class="line">硬件更新preload register配置信息到shadow register。当硬件</div>
+<div class="line">完成更新后，自动清零</div>
+<div class="line">当软件写“1”后，软件也可以在任意时刻写“0”，由硬件来保证对此</div>
+<div class="line">控制阈的操作是原子操作</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-output-color-depth">
+<h2><span class="section-number">10.1.3.4. </span>0x00C OUTPUT_COLOR_DEPTH<a class="headerlink" href="#x00c-output-color-depth" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输出颜色深度（Output Color Depth）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>17:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">R_DEPTH</div>
+<div class="line">R分量颜色深度</div>
+<div class="line">0:8bit</div>
+<div class="line">1:6bit</div>
+<div class="line">2:5bit</div>
+<div class="line">3:保留</div>
+<div class="line">当输出为6bit或者5bit时候，可以打开Dither功能，使图像更平</div>
+<div class="line">滑，否则直接丢弃低位bit</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">G_DEPTH</div>
+<div class="line">G分量颜色深度</div>
+<div class="line">0:8bit</div>
+<div class="line">1:6bit</div>
+<div class="line">2:5bit</div>
+<div class="line">3:保留</div>
+<div class="line">当输出为6bit或者5bit时候，可以打开Dither功能，使图像更平</div>
+<div class="line">滑，否则直接丢弃低位bit</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">B_DEPTH</div>
+<div class="line">B分量颜色深度</div>
+<div class="line">0:8bit</div>
+<div class="line">1:6bit</div>
+<div class="line">2:5bit</div>
+<div class="line">3:保留</div>
+<div class="line">当输出为6bit或者5bit时候，可以打开Dither功能，使图像更</div>
+<div class="line">平滑，否则直接丢弃低位bit</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-de-ver-id">
+<h2><span class="section-number">10.1.3.5. </span>0x010 DE_VER_ID<a class="headerlink" href="#x010-de-ver-id" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>DE版本（DE Version ID）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R0</p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line">DE_PATCH_ID</div>
+<div class="line">修订号</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">DE_VER_ID</div>
+<div class="line">[15:8]为主版本号，[7:0]为子版本号，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-dither-rand-seed">
+<h2><span class="section-number">10.1.3.6. </span>0x014 DITHER_RAND_SEED<a class="headerlink" href="#x014-dither-rand-seed" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>Dither随机种子（Dither Rand Seed）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RAND_DITHER_EN</div>
+<div class="line">0:随机Dither关闭</div>
+<div class="line">1:随机Dither打开</div>
+<div class="line">当DITHERING_EN为1的时候，可以选择打开随机Dither功能，当选</div>
+<div class="line">择随机Dither的时候，误差扩散Dither的模板随机选择。当</div>
+<div class="line">DITHERING_EN为0的时候，RAND_DITHER_EN无效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RAND_TEMPORAL_DITHER_EN</div>
+<div class="line">0:时域随机Dither关闭</div>
+<div class="line">1:时域随机Dither打开</div>
+<div class="line">当RAND_DITHER_EN关闭的时候，RAND_TEMPORAL_DITHER_EN无效</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>26:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">RAND_DITHER_SEED</div>
+<div class="line">当选择随机Dither的时候，需要设置位宽为24bits的随机种子</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-dither-rand-mask-bits">
+<h2><span class="section-number">10.1.3.7. </span>0x018 DITHER_RAND_MASK_BITS<a class="headerlink" href="#x018-dither-rand-mask-bits" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00E10000</p></th>
+<th class="head"><p>Dither随机掩码（Dither Rand Mask Bits）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xE10000</p></td>
+<td><div class="line-block">
+<div class="line">DITHER_MASK_BITS</div>
+<div class="line">当选择随机Dither的时候，需要设置位宽为24bits的Mask Bits</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-video-layer-ctrl">
+<h2><span class="section-number">10.1.3.8. </span>0x020 VIDEO_LAYER_CTRL<a class="headerlink" href="#x020-video-layer-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层控制（Video Layer Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FORMAT</div>
+<div class="line">像素格式</div>
+<div class="line">0x00:ARGB 8-8-8-8</div>
+<div class="line">0x01:ABGR 8-8-8-8</div>
+<div class="line">0x02:RGBA 8-8-8-8</div>
+<div class="line">0x03:BGRA 8-8-8-8</div>
+<div class="line">0x04:XRGB 8-8-8-8</div>
+<div class="line">0x05:XBGR 8-8-8-8</div>
+<div class="line">0x06:RGBX 8-8-8-8</div>
+<div class="line">0x07:BGRX 8-8-8-8</div>
+<div class="line">0x08:RGB 8-8-8</div>
+<div class="line">0x09:BGR 8-8-8</div>
+<div class="line">0x0A:ARGB 1-5-5-5</div>
+<div class="line">0x0B:ABGR 1-5-5-5</div>
+<div class="line">0x0C:RGBA 5-5-5-1</div>
+<div class="line">0x0D:BGRA 5-5-5-1</div>
+<div class="line">0x0E:RGB 5-6-5</div>
+<div class="line">0x0F:BGR 5-6-5</div>
+<div class="line">0x10:ARGB 4-4-4-4</div>
+<div class="line">0x11:ABGR 4-4-4-4</div>
+<div class="line">0x12:RGBA 4-4-4-4</div>
+<div class="line">0x13:BGRA 4-4-4-4</div>
+<div class="line">0x20:YUV420P</div>
+<div class="line">0x21:NV12</div>
+<div class="line">0x22:NV21</div>
+<div class="line">0x23:YUV422P</div>
+<div class="line">0x24:NV16</div>
+<div class="line">0x25:NV61</div>
+<div class="line">0x26:YUYV</div>
+<div class="line">0x27:YVYU</div>
+<div class="line">0x28:UYVY</div>
+<div class="line">0x29:VYUY</div>
+<div class="line">0x2a:YUV400</div>
+<div class="line">0x2b:reserved</div>
+<div class="line">0x30:YUV420_64x32</div>
+<div class="line">0x31:YUV420_128x16</div>
+<div class="line">0x32:YUV422_64x32</div>
+<div class="line">0x33:YUV422_128x16</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN</div>
+<div class="line">图层使能控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-video-layer-input-size">
+<h2><span class="section-number">10.1.3.9. </span>0x024 VIDEO_LAYER_INPUT_SIZE<a class="headerlink" href="#x024-video-layer-input-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层输入宽高（Video Layer Input Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_HEIGHT</div>
+<div class="line">图层高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_WIDTH</div>
+<div class="line">图层宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-video-layer-stride">
+<h2><span class="section-number">10.1.3.10. </span>0x030 VIDEO_LAYER_STRIDE<a class="headerlink" href="#x030-video-layer-stride" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层行对齐（Video Layer Stride）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PLANE1_STRIDE</div>
+<div class="line">Plane1行对齐宽度</div>
+<div class="line">格式YUV420_TILE_64x32/YUV422_TILE_64x32需要64 bytes对齐</div>
+<div class="line">格式YUV420_TILE_128x16/YUV422_TILE_128x16需要128bytes</div>
+<div class="line">对齐, 其他格式需要8bytes对齐</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PLANE0_STRIDE</div>
+<div class="line">Plane0行对齐宽度</div>
+<div class="line">格式YUV420_TILE_64x32/YUV422_TILE_64x32需要64 bytes对齐</div>
+<div class="line">格式YUV420_TILE_128x16/YUV422_TILE_128x16需要128bytes</div>
+<div class="line">对齐, 其他格式需要8bytes对齐</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-video-layer-addr0">
+<h2><span class="section-number">10.1.3.11. </span>0x040 VIDEO_LAYER_ADDR0<a class="headerlink" href="#x040-video-layer-addr0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层地址0（Video Layer Address0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADDR0</div>
+<div class="line">Video图层plane0地址</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x044-video-layer-addr1">
+<h2><span class="section-number">10.1.3.12. </span>0x044 VIDEO_LAYER_ADDR1<a class="headerlink" href="#x044-video-layer-addr1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层地址1（Video Layer Address1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADDR1</div>
+<div class="line">Video图层plane1地址</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-video-layer-addr2">
+<h2><span class="section-number">10.1.3.13. </span>0x048 VIDEO_LAYER_ADDR2<a class="headerlink" href="#x048-video-layer-addr2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层地址2（Video Layer Address2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADDR2</div>
+<div class="line">Video图层plane2地址</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x060-video-layer-tile-offset0">
+<h2><span class="section-number">10.1.3.14. </span>0x060 VIDEO_LAYER_TILE_OFFSET0<a class="headerlink" href="#x060-video-layer-tile-offset0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层Plane0 Tile块内偏移（Video Layer Tile Offset0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Y_OFFSET</div>
+<div class="line">垂直偏移</div>
+<div class="line">当格式为tile格式时候的块内垂直坐标偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">X_OFFSET</div>
+<div class="line">水平偏移</div>
+<div class="line">当格式为tile格式时候的块内水平坐标偏移</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x064-video-layer-tile-offset1">
+<h2><span class="section-number">10.1.3.15. </span>0x064 VIDEO_LAYER_TILE_OFFSET1<a class="headerlink" href="#x064-video-layer-tile-offset1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层Plane1 Tile块内偏移（Video Layer Tile Offset1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Y_OFFSET</div>
+<div class="line">垂直偏移</div>
+<div class="line">当格式为tile格式时候的块内垂直坐标偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">X_OFFSET</div>
+<div class="line">水平偏移</div>
+<div class="line">当格式为tile格式时候的块内水平坐标偏移</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x070-video-layer-csc0-coef0">
+<h2><span class="section-number">10.1.3.16. </span>0x070 VIDEO_LAYER_CSC0_COEF0<a class="headerlink" href="#x070-video-layer-csc0-coef0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000004a8</p></th>
+<th class="head"><p>Video图层CSC0系数0（Video Layer CSC0 COEF0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x04a8</p></td>
+<td><div class="line-block">
+<div class="line">COEF0</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF0 = coef0 * 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x074-video-layer-csc0-coef1">
+<h2><span class="section-number">10.1.3.17. </span>0x074 VIDEO_LAYER_CSC0_COEF1<a class="headerlink" href="#x074-video-layer-csc0-coef1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层CSC0系数1（Video Layer CSC0 COEF1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF1</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF1 = coef1* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x078-video-layer-csc0-coef2">
+<h2><span class="section-number">10.1.3.18. </span>0x078 VIDEO_LAYER_CSC0_COEF2<a class="headerlink" href="#x078-video-layer-csc0-coef2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000662</p></th>
+<th class="head"><p>Video图层CSC0系数2（Video Layer CSC0 COEF2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0662</p></td>
+<td><div class="line-block">
+<div class="line">COEF2</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF2 = coef2* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x07c-video-layer-csc0-coef3">
+<h2><span class="section-number">10.1.3.19. </span>0x07C VIDEO_LAYER_CSC0_COEF3<a class="headerlink" href="#x07c-video-layer-csc0-coef3" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00003212</p></th>
+<th class="head"><p>Video图层CSC0系数3（Video Layer CSC0 COEF3）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3212</p></td>
+<td><div class="line-block">
+<div class="line">COEF3</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF3 = coef3* 16</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-video-layer-csc0-coef4">
+<h2><span class="section-number">10.1.3.20. </span>0x080 VIDEO_LAYER_CSC0_COEF4<a class="headerlink" href="#x080-video-layer-csc0-coef4" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000004a8</p></th>
+<th class="head"><p>Video图层CSC0系数4（Video Layer CSC0 COEF4）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x04a8</p></td>
+<td><div class="line-block">
+<div class="line">COEF4</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF4 = coef4* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x084-video-layer-csc0-coef5">
+<h2><span class="section-number">10.1.3.21. </span>0x084 VIDEO_LAYER_CSC0_COEF5<a class="headerlink" href="#x084-video-layer-csc0-coef5" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001e70</p></th>
+<th class="head"><p>Video图层CSC0系数5（Video Layer CSC0 COEF5）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1e70</p></td>
+<td><div class="line-block">
+<div class="line">COEF5</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF5 = coef5* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x088-video-layer-csc0-coef6">
+<h2><span class="section-number">10.1.3.22. </span>0x088 VIDEO_LAYER_CSC0_COEF6<a class="headerlink" href="#x088-video-layer-csc0-coef6" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00001cc0</p></th>
+<th class="head"><p>Video图层CSC0系数6（Video Layer CSC0 COEF6）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1cc0</p></td>
+<td><div class="line-block">
+<div class="line">COEF6</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF6 = coef6* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x08c-video-layer-csc0-coef7">
+<h2><span class="section-number">10.1.3.23. </span>0x08C VIDEO_LAYER_CSC0_COEF7<a class="headerlink" href="#x08c-video-layer-csc0-coef7" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000087a</p></th>
+<th class="head"><p>Video图层CSC0系数7（Video Layer CSC0 COEF7）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x087a</p></td>
+<td><div class="line-block">
+<div class="line">COEF7</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF7 = coef7* 16</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x090-video-layer-csc0-coef8">
+<h2><span class="section-number">10.1.3.24. </span>0x090 VIDEO_LAYER_CSC0_COEF8<a class="headerlink" href="#x090-video-layer-csc0-coef8" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000004a8</p></th>
+<th class="head"><p>Video图层CSC0系数8（Video Layer CSC0 COEF8）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x04a8</p></td>
+<td><div class="line-block">
+<div class="line">COEF8</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF8 = coef8* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x094-video-layer-csc0-coef9">
+<h2><span class="section-number">10.1.3.25. </span>0x094 VIDEO_LAYER_CSC0_COEF9<a class="headerlink" href="#x094-video-layer-csc0-coef9" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000811</p></th>
+<th class="head"><p>Video图层CSC0系数9（Video Layer CSC0 COEF9）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0811</p></td>
+<td><div class="line-block">
+<div class="line">COEF9</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF9 = coef9* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x098-video-layer-csc0-coef10">
+<h2><span class="section-number">10.1.3.26. </span>0x098 VIDEO_LAYER_CSC0_COEF10<a class="headerlink" href="#x098-video-layer-csc0-coef10" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Video图层CSC0系数10（Video Layer CSC0 COEF10）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF10</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF10 = coef22* 1024</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x09c-video-layer-csc0-coef11">
+<h2><span class="section-number">10.1.3.27. </span>0x09C VIDEO_LAYER_CSC0_COEF11<a class="headerlink" href="#x09c-video-layer-csc0-coef11" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00002eb4</p></th>
+<th class="head"><p>Video图层CSC0系数11（Video Layer CSC0 COEF11）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2eb4</p></td>
+<td><div class="line-block">
+<div class="line">COEF11</div>
+<div class="line">YUV转RGB系数</div>
+<div class="line">COEF11 = coef11* 16</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a0-ui-layer-ctrl">
+<h2><span class="section-number">10.1.3.28. </span>0x0A0 UI_LAYER_CTRL<a class="headerlink" href="#x0a0-ui-layer-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI图层控制（UI Layer Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">G_ALPHA</div>
+<div class="line">图层全局alpha值</div>
+<div class="line">当alpha模式为全局alpha时，整个图层的alpha采用统一的全局</div>
+<div class="line">alpha。全局alpha的取值范围为0~255</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:22</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALPHA_MODE</div>
+<div class="line">Alpha模式</div>
+<div class="line">0:Pixels alpha模式</div>
+<div class="line">当不存在Pixels alpha时候，默认Pixels alpha 值为255，</div>
+<div class="line">输入Alpha值为Pixels alpha</div>
+<div class="line">1:全局alpha模式</div>
+<div class="line">输入Alpha的值为G_ALPHA</div>
+<div class="line">2:混合alpha模式</div>
+<div class="line">输入alpha为pixels alpha * G_ALPHA/255</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>21</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BG_BLEND_EN</div>
+<div class="line">0:不允许UI和背景叠加</div>
+<div class="line">1:允许UI和背景叠加</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>20:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>14:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_FORMAT</div>
+<div class="line">像素格式</div>
+<div class="line">0x00:ARGB 8-8-8-8</div>
+<div class="line">0x01:ABGR 8-8-8-8</div>
+<div class="line">0x02:RGBA 8-8-8-8</div>
+<div class="line">0x03:BGRA 8-8-8-8</div>
+<div class="line">0x04:XRGB 8-8-8-8</div>
+<div class="line">0x05:XBGR 8-8-8-8</div>
+<div class="line">0x06:RGBX 8-8-8-8</div>
+<div class="line">0x07:BGRX 8-8-8-8</div>
+<div class="line">0x08:RGB 8-8-8</div>
+<div class="line">0x09:BGR 8-8-8</div>
+<div class="line">0x0A:ARGB 1-5-5-5</div>
+<div class="line">0x0B:ABGR 1-5-5-5</div>
+<div class="line">0x0C:RGBA 5-5-5-1</div>
+<div class="line">0x0D:BGRA 5-5-5-1</div>
+<div class="line">0x0E:RGB 5-6-5</div>
+<div class="line">0x0F:BGR 5-6-5</div>
+<div class="line">0x10:ARGB 4-4-4-4</div>
+<div class="line">0x11:ABGR 4-4-4-4</div>
+<div class="line">0x12:RGBA 4-4-4-4</div>
+<div class="line">0x13:BGRA 4-4-4-4</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALPHA_EN</div>
+<div class="line">Alpha控制开关</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+<div class="line">如果Alpha控制开关开启，UI图层和Video图层的重叠区域进行</div>
+<div class="line">Alpha混合叠加。如果BG_BLEND_EN标记为1，UI图层和Blending</div>
+<div class="line">背景的重叠区域也进行Alpha混合叠加如果Alpha控制开关关闭，</div>
+<div class="line">不进行alpha叠加，UI图层的覆盖区域显示UI图层图像</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COLOR_KEY_EN</div>
+<div class="line">Color Key 控制开关</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+<div class="line">如果Color Key控制开关开启，在UI图层和Video图层的重叠区</div>
+<div class="line">域，UI图层进行Color Key匹配，如果匹配成功，重叠区域显示</div>
+<div class="line">Video图层图像，否则显示UI图层图像。如果Color Key控制开关</div>
+<div class="line">关闭，UI图层和Video图层的重叠区域显示UI图层的画面。如果</div>
+<div class="line">BG_BLEND_EN标记为1，UI图层和Blending背景的重叠区域也进行</div>
+<div class="line">Color Key混合叠加。如果Color Key和Alpha控制开关同时打</div>
+<div class="line">开，优先进行Color Key，然后进行alpha混合。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN</div>
+<div class="line">图层使能控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a4-ui-layer-input-size">
+<h2><span class="section-number">10.1.3.29. </span>0x0A4 UI_LAYER_INPUT_SIZE<a class="headerlink" href="#x0a4-ui-layer-input-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI图层宽高（UI Layer Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LAYER_HEIGHT</div>
+<div class="line">图层输入高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LAYER _WIDTH</div>
+<div class="line">图层输入宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a8-ui-layer-bg-color">
+<h2><span class="section-number">10.1.3.30. </span>0x0A8 UI_LAYER_BG_COLOR<a class="headerlink" href="#x0a8-ui-layer-bg-color" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI图层背景色（UI Layer Backgroud Color）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ALPHA_VALUE</div>
+<div class="line">透明度分量</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">R_VALUE</div>
+<div class="line">红色分量</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">G_VALUE</div>
+<div class="line">绿色分量</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">B_VALUE</div>
+<div class="line">蓝色分量</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0ac-ui-layer-color-key">
+<h2><span class="section-number">10.1.3.31. </span>0x0AC UI_LAYER_COLOR_KEY<a class="headerlink" href="#x0ac-ui-layer-color-key" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI图层Color Key（UI Layer Color Key）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">R_VALUE</div>
+<div class="line">Color Key功能打开的时候和UI图层像素进行匹配的红色值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">G_VALUE</div>
+<div class="line">Color Key功能打开的时候和UI图层像素进行匹配的绿色值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">B_VALUE</div>
+<div class="line">Color Key功能打开的时候和UI图层像素进行匹配的蓝色值</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0b0-ui-layer-rect-ctrl">
+<h2><span class="section-number">10.1.3.32. </span>0x0B0 UI_LAYER_RECT_CTRL<a class="headerlink" href="#x0b0-ui-layer-rect-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI矩形区控制（UI Layer Rectangle Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RECT_EN_3</div>
+<div class="line">矩形区域3开关控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RECT_EN_2</div>
+<div class="line">矩形区域2开关控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RECT_EN_1</div>
+<div class="line">矩形区域1开关控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RECT_EN_0</div>
+<div class="line">矩形区域0开关控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c0-n-0x10-n-0-3-ui-rect-input-size">
+<h2><span class="section-number">10.1.3.33. </span>0x0C0+N*0x10(N=0:3) UI_RECT_INPUT_SIZE<a class="headerlink" href="#x0c0-n-0x10-n-0-3-ui-rect-input-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI矩形区输入宽高（UI Rectangle Input Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_HEIGHT</div>
+<div class="line">图层输入高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT _WIDTH</div>
+<div class="line">图层输入宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c4-n-0x10-n-0-3-ui-rect-offset">
+<h2><span class="section-number">10.1.3.34. </span>0x0C4+N*0x10(N=0:3) UI_RECT_OFFSET<a class="headerlink" href="#x0c4-n-0x10-n-0-3-ui-rect-offset" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI矩形区偏移（UI Rectangle Offset）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Y_OFFSET</div>
+<div class="line">垂直偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">X_OFFSET</div>
+<div class="line">水平偏移</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0c8-n-0x10-n-0-3-ui-rect-stride">
+<h2><span class="section-number">10.1.3.35. </span>0x0C8+N*0x10(N=0:3) UI_RECT_STRIDE<a class="headerlink" href="#x0c8-n-0x10-n-0-3-ui-rect-stride" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI矩形区行对齐（UI Rectangle Stride）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STRIDE</div>
+<div class="line">矩形区memory行对齐宽度</div>
+<div class="line">需要8bytes对齐</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0cc-n-0x10-n-0-3-ui-rect-addr">
+<h2><span class="section-number">10.1.3.36. </span>0x0CC+N*0x10(N=0:3) UI_RECT_ADDR<a class="headerlink" href="#x0cc-n-0x10-n-0-3-ui-rect-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>UI矩形区地址（UI Rectangle Address）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADDR</div>
+<div class="line">矩形区地址</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x100-blending-bg-color">
+<h2><span class="section-number">10.1.3.37. </span>0x100 BLENDING_BG_COLOR<a class="headerlink" href="#x100-blending-bg-color" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Blending背景颜色（Blending BackGround Color）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PIXELS_R</div>
+<div class="line">背景颜色Red分量</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PIXELS_G</div>
+<div class="line">背景颜色Green分量</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PIXELS_B</div>
+<div class="line">背景颜色Blue分量</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x104-blending-output-size">
+<h2><span class="section-number">10.1.3.38. </span>0x104 BLENDING_OUTPUT_SIZE<a class="headerlink" href="#x104-blending-output-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Blending输出宽高（Blending Output Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_HEIGHT输出高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUT_WIDTH输出宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x10c-ui-layer-offset">
+<h2><span class="section-number">10.1.3.39. </span>0x10C UI_LAYER_OFFSET<a class="headerlink" href="#x10c-ui-layer-offset" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Blending UI图层坐标偏移（UI Layer Offset）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Y_OFFSET</div>
+<div class="line">垂直偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">X_OFFSET</div>
+<div class="line">水平偏移</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x114-video-layer-offset">
+<h2><span class="section-number">10.1.3.40. </span>0x114 VIDEO_LAYER_OFFSET<a class="headerlink" href="#x114-video-layer-offset" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Blending Video图层坐标偏移（Video Layer Offset）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Y_OFFSET</div>
+<div class="line">垂直偏移</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">X_OFFSET</div>
+<div class="line">水平偏移</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x120-video-scaler0-ctrl">
+<h2><span class="section-number">10.1.3.41. </span>0x120 VIDEO_SCALER0_CTRL<a class="headerlink" href="#x120-video-scaler0-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0控制（Scaler0 Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CH1_V_COEF_SELECT</div>
+<div class="line">Channel 1 垂直滤波系数选择</div>
+<div class="line">0:内置系数</div>
+<div class="line">1:查表</div>
+<div class="line">当scaler采用多相位滤波算法的时候用来选择不同的系数表来源。</div>
+<div class="line">可以选择内置系数或者查表。当选择内置系数的时候，scaler采用</div>
+<div class="line">芯片内部的scaler系数，不需要软件再配置scaler系数表。当选择</div>
+<div class="line">查表的时候，需要软件配置scaler系数表。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CH1_H_COEF_SELECT</div>
+<div class="line">Channel 1 水平滤波系数选择</div>
+<div class="line">0:内置系数</div>
+<div class="line">1:查表</div>
+<div class="line">当scaler采用多相位滤波算法的时候用来选择不同的系数表来源。</div>
+<div class="line">可以选择内置系数或者查表。当选择内置系数的时候，scaler采用</div>
+<div class="line">芯片内部的scaler系数，不需要软件再配置scaler系数表。当选择</div>
+<div class="line">查表的时候，需要软件配置scaler系数表。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CH0_V_COEF_SELECT</div>
+<div class="line">Channel 0 垂直滤波系数选择</div>
+<div class="line">0:内置系数</div>
+<div class="line">1:查表</div>
+<div class="line">当scaler采用多相位滤波算法的时候用来选择不同的系数表来源。</div>
+<div class="line">可以选择内置系数或者查表。当选择内置系数的时候，scaler采用</div>
+<div class="line">芯片内部的scaler系数，不需要软件再配置scaler系数表。当选择</div>
+<div class="line">查表的时候，需要软件配置scaler系数表。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CH0_H_COEF_SELECT</div>
+<div class="line">Channel 0 水平滤波系数选择</div>
+<div class="line">0:内置系数</div>
+<div class="line">1:查表</div>
+<div class="line">当scaler采用多相位滤波算法的时候用来选择不同的系数表来源。</div>
+<div class="line">可以选择内置系数或者查表。当选择内置系数的时候，scaler采用</div>
+<div class="line">芯片内部的scaler系数，不需要软件再配置scaler系数表。当选择</div>
+<div class="line">查表的时候，需要软件配置scaler系数表。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">METHOD_SELECT</div>
+<div class="line">算法选择</div>
+<div class="line">0:多相位滤波（6x4 taps 16 phases Polyphase filtering）</div>
+<div class="line">1:双线性滤波（Bi-linear filtering）</div>
+<div class="line">双线性滤波不需要配置滤波系数表，多相位滤波需要可以选择采</div>
+<div class="line">用芯片内置系数表或者软件采用查表的方式配置外部系数表</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EN</div>
+<div class="line">Scaler0使能控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x130-scaler-ch0-input-size">
+<h2><span class="section-number">10.1.3.42. </span>0x130 SCALER_CH0_INPUT_SIZE<a class="headerlink" href="#x130-scaler-ch0-input-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan0输入宽高（Scaler0 Ch0 Input Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_HEIGHT</div>
+<div class="line">Channel 0输入高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_WIDTH</div>
+<div class="line">Channel 0输入宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x134-scaler-ch0-output-size">
+<h2><span class="section-number">10.1.3.43. </span>0x134 SCALER_CH0_OUTPUT_SIZE<a class="headerlink" href="#x134-scaler-ch0-output-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan0输出宽高（Scaler0 Ch0 Output Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTPUT_HEIGHT</div>
+<div class="line">Channel 0输出高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTPUT_WIDTH</div>
+<div class="line">Channel 0输出宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x138-scaler0-ch0-h-init-phase">
+<h2><span class="section-number">10.1.3.44. </span>0x138 SCALER0_CH0_H_INIT_PHASE<a class="headerlink" href="#x138-scaler0-ch0-h-init-phase" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan0水平初始相位（Scaler0 Ch0 H Init Phase）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_INIT_PHASE_INT 水平初始相位整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_INIT_PHASE_FRAC水平初始相位小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x13c-scaler0-ch0-h-ratio">
+<h2><span class="section-number">10.1.3.45. </span>0x13C SCALER0_CH0_H_RATIO<a class="headerlink" href="#x13c-scaler0-ch0-h-ratio" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan0水平缩放比例（Scaler0 Ch0 H Ratio）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_RATIO_INIT 水平缩放比例整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_RATIO_FRAC 水平缩放比例小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x140-scaler0-ch0-v-init-phase">
+<h2><span class="section-number">10.1.3.46. </span>0x140 SCALER0_CH0_V_INIT_PHASE<a class="headerlink" href="#x140-scaler0-ch0-v-init-phase" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan0垂直初始相位（Scaler0 Ch0 V Init Phase）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_INIT_PHASE_INIT</div>
+<div class="line">垂直初始相位整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_INIT_PHASE_FRAC</div>
+<div class="line">垂直初始相位小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x144-scaler0-ch0-v-ratio">
+<h2><span class="section-number">10.1.3.47. </span>0x144 SCALER0_CH0_V_RATIO<a class="headerlink" href="#x144-scaler0-ch0-v-ratio" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan0垂直缩放比例（Scaler0 Ch0 V Ratio）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_RATIO_INIT</div>
+<div class="line">垂直缩放比例整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_RATIO_FRAC</div>
+<div class="line">垂直缩放比例小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x150-scaler0-ch1-input-size">
+<h2><span class="section-number">10.1.3.48. </span>0x150 SCALER0_CH1_INPUT_SIZE<a class="headerlink" href="#x150-scaler0-ch1-input-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan1输入宽高（Scaler0 Ch1 Input Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_HEIGHT</div>
+<div class="line">Channel 1输入高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_WIDTH</div>
+<div class="line">Channel 1输入宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x154-scaler0-ch1-output-size">
+<h2><span class="section-number">10.1.3.49. </span>0x154 SCALER0_CH1_OUTPUT_SIZE<a class="headerlink" href="#x154-scaler0-ch1-output-size" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan1输出宽高（Scaler0 Ch1 Output Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTPUT_HEIGHT</div>
+<div class="line">Channel 1输出高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTPUT_WIDTH</div>
+<div class="line">Channel 1输出宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x158-scaler0-ch1-h-init-phase">
+<h2><span class="section-number">10.1.3.50. </span>0x158 SCALER0_CH1_H_INIT_PHASE<a class="headerlink" href="#x158-scaler0-ch1-h-init-phase" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan1水平初始相位（Scaler0 Ch1 H Init Phase）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_INIT_PHASE_INIT</div>
+<div class="line">垂直初始相位整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_INIT_PHASE_FRAC</div>
+<div class="line">垂直初始相位小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x15c-scaler0-ch1-h-ratio">
+<h2><span class="section-number">10.1.3.51. </span>0x15C SCALER0_CH1_H_RATIO<a class="headerlink" href="#x15c-scaler0-ch1-h-ratio" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan1水平缩放比例（Scaler0 Ch1 H Ratio）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_RATIO_INIT</div>
+<div class="line">水平缩放比例整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_RATIO_FRAC</div>
+<div class="line">水平缩放比例小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x160-scaler0-ch1-v-init-phase">
+<h2><span class="section-number">10.1.3.52. </span>0x160 SCALER0_CH1_V_INIT_PHASE<a class="headerlink" href="#x160-scaler0-ch1-v-init-phase" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan1垂直初始相位（Scaler0 Ch1 V Init Phase）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:20</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>19:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_INIT_PHASE_INIT</div>
+<div class="line">垂直初始相位整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_INIT_PHASE_FRAC</div>
+<div class="line">垂直初始相位小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x164-scaler0-ch1-v-ratio">
+<h2><span class="section-number">10.1.3.53. </span>0x164 SCALER0_CH1_V_RATIO<a class="headerlink" href="#x164-scaler0-ch1-v-ratio" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 Chan1垂直缩放比例（Scaler0 Ch1 V Ratio）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_RATIO_INIT</div>
+<div class="line">垂直缩放比例整数部分</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_RATIO_FRAC</div>
+<div class="line">垂直缩放比例小数部分</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x170-wb-ctrl">
+<h2><span class="section-number">10.1.3.54. </span>0x170 WB_CTRL<a class="headerlink" href="#x170-wb-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>回写控制（WB Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CRC_EN</div>
+<div class="line">0:关闭CRC校验功能</div>
+<div class="line">1:打开CRC校验功能，回写不能和CRC校验功能同时打开</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SOFT_RESET_EN</div>
+<div class="line">0:关闭软复位</div>
+<div class="line">1:开启软复位</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>14:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FORMAT</div>
+<div class="line">像素格式</div>
+<div class="line">0x00:XRGB 8-8-8-8</div>
+<div class="line">0x01:reserved</div>
+<div class="line">0x02:reserved</div>
+<div class="line">0x03:reserved</div>
+<div class="line">0x04:reserved</div>
+<div class="line">0x05:reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PATH_SELECT</div>
+<div class="line">路径选择</div>
+<div class="line">0:Path0</div>
+<div class="line">1:Path1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">START</div>
+<div class="line">0:未开始回写</div>
+<div class="line">1:开始回写</div>
+<div class="line">写“1”会自动清零</div>
+<div class="line">回写仅用来进行DE功能验证，回写会影响显示输出时序，正常使用</div>
+<div class="line">DE不可以开启回写功能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x174-wb-int">
+<h2><span class="section-number">10.1.3.55. </span>0x174 WB_INT<a class="headerlink" href="#x174-wb-int" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>回写中断（WB Interrupt）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OVERFLOW_INT</div>
+<div class="line">回写FIFO上溢中断控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FINISH_INT</div>
+<div class="line">回写结束中断控制</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x178-wb-int-status">
+<h2><span class="section-number">10.1.3.56. </span>0x178 WB_INT_STATUS<a class="headerlink" href="#x178-wb-int-status" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>回写中断状态（WB Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OVERFLOW_FLAG</div>
+<div class="line">回写FIFO上溢标记</div>
+<div class="line">0:未溢出</div>
+<div class="line">1:回写溢出</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FINISH_FLAG</div>
+<div class="line">回写结束标记</div>
+<div class="line">0:未结束</div>
+<div class="line">1:结束</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x180-wb-stride">
+<h2><span class="section-number">10.1.3.57. </span>0x180 WB_STRIDE<a class="headerlink" href="#x180-wb-stride" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>回写行对齐（WB Stride）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STRIDE</div>
+<div class="line">行对齐宽度, 8bytes对齐</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x190-wb-addr">
+<h2><span class="section-number">10.1.3.58. </span>0x190 WB_ADDR<a class="headerlink" href="#x190-wb-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>回写地址（WB Address）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ADDR</div>
+<div class="line">回写地址，需要1024对齐</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x194-crc-check">
+<h2><span class="section-number">10.1.3.59. </span>0x194 CRC_CHECK<a class="headerlink" href="#x194-crc-check" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CRC校验（CRC Check）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CRC_CHECK</div>
+<div class="line">打开CRC校验功能后，在帧结束后可以查看到CRC校验值</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x198-input-id">
+<h2><span class="section-number">10.1.3.60. </span>0x198 INPUT_ID<a class="headerlink" href="#x198-input-id" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输入ID（Input ID）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">INPUT_ID</div>
+<div class="line">输入ID寄存器</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x19c-output-id">
+<h2><span class="section-number">10.1.3.61. </span>0x19C OUTPUT_ID<a class="headerlink" href="#x19c-output-id" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>输出ID（Output ID）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">OUTPUT_ID</div>
+<div class="line">输出ID寄存器</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1d0-timing-ctrl">
+<h2><span class="section-number">10.1.3.62. </span>0x1D0 TIMING_CTRL<a class="headerlink" href="#x1d0-timing-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000FF00</p></th>
+<th class="head"><p>Timing控制（Timing Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0xFF</p></td>
+<td><div class="line-block">
+<div class="line">TE脉冲宽度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DE模式</div>
+<div class="line">0:连续模式</div>
+<div class="line">1:单帧模式</div>
+<div class="line">2:自动单帧模式</div>
+<div class="line-block">
+<div class="line">自动单帧模式需要配置，TE脉冲宽度</div>
+</div>
+<div class="line">3:reserved</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TIMING_EN</div>
+<div class="line">0:关闭时序输出</div>
+<div class="line">1:开启时序输出</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1d4-timing-int">
+<h2><span class="section-number">10.1.3.63. </span>0x1D4 TIMING_INT<a class="headerlink" href="#x1d4-timing-int" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing中断（Timing Interrupt）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SF_END_INT</div>
+<div class="line">TE中断</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UNDERFLOW_INT</div>
+<div class="line">读取数据下溢中断</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LINE_INT</div>
+<div class="line">行中断</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_BLANK_INT</div>
+<div class="line">垂直消隐中断</div>
+<div class="line">0:关闭</div>
+<div class="line">1:开启</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1d8-timing-int-status">
+<h2><span class="section-number">10.1.3.64. </span>0x1D8 TIMING_INT_STATUS<a class="headerlink" href="#x1d8-timing-int-status" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing中断状态（Timing Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UNDERFLOW_FLAG</div>
+<div class="line">读取数据下溢标记</div>
+<div class="line">0:未溢出</div>
+<div class="line">1:溢出</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LINE_FLAG</div>
+<div class="line">行中断状态标记</div>
+<div class="line">0:未到所设置行</div>
+<div class="line">1:到达所设置行</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_BLANK_FLAG</div>
+<div class="line">垂直消隐中断状态</div>
+<div class="line">0:未到达垂直消隐区</div>
+<div class="line">1:已到达垂直消隐区</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1dc-timing-line-set">
+<h2><span class="section-number">10.1.3.65. </span>0x1DC TIMING_LINE_SET<a class="headerlink" href="#x1dc-timing-line-set" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing行数设置（Timing Line Set）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PREFETCH_LINE</div>
+<div class="line">预取行数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LINE_NUM</div>
+<div class="line">行中断行数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1e0-timing-line-set">
+<h2><span class="section-number">10.1.3.66. </span>0x1E0 TIMING_LINE_SET<a class="headerlink" href="#x1e0-timing-line-set" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing有效宽高（Timing Active Size）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACTIVE_H</div>
+<div class="line">有效高度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACTIVE_W</div>
+<div class="line">有效宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1e4-timing-h-porch">
+<h2><span class="section-number">10.1.3.67. </span>0x1E4 TIMING_H_PORCH<a class="headerlink" href="#x1e4-timing-h-porch" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing Horizontal Porch（Timing Horizontal Porch）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_B_PORCH</div>
+<div class="line">水平后肩</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_F_PORCH</div>
+<div class="line">水平前肩</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1e8-timing-v-porch">
+<h2><span class="section-number">10.1.3.68. </span>0x1E8 TIMING_V_PORCH<a class="headerlink" href="#x1e8-timing-v-porch" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing Vertical Porch（Timing Vertical Porch）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>28:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_B_PORCH</div>
+<div class="line">垂直后肩</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_F_PORCH</div>
+<div class="line">垂直前肩</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1ec-timing-sync-pluse">
+<h2><span class="section-number">10.1.3.69. </span>0x1EC TIMING_SYNC_PLUSE<a class="headerlink" href="#x1ec-timing-sync-pluse" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing同步脉冲（Timing Sync Pluse）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:27</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>26:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_SYNC_WIDTH</div>
+<div class="line">垂直同步脉冲宽度</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_SYNC_WIDTH</div>
+<div class="line">水平同步脉冲宽度</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1f0-timing-pol-set">
+<h2><span class="section-number">10.1.3.70. </span>0x1F0 TIMING_POL_SET<a class="headerlink" href="#x1f0-timing-pol-set" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing极性配置（Timing Polarization Set）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">V_SYNC_POL</div>
+<div class="line">垂直同步脉冲极性</div>
+<div class="line">0:负极</div>
+<div class="line">1:正极</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">H_SYNC_POL</div>
+<div class="line">水平同步脉冲极性</div>
+<div class="line">0:负极</div>
+<div class="line">1:正极</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x1f4-timing-debug">
+<h2><span class="section-number">10.1.3.71. </span>0x1F4 TIMING_DEBUG<a class="headerlink" href="#x1f4-timing-debug" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Timing调试（Timing Debug）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>12:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CUR_LINE</div>
+<div class="line">调试时候可以读取当前正在输出行数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x400-4-n-n-0-47-scaler0-ch0-h-coef">
+<h2><span class="section-number">10.1.3.72. </span>0x400+4*N(N=0:47) SCALER0_CH0_H_COEF<a class="headerlink" href="#x400-4-n-n-0-47-scaler0-ch0-h-coef" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 chan0水平系数表（Scaler0_ch0_h_coef_table）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>29:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N_1</div>
+<div class="line">表示第2*N +1个系数，水平系数表总共有96个系数，通过48个寄存</div>
+<div class="line">器来设置，每个系数为14bits有符号数， [13:12]为整数部分，</div>
+<div class="line">[11:0]为小数部分。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N</div>
+<div class="line">表示第2*N个系数，水平系数表总共有96个系数，通过48个寄存器</div>
+<div class="line">来设置，系数为14bits有符号数， [13:12]为整数部分，[11:0]</div>
+<div class="line">为小数部分。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x500-4-n-n-0-31-scaler0-ch0-v-coef-table">
+<h2><span class="section-number">10.1.3.73. </span>0x500+4*N(N=0:31) SCALER0_CH0_V_COEF_TABLE<a class="headerlink" href="#x500-4-n-n-0-31-scaler0-ch0-v-coef-table" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 chan0垂直系数表（Scaler0_ch0_v_coef_table）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>29:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N_1</div>
+<div class="line">表示第2*N +1个系数，水平系数表总共有64个系数，通过32个寄存</div>
+<div class="line">器来设置，每个系数为14bits有符号数， [13:12]为整数部分，</div>
+<div class="line">[11:0]为小数部分。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N</div>
+<div class="line">表示第2*N个系数，水平系数表总共有64个系数，通过32个寄存器</div>
+<div class="line">来设置，系数为14bits有符号数， [13:12]为整数部分，[11:0]</div>
+<div class="line">为小数部分。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x600-4-n-n-0-47-scaler0-ch1-h-coef">
+<h2><span class="section-number">10.1.3.74. </span>0x600+4*N(N=0:47) SCALER0_CH1_H_COEF<a class="headerlink" href="#x600-4-n-n-0-47-scaler0-ch1-h-coef" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 chan1水平系数表（Scaler0_ch1_h_coef_table）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>29:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N_1</div>
+<div class="line">表示第2*N +1个系数，水平系数表总共有96个系数，通过48个寄存</div>
+<div class="line">器来设置，每个系数为14bits有符号数， [13:12]为整数部分，</div>
+<div class="line">[11:0]为小数部分。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N</div>
+<div class="line">表示第2*N个系数，水平系数表总共有96个系数，通过48个寄存器</div>
+<div class="line">来设置，系数为14bits有符号数， [13:12]为整数部分，[11:0]为</div>
+<div class="line">小数部分。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x700-4-n-n-0-31-scaler0-ch1-v-coef">
+<h2><span class="section-number">10.1.3.75. </span>0x700+4*N(N=0:31) SCALER0_CH1_V_COEF<a class="headerlink" href="#x700-4-n-n-0-31-scaler0-ch1-v-coef" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>Scaler0 chan1垂直系数表（Scaler0_ch1_v_coef_table）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>29:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N_1</div>
+<div class="line">表示第2*N +1个系数，水平系数表总共有64个系数，通过32个寄存</div>
+<div class="line">器来设置，每个系数为14bits有符号数， [13:12]为整数部分，</div>
+<div class="line">[11:0]为小数部分。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>13:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEF_2N</div>
+<div class="line">表示第2*N个系数，水平系数表总共有64个系数，通过32个寄存器</div>
+<div class="line">来设置，系数为14bits有符号数， [13:12]为整数部分，[11:0]为</div>
+<div class="line">小数部分。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x880-qos-v-p0">
+<h2><span class="section-number">10.1.3.76. </span>0x880 QOS_V_P0<a class="headerlink" href="#x880-qos-v-p0" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>QOS Video Plane0（QOS_V_P0）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_GREEN</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_HIGH</div>
+<div class="line">RGB:0 – 511</div>
+<div class="line">YUV:0 - 255</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_RED</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_LOW</div>
+<div class="line">RGB:0 – 511</div>
+<div class="line">YUV:0 - 255</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x884-qos-v-p1">
+<h2><span class="section-number">10.1.3.77. </span>0x884 QOS_V_P1<a class="headerlink" href="#x884-qos-v-p1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>QOS Video Plane1（QOS_V_P1）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_GREEN</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_HIGH</div>
+<div class="line">YUV:0 – 127  0 – 255</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_RED</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_LOW</div>
+<div class="line">YUV:0 – 127  0 – 255</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x888-qos-v-p2">
+<h2><span class="section-number">10.1.3.78. </span>0x888 QOS_V_P2<a class="headerlink" href="#x888-qos-v-p2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>QOS Video Plane2（QOS_V_P2）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_GREEN</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_HIGH</div>
+<div class="line">YUV:0 – 127  0 – 255</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_RED</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_LOW</div>
+<div class="line">YUV:0 – 127  0 – 255</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x88c-qos-ui">
+<h2><span class="section-number">10.1.3.79. </span>0x88C QOS_UI<a class="headerlink" href="#x88c-qos-ui" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>QOS UI（QOS_UI）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_GREEN</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:26</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>25:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_HIGH</div>
+<div class="line">RGB:0 – 511</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_RED</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_QOS_LOW</div>
+<div class="line">RGB:0 – 511</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x890-qos-urgent">
+<h2><span class="section-number">10.1.3.80. </span>0x890 QOS_URGENT<a class="headerlink" href="#x890-qos-urgent" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>QOS Urgent（QOS_URGENT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1F</p></td>
+<td><div class="line-block">
+<div class="line">OUTSTANDING</div>
+<div class="line">0 – 31</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_URGENT_EN</div>
+<div class="line">0:disable</div>
+<div class="line">1:enable</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DMAR_URGENT_TH</div>
+<div class="line">0 – 511</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../ge/index.html" class="btn btn-neutral float-right" title="10.2. GE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="10.1.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

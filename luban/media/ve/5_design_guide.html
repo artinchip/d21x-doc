@@ -1,0 +1,888 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.2.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.2.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.2.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.2. VE 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.2.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.2.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.2.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">6.2.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">6.2.5.3.1. 寄存器地址空间映射</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.2.5.3.2. 中断处理流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.2.5.3.3. 多进程支持</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">6.2.5.3.4. 多线程支持</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">6.2.5.4. 数据结构设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">6.2.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-get-client">6.2.5.5.1. IOC_VE_GET_CLIENT</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-put-client">6.2.5.5.2. IOC_VE_PUT_CLIENT</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-wait">6.2.5.5.3. IOC_VE_WAIT</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-get-info">6.2.5.5.4. IOC_VE_GET_INFO</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-set-info">6.2.5.5.5. IOC_VE_SET_INFO</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-reset">6.2.5.5.6. IOC_VE_RESET</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-add-dma-buf">6.2.5.5.7. IOC_VE_ADD_DMA_BUF</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ioc-ve-rm-dma-buf">6.2.5.5.8. IOC_VE_RM_DMA_BUF</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#app-demo">6.2.5.6. APP Demo参考</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.2.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.2. </span>VE 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.2.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.2.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.2.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于：linux-5.10/drivers/video/artinchip/ve/aic_ve.c</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.2.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>VE 硬件需要由内核态 VE 驱动和用户态程序MPP相互配合实现编解码功能。其中，内核 VE 驱动主要负责VE硬件资源初始化和获取等，用户态 MPP 程序主要负责处理编解码逻辑、寄存器配置等。</p>
+<p>VE 驱动基于字符设备实现，应用层通过设备节点(/dev/aic_ve)进行交互。</p>
+<div class="figure align-center" id="id11">
+<img alt="../../../_images/ve_framework1.png" src="../../../_images/ve_framework1.png" />
+<p class="caption"><span class="caption-number">图 6.20 </span><span class="caption-text">ve驱动框架</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+<p>基本流程如下：</p>
+<ul class="simple">
+<li><p>1.用户态程序通过 open /dev/aic_ve打开 VE 驱动；</p></li>
+<li><p>2.用户态程序通过 ioctl 获取ve硬件设备独占权限；</p></li>
+<li><p>3.用户态程序完成一次独立的编解码任务：配置寄存器、等待VE当前任务完成；</p></li>
+<li><p>4.用户态程序通过 ioctl 释放ve硬件设备独占权限；</p></li>
+<li><p>5.视频帧解码完成，用户态程序调用 close 关闭 VE 驱动。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">6.2.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">6.2.5.3.1. </span>寄存器地址空间映射<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>由于寄存器是在用户空间配置，VE 驱动需要实现 mmap 接口，将寄存器地址空间映射到用户态进程的虚拟地址空间，以便用户态程序读写寄存器。</p>
+<p>不同 VE 硬件版本，寄存器基地址和寄存器地址范围可能不一样，因此需要在 dts 中针对不同平台正确配置 reg 项（如下所示）。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ve</span><span class="p">:</span> <span class="n">ve</span><span class="o">@</span><span class="mh">0x18c00000</span> <span class="p">{</span>
+        <span class="o">...</span>
+        <span class="n">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mh">0x0</span> <span class="mh">0x18c00000</span> <span class="mh">0x0</span> <span class="mh">0x4000</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="o">...</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>用户态程序映射寄存器地址空间步骤如下：</p>
+<ul class="simple">
+<li><p>通过 ioctl 获取寄存器地址范围；</p></li>
+<li><p>调用 mmap 映射寄存器地址空间到虚拟地址空间，并得到寄存器在虚拟地址空间的起始地址；</p></li>
+<li><p>根据寄存器起始地址和偏移地址读写 VE 寄存器。</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.2.5.3.2. </span>中断处理流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>1.VE 中断类型有三种，包括：finish 中断、error 中断、bit request 中断。</p>
+<ul class="simple">
+<li><p>finish 中断表示 VE 任务正常结束</p></li>
+<li><p>error 中断表示 VE 处理任务过程中出错</p></li>
+<li><p>bit request 中断表示当前数据不足以完成一次完整的任务，需要继续发送数据</p></li>
+</ul>
+<p>2.VE 的中断处理分为两部分：VE 驱动和用户态程序</p>
+<p>1）内核 VE 驱动的中断处理比较简单，只是把中断状态返回到用户态</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>读模块的状态寄存器，并将状态值返回到用户态，由用户态程序处理；</p></li>
+<li><p>关闭中断，避免中断重复发送；</p></li>
+<li><p>中断超时处理，当中断在规定时间（默认值为2s）内未收到，则表示出现异常，此时返回出错由用户态处理。</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>不同模块（H264/JPEG/PNG等）的状态寄存器不一样，读状态寄存器时需要根据模块获取相应状态寄存器的值；</p></li>
+<li><p>VE 每次任务处理完后，都会关闭中断，因此在下次启动 VE 前，必须再次使能 VE 中断。</p></li>
+</ol>
+</div>
+<p>2）用户态程序根据 VE 驱动返回的中断状态并处理中断</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>finish 中断处理：VE 正常结束，释放 VE 硬件设备独占权限</p></li>
+<li><p>bit request 中断处理：再次发送一笔数据，重新启动 VE 执行任务，重复以上过程，直到 VE 返回 finish 或 error 中断</p></li>
+<li><p>error 中断：VE 执行出错，必须对 VE 进行硬件复位避免错误影响下次任务</p></li>
+<li><p>等中断超时：此时 VE 出现未知异常，必须对 VE 进行硬件复位</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>处理 bit request 中断时，不能释放 VE 硬件设备独占权限，因为两次任务处理有相关性。如果这两次任务之间执行其他任务，会影响 VE 内部状态，从而导致该次任务执行出错。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.2.5.3.3. </span>多进程支持<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>VE 设备只有一个，所以同一时间只能执行一个任务。当多个进程同时操作 VE 驱动时，VE 只能分时复用。因此用户态进程在操作 VE 之前，必须获得 VE 的独占权限。
+VE 驱动通过 IOC_VE_GET_CLIENT/IOC_VE_PUT_CLIENT 这两个 ioctl 接口为用户态提供获取和释放 VE 独占权限功能。</p>
+<p>VE 驱动实现这一功能的几个概念：</p>
+<ul class="simple">
+<li><p>client：与进程相关的对象，保存该进程的信息，包括：进程 pid、该进程的 task、该进程使用的 dmabuf 队列等</p></li>
+<li><p>service：与 VE 资源相关的唯一对象，所有 client 通过 service 获取 VE 硬件的使用权限</p></li>
+</ul>
+<p>具体实现如下：</p>
+<ul class="simple">
+<li><p>VE 驱动在 probe 中创建一个唯一的 service 对象，用于管理 VE 资源</p></li>
+<li><p>VE 驱动为每个进程创建一个 client 对象，用于维护该进程的 VE 状态</p></li>
+<li><p>用户态进程调用 IOC_VE_GET_CLIENT 接口时，对应进程的 client 会通过 service 判断当前 VE 是否正在运行。如果是，当前 client 在此等待 VE 资源释放信号；否则得到 VE 操作权限</p></li>
+<li><p>用户态进程等待当前解码任务执行完成后（等到中断），调用 IOC_VE_PUT_CLIENT 接口，当前 client 发出释放 VE 资源信号通知其它 client</p></li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">6.2.5.3.4. </span>多线程支持<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>当一个进程中的多个线程同时操作 VE 驱动时，VE 只能分时复用。为避免每个线程都执行 VE 驱动初始化等重复操作，建议用户态程序使用单例模式实现 VE 驱动调用。具体实现可参考 mpp 代码（base/ve/ve.c）。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">6.2.5.4. </span>数据结构设计<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// VE 寄存器地址范围
+struct ve_info {
+        int reg_size;
+};
+
+// dma buffer信息，用于获取dma buffer的物理地址
+struct dma_buf_info {
+    int fd;
+    unsigned int phy_addr;
+};
+
+// 中断信息结构体
+struct wait_info {
+    int wait_time;
+    unsigned int reg_status;
+};
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">6.2.5.5. </span>接口设计<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<p>用户进程通过 /dev/aic_ve 节点打开 VE 驱动。</p>
+<div class="section" id="ioc-ve-get-client">
+<h3><span class="section-number">6.2.5.5.1. </span>IOC_VE_GET_CLIENT<a class="headerlink" href="#ioc-ve-get-client" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取 VE 设备独占权限</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_GET_CLIENT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-put-client">
+<h3><span class="section-number">6.2.5.5.2. </span>IOC_VE_PUT_CLIENT<a class="headerlink" href="#ioc-ve-put-client" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>释放 VE 设备独占权限</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_PUT_CLIENT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>IOC_VE_GET_CLIENT 和 IOC_VE_PUT_CLIENT 的调用必须一一对应</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-wait">
+<h3><span class="section-number">6.2.5.5.3. </span>IOC_VE_WAIT<a class="headerlink" href="#ioc-ve-wait" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">wait_info</span> <span class="o">*</span><span class="n">info</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>等待 VE 驱动编解码完成，获取 VE 寄存器状态</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_WAIT</div>
+<div class="line">info: 指向struct wait_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>IOC_VE_WAIT 的调用必须在 IOC_VE_GET_CLIENT 和 IOC_VE_PUT_CLIENT 之间</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-get-info">
+<h3><span class="section-number">6.2.5.5.4. </span>IOC_VE_GET_INFO<a class="headerlink" href="#ioc-ve-get-info" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ve_info</span> <span class="o">*</span><span class="n">info</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>获取 struct ve_info 数据</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_GET_INFO</div>
+<div class="line">info: 指向struct ve_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-set-info">
+<h3><span class="section-number">6.2.5.5.5. </span>IOC_VE_SET_INFO<a class="headerlink" href="#ioc-ve-set-info" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ve_info</span> <span class="o">*</span><span class="n">info</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>设置 struct ve_info 数据</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_SET_INFO</div>
+<div class="line">info: 指向struct ve_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-reset">
+<h3><span class="section-number">6.2.5.5.6. </span>IOC_VE_RESET<a class="headerlink" href="#ioc-ve-reset" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>VE 驱动硬件复位</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_RESET</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-add-dma-buf">
+<h3><span class="section-number">6.2.5.5.7. </span>IOC_VE_ADD_DMA_BUF<a class="headerlink" href="#ioc-ve-add-dma-buf" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">dma_buf_info</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>加载 DMA buffer, 获取 DMA buffer 物理地址</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_ADD_DMA_BUF</div>
+<div class="line">buf: 指向struct dma_buf_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ioc-ve-rm-dma-buf">
+<h3><span class="section-number">6.2.5.5.8. </span>IOC_VE_RM_DMA_BUF<a class="headerlink" href="#ioc-ve-rm-dma-buf" title="永久链接至标题">¶</a></h3>
+<p>接口语法：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">ioctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">dma_buf_info</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能说明</p></th>
+<th class="head"><p>移除 DMA buffer</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>参数</p></td>
+<td><div class="line-block">
+<div class="line">CMD：IOC_VE_RM_DMA_BUF</div>
+<div class="line">buf: 指向struct dma_buf_info指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功</div>
+<div class="line">&lt;0：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td><p>无</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="app-demo">
+<h2><span class="section-number">6.2.5.6. </span>APP Demo参考<a class="headerlink" href="#app-demo" title="永久链接至标题">¶</a></h2>
+<p>以下 demo 实现 VE 驱动基本调用流程，具体可参考 mpp 代码（base/ve/ve.c）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//* 1. 打开VE驱动
+int fd = open(&quot;/dev/aic_ve&quot;, O_RDWR);
+
+//* 2. 获取ve寄存器空间大小
+struct ve_info info = {0};
+ioctl(fd, IOC_VE_GET_INFO, &amp;info);
+
+//* 3. 映射寄存器地址空间
+unsigned long reg_base = (unsigned long)mmap(NULL,
+                info.reg_size,
+                PROT_READ | PROT_WRITE, MAP_SHARED,
+                fd,
+                0);
+
+//* 4. 获取VE权限
+ioctl(fd, IOC_VE_GET_CLIENT);
+
+//* 5. 配置寄存器（省略）
+...
+
+//* 6. 等VE中断
+struct wait_info wt_info;
+wt_info.wait_time = VE_TIMEOUT;
+int ret = ioctl(fd, IOC_VE_WAIT, &amp;wt_info);
+if(ret &lt; 0) {
+    // 中断超时,VE硬件复位
+    ioctl(fd, IOC_VE_RESET);
+}
+
+//* 7. 释放VE权限
+ioctl(fd, IOC_VE_PUT_CLIENT);
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.2.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.2.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

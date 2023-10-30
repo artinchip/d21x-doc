@@ -1,0 +1,1249 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.3.6. 屏配置指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="6.3.7. 竖屏横用、横屏竖用" href="../07_fb_rotation/index.html" />
+    <link rel="prev" title="6.3.5.6.1. Framebuffer标准接口的使用" href="../05_design_guide/demo.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6.3. Display 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../01_introduction/index.html">6.3.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../02_config_guide/index.html">6.3.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../03_debug_guide/index.html">6.3.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../04_test_guide/index.html">6.3.4. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../05_design_guide/index.html">6.3.5. 设计说明</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.3.6. 屏配置指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.3.6.1. 屏配置方式</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#ref-to-panel-port">6.3.6.2. 屏配置步骤</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#menuconfig">6.3.6.2.1. menuconfig</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#data-flow">6.3.6.2.2. data flow</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#ref-to-panel-driver">6.3.6.3. 屏驱动说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">6.3.6.3.1. 屏源码位置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.3.6.3.2. 新屏驱动支持</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.3.6.3.3. 数据结构</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">6.3.6.3.4. 函数接口</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../07_fb_rotation/index.html">6.3.7. 竖屏横用、横屏竖用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../08_disp_property/index.html">6.3.8. 色彩调整</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../09_boot_logo/index.html">6.3.9. Boot LOGO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../10_faq/index.html">6.3.10. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6.3. </span>Display 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.3.6. </span>屏配置指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.3.6. </span>屏配置指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>本章节将介绍 LCD 的配置方法。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>ArtInChip平台 SDK 已适配多款LCD屏幕，包括通用的RGB，LVDS屏幕以及多款MIPI屏幕。
+推荐使用已有的panel驱动，如果无法满足需求再考虑对现有驱动进行扩展或单独编写一个panel驱动</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">6.3.6.1. </span>屏配置方式<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>方式一：将屏参数写入panel驱动源码中</p>
+<ul class="simple">
+<li><p>时序参数</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Init the videomode parameter, dts will override the initial value. */</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">videomode</span> <span class="n">panel_vm</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">pixelclock</span> <span class="o">=</span> <span class="mi">130000000</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">hactive</span> <span class="o">=</span> <span class="mi">1080</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">hfront_porch</span> <span class="o">=</span> <span class="mi">160</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">hback_porch</span> <span class="o">=</span> <span class="mi">160</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">hsync_len</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">vactive</span> <span class="o">=</span> <span class="mi">1920</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">vfront_porch</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">vback_porch</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">vsync_len</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">DISPLAY_FLAGS_HSYNC_LOW</span> <span class="o">|</span> <span class="n">DISPLAY_FLAGS_VSYNC_LOW</span> <span class="o">|</span>
+        <span class="n">DISPLAY_FLAGS_DE_HIGH</span> <span class="o">|</span> <span class="n">DISPLAY_FLAGS_PIXDATA_POSEDGE</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>屏接口参数</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">int</span> <span class="n">panel_bind</span><span class="p">(</span><span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">master</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+    <span class="n">dsi</span><span class="o">-&gt;</span><span class="n">format</span> <span class="o">=</span> <span class="n">DSI_FMT_RGB888</span><span class="p">;</span>
+    <span class="n">dsi</span><span class="o">-&gt;</span><span class="n">mode</span> <span class="o">=</span> <span class="n">DSI_MOD_VID_PULSE</span><span class="p">;</span>
+    <span class="n">dsi</span><span class="o">-&gt;</span><span class="n">lane_num</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>方式二：将屏参数写入到board.dts文件中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">panel_lvds</span> <span class="p">{</span>
+    <span class="n">compatible</span> <span class="o">=</span> <span class="s2">&quot;artinchip,aic-general-lvds-panel&quot;</span><span class="p">;</span>
+    <span class="n">enable</span><span class="o">-</span><span class="n">gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">gpio_a</span> <span class="mi">4</span> <span class="n">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">data</span><span class="o">-</span><span class="n">mapping</span> <span class="o">=</span> <span class="s2">&quot;vesa-24&quot;</span><span class="p">;</span>
+    <span class="n">data</span><span class="o">-</span><span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;single-link1&quot;</span><span class="p">;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+
+    <span class="n">port</span> <span class="p">{</span>
+        <span class="n">panel_lvds_in</span><span class="p">:</span> <span class="n">endpoint</span> <span class="p">{</span>
+            <span class="n">remote</span><span class="o">-</span><span class="n">endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">lvds0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="n">display</span><span class="o">-</span><span class="n">timings</span> <span class="p">{</span>
+        <span class="n">native</span><span class="o">-</span><span class="n">mode</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="n">timing0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="n">timing0</span><span class="p">:</span> <span class="n">timing0</span> <span class="p">{</span>
+            <span class="n">clock</span><span class="o">-</span><span class="n">frequency</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">130000000</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vactive</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">600</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hback</span><span class="o">-</span><span class="n">porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">140</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hfront</span><span class="o">-</span><span class="n">porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">160</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">hsync</span><span class="o">-</span><span class="nb">len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vback</span><span class="o">-</span><span class="n">porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">20</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vfront</span><span class="o">-</span><span class="n">porch</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">12</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">vsync</span><span class="o">-</span><span class="nb">len</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">de</span><span class="o">-</span><span class="n">active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+            <span class="n">pixelclk</span><span class="o">-</span><span class="n">active</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>对于屏时序参数，只有当 board.dts 文件的 panel 结点没有设置 display-timings 子节点时，方式一才会生效。</p>
+</div>
+</div>
+<div class="section" id="ref-to-panel-port">
+<span id="id3"></span><h2><span class="section-number">6.3.6.2. </span>屏配置步骤<a class="headerlink" href="#ref-to-panel-port" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li><p>为 LCD 适配一款 panel 驱动。</p></li>
+<li><p>确保一条正确的数据通路。</p></li>
+</ol>
+<div class="section" id="menuconfig">
+<h3><span class="section-number">6.3.6.2.1. </span>menuconfig<a class="headerlink" href="#menuconfig" title="永久链接至标题">¶</a></h3>
+<p>选择使用Luban sdk 提供的 panel 驱动，可参考 <a class="reference internal" href="../02_config_guide/menuconfig/index.html#ref-to-panel-menuconfig"><span class="std std-ref">panel menuconfig</span></a> 配置即可。注意，需要把相应的 <a class="reference internal" href="../02_config_guide/menuconfig/index.html#ref-to-display-interface-menuconfig"><span class="std std-ref">显示接口编译进内核</span></a>，不然 panel 选项无法显示。</p>
+<p>如果需要额外编写驱动，可参考后续 <a class="reference internal" href="#ref-to-panel-driver"><span class="std std-ref">屏驱动说明</span></a> 章节。</p>
+</div>
+<div class="section" id="data-flow">
+<h3><span class="section-number">6.3.6.2.2. </span>data flow<a class="headerlink" href="#data-flow" title="永久链接至标题">¶</a></h3>
+<p>LCD 正常显示时，ArtInChip 平台的显示模块会形成一条完整的数据通道。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fb0</span> <span class="o">--&gt;</span> <span class="n">display</span> <span class="n">engine</span>  <span class="o">--&gt;</span> <span class="n">display</span> <span class="n">interface</span>  <span class="o">--&gt;</span> <span class="n">panel</span>
+</pre></div>
+</div>
+<p>数据通道的关系在 board.dts 中体现，以 LVDS 屏幕为例：</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">fb0</span> <span class="p">{</span>
+    <span class="na">port</span> <span class="p">{</span>
+        <span class="nl">fb0_out</span><span class="p">:</span> <span class="na">endpoint</span> <span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="na">de0</span> <span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">fb0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">de0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">lvds0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">rgb0</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;disabled&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">rgb0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">rgb0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">rgb0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_rgb_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">lvds0</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">lvds0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">de0_out</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">lvds0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_lvds_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="o">&amp;</span><span class="nf">dsi0</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;disabled&quot;</span><span class="p">;</span>
+    <span class="nf">port</span><span class="o">@</span><span class="mi">0</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">dsi0_in</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">dsi0_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+
+    <span class="nf">port</span><span class="o">@</span><span class="mi">1</span><span class="cm"> </span><span class="p">{</span>
+        <span class="kr">reg</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="nl">dsi0_out</span><span class="p">:</span> <span class="nf">endpoint</span><span class="cm"> </span><span class="p">{</span>
+            <span class="n">remote-endpoint</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">panel_dsi_in</span><span class="o">&gt;</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>在上述例子中，board.dts 通过 port 和 status 结点，配置了一条数据通道。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fb</span>       <span class="o">|</span>      <span class="n">de</span>    <span class="o">|</span>     <span class="o">|</span>     <span class="n">lvds</span>    <span class="o">|</span>     <span class="n">panel</span>
+<span class="n">port</span>  <span class="o">--&gt;</span> <span class="n">port0</span>   <span class="n">port1</span> <span class="o">--&gt;</span>  <span class="n">port0</span>   <span class="n">port1</span> <span class="o">--&gt;</span>  <span class="n">port</span>
+</pre></div>
+</div>
+<p>如果 board.dts 中没有正确配置一条数据通道，显示驱动无法完成初始化。</p>
+</div>
+</div>
+<div class="section" id="ref-to-panel-driver">
+<span id="id4"></span><h2><span class="section-number">6.3.6.3. </span>屏驱动说明<a class="headerlink" href="#ref-to-panel-driver" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">6.3.6.3.1. </span>屏源码位置<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>Kernel:</p>
+<p>source/linux-5.10/drivers/video/artinchip/disp/panel/</p>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.3.6.3.2. </span>新屏驱动支持<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>LCD 屏驱动，即 panel，本质上是一个回调函数的集合。新屏驱动实际上是重新实现 <a class="reference internal" href="#ref-to-struct-aic-panel-funcs"><span class="std std-ref">aic_panel_funcs</span></a> 结构体中一个或多个回调接口。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>如果是 LVDS 或 RGB 屏幕，这类屏幕往往不需要初始化动作，可直接使用 panel_lvds_general.c 或 panel_rgb_general.c。在 board.dts 中配置相关参数即可。</p>
+</div>
+<p>如果 LCD 屏幕需要初始化动作，则需要额外编写一份 panel 驱动。
+在 panel 目录下，根据屏接口类型（RGB/LVDS/DSI）选择一个合适的模板，拷贝一个屏驱动。</p>
+<ul class="simple">
+<li><p>DSI 接口可参考panel_dsi_xm91080.c</p></li>
+<li><p>SRGB 接口可参考panel_srgb_ili8961.c</p></li>
+<li><p>I8080 接口可参考panel_i8080_ili9486l.c</p></li>
+<li><p>SPI 接口可参考panel_spi_ili9341.c</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>修改新屏驱动名字，将屏驱动添加进同级目录下的 Kconfig 和 Makefile 文件。</p></li>
+<li><p>重新实现 <a class="reference internal" href="#ref-to-struct-aic-panel-funcs"><span class="std std-ref">aic_panel_funcs</span></a> 结构体中的 <code class="docutils literal notranslate"><span class="pre">prepare</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">enable</span></code> 接口，添加屏幕所需的初始化操作。</p></li>
+</ol>
+<p><strong>mipi 屏幕</strong></p>
+<ol class="arabic">
+<li><p>在发送 init_sequence 之前需要调用 <a class="reference internal" href="#ref-to-panel-mipi-send-perpare"><span class="std std-ref">panel_mipi_send_perpare()</span></a> 确保屏幕能正确无误地接受到命令。</p></li>
+<li><p>在发送完 init_sequence 后需要调用 <a class="reference internal" href="#ref-to-panel-mipi-setup-realmode"><span class="std std-ref">panel_mipi_setup_realmode()</span></a> 设置正确的mipi模式。</p></li>
+<li><p>panel_dsi.c 中为 mipi-dsi 的 init_sequence 封装了两个接口：</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p><a class="reference internal" href="#ref-to-panel-dsi-dcs-send-seq"><span class="std std-ref">panel_dsi_dcs_send_seq()</span></a> ：发送屏厂根据 mipi 协议扩展的 command</p></li>
+<li><p><a class="reference internal" href="#ref-to-panel-dsi-generic-send-seq"><span class="std std-ref">panel_dsi_generic_send_seq()</span></a> ：发送 mipi 协议标准的 command</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>额外 gpio</strong></p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt><a class="reference internal" href="#ref-to-struct-panel-comp"><span class="std std-ref">panel_comp</span></a> 结构体默认支持两个 gpio</dt><dd><ol class="loweralpha simple">
+<li><p>一个 <code class="docutils literal notranslate"><span class="pre">enable</span> <span class="pre">gpio</span></code> , 可用于控制背光，使能屏幕</p></li>
+<li><p>一个 <code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">gpio</span></code>, 可用于控制屏幕供电，休眠唤醒</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<p>如果需要添加更多 gpio 引脚，可参考 <code class="docutils literal notranslate"><span class="pre">panel_dsi_wuxga_7in.c/panel_srgb_ili8961.c</span></code> 。</p>
+<p><strong>时序参数</strong></p>
+<ol class="arabic simple">
+<li><p>LCD 的 timing 参数，既可以在驱动中使用 hardcode 的方式设置 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">videomode</span></code>，也可以在 board.dts 中通过 <code class="docutils literal notranslate"><span class="pre">display-timings</span></code> 节点设置。</p></li>
+<li><p>如果 timing 参数采用 hardcode 方式设置，board.dts 必须删除 <code class="docutils literal notranslate"><span class="pre">display-timings</span></code> 节点。不然屏驱动源码中的 timing 参数会被 dts 中的 timing 参数覆盖。其他屏参数不受此影响。</p></li>
+</ol>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.3.6.3.3. </span>数据结构<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="section" id="struct-panel-comp">
+<span id="ref-to-struct-panel-comp"></span><h4><span class="section-number">6.3.6.3.3.1. </span>struct panel_comp<a class="headerlink" href="#struct-panel-comp" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">panel_comp</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_panel</span> <span class="n">panel</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">display_timings</span> <span class="o">*</span><span class="n">timings</span><span class="p">;</span>
+    <span class="kt">bool</span>   <span class="n">use_dt_timing</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">backlight_device</span> <span class="o">*</span><span class="n">backlight</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">regulator</span> <span class="o">*</span><span class="n">supply</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">gpio_desc</span> <span class="o">*</span><span class="n">enable_gpio</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">gpio_desc</span> <span class="o">*</span><span class="n">sleep_gpio</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aic-panel">
+<span id="ref-to-struct-aic-panel"></span><h4><span class="section-number">6.3.6.3.3.2. </span>struct aic_panel<a class="headerlink" href="#struct-aic-panel" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_panel_funcs</span> <span class="o">*</span><span class="n">funcs</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_panel_callbacks</span> <span class="n">callbacks</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">videomode</span> <span class="o">*</span><span class="n">vm</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">panel_rgb</span> <span class="o">*</span><span class="n">rgb</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">panel_lvds</span> <span class="o">*</span><span class="n">lvds</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">panel_dsi</span> <span class="o">*</span><span class="n">dsi</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aic-panel-funcs">
+<span id="ref-to-struct-aic-panel-funcs"></span><h4><span class="section-number">6.3.6.3.3.3. </span>struct aic_panel_funcs<a class="headerlink" href="#struct-aic-panel-funcs" title="永久链接至标题">¶</a></h4>
+<p>panel提供，供fb调用的回调。新屏驱动必须实现。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Each panel driver should define the follow functions. */</span>
+<span class="k">struct</span> <span class="nc">aic_panel_funcs</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">prepare</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panel</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">enable</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panel</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">disable</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panel</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">unprepare</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panel</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">get_video_mode</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panel</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">videomode</span> <span class="o">*</span><span class="n">vm</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">register_callback</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panel</span><span class="p">,</span>
+                <span class="k">struct</span> <span class="nc">aic_panel_callbacks</span> <span class="o">*</span><span class="n">pcallback</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aic-panel-callbacks">
+<span id="ref-to-struct-aic-panel-callbacks"></span><h4><span class="section-number">6.3.6.3.3.4. </span>struct aic_panel_callbacks<a class="headerlink" href="#struct-aic-panel-callbacks" title="永久链接至标题">¶</a></h4>
+<p>panel无需实现，由DE、DI提供，供panel调用的回调。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_panel_callbacks</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">di_enable</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">di_disable</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">di_send_cmd</span><span class="p">)(</span><span class="n">u32</span> <span class="n">dt</span><span class="p">,</span> <span class="n">u32</span> <span class="n">vc</span><span class="p">,</span> <span class="n">s8</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">u32</span> <span class="n">len</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">di_set_videomode</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">videomode</span> <span class="o">*</span><span class="n">vm</span><span class="p">,</span> <span class="kt">int</span> <span class="n">enable</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">timing_enable</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">timing_disable</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-panel-rgb">
+<h4><span class="section-number">6.3.6.3.3.5. </span>struct panel_rgb<a class="headerlink" href="#struct-panel-rgb" title="永久链接至标题">¶</a></h4>
+<p>rgb接口屏幕参数</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">panel_rgb</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">clock_phase</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">data_order</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">data_mirror</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-panel-lvds">
+<h4><span class="section-number">6.3.6.3.3.6. </span>struct panel_lvds<a class="headerlink" href="#struct-panel-lvds" title="永久链接至标题">¶</a></h4>
+<p>lvds接口屏幕参数</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">panel_lvds</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">lvds_mode</span> <span class="n">mode</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">lvds_link_mode</span> <span class="n">link_mode</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-panel-dsi">
+<h4><span class="section-number">6.3.6.3.3.7. </span>struct panel_dsi<a class="headerlink" href="#struct-panel-dsi" title="永久链接至标题">¶</a></h4>
+<p>dsi接口屏幕参数</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">panel_dsi</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">dsi_mode</span> <span class="n">mode</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">dsi_format</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">lane_num</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">6.3.6.3.4. </span>函数接口<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="section" id="panel-default-prepare">
+<h4><span class="section-number">6.3.6.3.4.1. </span>panel_default_prepare<a class="headerlink" href="#panel-default-prepare" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_default_prepare(struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>默认的prepare接口函数,使能regulator</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0: 成功
+负数：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-default-enable">
+<h4><span class="section-number">6.3.6.3.4.2. </span>panel_default_enable<a class="headerlink" href="#panel-default-enable" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_default_enable(struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>默认的enable接口函数，设置de模块的timing参数，使能相应的DI接口，开启背光</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-default-unprepare">
+<h4><span class="section-number">6.3.6.3.4.3. </span>panel_default_unprepare<a class="headerlink" href="#panel-default-unprepare" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_default_unprepare(struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>默认的unprepare接口函数，禁用regulator</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-default-disable">
+<h4><span class="section-number">6.3.6.3.4.4. </span>panel_default_disable<a class="headerlink" href="#panel-default-disable" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_default_disable(struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>默认的disable接口函数，禁用背光，禁用DI接口，禁用DE</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-register-callback">
+<h4><span class="section-number">6.3.6.3.4.5. </span>panel_register_callback<a class="headerlink" href="#panel-register-callback" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_register_callback(struct aic_panel *panel, struct aic_panel_callbacks *pcallback)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>DE，DI提供的回调函数，供panel调用</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>
+结构体 <a class="reference internal" href="#ref-to-struct-aic-panel-callbacks"><span class="std std-ref">aic_panel_callbacks</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-default-get-video-mode">
+<h4><span class="section-number">6.3.6.3.4.6. </span>panel_default_get_video_mode<a class="headerlink" href="#panel-default-get-video-mode" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_default_get_video_mode(struct aic_panel *panel, struct videomode *vm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>panel提供的回调，供fb调用，传递从dts中解析的timing参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>videomode：包含屏幕的timing参数</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-parse-dts">
+<h4><span class="section-number">6.3.6.3.4.7. </span>panel_parse_dts<a class="headerlink" href="#panel-parse-dts" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>int panel_parse_dts(struct panel_comp *p, struct device *dev);</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>解析board.dts中的panel结点</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p><a class="reference internal" href="#ref-to-struct-panel-comp"><span class="std std-ref">panel_comp</span></a> ，结构体device</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0：成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-di-enable">
+<h4><span class="section-number">6.3.6.3.4.8. </span>panel_di_enable<a class="headerlink" href="#panel-di-enable" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_di_enable(struct aic_panel *panel, u32 ms)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>使能相应的DI接口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>, ms延时毫秒</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-di-disable">
+<h4><span class="section-number">6.3.6.3.4.9. </span>panel_di_disable<a class="headerlink" href="#panel-di-disable" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_di_disable(struct aic_panel *panel, u32 ms)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>禁用相应的DI接口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>, ms延时毫秒</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-de-timing-enable">
+<h4><span class="section-number">6.3.6.3.4.10. </span>panel_de_timing_enable<a class="headerlink" href="#panel-de-timing-enable" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_de_timing_enable(struct aic_panel *panel, u32 ms)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>启用DE, 设置de模块的timing参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>, ms延时毫秒</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-de-timing-disable">
+<h4><span class="section-number">6.3.6.3.4.11. </span>panel_de_timing_disable<a class="headerlink" href="#panel-de-timing-disable" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_de_timing_disable(struct aic_panel *panel, u32 ms)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>禁用DE, 设置de模块的timing参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>, ms延时毫秒</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-mipi-send-perpare">
+<span id="ref-to-panel-mipi-send-perpare"></span><h4><span class="section-number">6.3.6.3.4.12. </span>panel_mipi_send_perpare<a class="headerlink" href="#panel-mipi-send-perpare" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_mipi_send_perpare(struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>将mipi-dsi通道切换到command mode, 准备好给mipi屏幕发送初始化命令</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在mipi屏幕发送初始化命令前要先调用这个函数，以确保mipi屏幕收到正确的初始化命令</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-send-command">
+<span id="ref-to-panel-send-command"></span><h4><span class="section-number">6.3.6.3.4.13. </span>panel_send_command<a class="headerlink" href="#panel-send-command" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_send_command(u8 *para_cmd, u32 size, struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>给mipi屏幕发送初始化命令</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a> , 初始化序列大小size, 初始化序列 para_cmd</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-mipi-setup-realmode">
+<span id="ref-to-panel-mipi-setup-realmode"></span><h4><span class="section-number">6.3.6.3.4.14. </span>panel_mipi_setup_realmode<a class="headerlink" href="#panel-mipi-setup-realmode" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>void panel_send_command(u8 *para_cmd, u32 size, struct aic_panel *panel)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>将mipi-dsi通道切换回正确的模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在mipi屏幕发送完初始化命令后调用这个函数，以确保mipi通道正常工作</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-dsi-generic-send-seq">
+<span id="ref-to-panel-dsi-generic-send-seq"></span><h4><span class="section-number">6.3.6.3.4.15. </span>panel_dsi_generic_send_seq<a class="headerlink" href="#panel-dsi-generic-send-seq" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>#define panel_dsi_generic_send_seq(panel, seq…)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>发送屏厂根据 mipi 协议扩展的 command</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>，seq: init command</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0: 成功，
+负数：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-dsi-dcs-send-seq">
+<span id="ref-to-panel-dsi-dcs-send-seq"></span><h4><span class="section-number">6.3.6.3.4.16. </span>panel_dsi_dcs_send_seq<a class="headerlink" href="#panel-dsi-dcs-send-seq" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>#define panel_dsi_dcs_send_seq(panel, seq…)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>发送 mipi 协议标准的 command</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-aic-panel"><span class="std std-ref">aic_panel</span></a>，seq: init command</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0: 成功，
+负数：失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="panel-init">
+<h4><span class="section-number">6.3.6.3.4.17. </span>panel_init<a class="headerlink" href="#panel-init" title="永久链接至标题">¶</a></h4>
+<table class="colwidths-given docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>接口定义</p></th>
+<th class="head"><p>static inline void panel_init(struct panel_comp *p, struct device *dev,</p>
+<p>struct videomode *vm, struct aic_panel_funcs *funcs)</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化一个panel</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>结构体 <a class="reference internal" href="#ref-to-struct-panel-comp"><span class="std std-ref">panel_comp</span></a> , 结构体device，屏时序参数videomode，
+<a class="reference internal" href="#ref-to-struct-aic-panel-funcs"><span class="std std-ref">aic_panel_funcs</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>void</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../07_fb_rotation/index.html" class="btn btn-neutral float-right" title="6.3.7. 竖屏横用、横屏竖用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../05_design_guide/demo.html" class="btn btn-neutral float-left" title="6.3.5.6.1. Framebuffer标准接口的使用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

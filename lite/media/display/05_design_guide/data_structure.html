@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.2.5.3.1. mpp_types.h &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="6.2.5.4.1. 概述" href="interface.html" />
+    <link rel="prev" title="6.2.5.2.1. 硬件框图" href="key_process.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../audio/index.html">6.1. Audio 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6.2. Display 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../01_introduction/index.html">6.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../02_config_guide/index.html">6.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../03_debug_guide/index.html">6.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../04_test_guide/index.html">6.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">6.2.5. 设计说明</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="index.html#id2">6.2.5.1. 源码和文档说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id3">6.2.5.2. 关键流程设计</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="index.html#id4">6.2.5.3. 数据结构设计</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">6.2.5.3.1. mpp_types.h</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-fb-h">6.2.5.3.2. artinchip_fb.h</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id5">6.2.5.4. 接口设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#app-demo">6.2.5.5. APP Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../06_panel_port/index.html">6.2.6. 屏适配指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../07_fb_rotation/index.html">6.2.7. 竖屏横用、横屏竖用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../08_disp_property/index.html">6.2.8. 色彩调整</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../10_faq/index.html">6.2.9. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mpp/index.html">6.7. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../player/index.html">6.8. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lvgl/index.html">6.9. LVGL 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6.2. </span>Display 使用指南</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.2.5. </span>设计说明</a> &raquo;</li>
+        
+      <li><span class="section-number">6.2.5.3.1. </span>mpp_types.h</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mpp-types-h">
+<h1><span class="section-number">6.2.5.3.1. </span>mpp_types.h<a class="headerlink" href="#mpp-types-h" title="永久链接至标题">¶</a></h1>
+<p>路径： bsp/artinchip/include/uapi/mpp_types.h</p>
+<div class="section" id="struct-mpp-rect">
+<h2><span class="section-number">6.2.5.3.1.1. </span>struct mpp_rect<a class="headerlink" href="#struct-mpp-rect" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">mpp_rect</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-mpp-point">
+<h2><span class="section-number">6.2.5.3.1.2. </span>struct mpp_point<a class="headerlink" href="#struct-mpp-point" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">mpp_point</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-mpp-size">
+<h2><span class="section-number">6.2.5.3.1.3. </span>struct mpp_size<a class="headerlink" href="#struct-mpp-size" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">mpp_size</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enum-mpp-pixel-format">
+<h2><span class="section-number">6.2.5.3.1.4. </span>enum mpp_pixel_format<a class="headerlink" href="#enum-mpp-pixel-format" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">mpp_pixel_format</span> <span class="p">{</span>
+    <span class="n">MPP_FMT_ARGB_8888</span>            <span class="o">=</span> <span class="mh">0x00</span><span class="p">,</span>
+    <span class="n">MPP_FMT_ABGR_8888</span>            <span class="o">=</span> <span class="mh">0x01</span><span class="p">,</span>
+    <span class="n">MPP_FMT_RGBA_8888</span>            <span class="o">=</span> <span class="mh">0x02</span><span class="p">,</span>
+    <span class="n">MPP_FMT_BGRA_8888</span>            <span class="o">=</span> <span class="mh">0x03</span><span class="p">,</span>
+    <span class="n">MPP_FMT_XRGB_8888</span>            <span class="o">=</span> <span class="mh">0x04</span><span class="p">,</span>
+    <span class="n">MPP_FMT_XBGR_8888</span>            <span class="o">=</span> <span class="mh">0x05</span><span class="p">,</span>
+    <span class="n">MPP_FMT_RGBX_8888</span>            <span class="o">=</span> <span class="mh">0x06</span><span class="p">,</span>
+    <span class="n">MPP_FMT_BGRX_8888</span>            <span class="o">=</span> <span class="mh">0x07</span><span class="p">,</span>
+    <span class="n">MPP_FMT_RGB_888</span>              <span class="o">=</span> <span class="mh">0x08</span><span class="p">,</span>
+    <span class="n">MPP_FMT_BGR_888</span>              <span class="o">=</span> <span class="mh">0x09</span><span class="p">,</span>
+    <span class="n">MPP_FMT_ARGB_1555</span>            <span class="o">=</span> <span class="mh">0x0a</span><span class="p">,</span>
+    <span class="n">MPP_FMT_ABGR_1555</span>            <span class="o">=</span> <span class="mh">0x0b</span><span class="p">,</span>
+    <span class="n">MPP_FMT_RGBA_5551</span>            <span class="o">=</span> <span class="mh">0x0c</span><span class="p">,</span>
+    <span class="n">MPP_FMT_BGRA_5551</span>            <span class="o">=</span> <span class="mh">0x0d</span><span class="p">,</span>
+    <span class="n">MPP_FMT_RGB_565</span>              <span class="o">=</span> <span class="mh">0x0e</span><span class="p">,</span>
+    <span class="n">MPP_FMT_BGR_565</span>              <span class="o">=</span> <span class="mh">0x0f</span><span class="p">,</span>
+    <span class="n">MPP_FMT_ARGB_4444</span>            <span class="o">=</span> <span class="mh">0x10</span><span class="p">,</span>
+    <span class="n">MPP_FMT_ABGR_4444</span>            <span class="o">=</span> <span class="mh">0x11</span><span class="p">,</span>
+    <span class="n">MPP_FMT_RGBA_4444</span>            <span class="o">=</span> <span class="mh">0x12</span><span class="p">,</span>
+    <span class="n">MPP_FMT_BGRA_4444</span>            <span class="o">=</span> <span class="mh">0x13</span><span class="p">,</span>
+
+    <span class="n">MPP_FMT_YUV420P</span>              <span class="o">=</span> <span class="mh">0x20</span><span class="p">,</span>
+    <span class="n">MPP_FMT_NV12</span>                 <span class="o">=</span> <span class="mh">0x21</span><span class="p">,</span>
+    <span class="n">MPP_FMT_NV21</span>                 <span class="o">=</span> <span class="mh">0x22</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUV422P</span>              <span class="o">=</span> <span class="mh">0x23</span><span class="p">,</span>
+    <span class="n">MPP_FMT_NV16</span>                 <span class="o">=</span> <span class="mh">0x24</span><span class="p">,</span>
+    <span class="n">MPP_FMT_NV61</span>                 <span class="o">=</span> <span class="mh">0x25</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUYV</span>                 <span class="o">=</span> <span class="mh">0x26</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YVYU</span>                 <span class="o">=</span> <span class="mh">0x27</span><span class="p">,</span>
+    <span class="n">MPP_FMT_UYVY</span>                 <span class="o">=</span> <span class="mh">0x28</span><span class="p">,</span>
+    <span class="n">MPP_FMT_VYUY</span>                 <span class="o">=</span> <span class="mh">0x29</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUV400</span>               <span class="o">=</span> <span class="mh">0x2a</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUV444P</span>              <span class="o">=</span> <span class="mh">0x2b</span><span class="p">,</span>
+
+    <span class="n">MPP_FMT_YUV420_64x32_TILE</span>    <span class="o">=</span> <span class="mh">0x30</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUV420_128x16_TILE</span>   <span class="o">=</span> <span class="mh">0x31</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUV422_64x32_TILE</span>    <span class="o">=</span> <span class="mh">0x32</span><span class="p">,</span>
+    <span class="n">MPP_FMT_YUV422_128x16_TILE</span>   <span class="o">=</span> <span class="mh">0x33</span><span class="p">,</span>
+    <span class="n">MPP_FMT_MAX</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="artinchip-fb-h">
+<h1><span class="section-number">6.2.5.3.2. </span>artinchip_fb.h<a class="headerlink" href="#artinchip-fb-h" title="永久链接至标题">¶</a></h1>
+<p>路径： bsp/artinchip/include/uapi/artinchip_fb.h</p>
+<div class="section" id="struct-aicfb-layer-num">
+<span id="ref-to-lite-aicfb-layer-num"></span><h2><span class="section-number">6.2.5.3.2.1. </span>struct aicfb_layer_num<a class="headerlink" href="#struct-aicfb-layer-num" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_layer_num - aicfb layer number</span>
+<span class="cm"> * @vi_num: number of video layers</span>
+<span class="cm"> * @ui_num: number of UI layers</span>
+<span class="cm"> *</span>
+<span class="cm"> *  total_layer_num = vi_num + ui_num</span>
+<span class="cm"> *</span>
+<span class="cm"> *  layer id range: [0, total_layer_num - 1]</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_layer_num</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">vi_num</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ui_num</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-layer-capability">
+<span id="ref-to-lite-aicfb-layer-capability"></span><h2><span class="section-number">6.2.5.3.2.2. </span>struct aicfb_layer_capability<a class="headerlink" href="#struct-aicfb-layer-capability" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_layer_capability - aicfb layer capability</span>
+<span class="cm"> * @layer_id: the layer id</span>
+<span class="cm"> * @layer_type: the layer type</span>
+<span class="cm"> *  0: UI layer</span>
+<span class="cm"> *  1: Video layer</span>
+<span class="cm"> * @max_width:  the max pixels per line</span>
+<span class="cm"> * @max_height: the max lines</span>
+<span class="cm"> * @cap_flags:  flags of layer capability</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_layer_capability</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">layer_id</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">layer_type</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">max_width</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">max_height</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">cap_flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-buffer">
+<h2><span class="section-number">6.2.5.3.2.3. </span>struct aicfb_buffer<a class="headerlink" href="#struct-aicfb-buffer" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_buffer - aicfb frame buffer</span>
+<span class="cm"> * @phy_addr[3]: address of frame buffer</span>
+<span class="cm"> *  single addr for interleaved fomart with 1 plane,</span>
+<span class="cm"> *  double addr for semi-planar fomart with 2 planes,</span>
+<span class="cm"> *  triple addr for planar format with 3 planes</span>
+<span class="cm"> * @size: width and height of aicfb_buffer</span>
+<span class="cm"> * @stride[3]: stride for all planes</span>
+<span class="cm"> * @crop_en: corp disable/enable ctrl</span>
+<span class="cm"> *  0: disable crop the buffer</span>
+<span class="cm"> *  1: enable crop the buffer</span>
+<span class="cm"> * @crop: crop info</span>
+<span class="cm"> * @format: color format</span>
+<span class="cm"> * @buf_flags: aicfb buffer flags</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_buffer</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>            <span class="n">phy_addr</span><span class="p">[</span><span class="n">AICFB_PLANE_NUM</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>            <span class="n">dmabuf_fd</span><span class="p">[</span><span class="n">AICFB_PLANE_NUM</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>            <span class="n">stride</span><span class="p">[</span><span class="n">AICFB_PLANE_NUM</span><span class="p">];</span>
+    <span class="k">struct</span> <span class="nc">aic_size</span>         <span class="n">size</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>            <span class="n">crop_en</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_rect</span>         <span class="n">crop</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">aic_pixel_format</span>   <span class="n">format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>            <span class="n">buf_flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-layer-data">
+<span id="ref-to-lite-aicfb-layer-data"></span><h2><span class="section-number">6.2.5.3.2.4. </span>struct aicfb_layer_data<a class="headerlink" href="#struct-aicfb-layer-data" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_layer_data - aicfb layer data</span>
+<span class="cm"> * @enable</span>
+<span class="cm"> *  0: disable the layer</span>
+<span class="cm"> *  1: enable the layer</span>
+<span class="cm"> * @layer_id: the layer id</span>
+<span class="cm"> *</span>
+<span class="cm"> * @rect_id: the rectanglular window id of the layer</span>
+<span class="cm"> *  only used by layers with multi-rectangular windows</span>
+<span class="cm"> *  for example: if the layer has 4 rectangular windows,</span>
+<span class="cm"> *  rect_id can be 0,1,2 or 3 for different windows</span>
+<span class="cm"> *</span>
+<span class="cm"> * @scale_size:  scaling size</span>
+<span class="cm"> *  if the layer can be scaled. the scaling size can be different</span>
+<span class="cm"> *  from the input buffer. the input buffer can be original aicfb_buffer</span>
+<span class="cm"> *  or crop aicfb_buffer, otherwise, the scaling size will be ignore</span>
+<span class="cm"> *</span>
+<span class="cm"> * @pos: left-top x/y coordinate of the screen in pixels</span>
+<span class="cm"> * @buf: frame buffer</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_layer_data</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">enable</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">layer_id</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">rect_id</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_size</span> <span class="n">scale_size</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_point</span> <span class="n">pos</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_buffer</span> <span class="n">buf</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-config-lists">
+<span id="ref-to-lite-aicfb-config-lists"></span><h2><span class="section-number">6.2.5.3.2.5. </span>struct aicfb_config_lists<a class="headerlink" href="#struct-aicfb-config-lists" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_config_lists - aicfb config lists</span>
+<span class="cm"> * @num: the total number of layer data config lists</span>
+<span class="cm"> * @layers[]: the array of aicfb_layer_data lists</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_config_lists</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">num</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aicfb_layer_data</span> <span class="n">layers</span><span class="p">[];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-alpha-config">
+<span id="ref-to-lite-aicfb-alpha-config"></span><h2><span class="section-number">6.2.5.3.2.6. </span>struct aicfb_alpha_config<a class="headerlink" href="#struct-aicfb-alpha-config" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_alpha_config - aicfb layer alpha blending config</span>
+<span class="cm"> *</span>
+<span class="cm"> * @layer_id: the layer id</span>
+<span class="cm"> *</span>
+<span class="cm"> * @enable</span>
+<span class="cm"> *  0: disable alpha</span>
+<span class="cm"> *  1: enable alpha</span>
+<span class="cm"> *</span>
+<span class="cm"> * @mode: alpha mode</span>
+<span class="cm"> *  0: pixel alpha mode</span>
+<span class="cm"> *  1: global alpha mode</span>
+<span class="cm"> *  2: mixder alpha mode(alpha = pixel alpha * global alpha / 255)</span>
+<span class="cm"> *</span>
+<span class="cm"> * @value: global alpha value (0~255)</span>
+<span class="cm"> *  used by global alpha mode and mixer alpha mode</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_alpha_config</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">layer_id</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">enable</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-ck-config">
+<span id="ref-to-lite-aicfb-ck-config"></span><h2><span class="section-number">6.2.5.3.2.7. </span>struct aicfb_ck_config<a class="headerlink" href="#struct-aicfb-ck-config" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct aicfb_ck_config - aicfb layer color key blending config</span>
+<span class="cm"> *</span>
+<span class="cm"> * @layer_id: the layer id</span>
+<span class="cm"> *</span>
+<span class="cm"> * @ck_enable</span>
+<span class="cm"> *  0: disable color key</span>
+<span class="cm"> *  1: enable color key</span>
+<span class="cm"> *</span>
+<span class="cm"> *</span>
+<span class="cm"> * @ck_value: color key rgb value to match the layer pixels</span>
+<span class="cm"> *  bit[31:24]: reserved</span>
+<span class="cm"> *  bit[23:16]: R value</span>
+<span class="cm"> *  bit[15:8]: G value</span>
+<span class="cm"> *  bit[7:0]: B value</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_ck_config</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">layer_id</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">enable</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-disp-prop">
+<h2><span class="section-number">6.2.5.3.2.8. </span>struct aicfb_disp_prop<a class="headerlink" href="#struct-aicfb-disp-prop" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * struct aicfb_disp_prop - aicfb display property</span>
+<span class="cm"> *</span>
+<span class="cm"> * @bright: bright in percent, range [0, 100], 50 means no effect</span>
+<span class="cm"> * @contrast: contrast in percent, range [0, 100], 50 means no effect</span>
+<span class="cm"> * @saturation: saturation in percent, range [0, 100], 50 means no effect</span>
+<span class="cm"> * @hue: hue in percent, range [0, 100], 50 means no effect</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_disp_prop</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bright</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">contrast</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">saturation</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">hue</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aicfb-screeninfo">
+<span id="ref-to-aicfb-screeninfo"></span><h2><span class="section-number">6.2.5.3.2.9. </span>struct aicfb_screeninfo<a class="headerlink" href="#struct-aicfb-screeninfo" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * struct aicfb_screeninfo - aicfb screen info</span>
+<span class="cm"> *</span>
+<span class="cm"> * @format: color format</span>
+<span class="cm"> * @bits_per_pixel: bits per pixel</span>
+<span class="cm"> * @stride: stride of screen</span>
+<span class="cm"> * @width: screen width in pixels</span>
+<span class="cm"> * @height: screen height in pixels</span>
+<span class="cm"> * @framebuffer: start of frame buffer mem</span>
+<span class="cm"> * @smem_len: length of frame buffer mem</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="nc">aicfb_screeninfo</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">mpp_pixel_format</span> <span class="n">format</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bits_per_pixel</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">stride</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">height</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">framebuffer</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">smem_len</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ioctl">
+<h2><span class="section-number">6.2.5.3.2.10. </span>ioctl命令<a class="headerlink" href="#ioctl" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define AICFB_WAIT_FOR_VSYNC  _IOW(IOC_TYPE_FB, 0x20, unsigned int)</span>
+
+<span class="cm">/** get layer number */</span>
+<span class="cp">#define AICFB_GET_LAYER_NUM  _IOR(IOC_TYPE_FB, 0x21, struct aicfb_layer_num)</span>
+
+<span class="cm">/** get layer capability */</span>
+<span class="cp">#define AICFB_GET_LAYER_CAPABILITY  _IOWR(IOC_TYPE_FB, 0x22,\</span>
+<span class="cp">                    struct aicfb_layer_capability)</span>
+
+<span class="cm">/** get layer config data */</span>
+<span class="cp">#define AICFB_GET_LAYER_CONFIG  _IOWR(IOC_TYPE_FB, 0x23, \</span>
+<span class="cp">                    struct aicfb_layer_data)</span>
+
+<span class="cm">/** update layer config data */</span>
+<span class="cp">#define AICFB_UPDATE_LAYER_CONFIG  _IOW(IOC_TYPE_FB, 0x24, \</span>
+<span class="cp">                    struct aicfb_layer_data)</span>
+
+<span class="cm">/** update layer config data lists */</span>
+<span class="cp">#define AICFB_UPDATE_LAYER_CONFIG_LISTS  _IOW(IOC_TYPE_FB, 0x25, \</span>
+<span class="cp">                        struct aicfb_config_lists)</span>
+
+<span class="cm">/** get layer alpha blendig config */</span>
+<span class="cp">#define AICFB_GET_ALPHA_CONFIG  _IOWR(IOC_TYPE_FB, 0x26, \</span>
+<span class="cp">                    struct aicfb_alpha_config)</span>
+
+<span class="cm">/** update layer alpha blendig config */</span>
+<span class="cp">#define AICFB_UPDATE_ALPHA_CONFIG  _IOW(IOC_TYPE_FB, 0x27, \</span>
+<span class="cp">                    struct aicfb_alpha_config)</span>
+
+<span class="cm">/** get layer color key config */</span>
+<span class="cp">#define AICFB_GET_CK_CONFIG  _IOWR(IOC_TYPE_FB, 0x28, struct aicfb_ck_config)</span>
+
+<span class="cm">/** update layer color key config */</span>
+<span class="cp">#define AICFB_UPDATE_CK_CONFIG  _IOW(IOC_TYPE_FB, 0x29, struct aicfb_ck_config)</span>
+
+<span class="cm">/** pan display */</span>
+<span class="cp">#define AICFB_PAN_DISPLAY  _IOR(IOC_TYPE_FB, 0x43, unsigned int)</span>
+
+<span class="cm">/** set display property */</span>
+<span class="cp">#define AICFB_SET_DISP_PROP _IOW(IOC_TYPE_FB, 0x60, struct aicfb_disp_prop)</span>
+
+<span class="cm">/** get display property */</span>
+<span class="cp">#define AICFB_GET_DISP_PROP _IOR(IOC_TYPE_FB, 0x61, struct aicfb_disp_prop)</span>
+
+<span class="cm">/* get screen info */</span>
+<span class="cp">#define AICFB_GET_SCREENINFO _IOR(IOC_TYPE_FB, 0x62, struct aicfb_screeninfo)</span>
+
+<span class="cm">/* enable aic fb, calls panel enable callback */</span>
+<span class="cp">#define AICFB_POWERON   _IOR(IOC_TYPE_FB, 0x63, unsigned int)</span>
+
+<span class="cm">/* disable aic fb, calls panel disable callback */</span>
+<span class="cp">#define AICFB_POWEROFF   _IOR(IOC_TYPE_FB, 0x64, unsigned int)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="interface.html" class="btn btn-neutral float-right" title="6.2.5.4.1. 概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="key_process.html" class="btn btn-neutral float-left" title="6.2.5.2.1. 硬件框图" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

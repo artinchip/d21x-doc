@@ -1,0 +1,1742 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.12.6. USB Device 子系统代码架构 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.12.7. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.12.5. USB Host 子系统代码架构" href="5_host_design_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.12. USB 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.12.1. 配置指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.12.2. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.12.3. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">7.12.4. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_host_design_guide.html">7.12.5. USB Host 子系统代码架构</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.12.6. USB Device 子系统代码架构</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#usb-device-controller-layer">7.12.6.1. USB Device Controller Layer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-usb-device-controller">7.12.6.1.1. AIC USB Device Controller</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-udc-driver">7.12.6.1.2. AIC UDC Driver</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#usb-device-layer">7.12.6.2. USB Device Layer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#gadget-bus">7.12.6.2.1. Gadget Bus</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#gadget-device">7.12.6.2.2. Gadget Device</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#gadget-driver-configfs">7.12.6.2.3. Gadget Driver (Configfs)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#gadget-driver-legacy">7.12.6.2.4. Gadget Driver (Legacy)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#usb-interface-layer">7.12.6.3. USB Interface Layer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#function">7.12.6.3.1. Function 注册</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#gadget-api">7.12.6.3.2. Gadget API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.12.7. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.12. </span>USB 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.12.6. </span>USB Device 子系统代码架构</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usb-device">
+<h1><span class="section-number">7.12.6. </span>USB Device 子系统代码架构<a class="headerlink" href="#usb-device" title="永久链接至标题">¶</a></h1>
+<p><img alt="image0" src="../../../_images/usb_flow_detail.png" /></p>
+<p>整个 USB 系统的通讯模型如上图所示，Device 框架见右侧彩图部分。</p>
+<div class="section" id="usb-device-controller-layer">
+<h2><span class="section-number">7.12.6.1. </span>USB Device Controller Layer<a class="headerlink" href="#usb-device-controller-layer" title="永久链接至标题">¶</a></h2>
+<p>上述软件栈的最底层是 UDC (USB Device Controller)，UDC 层最主要的作用是提供一个 endpoint 资源池，负责处理 endpoint 层级的数据收发。</p>
+<div class="section" id="aic-usb-device-controller">
+<h3><span class="section-number">7.12.6.1.1. </span>AIC USB Device Controller<a class="headerlink" href="#aic-usb-device-controller" title="永久链接至标题">¶</a></h3>
+<p>ArtinChip UDC 在硬件层面实现了以下功能：</p>
+<div class="section" id="data-mode">
+<h4><span class="section-number">7.12.6.1.1.1. </span>Data Mode<a class="headerlink" href="#data-mode" title="永久链接至标题">¶</a></h4>
+<p>UDC 实现的一项主要工作是数据搬移：</p>
+<ul class="simple">
+<li><p>UDC 发送时，数据先从内存 Memory 搬移到 UDC 的内部 FIFO 当中，然后由 UDC 发送到 USB 物理线路上。</p></li>
+<li><p>UDC 接收时，数据先从 USB 物理线路接收到 UDC 的内部 FIFO 当中，然后再从 FIFO 拷贝到 内存 Memory 当中。</p></li>
+</ul>
+<p>对于 <code class="docutils literal notranslate"><span class="pre">FIFO</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Memory</span></code> 之间的数据搬移工作，当前 UDC 支持两种方式：</p>
+<ul class="simple">
+<li><p>DMA Mode。</p></li>
+</ul>
+<p><img alt="image1" src="../../../_images/usb_udc_mode_dma.png" /></p>
+<p>由 UDC 内部的 DMA 模块来承担数据搬移工作，只要使用寄存器配置好 FIFO 的分配，以及在寄存器中配置好 DMA 的其实地址，DMA 会完成数据的搬移。</p>
+<ul class="simple">
+<li><p>Slave Mode。</p></li>
+</ul>
+<p><img alt="image2" src="../../../_images/usb_udc_mode_slave.png" /></p>
+<p>也可以不使用 DMA 而直接使用 CPU 来搬移，这种方式非常消耗 CPU 的带宽，CPU 被简单重复的数据拷贝拖住不能做其他的事情。这种方式一般用于 Debug 模式。</p>
+</div>
+<div class="section" id="endpoint-fifo-mode">
+<h4><span class="section-number">7.12.6.1.1.2. </span>Endpoint FIFO Mode<a class="headerlink" href="#endpoint-fifo-mode" title="永久链接至标题">¶</a></h4>
+<p>不同的 UDC 中 Endpoint 对 FIFO 的使用有多种模式，当前 UDC 选用的是 <code class="docutils literal notranslate"><span class="pre">Shared</span> <span class="pre">Transmit</span> <span class="pre">FIFO</span></code> 模式。在   <code class="docutils literal notranslate"><span class="pre">Shared</span> <span class="pre">Transmit</span> <span class="pre">FIFO</span></code> 模式中， <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> 对 <code class="docutils literal notranslate"><span class="pre">FIFO</span></code> 使用模式如下：</p>
+<ul class="simple">
+<li><p>所有的 <code class="docutils literal notranslate"><span class="pre">non-periodic</span> <span class="pre">IN</span> <span class="pre">endpoints</span></code> 共享一个 <code class="docutils literal notranslate"><span class="pre">transmit</span> <span class="pre">FIFO</span></code> 。 <code class="docutils literal notranslate"><span class="pre">non-periodic</span> <span class="pre">endpoints</span></code> 包括 <code class="docutils literal notranslate"><span class="pre">isochronous</span> <span class="pre">transfers</span></code> 和 <code class="docutils literal notranslate"><span class="pre">interrupt</span> <span class="pre">transfers</span></code>。</p></li>
+<li><p>每一个 <code class="docutils literal notranslate"><span class="pre">periodic</span> <span class="pre">IN</span> <span class="pre">endpoint</span></code> 独立拥有一个 <code class="docutils literal notranslate"><span class="pre">transmit</span> <span class="pre">FIFO</span></code> 。 <code class="docutils literal notranslate"><span class="pre">periodic</span> <span class="pre">endpoints</span></code> 包括 <code class="docutils literal notranslate"><span class="pre">bulk</span> <span class="pre">transfers</span></code> 和 <code class="docutils literal notranslate"><span class="pre">control</span> <span class="pre">transfers</span></code>。</p></li>
+<li><p>所有的 <code class="docutils literal notranslate"><span class="pre">OUT</span> <span class="pre">endpoints</span></code> 共享一个 <code class="docutils literal notranslate"><span class="pre">receive</span> <span class="pre">FIFO</span></code>。</p></li>
+</ul>
+</div>
+<div class="section" id="endpoint-resource">
+<h4><span class="section-number">7.12.6.1.1.3. </span>Endpoint Resource<a class="headerlink" href="#endpoint-resource" title="永久链接至标题">¶</a></h4>
+<p>USB 协议定义一个 Device 最多可以实现 16 个 IN endpoint + 16 个 OUT endpoint。当前 UDC 实现了 5 个 IN endpoint + 5 个 OUT endpoint，除了 endpoint 0 IN/OUT 被系统默认使用，剩下的可以被驱动动态分配使用。</p>
+<p>如上一节所描述，UDC 是 <code class="docutils literal notranslate"><span class="pre">Shared</span> <span class="pre">Transmit</span> <span class="pre">FIFO</span></code> 模式， <code class="docutils literal notranslate"><span class="pre">periodic</span> <span class="pre">IN</span> <span class="pre">endpoint</span></code> 需要拥有一个独立的 <code class="docutils literal notranslate"><span class="pre">transmit</span> <span class="pre">FIFO</span></code>。当前 UDC 拥有两个这样的 <code class="docutils literal notranslate"><span class="pre">transmit</span> <span class="pre">FIFO</span></code> 资源，供驱动动态分配。</p>
+<p>如果驱动创建一个 <code class="docutils literal notranslate"><span class="pre">periodic</span> <span class="pre">IN</span> <span class="pre">endpoint</span></code> 它分配到了第一个 <code class="docutils literal notranslate"><span class="pre">endpoint</span></code>  资源，但是没有分配到 <code class="docutils literal notranslate"><span class="pre">transmit</span> <span class="pre">FIFO</span></code> 资源，也会创建失败。</p>
+</div>
+<div class="section" id="calculating-fifo-size">
+<h4><span class="section-number">7.12.6.1.1.4. </span>Calculating FIFO Size<a class="headerlink" href="#calculating-fifo-size" title="永久链接至标题">¶</a></h4>
+<p><img alt="image3" src="../../../_images/usb_udc_fifo_size.png" /></p>
+<p>由上几节的描述可以看到，UDC 有多个模块需要使用内部 FIFO。包括：</p>
+<ul class="simple">
+<li><p>OUT endpoints RxFIFO</p></li>
+<li><p>IN non-periodic endpoints TxFIFO</p></li>
+<li><p>IN periodic endpoints TxFIFO</p></li>
+<li><p>DMA</p></li>
+</ul>
+<p>UDC 内部 FIFO 总大小是固定的，那么怎么样来分配 FIFO 空间给这些模块呢？ UDC 提供了以下计算公式：</p>
+<ul class="simple">
+<li><p>Receive FIFO RAM allocation</p></li>
+</ul>
+<blockquote>
+<div><div class="line-block">
+<div class="line">RAM for SETUP Packets: 4 * n + 6 locations in Scatter/Gather DMA mode and 5 * n+6 locations in Slave and Buffer DMA mode must be reserved in the RxFIFO to receive up to n SETUP packets on control endpoints, where n is the number of control endpoints the device core supports. The core does not use these locations, which are Reserved for SETUP packets, to write any other data.</div>
+<div class="line">// Setup 包的保留 RAM 空间(DMA 模式)： <cite>5*n + 6</cite> locations，<cite>n</cite> 为 <cite>control endpoints</cite> 的个数。该部分只为 SETUP 包保留，不会写入其他数据。</div>
+<div class="line">One location for Global OUT NAK</div>
+<div class="line">// Global OUT NAK: <cite>1</cite> location</div>
+<div class="line">Status information is written to the FIFO along with each received packet. Therefore, a minimum space of (Largest Packet Size / 4) + 1 must be allotted to receive packets. If a high-bandwidth endpoint is enabled, or multiple isochronous endpoints are enabled, then at least two (Largest Packet Size / 4) + 1 spaces must be allotted to receive back-to-back packets. Typically, two (Largest Packet Size / 4) + 1 spaces are recommended so that when the previous packet is being transferred to AHB, the USB can receive the subsequent packet. If AHB latency is high, you must allocate enough space to receive multiple packets. This is critical to prevent dropping of any isochronous packets.</div>
+<div class="line">// 包接收空间： 最少 <cite>(Largest Packet Size / 4) + 1</cite> spaces，如果空间充裕使用 two <cite>(Largest Packet Size / 4) + 1</cite> spaces</div>
+<div class="line">Along with each endpoint’s last packet, transfer complete status information is also pushed to the FIFO. Typically, one location for each OUT endpoint is recommended.</div>
+<div class="line">// 对于每个 OUT endpoint ，最后一个包需要一个位置存放 <cite>transfer complete status information</cite></div>
+<div class="line">An additional endpoint for each EPDisable is also required.</div>
+<div class="line">// 对于每个 OUT endpoint ，还需要一个位置存放 <cite>EPDisable</cite></div>
+</div>
+<div class="line-block">
+<div class="line">计算公式：</div>
+</div>
+<div class="line-block">
+<div class="line">Device RxFIFO = <cite>(5 * number of control endpoints + 8)</cite> + <cite>((largest USB packet used / 4) + 1 for status information)</cite> + <cite>(2 * number of OUT endpoints)</cite> + <cite>1 for Global NAK</cite></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>Transmit FIFO RAM allocation</p></li>
+</ul>
+<blockquote>
+<div><div class="line-block">
+<div class="line">The RAM size for the Periodic Transmit FIFO must equal the maximum amount of data that can be transmitted in a single microframe. The core does not use any data RAM allocated over this requirement, and when data RAM allocated is less than this requirement, the core can malfunction.</div>
+<div class="line">// <cite>Periodic Transmit FIFO</cite> RAM大小必须等于在单个微帧中可以传输的最大数据量。核心不使用任何分配给这个需求的数据RAM，当分配的数据RAM小于这个需求时，核心可能会发生故障。</div>
+<div class="line">The minimum amount of RAM required for the Non-periodic Transmit FIFO is the largest maximum packet size among all supported non-periodic IN endpoints.</div>
+<div class="line">// <cite>Non-periodic Transmit FIFO</cite> 最小RAM数量是所有支持的非周期IN端点中最大的包大小。</div>
+<div class="line">More space allocated in the Transmit Non-periodic FIFO results in better performance on the USB and can hide AHB latencies. Typically, two Largest Packet Sizes’ worth of space is recommended, so that when the current packet is under transfer to the USB, the AHB can get the next packet. If the AHB latency is large, then you must allocate enough space to buffer multiple packets.</div>
+<div class="line">// <cite>Transmit Non-periodic FIFO</cite> 中分配更多的空间，可以在USB上获得更好的性能，并可以隐藏AHB延迟。通常，建议使用两个最大包大小的空间，以便当当前包正在传输到USB时，AHB可以获得下一个包。如果AHB延迟较大，则必须分配足够的空间来缓冲多个包。</div>
+<div class="line">It is assumed that i number of periodic FIFOs is implemented in Device mode.</div>
+<div class="line">// <cite>i</cite> 是 <cite>periodic FIFOs</cite> 的个数。</div>
+<div class="line">计算公式：</div>
+<div class="line">Non-Periodic TxFIFO = <cite>largest non-periodic USB packet used / 4</cite></div>
+<div class="line">Periodic Endpoint-Specific TxFIFOs= <cite>largest periodic USB packet used for an endpoint / 4</cite></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>Internal Register Storage Space Allocation</p></li>
+</ul>
+<blockquote>
+<div><div class="line-block">
+<div class="line">When operating in Internal DMA mode, the core stores the Endpoint DMA address register (DI/OEPDMA) in the SPRAM. One location must be allocated for each endpoint.</div>
+<div class="line">// 当在内部DMA模式下运行时，核心将端点DMA地址寄存器(DI/OEPDMA)存储在SPRAM中。必须为每个端点分配一个位置。</div>
+<div class="line">For example, if an endpoint is bidirectional, then two locations must be allocated. If an endpoint is IN or OUT, then only one location must be allocated.</div>
+<div class="line">// 例如，如果一个端点是双向的，那么必须分配两个位置。如果端点是IN或OUT，则必须只分配一个位置。</div>
+</div>
+</div></blockquote>
+<p><strong>Example</strong></p>
+<p>The MPS is 1,024 bytes for a <code class="docutils literal notranslate"><span class="pre">periodic</span> <span class="pre">USB</span> <span class="pre">packet</span></code> and 512 bytes for a <code class="docutils literal notranslate"><span class="pre">non-periodic</span> <span class="pre">USB</span> <span class="pre">packet</span></code>.
+There are three <code class="docutils literal notranslate"><span class="pre">OUT</span> <span class="pre">endpoints</span></code>, three <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">endpoints</span></code>, one <code class="docutils literal notranslate"><span class="pre">control</span> <span class="pre">endpoint</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Device</span> <span class="n">RxFIFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">279</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">Periodic</span> <span class="n">TxFIFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">512</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">Device</span> <span class="n">Periodic</span> <span class="n">TxFIFO</span><span class="p">:</span>
+ <span class="n">EP</span> <span class="mi">1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">256</span>
+ <span class="n">EP</span> <span class="mi">2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">256</span>
+ <span class="n">EP</span> <span class="mi">3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">256</span>
+</pre></div>
+</div>
+<p><strong>当前 UDC</strong></p>
+<p>The MPS is 1,024 bytes for a <code class="docutils literal notranslate"><span class="pre">periodic</span> <span class="pre">USB</span> <span class="pre">packet</span></code> and 1024 bytes for a <code class="docutils literal notranslate"><span class="pre">non-periodic</span> <span class="pre">USB</span> <span class="pre">packet</span></code>.
+There are 4 <code class="docutils literal notranslate"><span class="pre">OUT</span> <span class="pre">endpoints</span></code>, 4 <code class="docutils literal notranslate"><span class="pre">IN</span> <span class="pre">endpoints</span></code>, 1 <code class="docutils literal notranslate"><span class="pre">control</span> <span class="pre">endpoint</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Device</span> <span class="n">RxFIFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">281</span> <span class="o">=</span> <span class="mh">0x119</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">Periodic</span> <span class="n">TxFIFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">256</span> <span class="o">=</span> <span class="mh">0x100</span>
+<span class="n">Device</span> <span class="n">Periodic</span> <span class="n">TxFIFO</span><span class="p">:</span>
+ <span class="n">EP</span> <span class="mi">1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">256</span> <span class="o">=</span> <span class="mh">0x100</span>
+ <span class="n">EP</span> <span class="mi">2</span> <span class="o">=</span> <span class="n">remain</span> <span class="n">space</span> <span class="o">=</span> <span class="mh">0x3F6</span> <span class="o">-</span> <span class="mh">0x119</span> <span class="o">-</span> <span class="mh">0x100</span> <span class="o">-</span> <span class="mh">0x100</span> <span class="o">=</span> <span class="mh">0xDD</span>
+<span class="n">Internal</span> <span class="n">Register</span> <span class="n">Storage</span> <span class="n">Space</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">=</span> <span class="mh">0xA</span>
+</pre></div>
+</div>
+<p>或者：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Device</span> <span class="n">RxFIFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">281</span> <span class="o">=</span> <span class="mh">0x119</span>
+<span class="n">Non</span><span class="o">-</span><span class="n">Periodic</span> <span class="n">TxFIFO</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">256</span> <span class="o">=</span> <span class="mh">0x200</span>
+<span class="n">Device</span> <span class="n">Periodic</span> <span class="n">TxFIFO</span><span class="p">:</span>
+ <span class="n">EP</span> <span class="mi">1</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x3F6</span> <span class="o">-</span> <span class="mh">0x119</span> <span class="o">-</span> <span class="mh">0x200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">=</span> <span class="mh">0x6E</span>
+ <span class="n">EP</span> <span class="mi">2</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0x3F6</span> <span class="o">-</span> <span class="mh">0x119</span> <span class="o">-</span> <span class="mh">0x200</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">=</span> <span class="mh">0x6E</span>
+<span class="n">Internal</span> <span class="n">Register</span> <span class="n">Storage</span> <span class="n">Space</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">=</span> <span class="mh">0xA</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fifo-mapping">
+<h4><span class="section-number">7.12.6.1.1.5. </span>FIFO Mapping<a class="headerlink" href="#fifo-mapping" title="永久链接至标题">¶</a></h4>
+<p><img alt="image4" src="../../../_images/usb_udc_fifo_mapping.png" /></p>
+<p>由上几节可知对一个端点 Endpoint 来说，它对应的 FIFO 是动态分配的。在 DMA 模式下，一旦初始化时配置完成就不用再去管 Endpoint FIFO 的地址。但是对 Slave 模式来说，在数据收发过程中需要 CPU 访问对应 FIFO 空间。</p>
+<p>为了方便 CPU 对 Endpoint FIFO 的访问，UDC 把 Endpoint FIFO 映射到了固定地址。其中读操作会映射到 OUT Endpoint FIFO，写操作会映射到 IN Endpoint FIFO。</p>
+</div>
+<div class="section" id="interrupt-cascade">
+<h4><span class="section-number">7.12.6.1.1.6. </span>Interrupt Cascade<a class="headerlink" href="#interrupt-cascade" title="永久链接至标题">¶</a></h4>
+<p><img alt="image5" src="../../../_images/usb_udc_interrupt.png" /></p>
+<p>由于 UDC 的中断状态较多，所以分成 3 级级联：</p>
+<ul class="simple">
+<li><p>layer1: <code class="docutils literal notranslate"><span class="pre">GINTSTS</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">GINTMSK</span></code> 。全局中断，每一 bit 表示一个全局中断状态。其中： <code class="docutils literal notranslate"><span class="pre">OEPInt</span></code> 表示有 <code class="docutils literal notranslate"><span class="pre">Out</span> <span class="pre">Endpoint</span></code> 中断发生 ， <code class="docutils literal notranslate"><span class="pre">IEPInt</span></code> 表示有 <code class="docutils literal notranslate"><span class="pre">In</span> <span class="pre">Endpoint</span></code> 中断发生。</p></li>
+<li><p>layer2: <code class="docutils literal notranslate"><span class="pre">DAINT</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">DAINTMSK</span></code> 。Endpoint 中断，每一 bit 表示一个 Endpoint 发生了中断。</p></li>
+<li><p>layer3: <code class="docutils literal notranslate"><span class="pre">DOEPINTn</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">DOEPMSK</span></code> ， <code class="docutils literal notranslate"><span class="pre">DIEPINTn</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">DIEPMSK</span></code> 。Endpoint 中断细节，每一个 Endpoint 拥有一组这样的寄存器。 寄存器中的每一 bit 代表某个 Endpoint 的某种中断状态。</p></li>
+</ul>
+</div>
+<div class="section" id="data-transfer">
+<h4><span class="section-number">7.12.6.1.1.7. </span>Data Transfer<a class="headerlink" href="#data-transfer" title="永久链接至标题">¶</a></h4>
+<p><img alt="image6" src="../../../_images/usb_udc_trandfer.png" /></p>
+<p>UDC 内部的数据收发流程如上图所示。主要的工作就是根据 USB 接收到的读写指令，把数据在 FIFO 和 Memory 之间进行搬移。具体分为几种情况：</p>
+<ul class="simple">
+<li><p>OUT Endpoint。所有 OUT Endpoint 的线路数据会接收到一个统一的 <code class="docutils literal notranslate"><span class="pre">Rx</span> <span class="pre">FIFO</span></code> 当中，然后根据接收数据的具体 Endpoint配置的 Memory 地址和长度，DMA 把数据从 FIFO 搬移到对应 Memory 当中，最后产生中断。</p></li>
+<li><p>IN Non-period Endpoint。所有 IN Non-period Endpoint 共享一个统一的 <code class="docutils literal notranslate"><span class="pre">Tx</span> <span class="pre">Non-period</span> <span class="pre">FIFO</span></code> ，根据Endpoint配置的 Memory 地址和长度，DMA 把数据从 Memory 搬移到统一的 FIFO 当中，发送到线路上后产生中断。IN Non-period Endpoint 需要配置 <code class="docutils literal notranslate"><span class="pre">Next</span> <span class="pre">Endpoint</span></code> 指针，这样 DMA处理完一个 Endpoint 的数据后才知道下一个需要处理的 Endpoint。</p></li>
+<li><p>IN Period Endpoint。每一个 IN Period Endpoint 拥有自己独立的 FIFO，根据Endpoint配置的 Memory 地址和长度，DMA 把数据从 Memory 搬移到对应的 FIFO 当中，发送到线路上后产生中断。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="aic-udc-driver">
+<h3><span class="section-number">7.12.6.1.2. </span>AIC UDC Driver<a class="headerlink" href="#aic-udc-driver" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">UDC</span> <span class="pre">Driver</span></code> 在需要完成的工作有两点：</p>
+<ul class="simple">
+<li><p>把 UDC 硬件注册成标准的 Gadget Device，以便提供标准的 Gadget API 给 Gadget Function 驱动来使用。</p></li>
+<li><p>提供 endpoint 资源池，处理 endpoint 层级的数据收发。</p></li>
+<li><p>需要处理部分 Endpoint0 Setup 逻辑。</p></li>
+</ul>
+<div class="section" id="init">
+<h4><span class="section-number">7.12.6.1.2.1. </span>Init<a class="headerlink" href="#init" title="永久链接至标题">¶</a></h4>
+<p><img alt="image7" src="../../../_images/usb_udc_init.png" /></p>
+<p>UDC 驱动把资源初始化好以后，注册成一个标准的 gadget 设备。</p>
+</div>
+<div class="section" id="gadget-ops">
+<h4><span class="section-number">7.12.6.1.2.2. </span>gadget.ops<a class="headerlink" href="#gadget-ops" title="永久链接至标题">¶</a></h4>
+<p>UDC 驱动需要提供 gadget 设备的操作函数集 <code class="docutils literal notranslate"><span class="pre">gadget.ops</span></code>。简单定义如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">usb_gadget_ops</span> <span class="n">aic_usb_gadget_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">get_frame</span>              <span class="o">=</span> <span class="n">aic_gg_getframe</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">udc_start</span>              <span class="o">=</span> <span class="n">aic_gg_udc_start</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">udc_stop</span>               <span class="o">=</span> <span class="n">aic_gg_udc_stop</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">pullup</span>                 <span class="o">=</span> <span class="n">aic_gg_pullup</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">vbus_session</span>           <span class="o">=</span> <span class="n">aic_gg_vbus_session</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">vbus_draw</span>              <span class="o">=</span> <span class="n">aic_gg_vbus_draw</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中的核心函数为 <code class="docutils literal notranslate"><span class="pre">.udc_start()</span></code> ，在调用该函数以后 UDC 才真正进入工作状态。其主要流程如下：</p>
+<p><img alt="image8" src="../../../_images/usb_udc_start.png" /></p>
+</div>
+<div class="section" id="ep-ops">
+<h4><span class="section-number">7.12.6.1.2.3. </span>ep.ops<a class="headerlink" href="#ep-ops" title="永久链接至标题">¶</a></h4>
+<p>UDC 驱动需要提供 endpoint 的操作函数集 <code class="docutils literal notranslate"><span class="pre">ep.ops</span></code>。简单定义如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">usb_ep_ops</span> <span class="n">aic_usb_ep_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">enable</span>                 <span class="o">=</span> <span class="n">aic_ep_enable</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">disable</span>                <span class="o">=</span> <span class="n">aic_ep_disable</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">alloc_request</span>          <span class="o">=</span> <span class="n">aic_ep_alloc_request</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">free_request</span>           <span class="o">=</span> <span class="n">aic_ep_free_request</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">queue</span>                  <span class="o">=</span> <span class="n">aic_ep_queue_request</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">dequeue</span>                <span class="o">=</span> <span class="n">aic_ep_dequeue_request</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">set_halt</span>               <span class="o">=</span> <span class="n">aic_ep_sethalt</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">.queue()</span></code> 函数负责接收 Gadget Function 驱动发送下来的 <code class="docutils literal notranslate"><span class="pre">usb_request</span></code>。其主要流程如下：</p>
+<p><img alt="image9" src="../../../_images/usb_udc_queue.png" /></p>
+</div>
+<div class="section" id="interrupt">
+<h4><span class="section-number">7.12.6.1.2.4. </span>Interrupt<a class="headerlink" href="#interrupt" title="永久链接至标题">¶</a></h4>
+<p>UDC 驱动主要承担的是数据收发，在上一节收到 <code class="docutils literal notranslate"><span class="pre">usb_request</span></code> 请求以后，接下来就是等待硬件处理完成产生中断了。中断处理的主要流程如下：</p>
+<p><img alt="image10" src="../../../_images/usb_udc_interrupt_flow.png" /></p>
+</div>
+<div class="section" id="ep0-setup">
+<h4><span class="section-number">7.12.6.1.2.5. </span>EP0 Setup<a class="headerlink" href="#ep0-setup" title="永久链接至标题">¶</a></h4>
+<p>UDC 驱动还有一项重要工作就是负责 EP0 Control 状态机的处理。USB ep0 上的 Control Transfer 处理分为3个阶段： <code class="docutils literal notranslate"><span class="pre">Setup</span> <span class="pre">Stage</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Data</span> <span class="pre">In/Out</span> <span class="pre">Stage</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Status</span> <span class="pre">In/Out</span> <span class="pre">Stage</span></code> 。具体对应以下 5 种状态：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/*</span> <span class="n">Gadget</span> <span class="n">ep0</span> <span class="n">states</span> <span class="o">*/</span>
+<span class="n">enum</span> <span class="n">ep0_state</span> <span class="p">{</span>
+    <span class="n">EP0_SETUP</span><span class="p">,</span>
+    <span class="n">EP0_DATA_IN</span><span class="p">,</span>
+    <span class="n">EP0_DATA_OUT</span><span class="p">,</span>
+    <span class="n">EP0_STATUS_IN</span><span class="p">,</span>
+    <span class="n">EP0_STATUS_OUT</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>这几种状态之间的转换流程如下所示：</p>
+<p><img alt="image11" src="../../../_images/usb_udc_ep0_control.png" /></p>
+</div>
+</div>
+</div>
+<div class="section" id="usb-device-layer">
+<h2><span class="section-number">7.12.6.2. </span>USB Device Layer<a class="headerlink" href="#usb-device-layer" title="永久链接至标题">¶</a></h2>
+<p>Linux 使用了一个 <code class="docutils literal notranslate"><span class="pre">Gadget</span></code> 的概念来组织 USB Device。</p>
+<p>Gadget Layer 层把 UDC 提供的 endpoint 封装成标准的 Gadget Device，提供统一的向上接口。</p>
+<p>Gadget Driver 又把各式各样的 Function 和 Gadget Device 链接起来。</p>
+<div class="section" id="gadget-bus">
+<h3><span class="section-number">7.12.6.2.1. </span>Gadget Bus<a class="headerlink" href="#gadget-bus" title="永久链接至标题">¶</a></h3>
+<p>Gadget Layer 层没有定义一个标准的 Bus 总线，而是自定义了两条链表来分别存储 Device 和 Driver：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 44%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>type</p></th>
+<th class="head"><p>list</p></th>
+<th class="head"><p>escript</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Device</p></td>
+<td><p>udc_list</p></td>
+<td><p>所有Device全集</p></td>
+</tr>
+<tr class="row-odd"><td><p>Driver</p></td>
+<td><p>gadget_driver_pending_list</p></td>
+<td><p>只包含没有适配Device的Driver</p></td>
+</tr>
+</tbody>
+</table>
+<p>它们的使用场景如下：</p>
+<ul class="simple">
+<li><p>在 Gadget Device 创建时，首先把 Device 加入到 <code class="docutils literal notranslate"><span class="pre">udc_list</span></code> 链表，然后尝试和 <code class="docutils literal notranslate"><span class="pre">gadget_driver_pending_list</span></code> 链表中的 Driver 进行 match():</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_add_gadget_udc() → usb_add_gadget_udc_release() → usb_add_gadget():
+
+int usb_add_gadget(struct usb_gadget *gadget)
+{
+
+    /* (1) 将 device 加入全局链表 */
+    list_add_tail(&amp;udc-&gt;list, &amp;udc_list);
+
+    /* pick up one of pending gadget drivers */
+    /* (2) 尝试 match gadget 的 device 和 driver */
+    ret = check_pending_gadget_drivers(udc);
+    if (ret)
+        goto err_del_udc;
+
+    mutex_unlock(&amp;udc_lock);
+}
+
+↓
+
+static int check_pending_gadget_drivers(struct usb_udc *udc)
+{
+    struct usb_gadget_driver *driver;
+    int ret = 0;
+
+    /* (2.1) 遍历 `gadget_driver_pending_list` 链表中的 Driver，和 Device 进行 match()
+            且一个 Driver 只能 match 一个 Device，Driver match 成功后会从链表删除
+    */
+    list_for_each_entry(driver, &amp;gadget_driver_pending_list, pending)
+        if (!driver-&gt;udc_name || strcmp(driver-&gt;udc_name,
+                        dev_name(&amp;udc-&gt;dev)) == 0) {
+            /* (2.2) Match 成功，对 Device 和 Driver 进行 bind() */
+            ret = udc_bind_to_driver(udc, driver);
+            if (ret != -EPROBE_DEFER)
+                /* (2.3) Driver Match 成功后，从pending链表删除 */
+                list_del_init(&amp;driver-&gt;pending);
+            break;
+        }
+
+    return ret;
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在 Gadget Driver 创建时，首先尝试和 <code class="docutils literal notranslate"><span class="pre">udc_list</span></code> 链表中的 Device 进行 match()，match() 不成功则把 Driver 加入到 <code class="docutils literal notranslate"><span class="pre">gadget_driver_pending_list</span></code> 链表中:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gadget_dev_desc_UDC_store() → usb_gadget_probe_driver():
+
+int usb_gadget_probe_driver(struct usb_gadget_driver *driver)
+{
+    struct usb_udc          *udc = NULL;
+    int                     ret = -ENODEV;
+
+    if (!driver || !driver-&gt;bind || !driver-&gt;setup)
+        return -EINVAL;
+
+    mutex_lock(&amp;udc_lock);
+    /* (1.1) 如果 Driver 有 udc_name，尝试和 udc_list 链表中 Device 的 Name 进行 match()  */
+    if (driver-&gt;udc_name) {
+        list_for_each_entry(udc, &amp;udc_list, list) {
+            ret = strcmp(driver-&gt;udc_name, dev_name(&amp;udc-&gt;dev));
+            if (!ret)
+                break;
+        }
+        if (ret)
+            ret = -ENODEV;
+        else if (udc-&gt;driver)
+            ret = -EBUSY;
+        else
+            goto found;
+    /* (1.2) 如果 Driver 没有 udc_name，尝试适配 udc_list 链表中第一个没有适配的 Device */
+    } else {
+        list_for_each_entry(udc, &amp;udc_list, list) {
+            /* For now we take the first one */
+            if (!udc-&gt;driver)
+                goto found;
+        }
+    }
+
+    if (!driver-&gt;match_existing_only) {
+        /* (2) 如果没有 match() 成功，则把 Driver 加入到 pending 链表 */
+        list_add_tail(&amp;driver-&gt;pending, &amp;gadget_driver_pending_list);
+        pr_info(&quot;udc-core: couldn&#39;t find an available UDC - added [%s] to list of pending drivers\n&quot;,
+            driver-&gt;function);
+        ret = 0;
+    }
+
+    mutex_unlock(&amp;udc_lock);
+    if (ret)
+        pr_warn(&quot;udc-core: couldn&#39;t find an available UDC or it&#39;s busy\n&quot;);
+    return ret;
+found:
+    /* (3) 如果 Match 成功，对 Device 和 Driver 进行 bind() */
+    ret = udc_bind_to_driver(udc, driver);
+    mutex_unlock(&amp;udc_lock);
+    return ret;
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在 Device 和 Driver Match 成功时的 bind() 动作：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="nb">int</span> <span class="n">udc_bind_to_driver</span><span class="p">(</span><span class="n">struct</span> <span class="n">usb_udc</span> <span class="o">*</span><span class="n">udc</span><span class="p">,</span> <span class="n">struct</span> <span class="n">usb_gadget_driver</span> <span class="o">*</span><span class="n">driver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">int</span> <span class="n">ret</span><span class="p">;</span>
+
+    <span class="n">dev_dbg</span><span class="p">(</span><span class="o">&amp;</span><span class="n">udc</span><span class="o">-&gt;</span><span class="n">dev</span><span class="p">,</span> <span class="s2">&quot;registering UDC driver [</span><span class="si">%s</span><span class="s2">]</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">driver</span><span class="o">-&gt;</span><span class="n">function</span><span class="p">);</span>
+
+    <span class="o">/*</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">数据成员的赋值</span> <span class="o">*/</span>
+    <span class="n">udc</span><span class="o">-&gt;</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span><span class="p">;</span>
+    <span class="n">udc</span><span class="o">-&gt;</span><span class="n">dev</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">driver</span><span class="o">-&gt;</span><span class="n">driver</span><span class="p">;</span>
+    <span class="n">udc</span><span class="o">-&gt;</span><span class="n">gadget</span><span class="o">-&gt;</span><span class="n">dev</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">driver</span><span class="o">-&gt;</span><span class="n">driver</span><span class="p">;</span>
+
+    <span class="n">usb_gadget_udc_set_speed</span><span class="p">(</span><span class="n">udc</span><span class="p">,</span> <span class="n">driver</span><span class="o">-&gt;</span><span class="n">max_speed</span><span class="p">);</span>
+
+    <span class="o">/*</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">调用</span> <span class="n">Gadget</span> <span class="n">Driver</span> <span class="n">的</span> <span class="n">bind</span><span class="p">()</span> <span class="n">函数</span> <span class="o">*/</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">driver</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">(</span><span class="n">udc</span><span class="o">-&gt;</span><span class="n">gadget</span><span class="p">,</span> <span class="n">driver</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="n">goto</span> <span class="n">err1</span><span class="p">;</span>
+
+    <span class="o">/*</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="n">调用</span> <span class="n">Gadget</span> <span class="n">Device</span> <span class="n">的</span> <span class="n">start</span><span class="p">()</span> <span class="n">函数</span>
+            <span class="n">udc</span><span class="o">-&gt;</span><span class="n">gadget</span><span class="o">-&gt;</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">udc_start</span><span class="p">(</span><span class="n">udc</span><span class="o">-&gt;</span><span class="n">gadget</span><span class="p">,</span> <span class="n">udc</span><span class="o">-&gt;</span><span class="n">driver</span><span class="p">);</span>
+    <span class="o">*/</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">usb_gadget_udc_start</span><span class="p">(</span><span class="n">udc</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">driver</span><span class="o">-&gt;</span><span class="n">unbind</span><span class="p">(</span><span class="n">udc</span><span class="o">-&gt;</span><span class="n">gadget</span><span class="p">);</span>
+        <span class="n">goto</span> <span class="n">err1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="o">/*</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="n">调用</span> <span class="n">Gadget</span> <span class="n">Device</span> <span class="n">的</span> <span class="n">pullup</span><span class="p">()</span> <span class="n">函数</span>
+            <span class="n">gadget</span><span class="o">-&gt;</span><span class="n">ops</span><span class="o">-&gt;</span><span class="n">pullup</span><span class="p">(</span><span class="n">gadget</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="p">);</span>
+    <span class="o">*/</span>
+    <span class="n">usb_udc_connect_control</span><span class="p">(</span><span class="n">udc</span><span class="p">);</span>
+
+    <span class="n">kobject_uevent</span><span class="p">(</span><span class="o">&amp;</span><span class="n">udc</span><span class="o">-&gt;</span><span class="n">dev</span><span class="o">.</span><span class="n">kobj</span><span class="p">,</span> <span class="n">KOBJ_CHANGE</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>注意：这里和一般的 Device 和 Driver 的适配规则有些不一样。一般的规则是一个 Dirver 可以适配多个 Device，而一个 Device 只能适配一个 Driver。而这里的规则是一个 Gadget Device 只能适配一个 Gadget Driver，而一个 Gadget Driver 只能适配一个 Gadget Device。 Gadget Driver 代表的是一个 <code class="docutils literal notranslate"><span class="pre">Composite</span> <span class="pre">Device</span></code>。</p>
+</div>
+<div class="section" id="gadget-device">
+<h3><span class="section-number">7.12.6.2.2. </span>Gadget Device<a class="headerlink" href="#gadget-device" title="永久链接至标题">¶</a></h3>
+<p>上一节说过 Gadget Device 由 UDC Driver 创建。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dwc2_driver_probe() → usb_add_gadget_udc() → usb_add_gadget_udc_release() → usb_add_gadget()
+</pre></div>
+</div>
+<p>Gadget Device 的主要作用是提供了 Endpoint 资源，供 Function Layer 使用标准的 Gadget API 来进行访问。</p>
+<div class="section" id="endpoint-alloc">
+<h4><span class="section-number">7.12.6.2.2.1. </span>Endpoint Alloc<a class="headerlink" href="#endpoint-alloc" title="永久链接至标题">¶</a></h4>
+<p>UDC Driver 在调用 usb_add_gadget_udc() 注册 Gadget Device 之前，初始化了 Gadget 的 Endpoint 资源链表：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dwc2_driver_probe() → dwc2_gadget_init():
+
+int dwc2_gadget_init(struct dwc2_hsotg *hsotg)
+{
+
+    /* (1) 初始化 Gadget Device 的 Endpoint 资源链表为空  */
+    INIT_LIST_HEAD(&amp;hsotg-&gt;gadget.ep_list);
+    hsotg-&gt;gadget.ep0 = &amp;hsotg-&gt;eps_out[0]-&gt;ep;
+
+
+    /* initialise the endpoints now the core has been initialised */
+    /* (2) 初始化 UDC 拥有的 Endpoint，加入到 Gadget Device 的 Endpoint 资源链表中 */
+    for (epnum = 0; epnum &lt; hsotg-&gt;num_of_eps; epnum++) {
+        if (hsotg-&gt;eps_in[epnum])
+            dwc2_hsotg_initep(hsotg, hsotg-&gt;eps_in[epnum],
+                    epnum, 1);
+        if (hsotg-&gt;eps_out[epnum])
+            dwc2_hsotg_initep(hsotg, hsotg-&gt;eps_out[epnum],
+                    epnum, 0);
+    }
+
+}
+
+↓
+
+static void dwc2_hsotg_initep(struct dwc2_hsotg *hsotg,
+                struct dwc2_hsotg_ep *hs_ep,
+                    int epnum,
+                    bool dir_in)
+{
+
+
+    INIT_LIST_HEAD(&amp;hs_ep-&gt;queue);
+    INIT_LIST_HEAD(&amp;hs_ep-&gt;ep.ep_list);
+
+    /* add to the list of endpoints known by the gadget driver */
+    /* (2.1) UDC 中除了 endpoint0 以外，其他的 endpoint 都加入到Gadget Device 的 Endpoint 资源链表 `gadget.ep_list` 中
+            endpoint0 的操作由 UDC 驱动自己来处理
+    */
+    if (epnum)
+        list_add_tail(&amp;hs_ep-&gt;ep.ep_list, &amp;hsotg-&gt;gadget.ep_list);
+
+    /* (2.2) 初始化 endpoint 的结构体成员 */
+    hs_ep-&gt;parent = hsotg;
+    hs_ep-&gt;ep.name = hs_ep-&gt;name;
+
+    if (hsotg-&gt;params.speed == DWC2_SPEED_PARAM_LOW)
+        usb_ep_set_maxpacket_limit(&amp;hs_ep-&gt;ep, 8);
+    else
+        usb_ep_set_maxpacket_limit(&amp;hs_ep-&gt;ep,
+                    epnum ? 1024 : EP0_MPS_LIMIT);
+
+    /* (2.3) endpoint 最重要的结构体成员，endpoint 操作函数集
+        endpoint 的相关操作最后调用到这些函数上
+    */
+    hs_ep-&gt;ep.ops = &amp;dwc2_hsotg_ep_ops;
+
+    if (epnum == 0) {
+        hs_ep-&gt;ep.caps.type_control = true;
+    } else {
+        if (hsotg-&gt;params.speed != DWC2_SPEED_PARAM_LOW) {
+            hs_ep-&gt;ep.caps.type_iso = true;
+            hs_ep-&gt;ep.caps.type_bulk = true;
+        }
+        hs_ep-&gt;ep.caps.type_int = true;
+    }
+
+    if (dir_in)
+        hs_ep-&gt;ep.caps.dir_in = true;
+    else
+        hs_ep-&gt;ep.caps.dir_out = true;
+
+}
+</pre></div>
+</div>
+<p>Gadget Device 准备好了 Endpoint 资源链表以后，通过 usb_add_gadget_udc() 注册。这样就可以 Function Layer 就可以通过调用 Gadget Api 来动态分配 Endpoint 了。例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static int
+acm_bind(struct usb_configuration *c, struct usb_function *f)
+{
+
+    /* allocate instance-specific endpoints */
+    /* (1) 从 Gadget Device 中分配一个 in endpoint */
+    ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;acm_fs_in_desc);
+    if (!ep)
+        goto fail;
+    acm-&gt;port.in = ep;
+
+    /* (2) 从 Gadget Device 中分配一个 out endpoint */
+    ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;acm_fs_out_desc);
+    if (!ep)
+        goto fail;
+    acm-&gt;port.out = ep;
+
+    /* (3) 从 Gadget Device 中分配一个 notify endpoint */
+    ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;acm_fs_notify_desc);
+    if (!ep)
+        goto fail;
+    acm-&gt;notify = ep;
+
+}
+</pre></div>
+</div>
+<p>其中通过 usb_ep_autoconfig() 函数从 Gadget Device 的 Endpoint 资源链表中分配空闲的 endpoint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>drivers\usb\gadget\function\f_acm.c:
+
+usb_ep_autoconfig() → usb_ep_autoconfig_ss():
+
+struct usb_ep *usb_ep_autoconfig_ss(
+    struct usb_gadget               *gadget,
+    struct usb_endpoint_descriptor  *desc,
+    struct usb_ss_ep_comp_descriptor *ep_comp
+)
+{
+    struct usb_ep   *ep;
+
+    if (gadget-&gt;ops-&gt;match_ep) {
+        ep = gadget-&gt;ops-&gt;match_ep(gadget, desc, ep_comp);
+        if (ep)
+            goto found_ep;
+    }
+
+    /* Second, look at endpoints until an unclaimed one looks usable */
+    /* (1) 从 Gadget Device 的 Endpoint 资源链表中查找一个空闲的(ep-&gt;claimed为空) 且符合要求的 endpoint  */
+    list_for_each_entry (ep, &amp;gadget-&gt;ep_list, ep_list) {
+        if (usb_gadget_ep_match_desc(gadget, ep, desc, ep_comp))
+            goto found_ep;
+    }
+
+    /* Fail */
+    return NULL;
+found_ep:
+
+    ...
+
+    ep-&gt;address = desc-&gt;bEndpointAddress;
+    ep-&gt;desc = NULL;
+    ep-&gt;comp_desc = NULL;
+    /* (2) 设置 endpoint 为已分配 */
+    ep-&gt;claimed = true;
+    return ep;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="endpoint-access">
+<h4><span class="section-number">7.12.6.2.2.2. </span>EndPoint Access<a class="headerlink" href="#endpoint-access" title="永久链接至标题">¶</a></h4>
+<p>Gadget Device 不仅仅为 Gadget Api 提供了分配 endpoint 的支持，还支持对 endpoint 收发数据的底层支持。在上一节的 endpoint 初始化时，就已经设置 endpoint 的操作函数集 <code class="docutils literal notranslate"><span class="pre">dwc2_hsotg_ep_ops</span></code> ：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dwc2_driver_probe() → dwc2_gadget_init() → dwc2_hsotg_initep():
+
+static void dwc2_hsotg_initep(struct dwc2_hsotg *hsotg,
+                struct dwc2_hsotg_ep *hs_ep,
+                    int epnum,
+                    bool dir_in)
+{
+
+    /* (2.3) endpoint 最重要的结构体成员，endpoint 操作函数集
+        endpoint 的相关操作最后调用到这些函数上
+    */
+    hs_ep-&gt;ep.ops = &amp;dwc2_hsotg_ep_ops;
+
+}
+
+↓
+
+static const struct usb_ep_ops dwc2_hsotg_ep_ops = {
+    .enable         = dwc2_hsotg_ep_enable,
+    .disable        = dwc2_hsotg_ep_disable_lock,
+    .alloc_request  = dwc2_hsotg_ep_alloc_request,
+    .free_request   = dwc2_hsotg_ep_free_request,
+    .queue          = dwc2_hsotg_ep_queue_lock,
+    .dequeue        = dwc2_hsotg_ep_dequeue,
+    .set_halt       = dwc2_hsotg_ep_sethalt_lock,
+    /* note, don&#39;t believe we have any call for the fifo routines */
+};
+</pre></div>
+</div>
+<p>Gadget Api 提供了以下接口来操作 endpoint 读写数据。在 Host 侧对 endpoint 进行一次操作请求的数据结构是  <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">urb</span></code> ，而在 Device 侧也有类似的数据结构称为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_request</span></code> ，对 endpoint 的数据读写就是围绕 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_request</span></code> 展开的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>drivers\usb\gadget\function\f_acm.c:
+
+static int acm_cdc_notify(struct f_acm *acm, u8 type, u16 value,
+        void *data, unsigned length)
+{
+    struct usb_ep                   *ep = acm-&gt;notify;
+    struct usb_request              *req;
+    struct usb_cdc_notification     *notify;
+    const unsigned                  len = sizeof(*notify) + length;
+    void                            *buf;
+    int                             status;
+
+    /* (1) 初始化 `struct usb_request` 数据结构 */
+    req = acm-&gt;notify_req;
+    acm-&gt;notify_req = NULL;
+    acm-&gt;pending = false;
+
+    req-&gt;length = len;
+    notify = req-&gt;buf;
+    buf = notify + 1;
+
+    notify-&gt;bmRequestType = USB_DIR_IN | USB_TYPE_CLASS
+            | USB_RECIP_INTERFACE;
+    notify-&gt;bNotificationType = type;
+    notify-&gt;wValue = cpu_to_le16(value);
+    notify-&gt;wIndex = cpu_to_le16(acm-&gt;ctrl_id);
+    notify-&gt;wLength = cpu_to_le16(length);
+    memcpy(buf, data, length);
+
+    /* ep_queue() can complete immediately if it fills the fifo... */
+    spin_unlock(&amp;acm-&gt;lock);
+    /* (2) 提交 `usb_request` 请求到 endpoint 处理队列中 */
+    status = usb_ep_queue(ep, req, GFP_ATOMIC);
+    spin_lock(&amp;acm-&gt;lock);
+
+}
+</pre></div>
+</div>
+<p>其中 usb_ep_queue() 函数就会调用 endpoint 的操作函数集 <code class="docutils literal notranslate"><span class="pre">dwc2_hsotg_ep_ops</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">.queue</span></code> 函数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int usb_ep_queue(struct usb_ep *ep,
+                struct usb_request *req, gfp_t gfp_flags)
+{
+    int ret = 0;
+
+    if (WARN_ON_ONCE(!ep-&gt;enabled &amp;&amp; ep-&gt;address)) {
+        ret = -ESHUTDOWN;
+        goto out;
+    }
+
+    /* (1) 实际调用 dwc2_hsotg_ep_queue_lock() */
+    ret = ep-&gt;ops-&gt;queue(ep, req, gfp_flags);
+
+out:
+    trace_usb_ep_queue(ep, req, ret);
+
+    return ret;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="udc-control">
+<h4><span class="section-number">7.12.6.2.2.3. </span>UDC Control<a class="headerlink" href="#udc-control" title="永久链接至标题">¶</a></h4>
+<p>Gadget Device 还提供了 UDC 层级的一些操作函数，UDC Driver 在调用 usb_add_gadget_udc() 注册 Gadget Device 之前，初始化了 Gadget 的 操作函数集：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dwc2_driver_probe() → dwc2_gadget_init():
+
+int dwc2_gadget_init(struct dwc2_hsotg *hsotg)
+{
+
+    hsotg-&gt;gadget.max_speed = USB_SPEED_HIGH;
+    /* (1) 初始化 Gadget Device 的操作函数集  */
+    hsotg-&gt;gadget.ops = &amp;dwc2_hsotg_gadget_ops;
+    hsotg-&gt;gadget.name = dev_name(dev);
+    hsotg-&gt;remote_wakeup_allowed = 0;
+
+}
+
+↓
+
+static const struct usb_gadget_ops dwc2_hsotg_gadget_ops = {
+    .get_frame      = dwc2_hsotg_gadget_getframe,
+    .set_selfpowered        = dwc2_hsotg_set_selfpowered,
+    .udc_start              = dwc2_hsotg_udc_start,
+    .udc_stop               = dwc2_hsotg_udc_stop,
+    .pullup                 = dwc2_hsotg_pullup,
+    .vbus_session           = dwc2_hsotg_vbus_session,
+    .vbus_draw              = dwc2_hsotg_vbus_draw,
+};
+</pre></div>
+</div>
+<p>Gadget Api 提供了一些内部函数来调用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static inline int usb_gadget_udc_start(struct usb_udc *udc)
+{
+    return udc-&gt;gadget-&gt;ops-&gt;udc_start(udc-&gt;gadget, udc-&gt;driver);
+}
+
+static inline void usb_gadget_udc_stop(struct usb_udc *udc)
+{
+    udc-&gt;gadget-&gt;ops-&gt;udc_stop(udc-&gt;gadget);
+}
+
+static inline void usb_gadget_udc_set_speed(struct usb_udc *udc,
+                        enum usb_device_speed speed)
+{
+    if (udc-&gt;gadget-&gt;ops-&gt;udc_set_speed) {
+        enum usb_device_speed s;
+
+        s = min(speed, udc-&gt;gadget-&gt;max_speed);
+        udc-&gt;gadget-&gt;ops-&gt;udc_set_speed(udc-&gt;gadget, s);
+    }
+}
+
+int usb_gadget_connect(struct usb_gadget *gadget)
+{
+    int ret = 0;
+
+    if (!gadget-&gt;ops-&gt;pullup) {
+        ret = -EOPNOTSUPP;
+        goto out;
+    }
+
+    if (gadget-&gt;deactivated) {
+        /*
+        * If gadget is deactivated we only save new state.
+        * Gadget will be connected automatically after activation.
+        */
+        gadget-&gt;connected = true;
+        goto out;
+    }
+
+    ret = gadget-&gt;ops-&gt;pullup(gadget, 1);
+    if (!ret)
+        gadget-&gt;connected = 1;
+
+out:
+    trace_usb_gadget_connect(gadget, ret);
+
+    return ret;
+}
+
+int usb_gadget_disconnect(struct usb_gadget *gadget)
+{
+    int ret = 0;
+
+    if (!gadget-&gt;ops-&gt;pullup) {
+        ret = -EOPNOTSUPP;
+        goto out;
+    }
+
+    if (!gadget-&gt;connected)
+        goto out;
+
+    if (gadget-&gt;deactivated) {
+        /*
+        * If gadget is deactivated we only save new state.
+        * Gadget will stay disconnected after activation.
+        */
+        gadget-&gt;connected = false;
+        goto out;
+    }
+
+    ret = gadget-&gt;ops-&gt;pullup(gadget, 0);
+    if (!ret) {
+        gadget-&gt;connected = 0;
+        gadget-&gt;udc-&gt;driver-&gt;disconnect(gadget);
+    }
+
+out:
+    trace_usb_gadget_disconnect(gadget, ret);
+
+    return ret;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gadget-driver-configfs">
+<h3><span class="section-number">7.12.6.2.3. </span>Gadget Driver (Configfs)<a class="headerlink" href="#gadget-driver-configfs" title="永久链接至标题">¶</a></h3>
+<p>Gadget Device 支撑了核心 Gadget Api 的实现，而 Function Layer 又需要使用这些 Api。怎么样将两者适配起来？Gadget Driver 就是用来完成这项工作的。</p>
+<p>目前存在两种风格的 Gadget Driver，其中包括：</p>
+<ul class="simple">
+<li><p>Legacy。这是早期风格的 Gadget Driver，只能通过静态编译的方式指定使用哪些 Function。</p></li>
+<li><p>Configfs。这是目前流行的 Gadget Driver，可以通过 configfs 文件系统，不用重新编译内核，动态的配置需要使用的 Function。</p></li>
+</ul>
+<p>我们首先介绍 configfs 风格的 Gadget Driver。</p>
+<div class="section" id="configfs">
+<h4><span class="section-number">7.12.6.2.3.1. </span>Configfs 使用<a class="headerlink" href="#configfs" title="永久链接至标题">¶</a></h4>
+<p>首先从使用上体验一下 configfs 的便捷。例如创建一个 ACM Function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// 1、挂载configfs文件系统。
+mount -t configfs none /sys/kernel/config
+cd /sys/kernel/config/usb_gadget
+
+// 2、创建g1目录，实例化一个新的gadget模板 (composite device)。
+mkdir g1
+cd g1
+
+// 3.1、定义USB产品的VID和PID。
+echo &quot;0x1d6b&quot; &gt; idVendor
+echo &quot;0x0104&quot; &gt; idProduct
+
+// 3.2、实例化英语语言ID。(0x409是USB language ID 美国英语，不是任意的，可以在USBIF网站上下载文档查询。)
+mkdir strings/0x409
+ls strings/0x409/
+// 3.3、将开发商、产品和序列号字符串写入内核。
+echo &quot;0123456789&quot; &gt; strings/0x409/serialnumber
+echo &quot;AAAA Inc.&quot; &gt; strings/0x409/manufacturer
+echo &quot;Bar Gadget&quot; &gt; strings/0x409/product
+
+// 4、创建 `Function` 功能实例，需要注意的是，一个功能如果有多个实例的话，扩展名必须用数字编号。
+mkdir functions/acm.GS0
+
+// 5.1、创建一个USB `Configuration` 配置实例：
+mkdir configs/c.1
+ls configs/c.1
+// 5.2、定义配置描述符使用的字符串
+mkdir configs/c.1/strings/0x409
+ls configs/c.1/strings/0x409/
+echo &quot;ACM&quot; &gt; configs/c.1/strings/0x409/configuration
+
+// 6、捆绑功能 `Function` 实例到 `Configuration` 配置c.1
+ln -s functions/acm.GS0 configs/c.1
+
+// 7.1、查找本机可获得的UDC实例 (即 gadget device)
+# ls /sys/class/udc/
+10200000.usb
+// 7.2、将gadget驱动注册到UDC上，插上USB线到电脑上，电脑就会枚举USB设备。
+echo &quot;10200000.usb&quot; &gt; UDC
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h4><span class="section-number">7.12.6.2.3.2. </span>Configfs 层次结构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h4>
+<p>configfs 并不是 gadget 专用的，它是一个通用文件系统，方便用户通过文件系统创建文件夹、文件的方式来创建内核对象。</p>
+<p>configfs 是很好理解的， <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">config_group</span></code> 相当于一个文件夹， <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">config_item_type</span></code> 是这个文件夹的属性集。其中 <code class="docutils literal notranslate"><span class="pre">config_item_type-&gt;ct_group_ops-&gt;make_group()/drop_item()</span></code> 定义了创建/销毁下一层子文件夹的方法， <code class="docutils literal notranslate"><span class="pre">config_item_type-&gt;ct_attrs</span></code> 定义了子文件和相关操作函数。</p>
+<p>我们通过解析 <code class="docutils literal notranslate"><span class="pre">drivers\usb\gadget\configfs.c</span></code> 文件来深入理解 <code class="docutils literal notranslate"><span class="pre">configfs</span></code> 的使用方法：</p>
+<ul class="simple">
+<li><p>首先创建首层文件夹 <code class="docutils literal notranslate"><span class="pre">/sys/kernel/config/usb_gadget</span></code> ：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">struct</span> <span class="n">configfs_group_operations</span> <span class="n">gadgets_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">make_group</span>     <span class="o">=</span> <span class="o">&amp;</span><span class="n">gadgets_make</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">drop_item</span>      <span class="o">=</span> <span class="o">&amp;</span><span class="n">gadgets_drop</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">config_item_type</span> <span class="n">gadgets_type</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">ct_group_ops</span>   <span class="o">=</span> <span class="o">&amp;</span><span class="n">gadgets_ops</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">ct_owner</span>       <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">static</span> <span class="n">struct</span> <span class="n">configfs_subsystem</span> <span class="n">gadget_subsys</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">su_group</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="o">.</span><span class="n">cg_item</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="o">.</span><span class="n">ci_namebuf</span> <span class="o">=</span> <span class="s2">&quot;usb_gadget&quot;</span><span class="p">,</span>
+            <span class="o">.</span><span class="n">ci_type</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">gadgets_type</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="o">.</span><span class="n">su_mutex</span> <span class="o">=</span> <span class="n">__MUTEX_INITIALIZER</span><span class="p">(</span><span class="n">gadget_subsys</span><span class="o">.</span><span class="n">su_mutex</span><span class="p">),</span>
+<span class="p">};</span>
+
+<span class="n">static</span> <span class="nb">int</span> <span class="n">__init</span> <span class="n">gadget_cfs_init</span><span class="p">(</span><span class="n">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">int</span> <span class="n">ret</span><span class="p">;</span>
+
+    <span class="n">config_group_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gadget_subsys</span><span class="o">.</span><span class="n">su_group</span><span class="p">);</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">configfs_register_subsystem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gadget_subsys</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">module_init</span><span class="p">(</span><span class="n">gadget_cfs_init</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>创建 <code class="docutils literal notranslate"><span class="pre">/sys/kernel/config/usb_gadget/g1</span></code> ，相当于创建一个全新的 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code>。会调用顶层 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">config_group</span></code> 的 <code class="docutils literal notranslate"><span class="pre">config_item_type-&gt;ct_group_ops-&gt;make_group()</span></code> 函数，即 <code class="docutils literal notranslate"><span class="pre">gadgets_make()</span></code> ：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static struct config_group *gadgets_make(
+        struct config_group *group,
+        const char *name)
+{
+    struct gadget_info *gi;
+
+    gi = kzalloc(sizeof(*gi), GFP_KERNEL);
+    if (!gi)
+        return ERR_PTR(-ENOMEM);
+
+    /* (1) 创建顶层文件夹 `/sys/kernel/config/usb_gadget/g1` 对应的 `struct config_group` 结构
+            `/sys/kernel/config/usb_gadget/g1` 下对应不少子文件，在 gadget_root_type.ct_attrs 中定义，即 `gadget_root_attrs`:
+            static struct configfs_attribute *gadget_root_attrs[] = {
+                &amp;gadget_dev_desc_attr_bDeviceClass,
+                &amp;gadget_dev_desc_attr_bDeviceSubClass,
+                &amp;gadget_dev_desc_attr_bDeviceProtocol,
+                &amp;gadget_dev_desc_attr_bMaxPacketSize0,
+                &amp;gadget_dev_desc_attr_idVendor,
+                &amp;gadget_dev_desc_attr_idProduct,
+                &amp;gadget_dev_desc_attr_bcdDevice,
+                &amp;gadget_dev_desc_attr_bcdUSB,
+                &amp;gadget_dev_desc_attr_UDC,
+                &amp;gadget_dev_desc_attr_max_speed,
+                NULL,
+            };
+    */
+    config_group_init_type_name(&amp;gi-&gt;group, name, &amp;gadget_root_type);
+
+    /* (2) 创建子文件夹 `/sys/kernel/config/usb_gadget/g1/functions`
+            `functions_type` 中定义了进一步创建子文件夹的操作函数
+    */
+    config_group_init_type_name(&amp;gi-&gt;functions_group, &quot;functions&quot;,
+            &amp;functions_type);
+    configfs_add_default_group(&amp;gi-&gt;functions_group, &amp;gi-&gt;group);
+
+    /* (3) 创建子文件夹 `/sys/kernel/config/usb_gadget/g1/configs`
+            `config_desc_type` 中定义了进一步创建子文件夹的操作函数
+    */
+    config_group_init_type_name(&amp;gi-&gt;configs_group, &quot;configs&quot;,
+            &amp;config_desc_type);
+    configfs_add_default_group(&amp;gi-&gt;configs_group, &amp;gi-&gt;group);
+
+    /* (4) 创建子文件夹 `/sys/kernel/config/usb_gadget/g1/strings`
+            `gadget_strings_strings_type` 中定义了进一步创建子文件夹的操作函数
+    */
+    config_group_init_type_name(&amp;gi-&gt;strings_group, &quot;strings&quot;,
+            &amp;gadget_strings_strings_type);
+    configfs_add_default_group(&amp;gi-&gt;strings_group, &amp;gi-&gt;group);
+
+    /* (5) 创建子文件夹 `/sys/kernel/config/usb_gadget/g1/os_desc`
+            `os_desc_type` 中定义了进一步创建哪些子文件
+    */
+    config_group_init_type_name(&amp;gi-&gt;os_desc_group, &quot;os_desc&quot;,
+            &amp;os_desc_type);
+    configfs_add_default_group(&amp;gi-&gt;os_desc_group, &amp;gi-&gt;group);
+
+    /* (6) `configfs.c` 的目的很明确就是创建一个 `composite device`
+            由用户添加和配置这个 `device` 当中的多个 `interface` 即 `function`
+    */
+    gi-&gt;composite.bind = configfs_do_nothing;
+    gi-&gt;composite.unbind = configfs_do_nothing;
+    gi-&gt;composite.suspend = NULL;
+    gi-&gt;composite.resume = NULL;
+    gi-&gt;composite.max_speed = USB_SPEED_SUPER_PLUS;
+
+    spin_lock_init(&amp;gi-&gt;spinlock);
+    mutex_init(&amp;gi-&gt;lock);
+    INIT_LIST_HEAD(&amp;gi-&gt;string_list);
+    INIT_LIST_HEAD(&amp;gi-&gt;available_func);
+
+    composite_init_dev(&amp;gi-&gt;cdev);
+    gi-&gt;cdev.desc.bLength = USB_DT_DEVICE_SIZE;
+    gi-&gt;cdev.desc.bDescriptorType = USB_DT_DEVICE;
+    gi-&gt;cdev.desc.bcdDevice = cpu_to_le16(get_default_bcdDevice());
+
+    gi-&gt;composite.gadget_driver = configfs_driver_template;
+
+    gi-&gt;composite.gadget_driver.function = kstrdup(name, GFP_KERNEL);
+    gi-&gt;composite.name = gi-&gt;composite.gadget_driver.function;
+
+    if (!gi-&gt;composite.gadget_driver.function)
+        goto err;
+
+    return &amp;gi-&gt;group;
+err:
+    kfree(gi);
+    return ERR_PTR(-ENOMEM);
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>创建 <code class="docutils literal notranslate"><span class="pre">/sys/kernel/config/usb_gadget/g1/functions/acm.GS0</span></code>。会调用 <code class="docutils literal notranslate"><span class="pre">functions_type</span></code> 中定义的 function_make() 函数：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static struct config_group *function_make(
+        struct config_group *group,
+        const char *name)
+{
+    struct gadget_info *gi;
+    struct usb_function_instance *fi;
+    char buf[MAX_NAME_LEN];
+    char *func_name;
+    char *instance_name;
+    int ret;
+
+    ret = snprintf(buf, MAX_NAME_LEN, &quot;%s&quot;, name);
+    if (ret &gt;= MAX_NAME_LEN)
+        return ERR_PTR(-ENAMETOOLONG);
+
+    /* (1) 把 `acm.GS0` 分割成两部分：
+            func_name = `acm`
+            instance_name = `GS0`
+    */
+    func_name = buf;
+    instance_name = strchr(func_name, &#39;.&#39;);
+    if (!instance_name) {
+        pr_err(&quot;Unable to locate . in FUNC.INSTANCE\n&quot;);
+        return ERR_PTR(-EINVAL);
+    }
+    *instance_name = &#39;\0&#39;;
+    instance_name++;
+
+    /* (2) 根据 func_name 在全局链表中查找对应 function
+            usb_get_function_instance() → try_get_usb_function_instance() → fd-&gt;alloc_inst() → acm_alloc_instance():
+            并调用 usb_function_driver-&gt;alloc_inst() 分配一个 function 实例
+    */
+    fi = usb_get_function_instance(func_name);
+    if (IS_ERR(fi))
+        return ERR_CAST(fi);
+
+    /* (3) 初始化 function 实例 */
+    ret = config_item_set_name(&amp;fi-&gt;group.cg_item, &quot;%s&quot;, name);
+    if (ret) {
+        usb_put_function_instance(fi);
+        return ERR_PTR(ret);
+    }
+    if (fi-&gt;set_inst_name) {
+        ret = fi-&gt;set_inst_name(fi, instance_name);
+        if (ret) {
+            usb_put_function_instance(fi);
+            return ERR_PTR(ret);
+        }
+    }
+
+    gi = container_of(group, struct gadget_info, functions_group);
+
+    mutex_lock(&amp;gi-&gt;lock);
+    /* (4) 将 function 实例挂载到 composite device 的 function 链表当中去 */
+    list_add_tail(&amp;fi-&gt;cfs_list, &amp;gi-&gt;available_func);
+    mutex_unlock(&amp;gi-&gt;lock);
+    return &amp;fi-&gt;group;
+}
+</pre></div>
+</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">functions/acm.GS0</span> <span class="pre">configs/c.1</span></code> 时给 function 实例安装实际的函数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>config_usb_cfg_link() → usb_get_function() → fi-&gt;fd-&gt;alloc_func() → acm_alloc_func()：
+
+static struct usb_function *acm_alloc_func(struct usb_function_instance *fi)
+{
+    struct f_serial_opts *opts;
+    struct f_acm *acm;
+
+    /* (2.1) 对应分配一个 func 实例 */
+    acm = kzalloc(sizeof(*acm), GFP_KERNEL);
+    if (!acm)
+        return ERR_PTR(-ENOMEM);
+
+    spin_lock_init(&amp;acm-&gt;lock);
+
+    /* (2.2) 初始化 func 实例的成员函数 */
+    acm-&gt;port.connect = acm_connect;
+    acm-&gt;port.disconnect = acm_disconnect;
+    acm-&gt;port.send_break = acm_send_break;
+
+    acm-&gt;port.func.name = &quot;acm&quot;;
+    acm-&gt;port.func.strings = acm_strings;
+    /* descriptors are per-instance copies */
+    acm-&gt;port.func.bind = acm_bind;
+    acm-&gt;port.func.set_alt = acm_set_alt;
+    acm-&gt;port.func.setup = acm_setup;
+    acm-&gt;port.func.disable = acm_disable;
+
+    opts = container_of(fi, struct f_serial_opts, func_inst);
+    acm-&gt;port_num = opts-&gt;port_num;
+    acm-&gt;port.func.unbind = acm_unbind;
+    acm-&gt;port.func.free_func = acm_free_func;
+    acm-&gt;port.func.resume = acm_resume;
+    acm-&gt;port.func.suspend = acm_suspend;
+
+    return &amp;acm-&gt;port.func;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="gadget-driver">
+<h4><span class="section-number">7.12.6.2.3.3. </span>Gadget Driver<a class="headerlink" href="#gadget-driver" title="永久链接至标题">¶</a></h4>
+<p>Configfs 风格的 gadget driver 的定义：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>drivers\usb\gadget\configfs.c：
+
+static const struct usb_gadget_driver configfs_driver_template = {
+    .bind           = configfs_composite_bind,
+    .unbind         = configfs_composite_unbind,
+
+    .setup          = configfs_composite_setup,
+    .reset          = configfs_composite_disconnect,
+    .disconnect     = configfs_composite_disconnect,
+
+    .suspend        = configfs_composite_suspend,
+    .resume         = configfs_composite_resume,
+
+    .max_speed      = USB_SPEED_SUPER_PLUS,
+    .driver = {
+        .owner          = THIS_MODULE,
+        .name               = &quot;configfs-gadget&quot;,
+    },
+    .match_existing_only = 1,
+};
+</pre></div>
+</div>
+<p>在调用 <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">&quot;/sys/class/udc/10200000.usb&quot;</span> <span class="pre">&gt;</span> <span class="pre">/sys/kernel/config/usb_gadget/g1/UDC</span></code> 时，将上述 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">driver</span></code> 进行注册，和 UDC 已经注册好的 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">device</span></code> 进行动态适配。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gadget_dev_desc_UDC_store() → usb_gadget_probe_driver(&amp;gi-&gt;composite.gadget_driver) → udc_bind_to_driver()
+</pre></div>
+</div>
+<p>本质上是 使用 configfs 创建好的 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code> 和 <code class="docutils literal notranslate"><span class="pre">gadget</span> <span class="pre">device</span></code> 进行绑定：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gadget_dev_desc_UDC_store() → usb_gadget_probe_driver() → udc_bind_to_driver() → configfs_composite_bind() → usb_add_function() → function-&gt;bind() → acm_bind():
+
+static int
+acm_bind(struct usb_configuration *c, struct usb_function *f)
+{
+    /* (1) 这样 function 实例和 gadget device 进行了绑定 */
+    struct usb_composite_dev *cdev = c-&gt;cdev;
+    struct f_acm            *acm = func_to_acm(f);
+
+    /* allocate instance-specific endpoints */
+    /* (2) function 实例可以从 gadget device 中分配得到 endpoint */
+    ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;acm_fs_in_desc);
+    if (!ep)
+        goto fail;
+    acm-&gt;port.in = ep;
+
+    ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;acm_fs_out_desc);
+    if (!ep)
+        goto fail;
+    acm-&gt;port.out = ep;
+
+    ep = usb_ep_autoconfig(cdev-&gt;gadget, &amp;acm_fs_notify_desc);
+    if (!ep)
+        goto fail;
+    acm-&gt;notify = ep;
+
+}
+</pre></div>
+</div>
+<p>但是 bind() 以后 function 实例只是分配了 endpoint 资源还没有被启动，因为 Device 是被动状态，只有连上 Host，被 Host <code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Configuration</span></code> 操作以后。某一组 <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> 被配置，相应的 <code class="docutils literal notranslate"><span class="pre">Function</span> <span class="pre">实例</span></code> 才会被启用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dwc2_hsotg_complete_setup() → dwc2_hsotg_process_control() → hsotg-&gt;driver-&gt;setup() → configfs_composite_setup() → composite_setup() → set_config() → f-&gt;set_alt() → acm_set_alt():
+
+static int acm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
+{
+    struct f_acm            *acm = func_to_acm(f);
+    struct usb_composite_dev *cdev = f-&gt;config-&gt;cdev;
+
+    /* we know alt == 0, so this is an activation or a reset */
+
+    /* (1) 使能 endpoint，并且提交 `struct usb_request` 请求  */
+    if (intf == acm-&gt;ctrl_id) {
+        if (acm-&gt;notify-&gt;enabled) {
+            dev_vdbg(&amp;cdev-&gt;gadget-&gt;dev,
+                    &quot;reset acm control interface %d\n&quot;, intf);
+            usb_ep_disable(acm-&gt;notify);
+        }
+
+        if (!acm-&gt;notify-&gt;desc)
+            if (config_ep_by_speed(cdev-&gt;gadget, f, acm-&gt;notify))
+                return -EINVAL;
+
+        usb_ep_enable(acm-&gt;notify);
+
+    } else if (intf == acm-&gt;data_id) {
+        if (acm-&gt;notify-&gt;enabled) {
+            dev_dbg(&amp;cdev-&gt;gadget-&gt;dev,
+                &quot;reset acm ttyGS%d\n&quot;, acm-&gt;port_num);
+            gserial_disconnect(&amp;acm-&gt;port);
+        }
+        if (!acm-&gt;port.in-&gt;desc || !acm-&gt;port.out-&gt;desc) {
+            dev_dbg(&amp;cdev-&gt;gadget-&gt;dev,
+                &quot;activate acm ttyGS%d\n&quot;, acm-&gt;port_num);
+            if (config_ep_by_speed(cdev-&gt;gadget, f,
+                        acm-&gt;port.in) ||
+                config_ep_by_speed(cdev-&gt;gadget, f,
+                        acm-&gt;port.out)) {
+                acm-&gt;port.in-&gt;desc = NULL;
+                acm-&gt;port.out-&gt;desc = NULL;
+                return -EINVAL;
+            }
+        }
+        gserial_connect(&amp;acm-&gt;port, acm-&gt;port_num);
+
+    } else
+        return -EINVAL;
+
+    return 0;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gadget-driver-legacy">
+<h3><span class="section-number">7.12.6.2.4. </span>Gadget Driver (Legacy)<a class="headerlink" href="#gadget-driver-legacy" title="永久链接至标题">¶</a></h3>
+<p>对于 Legacy Gadget Driver 驱动来说，相当于 Configfs Gadget Driver 的一个简化版。</p>
+<div class="section" id="id2">
+<h4><span class="section-number">7.12.6.2.4.1. </span>Gadget Driver<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h4>
+<p>Legacy 风格的 gadget driver 的定义：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drivers</span>\<span class="n">usb</span>\<span class="n">gadget</span>\<span class="n">composite</span><span class="o">.</span><span class="n">c</span><span class="p">:</span>
+
+<span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">usb_gadget_driver</span> <span class="n">composite_driver_template</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">bind</span>           <span class="o">=</span> <span class="n">composite_bind</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">unbind</span>         <span class="o">=</span> <span class="n">composite_unbind</span><span class="p">,</span>
+
+    <span class="o">.</span><span class="n">setup</span>          <span class="o">=</span> <span class="n">composite_setup</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">reset</span>          <span class="o">=</span> <span class="n">composite_disconnect</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">disconnect</span>     <span class="o">=</span> <span class="n">composite_disconnect</span><span class="p">,</span>
+
+    <span class="o">.</span><span class="n">suspend</span>        <span class="o">=</span> <span class="n">composite_suspend</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">resume</span>         <span class="o">=</span> <span class="n">composite_resume</span><span class="p">,</span>
+
+    <span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="o">.</span><span class="n">owner</span>              <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>驱动提供了一个注册函数 usb_composite_probe()，以供 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code> 来进行调用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int usb_composite_probe(struct usb_composite_driver *driver)
+{
+    struct usb_gadget_driver *gadget_driver;
+
+    if (!driver || !driver-&gt;dev || !driver-&gt;bind)
+        return -EINVAL;
+
+    if (!driver-&gt;name)
+        driver-&gt;name = &quot;composite&quot;;
+
+    /* (1) 把传递过来的 `usb_composite_driver` 包装成 `usb_gadget_driver` */
+    driver-&gt;gadget_driver = composite_driver_template;
+    gadget_driver = &amp;driver-&gt;gadget_driver;
+
+    gadget_driver-&gt;function =  (char *) driver-&gt;name;
+    gadget_driver-&gt;driver.name = driver-&gt;name;
+    gadget_driver-&gt;max_speed = driver-&gt;max_speed;
+
+    /* (2) 注册 gadget driver，让其和 gadget device 适配 */
+    return usb_gadget_probe_driver(gadget_driver);
+}
+EXPORT_SYMBOL_GPL(usb_composite_probe);
+</pre></div>
+</div>
+</div>
+<div class="section" id="composite-device">
+<h4><span class="section-number">7.12.6.2.4.2. </span>Composite Device<a class="headerlink" href="#composite-device" title="永久链接至标题">¶</a></h4>
+<p>没有了 configfs 由用户来创建 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code> ，只能使用一个文件来创建 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code> 定义其使用哪些 <code class="docutils literal notranslate"><span class="pre">function</span></code> 和一系列配置。例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drivers</span>\<span class="n">usb</span>\<span class="n">gadget</span>\<span class="n">legacy</span>\<span class="n">acm_ms</span><span class="o">.</span><span class="n">c</span>
+
+<span class="n">static</span> <span class="n">struct</span> <span class="n">usb_composite_driver</span> <span class="n">acm_ms_driver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">name</span>           <span class="o">=</span> <span class="s2">&quot;g_acm_ms&quot;</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">dev</span>            <span class="o">=</span> <span class="o">&amp;</span><span class="n">device_desc</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">max_speed</span>      <span class="o">=</span> <span class="n">USB_SPEED_SUPER</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">strings</span>        <span class="o">=</span> <span class="n">dev_strings</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bind</span>           <span class="o">=</span> <span class="n">acm_ms_bind</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">unbind</span>         <span class="o">=</span> <span class="n">acm_ms_unbind</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="o">/*</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">驱动一开始就调用</span> <span class="n">usb_composite_probe</span><span class="p">()</span> <span class="n">来注册</span> <span class="n">acm_ms_driver</span>
+        <span class="n">因为</span> <span class="n">acm_ms_driver</span> <span class="n">没有指定</span> <span class="n">udc_name</span> <span class="n">所以只能适配第一个</span> <span class="n">udc</span>
+<span class="o">*/</span>
+<span class="n">module_usb_composite_driver</span><span class="p">(</span><span class="n">acm_ms_driver</span><span class="p">);</span>
+
+<span class="c1">#define module_usb_composite_driver(__usb_composite_driver) \</span>
+    <span class="n">module_driver</span><span class="p">(</span><span class="n">__usb_composite_driver</span><span class="p">,</span> <span class="n">usb_composite_probe</span><span class="p">,</span> \
+            <span class="n">usb_composite_unregister</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在 gadget driver 驱动适配后，调用 bind() 函数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_gadget_probe_driver() → udc_bind_to_driver() → composite_bind() → acm_ms_bind()
+</pre></div>
+</div>
+<p>在 acm_ms_bind() 函数中创建 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Function/Interface</span></code> ，并且和 Gadget Device / UDC 进行绑定。</p>
+<p>其他操作和 Configfs Gadget Driver 类似。</p>
+</div>
+</div>
+</div>
+<div class="section" id="usb-interface-layer">
+<h2><span class="section-number">7.12.6.3. </span>USB Interface Layer<a class="headerlink" href="#usb-interface-layer" title="永久链接至标题">¶</a></h2>
+<p>Linux 使用 Function 来实现 USB Interface 等级的功能。</p>
+<div class="section" id="function">
+<h3><span class="section-number">7.12.6.3.1. </span>Function 注册<a class="headerlink" href="#function" title="永久链接至标题">¶</a></h3>
+<p>在 <code class="docutils literal notranslate"><span class="pre">drivers/usb/gadget/function/</span></code> 路径下有一批 Gadget Function 的定义：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls drivers/usb/gadget/function/f*
+f_acm.c  f_ecm.c  f_eem.c  f_fs.c  f_hid.c  f_loopback.c  f_mass_storage.c  f_mass_storage.h
+f_midi.c  f_ncm.c  f_obex.c  f_phonet.c  f_printer.c  f_rndis.c  f_serial.c  f_sourcesink.c
+f_subset.c  f_tcm.c  f_uac1.c  f_uac1_legacy.c  f_uac2.c  f_uvc.c  f_uvc.h
+</pre></div>
+</div>
+<p>大家使用 <code class="docutils literal notranslate"><span class="pre">DECLARE_USB_FUNCTION_INIT()</span></code> 宏定义来调用 usb_function_register() 函数，把 <code class="docutils literal notranslate"><span class="pre">usb_function_driver</span></code> 注册到全局链表 <code class="docutils literal notranslate"><span class="pre">func_list</span></code> 中。等待 <code class="docutils literal notranslate"><span class="pre">composite</span> <span class="pre">device</span></code> 来进行实例化。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DECLARE_USB_FUNCTION_INIT</span><span class="p">(</span><span class="n">acm</span><span class="p">,</span> <span class="n">acm_alloc_instance</span><span class="p">,</span> <span class="n">acm_alloc_func</span><span class="p">);</span>
+
+<span class="c1">#define DECLARE_USB_FUNCTION(_name, _inst_alloc, _func_alloc)               \</span>
+    <span class="n">static</span> <span class="n">struct</span> <span class="n">usb_function_driver</span> <span class="n">_name</span> <span class="c1">## usb_func = {         \</span>
+        <span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">__stringify</span><span class="p">(</span><span class="n">_name</span><span class="p">),</span>                         \
+        <span class="o">.</span><span class="n">mod</span>  <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span>                                        \
+        <span class="o">.</span><span class="n">alloc_inst</span> <span class="o">=</span> <span class="n">_inst_alloc</span><span class="p">,</span>                          \
+        <span class="o">.</span><span class="n">alloc_func</span> <span class="o">=</span> <span class="n">_func_alloc</span><span class="p">,</span>                          \
+    <span class="p">};</span>                                                              \
+    <span class="n">MODULE_ALIAS</span><span class="p">(</span><span class="s2">&quot;usbfunc:&quot;</span><span class="n">__stringify</span><span class="p">(</span><span class="n">_name</span><span class="p">));</span>
+
+<span class="c1">#define DECLARE_USB_FUNCTION_INIT(_name, _inst_alloc, _func_alloc)  \</span>
+    <span class="n">DECLARE_USB_FUNCTION</span><span class="p">(</span><span class="n">_name</span><span class="p">,</span> <span class="n">_inst_alloc</span><span class="p">,</span> <span class="n">_func_alloc</span><span class="p">)</span>           \
+    <span class="n">static</span> <span class="nb">int</span> <span class="n">__init</span> <span class="n">_name</span> <span class="c1">## mod_init(void)                       \</span>
+    <span class="p">{</span>                                                               \
+        <span class="k">return</span> <span class="n">usb_function_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_name</span> <span class="c1">## usb_func);   \</span>
+    <span class="p">}</span>                                                               \
+    <span class="n">static</span> <span class="n">void</span> <span class="n">__exit</span> <span class="n">_name</span> <span class="c1">## mod_exit(void)                      \</span>
+    <span class="p">{</span>                                                               \
+        <span class="n">usb_function_unregister</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_name</span> <span class="c1">## usb_func);                \</span>
+    <span class="p">}</span>                                                               \
+    <span class="n">module_init</span><span class="p">(</span><span class="n">_name</span> <span class="c1">## mod_init);                                 \</span>
+    <span class="n">module_exit</span><span class="p">(</span><span class="n">_name</span> <span class="c1">## mod_exit)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gadget-api">
+<h3><span class="section-number">7.12.6.3.2. </span>Gadget API<a class="headerlink" href="#gadget-api" title="永久链接至标题">¶</a></h3>
+<p>在 Function Layer 主要使用以下 Gadget Layer 层提供的 API：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usb_ep_autoconfig</span><span class="p">()</span>
+<span class="n">usb_ep_enable</span><span class="p">()</span>
+<span class="n">usb_ep_disable</span><span class="p">()</span>
+<span class="n">usb_ep_alloc_request</span><span class="p">()</span>
+<span class="n">usb_ep_free_request</span><span class="p">()</span>
+<span class="n">usb_ep_queue</span><span class="p">()</span>
+<span class="n">usb_ep_dequeue</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.12.7. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="5_host_design_guide.html" class="btn btn-neutral float-left" title="7.12.5. USB Host 子系统代码架构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

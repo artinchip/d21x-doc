@@ -1,0 +1,998 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>8.1.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="8.1.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="8.1.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">8. 安全</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">8.1. SPI ENC</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">8.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">8.1.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">8.1.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">8.1.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">8.1.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">8.1.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">8.1.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">8.1.5.3. 设计要点</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">8.1.5.3.1. 融入内核加密子系统</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">8.1.5.3.2. 数据读写时启用</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">8.1.5.3.3. 空数据块的检测</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">8.1.5.4. 关键流程</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id9">8.1.5.4.1. 初始化</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id10">8.1.5.4.2. 加解密配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">8.1.5.4.3. 中断流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id12">8.1.5.5. 数据结构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id13">8.1.5.6. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spienc-alg-init">8.1.5.6.1. aic_spienc_alg_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spienc-probe">8.1.5.6.2. aic_spienc_probe</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spienc-attach-bus">8.1.5.6.3. aic_spienc_attach_bus</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spienc-encrypt">8.1.5.6.4. aic_spienc_encrypt</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-spienc-decrypt">8.1.5.6.5. aic_spienc_decrypt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">8.1.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../ce/index.html">8.2. CE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../efuse/index.html">8.3. eFuse 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hw_authorization/index.html">8.4. 硬件授权认证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">8. </span>安全</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">8.1. </span>SPI ENC</a> &raquo;</li>
+        
+      <li><span class="section-number">8.1.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">8.1.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">8.1.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>相关模块</p></th>
+<th class="head"><p>源码路径</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Crypto subsystem</p></td>
+<td><p>source/linux-5.10/crypto/</p></td>
+</tr>
+<tr class="row-odd"><td><p>Driver</p></td>
+<td><p>source/linux-5.10/drivers/crypto/artinchip/spienc/</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">8.1.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../../_images/spienc_arch.png" src="../../../_images/spienc_arch.png" />
+</div>
+<p>文件系统或者应用程序通过 MTD 层访问 SPI NOR / SPI NAND 设备的数据，SPI NOR / SPI NAND
+驱动在通过 SPI 总线传输数据。</p>
+<p>在 SPI NOR / SPI NAND 驱动通过 SPI 总线访问相关数据时，其实需要发送一系列的命令来进行数据的读写。
+这个过程中，命令通信的数据，包括一些读写 SPI NOR / SPI NAND 的寄存器数据都不能加密，
+仅存储数据部分需要进行加密处理。因此，虽然 SPI_ENC 是在硬件总线上对数据进行加密，
+但是软件使用时需要在 SPI NOR / SPI NAND 驱动 根据需要，提供必要的加解密信息（数据地址和长度），
+并且启动相应的数据传输加解密。</p>
+<p>因此在软件层次上，SPI NOR / SPI NAND 驱动依赖 SPI 驱动以及 SPI_ENC 驱动，而 SPI 驱动与 SPI_ENC
+驱动是并列关系。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">8.1.5.3. </span>设计要点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>在设计实现 SPI_ENC 的驱动时，主要考虑了 SPI_ENC 的本身特点，以及与 SPI NOR / SPI NAND
+驱动的结合。</p>
+<div class="section" id="id5">
+<h3><span class="section-number">8.1.5.3.1. </span>融入内核加密子系统<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>内核加密子系统提供了一个框架，通过该框架提供了不同算法的对接方法，
+常见的算法以及对应的硬件加速实现都可以通过该框架提供给使用者。</p>
+<p>SPI_ENC 硬件模块实现了 AES-128-CTR 算法，但是由于 COUNTER 的生成方式是通过自定义规则生成，
+密钥由硬件从 eFuse 中读取等，使得该算法与正常的 AES-128-CTR 不同，因此融入内核加密子系统时，
+<strong>将 SPI_ENC 抽象为一种特殊的 AES-128-CTR 算法实现</strong> ，通过 AES-128-CTR 的 API 进行使用，
+但是做一些特殊处理。</p>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/spienc_kenerl_crypto_arch.png" src="../../../_images/spienc_kenerl_crypto_arch.png" />
+<p class="caption"><span class="caption-number">图 8.8 </span><span class="caption-text">加入内核加密子系统</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+<p>将 SPI_ENC 的 AES-128-CTR 算法注册到内核加密子系统：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">struct</span> <span class="nc">aic_spienc_alg</span> <span class="n">spienc_alg</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">alg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_name</span> <span class="o">=</span> <span class="s">&quot;ctr(aes)&quot;</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_driver_name</span> <span class="o">=</span> <span class="s">&quot;ctr-aes-spienc-aic&quot;</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_priority</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_flags</span> <span class="o">=</span> <span class="n">CRYPTO_ALG_ASYNC</span> <span class="o">|</span>
+                  <span class="n">CRYPTO_ALG_ALLOCATES_MEMORY</span> <span class="o">|</span>
+                  <span class="n">CRYPTO_ALG_KERN_DRIVER_ONLY</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_blocksize</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_ctxsize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_spienc_ctx</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_alignmask</span> <span class="o">=</span> <span class="mh">0xf</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">cra_module</span> <span class="o">=</span> <span class="n">THIS_MODULE</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">aic_spienc_alg_init</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">decrypt</span> <span class="o">=</span> <span class="n">aic_spienc_decrypt</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">encrypt</span> <span class="o">=</span> <span class="n">aic_spienc_encrypt</span><span class="p">,</span>
+        <span class="p">.</span><span class="n">ivsize</span> <span class="o">=</span> <span class="n">AES_BLOCK_SIZE</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>设置说明：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cra_blocksize</span></code>: 设置为 1，即使用本算法，可以按字节设置加解密的数据长度。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ivsize</span></code>: 设置为 AES_BLOCK_SIZE，外部通过 IV 来提供地址、SPI ID 等信息</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_keysize</span></code>/<code class="docutils literal notranslate"><span class="pre">max_keysize</span></code>: 不设置，使用 eFuse 密钥，非外部密钥</p></li>
+</ul>
+</div></blockquote>
+<p>提供给外部（SPI NAND / SPI NOR）使用的 API：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 72%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>加密子系统 API</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_skcipher *crypto_alloc_skcipher(
+const char *alg_name, u32 type, u32 mask)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">直接指定算法驱动名字</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ctr-aes-spienc-aic</span></code></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><div class="line-block">
+<div class="line">struct skcipher_request *skcipher_request_alloc(
+struct crypto_skcipher *tfm, gfp_t gfp)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">分配一个数据请求结构体</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><div class="line-block">
+<div class="line">void skcipher_request_set_callback(struct skcipher_request *req, u32 flags,</div>
+<div class="line-block">
+<div class="line">crypto_completion_t compl, void *data)</div>
+</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">设置处理完毕时的回调函数</div>
+<div class="line"><br /></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><div class="line-block">
+<div class="line">void skcipher_request_set_crypt(struct skcipher_request *req,</div>
+<div class="line-block">
+<div class="line">struct scatterlist *src, struct scatterlist *dst,
+unsigned int cryptlen, void *iv)</div>
+</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">无输入输出 buffer，</div>
+<div class="line">仅提供数据长度。</div>
+<div class="line">通过 IV 提供地址、SPI ID</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><div class="line-block">
+<div class="line">int crypto_skcipher_decrypt(struct skcipher_request *req)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">启动解密，用于读</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><div class="line-block">
+<div class="line">int crypto_skcipher_encrypt(struct skcipher_request *req)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">启动加密，用于写</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><div class="line-block">
+<div class="line">void skcipher_request_free(struct skcipher_request *req)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">释放资源</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><div class="line-block">
+<div class="line">void crypto_free_skcipher(struct crypto_skcipher *tfm)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">释放资源</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<div class="line-block">
+<div class="line">由于 SPI_ENC 内部使用 eFuse 所提供的密钥，因此不需要通过外部设置密钥函数：</div>
+<div class="line-block">
+<div class="line">int crypto_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key, unsigned int keylen);</div>
+</div>
+<div class="line">来设置密钥。</div>
+</div>
+</div>
+<p>调用 <code class="docutils literal notranslate"><span class="pre">skcipher_request_set_crypt()</span></code> API 时，通过 <code class="docutils literal notranslate"><span class="pre">iv</span></code> 提供的并不是 COUNTER 值，而是用于生成
+COUNTER 值的信息，具体为：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_spienc_iv</span> <span class="p">{</span>
+    <span class="n">u32</span> <span class="n">addr</span><span class="p">;</span>       <span class="c1">// 要读写的数据在 SPI NAND / SPI NOR 上的地址</span>
+    <span class="n">u32</span> <span class="n">cpos</span><span class="p">;</span>       <span class="c1">// 密文在本次传输数据中开始位置</span>
+    <span class="n">u32</span> <span class="n">tweak</span><span class="p">;</span>      <span class="c1">// 生成 COUNTER 的调整值</span>
+    <span class="n">u32</span> <span class="n">spi_id</span><span class="p">;</span>     <span class="c1">// 要使用的 SPI 控制器 ID</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">8.1.5.3.2. </span>数据读写时启用<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>SPI NAND / SPI NOR 驱动通过发送命令的方式与 SPI NAND / SPI NOR 器件进行交互，从而实现数据的读写。
+在使能 SPI_ENC 之后，SPI NAND / SPI NOR 驱动需要进行区分：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>非存储数据的 SPI 传输，不启动 SPI_ENC，按照原有驱动的流程执行</p></li>
+<li><p>存储数据的 SPI 传输，启动 SPI_ENC 进行加密或者解密</p></li>
+</ul>
+</div></blockquote>
+<p>因此 SPI NAND / SPI NOR 驱动需要做一些改动，在对存储数据进行读写时，使用 Crypto API 启动 SPI_ENC。</p>
+<p>以 SPI NAND 为例： probe 时首先进行加密相关的初始，读取 DTS 中的 <code class="docutils literal notranslate"><span class="pre">aic,encrypt</span></code> 和 <code class="docutils literal notranslate"><span class="pre">aic,spi-id</span></code> 等信息。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span> <span class="n">spinand_probe</span><span class="p">();</span>
+ <span class="o">|-&gt;</span> <span class="n">spinand_init</span><span class="p">(</span><span class="n">spinand</span><span class="p">);</span>
+<span class="s">&quot;|-&gt; spinand_enc_init(spinand);</span>
+ <span class="o">|-&gt;</span> <span class="n">mtd_device_register</span><span class="p">(</span><span class="n">mtd</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>读操作流程：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spinand_read_page</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_load_page_op</span><span class="p">(</span><span class="n">spinand</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_wait</span><span class="p">(</span><span class="n">spinand</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_read_from_cache_op</span><span class="p">();</span>
+<span class="s">&quot;   |-&gt; spinand_enc_xfer_cfg(spinand, addr, clen);                          // 配置访问地址，以及密文的长度</span>
+<span class="s">&quot;   |-&gt; spinand_enc_read();</span>
+<span class="s">&quot;       |-&gt; spinand_enc_get_skcipher(spinand);</span>
+<span class="s">&quot;       |   |-&gt; crypto_alloc_skcipher(&quot;</span><span class="n">ctr</span><span class="o">-</span><span class="n">aes</span><span class="o">-</span><span class="n">spienc</span><span class="o">-</span><span class="n">aic</span><span class="s">&quot;, 0, 0);</span>
+<span class="s">&quot;       |   |-&gt; req = skcipher_request_alloc(tfm, GFP_NOFS);</span>
+<span class="s">&quot;       |</span>
+<span class="s">&quot;       |-&gt; skcipher_request_set_callback();</span>
+<span class="s">&quot;       |-&gt; skcipher_request_set_crypt(req, 0, 0, decrypt_len, &amp;ivinfo);    // 设置本次加密数据信息</span>
+<span class="s">&quot;       |-&gt; crypto_skcipher_decrypt(req);                                   // 启动 SPI_ENC</span>
+        <span class="o">|-&gt;</span> <span class="n">spi_mem_exec_op</span><span class="p">(</span><span class="n">desc</span><span class="o">-&gt;</span><span class="n">mem</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">op</span><span class="p">);</span>                                <span class="c1">// 调用标准的 SPI API 进行数据传输</span>
+<span class="s">&quot;       |-&gt; spinand_enc_wait(spinand-&gt;priv);                                // 等待解密处理结束</span>
+</pre></div>
+</div>
+<p>写操作流程：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spinand_write_page</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_write_enable_op</span><span class="p">(</span><span class="n">spinand</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_write_to_cache_op</span><span class="p">(</span><span class="n">spinand</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+<span class="o">|</span>  <span class="s">&quot;|-&gt; spinand_enc_xfer_cfg(spinand, addr, clen);                          // 配置访问地址，以及密文的长度</span>
+<span class="o">|</span>  <span class="s">&quot;|-&gt; spinand_enc_write();</span>
+<span class="o">|</span>  <span class="s">&quot;    |-&gt; spinand_enc_get_skcipher(spinand);</span>
+<span class="o">|</span>  <span class="s">&quot;    |   |-&gt; crypto_alloc_skcipher(&quot;</span><span class="n">ctr</span><span class="o">-</span><span class="n">aes</span><span class="o">-</span><span class="n">spienc</span><span class="o">-</span><span class="n">aic</span><span class="s">&quot;, 0, 0);</span>
+<span class="o">|</span>  <span class="s">&quot;    |   |-&gt; req = skcipher_request_alloc(tfm, GFP_NOFS);</span>
+<span class="o">|</span>  <span class="s">&quot;    |</span>
+<span class="o">|</span>  <span class="s">&quot;    |-&gt; skcipher_request_set_callback();</span>
+<span class="o">|</span>  <span class="s">&quot;    |-&gt; skcipher_request_set_crypt(req, 0, 0, decrypt_len, &amp;ivinfo);    // 设置本次加密数据信息</span>
+<span class="o">|</span>  <span class="s">&quot;    |-&gt; crypto_skcipher_encrypt(req);                                   // 启动 SPI_ENC</span>
+<span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">spi_mem_exec_op</span><span class="p">(</span><span class="n">desc</span><span class="o">-&gt;</span><span class="n">mem</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">op</span><span class="p">);</span>                                <span class="c1">// 调用标准的 SPI API 进行数据传输</span>
+<span class="o">|</span>  <span class="s">&quot;    |-&gt; spinand_enc_wait(spinand-&gt;priv);                                // 等待加密处理结束</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_program_op</span><span class="p">(</span><span class="n">spinand</span><span class="p">,</span> <span class="n">req</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">spinand_wait</span><span class="p">(</span><span class="n">spinand</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">8.1.5.3.3. </span>空数据块的检测<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>SPI NAND / SPI NOR 在执行了擦除之后，存储单元上的数据被认为是空的，值都是 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> 。
+但是在使用过程中，读取程序并不一定知道所读取的区域是否是被擦除过，因此在使能了 SPI_ENC 之后，
+通过 SPI 读取回来该区域的数据都是被 SPI_ENC 解密后的数据。原本是被擦除后的 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> ，
+读回来的却是其他数据。</p>
+<p>带来的问题：</p>
+<blockquote>
+<div><p>有些程序，如文件系统，会判断读回来的数据是否都为 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> ，如果是，则认为是未使用的块，做特殊处理。
+现在读回来的数据却被改变了，会导致原来的处理逻辑全部失效。</p>
+</div></blockquote>
+<p>为了解决上述问题，SPI_ENC 提供了一个空块检测功能。如下图所示：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>首先按照正常的流程读取一块数据</p></li>
+<li><p>传输完成之后，检查 SPI_ENC 的状态，如果提示解密前的所有数据都是 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code> ，则软件将读取的结果全部置为 <code class="docutils literal notranslate"><span class="pre">0xFF</span></code></p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/spienc_empty_detect1.png" src="../../../_images/spienc_empty_detect1.png" />
+<p class="caption"><span class="caption-number">图 8.9 </span><span class="caption-text">空块检测</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<p>相关的软件操作，在 <code class="docutils literal notranslate"><span class="pre">spinand_enc_read()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">spi_nor_enc_read()</span></code> 中完成。</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">8.1.5.4. </span>关键流程<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h3><span class="section-number">8.1.5.4.1. </span>初始化<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">aic_spienc_probe</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">=</span> <span class="n">devm_platform_ioremap_resource</span><span class="p">(</span><span class="n">pdev</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">irq</span> <span class="o">=</span> <span class="n">platform_get_irq</span><span class="p">(</span><span class="n">pdev</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">devm_request_threaded_irq</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">irq</span><span class="p">,</span> <span class="n">aic_spienc_irq_handler</span><span class="p">,</span>
+                              <span class="n">aic_spienc_irq_thread</span><span class="p">,</span> <span class="n">IRQF_ONESHOT</span><span class="p">,</span>
+                              <span class="n">dev_name</span><span class="p">(</span><span class="n">dev</span><span class="p">),</span> <span class="n">drvdata</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">clk</span> <span class="o">=</span> <span class="n">devm_clk_get</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">clk_prepare_enable</span><span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">clk</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">devm_reset_control_get</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">platform_set_drvdata</span><span class="p">(</span><span class="n">pdev</span><span class="p">,</span> <span class="n">drvdata</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">crypto_register_skcipher</span><span class="p">(</span><span class="o">&amp;</span><span class="n">spienc_alg</span><span class="p">.</span><span class="n">alg</span><span class="p">);</span>  <span class="c1">// 注册算法</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">8.1.5.4.2. </span>加解密配置<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">aic_spienc_encrypt</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
+<span class="o">|-&gt;</span> <span class="n">aic_spienc_xcrypt</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">aic_spienc_attach_bus</span><span class="p">(</span><span class="n">drvdata</span><span class="p">,</span> <span class="n">ivinfo</span><span class="o">-&gt;</span><span class="n">spi_id</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">writel</span><span class="p">(</span><span class="n">ivinfo</span><span class="o">-&gt;</span><span class="n">addr</span><span class="p">,</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_ADDR</span><span class="p">));</span>
+    <span class="o">|-&gt;</span> <span class="n">writel</span><span class="p">(</span><span class="n">ivinfo</span><span class="o">-&gt;</span><span class="n">cpos</span><span class="p">,</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_CPOS</span><span class="p">));</span>
+    <span class="o">|-&gt;</span> <span class="n">writel</span><span class="p">(</span><span class="n">clen</span><span class="p">,</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_CLEN</span><span class="p">));</span>
+    <span class="o">|-&gt;</span> <span class="n">writel</span><span class="p">(</span><span class="n">tweak</span><span class="p">,</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_TWEAK</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>解密流程相同。</p>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">8.1.5.4.3. </span>中断流程<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>当中断发生时，首先在 irq handler 中读取并保存状态寄存器。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">irqreturn_t</span> <span class="n">aic_spienc_irq_handler</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_spienc_drvdata</span> <span class="o">*</span><span class="n">drvdata</span> <span class="o">=</span> <span class="n">arg</span><span class="p">;</span>
+
+    <span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">irq_sts</span> <span class="o">=</span> <span class="n">readl</span><span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_ISR</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">IRQ_WAKE_THREAD</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>然后唤醒对应的处理线程进行处理。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">irqreturn_t</span> <span class="n">aic_spienc_irq_thread</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_spienc_drvdata</span> <span class="o">*</span><span class="n">drvdata</span> <span class="o">=</span> <span class="n">arg</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">crypto_async_request</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">irq_sts</span> <span class="o">&amp;</span> <span class="n">SPIE_INTR_ENC_DEC_FIN_MSK</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">irq_sts</span> <span class="o">&amp;</span> <span class="n">SPIE_INTR_ALL_EMP_MSK</span><span class="p">)</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="n">AIC_SPIENC_ALL_FF</span><span class="p">;</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">req</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">;</span>
+        <span class="n">base</span><span class="o">-&gt;</span><span class="n">complete</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+
+        <span class="cm">/* Stop it */</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">readl</span><span class="p">((</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_CTL</span><span class="p">));</span>
+        <span class="n">val</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">SPIE_START_MSK</span><span class="p">;</span>
+        <span class="n">writel</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_CTL</span><span class="p">));</span>
+
+        <span class="cm">/* Clear interrupts */</span>
+        <span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">irq_sts</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">writel</span><span class="p">(</span><span class="n">SPIE_INTR_ALL_MSK</span><span class="p">,</span> <span class="p">(</span><span class="n">drvdata</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">+</span> <span class="n">SPIE_REG_ISR</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">IRQ_HANDLED</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">8.1.5.5. </span>数据结构<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<p>设备数据结构。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_spienc_drvdata</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">attribute_group</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">device</span> <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">__iomem</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span> <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">skcipher_request</span> <span class="o">*</span><span class="n">req</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">tweak</span><span class="p">;</span> <span class="cm">/* Tweak value for hardware to generate counter */</span>
+    <span class="n">u32</span> <span class="n">irq_sts</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2><span class="section-number">8.1.5.6. </span>接口设计<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-spienc-alg-init">
+<h3><span class="section-number">8.1.5.6.1. </span>aic_spienc_alg_init<a class="headerlink" href="#aic-spienc-alg-init" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spienc_alg_init(struct crypto_skcipher *tfm)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>对称密钥算法的初始化函数</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct crypto_skcipher *tfm</div>
+<div class="line-block">
+<div class="line">算法实例指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spienc-probe">
+<h3><span class="section-number">8.1.5.6.2. </span>aic_spienc_probe<a class="headerlink" href="#aic-spienc-probe" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spienc_probe(struct platform_device *pdev)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>驱动的初始化函数</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct platform_device *pdev</div>
+<div class="line-block">
+<div class="line">设备指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spienc-attach-bus">
+<h3><span class="section-number">8.1.5.6.3. </span>aic_spienc_attach_bus<a class="headerlink" href="#aic-spienc-attach-bus" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spienc_attach_bus(struct aic_spienc_drvdata *drvdata, u32 bus)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>将 SPI ENC 连接到指定的 SPI 控制器</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct aic_spienc_drvdata *drvdata</div>
+<div class="line-block">
+<div class="line">设备驱动数据指针</div>
+</div>
+<div class="line">u32 bus</div>
+<div class="line-block">
+<div class="line">SPI 控制器 ID</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spienc-encrypt">
+<h3><span class="section-number">8.1.5.6.4. </span>aic_spienc_encrypt<a class="headerlink" href="#aic-spienc-encrypt" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spienc_encrypt(struct skcipher_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>配置 SPI_ENC 启动数据加密</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct skcipher_request *req</div>
+<div class="line-block">
+<div class="line">加密请求指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-spienc-decrypt">
+<h3><span class="section-number">8.1.5.6.5. </span>aic_spienc_decrypt<a class="headerlink" href="#aic-spienc-decrypt" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>函数原型</strong></p></td>
+<td><p>int aic_spienc_decrypt(struct skcipher_request *req)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>功能说明</strong></p></td>
+<td><p>配置 SPI_ENC 启动数据解密</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>参数定义</strong></p></td>
+<td><div class="line-block">
+<div class="line">struct skcipher_request *req</div>
+<div class="line-block">
+<div class="line">解密请求指针</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>返回值</strong></p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">其他: 失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>注意事项</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="8.1.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="8.1.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

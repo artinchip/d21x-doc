@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.2.2. 移植指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.3. SPI NOR 使用指南" href="../spinor/index.html" />
+    <link rel="prev" title="5.2.1. 配置指南" href="config_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../sdmc/index.html">5.1. SDMC 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.2. SPI NAND 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="config_guide.html">5.2.1. 配置指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.2.2. 移植指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">5.2.2.1. 文件准备</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">5.2.2.2. 驱动索引</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#spinand-manufacturer">5.2.2.3. spinand_manufacturer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mid-did">5.2.2.3.1. MID &amp; DID</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#xxx-spinand-table">5.2.2.4. xxx_spinand_table</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#spinand-info">5.2.2.4.1. SPINAND_INFO</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#nand-memorg">5.2.2.4.2. NAND_MEMORG</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#nand-eccreq">5.2.2.4.3. NAND_ECCREQ</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#spinand-info-op-variants">5.2.2.4.4. SPINAND_INFO_OP_VARIANTS</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#spinand-eccinfo">5.2.2.4.5. SPINAND_ECCINFO</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">5.2.2.5. 总结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../spinor/index.html">5.3. SPI NOR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/index.html">5.4. 文件系统使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.2. </span>SPI NAND 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.2.2. </span>移植指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ref-luban-spinand-port-guide">
+<span id="id1"></span><h1><span class="section-number">5.2.2. </span>移植指南<a class="headerlink" href="#ref-luban-spinand-port-guide" title="永久链接至标题">¶</a></h1>
+<p>SPI NAND 要工作既需要 SOC 端 SPI 模块的驱动能力，也需要对 SPI NAND 模块的正确配置，本章阐述如何进行 SPI NAND 器件的移植工作，以 <code class="docutils literal notranslate"><span class="pre">FudanMicro</span></code> 的 <code class="docutils literal notranslate"><span class="pre">FM25S01A</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Foresee</span></code> 的 <code class="docutils literal notranslate"><span class="pre">F35SQA002G</span></code> 为例</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>SPI NAND 在 U-Boot 和 Kernel 中的实现逻辑类似，文件路径和内容基本一致，本文以 Kernel 中的移植为例</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">5.2.2.1. </span>文件准备<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>一般情况下，某一个公司的 SPI NAND 的操作接口是类似，因此会为某一个公司创建一个文件进行管理，如果该公司的文件已经存在，则直接添加新器件支持即可</p>
+<ul class="simple">
+<li><p>在source/linux-5.10/drivers/mtd/nand/spi 下建相应公司的标识的文件，如 fmsh.c foresee.c</p></li>
+<li><p>在Makefile中添加该文件的编译 spinand-objs := core.o fmsh.o foresee.o …</p></li>
+<li><p>在include/linux/mtd/spinand.h 中声明 extern const struct spinand_manufacturer fmsh_spinand_manufacturer;</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">5.2.2.2. </span>驱动索引<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>不同于传统驱动通过 board.dts 进行设备和驱动的关联，内核中所支持的 SPI NAND 设备和驱动的关联关系通过两级列表进行设置。</p>
+<ul class="simple">
+<li><p>首先检查 source/linux-5.10/drivers/mtd/nand/spi/core.c 中的 spinand_manufacturers, 查看新设备的厂商是否在列表之中：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">spinand_manufacturer</span> <span class="o">*</span><span class="n">spinand_manufacturers</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">&amp;</span><span class="n">gigadevice_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">macronix_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">micron_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">paragon_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">toshiba_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">winbond_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">fmsh_spinand_manufacturer</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">foresee_spinand_manufacturer</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>再检查具体的设备厂商文件，具体的型号是否在列表之中（ 以 FudanMicro 为例）:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">spinand_info</span> <span class="n">fmsh_spinand_table</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">SPINAND_INFO</span><span class="p">(</span><span class="s">&quot;FM25S01A&quot;</span><span class="p">,</span>
+        <span class="n">SPINAND_ID</span><span class="p">(</span><span class="n">SPINAND_READID_METHOD_OPCODE_DUMMY</span><span class="p">,</span> <span class="mh">0xE4</span><span class="p">),</span>
+        <span class="n">NAND_MEMORG</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">NAND_ECCREQ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+        <span class="n">SPINAND_INFO_OP_VARIANTS</span><span class="p">(</span><span class="o">&amp;</span><span class="n">read_cache_variants</span><span class="p">,</span>
+                        <span class="o">&amp;</span><span class="n">write_cache_variants</span><span class="p">,</span>
+                        <span class="o">&amp;</span><span class="n">update_cache_variants</span><span class="p">),</span>
+        <span class="n">SPINAND_HAS_QE_BIT</span><span class="p">,</span>
+        <span class="n">SPINAND_ECCINFO</span><span class="p">(</span><span class="o">&amp;</span><span class="n">fm25s01_ooblayout</span><span class="p">,</span>
+                        <span class="n">fm25s01_ecc_get_status</span><span class="p">)),</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spinand-manufacturer">
+<h2><span class="section-number">5.2.2.3. </span>spinand_manufacturer<a class="headerlink" href="#spinand-manufacturer" title="永久链接至标题">¶</a></h2>
+<p>该结构为第一级索引，用来描述器件厂家的信息</p>
+<p>SPI NAND 的接口和操作命令基本上很统一，少有需要特殊处理的命令，但驱动上为了更好的兼容性，还是预留了一些接口</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="k">struct</span> <span class="nc">spinand_manufacturer</span> <span class="n">winbond_spinand_manufacturer</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">SPINAND_MFR_FMSH</span><span class="p">,</span>             <span class="c1">//厂家的ID，即 MID</span>
+        <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;FudanMicro&quot;</span><span class="p">,</span>               <span class="c1">//厂家名字标识</span>
+        <span class="p">.</span><span class="n">chips</span> <span class="o">=</span> <span class="n">fmsh_spinand_table</span><span class="p">,</span>        <span class="c1">//本驱动支持的器件</span>
+        <span class="p">.</span><span class="n">nchips</span> <span class="o">=</span> <span class="n">ARRAY_SIZE</span><span class="p">(</span><span class="n">fmsh_spinand_table</span><span class="p">),</span> <span class="c1">// 支持的器件的个数</span>
+        <span class="p">.</span><span class="n">ops</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">fmsh_spinand_manuf_ops</span><span class="p">,</span>      <span class="c1">// 本公司的器件 私有操作接口</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">spinand_manufacturer_ops</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">init</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">spinand_device</span> <span class="o">*</span><span class="n">spinand</span><span class="p">);</span>  <span class="c1">//初始化接口，如果没有特殊操作，可以为空</span>
+        <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">cleanup</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">spinand_device</span> <span class="o">*</span><span class="n">spinand</span><span class="p">);</span> <span class="c1">//清理接口，如果没有特殊操作，可以为空</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>对 <code class="docutils literal notranslate"><span class="pre">FudanMicro</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Foresee</span></code> 来讲，他们没有特殊的初始化接口， 因此预留该两个接口为空</p>
+<div class="section" id="mid-did">
+<h3><span class="section-number">5.2.2.3.1. </span>MID &amp; DID<a class="headerlink" href="#mid-did" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>Manufacture ID，厂商的唯一标识， 一般在数据手册文档中搜 Manufacture ID 或者 MID 即可获得</p></li>
+<li><p>Device ID：器件的唯一标识, 一般在数据手册文档中搜 Device ID 或者 DID 即可获得</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/mid-did.png" src="../../../_images/mid-did.png" />
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define SPINAND_MFR_FMSH                0xA1</span>
+<span class="cp">#define SPINAND_MFR_FORESEE             0xCD</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="xxx-spinand-table">
+<h2><span class="section-number">5.2.2.4. </span>xxx_spinand_table<a class="headerlink" href="#xxx-spinand-table" title="永久链接至标题">¶</a></h2>
+<p>该数据结构为第二级索引，描述厂商的系列器件信息，是 SPI NAND 驱动的核心，因为 SPI NAND 的操作接口一般都比较标准，因此此处的接口都是固定的，差别的是参数，而参数主要由 SPINAND_INFO 描述</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">spinand_info</span> <span class="n">foresee_spinand_table</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">SPINAND_INFO</span><span class="p">(</span><span class="s">&quot;F35SQA002G&quot;</span><span class="p">,</span>
+        <span class="n">SPINAND_ID</span><span class="p">(</span><span class="n">SPINAND_READID_METHOD_OPCODE_DUMMY</span><span class="p">,</span> <span class="mh">0x72</span><span class="p">),</span>
+        <span class="n">NAND_MEMORG</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">NAND_ECCREQ</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">528</span><span class="p">),</span>
+        <span class="n">SPINAND_INFO_OP_VARIANTS</span><span class="p">(</span><span class="o">&amp;</span><span class="n">read_cache_variants</span><span class="p">,</span>
+                    <span class="o">&amp;</span><span class="n">write_cache_variants</span><span class="p">,</span>
+                    <span class="o">&amp;</span><span class="n">update_cache_variants</span><span class="p">),</span>
+        <span class="n">SPINAND_HAS_QE_BIT</span><span class="p">,</span>
+        <span class="n">SPINAND_ECCINFO</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f35sqa_ooblayout</span><span class="p">,</span>
+                    <span class="n">f35sqa_ecc_get_status</span><span class="p">)),</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="section" id="spinand-info">
+<h3><span class="section-number">5.2.2.4.1. </span>SPINAND_INFO<a class="headerlink" href="#spinand-info" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define SPINAND_INFO(__model, __id, __memorg, __eccreq, __op_variants,      \</span>
+<span class="cp">             __flags, ...)</span>
+<span class="p">{</span>
+    <span class="p">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">__model</span><span class="p">,</span>       <span class="c1">// 对应器件型号，描述字符，不进行具体匹配</span>
+    <span class="p">.</span><span class="n">devid</span> <span class="o">=</span> <span class="n">__id</span><span class="p">,</span>          <span class="c1">// 对应器件 DID（DeviceID），是该器件的唯一标识</span>
+    <span class="p">.</span><span class="n">memorg</span> <span class="o">=</span> <span class="n">__memorg</span><span class="p">,</span>     <span class="c1">// 器件存储结构</span>
+    <span class="p">.</span><span class="n">eccreq</span> <span class="o">=</span> <span class="n">__eccreq</span><span class="p">,</span>     <span class="c1">// 请求ECC的参数</span>
+    <span class="p">.</span><span class="n">op_variants</span> <span class="o">=</span> <span class="n">__op_variants</span><span class="p">,</span>   <span class="c1">// 读写函数操作集合地址</span>
+    <span class="p">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">__flags</span><span class="p">,</span>       <span class="c1">// 功能标识</span>
+    <span class="n">__VA_ARGS__</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nand-memorg">
+<h3><span class="section-number">5.2.2.4.2. </span>NAND_MEMORG<a class="headerlink" href="#nand-memorg" title="永久链接至标题">¶</a></h3>
+<p>芯片存储结构 <code class="docutils literal notranslate"><span class="pre">memorg</span></code> 也是该芯片的特色参数, 通过 NAND_MEMORG 结构描述，一般器件的数据手册会在文章的开始进行结构的描述</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define NAND_MEMORG(bpc, ps, os, ppe, epl, mbb, ppl, lpt, nt)</span>
+    <span class="p">{</span>
+            <span class="p">.</span><span class="n">bits_per_cell</span> <span class="o">=</span> <span class="p">(</span><span class="n">bpc</span><span class="p">),</span>         <span class="c1">// Cell 是 NAND 的最小单元，一般只能存储 1bit，少有其他值得</span>
+            <span class="p">.</span><span class="n">pagesize</span> <span class="o">=</span> <span class="p">(</span><span class="n">ps</span><span class="p">),</span>               <span class="c1">// 页大小，大部分的器件的页通过（N + Mbytes）的方式描述，N 为页大小，M 为 oob</span>
+            <span class="p">.</span><span class="n">oobsize</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="p">),</span>                <span class="c1">//界外大小，一般用于存放ECC校验数据或其它数据，和pagesize 共同描述</span>
+            <span class="p">.</span><span class="n">pages_per_eraseblock</span> <span class="o">=</span> <span class="p">(</span><span class="n">ppe</span><span class="p">),</span>  <span class="c1">// 一个擦除块有多少个页</span>
+            <span class="p">.</span><span class="n">eraseblocks_per_lun</span> <span class="o">=</span> <span class="p">(</span><span class="n">epl</span><span class="p">),</span>   <span class="c1">//  一个 lun（die）有多少个擦除块,1Gb/(64 x 2048 x 8) = 1024</span>
+            <span class="p">.</span><span class="n">max_bad_eraseblocks_per_lun</span> <span class="o">=</span> <span class="p">(</span><span class="n">mbb</span><span class="p">),</span> <span class="c1">//器件出厂的最大坏块数，一般在数据手册中通过 bad blocks 查找到</span>
+            <span class="p">.</span><span class="n">planes_per_lun</span> <span class="o">=</span> <span class="p">(</span><span class="n">ppl</span><span class="p">),</span>        <span class="c1">//一般设置为 1，单 die</span>
+            <span class="p">.</span><span class="n">luns_per_target</span> <span class="o">=</span> <span class="p">(</span><span class="n">lpt</span><span class="p">),</span>       <span class="c1">//一般设置为 1</span>
+            <span class="p">.</span><span class="n">ntargets</span> <span class="o">=</span> <span class="p">(</span><span class="n">nt</span><span class="p">),</span>               <span class="c1">//一般设置为 1</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="fm25s01a">
+<h4><span class="section-number">5.2.2.4.2.1. </span>FM25S01A<a class="headerlink" href="#fm25s01a" title="永久链接至标题">¶</a></h4>
+<p>以 <code class="docutils literal notranslate"><span class="pre">FM25S01A</span></code> 为例，配置的参数为 NAND_MEMORG(1, 2048, 64, 64, 1024, 20, 1, 1, 1)</p>
+<ul class="simple">
+<li><p>single cell， 则 bpc 设置为 1</p></li>
+<li><p>Page size： 2048 + 64 bytes， 则 pagesize = 2048， oobsize = 64</p></li>
+<li><p>Block size： 64 pages， 则 pages_per_eraseblock = 64</p></li>
+<li><p>eraseblocks_per_lun 通过计算所得，该器件容量为 1Gb，一个 block 的容量为 （64 pages x 2048 bytes）= 128KB，则 1Gb / 128KB = 1024, 注意 bit 和 byte 的单位</p></li>
+<li><p>max_bad_eraseblocks_per_lun：0014h (16进制) = 20（十进制）</p></li>
+<li><p>ppl，lpt，nt 描述的是该器件中有几个单元，大部分为 1，lun 对应器件上的 die，即有几个晶圆</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/FM25S01A-1.png" src="../../../_images/FM25S01A-1.png" />
+</div>
+</div>
+<div class="section" id="f35sqa002g">
+<h4><span class="section-number">5.2.2.4.2.2. </span>F35SQA002G<a class="headerlink" href="#f35sqa002g" title="永久链接至标题">¶</a></h4>
+<p>以 <code class="docutils literal notranslate"><span class="pre">F35SQA002G</span></code> 为例，配置的参数为 NAND_MEMORG(1, 2048, 64, 64, 2048, 40, 1, 1, 1)</p>
+<ul class="simple">
+<li><p>cell 未明确， bpc 设置为 1</p></li>
+<li><p>Page size： 2k + 64 bytes， 则 pagesize = 2048， oobsize = 64</p></li>
+<li><p>Block size： 64 pages， 则 pages_per_eraseblock = 64</p></li>
+<li><p>eraseblocks_per_lun 通过计算所得，该器件容量为 2Gb（256MB），一个 block 的容量为 （64 pages x 2048 bytes）= 128KB，则 256M / 128KB = 2048</p></li>
+<li><p>max_bad_eraseblocks_per_lun：0028h (16进制) = 40 （十进制）</p></li>
+<li><p>ppl，lpt，nt 描述的是该器件中有几个单元，大部分为 1，lun 对应器件上的 die，即有几个晶圆</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/F35SQA-1.png" src="../../../_images/F35SQA-1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="nand-eccreq">
+<h3><span class="section-number">5.2.2.4.3. </span>NAND_ECCREQ<a class="headerlink" href="#nand-eccreq" title="永久链接至标题">¶</a></h3>
+<p>ECC： Error Correcting Code， NAND_ECCREQ 用来描述每 stp bytes 有多少位的内部 ECC，一般通过搜 <code class="docutils literal notranslate"><span class="pre">`ECC``</span></code> 获得， 如上图所示</p>
+<ul class="simple">
+<li><p>FM25S01A 为 NAND_ECCREQ(1, 512)</p></li>
+<li><p>F35SQA002G 为 NAND_ECCREQ(1, 528)</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define NAND_ECCREQ(str, stp) { .strength = (str), .step_size = (stp) }</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spinand-info-op-variants">
+<h3><span class="section-number">5.2.2.4.4. </span>SPINAND_INFO_OP_VARIANTS<a class="headerlink" href="#spinand-info-op-variants" title="永久链接至标题">¶</a></h3>
+<p>该结构针对不同的总线宽度，设置不同的 cache 操作接口，分为 read， write， update，一般差别在 read 上</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define SPINAND_INFO_OP_VARIANTS(__read, __write, __update)         \</span>
+<span class="cp">{                                                               \</span>
+<span class="cp">        .read_cache = __read,                                   \</span>
+<span class="cp">        .write_cache = __write,                                 \</span>
+<span class="cp">        .update_cache = __update,                               \</span>
+<span class="cp">}</span>
+</pre></div>
+</div>
+<div class="section" id="read-cache-variants">
+<h4><span class="section-number">5.2.2.4.4.1. </span>read_cache_variants<a class="headerlink" href="#read-cache-variants" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="nf">SPINAND_OP_VARIANTS</span><span class="p">(</span><span class="n">read_cache_variants</span><span class="p">,</span>
+        <span class="n">SPINAND_PAGE_READ_FROM_CACHE_QUADIO_OP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>   <span class="c1">//command id：0xeb</span>
+        <span class="n">SPINAND_PAGE_READ_FROM_CACHE_X4_OP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>      <span class="c1">//command id：0x6b</span>
+        <span class="n">SPINAND_PAGE_READ_FROM_CACHE_DUALIO_OP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1">//command id：0xbb</span>
+        <span class="n">SPINAND_PAGE_READ_FROM_CACHE_X2_OP</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>      <span class="c1">//command id：0x3b</span>
+        <span class="n">SPINAND_PAGE_READ_FROM_CACHE_OP</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>   <span class="c1">//command id：0x0b</span>
+        <span class="n">SPINAND_PAGE_READ_FROM_CACHE_OP</span><span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span> <span class="c1">//command id：0x03</span>
+</pre></div>
+</div>
+<p>在数据手册中搜索 commands 或者 command set获得 command 列表来设置</p>
+<p><strong>SPINAND_PAGE_READ_FROM_CACHE_QUADIO_OP(0, 1, NULL, 0)</strong></p>
+<ul class="simple">
+<li><p>第一个参数是地址，将在后续被赋值，所以此处设置为规定值：0</p></li>
+<li><p>第二个参数是 dummy 的 byte 长度，大部分为1，少数部分为2，通过在数据手册中查找获得</p></li>
+<li><p>第三个参数为读取数据的 buf，后续赋值，因此固定为 NULL</p></li>
+<li><p>第四个参数为读取数据的长度，后续赋值，所以设置为固定值：0</p></li>
+<li><p>如果有些器件对 0xeb 的 dummy 没有明确标识，则设置为1</p></li>
+<li><p>4个参数中，实际只需要从数据手册中去获取 dummy 的长度即可，其他均赋固定值</p></li>
+<li><p>有些器件支持的命令比较少，需求去掉一些不支持的操作，一般根据 variants 的 command id 来判断，如```F35SQA002G```就不支持 0xeb，0xbb 命令</p></li>
+</ul>
+<p><strong>SPINAND_PAGE_READ_FROM_CACHE_OP</strong></p>
+<ul class="simple">
+<li><p>该命令被设置两次，分别是 normal read 0x3 和 fast read 0xb</p></li>
+<li><p>第一个参数为 fast read 标志，对于支持 0x0b 和 0x03 两个命令的器件，此二者必须成对存在，并且参数一致</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/FM25S01A-com2.png" src="../../../_images/FM25S01A-com2.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/F35SQA-com2.png" src="../../../_images/F35SQA-com2.png" />
+</div>
+</div>
+<div class="section" id="write-cache-variants">
+<h4><span class="section-number">5.2.2.4.4.2. </span>write_cache_variants<a class="headerlink" href="#write-cache-variants" title="永久链接至标题">¶</a></h4>
+<p>所有器件的设置都一致，不需要根据数据手册更改</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">SPINAND_OP_VARIANTS</span><span class="p">(</span><span class="n">write_cache_variants</span><span class="p">,</span>
+            <span class="n">SPINAND_PROG_LOAD_X4</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">SPINAND_PROG_LOAD</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-cache-variants">
+<h4><span class="section-number">5.2.2.4.4.3. </span>update_cache_variants<a class="headerlink" href="#update-cache-variants" title="永久链接至标题">¶</a></h4>
+<p>所有器件的设置都一致，不需要根据数据手册更改</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">SPINAND_OP_VARIANTS</span><span class="p">(</span><span class="n">update_cache_variants</span><span class="p">,</span>
+            <span class="n">SPINAND_PROG_LOAD_X4</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">SPINAND_PROG_LOAD</span><span class="p">(</span><span class="n">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="spinand-eccinfo">
+<h3><span class="section-number">5.2.2.4.5. </span>SPINAND_ECCINFO<a class="headerlink" href="#spinand-eccinfo" title="永久链接至标题">¶</a></h3>
+<p>SPI NAND 的坏块管理分两部分，器件内部硬件逻辑进行的管理和器件对外提供给用户手工操作的管理逻辑， ECCINFO 即对外暴露的给用户手工操作的区域</p>
+<ul class="simple">
+<li><p>即便不进行 ECCINFO 的设置，坏块管理还是处于工作状态</p></li>
+<li><p>器件自身的坏块管理更高效，因此一般占 ECC 容量的大部分</p></li>
+<li><p>现在大部分器件都不再提供用户操作接口，因为使用门槛比较高</p>
+<ul>
+<li><p>Toshiba 的 TC58CYG0S3HRAIJ 有对外暴露 64Byte ECC</p></li>
+<li><p>FM25S01A 和 F35SQA002G 两款器件都没有提供外部使用接口</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#define SPINAND_ECCINFO(__ooblayout, __get_status)
+    .eccinfo = {
+        .ooblayout = __ooblayout,   //ooblayot操作函数集合
+        .get_status = __get_status, //获取ECC状态
+    }
+
+
+Toshiba 设置
+static int tx58cxgxsxraix_ooblayout_ecc(struct mtd_info *mtd, int section,
+                                    struct mtd_oob_region *region)
+{
+        if (section &gt; 0)
+                return -ERANGE;
+
+        region-&gt;offset = mtd-&gt;oobsize / 2;  //ECC 总长度为128Byte，64B 为对外
+        region-&gt;length = mtd-&gt;oobsize / 2;  //长度也为64
+
+        return 0;
+}
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/toshiba-ecc.png" src="../../../_images/toshiba-ecc.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/FM25S01A-ecc.png" src="../../../_images/FM25S01A-ecc.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/F35SQA-ecc.png" src="../../../_images/F35SQA-ecc.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">5.2.2.5. </span>总结<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>移植一款 SPI NAND，最重要的是 MID, DID, NAND_MEMORG 三块参数，均可以按照一定的规则从数据手册中获得</p></li>
+<li><p>READ_FROM_CACHE 中的 dummy 长度是另外一个需要简单关注的参数，大部分都是1，非常小部分为2</p></li>
+<li><p>其他的参数不配置或者配置不正确均不影响使用，但有可能会性能或者某些特殊操作有影响</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../spinor/index.html" class="btn btn-neutral float-right" title="5.3. SPI NOR 使用指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="config_guide.html" class="btn btn-neutral float-left" title="5.2.1. 配置指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,706 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.3.1. rtl8821CS &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.4. 按键矩阵使用指南" href="../keyadc/index.html" />
+    <link rel="prev" title="10.3. WiFi调试指南" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 外设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../tp/index.html">10.1. 触摸屏调试指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.2. 显示屏调试指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.3. WiFi调试指南</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.3.1. rtl8821CS</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">10.3.1.1. 添加源码</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#kconfig">10.3.1.2. Kconfig 修改</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#include">10.3.1.3. include 目录添加</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id2">10.3.1.3.1. 出错现象</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">10.3.1.3.2. 解决方案</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#makefile">10.3.1.4. Makefile 编译优化</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">10.3.1.5. 内核配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">10.3.1.5.1. 无线配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">10.3.1.5.2. 蓝牙配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rfkill">10.3.1.5.3. RFKILL配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">10.3.1.5.4. 驱动选择</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dts">10.3.1.6. DTS配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#wifi">10.3.1.6.1. WIFI</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#bt">10.3.1.6.2. BT</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">10.3.1.7. 模组配置文件</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id9">10.3.1.7.1. 蓝牙固件和下载工具</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">10.3.1.8. 功能测试和调试</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id11">10.3.1.8.1. 添加相关工具包</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id12">10.3.1.8.2. 测试</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id13">10.3.1.8.3. 调试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../keyadc/index.html">10.4. 按键矩阵使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>外设</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.3. </span>WiFi调试指南</a> &raquo;</li>
+        
+      <li><span class="section-number">10.3.1. </span>rtl8821CS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rtl8821cs">
+<h1><span class="section-number">10.3.1. </span>rtl8821CS<a class="headerlink" href="#rtl8821cs" title="永久链接至标题">¶</a></h1>
+<p>RealTek（瑞昱）系列的 SDIO WiFi 设备的驱动都开发的相对比较标准，移植的难度都比较低</p>
+<div class="section" id="id1">
+<h2><span class="section-number">10.3.1.1. </span>添加源码<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Luban 的 Kernel 版本为 5.10， 建议尽量获取官方的比较新的驱动（ &gt;= 5.10).</p>
+<ul class="simple">
+<li><p>在 source/linux-5.10/drivers/net/wireless/realtek 中创建 rtl8821CS 目录，并复制 rtl8821CS 的驱动源码</p></li>
+<li><p>在 source/linux-5.10/drivers/net/wireless/realtek/Kconfig 中添加对 rtl8821CS 模块的索引：</p></li>
+</ul>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span><span class="k">source</span> <span class="s2">&quot;drivers/net/wireless/realtek/rtl8821/Kconfig&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在 source/linux-5.10/drivers/net/wireless/realtek/Makefile 中添加对 rtl8821CS 模块的索引：</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>obj-$(CONFIG_RTL8821CS)                += rtl8821CS/
+</pre></div>
+</div>
+</div>
+<div class="section" id="kconfig">
+<h2><span class="section-number">10.3.1.2. </span>Kconfig 修改<a class="headerlink" href="#kconfig" title="永久链接至标题">¶</a></h2>
+<p>基于版本的差异，Luban 对 Kconfig 中 help 的字段解析可能和驱动原生的格式有差异，
+在drivers/net/wireless/realtek/rtl8821/Kconfig中调整如下：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span><span class="k">config</span> RTL8821CS
+    <span class="nb">tristate</span> <span class="s2">&quot;Realtek 8821C SDIO WiFi&quot;</span>
+-    <span class="k">---help---</span>
++       <span class="k">help</span>
+</pre></div>
+</div>
+<p>Kconfig 修改正确后，在 make kernel_menuconfig 中应该能看到 rtl8821CS 模块， 勾选后可以进行编译错误的解决</p>
+</div>
+<div class="section" id="include">
+<h2><span class="section-number">10.3.1.3. </span>include 目录添加<a class="headerlink" href="#include" title="永久链接至标题">¶</a></h2>
+<p>大部分 WiFi 驱动为了增强兼容性，驱动中会有一些存放 .h 文件的目录，而在 Makefile 中会引用这些目录，因为版本的差异，
+此类目录的引用方法可能不一样</p>
+<div class="section" id="id2">
+<h3><span class="section-number">10.3.1.3.1. </span>出错现象<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fatal error: drv_types.h: No such file or directory
+<span class="m">17</span> <span class="p">|</span> <span class="c1">#include &lt;drv_types.h&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">10.3.1.3.2. </span>解决方案<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>在 source/linux-5.10/drivers/net/wireless/realtek/rtl8821cs/Makefile中修改如下：</p>
+<ul class="simple">
+<li><p>修改引用方式，添加 srctree 前缀</p></li>
+<li><p>添加额外的目录</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-EXTRA_CFLAGS += -I$(src)/include
++EXTRA_CFLAGS += -I$(srctree)/$(src)/include
++EXTRA_CFLAGS += -I$(srctree)/$(src)/hal/phydm
++EXTRA_CFLAGS += -I$(srctree)/$(src)/hal/btc
++EXTRA_CFLAGS += -I$(srctree)/$(src)/platform
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="makefile">
+<h2><span class="section-number">10.3.1.4. </span>Makefile 编译优化<a class="headerlink" href="#makefile" title="永久链接至标题">¶</a></h2>
+<p>在 source/linux-5.10/drivers/net/wireless/realtek/rtl8821cs/Makefile中修改如下：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-EXTRA_CFLAGS += -O1
++EXTRA_CFLAGS += -Os
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">10.3.1.5. </span>内核配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>在make kernel_menuconfig进行功能配置</p>
+<div class="section" id="id5">
+<h3><span class="section-number">10.3.1.5.1. </span>无线配置<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>WiFi 的使用必须要在 kernel 中打开 cfg80211 和 mac80211 的支持</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Networking support &gt; Wireless
+
+--- Wireless
+&lt;*&gt;   cfg80211 - wireless configuration API
+[ ]     nl80211 testmode command <span class="p">(</span>NEW)
+[ ]     enable developer warnings <span class="p">(</span>NEW)
+[ ]     cfg80211 certification onus <span class="p">(</span>NEW)
+[*]     enable powersave by <span class="k">default</span> <span class="p">(</span>NEW)
+[ ]     cfg80211 DebugFS entries <span class="p">(</span>NEW)
+[*]     support CRDA <span class="p">(</span>NEW)
+[*]     cfg80211 wireless extensions compatibility
+&lt;*&gt;   Generic IEEE <span class="mi">802</span>.11 Networking Stack <span class="p">(</span>mac80211)
+[*]   Minstrel <span class="p">(</span>NEW)
+      Default rate control algorithm <span class="p">(</span>Minstrel)  ---&gt;
+[ ]   Enable mac80211 mesh networking support <span class="p">(</span>NEW)
+[ ]   Export mac80211 internals in DebugFS <span class="p">(</span>NEW)
+[ ]   Trace all mac80211 debug messages <span class="p">(</span>NEW)
+[ ]   Select mac80211 debugging features <span class="p">(</span>NEW)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">10.3.1.5.2. </span>蓝牙配置<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>BT 的使用必须要在 kernel 中打开bluetooth子系统相关配置</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Networking support &gt; Bluetooth subsystem support &gt; Bluetooth device drivers
+
+&lt; &gt; HCI USB driver
+&lt; &gt; HCI SDIO driver
+&lt;*&gt; HCI UART driver
+[*]   UART <span class="p">(</span>H4) protocol support
+&lt; &gt;   UART Nokia H4+ protocol support
+[ ]   BCSP protocol support
+[ ]   Atheros AR300x serial support
+[ ] HCILL protocol support
+-*- Three-wire UART <span class="p">(</span>H5) protocol support
+[ ] Intel protocol support
+[ ] Broadcom protocol support
+[*] Realtek protocol support
+[ ] Qualcomm Atheros protocol support
+[ ] Intel AG6XX protocol support
+[ ] Marvell protocol support
+&lt; &gt; HCI BCM203x USB driver
+&lt; &gt; HCI BPA10x USB driver
+&lt; &gt; HCI BlueFRITZ! USB driver
+&lt; &gt; HCI VHCI <span class="p">(</span>Virtual HCI device) driver
+&lt; &gt; Marvell Bluetooth driver support
+&lt; &gt; MediaTek HCI SDIO driver
+&lt; &gt; MediaTek HCI UART driver
+</pre></div>
+</div>
+</div>
+<div class="section" id="rfkill">
+<h3><span class="section-number">10.3.1.5.3. </span>RFKILL配置<a class="headerlink" href="#rfkill" title="永久链接至标题">¶</a></h3>
+<p>rfkill的使用必须要在 kernel 中打开相关配置</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Networking support &gt; RF switch subsystem support
+
+ --- RF switch subsystem support
+ [ ]   RF switch input support
+ &lt;*&gt;   GPIO RFKILL driver
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">10.3.1.5.4. </span>驱动选择<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>要使用8821C 驱动，需要在 kernel 中打开该驱动</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Device Drivers &gt; Network device support &gt; Wireless LAN
+
+[*]   Realtek devices
+&lt; &gt;     Realtek <span class="mi">8187</span> and <span class="mi">8187</span>B USB support
+&lt; &gt;     Realtek rtlwifi family of devices  ----
+&lt; &gt;     RTL8723AU/RTL8188[CR]U/RTL819[12]CU <span class="p">(</span>mac80211) support
+&lt; &gt;     Realtek <span class="mi">802</span>.11ac wireless chips support  ----
+&lt;*&gt;     Realtek <span class="mi">8821</span>C SDIO WiFi
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dts">
+<h2><span class="section-number">10.3.1.6. </span>DTS配置<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h2>
+<p>在board.dts中进行各子节点配置</p>
+<div class="section" id="wifi">
+<h3><span class="section-number">10.3.1.6.1. </span>WIFI<a class="headerlink" href="#wifi" title="永久链接至标题">¶</a></h3>
+<p>1.打开对应的SDMC</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">sdmc1</span> <span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">sdmc1_pins_a</span><span class="o">&gt;</span><span class="p">;</span><span class="c1">//核对引脚是否和原理图一致</span>
+    <span class="n">bus-width</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">no-mmc</span><span class="p">;</span>
+    <span class="n">no-sd</span><span class="p">;</span>
+    <span class="n">non-removalbe</span><span class="p">;</span>
+    <span class="n">cap-sdio-irq</span><span class="p">;</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>2.配置控制引脚</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">rfkill_wlan</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;rfkill-gpio&quot;</span><span class="p">;</span>
+    <span class="n">rfkill-name</span> <span class="o">=</span> <span class="s">&quot;wlan&quot;</span><span class="p">;</span>
+    <span class="n">rfkill-type</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">reset-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_e</span> <span class="mi">4</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span><span class="c1">//模组WiFi使能引脚，根据实际原理图配置</span>
+    <span class="n">shutdown-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_d</span> <span class="mi">8</span> <span class="na">GPIO_ACTIVE_LOW</span><span class="o">&gt;</span><span class="p">;</span><span class="c1">//电源控制引脚，根据实际原理图配置</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bt">
+<h3><span class="section-number">10.3.1.6.2. </span>BT<a class="headerlink" href="#bt" title="永久链接至标题">¶</a></h3>
+<p>1.打开对应UART</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="na">uart6</span> <span class="p">{</span>
+    <span class="n">pinctrl-names</span> <span class="o">=</span> <span class="s">&quot;default&quot;</span><span class="p">;</span>
+    <span class="n">pinctrl-0</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">uart6_pins_a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;&amp;</span><span class="na">uart6_rts_pins_a</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;&amp;</span><span class="na">uart6_rts_pins_b</span><span class="o">&gt;</span><span class="p">;</span><span class="c1">//须和原理图保持一致</span>
+   <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>2.配置控制引脚</p>
+<div class="highlight-dts notranslate"><div class="highlight"><pre><span></span><span class="nf">rfkill_bt</span><span class="cm"> </span><span class="p">{</span>
+    <span class="kr">compatible</span> <span class="o">=</span> <span class="s">&quot;rfkill-gpio&quot;</span><span class="p">;</span>
+    <span class="n">rfkill-name</span> <span class="o">=</span> <span class="s">&quot;bluetooth&quot;</span><span class="p">;</span>
+    <span class="n">rfkill-type</span> <span class="o">=</span> <span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="n">reset-gpios</span> <span class="o">=</span> <span class="o">&lt;&amp;</span><span class="na">gpio_c</span> <span class="mi">6</span> <span class="na">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span><span class="c1">//模组蓝牙使能引脚，须和原理图保持一致</span>
+    <span class="kr">status</span> <span class="o">=</span> <span class="s">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">10.3.1.7. </span>模组配置文件<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h3><span class="section-number">10.3.1.7.1. </span>蓝牙固件和下载工具<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>可以从模组厂获取，存放于overylay目录</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>├── lib
+│   └── firmware
+│       └── rtlbt
+│           ├── rtl8821c_config//模组配置文件，最好从模组厂获取
+│           └── rtl8821c_fw//模组固件，最好从模组厂获取
+├── usr
+│   └── bin
+│       └── rtk_hciattach//模组蓝牙固件下载工具，最好从模组厂获取
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">10.3.1.8. </span>功能测试和调试<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id11">
+<h3><span class="section-number">10.3.1.8.1. </span>添加相关工具包<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>在make menuconfig进行功能配置</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>[*] wireless tools  ---&gt;
+[*] bluez-utils  ---&gt;
+    [ ]   use prebuilt binary instead of building from <span class="k">source</span>
+    [ ]   build OBEX support
+    [ ]   build CLI client
+    [ ]   build monitor utility
+    [*]   build tools
+    [*]     install deprecated tools
+    [ ]   build experimental tools
+    [ ]   build audio plugins <span class="p">(</span>a2dp and avrcp)
+    [ ]   build health plugin
+    [ ]   build hid plugin
+    [ ]   build hog plugin
+    [ ]   build mesh plugin
+    [ ]   build midi plugin
+    [*]   build network plugin
+    [ ]   build nfc plugin
+    [ ]   build sap plugin
+          *** sixaxis plugin needs udev /dev management ***
+    [ ]   install test scripts
+          *** hid2hci tool needs udev /dev management ***
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">10.3.1.8.2. </span>测试<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>1.WiFi</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>insmod rtl8821.ko
+ifconfig wlan0 up
+iwlist wlan0 scan
+</pre></div>
+</div>
+<p>2.BT</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="m">0</span> &gt; /sys/class/rfkill/rfkill0/state
+<span class="nb">echo</span> <span class="m">1</span> &gt; /sys/class/rfkill/rfkill0/state
+rtk_hciattach -n -s <span class="m">115200</span> /dev/ttyS6 rtk_h5 <span class="p">&amp;</span>
+hciconfig hci0 up
+hcitool scan
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h3><span class="section-number">10.3.1.8.3. </span>调试<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>核对并测试硬件信号的连通性</p></li>
+<li><p>查看系统启动日志和模组驱动加载日志是否有异常并排查</p></li>
+<li><p>WIFI模组驱动日志配置方法如下，Makefile中：</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CONFIG_RTW_DEBUG = n//debug开关
+CONFIG_RTW_LOG_LEVEL = 4//debug level
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../keyadc/index.html" class="btn btn-neutral float-right" title="10.4. 按键矩阵使用指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="10.3. WiFi调试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

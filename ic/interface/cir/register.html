@@ -1,0 +1,1443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.8.4. 寄存器定义 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.9. PBUS" href="../pbus/index.html" />
+    <link rel="prev" title="12.8.3. 编程指南" href="program.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">12.6. Inter Integrated Circuit (I2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.8. Consumer Infrared Radiation (CIR)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.8.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.8.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="program.html">12.8.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.8.4. 寄存器定义</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-cir-mcr">12.8.4.1. 0x000 CIR_MCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-cir-intr">12.8.4.2. 0x004 CIR_INTR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-cir-inten">12.8.4.3. 0x008 CIR_INTEN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-cir-txstat">12.8.4.4. 0x00C CIR_TXSTAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-cir-rxstat">12.8.4.5. 0x010 CIR_RXSTAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014-cir-rxclk">12.8.4.6. 0x014 CIR_RXCLK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x018-cir-rx-thres">12.8.4.7. 0x018 CIR_RX_THRES</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01c-cir-rx-cfg">12.8.4.8. 0x01C CIR_RX_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-cir-tx-cfg">12.8.4.9. 0x020 CIR_TX_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-cir-tidc">12.8.4.10. 0x024 CIR_TIDC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x02c-cir-carr-cfg">12.8.4.11. 0x02c CIR_CARR_CFG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-cir-rxfifo">12.8.4.12. 0x030 CIR_RXFIFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x080-cir-txfifo">12.8.4.13. 0x080 CIR_TXFIFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#xffc-cir-version">12.8.4.14. 0xFFC CIR_VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.8. </span>CIR</a> &raquo;</li>
+        
+      <li><span class="section-number">12.8.4. </span>寄存器定义</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.8.4. </span>寄存器定义<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><strong>寄存器列表</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>寄存器名</p></th>
+<th class="head"><p>偏移地址</p></th>
+<th class="head"><p>寄存器功能描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CIR_MCR</p></td>
+<td><p>0x00</p></td>
+<td><p>CIR模块控制寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_INTR</p></td>
+<td><p>0x04</p></td>
+<td><p>CIR模块中断控制寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CIR_INTEN</p></td>
+<td><p>0x08</p></td>
+<td><p>CIR模块中断控制寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_TXSTAT</p></td>
+<td><p>0x0C</p></td>
+<td><p>CIR发送状态寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CIR_RXSTAT</p></td>
+<td><p>0x10</p></td>
+<td><p>CIR接收状态寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_RXCLK</p></td>
+<td><p>0x14</p></td>
+<td><p>CIR接收采样时钟寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CIR_RX_THRES</p></td>
+<td><p>0x18</p></td>
+<td><p>CIR接收阈值配置寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_RX_CFG</p></td>
+<td><p>0x1C</p></td>
+<td><p>CIR接收配置寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CIR_TX_CFG</p></td>
+<td><p>0x20</p></td>
+<td><p>CIR发送配置寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_TIDC</p></td>
+<td><p>0x24</p></td>
+<td><p>CIR发送间隔时间寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CIR_CARR_CFG</p></td>
+<td><p>0x2C</p></td>
+<td><p>CIR载波配置寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_RXFIFO</p></td>
+<td><p>0x30</p></td>
+<td><p>CIR接收缓存寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>CIR_TXFIFO</p></td>
+<td><p>0x80</p></td>
+<td><p>CIR发送缓存寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>CIR_VERSION</p></td>
+<td><p>0xFFC</p></td>
+<td><p>CIR模块版本号</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>寄存器描述</strong></p>
+<div class="section" id="x000-cir-mcr">
+<h2><span class="section-number">12.8.4.1. </span>0x000 CIR_MCR<a class="headerlink" href="#x000-cir-mcr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR控制寄存器（CIR_MCR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:18</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_CLR：TX FIFO CLEAR，清TX FIFO</div>
+<div class="line">0x0：未使能</div>
+<div class="line">0x1：Clear Tx FIFO</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_FIFO_CLR：RX FIFO CLEAR，清RX FIFO</div>
+<div class="line">0x0：未使能</div>
+<div class="line">0x1：Clear Rx FIFO</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:10</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_STOP：Transmit Stop Control，发送停止控制，仅用于循环模式。</div>
+<div class="line">0x0：硬件发送完FIFO的数据后自动将该bit清0</div>
+<div class="line">0x1：循环发送停止。由开始到停止，FIFO中数据必须被发送完。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>WAC</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_START：Transmit Start Control，发送启动控制。在循环模式和</div>
+<div class="line">非循环模式都需要。</div>
+<div class="line">0x0：硬件发送完FIFO的数据后自动将该bit清0</div>
+<div class="line">0x1：发送开始。由开始到停止，FIFO中数据必须被发送完。在循环模式下，FIFO中的数据会</div>
+<div class="line">在一定的间隔时间IDC_THRES后反复发送，直到TX_STOP为1时才会在发送完当次命令后停止。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:3</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_EN：Transmitter Enable，发送器使能</div>
+<div class="line">0x0：未使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_EN：Receiver Enable，接收器使能</div>
+<div class="line">0x0：未使能</div>
+<div class="line">0x1：使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-cir-intr">
+<h2><span class="section-number">12.8.4.2. </span>0x004 CIR_INTR<a class="headerlink" href="#x004-cir-intr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR中断寄存器（CIR_INTR）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:7</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXB_AVL _INT：TX FIFO Available Interrupt Flag，发送缓存可用中断</div>
+<div class="line">0x0：发送缓存不可用。</div>
+<div class="line">0x1：发送缓存可用。达到TXB_EMPTY_LEVEL时触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXEND_INT：Transmit End Interrupt，发送结束中断</div>
+<div class="line">0x0：发送未完成。</div>
+<div class="line">0x1：发送完成。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_UNF_INT：Transmit FIFO Underflow Interrupt for Non-cyclical Pulse，</div>
+<div class="line">非循环发送下溢出中断</div>
+<div class="line">0x0：发送器FIFO 无下溢出。</div>
+<div class="line">0x1：发送器FIFO 下溢出。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXB_AVL _INT：RX FIFO Available Interrupt Flag，接收缓存可用中断。</div>
+<div class="line">0x0：接收缓存不可用。</div>
+<div class="line">0x1：接收缓存可用。达到RXB_AVL_LEVEL时触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_END_INT：Receive End Interrupt，接收结束中断</div>
+<div class="line">0x0：接收未结束</div>
+<div class="line">0x1：接收结束</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_OVF_INT：Receive Overflow Interrupt，接收缓存溢出中断</div>
+<div class="line">0x0：接收器FIFO未溢出</div>
+<div class="line">0x1：接收器FIFO溢出</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-cir-inten">
+<h2><span class="section-number">12.8.4.3. </span>0x008 CIR_INTEN<a class="headerlink" href="#x008-cir-inten" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000063</p></th>
+<th class="head"><p>CIR中断使能控制寄存器（CIR_INTEN）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXB_EMPTY_LEVEL：TX FIFO Empty Level，发送缓存空闲深度。达到该设置值</div>
+<div class="line">触发TXB_AVL_INT。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXB_AVL _LEVEL：RX FIFO Available Level，接收缓存可用字节深度。达到该设置值</div>
+<div class="line">触发RXB_AVL_INT。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TXB_AVL _EN：TX FIFO Available Interrupt Enable，发送缓存可用中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TXEND_EN：Transmit Ended Interrupt Enable，发送结束中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_UNF_EN：Transmit FIFO Underflow Interrupt Enable for non-Cyclical Pulse，</div>
+<div class="line">非循环发送下溢出中断使能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXB_AVL_EN：RX FIFO Available Interrupt Enable，接收缓存可用中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RXEND_EN：Receive Ended Interrupt Enable，接收结束中断使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RX_OVF_EN：Receive Overflow Interrupt Enable，接收缓存溢出断使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-cir-txstat">
+<h2><span class="section-number">12.8.4.4. </span>0x00C CIR_TXSTAT<a class="headerlink" href="#x00c-cir-txstat" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>CIR发送状态寄存器（CIR_TXSTAT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_STAT：Transmitter Status，发送器状态</div>
+<div class="line">0x0：Idle，空闲，当FIFO中所有数据被发送完时自动清0</div>
+<div class="line">0x1：Active，激活</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_ERR：FIFO Error Flag，发送FIFO错误标志。</div>
+<div class="line">0x0：no error</div>
+<div class="line">0x1：error, such as overflow or underflow</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_FULL：FIFO Full Flag，发送FIFO满标志。</div>
+<div class="line">0x0：not full</div>
+<div class="line">0x1：full</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_EMPTY：TX FIFO Empty Flag，发送FIFO空标志。</div>
+<div class="line">0x0：not empty</div>
+<div class="line">0x1：empty</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x7F</p></td>
+<td><div class="line-block">
+<div class="line">TX_FIFO_DLEN：TX FIFO Data Length，TX FIFO 当前有效数据量指示</div>
+<div class="line">0x00：发送缓存中还有1byte待发送</div>
+<div class="line">0x01：发送缓存中还有2byte待发送</div>
+<div class="line">… …</div>
+<div class="line">0x7F：发送缓存中还有128bytes待发送</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-cir-rxstat">
+<h2><span class="section-number">12.8.4.5. </span>0x010 CIR_RXSTAT<a class="headerlink" href="#x010-cir-rxstat" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>CIR接收状态寄存器（CIR_RXSTAT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_STAT：Receiver Status，接收器状态</div>
+<div class="line">0x0：Idle，空闲</div>
+<div class="line">0x1：Active，激活</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_FIFO_ERR：FIFO Error Flag，接收FIFO错误标志。</div>
+<div class="line">0x0：no error</div>
+<div class="line">0x1：error, such as overflow or underflow</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>RO</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_FIFO_FULL：FIFO Full Flag，接收FIFO满标志。</div>
+<div class="line">0x0：not full</div>
+<div class="line">0x1：full</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>RO</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RX_FIFO_EMPTY：RX FIFO Empty Flag，接收FIFO空标志。</div>
+<div class="line">0x0：not empty</div>
+<div class="line">0x1：empty</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">RX_FIFO_DLEN：RX FIFO Data Length，RX FIFO 当前有效数据量指示</div>
+<div class="line">0x00：接收缓存中还有1byte待取走</div>
+<div class="line">0x01：接收缓存中还有2byte待取走</div>
+<div class="line">… …</div>
+<div class="line">0x3F：接收缓存中还有64bytes待取走</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014-cir-rxclk">
+<h2><span class="section-number">12.8.4.6. </span>0x014 CIR_RXCLK<a class="headerlink" href="#x014-cir-rxclk" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR接收采样时钟寄存器（CIR_RXCLK）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DIV_RXCLK：Receive Sample Clock Divider，接收采样时钟分频系数（1~65535）</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x018-cir-rx-thres">
+<h2><span class="section-number">12.8.4.7. </span>0x018 CIR_RX_THRES<a class="headerlink" href="#x018-cir-rx-thres" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000F00FF</p></th>
+<th class="head"><p>CIR接收阈值配置寄存器（CIR_RX_THRES）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0F</p></td>
+<td><div class="line-block">
+<div class="line">ACTIVE_THRES：Active Threshold，激活阈值。</div>
+<div class="line">接收器由空闲状态转变到激活状态的阈值。当接收器处于空闲状态，若输入信号电平发生变化</div>
+<div class="line">（上升沿或下降沿），且持续时间大于ACTIVE_THRES*Trx_clk时，接收器认为这是一个</div>
+<div class="line">激活码，将转变为激活状态，并开始捕获CIR_RX信号。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xFF</p></td>
+<td><div class="line-block">
+<div class="line">IDLE_THRES：Idle Threshold，空闲阈值</div>
+<div class="line">接收器根据该阈值决定当前指令是否完成被接收。若无CIR_RX输入，接收器处于空闲状态。</div>
+<div class="line">当CIR_RX信号保持高电平或低电平，且持续时间大于 IDLE_THRES*Trx_clk时，</div>
+<div class="line">表示前一个指令完成接收。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01c-cir-rx-cfg">
+<h2><span class="section-number">12.8.4.8. </span>0x01C CIR_RX_CFG<a class="headerlink" href="#x01c-cir-rx-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x01FF0000</p></th>
+<th class="head"><p>CIR接收配置寄存器（CIR_RX_CFG）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1FF</p></td>
+<td><div class="line-block">
+<div class="line">NOSIE_THRES：Nosie Threshold，噪声阈值</div>
+<div class="line">CIR_RX信号脉冲（高电平或低电平）持续时间小于NOSIE_THRES个采样周期Tpclk，</div>
+<div class="line">该脉冲将被当作噪声干扰而被忽略。</div>
+<div class="line">0x0：所有采样都存储于RX_FIFO</div>
+<div class="line">0x1：若信号小于等于1个周期Tpclk，忽略</div>
+<div class="line">0x2：若信号小于等于2个周期Tpclk，忽略</div>
+<div class="line">…</div>
+<div class="line">0xFFFF：若信号小于等于65535个周期Tpclk，忽略</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:3</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBC_LEVEL_SET：Debounce 输出初始化电平设置</div>
+<div class="line">0x0：Debounce 输出初始化电平为1</div>
+<div class="line">0x1：Debounce 输出初始化电平与RX_LEVEL一致</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_LEVEL：RX输入信号电平</div>
+<div class="line">0x0：空闲状态下为低电平、激活状态下为高电平</div>
+<div class="line">0x1：空闲状态下为高电平、激活状态下为低电平</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_INVERT：RX信号极性反相</div>
+<div class="line">0x0：信号不反相</div>
+<div class="line">0x1：信号反相</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-cir-tx-cfg">
+<h2><span class="section-number">12.8.4.9. </span>0x020 CIR_TX_CFG<a class="headerlink" href="#x020-cir-tx-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR发送配置寄存器（CIR_TX_CFG）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:3</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_MODE：Transmit Mode，发送模式</div>
+<div class="line">0x0：非循环发送模式</div>
+<div class="line">0x1：循环发送模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_OUT_MODE：Transmit Out Mode，发送输出模式</div>
+<div class="line">0x0：发送信号调制</div>
+<div class="line">0x1：发送信号不调制</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_INVERT：Transmit Signal Invert，TX信号极性反相</div>
+<div class="line">0x0：信号不反相</div>
+<div class="line">0x1：信号反相</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-cir-tidc">
+<h2><span class="section-number">12.8.4.10. </span>0x024 CIR_TIDC<a class="headerlink" href="#x024-cir-tidc" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 11%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR发送间隔时间寄存器（CIR_TIDC）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IDC_THRES：Idle Duration Counter Threshold，空闲持续时间计数阈值，0~65536</div>
+<div class="line">循环发送间隔时间= IDC_THRES*Ttx_clk</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x02c-cir-carr-cfg">
+<h2><span class="section-number">12.8.4.11. </span>0x02c CIR_CARR_CFG<a class="headerlink" href="#x02c-cir-carr-cfg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0003000b</p></th>
+<th class="head"><p>CIR发送载波配置寄存器（CIR_CARR_CFG）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x3</p></td>
+<td><div class="line-block">
+<div class="line">CARRIER_HIGH：Carrier High Pulse Number，载波高电平脉冲个数，以APB_CLK为基本单位。</div>
+<div class="line">用于配置载波频率及占空比。</div>
+<div class="line">TX_CLK=24MHz/（CARR_HIGH+1+CARR_LOW+1）；</div>
+<div class="line">DUTY=（CARR_HIGH+1）/（CARR_HIGH+1+CARR_LOW+1）</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xb</p></td>
+<td><div class="line-block">
+<div class="line">CARRIER_LOW：Carrier Low Pulse Number，载波低电平脉冲个数，以APB_CLK为基本单位。</div>
+<div class="line">用于配置载波频率及占空比。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-cir-rxfifo">
+<h2><span class="section-number">12.8.4.12. </span>0x030 CIR_RXFIFO<a class="headerlink" href="#x030-cir-rxfifo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR接收缓存寄存器（CIR_RXFIFO）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXFIFO：Receive Byte FIFO，接收字节缓存</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x080-cir-txfifo">
+<h2><span class="section-number">12.8.4.13. </span>0x080 CIR_TXFIFO<a class="headerlink" href="#x080-cir-txfifo" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>CIR发送缓存寄存器（CIR_TXFIFO）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><div class="line-block">
+<div class="line">-</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXFIFO：Transmit Byte FIFO，发送字节缓存</div>
+<div class="line">当发送触发，FIFO中的数据将被发送，直至所有数据字节数量都被发送完。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xffc-cir-version">
+<h2><span class="section-number">12.8.4.14. </span>0xFFC CIR_VERSION<a class="headerlink" href="#xffc-cir-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>CIR版本寄存器（VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x00000100</p></td>
+<td><div class="line-block">
+<div class="line">Version （版本号），采用BCD码，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../pbus/index.html" class="btn btn-neutral float-right" title="12.9. PBUS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="program.html" class="btn btn-neutral float-left" title="12.8.3. 编程指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

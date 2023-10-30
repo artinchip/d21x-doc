@@ -1,0 +1,605 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1.7. QT + Directfb + GE &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2. LVGL移植" href="../lvgl/index.html" />
+    <link rel="prev" title="1.6. Directfb Cross Compile" href="dfb-compile.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">三方应用</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. QT 使用</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="qt-compile.html">1.1. QT Cross Compile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-luban.html">1.2. QT Luban</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-accel.html">1.3. QT 性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-ide.html">1.4. QT Windows IDE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qt-develop.html">1.5. QT 应用开发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dfb-compile.html">1.6. Directfb Cross Compile</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.7. QT + Directfb + GE</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ge">1.7.1. GE介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.7.2. 功能移植</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.7.3. 模块添加</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dma-buf">1.7.4. dma buf</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id3">1.7.4.1. 代码修改</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">1.7.4.2. 核心代码</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#fbdev">1.7.5. fbdev</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id5">1.7.5.1. 代码修改</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">1.7.5.2. 核心代码</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#gfxdriver">1.7.6. gfxdriver</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id7">1.7.6.1. 接口方式</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">1.7.6.2. 功能声明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">1.7.6.3. 功能函数</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#gfx">1.7.7. GFX</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lvgl/index.html">2. LVGL移植</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">三方应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">1. </span>QT 使用</a> &raquo;</li>
+        
+      <li><span class="section-number">1.7. </span>QT + Directfb + GE</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qt-directfb-ge">
+<h1><span class="section-number">1.7. </span>QT + Directfb + GE<a class="headerlink" href="#qt-directfb-ge" title="永久链接至标题">¶</a></h1>
+<div class="section" id="ge">
+<h2><span class="section-number">1.7.1. </span>GE介绍<a class="headerlink" href="#ge" title="永久链接至标题">¶</a></h2>
+<p>GE(Graphics Engine) 是一个用来进行2D图形加速的硬件模块。主要包括格式转换、旋转、 镜像、缩放、Alpha混合、Color Key、位块搬移、Dither等功能，
+以下特性应该会被Directfb使用的到。</p>
+<ul class="simple">
+<li><p>支持水平和垂直Flip</p></li>
+<li><p>所有格式支持90/180/270度旋转</p></li>
+<li><p>RGB格式支持任意角度旋转</p></li>
+<li><p>支持1/16x ~ 16x缩放</p></li>
+<li><p>支持porter-duff规则的Alpha混合</p></li>
+<li><p>支持矩形填充</p></li>
+<li><p>位块搬移(bit block transfer)</p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">1.7.2. </span>功能移植<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>因为平台的差异，需要在Directfb代码中注入如下信息来支持：</p>
+<ul class="simple">
+<li><p>dmabuf surface支持</p></li>
+<li><p>fbdev接口</p></li>
+<li><p>gfxdrivers接口</p></li>
+<li><p>gfx逻辑</p></li>
+</ul>
+<div class="figure align-center" id="id10">
+<img alt="../../_images/dfb-ge.jpg" src="../../_images/dfb-ge.jpg" />
+<p class="caption"><span class="caption-number">图 1.11 </span><span class="caption-text">移植架构图</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">1.7.3. </span>模块添加<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>需要在Directfb中添加对ge模块的编译，修改对象为“configure.in” 文件，具体方法是参考某一个模块仿写，
+譬如：vmware， 在相应的地方添加ge 的check 为 “yes”。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>@@ -1925,6 +1925,7 @@ <span class="nv">sis315</span><span class="o">=</span>no
+<span class="nv">vdpau</span><span class="o">=</span>no
++ge<span class="o">=</span>yes
+<span class="nv">vmware</span><span class="o">=</span>no
+
+<span class="k">if</span> <span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$have_linux</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;yes&quot;</span><span class="p">;</span> <span class="k">then</span>
+@@ -1938,7 +1939,7 @@ AC_ARG_WITH<span class="o">(</span>gfxdrivers,
+                            <span class="o">[</span>radeon, savage, sh772x, sis315, tdfx, unichrome,<span class="o">]</span>
+-                           <span class="o">[</span>vdpau, vmware. @&lt;:@default<span class="o">=</span>all@:&gt;@<span class="o">])</span>,
++                           <span class="o">[</span>vdpau, ge, vmware. @&lt;:@default<span class="o">=</span>all@:&gt;@<span class="o">])</span>,
+            <span class="o">[</span><span class="nv">gfxdrivers</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$withval</span><span class="s2">&quot;</span><span class="o">]</span>, <span class="o">[</span><span class="nv">gfxdrivers</span><span class="o">=</span>all<span class="o">])</span>
+@@ -1966,6 +1967,7 @@ <span class="k">if</span> <span class="nb">test</span> <span class="s2">&quot;</span><span class="nv">$gfxdrivers</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">;</span> <span class="k">then</span>
+<span class="nv">checkfor_vdpau</span><span class="o">=</span>yes
++  <span class="nv">checkfor_ge</span><span class="o">=</span>yes
+<span class="nv">checkfor_vmware</span><span class="o">=</span>no
+
+                <span class="nv">checkfor_vdpau</span><span class="o">=</span>yes
+                <span class="p">;;</span>
++          ge<span class="o">)</span>
++               <span class="nv">checkfor_ge</span><span class="o">=</span>yes
++               <span class="p">;;</span>
+        *<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dma-buf">
+<h2><span class="section-number">1.7.4. </span>dma buf<a class="headerlink" href="#dma-buf" title="永久链接至标题">¶</a></h2>
+<p>AIC GE 需要连续的内存作为操作buf，因此需要在surface pool 中添加 aic的操作接口</p>
+<div class="section" id="id3">
+<h3><span class="section-number">1.7.4.1. </span>代码修改<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>modified:   src/core/local_surface_pool.c
+    modified:   src/core/prealloc_surface_pool.c
+    modified:   src/core/surface_buffer.h
+    modified:   src/core/surface_core.c
+add：       src/core/dmabuf_surface_pool.c
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">1.7.4.2. </span>核心代码<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>添加width 和 height 变量的使用</p></li>
+<li><p>实现dmabufSurfacePoolFuncs的函数</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">SurfacePoolFuncs</span> <span class="n">dmabufSurfacePoolFuncs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">PoolDataSize</span>       <span class="o">=</span> <span class="n">dmabufPoolDataSize</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">PoolLocalDataSize</span>  <span class="o">=</span> <span class="n">dmabufPoolLocalDataSize</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">AllocationDataSize</span> <span class="o">=</span> <span class="n">dmabufAllocationDataSize</span><span class="p">,</span>
+
+    <span class="p">.</span><span class="n">InitPool</span>           <span class="o">=</span> <span class="n">dmabufInitPool</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">JoinPool</span>           <span class="o">=</span> <span class="n">dmabufJoinPool</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">DestroyPool</span>        <span class="o">=</span> <span class="n">dmabufDestroyPool</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">LeavePool</span>          <span class="o">=</span> <span class="n">dmabufLeavePool</span><span class="p">,</span>
+
+    <span class="p">.</span><span class="n">AllocateBuffer</span>     <span class="o">=</span> <span class="n">dmabufAllocateBuffer</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">DeallocateBuffer</span>   <span class="o">=</span> <span class="n">dmabufDeallocateBuffer</span><span class="p">,</span>
+
+    <span class="p">.</span><span class="n">Lock</span>               <span class="o">=</span> <span class="n">dmabufLock</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">Unlock</span>             <span class="o">=</span> <span class="n">dmabufUnlock</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="fbdev">
+<h2><span class="section-number">1.7.5. </span>fbdev<a class="headerlink" href="#fbdev" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">1.7.5.1. </span>代码修改<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>modified:   systems/fbdev/fb.h
+modified:   systems/fbdev/fbdev.c
+modified:   systems/fbdev/fbdev.h
+modified:   systems/fbdev/fbdev_surface_pool.c
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">1.7.5.2. </span>核心代码<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>fbdev中做两块兼容性修改</p>
+<ul class="simple">
+<li><p>添加width 和 height 变量的使用</p></li>
+<li><p>添加gfxdriver的接口变量</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">systems</span><span class="o">/</span><span class="n">fbdev</span><span class="o">/</span><span class="n">fbdev_surface_pool</span><span class="o">.</span><span class="n">c</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">systems</span><span class="o">/</span><span class="n">fbdev</span><span class="o">/</span><span class="n">fbdev_surface_pool</span><span class="o">.</span><span class="n">c</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">66</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">66</span><span class="p">,</span><span class="mi">8</span> <span class="o">@@</span> <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="nb">int</span>    <span class="n">magic</span><span class="p">;</span>
+
+<span class="o">+</span>   <span class="nb">int</span>    <span class="n">width</span><span class="p">;</span>
+<span class="o">+</span>   <span class="nb">int</span>    <span class="n">height</span><span class="p">;</span>
+    <span class="n">Chunk</span> <span class="o">*</span><span class="n">chunk</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">FBDevAllocationData</span><span class="p">;</span>
+
+<span class="o">@@</span> <span class="o">-</span><span class="mi">278</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">280</span><span class="p">,</span><span class="mi">9</span> <span class="o">@@</span> <span class="n">fbdevAllocateBuffer</span><span class="p">(</span> <span class="n">CoreSurfacePool</span>       <span class="o">*</span><span class="n">pool</span><span class="p">,</span>
+    <span class="n">surface</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">surface</span><span class="p">;</span>
+    <span class="n">D_MAGIC_ASSERT</span><span class="p">(</span> <span class="n">surface</span><span class="p">,</span> <span class="n">CoreSurface</span> <span class="p">);</span>
+
+<span class="o">+</span>   <span class="n">alloc</span><span class="o">-&gt;</span><span class="n">width</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">config</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">w</span><span class="p">;</span>
+<span class="o">+</span>   <span class="n">alloc</span><span class="o">-&gt;</span><span class="n">height</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">config</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">h</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gfxdriver">
+<h2><span class="section-number">1.7.6. </span>gfxdriver<a class="headerlink" href="#gfxdriver" title="永久链接至标题">¶</a></h2>
+<p>gfxdirver是directfb 集成GE的接口，主要实现 ge_driver 和 ge_device</p>
+<div class="section" id="id7">
+<h3><span class="section-number">1.7.6.1. </span>接口方式<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>gfxdriver 是模拟 Linux 的 driver 的方式，向 QT 注册自己，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">driver_init_device</span>
+<span class="n">driver_init_driver</span>
+<span class="n">driver_probe</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">1.7.6.2. </span>功能声明<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define GE_SUPPORTED_DRAWINGFLAGS (DSDRAW_BLEND)</span>
+<span class="c1">#define GE_SUPPORTED_BLITTINGFLAGS (DSBLIT_BLEND_ALPHACHANNEL | \</span>
+                                    <span class="n">DSBLIT_BLEND_COLORALPHA</span>   <span class="o">|</span> \
+                                    <span class="n">DSBLIT_SRC_COLORKEY</span>       <span class="o">|</span> \
+                                    <span class="n">DSBLIT_ROTATE90</span>           <span class="o">|</span> \
+                                    <span class="n">DSBLIT_ROTATE180</span>          <span class="o">|</span> \
+                                    <span class="n">DSBLIT_ROTATE270</span>          <span class="o">|</span> \
+                                    <span class="n">DSBLIT_FLIP_HORIZONTAL</span>    <span class="o">|</span> \
+                                    <span class="n">DSBLIT_FLIP_VERTICAL</span><span class="p">)</span>
+
+<span class="c1">#define GE_SUPPORTED_BLITTINGFUNCTIONS  (DFXL_BLIT | \</span>
+                                        <span class="n">DFXL_STRETCHBLIT</span><span class="p">)</span>
+
+<span class="c1">#define GE_SUPPORTED_DRAWINGFUNCTIONS (DFXL_FILLRECTANGLE)</span>
+<span class="n">device_info</span><span class="o">-&gt;</span><span class="n">caps</span><span class="o">.</span><span class="n">accel</span>    <span class="o">=</span> <span class="n">GE_SUPPORTED_DRAWINGFUNCTIONS</span> <span class="o">|</span>
+                            <span class="n">GE_SUPPORTED_BLITTINGFUNCTIONS</span><span class="p">;</span>
+
+<span class="n">device_info</span><span class="o">-&gt;</span><span class="n">caps</span><span class="o">.</span><span class="n">drawing</span>  <span class="o">=</span> <span class="n">GE_SUPPORTED_DRAWINGFLAGS</span><span class="p">;</span>
+<span class="n">device_info</span><span class="o">-&gt;</span><span class="n">caps</span><span class="o">.</span><span class="n">blitting</span> <span class="o">=</span> <span class="n">GE_SUPPORTED_BLITTINGFLAGS</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><span class="section-number">1.7.6.3. </span>功能函数<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>通过src/core/gfxcard.h 中的 GraphicsDeviceFuncs 实现</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">funcs</span><span class="o">-&gt;</span><span class="n">CheckState</span>    <span class="o">=</span> <span class="n">ge_check_state</span><span class="p">;</span>
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">SetState</span>      <span class="o">=</span> <span class="n">ge_set_state</span><span class="p">;</span>
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">EngineSync</span>    <span class="o">=</span> <span class="n">ge_sync</span><span class="p">;</span>
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">EngineReset</span>   <span class="o">=</span> <span class="n">ge_reset</span><span class="p">;</span>
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">FlushTextureCache</span>  <span class="o">=</span> <span class="n">ge_flush_texture_cache</span><span class="p">;</span>
+
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">FillRectangle</span> <span class="o">=</span> <span class="n">ge_fill_rectangle</span><span class="p">;</span>
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">Blit</span>          <span class="o">=</span> <span class="n">ge_blit</span><span class="p">;</span>
+<span class="n">funcs</span><span class="o">-&gt;</span><span class="n">StretchBlit</span>   <span class="o">=</span> <span class="n">ge_stretch_blit</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gfx">
+<h2><span class="section-number">1.7.7. </span>GFX<a class="headerlink" href="#gfx" title="永久链接至标题">¶</a></h2>
+<p>GFX driver 是驱动，是和DirectFB的接口描述，真正的实现是通过调用 aic_mpp 库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">gfx</span><span class="o">/</span><span class="n">Makefile</span><span class="o">.</span><span class="n">am</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">gfx</span><span class="o">/</span><span class="n">Makefile</span><span class="o">.</span><span class="n">am</span>
+<span class="o">+</span><span class="n">libdirectfb_gfx_la_LDFLAGS</span> <span class="o">=</span> <span class="o">-</span><span class="n">lmpp_decoder</span> <span class="o">-</span><span class="n">lmpp_ge</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../lvgl/index.html" class="btn btn-neutral float-right" title="2. LVGL移植" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dfb-compile.html" class="btn btn-neutral float-left" title="1.6. Directfb Cross Compile" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

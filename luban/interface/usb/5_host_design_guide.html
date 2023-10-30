@@ -1,0 +1,1462 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.12.5. USB Host 子系统代码架构 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.12.6. USB Device 子系统代码架构" href="5_device_design_guide.html" />
+    <link rel="prev" title="7.12.4. 设计说明" href="5_design_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.12. USB 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.12.1. 配置指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.12.2. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.12.3. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">7.12.4. 设计说明</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.12.5. USB Host 子系统代码架构</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#usb-core">7.12.5.1. USB Core</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#layer">7.12.5.1.1. Layer</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#urb-usb-request-block">7.12.5.1.2. URB (USB Request Block)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#usb-device-layer">7.12.5.2. USB Device Layer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#device-struct-usb-device">7.12.5.2.1. Device (struct usb_device)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#driver-struct-usb-device-driver">7.12.5.2.2. Driver (struct usb_device_driver)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#bus-usb-bus-type">7.12.5.2.3. Bus (usb_bus_type)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#usb-interface-layer">7.12.5.3. USB Interface Layer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#device-struct-usb-interface">7.12.5.3.1. Device (struct usb_interface)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#driver-struct-usb-driver">7.12.5.3.2. Driver (struct usb_driver)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#usb-hub-driver">7.12.5.3.3. USB Hub Driver</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id1">7.12.5.3.4. Bus (usb_bus_type)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#usb-host-controller-layer">7.12.5.4. USB Host Controller Layer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-usb-host-controller">7.12.5.4.1. AIC USB Host Controller</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ehci">7.12.5.4.2. EHCI 内部结构</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ehci-driver">7.12.5.4.3. EHCI Driver</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="5_device_design_guide.html">7.12.6. USB Device 子系统代码架构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.12.7. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.12. </span>USB 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.12.5. </span>USB Host 子系统代码架构</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usb-host">
+<h1><span class="section-number">7.12.5. </span>USB Host 子系统代码架构<a class="headerlink" href="#usb-host" title="永久链接至标题">¶</a></h1>
+<p><img alt="image0" src="../../../_images/usb_flow_detail_host.png" /></p>
+<p>整个 USB 系统的通讯模型如上图所示，Host 框架见左侧彩图部分。</p>
+<div class="section" id="usb-core">
+<h2><span class="section-number">7.12.5.1. </span>USB Core<a class="headerlink" href="#usb-core" title="永久链接至标题">¶</a></h2>
+<div class="section" id="layer">
+<h3><span class="section-number">7.12.5.1.1. </span>Layer<a class="headerlink" href="#layer" title="永久链接至标题">¶</a></h3>
+<p><img alt="image1" src="../../../_images/usb_host_drv_dev.png" /></p>
+<p>由前几节可知USB将 <code class="docutils literal notranslate"><span class="pre">Device</span></code> 进一步细分成了3个层级： <code class="docutils literal notranslate"><span class="pre">Configuration</span></code>  配置、 <code class="docutils literal notranslate"><span class="pre">Interface</span></code> 接口、 <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code>  端点。</p>
+<p>USB Core 为其中两个层次提供了 <code class="docutils literal notranslate"><span class="pre">Device</span> <span class="pre">+</span> <span class="pre">Driver</span></code> 的设备驱动模型，这两个层次分别是 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span> <span class="pre">Layer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span> <span class="pre">Layer</span></code> 层，一个 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> 包含一个或多个 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code>。其中：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span> <span class="pre">Layer</span></code> 层。这一层的 <code class="docutils literal notranslate"><span class="pre">Device</span></code> 由 <code class="docutils literal notranslate"><span class="pre">Hub</span></code> 创建， <code class="docutils literal notranslate"><span class="pre">Hub</span></code> 本身也是一种 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> ；这一层的 <code class="docutils literal notranslate"><span class="pre">Driver</span></code> 完成的功能非常简单，基本就是帮 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> 创建其包含的所有子 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Device</span></code> ，大部分场景下都是使用 <code class="docutils literal notranslate"><span class="pre">usb_generic_driver</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span> <span class="pre">Layer</span></code> 层。这一层的 <code class="docutils literal notranslate"><span class="pre">Device</span></code> 由上一级  <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> 在驱动 probe() 时创建；而这一层的 <code class="docutils literal notranslate"><span class="pre">Driver</span></code> 就是普通的业务 Usb 驱动，即 Usb 协议中所说的 <code class="docutils literal notranslate"><span class="pre">Client</span> <span class="pre">Software</span></code>。</p></li>
+</ul>
+</div>
+<div class="section" id="urb-usb-request-block">
+<h3><span class="section-number">7.12.5.1.2. </span>URB (USB Request Block)<a class="headerlink" href="#urb-usb-request-block" title="永久链接至标题">¶</a></h3>
+<p><img alt="image2" src="../../../_images/usb_host_urb.png" /></p>
+<p>USB Core 除了提供上一节描述的设备驱动模型以外，另一个重要的作用就是要给 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> Driver 提供读写 USB 数据的 API，这一任务是围绕着 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Request</span> <span class="pre">Block</span></code> 来完成的。</p>
+<p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> Driver 适配成功以后，会从配置信息中获取到当前 Interface 包含了多少个 <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> ，以及每个 <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> 的地址、传输类型、最大包长等其他信息。 <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> 是 USB 总线传输中最小的 <code class="docutils literal notranslate"><span class="pre">寻址单位</span></code> ，Interface Driver 利用对几个 <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> 的读写来驱动具体的设备功能。</p>
+<p>对某个 <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> 发起一次读写操作，具体工作使用 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">urb</span></code> 数据结构来承担。</p>
+<p>以下是一个对 <code class="docutils literal notranslate"><span class="pre">Endpoint</span> <span class="pre">0</span></code> 使用 urb 发起读写的一个简单实例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static int usb_internal_control_msg(struct usb_device *usb_dev,
+                    unsigned int pipe,
+                    struct usb_ctrlrequest *cmd,
+                    void *data, int len, int timeout)
+{
+    struct urb *urb;
+    int retv;
+    int length;
+
+    /* (1) 分配一个 urb 内存空间 */
+    urb = usb_alloc_urb(0, GFP_NOIO);
+    if (!urb)
+        return -ENOMEM;
+
+    /* (2) 填充 urb 内容，最核心的有3方面：
+            1、总线地址：Device Num + Endpoint Num
+            2、数据：data + len
+            3、回调函数：usb_api_blocking_completion
+    */
+    usb_fill_control_urb(urb, usb_dev, pipe, (unsigned char *)cmd, data,
+                len, usb_api_blocking_completion, NULL);
+
+    /* (3) 发送 urb 请求，并且等待请求完成 */
+    retv = usb_start_wait_urb(urb, timeout, &amp;length);
+    if (retv &lt; 0)
+        return retv;
+    else
+        return length;
+}
+
+↓
+
+static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length)
+{
+    struct api_context ctx;
+    unsigned long expire;
+    int retval;
+
+    init_completion(&amp;ctx.done);
+    urb-&gt;context = &amp;ctx;
+    urb-&gt;actual_length = 0;
+    /* (3.1) 把 urb 请求挂载到 hcd 的队列当中 */
+    retval = usb_submit_urb(urb, GFP_NOIO);
+    if (unlikely(retval))
+        goto out;
+
+    expire = timeout ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
+    /* (3.2) 当 urb 执行完成后，首先会调用 urb 的回调函数，然后会发送 completion 信号解除这里的阻塞 */
+    if (!wait_for_completion_timeout(&amp;ctx.done, expire)) {
+        usb_kill_urb(urb);
+        retval = (ctx.status == -ENOENT ? -ETIMEDOUT : ctx.status);
+
+        dev_dbg(&amp;urb-&gt;dev-&gt;dev,
+            &quot;%s timed out on ep%d%s len=%u/%u\n&quot;,
+            current-&gt;comm,
+            usb_endpoint_num(&amp;urb-&gt;ep-&gt;desc),
+            usb_urb_dir_in(urb) ? &quot;in&quot; : &quot;out&quot;,
+            urb-&gt;actual_length,
+            urb-&gt;transfer_buffer_length);
+    } else
+        retval = ctx.status;
+out:
+    if (actual_length)
+        *actual_length = urb-&gt;actual_length;
+
+    usb_free_urb(urb);
+    return retval;
+}
+</pre></div>
+</div>
+<div class="section" id="normal-device-urb-enqueue">
+<h4><span class="section-number">7.12.5.1.2.1. </span>Normal Device urb_enqueue<a class="headerlink" href="#normal-device-urb-enqueue" title="永久链接至标题">¶</a></h4>
+<p>对普通的 Usb device 来说，urb 最后会提交到 Host Controller 的收发队列上面，由 HC 完成实际的 USB 传输：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_submit_urb() → usb_hcd_submit_urb():
+
+int usb_hcd_submit_urb (struct urb *urb, gfp_t mem_flags)
+{
+
+    /* (1) 如果是 roothub 走特殊的路径 */
+    if (is_root_hub(urb-&gt;dev)) {
+        status = rh_urb_enqueue(hcd, urb);
+    /* (2) 如果是普通 device 调用对应的 hcd 的 urb_enqueue() 函数 */
+    } else {
+        status = map_urb_for_dma(hcd, urb, mem_flags);
+        if (likely(status == 0)) {
+            status = hcd-&gt;driver-&gt;urb_enqueue(hcd, urb, mem_flags);
+            if (unlikely(status))
+                unmap_urb_for_dma(hcd, urb);
+        }
+    }
+
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="roothub-device-urb-enqueue">
+<h4><span class="section-number">7.12.5.1.2.2. </span>Roothub Device urb_enqueue<a class="headerlink" href="#roothub-device-urb-enqueue" title="永久链接至标题">¶</a></h4>
+<p>特别需要注意的是 roothub 它是一个虚拟的 usb device，实际上它并不在usb总线上而是在 host 内部，所以相应的 urb 需要特殊处理，而不能使用 hcd 把数据发送到 Usb 总线上去。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_submit_urb() → usb_hcd_submit_urb() → rh_urb_enqueue():
+
+static int rh_urb_enqueue (struct usb_hcd *hcd, struct urb *urb)
+{
+    /* (1) 对于 int 类型的数据，被挂载到 hcd-&gt;status_urb 指针上面
+            通常 roothub 驱动用这个 urb 来查询 roothub 的端口状态
+    */
+    if (usb_endpoint_xfer_int(&amp;urb-&gt;ep-&gt;desc))
+        return rh_queue_status (hcd, urb);
+
+    /* (2) 对于 control 类型的数据，是想读取 roothub ep0 上的配置信息
+            使用软件来模拟这类操作的响应
+    */
+    if (usb_endpoint_xfer_control(&amp;urb-&gt;ep-&gt;desc))
+        return rh_call_control (hcd, urb);
+    return -EINVAL;
+}
+
+|→
+
+static int rh_queue_status (struct usb_hcd *hcd, struct urb *urb)
+{
+
+    /* (1.1) 将 urb 挂载到对应的 ep 链表中 */
+    retval = usb_hcd_link_urb_to_ep(hcd, urb);
+    if (retval)
+        goto done;
+
+    /* (1.2) 将 urb 赋值给 hcd-&gt;status_urb
+            在 hcd 驱动中，会通过这些接口来通知 roothub 的端口状态变化
+    */
+    hcd-&gt;status_urb = urb;
+    urb-&gt;hcpriv = hcd;      /* indicate it&#39;s queued */
+    if (!hcd-&gt;uses_new_polling)
+        mod_timer(&amp;hcd-&gt;rh_timer, (jiffies/(HZ/4) + 1) * (HZ/4));
+
+}
+
+|→
+
+static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
+{
+    /* (2.1) 软件模拟对 roothub 配置读写的响应 */
+}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="usb-device-layer">
+<h2><span class="section-number">7.12.5.2. </span>USB Device Layer<a class="headerlink" href="#usb-device-layer" title="永久链接至标题">¶</a></h2>
+<div class="section" id="device-struct-usb-device">
+<h3><span class="section-number">7.12.5.2.1. </span>Device (struct usb_device)<a class="headerlink" href="#device-struct-usb-device" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> Device 对应的数据结构为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_device</span></code> ，会在两种情况下被创建：</p>
+<ul class="simple">
+<li><p>roothub device。在 HCD 驱动注册时创建：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/* (1) 首先创建和初始化 `usb_device` 结构： */
+usb_add_hcd() → usb_alloc_dev():
+struct usb_device *usb_alloc_dev(struct usb_device *parent,
+                struct usb_bus *bus, unsigned port1)
+{
+
+    /* (1.1) dev 总线初始化为 usb_bus_type */
+    dev-&gt;dev.bus = &amp;usb_bus_type;
+    /* (1.2) dev 类型初始化为 usb_device_type，标明自己是一个 usb device */
+    dev-&gt;dev.type = &amp;usb_device_type;
+    dev-&gt;dev.groups = usb_device_groups;
+
+}
+
+/* (2) 然后注册  `usb_device` 结构： */
+usb_add_hcd() → register_root_hub() → usb_new_device() → device_add()
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>普通 usb device。在 Hub 检测到端口有设备 attach 时创建：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/* (1) 首先创建和初始化 `usb_device` 结构： */
+hub_event() → port_event() → hub_port_connect_change() → hub_port_connect() → usb_alloc_dev()
+
+/* (2) 然后注册  `usb_device` 结构： */
+hub_event() → port_event() → hub_port_connect_change() → hub_port_connect() → usb_new_device() → device_add()
+</pre></div>
+</div>
+</div>
+<div class="section" id="driver-struct-usb-device-driver">
+<h3><span class="section-number">7.12.5.2.2. </span>Driver (struct usb_device_driver)<a class="headerlink" href="#driver-struct-usb-device-driver" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> Driver 对应的数据结构为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_device_driver</span></code>，使用 <code class="docutils literal notranslate"><span class="pre">usb_register_device_driver()</span></code> 函数进行注册：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int usb_register_device_driver(struct usb_device_driver *new_udriver,
+        struct module *owner)
+{
+
+    /* (1) 设置for_devices标志为1，表面这个驱动时给 usb device 使用的 */
+    new_udriver-&gt;drvwrap.for_devices = 1;
+    new_udriver-&gt;drvwrap.driver.name = new_udriver-&gt;name;
+    new_udriver-&gt;drvwrap.driver.bus = &amp;usb_bus_type;
+    new_udriver-&gt;drvwrap.driver.probe = usb_probe_device;
+    new_udriver-&gt;drvwrap.driver.remove = usb_unbind_device;
+    new_udriver-&gt;drvwrap.driver.owner = owner;
+    new_udriver-&gt;drvwrap.driver.dev_groups = new_udriver-&gt;dev_groups;
+
+    retval = driver_register(&amp;new_udriver-&gt;drvwrap.driver);
+
+}
+</pre></div>
+</div>
+<p>注册的 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> Driver 驱动非常少，一般情况下所有的 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> Device 都会适配到 <code class="docutils literal notranslate"><span class="pre">usb_generic_driver</span></code>。因为这一层次驱动的目的很单纯，就是给 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> 下所有的 <code class="docutils literal notranslate"><span class="pre">Interface</span></code> 创建对应的 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> Device。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_init() → usb_register_device_driver() :
+
+static int __init usb_init(void)
+{
+
+    retval = usb_register_device_driver(&amp;usb_generic_driver, THIS_MODULE);
+
+}
+
+struct usb_device_driver usb_generic_driver = {
+    .name = &quot;usb&quot;,
+    .match = usb_generic_driver_match,
+    .probe = usb_generic_driver_probe,
+    .disconnect = usb_generic_driver_disconnect,
+#ifdef      CONFIG_PM
+    .suspend = usb_generic_driver_suspend,
+    .resume = usb_generic_driver_resume,
+#endif
+    .supports_autosuspend = 1,
+};
+</pre></div>
+</div>
+<p>驱动 probe() 过程：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_probe_device() → usb_generic_driver_probe() → usb_set_configuration():
+
+int usb_set_configuration(struct usb_device *dev, int configuration)
+{
+
+    /* (1) 创建和初始化 `struct usb_interface` */
+    for (i = 0; i &lt; nintf; ++i) {
+        /* (1.1) dev 总线初始化为 usb_bus_type */
+        intf-&gt;dev.bus = &amp;usb_bus_type;
+        /* (1.2) dev 类型初始化为 usb_if_device_type，标明自己是一个 usb interface */
+        intf-&gt;dev.type = &amp;usb_if_device_type;
+        intf-&gt;dev.groups = usb_interface_groups;
+    }
+
+    /* (2) 注册 `struct usb_interface` */
+    for (i = 0; i &lt; nintf; ++i) {
+        ret = device_add(&amp;intf-&gt;dev);
+    }
+
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="bus-usb-bus-type">
+<h3><span class="section-number">7.12.5.2.3. </span>Bus (usb_bus_type)<a class="headerlink" href="#bus-usb-bus-type" title="永久链接至标题">¶</a></h3>
+<p>可以看到 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_device</span></code> 和 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_interface</span></code> 使用的总线都是 <code class="docutils literal notranslate"><span class="pre">usb_bus_type</span></code>。他们是通过字段 <code class="docutils literal notranslate"><span class="pre">dev.type</span></code> 来区分的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/* (1) `struct usb_device` 的 `dev.type` 值为 `usb_device_type`： */
+usb_add_hcd() → usb_alloc_dev():
+struct usb_device *usb_alloc_dev(struct usb_device *parent,
+                struct usb_bus *bus, unsigned port1)
+{
+    dev-&gt;dev.type = &amp;usb_device_type;
+}
+
+/* (2) `struct usb_interface` 的 `dev.type` 值为 `usb_if_device_type` */
+usb_probe_device() → usb_generic_driver_probe() → usb_set_configuration():
+int usb_set_configuration(struct usb_device *dev, int configuration)
+{
+    for (i = 0; i &lt; nintf; ++i) {
+        intf-&gt;dev.type = &amp;usb_if_device_type;
+    }
+}
+
+static inline int is_usb_device(const struct device *dev)
+{
+    /* (3) 判断当前 Device 是否为 Usb Device */
+    return dev-&gt;type == &amp;usb_device_type;
+}
+
+static inline int is_usb_interface(const struct device *dev)
+{
+    /* (4) 判断当前 Device 是否为 Usb Interface */
+    return dev-&gt;type == &amp;usb_if_device_type;
+}
+</pre></div>
+</div>
+<p>另外 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_device_driver</span></code> 和 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_driver</span></code> 使用的总线都是 <code class="docutils literal notranslate"><span class="pre">usb_bus_type</span></code>。他们是通过字段 <code class="docutils literal notranslate"><span class="pre">drvwrap.for_devices</span></code> 来区分的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/* (1) `struct usb_device_driver` 的 `drvwrap.for_devices` 值为 1： */
+int usb_register_device_driver(struct usb_device_driver *new_udriver,
+        struct module *owner)
+{
+    new_udriver-&gt;drvwrap.for_devices = 1;
+}
+
+/* (2) `struct usb_driver` 的 `drvwrap.for_devices` 值为 0： */
+int usb_register_driver(struct usb_driver *new_driver, struct module *owner,
+            const char *mod_name)
+{
+    new_driver-&gt;drvwrap.for_devices = 0;
+}
+
+/* (3) 判断当前 Driver 是适配 Usb Device 还是 Usb Interface */
+static inline int is_usb_device_driver(struct device_driver *drv)
+{
+    return container_of(drv, struct usbdrv_wrap, driver)-&gt;
+            for_devices;
+}
+</pre></div>
+</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">usb_bus_type</span></code> 的 <code class="docutils literal notranslate"><span class="pre">match()</span></code> 函数中利用 <code class="docutils literal notranslate"><span class="pre">dev.type</span></code> 进行判别分开处理：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>struct bus_type usb_bus_type = {
+    .name =         &quot;usb&quot;,
+    .match =        usb_device_match,
+    .uevent =       usb_uevent,
+    .need_parent_lock =     true,
+};
+
+static int usb_device_match(struct device *dev, struct device_driver *drv)
+{
+    /* devices and interfaces are handled separately */
+    /* (1) Device 是 `Usb Device` 的处理 */
+    if (is_usb_device(dev)) {
+        struct usb_device *udev;
+        struct usb_device_driver *udrv;
+
+        /* interface drivers never match devices */
+        /* (1.1) 只查找 `Usb Device` 的 Driver */
+        if (!is_usb_device_driver(drv))
+            return 0;
+
+        udev = to_usb_device(dev);
+        udrv = to_usb_device_driver(drv);
+
+        /* If the device driver under consideration does not have a
+        * id_table or a match function, then let the driver&#39;s probe
+        * function decide.
+        */
+        if (!udrv-&gt;id_table &amp;&amp; !udrv-&gt;match)
+            return 1;
+
+        return usb_driver_applicable(udev, udrv);
+
+    /* (2) Device 是 `Usb Interface` 的处理 */
+    } else if (is_usb_interface(dev)) {
+        struct usb_interface *intf;
+        struct usb_driver *usb_drv;
+        const struct usb_device_id *id;
+
+        /* device drivers never match interfaces */
+        /* (2.1) 只查找 `Usb Interface` 的 Driver */
+        if (is_usb_device_driver(drv))
+            return 0;
+
+        intf = to_usb_interface(dev);
+        usb_drv = to_usb_driver(drv);
+
+        id = usb_match_id(intf, usb_drv-&gt;id_table);
+        if (id)
+            return 1;
+
+        id = usb_match_dynamic_id(intf, usb_drv);
+        if (id)
+            return 1;
+    }
+
+    return 0;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="usb-interface-layer">
+<h2><span class="section-number">7.12.5.3. </span>USB Interface Layer<a class="headerlink" href="#usb-interface-layer" title="永久链接至标题">¶</a></h2>
+<div class="section" id="device-struct-usb-interface">
+<h3><span class="section-number">7.12.5.3.1. </span>Device (struct usb_interface)<a class="headerlink" href="#device-struct-usb-interface" title="永久链接至标题">¶</a></h3>
+<p>如上一节描述， <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> Device 对应的数据结构为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_interface</span></code> ，会在 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Device</span></code> Driver 驱动 probe() 时 被创建：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_probe_device() → usb_generic_driver_probe() → usb_set_configuration():
+
+int usb_set_configuration(struct usb_device *dev, int configuration)
+{
+
+    /* (1) 创建和初始化 `struct usb_interface` */
+    for (i = 0; i &lt; nintf; ++i) {
+        /* (1.1) dev 总线初始化为 usb_bus_type */
+        intf-&gt;dev.bus = &amp;usb_bus_type;
+        /* (1.2) dev 类型初始化为 usb_if_device_type，标明自己是一个 usb interface */
+        intf-&gt;dev.type = &amp;usb_if_device_type;
+        intf-&gt;dev.groups = usb_interface_groups;
+    }
+
+    /* (2) 注册 `struct usb_interface` */
+    for (i = 0; i &lt; nintf; ++i) {
+        ret = device_add(&amp;intf-&gt;dev);
+    }
+
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="driver-struct-usb-driver">
+<h3><span class="section-number">7.12.5.3.2. </span>Driver (struct usb_driver)<a class="headerlink" href="#driver-struct-usb-driver" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> 这一层次的驱动就非常的多了，这一层主要是在 USB 传输层之上，针对 USB Device 的某个功能 <code class="docutils literal notranslate"><span class="pre">Function</span></code> 开发对应的 USB 功能业务驱动，即常说的 <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Client</span> <span class="pre">Software</span></code>。在 USB 定义中，一个 <code class="docutils literal notranslate"><span class="pre">Interface</span></code> 就是一个 <code class="docutils literal notranslate"><span class="pre">Function</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> Driver 对应的数据结构为 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">usb_driver</span></code> ，使用 <code class="docutils literal notranslate"><span class="pre">usb_register_driver()</span></code> 函数进行注册：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int usb_register_driver(struct usb_driver *new_driver, struct module *owner,
+            const char *mod_name)
+{
+
+    /* (1) 设置for_devices标志为0，表面这个驱动时给 usb interface 使用的 */
+    new_driver-&gt;drvwrap.for_devices = 0;
+    new_driver-&gt;drvwrap.driver.name = new_driver-&gt;name;
+    new_driver-&gt;drvwrap.driver.bus = &amp;usb_bus_type;
+    new_driver-&gt;drvwrap.driver.probe = usb_probe_interface;
+    new_driver-&gt;drvwrap.driver.remove = usb_unbind_interface;
+    new_driver-&gt;drvwrap.driver.owner = owner;
+    new_driver-&gt;drvwrap.driver.mod_name = mod_name;
+    new_driver-&gt;drvwrap.driver.dev_groups = new_driver-&gt;dev_groups;
+    spin_lock_init(&amp;new_driver-&gt;dynids.lock);
+    INIT_LIST_HEAD(&amp;new_driver-&gt;dynids.list);
+
+    retval = driver_register(&amp;new_driver-&gt;drvwrap.driver);
+
+}
+</pre></div>
+</div>
+<p>一个最简单的 <code class="docutils literal notranslate"><span class="pre">Usb</span> <span class="pre">Interface</span> <span class="pre">Driver</span></code> 是 <code class="docutils literal notranslate"><span class="pre">usb_mouse_driver</span></code> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">usb_device_id</span> <span class="n">usb_mouse_id_table</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span> <span class="n">USB_INTERFACE_INFO</span><span class="p">(</span><span class="n">USB_INTERFACE_CLASS_HID</span><span class="p">,</span> <span class="n">USB_INTERFACE_SUBCLASS_BOOT</span><span class="p">,</span>
+        <span class="n">USB_INTERFACE_PROTOCOL_MOUSE</span><span class="p">)</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="p">}</span>     <span class="o">/*</span> <span class="n">Terminating</span> <span class="n">entry</span> <span class="o">*/</span>
+<span class="p">};</span>
+<span class="n">MODULE_DEVICE_TABLE</span> <span class="p">(</span><span class="n">usb</span><span class="p">,</span> <span class="n">usb_mouse_id_table</span><span class="p">);</span>
+
+<span class="n">static</span> <span class="n">struct</span> <span class="n">usb_driver</span> <span class="n">usb_mouse_driver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">name</span>           <span class="o">=</span> <span class="s2">&quot;usbmouse&quot;</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">probe</span>          <span class="o">=</span> <span class="n">usb_mouse_probe</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">disconnect</span>     <span class="o">=</span> <span class="n">usb_mouse_disconnect</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">id_table</span>       <span class="o">=</span> <span class="n">usb_mouse_id_table</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">module_usb_driver</span><span class="p">(</span><span class="n">usb_mouse_driver</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>首先根据得到的 endpoint 准备好 urb，创建好 input 设备：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static int usb_mouse_probe(struct usb_interface *intf, const struct usb_device_id *id)
+{
+    struct usb_device *dev = interface_to_usbdev(intf);
+    struct usb_host_interface *interface;
+    struct usb_endpoint_descriptor *endpoint;
+    struct usb_mouse *mouse;
+    struct input_dev *input_dev;
+    int pipe, maxp;
+    int error = -ENOMEM;
+
+    interface = intf-&gt;cur_altsetting;
+
+    if (interface-&gt;desc.bNumEndpoints != 1)
+        return -ENODEV;
+
+    /* (1) 得到当前 interface 中的第一个 endpoint，mouse设备只需一个 endpoint */
+    endpoint = &amp;interface-&gt;endpoint[0].desc;
+    if (!usb_endpoint_is_int_in(endpoint))
+        return -ENODEV;
+
+    pipe = usb_rcvintpipe(dev, endpoint-&gt;bEndpointAddress);
+    maxp = usb_maxpacket(dev, pipe, usb_pipeout(pipe));
+
+    mouse = kzalloc(sizeof(struct usb_mouse), GFP_KERNEL);
+    /* (2.1) 分配 input device */
+    input_dev = input_allocate_device();
+    if (!mouse || !input_dev)
+        goto fail1;
+
+    mouse-&gt;data = usb_alloc_coherent(dev, 8, GFP_ATOMIC, &amp;mouse-&gt;data_dma);
+    if (!mouse-&gt;data)
+        goto fail1;
+
+    /* (3.1) 分配 urb */
+    mouse-&gt;irq = usb_alloc_urb(0, GFP_KERNEL);
+    if (!mouse-&gt;irq)
+        goto fail2;
+
+    mouse-&gt;usbdev = dev;
+    mouse-&gt;dev = input_dev;
+
+    if (dev-&gt;manufacturer)
+        strlcpy(mouse-&gt;name, dev-&gt;manufacturer, sizeof(mouse-&gt;name));
+
+    if (dev-&gt;product) {
+        if (dev-&gt;manufacturer)
+            strlcat(mouse-&gt;name, &quot; &quot;, sizeof(mouse-&gt;name));
+        strlcat(mouse-&gt;name, dev-&gt;product, sizeof(mouse-&gt;name));
+    }
+
+    if (!strlen(mouse-&gt;name))
+        snprintf(mouse-&gt;name, sizeof(mouse-&gt;name),
+            &quot;USB HIDBP Mouse %04x:%04x&quot;,
+            le16_to_cpu(dev-&gt;descriptor.idVendor),
+            le16_to_cpu(dev-&gt;descriptor.idProduct));
+
+    usb_make_path(dev, mouse-&gt;phys, sizeof(mouse-&gt;phys));
+    strlcat(mouse-&gt;phys, &quot;/input0&quot;, sizeof(mouse-&gt;phys));
+
+    /* (2.2) 初始化 input device */
+    input_dev-&gt;name = mouse-&gt;name;
+    input_dev-&gt;phys = mouse-&gt;phys;
+    usb_to_input_id(dev, &amp;input_dev-&gt;id);
+    input_dev-&gt;dev.parent = &amp;intf-&gt;dev;
+
+    input_dev-&gt;evbit[0] = BIT_MASK(EV_KEY) | BIT_MASK(EV_REL);
+    input_dev-&gt;keybit[BIT_WORD(BTN_MOUSE)] = BIT_MASK(BTN_LEFT) |
+        BIT_MASK(BTN_RIGHT) | BIT_MASK(BTN_MIDDLE);
+    input_dev-&gt;relbit[0] = BIT_MASK(REL_X) | BIT_MASK(REL_Y);
+    input_dev-&gt;keybit[BIT_WORD(BTN_MOUSE)] |= BIT_MASK(BTN_SIDE) |
+        BIT_MASK(BTN_EXTRA);
+    input_dev-&gt;relbit[0] |= BIT_MASK(REL_WHEEL);
+
+    input_set_drvdata(input_dev, mouse);
+
+    input_dev-&gt;open = usb_mouse_open;
+    input_dev-&gt;close = usb_mouse_close;
+
+    /* (3.2) 初始化 urb */
+    usb_fill_int_urb(mouse-&gt;irq, dev, pipe, mouse-&gt;data,
+            (maxp &gt; 8 ? 8 : maxp),
+            usb_mouse_irq, mouse, endpoint-&gt;bInterval);
+    mouse-&gt;irq-&gt;transfer_dma = mouse-&gt;data_dma;
+    mouse-&gt;irq-&gt;transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
+
+    /* (2.3) 注册 input device */
+    error = input_register_device(mouse-&gt;dev);
+    if (error)
+        goto fail3;
+
+    usb_set_intfdata(intf, mouse);
+    return 0;
+
+fail3:
+    usb_free_urb(mouse-&gt;irq);
+fail2:
+    usb_free_coherent(dev, 8, mouse-&gt;data, mouse-&gt;data_dma);
+fail1:
+    input_free_device(input_dev);
+    kfree(mouse);
+    return error;
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在 input device 被 open 时提交 urb 启动传输：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static int usb_mouse_open(struct input_dev *dev)
+{
+    struct usb_mouse *mouse = input_get_drvdata(dev);
+
+    mouse-&gt;irq-&gt;dev = mouse-&gt;usbdev;
+    /* (1) 提交初始化好的 usb，开始查询数据 */
+    if (usb_submit_urb(mouse-&gt;irq, GFP_KERNEL))
+        return -EIO;
+
+    return 0;
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在传输完 urb 的回调函数中，根据读回的数据上报 input 事件，并且重新提交 urb 继续查询：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static void usb_mouse_irq(struct urb *urb)
+{
+    struct usb_mouse *mouse = urb-&gt;context;
+    signed char *data = mouse-&gt;data;
+    struct input_dev *dev = mouse-&gt;dev;
+    int status;
+
+    switch (urb-&gt;status) {
+    case 0:                 /* success */
+        break;
+    case -ECONNRESET:       /* unlink */
+    case -ENOENT:
+    case -ESHUTDOWN:
+        return;
+    /* -EPIPE:  should clear the halt */
+    default:                /* error */
+        goto resubmit;
+    }
+
+    /* (1) 根据 urb 读回的数据，上报 input event */
+    input_report_key(dev, BTN_LEFT,   data[0] &amp; 0x01);
+    input_report_key(dev, BTN_RIGHT,  data[0] &amp; 0x02);
+    input_report_key(dev, BTN_MIDDLE, data[0] &amp; 0x04);
+    input_report_key(dev, BTN_SIDE,   data[0] &amp; 0x08);
+    input_report_key(dev, BTN_EXTRA,  data[0] &amp; 0x10);
+
+    input_report_rel(dev, REL_X,     data[1]);
+    input_report_rel(dev, REL_Y,     data[2]);
+    input_report_rel(dev, REL_WHEEL, data[3]);
+
+    input_sync(dev);
+resubmit:
+    /* (2) 重新提交 urb 继续查询 */
+    status = usb_submit_urb (urb, GFP_ATOMIC);
+    if (status)
+        dev_err(&amp;mouse-&gt;usbdev-&gt;dev,
+            &quot;can&#39;t resubmit intr, %s-%s/input0, status %d\n&quot;,
+            mouse-&gt;usbdev-&gt;bus-&gt;bus_name,
+            mouse-&gt;usbdev-&gt;devpath, status);
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="usb-hub-driver">
+<h3><span class="section-number">7.12.5.3.3. </span>USB Hub Driver<a class="headerlink" href="#usb-hub-driver" title="永久链接至标题">¶</a></h3>
+<p><img alt="image3" src="../../../_images/usb_hub.png" /></p>
+<p>普通的 Usb Device 通过内部的 Interface 提供各种业务功能。而 Hub 这类特殊的 Usb Device 功能就一种，那就是监控端口的状态变化：</p>
+<ul class="simple">
+<li><p>在端口上有设备 attach 时，创建新的 usb device，给其适配驱动。如果是 hub device，子 usb 驱动会进一步扫描端口。</p></li>
+<li><p>在端口上有设备 deattach 时，移除掉对应的 usb device。如果是 hub device 进一步移除其所有的子 usb device。</p></li>
+</ul>
+<p>Hub 也是标准的 Usb Device，它也是标准的流程被上一级设备发现后 <code class="docutils literal notranslate"><span class="pre">创建</span> <span class="pre">Usb</span> <span class="pre">Device</span></code> → <code class="docutils literal notranslate"><span class="pre">创建</span> <span class="pre">Usb</span> <span class="pre">Interface</span></code> ，然后被 <code class="docutils literal notranslate"><span class="pre">Usb</span> <span class="pre">Hub</span> <span class="pre">Interface</span></code> Driver 给适配到。系统中只有一个 Hub 驱动：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">usb_device_id</span> <span class="n">hub_id_table</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span> <span class="o">.</span><span class="n">match_flags</span> <span class="o">=</span> <span class="n">USB_DEVICE_ID_MATCH_VENDOR</span>
+                <span class="o">|</span> <span class="n">USB_DEVICE_ID_MATCH_PRODUCT</span>
+                <span class="o">|</span> <span class="n">USB_DEVICE_ID_MATCH_INT_CLASS</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">idVendor</span> <span class="o">=</span> <span class="n">USB_VENDOR_SMSC</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">idProduct</span> <span class="o">=</span> <span class="n">USB_PRODUCT_USB5534B</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bInterfaceClass</span> <span class="o">=</span> <span class="n">USB_CLASS_HUB</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">driver_info</span> <span class="o">=</span> <span class="n">HUB_QUIRK_DISABLE_AUTOSUSPEND</span><span class="p">},</span>
+    <span class="p">{</span> <span class="o">.</span><span class="n">match_flags</span> <span class="o">=</span> <span class="n">USB_DEVICE_ID_MATCH_VENDOR</span>
+            <span class="o">|</span> <span class="n">USB_DEVICE_ID_MATCH_INT_CLASS</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">idVendor</span> <span class="o">=</span> <span class="n">USB_VENDOR_GENESYS_LOGIC</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bInterfaceClass</span> <span class="o">=</span> <span class="n">USB_CLASS_HUB</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">driver_info</span> <span class="o">=</span> <span class="n">HUB_QUIRK_CHECK_PORT_AUTOSUSPEND</span><span class="p">},</span>
+    <span class="p">{</span> <span class="o">.</span><span class="n">match_flags</span> <span class="o">=</span> <span class="n">USB_DEVICE_ID_MATCH_DEV_CLASS</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bDeviceClass</span> <span class="o">=</span> <span class="n">USB_CLASS_HUB</span><span class="p">},</span>
+    <span class="p">{</span> <span class="o">.</span><span class="n">match_flags</span> <span class="o">=</span> <span class="n">USB_DEVICE_ID_MATCH_INT_CLASS</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bInterfaceClass</span> <span class="o">=</span> <span class="n">USB_CLASS_HUB</span><span class="p">},</span>
+    <span class="p">{</span> <span class="p">}</span>                                             <span class="o">/*</span> <span class="n">Terminating</span> <span class="n">entry</span> <span class="o">*/</span>
+<span class="p">};</span>
+
+<span class="n">MODULE_DEVICE_TABLE</span><span class="p">(</span><span class="n">usb</span><span class="p">,</span> <span class="n">hub_id_table</span><span class="p">);</span>
+
+<span class="n">static</span> <span class="n">struct</span> <span class="n">usb_driver</span> <span class="n">hub_driver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">name</span> <span class="o">=</span>         <span class="s2">&quot;hub&quot;</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">probe</span> <span class="o">=</span>        <span class="n">hub_probe</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">disconnect</span> <span class="o">=</span>   <span class="n">hub_disconnect</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">suspend</span> <span class="o">=</span>      <span class="n">hub_suspend</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">resume</span> <span class="o">=</span>       <span class="n">hub_resume</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">reset_resume</span> <span class="o">=</span> <span class="n">hub_reset_resume</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">pre_reset</span> <span class="o">=</span>    <span class="n">hub_pre_reset</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">post_reset</span> <span class="o">=</span>   <span class="n">hub_post_reset</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">unlocked_ioctl</span> <span class="o">=</span> <span class="n">hub_ioctl</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">id_table</span> <span class="o">=</span>     <span class="n">hub_id_table</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">supports_autosuspend</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>hub_driver 驱动启动以后，只做一件事情发送一个查询端口状态的 <code class="docutils literal notranslate"><span class="pre">urb</span></code> ：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hub_probe() → hub_configure():
+
+static int hub_configure(struct usb_hub *hub,
+    struct usb_endpoint_descriptor *endpoint)
+{
+
+    /* (1) 分配 urb */
+    hub-&gt;urb = usb_alloc_urb(0, GFP_KERNEL);
+    if (!hub-&gt;urb) {
+        ret = -ENOMEM;
+        goto fail;
+    }
+
+    /* (2) 初始化 urb，作用就是通过 ep0 查询 hub 的端口状态
+            urb 的回调函数是 hub_irq()
+    */
+    usb_fill_int_urb(hub-&gt;urb, hdev, pipe, *hub-&gt;buffer, maxp, hub_irq,
+        hub, endpoint-&gt;bInterval);
+
+    /* (3) 发送 urb */
+    hub_activate(hub, HUB_INIT);
+
+}
+
+↓
+
+static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
+{
+    /*  (3.1) 提交 urb */
+    status = usb_submit_urb(hub-&gt;urb, GFP_NOIO);
+}
+</pre></div>
+</div>
+<div class="section" id="normal-hub-port-op">
+<h4><span class="section-number">7.12.5.3.3.1. </span>Normal Hub Port op<a class="headerlink" href="#normal-hub-port-op" title="永久链接至标题">¶</a></h4>
+<p>在普通的 hub 中，端口操作是通过标准的 urb 发起 usb ep0 读写。分为两类：</p>
+<ul class="simple">
+<li><p>通过轮询读取 <cite>Hub Class-specific Requests</cite> 配置来查询端口的状态：</p></li>
+</ul>
+<p><img alt="image4" src="../../../_images/usb_hub_get_port.png" /></p>
+<ul class="simple">
+<li><p>设置和使能端口也是通过 <cite>Hub Class-specific Requests</cite> 中相应的命令实现的：</p></li>
+</ul>
+<p><img alt="image5" src="../../../_images/usb_hub_set_port.png" /></p>
+</div>
+<div class="section" id="roothub-port-op">
+<h4><span class="section-number">7.12.5.3.3.2. </span>RootHub Port op<a class="headerlink" href="#roothub-port-op" title="永久链接至标题">¶</a></h4>
+<p>而对于 roothub 来说，对端口的操作的 urb 都需要特殊处理 (以 EHCI 的驱动为例)：</p>
+<ul class="simple">
+<li><p>端口状态的变化可以通过 HCD 触发中断再上报：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ehci_irq() → usb_hcd_poll_rh_status() :
+
+void usb_hcd_poll_rh_status(struct usb_hcd *hcd)
+{
+
+    /* (1) 获取端口状态的变化 */
+    length = hcd-&gt;driver-&gt;hub_status_data(hcd, buffer);
+    if (length &gt; 0) {
+
+        /* try to complete the status urb */
+        spin_lock_irqsave(&amp;hcd_root_hub_lock, flags);
+
+        /* (2) 通过回复 hcd-&gt;status_urb 来进行上报 */
+        urb = hcd-&gt;status_urb;
+        if (urb) {
+            clear_bit(HCD_FLAG_POLL_PENDING, &amp;hcd-&gt;flags);
+            hcd-&gt;status_urb = NULL;
+            urb-&gt;actual_length = length;
+            memcpy(urb-&gt;transfer_buffer, buffer, length);
+
+            usb_hcd_unlink_urb_from_ep(hcd, urb);
+            usb_hcd_giveback_urb(hcd, urb, 0);
+        } else {
+            length = 0;
+            set_bit(HCD_FLAG_POLL_PENDING, &amp;hcd-&gt;flags);
+        }
+        spin_unlock_irqrestore(&amp;hcd_root_hub_lock, flags);
+    }
+
+}
+
+↓
+
+hcd-&gt;driver-&gt;hub_status_data() → ehci_hub_status_data():
+
+static int
+ehci_hub_status_data (struct usb_hcd *hcd, char *buf)
+{
+    /* (1.1) 通过 HCD 驱动，获取 roothub 端口的状态 */
+}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>设置和使能端口需要嫁接到 HCD 驱动相关函数上实现：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>usb_hcd_submit_urb() → rh_urb_enqueue() → rh_call_control() → hcd-&gt;driver-&gt;hub_control() → ehci_hub_control():
+
+int ehci_hub_control(
+    struct usb_hcd  *hcd,
+    u16             typeReq,
+    u16             wValue,
+    u16             wIndex,
+    char            *buf,
+    u16             wLength
+) {
+    /* (1) 通过 HCD 驱动，设置 roothub 的端口 */
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="device-attach">
+<h4><span class="section-number">7.12.5.3.3.3. </span>Device Attach<a class="headerlink" href="#device-attach" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hub_event() → port_event() → hub_port_connect_change() → hub_port_connect():
+
+static void hub_port_connect(struct usb_hub *hub, int port1, u16 portstatus,
+        u16 portchange)
+{
+
+    for (i = 0; i &lt; PORT_INIT_TRIES; i++) {
+
+        /* (1) 给端口上新 Device 分配 `struct usb_device` 数据结构 */
+        udev = usb_alloc_dev(hdev, hdev-&gt;bus, port1);
+        if (!udev) {
+            dev_err(&amp;port_dev-&gt;dev,
+                    &quot;couldn&#39;t allocate usb_device\n&quot;);
+            goto done;
+        }
+
+        /* (2) 给新的 Device 分配一个新的 Address */
+        choose_devnum(udev);
+        if (udev-&gt;devnum &lt;= 0) {
+            status = -ENOTCONN;     /* Don&#39;t retry */
+            goto loop;
+        }
+
+        /* reset (non-USB 3.0 devices) and get descriptor */
+        usb_lock_port(port_dev);
+        /* (3) 使能端口，并且调用 hub_set_address() 给 Device 配置上新分配的 Address */
+        status = hub_port_init(hub, udev, port1, i);
+        usb_unlock_port(port_dev);
+
+        /* (4) 注册 `struct usb_device` */
+            status = usb_new_device(udev);
+
+    }
+
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="device-deattach">
+<h4><span class="section-number">7.12.5.3.3.4. </span>Device Deattach<a class="headerlink" href="#device-deattach" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hub_event() → port_event() → hub_port_connect_change() → hub_port_connect():
+
+static void hub_port_connect(struct usb_hub *hub, int port1, u16 portstatus,
+        u16 portchange)
+{
+
+    /* (1) 移除端口上的 `struct usb_device` */
+    if (udev) {
+        if (hcd-&gt;usb_phy &amp;&amp; !hdev-&gt;parent)
+            usb_phy_notify_disconnect(hcd-&gt;usb_phy, udev-&gt;speed);
+        usb_disconnect(&amp;port_dev-&gt;child);
+    }
+
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3><span class="section-number">7.12.5.3.4. </span>Bus (usb_bus_type)<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">Interface</span></code> 这一层次总线也是 <code class="docutils literal notranslate"><span class="pre">usb_bus_type</span></code> ，上一节已经分析，这里就不重复解析了。</p>
+</div>
+</div>
+<div class="section" id="usb-host-controller-layer">
+<h2><span class="section-number">7.12.5.4. </span>USB Host Controller Layer<a class="headerlink" href="#usb-host-controller-layer" title="永久链接至标题">¶</a></h2>
+<p>Usb Host Controller 提供了 endpoint 层级的数据收发，主要分为以下种类：</p>
+<ul class="simple">
+<li><p>Usb1.0 有两种控制器标准： <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 康柏的开放主机控制器接口， <code class="docutils literal notranslate"><span class="pre">UHCI</span></code> Intel 的通用主机控制器接口。它们的主要区别是 UHCI 更加依赖软件驱动，因此对 CPU 要求更高，但是自身的硬件会更廉价。</p></li>
+<li><p>Usb2.0 只有一种控制器标准： <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 。因为 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 只支持高速传输，所以EHCI控制器包括四个虚拟的全速或者慢速控制器。 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 主要用于 USB 2.0，老的 USB 1.1 用 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 和 <code class="docutils literal notranslate"><span class="pre">UHCI</span></code> 。 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 为了兼容 USB 1.1，将老的 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 和 <code class="docutils literal notranslate"><span class="pre">UHCI</span></code> 合并到 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 规范里。</p></li>
+<li><p>USB 3.0 控制器标准： <code class="docutils literal notranslate"><span class="pre">XHCI</span></code> 。 <code class="docutils literal notranslate"><span class="pre">XHCI</span></code> 是 Intel 最新开发的主机控制器接口，广泛用户 Intel 六代 Skylake 处理器对应的 100 系列主板上，支持 USB3.0 接口，往下也兼容 USB2.0 。 XHCI 英文全称 <code class="docutils literal notranslate"><span class="pre">eXtensible</span> <span class="pre">Host</span> <span class="pre">Controller</span> <span class="pre">Interface</span></code> ，是一种可扩展的主机控制器接口，是 Intel 开发的 USB 主机控制器。Intel 系列芯片的 USB 协议采用的就是 <code class="docutils literal notranslate"><span class="pre">XHCI</span></code> 主控，主要面向 USB 3.0 标准的，同时也兼容 2.0 以下的设备。</p></li>
+</ul>
+<div class="section" id="aic-usb-host-controller">
+<h3><span class="section-number">7.12.5.4.1. </span>AIC USB Host Controller<a class="headerlink" href="#aic-usb-host-controller" title="永久链接至标题">¶</a></h3>
+<p>ArtinChip 提供了兼容标准 EHCI 的 USB Host Controller。</p>
+<p><code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 只支持 USB 2.0 高速传输，为了向下兼容 USB 1.1，它直接在内部集成最多4个全速或者慢速控制器 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code>。在 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 协议内称这种伴生的 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 控制器为 <code class="docutils literal notranslate"><span class="pre">companion</span> <span class="pre">host</span> <span class="pre">controllers</span></code>。</p>
+<p><img alt="image6" src="../../../_images/usb_ehci_ohci.png" /></p>
+<p>由 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 驱动根据端口速率情况来决定由谁来处理：</p>
+<ul class="simple">
+<li><p>每个端口有一个 <code class="docutils literal notranslate"><span class="pre">Owner</span></code> 属性，用来决定是 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 管理还是 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 管理。就是一个 <code class="docutils literal notranslate"><span class="pre">Switch</span></code> 开关，决定 USB 数据切到哪边处理。</p></li>
+<li><p>初始状态时端口默认属于 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 管理。所以对于硬件上从 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 升级到 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> ，而软件上只有 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 驱动而没有 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 驱动的系统来说是透明的，它继续把 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 当成 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 硬件来使用就行了，保持完美的向前兼容。</p></li>
+<li><p>如果系统软件上启用了 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 驱动，它首先会把所有端口的 <code class="docutils literal notranslate"><span class="pre">Owner</span></code> 配置成 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 管理。如果 <code class="docutils literal notranslate"><span class="pre">EHCI</span></code> 驱动发现端口连接且速率是全速或者慢速，则把端口的 <code class="docutils literal notranslate"><span class="pre">Owner</span></code> 配置成 <code class="docutils literal notranslate"><span class="pre">OHCI</span></code> 管理。</p></li>
+</ul>
+<p>对于 EHCI 这种包含两种控制器的兼容方式，软件上需要同时启动 EHCI Driver 和 OHCI Driver，才能完整的兼容 USB 1.0 和 USB 2.0：</p>
+<p><img alt="image7" src="../../../_images/usb_ehci_ohci_sw.png" /></p>
+</div>
+<div class="section" id="ehci">
+<h3><span class="section-number">7.12.5.4.2. </span>EHCI 内部结构<a class="headerlink" href="#ehci" title="永久链接至标题">¶</a></h3>
+<p><img alt="image8" src="../../../_images/usb_ehci_schedule.png" /></p>
+<p>EHCI 的核心就是把数据传输分成了两类来进行调度：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Asynchronous</span> <span class="pre">Schedule</span></code>。用来传输对时间延迟要求不高的 Endpoint 数据，包括 <code class="docutils literal notranslate"><span class="pre">Control</span> <span class="pre">Transfer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Bulk</span>&#160; <span class="pre">Transfer</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Periodic</span> <span class="pre">Schedule</span></code>。用来传输对时间延迟要求高的 Endpoint 数据，包括 <code class="docutils literal notranslate"><span class="pre">Isochronous</span> <span class="pre">Transfer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Interrupt</span> <span class="pre">Transfer</span></code>。</p></li>
+</ul>
+<div class="section" id="asynchronous-queue-schedule">
+<h4><span class="section-number">7.12.5.4.2.1. </span>Asynchronous Queue Schedule<a class="headerlink" href="#asynchronous-queue-schedule" title="永久链接至标题">¶</a></h4>
+<p><img alt="image9" src="../../../_images/usb_ehci_schedule_async.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">Asynchronous</span> <span class="pre">Schedule</span></code> 内部实现非常的简单就只有一级链表，链表中只有 <code class="docutils literal notranslate"><span class="pre">Queue</span> <span class="pre">Head</span></code> 类型的描述符。每个时间片内传输完 Period 数据以后，再尽可能的传输 Asynchronous 数据即可。</p>
+<p>核心的描述符如下：</p>
+<ul class="simple">
+<li><p>Queue Head</p></li>
+</ul>
+<p><img alt="image10" src="../../../_images/usb_ehci_schedule_qh.png" /></p>
+<ul class="simple">
+<li><p>Queue Element Transfer Descriptor (qTD)</p></li>
+</ul>
+<p><img alt="image11" src="../../../_images/usb_ehci_schedule_qtd.png" /></p>
+</div>
+<div class="section" id="periodic-queue-schedule">
+<h4><span class="section-number">7.12.5.4.2.2. </span>Periodic Queue Schedule<a class="headerlink" href="#periodic-queue-schedule" title="永久链接至标题">¶</a></h4>
+<p><img alt="image12" src="../../../_images/usb_ehci_schedule_period.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">Periodic</span> <span class="pre">Schedule</span></code> 内部实现如上图所示，核心是两级链表：</p>
+<ul class="simple">
+<li><p>第一级链表如上图 <code class="docutils literal notranslate"><span class="pre">绿色</span></code> 所示。是各种传输结构的实际描述符，主要包含以下几种类型的描述符：</p></li>
+</ul>
+<p><img alt="image13" src="../../../_images/usb_ehci_schedule_period_type.png" /></p>
+<ul class="simple">
+<li><p>第二级链表如上图 <code class="docutils literal notranslate"><span class="pre">橙色</span></code> 所示。是一个指针数组，数组中保存的是指向第一级链表的指针。这里每个数组成员代表一个时间分片 Frame/Micro-Frame 的起始位置，每个时间片会根据指针传输第一级链表中的数据，直到第一级链表的结尾。指针的格式如下：</p></li>
+</ul>
+<p><img alt="image14" src="../../../_images/usb_ehci_schedule_period_framelist.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>这里的调度思想就是：第一级链表是一个传输数据全集，第二级链表决定了某个时间片里要传输的数据。</p>
+<p>这样合理的安排二级链表的指针，比如间隔 8 次指向同一位置这部分数据的 interval 就是 8，间隔 4 次指向同一位置这部分数据的 interval 就是 4。  第一级链表也是要根据 interval 排序的。</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Periodic</span> <span class="pre">Schedule</span></code> 核心的描述符除了 QH、QTD 还有 ITD：</p>
+<ul class="simple">
+<li><p>Isochronous (High-Speed) Transfer Descriptor (iTD)</p></li>
+</ul>
+<p><img alt="image15" src="../../../_images/usb_ehci_schedule_itd.png" /></p>
+</div>
+</div>
+<div class="section" id="ehci-driver">
+<h3><span class="section-number">7.12.5.4.3. </span>EHCI Driver<a class="headerlink" href="#ehci-driver" title="永久链接至标题">¶</a></h3>
+<p>ehci driver 负责把 echi 功能封装成标准的 hcd 驱动。它主要完成两项工作：</p>
+<ul class="simple">
+<li><p>注册标准的 hcd 驱动。把 <code class="docutils literal notranslate"><span class="pre">Client</span> <span class="pre">Software</span></code> 传送下来的 <code class="docutils literal notranslate"><span class="pre">urb</span></code> 映射到 EHCI 的链表中进行传输。</p></li>
+<li><p>创建一个虚拟的根 hub 设备，即 roothub。</p></li>
+</ul>
+<div class="section" id="urb-transfer">
+<h4><span class="section-number">7.12.5.4.3.1. </span>URB Transfer<a class="headerlink" href="#urb-transfer" title="永久链接至标题">¶</a></h4>
+<p>ehci 注册 hcd 驱动：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>static int ehci_platform_probe(struct platform_device *dev)
+{
+
+    /* (1) 分配 hcd，并且把 hcd-&gt;driver 初始化成 ehci_hc_driver */
+    ehci_init_driver(&amp;ehci_platform_hc_driver, &amp;platform_overrides);
+    hcd = usb_create_hcd(&amp;ehci_platform_hc_driver, &amp;dev-&gt;dev,
+                dev_name(&amp;dev-&gt;dev));
+
+    /* (2) 注册标准的 hcd 驱动 */
+    err = usb_add_hcd(hcd, irq, IRQF_SHARED);
+}
+</pre></div>
+</div>
+<p>hcd 驱动向上提供了标准接口，最终的实现会调用到 <code class="docutils literal notranslate"><span class="pre">ehci_hc_driver</span></code> 当中。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="n">struct</span> <span class="n">hc_driver</span> <span class="n">ehci_hc_driver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">.</span><span class="n">description</span> <span class="o">=</span>          <span class="n">hcd_name</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">product_desc</span> <span class="o">=</span>         <span class="s2">&quot;EHCI Host Controller&quot;</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">hcd_priv_size</span> <span class="o">=</span>        <span class="n">sizeof</span><span class="p">(</span><span class="n">struct</span> <span class="n">ehci_hcd</span><span class="p">),</span>
+
+    <span class="o">/*</span>
+    <span class="o">*</span> <span class="n">generic</span> <span class="n">hardware</span> <span class="n">linkage</span>
+    <span class="o">*/</span>
+    <span class="o">.</span><span class="n">irq</span> <span class="o">=</span>                  <span class="n">ehci_irq</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">flags</span> <span class="o">=</span>                <span class="n">HCD_MEMORY</span> <span class="o">|</span> <span class="n">HCD_DMA</span> <span class="o">|</span> <span class="n">HCD_USB2</span> <span class="o">|</span> <span class="n">HCD_BH</span><span class="p">,</span>
+
+    <span class="o">/*</span>
+    <span class="o">*</span> <span class="n">basic</span> <span class="n">lifecycle</span> <span class="n">operations</span>
+    <span class="o">*/</span>
+    <span class="o">.</span><span class="n">reset</span> <span class="o">=</span>                <span class="n">ehci_setup</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">start</span> <span class="o">=</span>                <span class="n">ehci_run</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">stop</span> <span class="o">=</span>                 <span class="n">ehci_stop</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">shutdown</span> <span class="o">=</span>             <span class="n">ehci_shutdown</span><span class="p">,</span>
+
+    <span class="o">/*</span>
+    <span class="o">*</span> <span class="n">managing</span> <span class="n">i</span><span class="o">/</span><span class="n">o</span> <span class="n">requests</span> <span class="ow">and</span> <span class="n">associated</span> <span class="n">device</span> <span class="n">resources</span>
+    <span class="o">*/</span>
+    <span class="o">.</span><span class="n">urb_enqueue</span> <span class="o">=</span>          <span class="n">ehci_urb_enqueue</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">urb_dequeue</span> <span class="o">=</span>          <span class="n">ehci_urb_dequeue</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">endpoint_disable</span> <span class="o">=</span>     <span class="n">ehci_endpoint_disable</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">endpoint_reset</span> <span class="o">=</span>       <span class="n">ehci_endpoint_reset</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">clear_tt_buffer_complete</span> <span class="o">=</span>     <span class="n">ehci_clear_tt_buffer_complete</span><span class="p">,</span>
+
+    <span class="o">/*</span>
+    <span class="o">*</span> <span class="n">scheduling</span> <span class="n">support</span>
+    <span class="o">*/</span>
+    <span class="o">.</span><span class="n">get_frame_number</span> <span class="o">=</span>     <span class="n">ehci_get_frame</span><span class="p">,</span>
+
+    <span class="o">/*</span>
+    <span class="o">*</span> <span class="n">root</span> <span class="n">hub</span> <span class="n">support</span>
+    <span class="o">*/</span>
+    <span class="o">.</span><span class="n">hub_status_data</span> <span class="o">=</span>      <span class="n">ehci_hub_status_data</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">hub_control</span> <span class="o">=</span>          <span class="n">ehci_hub_control</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bus_suspend</span> <span class="o">=</span>          <span class="n">ehci_bus_suspend</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">bus_resume</span> <span class="o">=</span>           <span class="n">ehci_bus_resume</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">relinquish_port</span> <span class="o">=</span>      <span class="n">ehci_relinquish_port</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">port_handed_over</span> <span class="o">=</span>     <span class="n">ehci_port_handed_over</span><span class="p">,</span>
+    <span class="o">.</span><span class="n">get_resuming_ports</span> <span class="o">=</span>   <span class="n">ehci_get_resuming_ports</span><span class="p">,</span>
+
+    <span class="o">/*</span>
+    <span class="o">*</span> <span class="n">device</span> <span class="n">support</span>
+    <span class="o">*/</span>
+    <span class="o">.</span><span class="n">free_dev</span> <span class="o">=</span>             <span class="n">ehci_remove_device</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>在 urb transfer 过程中，最核心的是调用上述的 <code class="docutils literal notranslate"><span class="pre">ehci_urb_enqueue()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ehci_urb_dequeue()</span></code> 函数。</p>
+</div>
+<div class="section" id="roothub">
+<h4><span class="section-number">7.12.5.4.3.2. </span>Roothub<a class="headerlink" href="#roothub" title="永久链接至标题">¶</a></h4>
+<p>首先创建虚拟的 roothub:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/* (1) 首先创建和初始化 `usb_device` 结构： */
+ehci_platform_probe() → usb_add_hcd() → usb_alloc_dev():
+struct usb_device *usb_alloc_dev(struct usb_device *parent,
+                struct usb_bus *bus, unsigned port1)
+{
+
+    /* (1.1) dev 总线初始化为 usb_bus_type */
+    dev-&gt;dev.bus = &amp;usb_bus_type;
+    /* (1.2) dev 类型初始化为 usb_device_type，标明自己是一个 usb device */
+    dev-&gt;dev.type = &amp;usb_device_type;
+    dev-&gt;dev.groups = usb_device_groups;
+
+}
+
+/* (2) 然后注册  `usb_device` 结构： */
+usb_add_hcd() → register_root_hub() → usb_new_device() → device_add()
+</pre></div>
+</div>
+<p>然后因为 roothub 并不是在 Usb 物理总线上，所以对它的查询和配置需要特殊处理。详见 <code class="docutils literal notranslate"><span class="pre">Usb</span> <span class="pre">Hub</span> <span class="pre">Driver</span></code> 这一节。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="5_device_design_guide.html" class="btn btn-neutral float-right" title="7.12.6. USB Device 子系统代码架构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="5_design_guide.html" class="btn btn-neutral float-left" title="7.12.4. 设计说明" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

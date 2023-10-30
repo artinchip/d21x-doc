@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.1.2. CTP调试配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.2. 显示屏调试指南" href="../lcd/index.html" />
+    <link rel="prev" title="10.1.1. RTP调试配置" href="rtp_debug.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 外设</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.1. 触摸屏调试指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rtp_debug.html">10.1.1. RTP调试配置</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.1.2. CTP调试配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">10.1.2.1. 概述</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">10.1.2.2. 内核配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id3">10.1.2.2.1. 驱动移植</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">10.1.2.2.2. 内核配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dts">10.1.2.3. DTS参数配置</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">10.1.2.4. 调试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.2. 显示屏调试指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wifi/index.html">10.3. WiFi调试指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keyadc/index.html">10.4. 按键矩阵使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>外设</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.1. </span>触摸屏调试指南</a> &raquo;</li>
+        
+      <li><span class="section-number">10.1.2. </span>CTP调试配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ctp">
+<h1><span class="section-number">10.1.2. </span>CTP调试配置<a class="headerlink" href="#ctp" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">10.1.2.1. </span>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>相比RTP电阻触摸屏， CTP电容触摸屏的调试稍微繁琐一点，CTP驱动一般由触摸屏原厂提供，经过移植添加到SDK中编译和使用
+本章节以GT911为例来说明一款新的CTP的调试和移植过程。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">10.1.2.2. </span>内核配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">10.1.2.2.1. </span>驱动移植<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>驱动存放路径：source/linux-5.10/drivers/input/touchscreen/gt911</p>
+<p>其中source/linux-5.10/drivers/input/touchscreen/Makefile修改添加如下：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diff --git a/drivers/input/touchscreen/Makefile b/drivers/input/touchscreen/Makefile
+index 75924acd8..4be057598 100644
+--- a/drivers/input/touchscreen/Makefile
++++ b/drivers/input/touchscreen/Makefile
+@@ -116,3 +116,6 @@ obj-$(CONFIG_TOUCHSCREEN_ROHM_BU21023)      += rohm_bu21023.o
+ obj-$(CONFIG_TOUCHSCREEN_RASPBERRYPI_FW)       += raspberrypi-ts.o
+ obj-$(CONFIG_TOUCHSCREEN_IQS5XX)       += iqs5xx.o
+ obj-$(CONFIG_TOUCHSCREEN_ZINITIX)      += zinitix.o
++obj-$(CONFIG_INPUT_TOUCHSCREEN)   += gt911/
+</pre></div>
+</div>
+<p>其中source/linux-5.10/drivers/input/touchscreen/Kconfig修改添加如下：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>diff --git a/drivers/input/touchscreen/Kconfig b/drivers/input/touchscreen/Kconfig
+index a8d18a679..6acdc3b63 <span class="mi">100644</span>
+--- a/drivers/input/touchscreen/Kconfig
++++ b/drivers/input/touchscreen/Kconfig
+@@ -1344,5 +1344,7 @@ <span class="k">config</span> TOUCHSCREEN_ZINITIX
+
+          To compile this driver as a module, choose M here: the
+          module will be called zinitix.
+-
++source <span class="s2">&quot;drivers/input/touchscreen/gt911/Kconfig&quot;</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>请从触摸屏供应商处获取和内核版本匹配的驱动程序，如果版本不匹配则可能编译出错，需要自行适配。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">10.1.2.2.2. </span>内核配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在luban根目录下执行 make km (make kernel-menuconfig)，进入kernel的功能配置，按如下选择：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Linux
+    Device Drivers
+        Input device support
+            [*] Touchscreens
+                &lt;M&gt; gt911 based touchscreens
+</pre></div>
+</div>
+<p>驱动以ko的方式编译后，系统启动后在启动脚本S10mdev自动加载，如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">start</span><span class="p">()</span> <span class="p">{</span>
+     <span class="n">echo</span> <span class="o">-</span><span class="n">n</span> <span class="s">&quot;Starting $DAEMON... &quot;</span>
+     <span class="n">start</span><span class="o">-</span><span class="n">stop</span><span class="o">-</span><span class="n">daemon</span> <span class="o">-</span><span class="n">S</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">p</span> <span class="n">$PIDFILE</span> <span class="o">-</span><span class="n">x</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">mdev</span> <span class="o">--</span> <span class="o">-</span><span class="n">df</span>
+     <span class="p">[</span> <span class="n">$</span><span class="o">?</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">0</span> <span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="s">&quot;OK&quot;</span> <span class="o">||</span> <span class="n">echo</span> <span class="s">&quot;ERROR&quot;</span>
+
+     <span class="cp"># coldplug modules</span>
+     <span class="n">find</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="n">modalias</span> <span class="o">-</span><span class="n">print0</span> <span class="o">|</span> \
+         <span class="n">xargs</span> <span class="mi">-0</span> <span class="n">sort</span> <span class="o">-</span><span class="n">u</span> <span class="o">|</span> \
+         <span class="n">tr</span> <span class="sc">&#39;\n&#39;</span> <span class="sc">&#39;\0&#39;</span> <span class="o">|</span> \
+         <span class="n">xargs</span> <span class="mi">-0</span> <span class="n">modprobe</span> <span class="o">-</span><span class="n">abq</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>如果不需要自动加载，可注释掉所示代码，仿照其他启动服务自定义加载服务。</p>
+</div>
+</div>
+</div>
+<div class="section" id="dts">
+<h2><span class="section-number">10.1.2.3. </span>DTS参数配置<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>board.dts中要添加的参数选项需要查看驱动代码中所要解析的dts参数而添加，示例如下：</p></li>
+</ul>
+<p>GT911驱动程序中所要解析的dts参数</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">input_sensor_startup</span><span class="p">(</span><span class="k">enum</span> <span class="n">input_sensor_type</span> <span class="o">*</span><span class="n">ctp_type</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">ctp_config_info</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">container_of</span><span class="p">(</span><span class="n">ctp_type</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">ctp_config_info</span><span class="p">,</span> <span class="n">input_type</span><span class="p">);</span>
+        <span class="k">struct</span> <span class="nc">device_node</span> <span class="o">*</span><span class="n">np</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="n">np</span> <span class="o">=</span> <span class="n">of_find_node_by_name</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="s">&quot;ctp&quot;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">np</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;ERROR! get ctp_para failed, func:%s, line:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">__func__</span><span class="p">,</span> <span class="n">__LINE__</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">devicetree_get_item_err</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">of_device_is_available</span><span class="p">(</span><span class="n">np</span><span class="p">))</span>
+        <span class="p">{</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;%s: ctp is not used</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">__func__</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">devicetree_get_item_err</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+                <span class="n">data</span><span class="o">-&gt;</span><span class="n">ctp_used</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_twi_id&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">twi_id</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get twi_id is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">devicetree_get_item_err</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">printk</span><span class="p">(</span><span class="s">&quot;ctp_twi_id is %d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">twi_id</span><span class="p">);</span>
+        <span class="n">data</span><span class="o">-&gt;</span><span class="n">wakeup_gpio</span> <span class="o">=</span> <span class="n">of_get_named_gpio</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_wakeup&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">printk</span><span class="p">(</span><span class="s">&quot;wavkeup_gpio %d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">wakeup_gpio</span><span class="p">);</span>
+        <span class="n">data</span><span class="o">-&gt;</span><span class="n">irq_gpio</span> <span class="o">=</span> <span class="n">of_get_named_gpio</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_int_port&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">printk</span><span class="p">(</span><span class="s">&quot;ctp_int_port %d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">irq_gpio</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_screen_max_x&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">screen_max_x</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get ctp_screen_max_x is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_screen_max_y&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">screen_max_y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get screen_max_y is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_revert_x_flag&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">revert_x_flag</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get revert_x_flag is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_revert_y_flag&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">revert_y_flag</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get revert_y_flag is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_exchange_x_y_flag&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">exchange_x_y_flag</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get ctp_exchange_x_y_flag is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_abs_max_x&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">abs_max_x</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get ctp_abs_max_x is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_abs_max_y&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">abs_max_y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get ctp_abs_max_y is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">of_property_read_u32</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="s">&quot;ctp_convert_reslution&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">convert_reslution</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;get convert_reslution is fail, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="n">printk</span><span class="p">(</span><span class="s">&quot;screen %d %d %d %d %d abs_x %d abs_y %d convert %d</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">screen_max_x</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">screen_max_y</span><span class="p">,</span>
+                                 <span class="n">data</span><span class="o">-&gt;</span><span class="n">revert_x_flag</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">revert_y_flag</span><span class="p">,</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">exchange_x_y_flag</span><span class="p">,</span>
+                                 <span class="n">data</span><span class="o">-&gt;</span><span class="n">abs_max_x</span><span class="p">,</span><span class="n">data</span><span class="o">-&gt;</span><span class="n">abs_max_y</span><span class="p">,</span>
+                                 <span class="n">data</span><span class="o">-&gt;</span><span class="n">convert_reslution</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nl">devicetree_get_item_err</span><span class="p">:</span>
+        <span class="n">pr_notice</span><span class="p">(</span><span class="s">&quot;=========script_get_item_err============</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>board.dts中所添加的参数项</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&amp;twi2 {
+    pinctrl-names = &quot;default&quot;;
+    pinctrl-0 = &lt;&amp;twi2_pins_a&gt;;
+    status = &quot;okay&quot;;
+    ctp {
+        reg = &lt;0x5d&gt;;                                   //CTP设备地址，可以从规格书中获取
+        device_type = &quot;ctp&quot;;                            //默认
+        status = &quot;okay&quot;;                                //使能标志
+        ctp_twi_id = &lt;0x2&gt;;                             //所挂在的twi总线id
+        ctp_twi_addr = &lt;0x5d&gt;;                          //CTP设备地址，可以从规格书中获取
+        ctp_screen_max_x = &lt;0x500&gt;;                     //CTP x轴的范围
+        ctp_screen_max_y = &lt;0x320&gt;;                     //CTP y轴范围
+        ctp_revert_x_flag = &lt;0x0&gt;;                      //CTP x轴是否翻转
+        ctp_revert_y_flag = &lt;0x0&gt;;                      //CTP y轴是否翻转
+        ctp_exchange_x_y_flag = &lt;0x0&gt;;                  //CTP x轴和y轴是否互换
+        ctp_int_port = &lt;&amp;gpio_a 9 GPIO_ACTIVE_HIGH&gt;;    //CTP中断引脚
+        ctp_wakeup = &lt;&amp;gpio_a 8 GPIO_ACTIVE_HIGH&gt;;      //CTP reset引脚
+    };
+};
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>CTP设备地址获取：</p></li>
+</ul>
+<p>从规格书中可以看出GT911根据初始化时序的不同支持两种设备地址，默认时序的读写地址为0xBA/0xBB,读写地址去掉最后一位读写位就是设备地址，即：0x5d</p>
+<div class="figure align-center">
+<img alt="../../../_images/slave_addr.png" src="../../../_images/slave_addr.png" />
+</div>
+<ul class="simple">
+<li><p>硬件接线示例图如下：</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/ctp1.png" src="../../../_images/ctp1.png" />
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>请务必确保dts所配置的参数和引脚与硬件原理图一致</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">10.1.2.4. </span>调试<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>测量硬件通路</p>
+<p>测量硬件通路是否正常，测量电压信号是否正常</p>
+</li>
+<li><p>查看打印信息</p>
+<p>在board.dts中修改bootargs，增加“loglevel=8” 调高打印级别，系统启动时或insmod驱动模块时看是否有异常打印</p>
+</li>
+<li><p>获取坐标信息</p>
+<p>如果系统有编译getevent工具，触摸屏有触摸时进行坐标的打印</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># getevent</span>
+</pre></div>
+</div>
+</li>
+<li><p>获取设备信息</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># cat /proc/bus/input/devices</span>
+
+例如：（以gt9xx为例）
+I: <span class="nv">Bus</span><span class="o">=</span><span class="m">0018</span> <span class="nv">Vendor</span><span class="o">=</span>dead <span class="nv">Product</span><span class="o">=</span>beef <span class="nv">Version</span><span class="o">=</span>28bb
+N: <span class="nv">Name</span><span class="o">=</span><span class="s2">&quot;goodix-ts&quot;</span>
+P: <span class="nv">Phys</span><span class="o">=</span>input/ts
+S: <span class="nv">Sysfs</span><span class="o">=</span>/devices/virtual/input/input0
+U: <span class="nv">Uniq</span><span class="o">=</span>
+H: <span class="nv">Handlers</span><span class="o">=</span>event0
+B: <span class="nv">PROP</span><span class="o">=</span><span class="m">2</span>
+B: <span class="nv">EV</span><span class="o">=</span>b
+B: <span class="nv">KEY</span><span class="o">=</span>1c00 <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span>
+B: <span class="nv">ABS</span><span class="o">=</span>6e1800000000000
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../lcd/index.html" class="btn btn-neutral float-right" title="10.2. 显示屏调试指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rtp_debug.html" class="btn btn-neutral float-left" title="10.1.1. RTP调试配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

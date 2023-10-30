@@ -1,0 +1,767 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>9.1.2. eMMC OTA参数配置 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="9.1.3. SPINAND OTA参数配置" href="3_spinand_config_guide.html" />
+    <link rel="prev" title="9.1.1. 模块介绍" href="1_introduction.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">9. 应用</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">9.1. OTA 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">9.1.1. 模块介绍</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">9.1.2. eMMC OTA参数配置</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#recovery">9.1.2.1. Recovery系统配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#swupdate">9.1.2.1.1. SWUpdate包配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rootfs-initramfs">9.1.2.1.2. 配置 RootFS 为initramfs</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id1">9.1.2.2. 主系统配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id2">9.1.2.2.1. SWUpdate包配置</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">9.1.2.3. 增加recovery分区并烧录程序</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#u-boot">9.1.2.4. U-Boot 环境变量配置</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#fw-env-config">9.1.2.4.1. fw_env.config配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ota-ota">9.1.2.4.2. 配置 ota 分区烧录OTA升级包</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ota-ext4">9.1.2.4.3. 主系统配置生成 ota.ext4 目标文件</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">9.1.2.4.4. 启动脚本配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="3_spinand_config_guide.html">9.1.3. SPINAND OTA参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_debug_guide.html">9.1.4. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_emmc_test_guide.html">9.1.5. eMMC 平台测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_spinand_test_guide.html">9.1.6. SPI NAND 平台测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="7_design_guide.html">9.1.7. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="8_faq.html">9.1.8. 常见问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">9. </span>应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">9.1. </span>OTA 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">9.1.2. </span>eMMC OTA参数配置</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="emmc-ota">
+<h1><span class="section-number">9.1.2. </span>eMMC OTA参数配置<a class="headerlink" href="#emmc-ota" title="永久链接至标题">¶</a></h1>
+<p>eMMC OTA参数配置主要分为主系统配置, Recovery系统配置, 以d211_per1_mmc为例进行说明</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>系统名称</p></th>
+<th class="head"><p>配置文件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>主系统</p></td>
+<td><p>d211_per1_mmc_defconfig</p></td>
+</tr>
+<tr class="row-odd"><td><p>Recovery系统</p></td>
+<td><p>d211_ota_emmc_defconfig</p></td>
+</tr>
+</tbody>
+</table>
+<p>主系统配置涉及到的文件如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">per1</span><span class="o">/</span><span class="n">image_cfg</span><span class="o">.</span><span class="n">json</span> <span class="o">//</span><span class="n">分区配置和烧录</span>
+<span class="mf">2.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">common</span><span class="o">/</span><span class="n">env</span><span class="o">.</span><span class="n">txt</span> <span class="o">//</span><span class="n">U</span><span class="o">-</span><span class="n">Boot环境变量</span>
+<span class="mf">3.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">per1</span><span class="o">/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fw_env</span><span class="o">.</span><span class="n">config</span>
+<span class="mf">4.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">per1</span><span class="o">/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">swupdate_main</span>
+<span class="mf">5.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">per1</span><span class="o">/</span><span class="n">swupdate</span><span class="o">/</span><span class="n">sw</span><span class="o">-</span><span class="n">description</span>
+<span class="mf">6.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">per1</span><span class="o">/</span><span class="n">swupdate</span><span class="o">/</span><span class="n">sw</span><span class="o">-</span><span class="n">images</span><span class="o">.</span><span class="n">cfg</span>
+<span class="mf">7.</span> <span class="n">target</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_per1_mmc_defconfig</span>
+</pre></div>
+</div>
+<p>Recovery系统配置涉及到的文件如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">ota_emmc</span><span class="o">/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fw_env</span><span class="o">.</span><span class="n">config</span>
+<span class="mf">2.</span> <span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">ota_emmc</span><span class="o">/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">S91swupdate_ota</span>
+<span class="mf">3.</span> <span class="n">target</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_ota_emmc_defconfig</span>
+</pre></div>
+</div>
+<div class="section" id="recovery">
+<h2><span class="section-number">9.1.2.1. </span>Recovery系统配置<a class="headerlink" href="#recovery" title="永久链接至标题">¶</a></h2>
+<div class="section" id="swupdate">
+<h3><span class="section-number">9.1.2.1.1. </span>SWUpdate包配置<a class="headerlink" href="#swupdate" title="永久链接至标题">¶</a></h3>
+<p>Recovery系统配置文件路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/</span><span class="n">configs</span><span class="o">/</span><span class="n">d211_ota_emmc_defconfig</span>
+</pre></div>
+</div>
+<p>进入到Recovery系统 SDK 生产环境</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunch ota_emmc
+</pre></div>
+</div>
+<p>在Luban根目录下执行命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make m
+</pre></div>
+</div>
+<p>进入Luban SDK 功能配置, 按如下选择:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Third-party packages  ---&gt;
+    -*- libubootenv  ---&gt;
+    -*- libconfig  ---&gt;
+    -*- libcurl  ---&gt;
+    [*] swupdate  ---&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="rootfs-initramfs">
+<h3><span class="section-number">9.1.2.1.2. </span>配置 RootFS 为initramfs<a class="headerlink" href="#rootfs-initramfs" title="永久链接至标题">¶</a></h3>
+<p>默认切换RootFS配置为initramfs, 执行命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make m
+</pre></div>
+</div>
+<p>配置如下:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Filesystem images  ---&gt;
+    RootFS images  ---&gt;
+        -*- cpio the root filesystem <span class="p">(</span>for use as an initial RAM filesystem)
+            Compression method <span class="p">(</span>gzip)  ---&gt;
+    [*] initial RAM filesystem linked into linux kernel
+</pre></div>
+</div>
+<p>默认将initramfs编译进Kernel, 执行命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make km
+</pre></div>
+</div>
+<p>配置如下:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>General setup  ---&gt;
+    [*] Initial RAM filesystem and RAM disk <span class="p">(</span>initramfs/initrd) support
+    [*]   Support initial ramdisk/ramfs compressed using gzip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">9.1.2.2. </span>主系统配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3><span class="section-number">9.1.2.2.1. </span>SWUpdate包配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>进入主系统 SDK 生产环境</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunch d211_per1_mmc
+</pre></div>
+</div>
+<p>在Luban根目录下执行配置命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make m
+</pre></div>
+</div>
+<p>进入Luban SDK 功能配置, 按如下配置选择:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Third-party packages  ---&gt;
+    -*- libubootenv  ---&gt;
+    -*- libconfig  ---&gt;
+    -*- libcurl  ---&gt;
+    [*] swupdate  ---&gt;
+</pre></div>
+</div>
+<p>查看SWUpdate库相关配置如下:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>[*]   use prebuilt binary instead of building from <span class="k">source</span>
+<span class="p">(</span>package/third-party/swupdate/luban_swupdate.config) swupdate configuration file
+[*]   swupdate webserver
+</pre></div>
+</div>
+<p>查看SWUpdate相关配置, 需要先关闭SWUpdate预编译功能:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>[ ]   use prebuilt binary instead of building from <span class="k">source</span>
+</pre></div>
+</div>
+<p>执行命令查看SWUpdate相关配置</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make swupdate-menuconfig
+</pre></div>
+</div>
+<p>SWUpdate包重要配置信息解析:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CONFIG_UBOOT=y</p></td>
+<td><p>支持U-Boot</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONFIG_DOWNLOAD=y</p></td>
+<td><p>使能通过libcurl的方式下载程序</p></td>
+</tr>
+<tr class="row-even"><td><p>CONFIG_DOWNLOAD_SSL=y</p></td>
+<td><p>在使用libcurl时使能ssl校验</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONFIG_WEBSERVER=y</p></td>
+<td><p>编译web服务器, 设备端作为服务器使用</p></td>
+</tr>
+<tr class="row-even"><td><p>CONFIG_HASH_VERIFY=y</p></td>
+<td><p>解析升级包时使能sha256校验</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONFIG_BOOTLOADERHANDLER=y</p></td>
+<td><p>在升级过程中允许修改U-Boot环境变量</p></td>
+</tr>
+<tr class="row-even"><td><p>CONFIG_CFI=y</p></td>
+<td><p>允许给flash烧录程序</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONFIG_RAW=y</p></td>
+<td><p>默认烧录方式, 给eMMC使用</p></td>
+</tr>
+<tr class="row-even"><td><p>CONFIG_SHELLSCRIPTHANDLER=y</p></td>
+<td><p>支持shell脚本升级</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果需要重新配置SWUpdate参数, 必须关掉SWUpdate预编译功能, 修改的SWUpdate配置才能够生效</p>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">9.1.2.3. </span>增加recovery分区并烧录程序<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>增加 recovery分区, 烧录Recovery 系统镜像。在 image_cfg.json 修改如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;kernel&quot;</span><span class="p">:</span>   <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;12m&quot;</span> <span class="p">},</span>
+<span class="o">+</span> <span class="s2">&quot;recovery&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="s2">&quot;10m&quot;</span> <span class="p">},</span>          <span class="o">//</span><span class="n">在kernel分区后面增加recovery分区</span>
+
+<span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;kernel.itb&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mtd&quot;</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">],</span>      <span class="o">//</span><span class="n">在kernel镜像烧录配置后面添加recovery镜像烧录配置</span>
+        <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">]</span>
+<span class="p">},</span>
+<span class="o">+</span> <span class="s2">&quot;recovery&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="o">+</span>    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;recovery.itb&quot;</span><span class="p">,</span>              <span class="o">//</span><span class="n">将recovery</span><span class="o">.</span><span class="n">itb镜像文件烧录到recovery分区里面</span>
+<span class="o">+</span>    <span class="s2">&quot;attr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;mtd&quot;</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">],</span>
+<span class="o">+</span>    <span class="s2">&quot;part&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;recovery&quot;</span><span class="p">]</span>
+<span class="o">+</span> <span class="p">},</span>
+
+<span class="s2">&quot;kernel.itb&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;its&quot;</span><span class="p">:</span> <span class="s2">&quot;kernel.its&quot;</span>               <span class="o">//</span><span class="n">在kernel镜像生成方法后面增加recovery镜像生成方法</span>
+
+<span class="p">},</span>
+<span class="o">+</span> <span class="s2">&quot;recovery.itb&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="o">+</span>    <span class="s2">&quot;its&quot;</span><span class="p">:</span> <span class="s2">&quot;recovery.its&quot;</span>                <span class="o">//</span><span class="n">配置recovery</span><span class="o">.</span><span class="n">itb文件通过recovery</span><span class="o">.</span><span class="n">its指导编译完成</span>
+<span class="o">+</span> <span class="p">},</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>在image目录中检查recovery.itb 文件是否生成</p></li>
+<li><p>通过升级信息判断recovery.itb是否烧录到recovery分区</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="u-boot">
+<h2><span class="section-number">9.1.2.4. </span>U-Boot 环境变量配置<a class="headerlink" href="#u-boot" title="永久链接至标题">¶</a></h2>
+<p>通过环境变量boot_partition决定从kernel分区还是recovery分区引导启动</p>
+<p>在d211/common/env.txt修改如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>+ set_commonargs_recovery=setenv bootargs earlycon=${earlycon} earlyprintk console=${console} rdinit=/linuxrc
++  //从Recovery系统启动, 引导initramfs启动
+
++ set_mmc_bootargs_recovery=run set_commonargs_recovery; \ //设置环境变量set_mmc_bootargs_recovery
+                      run set_mmc_root; \
+                      setenv bootargs &quot;${bootargs}&quot;;
+
++ boot_partition=kernel   //初始化环境变量boot_partition从kernel分区启动
+
++ run set_mmc_bootargs_recovery; \
++ loadknl mmc ${boot_devnum} recovery ${knl_addr}; \
++ bootm ${knl_addr};      //nand_boot环境变量增加从recovery分区引导启动
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>手动配置环境变量boot_partition并保存, 重启测试U-Boot是否能够引导Recovery系统启动, 判断配置文件是否生效</p>
+</div>
+<div class="section" id="fw-env-config">
+<h3><span class="section-number">9.1.2.4.1. </span>fw_env.config配置<a class="headerlink" href="#fw-env-config" title="永久链接至标题">¶</a></h3>
+<p>OTA升级过程中, 主系统和Recovery系统都使用到SWUpdate命令, SWUpdate依赖U-Boot环境变量, 需要在 Linux 中配置 U-Boot 环境变量索引路径。</p>
+<p>fw_printenv/fw_setenv命令默认索引路径为:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fw_env</span><span class="o">.</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>因为使用到了 env_r 备份分区, fw_env.config 需要包含 env, env_r 分区信息, eMMC 的默认的配置信息如下:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>//device name       Device offset   Env. size
+/dev/mmcblk0        <span class="mi">0</span>x180000        <span class="mi">0</span>x4000
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>/dev/mmcblk0表示emmc分区的设备号</p></li>
+<li><p>Device offset 为env分区的偏移值</p></li>
+<li><p>Env. size 表示实际 env 的大小</p></li>
+</ol>
+</div>
+<p>Recovery系统 SDK 生产环境默认存在fw_env.config文件, 具体路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">ota_emmc</span><span class="o">/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fw_env</span><span class="o">.</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>主系统 SDK 生产环境默认存在fw_env.config文件, 具体路径如下:</p>
+<p>fw_env.config在主系统的路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/&lt;</span><span class="n">board</span><span class="o">&gt;/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fw_env</span><span class="o">.</span><span class="n">config</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ol class="arabic simple">
+<li><p>客户env、env_r分区信息如果修改, 以上两个fw_env.config文件需要同时更新</p></li>
+<li><p>在 Linux 环境下执行fw_printenv/fw_setenv命令, 测试能够正常打印U-Boot环境变量信息</p></li>
+</ol>
+</div>
+<p>至此, OTA 手动升级环境搭建完成, 下面继续搭建OTA 自动升级环境, 首先配置一个 ota 分区， 用来保存 OTA 升级swu包数据</p>
+</div>
+<div class="section" id="ota-ota">
+<h3><span class="section-number">9.1.2.4.2. </span>配置 ota 分区烧录OTA升级包<a class="headerlink" href="#ota-ota" title="永久链接至标题">¶</a></h3>
+<p>在target/d211/per1/image_cfg.json文件修改</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="s">&quot;partitions&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="c1">// Partition table apply to device</span>
+                    <span class="s">&quot;rootfs&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;72m&quot;</span> <span class="p">},</span>
+    <span class="o">+</span>               <span class="s">&quot;ota&quot;</span><span class="o">:</span> <span class="p">{</span> <span class="s">&quot;size&quot;</span><span class="o">:</span> <span class="s">&quot;96m&quot;</span> <span class="p">},</span>
+<span class="p">},</span>
+
+<span class="s">&quot;rootfs&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s">&quot;file&quot;</span><span class="o">:</span> <span class="s">&quot;rootfs.ext4&quot;</span><span class="p">,</span>
+    <span class="s">&quot;attr&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;block&quot;</span><span class="p">,</span> <span class="s">&quot;required&quot;</span><span class="p">],</span>
+    <span class="s">&quot;part&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;rootfs&quot;</span><span class="p">]</span>
+<span class="p">},</span>
+<span class="o">+</span> <span class="s">&quot;ota&quot;</span><span class="o">:</span> <span class="p">{</span>
+<span class="o">+</span>    <span class="s">&quot;file&quot;</span><span class="o">:</span> <span class="s">&quot;ota.ext4&quot;</span><span class="p">,</span>
+<span class="o">+</span>    <span class="s">&quot;attr&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;block&quot;</span><span class="p">,</span> <span class="s">&quot;required&quot;</span><span class="p">],</span>
+<span class="o">+</span>    <span class="s">&quot;part&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;ota&quot;</span><span class="p">]</span>
+<span class="o">+</span> <span class="p">},</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ota-ext4">
+<h3><span class="section-number">9.1.2.4.3. </span>主系统配置生成 ota.ext4 目标文件<a class="headerlink" href="#ota-ext4" title="永久链接至标题">¶</a></h3>
+<p>将OTA升级包下载到ota分区里面, 方便测试OTA本地升级功能</p>
+<p>ota 分区如下所示:</p>
+<div class="figure align-center">
+<img alt="../../../_images/part.png" src="../../../_images/part.png" />
+</div>
+<p>进入主系统 SDK 生产环境</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lunch d211_per1_mmc
+</pre></div>
+</div>
+<p>在Luban根目录下执行配置命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make m
+</pre></div>
+</div>
+<p>配置如下:</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Filesystem images  ---&gt;
+    [*] UserFS <span class="mi">1</span>  ---&gt;
+        <span class="p">(</span>ota) Name                                                                                                                                 │ │
+        FS Type <span class="p">(</span>Ext4)  ---&gt;
+        <span class="p">(</span><span class="mi">96</span>M) Size
+        <span class="p">(</span>target/$(LUBAN_CHIP_NAME)/$(LUBAN_BOARD_NAME)/ota) Overlay directory
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>编译生成的 swu 包文件d211_per1_mmc.swu需要拷贝到目录 target/$(LUBAN_CHIP_NAME)/$(LUBAN_BOARD_NAME)/ota 下,
+将target/$(LUBAN_CHIP_NAME)/$(LUBAN_BOARD_NAME)/ota目录里的内容生成ota.ext4镜像文件, 之后整个文件烧录到ota分区里面。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">9.1.2.4.4. </span>启动脚本配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>主系统自动挂载ota分区到/mnt/ota 目录下, 之后直接执行命令就可以启动 OTA 升级了</p>
+<p>脚本路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/</span><span class="n">per1</span><span class="o">/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">swupdate_main</span>
+</pre></div>
+</div>
+<p>主要内容如下:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p /mnt/ota
+mount /dev/mmcblk0p12 /mnt/ota              //挂载ota分区到mnt/ota目录下
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>客户如果自定义分区, 对应的设备节点有变更，需要修改对应的挂载方式</p>
+</div>
+<p>Recovery系统执行后, 也需要自动挂载ota分区到/mnt/ota 目录下, 并根据 U-Boot 环境变量自动触发 OTA 升级功能。</p>
+<p>Recovery系统启动脚本路径如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">/</span><span class="n">d211</span><span class="o">/&lt;</span><span class="n">board</span><span class="o">&gt;/</span><span class="n">rootfs_overlay</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">S91swupdate_ota</span>
+</pre></div>
+</div>
+<p>主要内容如下:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>mkdir -p /mnt/ota
+mount /dev/mmcblk0p12 /mnt/ota              //挂载ota分区到mnt/ota目录下
+./usr/lib/swupdate/swupdate_cmd.sh          //执行OTA升级程序
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>客户如果自定义分区, 对应的设备节点有变更，需要修改对应的挂载方式</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="3_spinand_config_guide.html" class="btn btn-neutral float-right" title="9.1.3. SPINAND OTA参数配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="1_introduction.html" class="btn btn-neutral float-left" title="9.1.1. 模块介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

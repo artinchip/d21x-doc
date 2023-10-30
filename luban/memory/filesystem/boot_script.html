@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.4.2. 开机启动 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.4.3. 系统分区" href="new_partition.html" />
+    <link rel="prev" title="5.4.1. RootFS" href="rootfs.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../sdmc/index.html">5.1. SDMC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinor/index.html">5.3. SPI NOR 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.4. 文件系统使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="rootfs.html">5.4.1. RootFS</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.4.2. 开机启动</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#init-d">5.4.2.1. init.d 脚本</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id2">5.4.2.1.1. 脚本</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">5.4.2.1.2. 安装</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#rootfs-overlay">5.4.2.2. RootFS Overlay</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#initscripts">5.4.2.3. initscripts</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="new_partition.html">5.4.3. 系统分区</a></li>
+<li class="toctree-l4"><a class="reference internal" href="new_image.html">5.4.4. 系统镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="update_image.html">5.4.5. 分区修改</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.4. </span>文件系统使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.4.2. </span>开机启动</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">5.4.2. </span>开机启动<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>RootFS <code class="docutils literal notranslate"><span class="pre">/etc/init.d/</span></code> 目录可以设置开机初始化脚本，这些脚本在登录之前被 linuxrc 执行。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>linuxrc 执行的内容和顺序可详细参考：package/third-party/busybox/inittab</p>
+</div>
+<p>Luban SDK 编译时，如何为项目安装开机初始化脚本？推荐如下几种方式</p>
+<div class="section" id="init-d">
+<h2><span class="section-number">5.4.2.1. </span>init.d 脚本<a class="headerlink" href="#init-d" title="永久链接至标题">¶</a></h2>
+<p>如果初始化脚本与某组件包相关，可以编写一个 init.d 脚本， 在该组件包安装文件时，将对应的脚本安装到 <code class="docutils literal notranslate"><span class="pre">/etc/init.d/</span></code> 目录</p>
+<div class="section" id="id2">
+<h3><span class="section-number">5.4.2.1.1. </span>脚本<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>Linux 对 init.d 脚本有统一的要求，可以百度解决，此处给一个简单的例子: S99qtlauncher, 其中 S99 为优先级，99说明优先级比较低</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+#
+# Start qtlauncher....
+#
+
+DAEMON=&quot;/usr/local/qtlauncher/qtlauncher&quot;
+DAEMONOPTS=&quot; -platform=linuxrc&quot;
+PIDFILE=/var/run/qtlauncher.pid
+
+start() {
+    printf &quot;Starting qtlauncher: &quot;
+    PID=`$DAEMON $DAEMONOPTS &gt; /DEV/NULL 2&gt;&amp;1 &amp; echo $!`
+    if [ -z $PID ]: then
+        printf &quot;Fail \n&quot;
+    else
+        echo $PID &gt;$PIDFILE
+        printf &quot;OK \n&quot;
+    fi
+
+}
+
+stop() {
+        printf &quot;Stopping qtlauncher: &quot;
+        PID=`cat $PIDFILE`
+        if [ -f $PIDFILE]; then
+            kill -HUP $PID
+            printf &quot;OK \n&quot;
+            rm -f $PIDFILE
+        else
+            printf &quot;pidfile not found \n&quot;
+        fi
+}
+
+case &quot;$1&quot; in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart|reload)
+        stop
+        start
+        ;;
+*)
+        echo &quot;Usage: $0 {start|stop|restart}&quot;
+        exit 1
+esac
+
+exit $?
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">5.4.2.1.2. </span>安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>继续上文的 S99qtlauncher:</p>
+<p><code class="docutils literal notranslate"><span class="pre">package/artinchip/qtlauncher/qtlauncher.mk</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>define QTLAUNCHER_INSTALL_TARGET_CMDS
+        $(INSTALL) -m 0755 -D package/artinchip/qtlauncher/S99qtlauncher \
+                $(TARGET_DIR)/etc/init.d/S99qtlauncher
+endef
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="rootfs-overlay">
+<h2><span class="section-number">5.4.2.2. </span>RootFS Overlay<a class="headerlink" href="#rootfs-overlay" title="永久链接至标题">¶</a></h2>
+<p>如果该脚本与具体的组件包没有直接的关系，与项目相关性较大，或者不方便放到具体的组件包中，则可以
+放到 <code class="docutils literal notranslate"><span class="pre">target/&lt;chip&gt;/&lt;board&gt;/rootfs_overlay/</span></code> 目录，这样在生成 RootFS 镜像时，通过 Overlay 的方式
+安装到镜像的 <code class="docutils literal notranslate"><span class="pre">/etc/init.d/</span></code> 目录中。</p>
+<p>具体可参考 <a class="reference internal" href="rootfs.html#ref-luban-rootfs-overlay"><span class="std std-ref">RootFS</span></a> 。</p>
+</div>
+<div class="section" id="initscripts">
+<h2><span class="section-number">5.4.2.3. </span>initscripts<a class="headerlink" href="#initscripts" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">/etc/init.d/</span></code> 目录是由 <code class="docutils literal notranslate"><span class="pre">package/third-party/initscripts/</span></code> 包进行安装创建的，
+也可以将相关初始化脚本放在该包中进行安装。</p>
+<p>需要修改 <code class="docutils literal notranslate"><span class="pre">package/third-party/initscripts/initscripts.mk</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">INITSCRIPTS_INSTALL_TARGET_CMDS</span></code> 。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>多数的脚本都有与之相关的组件包，建议尽量采用第一、第二种方式进行安装，并不建议将过多的脚本放到 initscripts 包中进行安装。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="new_partition.html" class="btn btn-neutral float-right" title="5.4.3. 系统分区" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rootfs.html" class="btn btn-neutral float-left" title="5.4.1. RootFS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,837 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.5.3. 调试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.5.4. 测试指南" href="testguide.html" />
+    <link rel="prev" title="7.5.2. 使用指南" href="userguide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.5. MAC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="introduction.html">7.5.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="userguide.html">7.5.2. 使用指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.5.3. 调试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.5.3.1. 调试开关</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#log">7.5.3.1.1. Log 等级</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">7.5.3.1.2. 调试开关</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.5.3.2. 功能验证</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.5.3.2.1. 驱动加载</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.5.3.2.2. 设备可发现</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">7.5.3.2.3. 设备可启动</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">7.5.3.2.4. 网络可联通</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">7.5.3.2.5. 网络可通信</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id14">7.5.3.3. 寄存器信息</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id15">7.5.3.3.1. 千兆</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id16">7.5.3.3.2. 百兆</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id17">7.5.3.4. 驱动信息</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id18">7.5.3.5. 设备信息</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id19">7.5.3.5.1. 连接成功前</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id20">7.5.3.5.2. 连接成功后</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id21">7.5.3.6. 辅助工具</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id22">7.5.3.6.1. 数据包分析</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id23">7.5.3.6.2. 网速测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="testguide.html">7.5.4. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="codeguide.html">7.5.5. 源码说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faq.html">7.5.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.5. </span>MAC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.5.3. </span>调试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.5.3. </span>调试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.5.3.1. </span>调试开关<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="log">
+<h3><span class="section-number">7.5.3.1.1. </span>Log 等级<a class="headerlink" href="#log" title="永久链接至标题">¶</a></h3>
+<p>调试的时候需要设置 log 等级为最高7，设置方法为通过 make km (make kernel_menuconfig) 命令打开 kernel 的 menuconfig</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kernel</span> <span class="n">hacking</span>
+    <span class="n">printk</span> <span class="ow">and</span> <span class="n">dmesg</span> <span class="n">options</span>
+        <span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="n">Default</span> <span class="n">console</span> <span class="n">loglevel</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">15</span><span class="p">)</span>
+        <span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="n">Default</span> <span class="n">message</span> <span class="n">log</span> <span class="n">level</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">7.5.3.1.2. </span>调试开关<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>通过 make km (make kernel_menuconfig) 命令打开 kernel 的 menuconfig， 如下路径选中 GMAC 的调试开关</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kernel</span> <span class="n">hacking</span>
+    <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Kernel</span> <span class="n">debuging</span>
+        <span class="n">ArtInChip</span> <span class="n">Debug</span>
+        <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">GMAC</span> <span class="n">Driver</span> <span class="n">Debug</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.5.3.2. </span>功能验证<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>网络模块是否可以正常工作可以通过如下顺序排查：</p>
+<ul class="simple">
+<li><p>驱动是否加载成功</p></li>
+<li><p>本机 MAC 和 PHY 的连接是否成功</p></li>
+<li><p>本机 PHY 和对端 PHY 的连接是否成功</p></li>
+<li><p>本机网络和对端网络的连接是否成功</p></li>
+<li><p>是否可以通信</p></li>
+</ul>
+<div class="section" id="id5">
+<h3><span class="section-number">7.5.3.2.1. </span>驱动加载<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>在 log 等级为7的情况下，可以通过如下信息对模块的启动进程进行追踪</p>
+<ul class="simple">
+<li><p>有任何的 error 信息输出，模块都将不正常工作，因此任何的 error 信息都必须要解决</p></li>
+<li><dl class="simple">
+<dt>libphy: aicgmac: probed</dt><dd><p>总线注册成功</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>aicmac_probe success.</dt><dd><p>驱动加载成功，使用 ifconfig -a 命令应该可以看到设备</p>
+</dd>
+</dl>
+</li>
+<li><p>其他日志</p></li>
+</ul>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span>aicmac_phy_init_data <span class="nv">phy_addr</span> <span class="o">=</span> <span class="m">1</span>
+aicmac_mac_init_data mac_interface:8 max_speed:1000
+aicmac_mdio_init_data mdio:1
+mac addr: 4a:2a1e:fbeb:26
+aicmac_platform_get_config bus_id:0
+libphy: aicgmac: probed
+aicmac_probe success.
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.5.3.2.2. </span>设备可发现<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>驱动加载成功的主要标志是网络设备存在，可以通过 “ifconfig -a” 命令查看设备是否存在，如果某一个设备不存在，则要排查驱动是否编译，是否加载，设备的系统参数和功能参数配置是否正确</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ifconfig -a</span>
+eth0    Link encap:Ethernet  HWaddr DA:BD:4C:BA:5D:80
+        BROADCAST MULTICAST  MTU:1500  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:0 <span class="o">(</span><span class="m">0</span>.0 B<span class="o">)</span>  TX bytes:0 <span class="o">(</span><span class="m">0</span>.0 B<span class="o">)</span>
+        Interrupt:25
+
+eth1    Link encap:Ethernet  HWaddr 6A:8D:2A:7F:EA:3E
+        BROADCAST MULTICAST  MTU:1500  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:0 <span class="o">(</span><span class="m">0</span>.0 B<span class="o">)</span>  TX bytes:0 <span class="o">(</span><span class="m">0</span>.0 B<span class="o">)</span>
+        Interrupt:26
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">7.5.3.2.3. </span>设备可启动<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>设备启动的时候 MAC 会尝试和 PHY 建立连接，可以通过 “ifconfig eth0 up” 命令来启动网络设备，如果启动不成功，则说明 MAC 和 PHY 的连接不成功，
+居多 MDC 时钟不工作， 也可能是 phy-addr 设置错误</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ifconfig eth0 up</span>
+    gmac <span class="m">10280000</span>.ethernet eth0: PHY <span class="o">[</span>aicgmac-0:01<span class="o">]</span> driver <span class="o">[</span>RTL8211F Gigabit Ethernet<span class="o">]</span> <span class="o">(</span><span class="nv">irq</span><span class="o">=</span>POLL<span class="o">)</span>
+    gmac <span class="m">10280000</span>.ethernet eth0: RX IPC Checksum Offload disabled
+    gmac <span class="m">10280000</span>.ethernet eth0: configuring <span class="k">for</span> phy/rgmii link mode
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">7.5.3.2.4. </span>网络可联通<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>网络的联通是本机 PHY 和远端 PHY 通过网线建立的，同时要牵涉到 MAC 到 PHY,PHY 到 PHY，PHY 到 MAC 的一个循环</p>
+<div class="section" id="id9">
+<h4><span class="section-number">7.5.3.2.4.1. </span>物理连接信息<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h4>
+<p>PHY 和 PHY 的协商是自动的，不需要 MAC,AP 的参与，因此两个 PHY 通过网线连接时，二者应该是自协商成功的，对于有指示灯的系统，PHY 物理连接成功后指示灯会呼吸</p>
+</div>
+<div class="section" id="id10">
+<h4><span class="section-number">7.5.3.2.4.2. </span>模块状态信息<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h4>
+<p>通过命令 “ifconfig eth0 up” 打开设备，如果连接成功，则会报告 Link is Up 的信息，如下所示</p>
+<p>如果没有连接成功，并且 MAC 和 PHY 的连接是成功的，则说明两个 PHY 的连接或者协商不成功，有两个可能</p>
+<ul class="simple">
+<li><p>二者的工作模块无法协商成功，如某一方只支持百兆，而另一方只支持千兆，或者是两个标准的 PHY 模块等，可以更换对端的网络设备，如换为路由器，PC 等</p></li>
+<li><p>物理网络不通，更换网线</p></li>
+</ul>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ifconfig eth0 up</span>
+    gmac <span class="m">10280000</span>.ethernet eth0: Link is Up - 1Gbps/Full - flow control rx/tx
+    IPv6: ADDRCONF<span class="o">(</span>NETDEV_CHANGE<span class="o">)</span>: eth0: link becomes ready
+
+<span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ethtool  eth0</span>
+    Speed: 1000Mb/s
+    Duplex: Full
+    Auto-negotiation: on
+    master-slave cfg: preferred slave
+    master-slave status: master
+    Port: Twisted Pair
+    PHYAD: <span class="m">1</span>
+    Transceiver: external
+    MDI-X: Unknown
+    Supports Wake-on: d
+    Wake-on: d
+    Current message level: 0x0000003f <span class="o">(</span><span class="m">63</span><span class="o">)</span>
+                           drv probe link timer ifdown ifup
+    Link detected: yes
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">7.5.3.2.5. </span>网络可通信<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>经过上述的排查，MAC 和 PHY，PHY 和远端 PHY 的通路均正常，则可以进行网络通信验证</p>
+<div class="section" id="id12">
+<h4><span class="section-number">7.5.3.2.5.1. </span>验证方法<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><p>通过 ifconfig eth0 ipaddr 设置一IP地址</p></li>
+<li><p>通过 ping 对端 ipaddr 来验证是否可以通信</p></li>
+</ul>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ifconfig eth0 192.168.168.100</span>
+<span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ping 192.168.168.101</span>
+PING <span class="m">192</span>.168.168.101 <span class="o">(</span><span class="m">192</span>.168.168.101<span class="o">)</span>: <span class="m">56</span> data bytes
+<span class="m">64</span> bytes from <span class="m">192</span>.168.168.101: <span class="nv">seq</span><span class="o">=</span><span class="m">0</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">64</span> <span class="nv">time</span><span class="o">=</span><span class="m">4</span>.004 ms
+<span class="m">64</span> bytes from <span class="m">192</span>.168.168.101: <span class="nv">seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">64</span> <span class="nv">time</span><span class="o">=</span><span class="m">0</span>.943 ms
+<span class="m">64</span> bytes from <span class="m">192</span>.168.168.101: <span class="nv">seq</span><span class="o">=</span><span class="m">2</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">64</span> <span class="nv">time</span><span class="o">=</span><span class="m">0</span>.818 ms
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h4><span class="section-number">7.5.3.2.5.2. </span>问题分析<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h4>
+<p>如果通信不正常，在没有对驱动进行修改的情况下，一般不会是寄存器配置的问题，可能的原因有</p>
+<ul class="simple">
+<li><p>cl k配置，如果使用外部 clk，则要设置 aic,use_extclk</p></li>
+<li><p>clk 频率，测量 MII Data的TX/RX Clk 的频率，满足当前标准</p></li>
+<li><p>时延，如果使用的是千兆网络，确定时延的配置和硬件匹配</p></li>
+<li><p>防火墙，确认路由器，对端设备不受防火墙的隔离保护</p></li>
+</ul>
+<p>如果以上问题均排除，则请获取日志提交原厂分析</p>
+</div>
+</div>
+</div>
+<div class="section" id="id14">
+<h2><span class="section-number">7.5.3.3. </span>寄存器信息<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+<p>一个可以正常工作的 MAC 模块的寄存器样板</p>
+<div class="section" id="id15">
+<h3><span class="section-number">7.5.3.3.1. </span>千兆<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reg</span><span class="o">-</span><span class="n">dump</span> <span class="o">-</span><span class="n">a</span> <span class="mh">0x10280000</span> <span class="o">-</span><span class="n">c</span> <span class="mi">128</span>
+<span class="mh">0x10280000</span><span class="p">:</span> <span class="mi">00000012</span> <span class="mi">06432208</span> <span class="mi">00080400</span> <span class="mi">04660000</span>
+<span class="mh">0x10280010</span><span class="p">:</span> <span class="mi">0001</span><span class="n">a061</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000311</span>
+<span class="mh">0x10280020</span><span class="p">:</span> <span class="mi">00000003</span> <span class="mi">00000061</span> <span class="mi">00000009</span> <span class="mi">00000000</span>
+<span class="mh">0x10280030</span><span class="p">:</span> <span class="mi">00000000</span> <span class="n">ffff000e</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280040</span><span class="p">:</span> <span class="mi">00000404</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280050</span><span class="p">:</span> <span class="mi">80009</span><span class="n">d32</span> <span class="mi">195</span><span class="n">ef056</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280060</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280070</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280080</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280090</span><span class="p">:</span> <span class="mi">00000850</span> <span class="mi">000079</span><span class="n">ad</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800a0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">0000000</span><span class="n">d</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800b0</span><span class="p">:</span> <span class="mi">4341</span><span class="n">c000</span> <span class="mi">43418000</span> <span class="mi">4341</span><span class="n">c000</span> <span class="mf">434182e0</span>
+<span class="mh">0x102800c0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">40</span><span class="n">d25000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800d0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800e0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800f0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280100</span><span class="p">:</span> <span class="mi">00002000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280110</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280120</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280130</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280140</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280150</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="n">ffffffff</span>
+<span class="mh">0x10280160</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3><span class="section-number">7.5.3.3.2. </span>百兆<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reg</span><span class="o">-</span><span class="n">dump</span> <span class="o">-</span><span class="n">a</span> <span class="mh">0x10280000</span> <span class="o">-</span><span class="n">c</span> <span class="mi">128</span>
+<span class="mh">0x10280000</span><span class="p">:</span> <span class="mi">00000016</span> <span class="mi">06432208</span> <span class="mi">00080400</span> <span class="mi">00660000</span>
+<span class="mh">0x10280010</span><span class="p">:</span> <span class="mi">0001</span><span class="n">a061</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000311</span>
+<span class="mh">0x10280020</span><span class="p">:</span> <span class="mi">00000003</span> <span class="mi">00000061</span> <span class="mi">00000009</span> <span class="mi">00000000</span>
+<span class="mh">0x10280030</span><span class="p">:</span> <span class="mi">00000000</span> <span class="n">ffff000e</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280040</span><span class="p">:</span> <span class="mi">00000404</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280050</span><span class="p">:</span> <span class="mi">8000</span><span class="n">c416</span> <span class="mi">44</span><span class="n">da1a5a</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280060</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280070</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280080</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280090</span><span class="p">:</span> <span class="mi">00000850</span> <span class="mi">0000786</span><span class="n">d</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800a0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000008</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800b0</span><span class="p">:</span> <span class="mi">4383</span><span class="n">c000</span> <span class="mi">43838000</span> <span class="mi">4383</span><span class="n">c000</span> <span class="mi">43838440</span>
+<span class="mh">0x102800c0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">41</span><span class="n">f9c000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800d0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800e0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x102800f0</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280100</span><span class="p">:</span> <span class="mi">00002000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280110</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280120</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280130</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280140</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+<span class="mh">0x10280150</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="n">ffffffff</span>
+<span class="mh">0x10280160</span><span class="p">:</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span> <span class="mi">00000000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id17">
+<h2><span class="section-number">7.5.3.4. </span>驱动信息<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<p>通过 “ethtool -i eth0” 命令可以查看设备驱动信息，用以确认驱动版本，mii 总线挂载信息</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ethtool -i eth0</span>
+driver: aicgmac
+version: <span class="m">20211010</span>
+firmware-version:
+expansion-rom-version:
+bus-info: aicgmac-0:01 : 设备id：phy addr id
+supports-statistics: no
+supports-test: no
+supports-eeprom-access: no
+supports-register-dump: yes
+supports-priv-flags: no
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h2><span class="section-number">7.5.3.5. </span>设备信息<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h2>
+<p>设备的信息固化在 MAC 模块硬件寄存器和设备驱动中，通过 “ethtool eth0” 命令可以确认设备的配置信息是否正确</p>
+<div class="section" id="id19">
+<h3><span class="section-number">7.5.3.5.1. </span>连接成功前<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ethtool eth0</span>
+Settings <span class="k">for</span> eth0:
+    Supported ports: <span class="o">[</span> TP    MII <span class="o">]</span>
+    Supported link modes:   10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Supported pause frame use: Symmetric Receive-only
+    Supports auto-negotiation: Yes
+    Supported FEC modes: Not reported
+    Advertised link modes:  10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Advertised pause frame use: Symmetric Receive-only
+    Advertised auto-negotiation: Yes
+    Advertised FEC modes: Not reported
+    Speed: Unknown!
+    Duplex: Unknown! <span class="o">(</span><span class="m">255</span><span class="o">)</span>
+    Auto-negotiation: on
+    master-slave cfg: preferred slave
+    master-slave status: unknown
+    Port: Twisted Pair
+    PHYAD: <span class="m">1</span>
+    Transceiver: external
+    MDI-X: Unknown
+    Supports Wake-on: d
+    Wake-on: d
+    Current message level: 0x0000003f <span class="o">(</span><span class="m">63</span><span class="o">)</span>
+                           drv probe link timer ifdown ifup
+    Link detected: no
+</pre></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h3><span class="section-number">7.5.3.5.2. </span>连接成功后<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>aic@<span class="o">]</span> <span class="c1"># ethtool eth0</span>
+Settings <span class="k">for</span> eth0:
+    Supported ports: <span class="o">[</span> TP    MII <span class="o">]</span>
+    Supported link modes:   10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Supported pause frame use: Symmetric Receive-only
+    Supports auto-negotiation: Yes
+    Supported FEC modes: Not reported
+    Advertised link modes:  10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Advertised pause frame use: Symmetric Receive-only
+    Advertised auto-negotiation: Yes
+    Advertised FEC modes: Not reported
+    Link partner advertised link modes:  10baseT/Half 10baseT/Full
+                                        100baseT/Half 100baseT/Full
+                                        1000baseT/Full
+    Link partner advertised pause frame use: Symmetric Receive-only
+    Link partner advertised auto-negotiation: Yes
+    Link partner advertised FEC modes: Not reported
+    Speed: 1000Mb/s
+    Duplex: Full
+    Auto-negotiation: on
+    master-slave cfg: preferred slave
+    master-slave status: slave
+    Port: Twisted Pair
+    PHYAD: <span class="m">1</span>
+    Transceiver: external
+    MDI-X: Unknown
+    Supports Wake-on: d
+    Wake-on: d
+    Current message level: 0x0000003f <span class="o">(</span><span class="m">63</span><span class="o">)</span>
+                    drv probe link timer ifdown ifup
+    Link detected: yes
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id21">
+<h2><span class="section-number">7.5.3.6. </span>辅助工具<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id22">
+<h3><span class="section-number">7.5.3.6.1. </span>数据包分析<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h3>
+<p>一般使用 WiredShark 抓包工具进行数据包的分析，可以借助其分析发送和接收的数据内容，从而分析通信双方的行为</p>
+<div class="figure align-center">
+<img alt="../../../_images/wireshark1.jpg" src="../../../_images/wireshark1.jpg" />
+</div>
+</div>
+<div class="section" id="id23">
+<h3><span class="section-number">7.5.3.6.2. </span>网速测试<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h3>
+<p>压力测试的模型是搭建一个简单的 C/S 模型，Client 以最大资源利用发送数据，Server 端接收数据并进行相应计算</p>
+<p>SDK 自带两种可用于进行压力测试的工具，iperf3 和 netperf，二者会以全速进行数据的收发，并进行丢包，错包，发送速率计算等辅助工作</p>
+<p>网速测试因为需要验证收到的信息的准确性，因此有比较大的计算任务，所以也受 CPU 和 DDR 频率的影响</p>
+<div class="section" id="iperf3">
+<h4><span class="section-number">7.5.3.6.2.1. </span>iperf3<a class="headerlink" href="#iperf3" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><dl class="simple">
+<dt>server 命令</dt><dd><p>iperf3 -s</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>client 命令</dt><dd><p>iperf3 -c 192.168.168.100 -u -b 50M ， 以 50M UDP 的方式和 server 192.168.168.100 进行测试</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="netperf">
+<h4><span class="section-number">7.5.3.6.2.2. </span>netperf<a class="headerlink" href="#netperf" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><dl class="simple">
+<dt>server 命令</dt><dd><p>netserver</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>client 命令</dt><dd><p>netperf -H 192.168.168.100 ， 不限速和 server 192.168.168.100 进行测试</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id24">
+<h4><span class="section-number">7.5.3.6.2.3. </span>持久测试<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h4>
+<p>不管是 iperf3 还是 netperf 都是进行有限次的数据交互后即停止工作，如果进行长时间的压力测试，则需要脚本配合</p>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">#Run as Server</span>
+
+ifconfig eth0 up
+ifconfig eth0 <span class="m">192</span>.168.168.100
+
+<span class="c1">#netserver &gt;/dev/null</span>
+iperf3 -s &gt;/dev/null
+</pre></div>
+</div>
+<div class="highlight-Bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#Run as Client</span>
+
+ifconfig eth0 up
+ifconfig eth0 <span class="m">192</span>.168.168.105
+
+<span class="k">for</span> i <span class="k">in</span> <span class="k">$(</span>seq <span class="m">1</span> <span class="m">10000</span><span class="k">)</span>
+<span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Start to test at </span><span class="nv">$i</span><span class="s2"> times&quot;</span>
+    <span class="c1">#netperf -H 192.168.168.100</span>
+    iperf3 -c <span class="m">192</span>.168.168.100 -u -b 50M
+    sleep <span class="m">5</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="testguide.html" class="btn btn-neutral float-right" title="7.5.4. 测试指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="userguide.html" class="btn btn-neutral float-left" title="7.5.2. 使用指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

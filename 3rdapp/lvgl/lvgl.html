@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2.1. LVGL移植 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="关于我们" href="../../aboutus/index.html" />
+    <link rel="prev" title="2. LVGL移植" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">三方应用</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../qt/index.html">1. QT 使用</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. LVGL移植</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. LVGL移植</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.1.1. LVGL简介</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">2.1.1.1. 主要特性</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">2.1.1.2. 配置要求</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.1.2. LVGL移植</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id5">2.1.2.1. 获取代码</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">2.1.2.2. 配置代码</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">2.1.2.3. 编写应用</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">2.1.2.4. 编译运行</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">三方应用</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">2. </span>LVGL移植</a> &raquo;</li>
+        
+      <li><span class="section-number">2.1. </span>LVGL移植</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lvgl">
+<h1><span class="section-number">2.1. </span>LVGL移植<a class="headerlink" href="#lvgl" title="永久链接至标题">¶</a></h1>
+<p>本文档仅介绍LVGL移植到D211平台的流程和步骤，没有涉及到基于LVGL应用的开发</p>
+<div class="section" id="id1">
+<h2><span class="section-number">2.1.1. </span>LVGL简介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center">
+<img alt="../../_images/home_banner.jpg" src="../../_images/home_banner.jpg" />
+</div>
+<p>LVGL(轻量级和通用图形库)是一个免费和开源的图形库，它提供了创建嵌入式 GUI 所需的一切，具有易于使用的图形元素，美丽的视觉效果和低内存占用</p>
+<div class="section" id="id2">
+<h3><span class="section-number">2.1.1.1. </span>主要特性<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>丰富且强大的模块化图形组件：按钮、图标、列表、互动条、图片等</p></li>
+<li><p>先进的图形界面：动画、抗锯齿、透明度、平滑滚动等效果</p></li>
+<li><p>支持不同的输入设备包括键盘，鼠标，触摸屏，编码器等</p></li>
+<li><p>UTF-8编码支持多语言</p></li>
+<li><p>多显示器支持，可以同时使用多个TFT或单色显示</p></li>
+<li><p>可以通过类 CSS的方式来设计、布局图形界面</p></li>
+<li><p>不限制芯片类型、硬件，可在各种微控制器或显示器上使用LVGL</p></li>
+<li><p>配置可裁剪（最低资源占用：64 kB Flash，16 kB RAM）</p></li>
+<li><p>支持操作系统、外部存储和GPU，但都不是硬性要求</p></li>
+<li><p>即使单缓冲区(frame buffer)也能实现高级图形效果</p></li>
+<li><p>不需要嵌入式硬件环境在PC模拟器就可以调试GUI</p></li>
+<li><p>支持 Micropython 编程</p></li>
+<li><p>有用于快速GUI设计的教程、示例、主题</p></li>
+<li><p>详尽的文档以及 API 参考手册，可线上查阅或可下载为 PDF 格式</p></li>
+<li><p>在 MIT 许可下免费和开源</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">2.1.1.2. </span>配置要求<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>16、32或64位微控制器或处理器</p></li>
+<li><p>最低 16 MHz 时钟频率</p></li>
+<li><p>Flash/ROM: &gt;64 kB(建议 180 kB)</p></li>
+<li><p>RAM: 8 kB(建议 24 kB)</p></li>
+<li><p>显示缓冲区: &gt;水平分辨率像素(建议为1/10屏幕大小)</p></li>
+<li><p>支持C99编程</p></li>
+<li><p>具备基本的C或C++知识</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">2.1.2. </span>LVGL移植<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>软件模块的移植一般包括下载代码、平台配置、应用开发、编译等几个步骤，本章节也从这几个方面进行描述</p>
+<div class="section" id="id5">
+<h3><span class="section-number">2.1.2.1. </span>获取代码<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>一个LVGL应用项目工程的代码分为两部分，一部分为LVGL图形库代码lvgl目录，一部分为驱动支持部分代码lv_driver目录。由于LVGL的图形库非常轻量级，所以这部分是以源码的形式集成到应用项目中。两部分都可以从GitHub获取最新的源码。</p>
+<ul class="simple">
+<li><p>lvgl源码获取：<a class="reference external" href="https://github.com/lvgl/lvgl">https://github.com/lvgl/lvgl</a></p></li>
+<li><p>lvgl_driver源码获取：<a class="reference external" href="https://github.com/lvgl/lv_drivers">https://github.com/lvgl/lv_drivers</a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>本文档中移植示例中使用的lvgl版本和lv_driver版本均为v8.2版本</p>
+</div>
+<p>创建一个名称为lvgl的工程目录，把所从GitHub上所获取的两部分代码放入工程目录，结构如下：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lvgl
+|-- lv_drivers                     --&gt; 驱动支持总目录
+|   |-- CMakeLists.txt
+|   |-- display
+|   |-- docs
+|   |-- gtkdrv
+|   |-- indev
+|   |-- library.json
+|   |-- LICENSE
+|   |-- lv_drivers.mk
+|   |-- lv_drv_conf_template.h     --&gt; 驱动配置模板
+|   |-- README.md
+|   |-- sdl
+|   |-- wayland
+|   |-- win32drv
+|   |-- win_drv.c
+|   `-- win_drv.h
+`-- lvgl                           --&gt; 图形库总目录
+    |-- CMakeLists.txt
+    |-- component.mk
+    |-- demos                      --&gt; 应用示例
+    |-- docs
+    |-- env_support
+    |-- examples
+    |-- idf_component.yml
+    |-- Kconfig
+    |-- library.json
+    |-- library.properties
+    |-- LICENCE.txt
+    |-- lv_conf_template.h         --&gt; 图形库配置模板
+    |-- lvgl.h
+    |-- lvgl.mk
+    |-- README.md
+    |-- README_zh.md
+    |-- SConscript
+    |-- scripts
+    |-- src                        --&gt; 源码目录
+    `-- tests
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">2.1.2.2. </span>配置代码<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>lvgl配置</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>基于模板创建配置文件:
+cp lvgl/lv_conf_template.h ./lv_conf.h
+
+修改lv_conf.h如下:
+--- a/lv_conf.h
++++ b/lv_conf.h
+@@ -12,7 +12,7 @@
+  */
+
+ /* clang-format off */
+-#if 0 /*Set it to &quot;1&quot; to enable content*/
++#if 1 /*Set it to &quot;1&quot; to enable content*/               --&gt; 使能配置文件内容
+
+ #ifndef LV_CONF_H
+ #define LV_CONF_H
+@@ -85,10 +85,10 @@
+
+ /*Use a custom tick source that tells the elapsed time in milliseconds.
+  *It removes the need to manually update the tick with `lv_tick_inc()`)*/
+-#define LV_TICK_CUSTOM 0
++#define LV_TICK_CUSTOM 1                                --&gt; 使能客户custom_tick_get函数
+ #if LV_TICK_CUSTOM
+-    #define LV_TICK_CUSTOM_INCLUDE &quot;Arduino.h&quot;         /*Header for the system time function*/
+-    #define LV_TICK_CUSTOM_SYS_TIME_EXPR (millis())    /*Expression evaluating to current system time in ms*/
++    #define LV_TICK_CUSTOM_INCLUDE &lt;stdint.h&gt;         /*Header for the system time function*/
++    #define LV_TICK_CUSTOM_SYS_TIME_EXPR (custom_tick_get())    /*Expression evaluating to current system time in ms*/
+ #endif   /*LV_TICK_CUSTOM*/
+
+ /*Default Dot Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
+@@ -705,7 +705,7 @@
+  ====================*/
+
+ /*Show some widget. It might be required to increase `LV_MEM_SIZE` */
+-#define LV_USE_DEMO_WIDGETS 0
++#define LV_USE_DEMO_WIDGETS 1                           --&gt; 打开widgets示例demo
+ #if LV_USE_DEMO_WIDGETS
+ #define LV_DEMO_WIDGETS_SLIDESHOW 0
+ #endif
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>lv_drivers配置</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>基于模板创建配置文件:
+cp lv_drivers/lv_drv_conf_template.h ./lv_drv_conf.h
+
+修改lv_drv_conf.h如下：
+--- a/lv_drv_conf.h
++++ b/lv_drv_conf.h
+@@ -8,7 +8,7 @@
+  */
+
+ /* clang-format off */
+-#if 0 /*Set it to &quot;1&quot; to enable the content*/
++#if 1 /*Set it to &quot;1&quot; to enable the content*/           --&gt; 使能配置文件内容
+
+ #ifndef LV_DRV_CONF_H
+ #define LV_DRV_CONF_H
+@@ -316,7 +316,7 @@
+  *  Linux frame buffer device (/dev/fbx)
+  *-----------------------------------------*/
+ #ifndef USE_FBDEV
+-#  define USE_FBDEV           0
++#  define USE_FBDEV           1                         --&gt; 使用/dev/fb设备节点
+ #endif
+
+ #if USE_FBDEV
+@@ -439,7 +439,7 @@
+  * Mouse or touchpad as evdev interface (for Linux based systems)
+  *------------------------------------------------*/
+ #ifndef USE_EVDEV
+-#  define USE_EVDEV           0
++#  define USE_EVDEV           1                         --&gt; 使用/dev/fb设备节点
+ #endif
+
+ #ifndef USE_BSD_EVDEV
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">2.1.2.3. </span>编写应用<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>应用程序主题main.c如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;lvgl/lvgl.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;lvgl/demos/lv_demos.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;lv_drivers/display/fbdev.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;lv_drivers/indev/evdev.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sys/time.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#define DISP_BUF_SIZE (128 * 1024)</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="cm">/*LittlevGL init*/</span>
+   <span class="n">lv_init</span><span class="p">();</span>
+
+   <span class="cm">/*Linux frame buffer device init*/</span>
+   <span class="n">fbdev_init</span><span class="p">();</span>
+
+   <span class="cm">/*A small buffer for LittlevGL to draw the screen&#39;s content*/</span>
+   <span class="k">static</span> <span class="n">lv_color_t</span> <span class="n">buf</span><span class="p">[</span><span class="n">DISP_BUF_SIZE</span><span class="p">];</span>
+
+   <span class="cm">/*Initialize a descriptor for the buffer*/</span>
+   <span class="k">static</span> <span class="n">lv_disp_draw_buf_t</span> <span class="n">disp_buf</span><span class="p">;</span>
+   <span class="n">lv_disp_draw_buf_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">disp_buf</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">DISP_BUF_SIZE</span><span class="p">);</span>
+
+   <span class="cm">/*Initialize and register a display driver*/</span>
+   <span class="k">static</span> <span class="n">lv_disp_drv_t</span> <span class="n">disp_drv</span><span class="p">;</span>
+   <span class="n">lv_disp_drv_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">disp_drv</span><span class="p">);</span>
+   <span class="n">disp_drv</span><span class="p">.</span><span class="n">draw_buf</span>   <span class="o">=</span> <span class="o">&amp;</span><span class="n">disp_buf</span><span class="p">;</span>
+   <span class="n">disp_drv</span><span class="p">.</span><span class="n">flush_cb</span>   <span class="o">=</span> <span class="n">fbdev_flush</span><span class="p">;</span>
+   <span class="n">disp_drv</span><span class="p">.</span><span class="n">hor_res</span>    <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+   <span class="n">disp_drv</span><span class="p">.</span><span class="n">ver_res</span>    <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+   <span class="n">lv_disp_drv_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">disp_drv</span><span class="p">);</span>
+
+   <span class="n">evdev_init</span><span class="p">();</span>
+   <span class="k">static</span> <span class="n">lv_indev_drv_t</span> <span class="n">indev_drv_1</span><span class="p">;</span>
+   <span class="n">lv_indev_drv_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">indev_drv_1</span><span class="p">);</span> <span class="cm">/*Basic initialization*/</span>
+   <span class="n">indev_drv_1</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">LV_INDEV_TYPE_POINTER</span><span class="p">;</span>
+
+   <span class="cm">/*This function will be called periodically (by the library) to get the mouse position and state*/</span>
+   <span class="n">indev_drv_1</span><span class="p">.</span><span class="n">read_cb</span> <span class="o">=</span> <span class="n">evdev_read</span><span class="p">;</span>
+   <span class="n">lv_indev_t</span> <span class="o">*</span><span class="n">mouse_indev</span> <span class="o">=</span> <span class="n">lv_indev_drv_register</span><span class="p">(</span><span class="o">&amp;</span><span class="n">indev_drv_1</span><span class="p">);</span>
+
+   <span class="cm">/*Create a Demo*/</span>
+   <span class="n">lv_demo_widgets</span><span class="p">();</span>
+
+   <span class="cm">/*Handle LitlevGL tasks (tickless mode)*/</span>
+   <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">lv_timer_handler</span><span class="p">();</span>
+      <span class="n">usleep</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*Set in lv_conf.h as `LV_TICK_CUSTOM_SYS_TIME_EXPR`*/</span>
+<span class="kt">uint32_t</span> <span class="nf">custom_tick_get</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">static</span> <span class="kt">uint64_t</span> <span class="n">start_ms</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="k">if</span><span class="p">(</span><span class="n">start_ms</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">struct</span> <span class="nc">timeval</span> <span class="n">tv_start</span><span class="p">;</span>
+      <span class="n">gettimeofday</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tv_start</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+      <span class="n">start_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">tv_start</span><span class="p">.</span><span class="n">tv_sec</span> <span class="o">*</span> <span class="mi">1000000</span> <span class="o">+</span> <span class="n">tv_start</span><span class="p">.</span><span class="n">tv_usec</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="k">struct</span> <span class="nc">timeval</span> <span class="n">tv_now</span><span class="p">;</span>
+   <span class="n">gettimeofday</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tv_now</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+   <span class="kt">uint64_t</span> <span class="n">now_ms</span><span class="p">;</span>
+   <span class="n">now_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">tv_now</span><span class="p">.</span><span class="n">tv_sec</span> <span class="o">*</span> <span class="mi">1000000</span> <span class="o">+</span> <span class="n">tv_now</span><span class="p">.</span><span class="n">tv_usec</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">;</span>
+
+   <span class="kt">uint32_t</span> <span class="n">time_ms</span> <span class="o">=</span> <span class="n">now_ms</span> <span class="o">-</span> <span class="n">start_ms</span><span class="p">;</span>
+   <span class="k">return</span> <span class="n">time_ms</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>本章节所展示的应用基于lvgl自带的demo程序：lv_port_linux_frame_buffer,可从GitHub获取：<a class="reference external" href="https://github.com/lvgl/lv_port_linux_frame_buffer">https://github.com/lvgl/lv_port_linux_frame_buffer</a></p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">2.1.2.4. </span>编译运行<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>编译脚本Makefile内容如下：</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CC = arm-linux-gnueabihf-gcc
+LVGL_DIR_NAME ?= lvgl
+LVGL_DIR ?= ${shell pwd}
+CFLAGS ?= -O3 -g0 -I$(LVGL_DIR)/ -Wall -Wshadow -Wundef -Wmissing-prototypes -Wno-discarded-qualifiers -Wall -Wextra -Wno-unused-function -Wno-error=strict-prototypes -Wpointer-arith -fno-strict-aliasing -Wno-error=cpp -Wuninitialized -Wmaybe-uninitialized -Wno-unused-parameter -Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wno-cast-qual -Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wformat-security -Wno-ignored-qualifiers -Wno-error=pedantic -Wno-sign-compare -Wno-error=missing-prototypes -Wdouble-promotion -Wclobbered -Wdeprecated -Wempty-body -Wtype-limits -Wstack-usage=2048 -Wno-unused-value -Wno-unused-parameter -Wno-missing-field-initializers -Wuninitialized -Wmaybe-uninitialized -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wpointer-arith -Wno-cast-qual -Wmissing-prototypes -Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wno-discarded-qualifiers -Wformat-security -Wno-ignored-qualifiers -Wno-sign-compare
+LDFLAGS ?= -lm
+BIN = demo
+
+
+#Collect the files to compile
+MAINSRC = ./main.c
+
+include $(LVGL_DIR)/lvgl/lvgl.mk
+include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
+
+OBJEXT ?= .o
+
+AOBJS = $(ASRCS:.S=$(OBJEXT))
+COBJS = $(CSRCS:.c=$(OBJEXT))
+
+MAINOBJ = $(MAINSRC:.c=$(OBJEXT))
+
+SRCS = $(ASRCS) $(CSRCS) $(MAINSRC)
+OBJS = $(AOBJS) $(COBJS)
+
+## MAINOBJ -&gt; OBJFILES
+
+all: default
+
+%.o: %.c
+      @$(CC)  $(CFLAGS) -std=c99 -c $&lt; -o $@
+      @echo &quot;CC $&lt;&quot;
+
+default: $(AOBJS) $(COBJS) $(MAINOBJ)
+      $(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)
+
+clean:
+      rm -f $(BIN) $(AOBJS) $(COBJS) $(MAINOBJ)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在应用工程目录下运行makem命令后， 生成可执行程序demo文件，把二进制文件demo通过adb推送到开发板，运行：./demo，程序运行效果如下：</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/demo.jpg" src="../../_images/demo.jpg" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../aboutus/index.html" class="btn btn-neutral float-right" title="关于我们" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="2. LVGL移植" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

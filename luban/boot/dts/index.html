@@ -1,0 +1,697 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.5. DTS &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.6. SPL 阶段" href="../spl/index.html" />
+    <link rel="prev" title="3.4. 环境变量" href="../env_setting/index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.5. DTS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dtb">3.5.1. 两个 DTB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spl-dts">3.5.2. SPL DTS 的配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platdata">3.5.3. PLATDATA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.5.4. 扫描和绑定</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers/index.html">3.8. 驱动支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+      <li><span class="section-number">3.5. </span>DTS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dts">
+<h1><span class="section-number">3.5. </span>DTS<a class="headerlink" href="#dts" title="永久链接至标题">¶</a></h1>
+<p>Artinchip 平台上，U-Boot 与 Kernel 共用一份 DTS 配置，目前 DTB 的编译放在 U-Boot
+阶段进行。项目相关的 DTS 文件存放路径：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/common/*.dtsi</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/&lt;Board&gt;/board.dts</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/&lt;Board&gt;/board-u-boot.dtsi</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/&lt;Board&gt;/board.dts</span></code></p></li>
+</ul>
+<p>DTS 编译时，相关的源文件会被链接到 <code class="docutils literal notranslate"><span class="pre">arch/riscv/dts/</span></code> 进行编译。</p>
+<p>U-Boot 的 DTS 配置可参考 U-Boot 官方文档：</p>
+<blockquote>
+<div><p>doc/README.fdt-control</p>
+</div></blockquote>
+<div class="section" id="dtb">
+<h2><span class="section-number">3.5.1. </span>两个 DTB<a class="headerlink" href="#dtb" title="永久链接至标题">¶</a></h2>
+<p>U-Boot 编译期间，DTS 被编译产生两个 dtb 文件：</p>
+<ul class="simple">
+<li><p>u-boot-spl.dtb</p></li>
+<li><p>u-boot.dtb</p></li>
+</ul>
+<p>这两个 DTB 分别保存在三个不同位置，给 SPL, U-Boot, Kernel 三个阶段使用。</p>
+<p><strong>SPL DTB 的保存</strong></p>
+<p>在编译阶段 u-boot-spl.dtb 会被合并到 u-boot-spl.bin 的尾部，并生成 u-boot-spl-dtb.bin。
+SPL 程序通过链接脚本中的变量 <code class="docutils literal notranslate"><span class="pre">__bss_end</span></code> 访问 DTB 数据。具体请参考 <code class="docutils literal notranslate"><span class="pre">lib/fdtdec.c</span></code> 。</p>
+<p>开发者可以通过重新定义 <code class="docutils literal notranslate"><span class="pre">board_fdt_blob_setup()</span></code> 的方式，修改加载 dtb 的方式和规则。</p>
+<p><strong>U-Boot DTB 的保存</strong></p>
+<p>在编译阶段 u-boot.dtb 会被合并到 u-boot.bin 的尾部，并生成 u-boot-dtb.bin。
+U-Boot 程序通过链接脚本中的变量 <code class="docutils literal notranslate"><span class="pre">_end</span></code> 访问 DTB 数据。具体请参考 <code class="docutils literal notranslate"><span class="pre">lib/fdtdec.c</span></code> 。</p>
+<p>开发者可以通过重新定义 <code class="docutils literal notranslate"><span class="pre">board_fdt_blob_setup()</span></code> 的方式，修改加载 dtb 的方式和规则。</p>
+<p><strong>Kernel DTB 的保存</strong></p>
+<p>Kernel 所用的 DTB 通常保存在单独分区，或者与 Kernel 一起保存在 FIT Image 包中，
+U-Boot 通过读取分区或者解析 FIT Image 格式来加载 Kernel DTB 数据。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>通常情况下 U-Boot 使用的 DTB 与 Kernel 所使用的 DTB 是相同的，做启动优化的时候，
+这部分可以做一些优化，使得 DTB 数据只需从存储介质读取一次，从而加快启动速度。</p>
+</div>
+</div>
+<div class="section" id="spl-dts">
+<h2><span class="section-number">3.5.2. </span>SPL DTS 的配置<a class="headerlink" href="#spl-dts" title="永久链接至标题">¶</a></h2>
+<p>由于 SPL 仅使用 U-Boot DTS 中很少部分的设备配置，为了减少内存占用，SPL DTB
+在编译时会使用 fdtgrep 工具对 U-Boot DTS 进行过滤，以产生一个更小的 DTB。
+过滤后的 DTB 仅包含：</p>
+<ul class="simple">
+<li><p>the mandatory nodes (/alias, /chosen, /config)</p></li>
+<li><p>the nodes with one pre-relocation property:
+‘u-boot,dm-pre-reloc’ or ‘u-boot,dm-spl’</p></li>
+</ul>
+<p>在 Artinchip 平台上，对于需要在 SPL 中使用的设备，需要配置属性 <code class="docutils literal notranslate"><span class="pre">u-boot,dm-pre-reloc</span></code> ，
+具体配置文件在：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target/&lt;IC&gt;/&lt;Board&gt;/board-u-boot.dtsi</span></code></p></li>
+</ul>
+<p>参考示例：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&amp;ccu {
+    u-boot,dm-pre-reloc;
+};
+
+&amp;rst {
+    u-boot,dm-pre-reloc;
+};
+
+&amp;osc24m {
+    u-boot,dm-pre-reloc;
+};
+
+&amp;rc1m {
+    u-boot,dm-pre-reloc;
+};
+</pre></div>
+</div>
+<p>更多描述可参考文档：</p>
+<blockquote>
+<div><p>doc/README.SPL</p>
+</div></blockquote>
+</div>
+<div class="section" id="platdata">
+<h2><span class="section-number">3.5.3. </span>PLATDATA<a class="headerlink" href="#platdata" title="永久链接至标题">¶</a></h2>
+<p>SPL 使用 DTS 对平台上的设备进行配置，通常 SPL 支持 DTB 解析并不会占用太多的内存空间，
+大约需要 3KB。但是对于一些 SPL 可用内存空间十分之有限的平台，节省 DTB 解析库
+所占用的空间是十分之有吸引力的。</p>
+<p>为此，U-Boot 提供另外一种设备配置方式，即通过 C 代码手动定义 Platform data，
+其包含对设备的配置，然后通过 U_BOOT_DEIVCE() 声明设备。
+如 <code class="docutils literal notranslate"><span class="pre">drivers/demo/demo-pdata.c</span></code> 中的示例：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">dm_demo_pdata</span> <span class="n">red_square</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">colour</span> <span class="o">=</span> <span class="s">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">sides</span> <span class="o">=</span> <span class="mf">4.</span>
+<span class="p">};</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">dm_demo_pdata</span> <span class="n">green_triangle</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">colour</span> <span class="o">=</span> <span class="s">&quot;green&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">sides</span> <span class="o">=</span> <span class="mf">3.</span>
+<span class="p">};</span>
+<span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">dm_demo_pdata</span> <span class="n">yellow_hexagon</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">colour</span> <span class="o">=</span> <span class="s">&quot;yellow&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">sides</span> <span class="o">=</span> <span class="mf">6.</span>
+<span class="p">};</span>
+<span class="n">U_BOOT_DEVICE</span><span class="p">(</span><span class="n">demo1</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;demo_simple_drv&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">platdata</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">red_square</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="n">U_BOOT_DEVICE</span><span class="p">(</span><span class="n">demo2</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;demo_shape_drv&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">platdata</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">green_triangle</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="n">U_BOOT_DEVICE</span><span class="p">(</span><span class="n">demo3</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;demo_simple_drv&quot;</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">platdata</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">yellow_hexagon</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>这种方式可以节省空间，但需要在 DTS 之外新增一种配置方式，对于配置管理带来新的麻烦。
+U-Boot 还提供另外一种功能，可以在编译时将 DTS 转为 C 语言的 Platform Data 数据结构，
+然后在驱动源码中可以直接引用对应的配置。</p>
+<p>其工作原理如下：</p>
+<ul class="simple">
+<li><p>SPL 编译时，首先通过 fdtgrep 生成 SPL 使用的 DTS</p></li>
+<li><p>然后使用 dtoc.py 工具，将 DTS 配置转为 C 语言数据结构，在编译目录下生成：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">include/generated/dt-structs-gen.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spl/dts/dt-platdata.c</span></code></p></li>
+</ul>
+</li>
+<li><p>驱动中通过包含 <code class="docutils literal notranslate"><span class="pre">dt-structs.h</span></code> 来引用生成的数据结构</p></li>
+<li><p>数据结构的名字根据 DTS 中的命名，按照一定规则生成，驱动引用时需要注意</p></li>
+</ul>
+<p>使用该功能需要使能下面的配置：</p>
+<ul class="simple">
+<li><p>CONFIG_SPL_OF_PLATDATA</p></li>
+</ul>
+<p>示例可参考：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">drivers/serial/serial_artinchip.c</span></code></p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;dt-structs.h&gt;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="nc">aic_serial_plat</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">dtd_artinchip_aic_uart</span> <span class="n">dtplat</span><span class="p">;</span>  <span class="c1">// 数据类型编译时根据 DTS 配置生成</span>
+    <span class="k">struct</span> <span class="nc">ns16550_platdata</span> <span class="n">plat</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">aic_serial_probe</span><span class="p">(</span><span class="k">struct</span> <span class="nc">udevice</span> <span class="o">*</span><span class="n">dev</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_serial_plat</span> <span class="o">*</span><span class="n">plat</span> <span class="o">=</span> <span class="n">dev_get_platdata</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+
+    <span class="n">plat</span><span class="o">-&gt;</span><span class="n">plat</span><span class="p">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">plat</span><span class="o">-&gt;</span><span class="n">dtplat</span><span class="p">.</span><span class="n">reg</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// 直接使用数据结构中的配置</span>
+    <span class="n">plat</span><span class="o">-&gt;</span><span class="n">plat</span><span class="p">.</span><span class="n">reg_shift</span> <span class="o">=</span> <span class="n">plat</span><span class="o">-&gt;</span><span class="n">dtplat</span><span class="p">.</span><span class="n">reg_shift</span><span class="p">;</span>
+    <span class="n">plat</span><span class="o">-&gt;</span><span class="n">plat</span><span class="p">.</span><span class="n">clock</span> <span class="o">=</span> <span class="n">plat</span><span class="o">-&gt;</span><span class="n">dtplat</span><span class="p">.</span><span class="n">clock_frequency</span><span class="p">;</span>
+    <span class="n">plat</span><span class="o">-&gt;</span><span class="n">plat</span><span class="p">.</span><span class="n">fcr</span> <span class="o">=</span> <span class="n">UART_FCR_DEFVAL</span><span class="p">;</span>
+    <span class="n">dev</span><span class="o">-&gt;</span><span class="n">platdata</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">plat</span><span class="o">-&gt;</span><span class="n">plat</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nf">ns16550_serial_probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">U_BOOT_DRIVER</span><span class="p">(</span><span class="n">aic_serial</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">name</span>                     <span class="o">=</span> <span class="s">&quot;artinchip_aic_uart&quot;</span><span class="p">,</span> <span class="c1">// 注意此处的名字规则</span>
+    <span class="p">.</span><span class="n">id</span>                       <span class="o">=</span> <span class="n">UCLASS_SERIAL</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">priv_auto_alloc_size</span>     <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">NS16550</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">platdata_auto_alloc_size</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_serial_plat</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">probe</span>                    <span class="o">=</span> <span class="n">aic_serial_probe</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">ops</span>                      <span class="o">=</span> <span class="o">&amp;</span><span class="n">ns16550_serial_ops</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">flags</span>                    <span class="o">=</span> <span class="n">DM_FLAG_PRE_RELOC</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spl/dts/dt-platdata.c</span></code> 中生成的配置信息为：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">dtd_artinchip_aic_uart</span> <span class="n">dtv_serial_at_19210000</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">clock_frequency</span>        <span class="o">=</span> <span class="mh">0x16e3600</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">clocks</span>                 <span class="o">=</span> <span class="p">{</span>
+                              <span class="p">{</span><span class="o">&amp;</span><span class="n">dtv_clock_at_18020000</span><span class="p">,</span> <span class="p">{</span><span class="mi">53</span><span class="p">}},},</span>
+    <span class="p">.</span><span class="n">dma_names</span>              <span class="o">=</span> <span class="p">{</span><span class="s">&quot;rx&quot;</span><span class="p">,</span> <span class="s">&quot;tx&quot;</span><span class="p">},</span>
+    <span class="p">.</span><span class="n">dmas</span>                   <span class="o">=</span> <span class="p">{</span><span class="mh">0x8</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x8</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">},</span>
+    <span class="p">.</span><span class="n">reg</span>                    <span class="o">=</span> <span class="p">{</span><span class="mh">0x19210000</span><span class="p">,</span> <span class="mh">0x400</span><span class="p">},</span>
+    <span class="p">.</span><span class="n">reg_io_width</span>           <span class="o">=</span> <span class="mh">0x4</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">reg_shift</span>              <span class="o">=</span> <span class="mh">0x2</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">resets</span>                 <span class="o">=</span> <span class="p">{</span><span class="mh">0x3</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">},</span>
+<span class="p">};</span>
+<span class="n">U_BOOT_DEVICE</span><span class="p">(</span><span class="n">serial_at_19210000</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">name</span>           <span class="o">=</span> <span class="s">&quot;artinchip_aic_uart&quot;</span><span class="p">,</span> <span class="c1">// 扫描时，通过名字进行绑定</span>
+    <span class="p">.</span><span class="n">platdata</span>       <span class="o">=</span> <span class="o">&amp;</span><span class="n">dtv_serial_at_19210000</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">platdata_size</span>  <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">dtv_serial_at_19210000</span><span class="p">),</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>更详细的说明请参考官方文档：</p>
+<blockquote>
+<div><p>doc/driver-model/of-plat.rst</p>
+</div></blockquote>
+</div>
+<div class="section" id="id1">
+<h2><span class="section-number">3.5.4. </span>扫描和绑定<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>在 SPL 和 U-Boot 初始化阶段，需要对设备驱动模型进行初始化，并且需要扫描 DTS 或者
+Platform Data 的配置，实现设备和驱动的绑定。注意，在此阶段仅完成设备和驱动的匹配和绑定，
+并不会 probe 激活具体的设备。设备 Probe 在设备使用时才被触发。</p>
+<p>SPL 的设备驱动初始化流程：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">_start</span> <span class="c1">// arch/riscv/cpu/start.S</span>
+<span class="o">|-&gt;</span> <span class="n">board_init_f</span>   <span class="c1">// arch/riscv/lib/spl.c</span>
+    <span class="o">|-&gt;</span> <span class="n">spl_early_init</span><span class="p">()</span> <span class="c1">// common/spl/spl.c</span>
+        <span class="o">|-&gt;</span> <span class="n">spl_common_init</span><span class="p">(</span><span class="n">setup_malloc</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="c1">// common/spl/spl.c</span>
+            <span class="o">|-&gt;</span> <span class="n">fdtdec_setup</span><span class="p">();</span> <span class="c1">// lib/fdtdec.c 获取dtb的地址，并验证合法性</span>
+            <span class="o">|-&gt;</span> <span class="n">dm_init_and_scan</span><span class="p">(</span><span class="o">!</span><span class="n">CONFIG_IS_ENABLED</span><span class="p">(</span><span class="n">OF_PLATDATA</span><span class="p">));</span>
+            <span class="o">|</span>  <span class="c1">// 初始化驱动模型的根节点，扫描设备树创建udevice,uclass</span>
+</pre></div>
+</div>
+<p>U-Boot 的设备驱动初始化分为两个阶段： <code class="docutils literal notranslate"><span class="pre">initf_dm</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">initr_dm</span></code> 。</p>
+<p>前一阶段只处理标记了 <code class="docutils literal notranslate"><span class="pre">u-boot,dm-pre-reloc</span></code> 的设备或者标记了 <code class="docutils literal notranslate"><span class="pre">DM_FLAG_PRE_RELOC</span></code> 的驱动；
+后一阶段处理所有的设备和驱动。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">_start</span> <span class="c1">// arch/riscv/cpu/start.S</span>
+<span class="o">|-&gt;</span> <span class="n">board_init_f</span><span class="p">()</span>   <span class="c1">// common/board_f.c</span>
+    <span class="o">|-&gt;</span> <span class="n">fdtdec_setup</span><span class="p">();</span> <span class="c1">// lib/fdtdec.c</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">gd</span><span class="o">-&gt;</span><span class="n">fdt_blob</span> <span class="o">=</span> <span class="n">board_fdt_blob_setup</span><span class="p">();</span> <span class="c1">// lib/fdtdec.c</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">fdtdec_prepare_fdt</span><span class="p">();</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">initf_dm</span><span class="p">()</span> <span class="c1">// common/board_f.c</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_init_and_scan</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span> <span class="c1">// drivers/core/root.c</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">setup_reloc</span><span class="p">()</span> <span class="c1">// common/board_f.c</span>
+    <span class="o">|-&gt;</span> <span class="n">jump_to_copy</span><span class="p">()</span>
+        <span class="o">|-&gt;</span> <span class="n">relocate_code</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">start_addr_sp</span><span class="p">,</span> <span class="n">gd</span><span class="o">-&gt;</span><span class="n">new_gd</span><span class="p">,</span> <span class="n">gd</span><span class="o">-&gt;</span><span class="n">relocaddr</span><span class="p">);</span>  <span class="c1">// arch/riscv/cpu/start.S</span>
+            <span class="o">|</span> <span class="c1">// RISCV 上的实现，relocate 之后，函数不返回，直接跳转到 board_init_r 执行</span>
+            <span class="o">|-&gt;</span> <span class="n">invalidate_icache_all</span><span class="p">()</span>
+            <span class="o">|-&gt;</span> <span class="n">flush_dcache_all</span><span class="p">()</span>
+            <span class="o">|-&gt;</span> <span class="n">board_init_r</span> <span class="c1">// common/board_r.c</span>
+                <span class="o">|-&gt;</span> <span class="n">initr_dm</span><span class="p">()</span> <span class="c1">// 初始化设备驱动，这次扫描所有的设备，并且绑定到匹配的驱动上</span>
+                <span class="o">|-&gt;</span> <span class="n">dm_init_and_scan</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>具体的扫描和绑定过程：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">dm_init_and_scan</span><span class="p">(</span><span class="o">!</span><span class="n">CONFIG_IS_ENABLED</span><span class="p">(</span><span class="n">OF_PLATDATA</span><span class="p">));</span> <span class="c1">// drivers/core/root.c</span>
+<span class="o">|-&gt;</span> <span class="n">dm_init</span><span class="p">();</span> <span class="c1">// driver model, initiate virtual root driver</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_bind_by_name</span><span class="p">()</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// 加载&quot;root_driver&quot;, gd-&gt;dm_root</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">lists_driver_lookup_name</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// drivers/core/lists.c</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// 采用 U_BOOT_DRIVER(name) 声明的 driver</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">();</span> <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uc</span><span class="p">)</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_bind_device</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">parent</span><span class="o">-&gt;</span><span class="n">driver</span><span class="o">-&gt;</span><span class="n">child_post_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uc</span><span class="o">-&gt;</span><span class="n">uc_drv</span><span class="o">-&gt;</span><span class="n">post_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">dm_root</span><span class="p">)</span> <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_resolve_seq</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">dm_scan</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+    <span class="o">|-&gt;</span> <span class="n">dm_scan_plat</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+    <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// 在 SPL OF_PLATDATA 的情况,扫描和绑定由 U_BOOT_DEVICE 声明的驱动。</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">lists_bind_drivers</span><span class="p">();</span> <span class="c1">// drivers/core/lists.c</span>
+    <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">bind_drivers_pass</span><span class="p">();</span>
+    <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_bind_by_name</span><span class="p">();</span> <span class="c1">// 通过名字匹配设备和驱动</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">dm_extended_scan</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span> <span class="c1">// 扫描设备树并与设备驱动建立联系</span>
+    <span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_node</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">dm_root</span><span class="p">,</span> <span class="n">ofnode_root</span><span class="p">(),</span> <span class="n">pre_reloc_only</span><span class="p">);</span> <span class="c1">//扫描设备树并绑定root节点下的设备</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_first_subnode</span><span class="p">(</span><span class="n">parent_node</span><span class="p">)</span> <span class="c1">// 获取设备树的第一个子节点</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_next_subnode</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="c1">// 遍历所有的子节点</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_is_enabled</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="c1">// 判断设备树的子节点是否使能</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">lists_bind_fdt</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">pre_reloc_only</span><span class="p">);</span> <span class="c1">// 绑定设备树节点，创建新的udevicd drivers/core/lists.c</span>
+    <span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">ofnode_get_property</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s">&quot;compatible&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">compat_length</span><span class="p">);</span> <span class="c1">// 获取compatible</span>
+    <span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">driver_check_compatible</span><span class="p">()</span> <span class="c1">// 和driver比较compatible值</span>
+    <span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_bind_with_driver_data</span><span class="p">()</span> <span class="c1">// 创建一个设备并绑定到driver drivers/core/device.c</span>
+    <span class="o">|</span>   <span class="o">|</span>               <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">()</span> <span class="c1">// 创建初始化udevice 与对应的uclass,driver绑定</span>
+    <span class="o">|</span>   <span class="o">|</span>
+    <span class="o">|</span>   <span class="o">|</span> <span class="c1">// nodes = /chosen /clocks /firmware 一些节点本身不是设备，但包含一些设备，遍历其包含的设备</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_ofnode_path</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pre_reloc_only</span><span class="p">);</span>
+    <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_path</span><span class="p">(</span><span class="n">path</span><span class="p">);</span> <span class="c1">// 找到节点下包含的设备</span>
+    <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_node</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">dm_root</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">pre_reloc_only</span><span class="p">);</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">dm_scan_other</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+    <span class="o">|</span>   <span class="c1">// 扫描使用者自定义的节点 nothing</span>
+</pre></div>
+</div>
+<p>对于 DTS 中 <code class="docutils literal notranslate"><span class="pre">soc</span></code> 节点下的设备，在初始化时统一挂载到 <code class="docutils literal notranslate"><span class="pre">simple-bus</span></code> 中，在 <code class="docutils literal notranslate"><span class="pre">soc</span></code>
+设备绑定了 simple-bus 驱动后，触发对 <code class="docutils literal notranslate"><span class="pre">soc</span></code> 的子设备的扫描和绑定。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">device_bind_common</span><span class="p">();</span>
+<span class="o">|-&gt;</span> <span class="n">uc</span><span class="o">-&gt;</span><span class="n">uc_drv</span><span class="o">-&gt;</span><span class="n">post_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+    <span class="n">simple_bus_post_bind</span><span class="p">();</span> <span class="c1">// drivers/core/simple-bus.c</span>
+    <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_dev</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// drivers/core/root.c</span>
+        <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_node</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>在完成扫描和绑定所有的设备和驱动之后，系统处于可用状态，可以激活（probe）具体的设备并且使用。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../spl/index.html" class="btn btn-neutral float-right" title="3.6. SPL 阶段" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../env_setting/index.html" class="btn btn-neutral float-left" title="3.4. 环境变量" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

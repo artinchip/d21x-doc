@@ -1,0 +1,1536 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.5.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.5.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.5.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.5. MPP 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.5.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.5.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.5.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.5.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.5.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.5.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.5.5.2. 模块架构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mpp">6.5.5.2.1. MPP 软件框架</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-decoder">6.5.5.3. mpp_decoder 设计以及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#packet">6.5.5.3.1. packet 管理机制</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#frame">6.5.5.3.2. frame 管理机制</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">6.5.5.3.3. 物理连续内存使用情况</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">6.5.5.3.4. mpp_decoder 调用流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.5.5.3.5. mpp_decoder 数据结构</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id7">6.5.5.3.6. mpp_decoder 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-decoder-demo">6.5.5.3.7. mpp_decoder 参考demo</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-encoder">6.5.5.4. mpp_encoder 设计及接口说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id8">6.5.5.4.1. 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-encoder-demo">6.5.5.4.2. mpp_encoder 参考demo</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-ge">6.5.5.5. mpp_ge 接口说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#mpp-heap">6.5.5.6. mpp heap 设计及说明</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id9">6.5.5.6.1. mpp heap 特点</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-heap-init">6.5.5.6.2. mpp heap init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-heap-export">6.5.5.6.3. mpp heap export</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-heap-close">6.5.5.6.4. mpp heap close</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mpp-heap-destroy">6.5.5.6.5. mpp heap destroy</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id10">6.5.5.6.6. mpp heap 接口</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#ref-mpp-heap-size">6.5.5.6.7. mpp heap 设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.5.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.5. </span>MPP 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.5.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.5.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.5.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在 luban 的根目录下通过 make menuconfig 打开 aic-mpp，并进行编译。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Artinchip</span> <span class="n">packages</span>  <span class="o">---&gt;</span>
+    <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">aic</span><span class="o">-</span><span class="n">mpp</span>
+</pre></div>
+</div>
+<p>源文件目录：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aic-mpp$ tree
+.
+├── base             // 公共模块：包括内存分配和链表等基础功能
+│   ├── memory
+├── ge              // 2D 图形加速模块
+├── ve              // 编解码器模块
+|   ├── include     // ve 模块头文件
+│   ├── common      // 编解码器公共组件
+|   ├── decoder
+│        ├── h264   // h.264 解码模块
+│        ├── jpeg   // jpg 解码模块
+│        └── png    // png 解码模块
+├── include         // mpp 对外头文件
+├── mpp_test        // mpp 测试用例
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.5.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="mpp">
+<h3><span class="section-number">6.5.5.2.1. </span>MPP 软件框架<a class="headerlink" href="#mpp" title="永久链接至标题">¶</a></h3>
+<p>mpp 软件框图如下所示：</p>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/mpp_framework1.png" src="../../../_images/mpp_framework1.png" />
+<p class="caption"><span class="caption-number">图 6.44 </span><span class="caption-text">mpp 软件框架</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</div>
+<p>分为三个部分：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>mpp_decoder，实现h264、jpeg、png等解码功能</p></li>
+<li><p>mpp_encoder，实现jpeg编码（功能还未完成）。</p></li>
+<li><p>mpp_ge，实现2D图形加速功能</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="mpp-decoder">
+<h2><span class="section-number">6.5.5.3. </span>mpp_decoder 设计以及接口说明<a class="headerlink" href="#mpp-decoder" title="永久链接至标题">¶</a></h2>
+<p>mpp_decoder 由三个主要模块组成：</p>
+<ul class="simple">
+<li><p>解码模块（H264、JPEG、PNG等）：负责将码流数据解码成视频图像</p></li>
+<li><p>输入码流数据管理模块（Packet manager）：负责视频、图片码流数据和 buffer 的管理</p></li>
+<li><p>显示帧管理模块（Frame manager）：负责解码图像 buffer 的管理</p></li>
+</ul>
+<div class="section" id="packet">
+<h3><span class="section-number">6.5.5.3.1. </span>packet 管理机制<a class="headerlink" href="#packet" title="永久链接至标题">¶</a></h3>
+<p>Packet manager 负责管理码流数据和 buffer。初始化时，该模块申请一块物理连续的内存（buffer大小可由外部配置），用于存放视频/图片码流数据。</p>
+<p>Packet manager 管理的数据单元为 packet，packet 表示一笔码流数据，它可以是完整的一帧数据，也支持不是完整的一帧数据。
+每个 packet 与物理内存中的码流数据一一对应，它记录了每一笔码流的物理内存基地址、物理内存结束地址、物理内存偏移、虚拟内存地址、码流数据长度等信息。</p>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/packet_manager1.png" src="../../../_images/packet_manager1.png" />
+<p class="caption"><span class="caption-number">图 6.45 </span><span class="caption-text">packet管理</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</div>
+<p>packet 通过 empty list 和 ready list 两个链表进行管理。
+其中，empty list 用于存放空闲的 packet，ready list 用于存放待解码的 packet。</p>
+<p>送码流数据时，从 empty list 获取一个空闲 packet，填充数据后，再把 packet 放入 ready list；</p>
+<p>解码前，解码器从 ready list 获取一个填充数据的 packet，使用完后再把该 packet 放入 empty list。</p>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/pm_flow1.png" src="../../../_images/pm_flow1.png" />
+<p class="caption"><span class="caption-number">图 6.46 </span><span class="caption-text">packet manager 调用流程</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="frame">
+<h3><span class="section-number">6.5.5.3.2. </span>frame 管理机制<a class="headerlink" href="#frame" title="永久链接至标题">¶</a></h3>
+<p>Frame manager 负责管理图像 buffer。Frame manager 内部通过两个链表来管理图像 buffer：empty list 和 render list。
+其中，empty list 存放可以给解码输出使用的图像 buffer，render list 存放解码完成但还未显示的图像 buffer。
+在运行过程中，正在显示的图像 buffer 和用于参考的图像 buffer 可能不在这两个 list 中。</p>
+<ol class="arabic simple">
+<li><p>frame 状态迁移</p></li>
+</ol>
+<p>初始化时，该模块申请指定个数的图像 buffer（个数可由外部配置），每个图像 buffer 的信息存放在内部数组中。
+每个图像 buffer 有4种状态：</p>
+<ul class="simple">
+<li><p>Decoding: 该帧正在被解码器使用（用于解码输出或作为参考帧）</p></li>
+<li><p>wait_render: 该帧在 render list 中，等待显示</p></li>
+<li><p>Rendering: 该帧正在被显示占用</p></li>
+<li><p>IDLE: 该帧处于空闲状态（既没有被显示占用，也没有被解码器用作参考帧）</p></li>
+</ul>
+<p>其状态转移如下图所示：</p>
+<ul class="simple">
+<li><p>初始化时，所有图像 buffer 都在 empty list 中，此时处于 IDLE 状态；</p></li>
+<li><p>解码模块从 empty list 链表头部获取一个空图像 buffer，此时 buffer 被解码模块占用，从 IDLE 状态变为 Decoding 状态;</p></li>
+<li><p>解码完成后，解码模块还图像数据。此时分两种情况：</p>
+<ul>
+<li><p>1）如果当前帧还未被显示，该帧加入 render list 链表尾部，从 Decoding 状态变为 wait render 状态；</p></li>
+<li><p>2）该帧不再用做参考帧且已显示完成，此时该帧加入 empty list 链表尾部，由 Decoding 状态进入 IDLE 状态；</p></li>
+</ul>
+</li>
+<li><p>显示模块从 render list 链表头部取一帧图像，此时当前帧由 wait render 状态进入 Rendering 状态；</p></li>
+<li><p>显示模块还图像 buffer，分两种情况：</p>
+<ul>
+<li><p>1）如果当前帧不用于参考，此时由 Rendering 状态回到IDLE状态，该帧加入 empty list 链表尾部；</p></li>
+<li><p>2）如果当前帧用于参考，此时由 Rendering 状态进入Decoding状态，该图像 buffer 不进入任何队列，等待解码器还参考帧；</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/frame_status1.png" src="../../../_images/frame_status1.png" />
+<p class="caption"><span class="caption-number">图 6.47 </span><span class="caption-text">frame状态迁移</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>frame manager 调用流程</p></li>
+</ol>
+<p>对于 JPEG、PNG 这类没有参考帧概念的编码格式，每一帧的状态是唯一的，解码后的数据帧可直接送 render list</p>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/frame_manager_jpeg1.png" src="../../../_images/frame_manager_jpeg1.png" />
+<p class="caption"><span class="caption-number">图 6.48 </span><span class="caption-text">frame manager 调用流程（JPEG/PNG）</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>但对于 H264 这类有参考帧的编码格式，解码后的视频帧可能既被显示占用也会被解码器用作参考帧，并且由于双向参考帧的存在，
+视频帧需要重排序后才能送显示。 不同于JPG，H264 解码库内部存在一个 delay list 用于为显示帧重排序。</p>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/frame_manager_2641.png" src="../../../_images/frame_manager_2641.png" />
+<p class="caption"><span class="caption-number">图 6.49 </span><span class="caption-text">frame manager 调用流程（H264）</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">6.5.5.3.3. </span>物理连续内存使用情况<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>H264 解码所需的物理连续内存如下所示：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 33%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>内存占用模块</p></th>
+<th class="head"><p>计算方式</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>输入码流</p></td>
+<td></td>
+<td><p>大小由应用层配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>输出帧</p></td>
+<td><p>width*height*3/2*frame_num</p></td>
+<td><div class="line-block">
+<div class="line">frame_num至少需要（参考帧个数+1）个</div>
+<div class="line">显示占用个数可由应用层通过struct decode_config</div>
+<div class="line">结构体中的extra_frame_num 配置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>帧内预测(需要上一行数据)</p></td>
+<td><div class="line-block">
+<div class="line">帧格式：width*2</div>
+<div class="line">MBAFF：width*4</div>
+</div>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>宏块信息</p></td>
+<td><p>固定12K</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>dblk模块(上一个宏块行最后4行数据)</p></td>
+<td><div class="line-block">
+<div class="line">帧格式：width*8</div>
+<div class="line">MBAFF：width*16</div>
+</div>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>co-located信息</p></td>
+<td><p>固定68K</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>每一帧co-located数据缓存</p></td>
+<td><div class="line-block">
+<div class="line">(width/16)*(height/16)*32*frame_num</div>
+</div>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>co-located 两个buffer，I、P帧解码时会往buffer里写数据，B 帧解码时从buffer读数据。
+如果当前码流中没有 B 帧，这两块内存也需要申请。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">6.5.5.3.4. </span>mpp_decoder 调用流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>在调用 mpp_decoder 的解码函数时，解码模块从 Packet manager 取一笔码流，同时从 Frame maneger 取一个空闲图像 buffer，对码流进行解码
+并输出图像到图像 buffer。</p>
+<p>解码后，解码模块将码流 buffer 归还 Packet manager，将解码图像 buffer 归还 Frame maneger。</p>
+<p>为保证解码效率，建议调用者创建3个线程实现解码功能：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>send data thread</dt><dd><p>通过 mpp_decoder_get_packet 和 mpp_decoder_put_packet 这两个接口把码流数据送到 packet 管理模块</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>decode thread</dt><dd><p>通过调用 mpp_decoder_decode 控制解码，解码库从 packet 管理模块取一笔码流数据，解码完成后，将视频帧送入 frame 管理模块</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>render thread</dt><dd><p>通过 mpp_decoder_get_frame 和 mpp_decoder_put_frame 两个接口从 frame 管理模块获取视频帧，并控制该帧显示时机</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/mpp_decoder_flow1.png" src="../../../_images/mpp_decoder_flow1.png" />
+<p class="caption"><span class="caption-number">图 6.50 </span><span class="caption-text">mpp_decoder 调用流程</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.5.5.3.5. </span>mpp_decoder 数据结构<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="section" id="struct-decode-config">
+<h4><span class="section-number">6.5.5.3.5.1. </span>struct decode_config<a class="headerlink" href="#struct-decode-config" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">decode_config</span> <span class="p">{</span>
+    <span class="n">enum</span> <span class="n">mpp_pixel_format</span> <span class="n">pix_fmt</span><span class="p">;</span>  <span class="o">//</span> <span class="n">output</span> <span class="n">pixel</span> <span class="nb">format</span>
+    <span class="nb">int</span> <span class="n">bitstream_buffer_size</span><span class="p">;</span>      <span class="o">//</span> <span class="n">bitstream</span> <span class="n">buffer</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">packet_count</span><span class="p">;</span>               <span class="o">//</span> <span class="n">packet</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">extra_frame_num</span><span class="p">;</span>            <span class="o">//</span> <span class="n">extra</span> <span class="n">frame</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">fm</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>decode_config 结构体用于配置解码器初始化使用的参数。</p>
+<ul class="simple">
+<li><p>pix_fmt 表示解码输出的颜色格式</p></li>
+<li><p>bitstream_buffer_size 表示存放输入码流缓存的总长度</p></li>
+<li><p>packet_count 表示 packet manager 中 packet 的最大个数</p></li>
+<li><p>extra_frame_num 表示解码器额外分配的帧个数，主要用于缓存显示帧以保证显示平滑。</p></li>
+</ul>
+</div>
+<div class="section" id="struct-mpp-packet">
+<h4><span class="section-number">6.5.5.3.5.2. </span>struct mpp_packet<a class="headerlink" href="#struct-mpp-packet" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">mpp_packet</span> <span class="p">{</span>
+    <span class="n">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">long</span> <span class="n">long</span> <span class="n">pts</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">flag</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>mpp_packet 结构体用于表示输入码流信息。</p>
+<ul class="simple">
+<li><p>data 表示码流数据存放的起始地址</p></li>
+<li><p>size 表示该笔码流数据长度</p></li>
+<li><p>pts 表示该笔码流的时间戳</p></li>
+<li><p>flag 表示该笔码流的标记位，目前仅用于确定该码流是否为最后一笔码流（PACKET_FLAG_EOS）</p></li>
+</ul>
+</div>
+<div class="section" id="struct-mpp-frame">
+<h4><span class="section-number">6.5.5.3.5.3. </span>struct mpp_frame<a class="headerlink" href="#struct-mpp-frame" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">mpp_size</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">struct</span> <span class="n">mpp_rect</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">y</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">width</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">enum</span> <span class="n">mpp_buf_type</span> <span class="p">{</span>
+    <span class="n">MPP_DMA_BUF_FD</span><span class="p">,</span>
+    <span class="n">MPP_PHY_ADDR</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">mpp_buf</span> <span class="p">{</span>
+    <span class="n">enum</span> <span class="n">mpp_buf_type</span>       <span class="n">buf_type</span><span class="p">;</span>
+    <span class="n">union</span> <span class="p">{</span>
+            <span class="nb">int</span>             <span class="n">fd</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+            <span class="n">unsigned</span> <span class="nb">int</span>    <span class="n">phy_addr</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="p">};</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">stride</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="n">struct</span> <span class="n">mpp_size</span>         <span class="n">size</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">crop_en</span><span class="p">;</span>
+    <span class="n">struct</span> <span class="n">mpp_rect</span>         <span class="n">crop</span><span class="p">;</span>
+    <span class="n">enum</span> <span class="n">mpp_pixel_format</span>   <span class="nb">format</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>buf_type：表示 mpp_buf 类型，以 fd 方式 MPP_DMA_BUF_FD 或 以物理地址方式 MPP_PHY_ADDR；</p></li>
+<li><p>fd[3]：表示 buffer 三个分量的 fd</p></li>
+<li><p>phy_addr[3]：表示 buffer 三个分量的物理地址</p></li>
+<li><p>stride[3]：表示 buffer 三个分量的 stride</p></li>
+<li><p>size：表示 buffer 的宽、高</p></li>
+<li><p>crop_en： 表示该 buffer 是否需要 crop</p></li>
+<li><p>crop：表示该 buffer 的 crop 信息</p></li>
+<li><p>format： 表示该 buffer 的颜色格式类型</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">mpp_frame</span> <span class="p">{</span>
+    <span class="n">struct</span> <span class="n">mpp_buf</span>          <span class="n">buf</span><span class="p">;</span>
+    <span class="n">long</span> <span class="n">long</span>               <span class="n">pts</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="nb">id</span><span class="p">;</span>
+    <span class="n">unsigned</span> <span class="nb">int</span>            <span class="n">flags</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>buf：表示 mpp_frame 的 buffer 信息</p></li>
+<li><p>pts：表示 mpp_frame 的时间戳</p></li>
+<li><p>id：表示 mpp_frame 的唯一标识</p></li>
+<li><p>flags：表示 mpp_frame 的标志位</p></li>
+</ul>
+</div>
+<div class="section" id="enum-mpp-dec-errno">
+<h4><span class="section-number">6.5.5.3.5.4. </span>enum mpp_dec_errno<a class="headerlink" href="#enum-mpp-dec-errno" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">mpp_dec_errno</span> <span class="p">{</span>
+    <span class="n">DEC_ERR_NOT_SUPPORT</span>         <span class="o">=</span> <span class="mh">0x90000001</span><span class="p">,</span>
+    <span class="n">DEC_ERR_NO_EMPTY_PACKET</span>     <span class="o">=</span> <span class="mh">0x90000002</span><span class="p">,</span> <span class="o">//</span> <span class="n">no</span> <span class="n">packet</span> <span class="ow">in</span> <span class="n">empty</span> <span class="nb">list</span>
+    <span class="n">DEC_ERR_NO_READY_PACKET</span>     <span class="o">=</span> <span class="mh">0x90000003</span><span class="p">,</span> <span class="o">//</span>
+    <span class="n">DEC_ERR_NO_EMPTY_FRAME</span>      <span class="o">=</span> <span class="mh">0x90000004</span><span class="p">,</span> <span class="o">//</span>
+    <span class="n">DEC_ERR_NO_RENDER_FRAME</span>     <span class="o">=</span> <span class="mh">0x90000005</span><span class="p">,</span> <span class="o">//</span>
+    <span class="n">DEC_ERR_NULL_PTR</span>            <span class="o">=</span> <span class="mh">0x90000006</span><span class="p">,</span>
+    <span class="n">DEC_ERR_FM_NOT_CREATE</span>       <span class="o">=</span> <span class="mh">0x90000006</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>DEC_ERR_NOT_SUPPORT：该码流不支持</p></li>
+<li><p>DEC_ERR_NO_EMPTY_PACKET：packet manager 中缺少空闲的 packet，可能是解码速度小于送 packet 速度，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NO_READY_PACKET：packet manager 中缺少填好码流数据的 packet，可能是送 packet 速度小于解码速度，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NO_EMPTY_FRAME：frame manager 中缺少空闲的 frame，表示所有帧都处于使用状态，通常是解码速度大于显示速度导致，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NO_RENDER_FRAME：frame manager 中缺少待显示的 frame，表示所有帧都处于空闲状态，通常是解码速度小于显示速度导致，此时需要等待一段时间；</p></li>
+<li><p>DEC_ERR_NULL_PTR：表示接口函数输入参数存在空指针</p></li>
+<li><p>DEC_ERR_FM_NOT_CREATE：表示在获取待显示 frame 时 frame manager 还未创建</p></li>
+</ul>
+</div>
+<div class="section" id="enum-mpp-codec-type">
+<h4><span class="section-number">6.5.5.3.5.5. </span>enum mpp_codec_type<a class="headerlink" href="#enum-mpp-codec-type" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">mpp_codec_type</span> <span class="p">{</span>
+    <span class="n">MPP_CODEC_VIDEO_DECODER_H264</span> <span class="o">=</span> <span class="mh">0x1000</span><span class="p">,</span>         <span class="o">//</span> <span class="n">decoder</span>
+    <span class="n">MPP_CODEC_VIDEO_DECODER_MJPEG</span><span class="p">,</span>
+    <span class="n">MPP_CODEC_VIDEO_DECODER_PNG</span><span class="p">,</span>
+
+    <span class="n">MPP_CODEC_VIDEO_ENCODER_H264</span> <span class="o">=</span> <span class="mh">0x2000</span><span class="p">,</span>         <span class="o">//</span> <span class="n">encoder</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>mpp_codec_type 枚举类型表示支持的编解码格式。</p>
+</div>
+<div class="section" id="enum-mpp-dec-cmd">
+<h4><span class="section-number">6.5.5.3.5.6. </span>enum mpp_dec_cmd<a class="headerlink" href="#enum-mpp-dec-cmd" title="永久链接至标题">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="n">mpp_dec_cmd</span> <span class="p">{</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_EXT_FRAME_ALLOCATOR</span><span class="p">,</span>            <span class="o">//</span> <span class="n">frame</span> <span class="n">buffer</span> <span class="n">allocator</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_ROT_FLIP_FLAG</span><span class="p">,</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_SCALE</span><span class="p">,</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_CROP_INFO</span><span class="p">,</span>
+    <span class="n">MPP_DEC_INIT_CMD_SET_OUTPUT_POS</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>MPP_DEC_INIT_CMD_SET_EXT_FRAME_ALLOCATOR：表示由外部设置帧 buffer 分配器</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_ROT_FLIP_FLAG: 表示设置旋转、镜像后处理，只用于JPEG</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_SCALE： 表示设置缩放系数，只用于JPEG</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_CROP_INFO：表示设置输出 crop 信息</p></li>
+<li><p>MPP_DEC_INIT_CMD_SET_OUTPUT_POS：表示设置解码图像在输出缓存的位置</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">6.5.5.3.6. </span>mpp_decoder 接口设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>接口如下 :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">decode_config</span> <span class="p">{</span>
+    <span class="n">enum</span> <span class="n">mpp_pixel_format</span> <span class="n">pix_fmt</span><span class="p">;</span>  <span class="o">//</span> <span class="n">output</span> <span class="n">pixel</span> <span class="nb">format</span>
+    <span class="nb">int</span> <span class="n">bitstream_buffer_size</span><span class="p">;</span>      <span class="o">//</span> <span class="n">bitstream</span> <span class="n">buffer</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">packet_count</span><span class="p">;</span>               <span class="o">//</span> <span class="n">packet</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">pm</span>
+    <span class="nb">int</span> <span class="n">extra_frame_num</span><span class="p">;</span>            <span class="o">//</span> <span class="n">extra</span> <span class="n">frame</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">fm</span>
+<span class="p">};</span>
+
+<span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">create_mpp_decoder</span><span class="p">(</span><span class="n">enum</span> <span class="n">mpp_codec_type</span> <span class="nb">type</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">destory_mpp_decoder</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_init</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span> <span class="o">*</span><span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">decode_config</span> <span class="o">*</span><span class="n">config</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_decode</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_control</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="nb">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">param</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_reset</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_get_packet</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_packet</span><span class="o">*</span> <span class="n">packet</span><span class="p">,</span> <span class="nb">int</span> <span class="n">size</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_put_packet</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_packet</span><span class="o">*</span> <span class="n">packet</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_get_frame</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_frame</span><span class="o">*</span> <span class="n">frame</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">mpp_decoder_put_frame</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">decoder</span><span class="p">,</span> <span class="n">struct</span> <span class="n">mpp_frame</span><span class="o">*</span> <span class="n">frame</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="mpp-decoder-create">
+<h4><span class="section-number">6.5.5.3.6.1. </span>mpp_decoder_create<a class="headerlink" href="#mpp-decoder-create" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct mpp_decoder* mpp_decoder_create(enum mpp_codec_type type)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>创建mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>type: 解码器类型</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-destory">
+<h4><span class="section-number">6.5.5.3.6.2. </span>mpp_decoder_destory<a class="headerlink" href="#mpp-decoder-destory" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void mpp_decoder_destory(struct mpp_decoder* decoder)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>销毁mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>decoder: mpp_decoder对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-init">
+<h4><span class="section-number">6.5.5.3.6.3. </span>mpp_decoder_init<a class="headerlink" href="#mpp-decoder-init" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_init(struct mpp_decoder *decoder, struct decode_config *config)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化解码器</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">config：解码器的配置参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-decode">
+<h4><span class="section-number">6.5.5.3.6.4. </span>mpp_decoder_decode<a class="headerlink" href="#mpp-decoder-decode" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_decode(struct mpp_decoder* decoder)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>解码一笔数据</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>decoder: mpp_decoder对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-control">
+<h4><span class="section-number">6.5.5.3.6.5. </span>mpp_decoder_control<a class="headerlink" href="#mpp-decoder-control" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_control(struct mpp_decoder* decoder, int cmd, void* param)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>向mpp_decoder对象发送控制命令</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">cmd: 控制命令类型</div>
+<div class="line">param: 控制参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-reset">
+<h4><span class="section-number">6.5.5.3.6.6. </span>mpp_decoder_reset<a class="headerlink" href="#mpp-decoder-reset" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_reset(struct mpp_decoder* decoder)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>重置mpp_decoder对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-get-packet">
+<h4><span class="section-number">6.5.5.3.6.7. </span>mpp_decoder_get_packet<a class="headerlink" href="#mpp-decoder-get-packet" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_get_packet(struct mpp_decoder* decoder, struct mpp_packet* packet, int size)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取一个写码流数据的packet</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">packet:码流数据结构指针</div>
+<div class="line">size:上层应用申请packet的buffer大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-put-packet">
+<h4><span class="section-number">6.5.5.3.6.8. </span>mpp_decoder_put_packet<a class="headerlink" href="#mpp-decoder-put-packet" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_put_packet(struct mpp_decoder* decoder, struct mpp_packet* packet)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>归还码流数据的packet对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">packet:码流数据结构指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-get-frame">
+<h4><span class="section-number">6.5.5.3.6.9. </span>mpp_decoder_get_frame<a class="headerlink" href="#mpp-decoder-get-frame" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_get_frame(struct mpp_decoder* decoder, struct mpp_frame* frame)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取一个视频帧对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">frame:视频帧数据结构指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mpp-decoder-put-frame">
+<h4><span class="section-number">6.5.5.3.6.10. </span>mpp_decoder_put_frame<a class="headerlink" href="#mpp-decoder-put-frame" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_decoder_put_frame(struct mpp_decoder* decoder, struct mpp_frame* frame)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>归还视频帧对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">decoder: mpp_decoder对象</div>
+<div class="line">frame:视频帧数据结构指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="mpp-decoder-demo">
+<h3><span class="section-number">6.5.5.3.7. </span>mpp_decoder 参考demo<a class="headerlink" href="#mpp-decoder-demo" title="永久链接至标题">¶</a></h3>
+<p id="ref-picture-decoder-test">以下 demo 为基本流程调用，具体实现可以参考代码 mpp/mpp_test/picture_decoder_test.c</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*</span> <span class="mf">1.</span><span class="n">创建</span> <span class="n">mpp_decoder</span> <span class="n">对象</span>
+<span class="n">struct</span> <span class="n">mpp_decoder</span><span class="o">*</span> <span class="n">dec</span> <span class="o">=</span> <span class="n">mpp_decoder_create</span><span class="p">(</span><span class="nb">type</span><span class="p">);</span>
+
+<span class="n">struct</span> <span class="n">decode_config</span> <span class="n">config</span><span class="p">;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">bitstream_buffer_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_len</span> <span class="o">+</span> <span class="mi">1023</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="mi">1023</span><span class="p">);</span>
+<span class="n">config</span><span class="o">.</span><span class="n">extra_frame_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">packet_count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">pix_fmt</span> <span class="o">=</span> <span class="n">MPP_FMT_ARGB_8888</span><span class="p">;</span>
+
+<span class="o">//*</span> <span class="mf">2.</span> <span class="n">初始化</span> <span class="n">mpp_decoder</span>
+<span class="n">mpp_decoder_init</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">config</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">3.</span> <span class="n">获取一个空的packet</span>
+<span class="n">struct</span> <span class="n">mpp_packet</span> <span class="n">packet</span><span class="p">;</span>
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">packet</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_packet</span><span class="p">));</span>
+<span class="n">mpp_decoder_get_packet</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">packet</span><span class="p">,</span> <span class="n">file_len</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">4.</span> <span class="n">把视频码流数据拷贝到</span> <span class="n">packet</span>
+<span class="n">fread</span><span class="p">(</span><span class="n">packet</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">file_len</span><span class="p">,</span> <span class="n">fp</span><span class="p">);</span>
+<span class="n">packet</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">file_len</span><span class="p">;</span>
+<span class="n">packet</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="n">PACKET_FLAG_EOS</span><span class="p">;</span>
+
+<span class="o">//*</span> <span class="mf">5.</span> <span class="n">归还</span> <span class="n">packet</span>
+<span class="n">mpp_decoder_put_packet</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">packet</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">6.</span> <span class="n">解码该笔码流数据</span>
+<span class="n">mpp_decoder_decode</span><span class="p">(</span><span class="n">dec</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">7.</span> <span class="n">获取解码后视频帧数据</span>
+<span class="n">struct</span> <span class="n">mpp_frame</span> <span class="n">frame</span><span class="p">;</span>
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">frame</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">struct</span> <span class="n">mpp_frame</span><span class="p">));</span>
+<span class="n">mpp_decoder_get_frame</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">8.</span> <span class="n">显示该视频帧</span>
+<span class="o">//</span> <span class="n">render_frame</span><span class="o">...</span>
+
+<span class="o">//*</span> <span class="mf">9.</span> <span class="n">归还该视频帧</span>
+<span class="n">mpp_decoder_put_frame</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">frame</span><span class="p">);</span>
+
+<span class="o">//*</span> <span class="mf">10.</span> <span class="n">销毁</span> <span class="n">mpp_decoder</span>
+<span class="n">mpp_decoder_destory</span><span class="p">(</span><span class="n">dec</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-encoder">
+<h2><span class="section-number">6.5.5.4. </span>mpp_encoder 设计及接口说明<a class="headerlink" href="#mpp-encoder" title="永久链接至标题">¶</a></h2>
+<p>mpp_encoder 目前只支持 JPEG 图片编码。</p>
+<div class="section" id="id8">
+<h3><span class="section-number">6.5.5.4.1. </span>接口设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="section" id="mpp-encode-jpeg">
+<h4><span class="section-number">6.5.5.4.1.1. </span>mpp_encode_jpeg<a class="headerlink" href="#mpp-encode-jpeg" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int mpp_encode_jpeg(struct mpp_frame* frame, int quality, int dma_buf_fd, int buf_len, int* len)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>编码一帧 JPEG 图片</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">frame: 待编码的原始 YUV 数据</div>
+<div class="line">quality: 编码质量，取值范围1~100，1表示编码图片质量最差，100表示最好</div>
+<div class="line">dma_buf_fd：输出 JPEG 图片存放的 dma-buf fd</div>
+<div class="line">buf_len：输出 JPEG 图片 dma-buf 的长度</div>
+<div class="line">len: 输出 JPEG 图片的真实大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0: 成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>输出 JPEG 图片的缓存 buffer 由调用者申请，但调用者并不知道编码后图片的实际大小，
+为避免 VE 写输出数据时越界，该 buffer 需要预先申请较大的内存。</p>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-encoder-demo">
+<h3><span class="section-number">6.5.5.4.2. </span>mpp_encoder 参考demo<a class="headerlink" href="#mpp-encoder-demo" title="永久链接至标题">¶</a></h3>
+<p>以下 demo 为基本流程调用，具体实现可以参考代码 mpp/mpp_test/jpeg_encoder_test.c</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//* 1. 获取 dma-buf device 句柄
+int dma_fd = dmabuf_device_open();
+
+//* 2. 设置输入 YUV 数据结构体
+struct mpp_frame frame;
+// ....
+
+//* 3. 申请编码输出 buffer
+int len = 0;
+int buf_len = width * height * 4/5 * quality / 100;
+int jpeg_data_fd = dmabuf_alloc(dma_fd, buf_len);
+
+//* 4. 编码 JPEG 图片
+mpp_encode_jpeg(&amp;frame, quality, jpeg_data_fd, buf_len, &amp;len)；
+
+//* 5. 保存编码后 JPEG 图片
+unsigned char* jpeg_vir_addr = dmabuf_mmap(jpeg_data_fd, buf_len);
+FILE* fp_save = fopen(&quot;/save.jpg&quot;, &quot;wb&quot;);
+fwrite(jpeg_vir_addr, 1, len, fp_save);
+fclose(fp_save);
+
+//* 6. 释放资源
+dmabuf_munmap(jpeg_vir_addr, buf_len);
+dmabuf_free(jpeg_data_fd);
+dmabuf_device_close(dma_fd);
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mpp-ge">
+<h2><span class="section-number">6.5.5.5. </span>mpp_ge 接口说明<a class="headerlink" href="#mpp-ge" title="永久链接至标题">¶</a></h2>
+<p>mpp_ge 接口说明请参考 <a class="reference internal" href="../ge/5_design_guide.html#ref-luban-mpp-ge"><span class="std std-ref">MPP对GE接口的封装</span></a></p>
+</div>
+<div class="section" id="mpp-heap">
+<h2><span class="section-number">6.5.5.6. </span>mpp heap 设计及说明<a class="headerlink" href="#mpp-heap" title="永久链接至标题">¶</a></h2>
+<p>Mpp Heap 负责管理 mpp 中间件独占的 CMA 内存，并在 mpp 中间件需要物理内存时，将内存页面导出为 DMA-BUF。</p>
+<div class="section" id="id9">
+<h3><span class="section-number">6.5.5.6.1. </span>mpp heap 特点<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p><strong>解决内存碎片化</strong></p>
+<p>CMA 内存允许多媒体模块和系统复用，在这种情况下，内存碎片化的情况不可避免（部分内存页面可能会被系统 pin
+住，无法迁移）。而 mpp heap 管理的内存能确保只被 mpp 中间件使用，避免了内存页面被 pin 住而导致碎片化的问题。</p>
+<ul class="simple">
+<li><p>mpp heap 的内存需要在用户态通过 <code class="docutils literal notranslate"><span class="pre">/dev/dmabuf/mpp</span></code> 节点来申请，这个节点是 ArtInChip 平台扩展的私有节点，只有 mpp 中间件会访问。</p></li>
+<li><p>对于系统来说，该块内存已被 alloc，系统不会再去访问，因此能达到 mpp 中间件独占的效果。</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>只要在调用 mpp 中间件的过程中，只要做到资源的申请与释放一一对应，就能解决内存碎片化问题。</p>
+</div>
+<p><strong>允许系统回收 mpp heap 内存</strong></p>
+<p>mpp heap 管理的内存通过 <code class="docutils literal notranslate"><span class="pre">cma_alloc</span></code> 申请，在系统内存资源紧张，而又不需要 mpp 中间件的情况下
+（例如 OTA 升级），允许通过销毁 mpp heap 释放 CMA 内存给系统使用。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>mpp heap 一旦销毁，无法再次初始化，只能 reboot 系统。</p>
+</div>
+</div>
+<div class="section" id="mpp-heap-init">
+<h3><span class="section-number">6.5.5.6.2. </span>mpp heap init<a class="headerlink" href="#mpp-heap-init" title="永久链接至标题">¶</a></h3>
+<p>初始化时，MPP Heap 从 CMA 内存中申请一大块物理连续内存，并创建一个 genpool 内存池进行管理。</p>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/mpp_heap_init.png" src="../../../_images/mpp_heap_init.png" />
+<p class="caption"><span class="caption-number">图 6.51 </span><span class="caption-text">mpp_heap 初始化</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="mpp-heap-export">
+<h3><span class="section-number">6.5.5.6.3. </span>mpp heap export<a class="headerlink" href="#mpp-heap-export" title="永久链接至标题">¶</a></h3>
+<p>mpp heap 通过 <code class="docutils literal notranslate"><span class="pre">/dev/dmabuf/mpp</span></code> 节点，以 <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> 的方式将管理的 CMA 内存导出为标准的 DMA-BUF
+文件句柄。</p>
+<p>genpool 内存池是一个基于 bitmap 的管理算法，其最小分配单位为 4K，分配的内存无论 <strong>首地址</strong>
+还是 <strong>大小</strong> ，都遵循 <code class="docutils literal notranslate"><span class="pre">4K</span></code> 对齐。</p>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/mpp_heap_export.png" src="../../../_images/mpp_heap_export.png" />
+<p class="caption"><span class="caption-number">图 6.52 </span><span class="caption-text">mpp_heap 导出 DMA-BUF</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="mpp-heap-close">
+<h3><span class="section-number">6.5.5.6.4. </span>mpp heap close<a class="headerlink" href="#mpp-heap-close" title="永久链接至标题">¶</a></h3>
+<p>只需要 <code class="docutils literal notranslate"><span class="pre">close</span></code> DMA-BUF 的文件句柄，即触发 mpp heap 的回收 DMA-BUF。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>当一块 DMA-BUF 还被多媒体模块占用时，close 操作无法触发 mpp heap 回收</p>
+</div>
+<div class="figure align-center" id="id21">
+<img alt="../../../_images/mpp_heap_close.png" src="../../../_images/mpp_heap_close.png" />
+<p class="caption"><span class="caption-number">图 6.53 </span><span class="caption-text">mpp_heap 回收 DMA-BUF</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="mpp-heap-destroy">
+<h3><span class="section-number">6.5.5.6.5. </span>mpp heap destroy<a class="headerlink" href="#mpp-heap-destroy" title="永久链接至标题">¶</a></h3>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">/dev/dmabuf/mpp</span></code> 节点，下发扩展的 <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> 接口即可销毁 MPP Heap, 将其中的 CMA 内存归还改系统。</p>
+<p>mpp heap 一旦被销毁，无法再次初始化，只能 reboot。</p>
+<div class="figure align-center" id="id22">
+<img alt="../../../_images/mpp_heap_destroy.png" src="../../../_images/mpp_heap_destroy.png" />
+<p class="caption"><span class="caption-number">图 6.54 </span><span class="caption-text">mpp heap 销毁</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">6.5.5.6.6. </span>mpp heap 接口<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>接口如下 :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">dmabuf_device_open</span><span class="p">();</span>
+<span class="n">void</span> <span class="n">dmabuf_device_close</span><span class="p">(</span><span class="nb">int</span> <span class="n">dma_fd</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">dmabuf_device_destroy</span><span class="p">(</span><span class="nb">int</span> <span class="n">dma_fd</span><span class="p">);</span>
+<span class="nb">int</span> <span class="n">dmabuf_alloc</span><span class="p">(</span><span class="nb">int</span> <span class="n">dma_fd</span><span class="p">,</span> <span class="nb">int</span> <span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int dmabuf_device_open()</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取 mpp heap 的文件句柄</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">void</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">dma_fd:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void dmabuf_device_close(int dma_fd)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>释放 mpp heap 的文件句柄</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dma_fd: mpp heap 的文件句柄</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">void</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void dmabuf_device_destroy(int dma_fd)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>销毁 mpp heap</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dma_fd: mpp heap 的文件句柄</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">void</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>mpp heap 一旦被销毁，无法再次初始化，只能 reboot</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int dmabuf_alloc(int dma_fd, int size)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>通过 mpp heap 申请一块 DMA-BUF</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">dma_fd: mpp heap 的文件句柄</div>
+<div class="line">size: DMA-BUF size</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">DMA-BUF fd:成功</div>
+<div class="line">&lt;0:失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ref-mpp-heap-size">
+<span id="id11"></span><h3><span class="section-number">6.5.5.6.7. </span>mpp heap 设置<a class="headerlink" href="#ref-mpp-heap-size" title="永久链接至标题">¶</a></h3>
+<p>mpp heap 管理的内存必须满足视频播放的最大需求。</p>
+<p>视频播放内存可由 <a class="reference download internal" download="" href="../../../_downloads/8db0ff5ddffd480ed46bdfb4ca60868d/video_memory.xlsx"><code class="xref download docutils literal notranslate"><span class="pre">视频播放内存统计表格</span></code></a> 得到结果。</p>
+<p>mpp heap 中的内存从 CMA 预留内存中申请，但 CMA 内存不能只为 mpp heap 预留，还需要为
+其他需要物理连续内存的模块预留，主要是显示，音频和通讯模块。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果 mpp heap 的 size 或 CMA 预留内存的 size 设置不合理，不仅影响 mpp heap 初始化，还可能影响其他模块运行。</p>
+</div>
+<p><strong>显示模块</strong></p>
+<p>以 fb0 为 32 位 argb8888 格式，外接分辨率为 1024x600 的 LCD 为例：</p>
+<p>单 buffer 场景下需要 1024 * 600 * (32 / 8) = 2457600 byte, 约 <code class="docutils literal notranslate"><span class="pre">2.4M</span></code> CMA 内存</p>
+<p>双 buffer 场景下则需要 <code class="docutils literal notranslate"><span class="pre">4.8M</span></code></p>
+<p><strong>音频模块</strong></p>
+<p>启用 ALSL 的场景下需要为音频模块预留 <code class="docutils literal notranslate"><span class="pre">1.5M</span></code> CMA 内存</p>
+<p>在 ALSL 加 I2S 的场景下则需要 <code class="docutils literal notranslate"><span class="pre">2.5M</span></code> CMA 内存</p>
+<p><strong>通讯模块</strong></p>
+<p>WIFI, Bluetooth, USB 等通讯模块也会占用部分 CMA 内存，这个要根据实际场景进行推算。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>CMA 预留内存的大小 &gt;=  mpp heap + 其他模块，同时 CMA 预留内存大小遵循 <code class="docutils literal notranslate"><span class="pre">4M</span></code> 对齐。
+为确保系统正常运行，在设置 CMA 预留内存时要保有一定的余量。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.5.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.5.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

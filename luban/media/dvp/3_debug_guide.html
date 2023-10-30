@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.4.3. 调试指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.4.4. 测试指南" href="4_test_guide.html" />
+    <link rel="prev" title="6.4.2. 参数配置" href="2_config_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.4. DVP 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.4.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.4.2. 参数配置</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.4.3. 调试指南</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#ref-dvp-debug">6.4.3.1. 调试开关</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#sysfs">6.4.3.2. Sysfs 节点</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2">6.4.3.2.1. 查看V4L2设备</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#v4l2debug">6.4.3.2.2. 打开V4L2的debug开关</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dvp-buf">6.4.3.2.3. 查看 DVP 的 Buf 队列情况</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.4.3.3. V4L2 相关的其他工具</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.4.4. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">6.4.5. 设计说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.4.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.4. </span>DVP 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.4.3. </span>调试指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.4.3. </span>调试指南<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="ref-dvp-debug">
+<span id="id2"></span><h2><span class="section-number">6.4.3.1. </span>调试开关<a class="headerlink" href="#ref-dvp-debug" title="永久链接至标题">¶</a></h2>
+<p>在luban根目录下执行 make kernel-menuconfig，进入kernel的功能配置，可以打开DVP模块的DEBUG选项：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Linux</span>
+    <span class="n">Kernel</span> <span class="n">hacking</span>
+        <span class="n">Artinchip</span> <span class="n">Debug</span>
+            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">DVP</span> <span class="n">driver</span> <span class="n">debug</span>
+</pre></div>
+</div>
+<p>此DEBUG选项打开的影响：</p>
+<ol class="arabic simple">
+<li><p>DVP驱动以-O0编译</p></li>
+<li><p>DVP的pr_dbg()和dev_dbg()调试信息会被编译</p></li>
+</ol>
+<p>在系统运行时，如果要打印pr_dbg()和dev_dbg()信息，还需要调整loglevel为8，两个方法：</p>
+<ol class="arabic simple">
+<li><p>在board.dts中修改bootargs，增加“loglevel=8”</p></li>
+<li><p>在板子启动到Linux shell后，执行命令：</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="m">8</span> &gt; /proc/sys/kernel/printk
+</pre></div>
+</div>
+</div>
+<div class="section" id="sysfs">
+<h2><span class="section-number">6.4.3.2. </span>Sysfs 节点<a class="headerlink" href="#sysfs" title="永久链接至标题">¶</a></h2>
+<div class="section" id="v4l2">
+<h3><span class="section-number">6.4.3.2.1. </span>查看V4L2设备<a class="headerlink" href="#v4l2" title="永久链接至标题">¶</a></h3>
+<p>在 Sysfs 中查看video设备的信息：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># ls /dev/video0 -l</span>
+crw-------    <span class="m">1</span> root     root       <span class="m">81</span>,   <span class="m">0</span> Jan  <span class="m">1</span>  <span class="m">1970</span> /dev/video0
+<span class="c1"># ls /sys/class/video4linux/v4l-subdev0/</span>
+dev        dev_debug  device     index      name       subsystem  uevent
+<span class="c1">#</span>
+<span class="c1"># cat /sys/class/video4linux/v4l-subdev0/name</span>
+ov5640 <span class="m">3</span>-003c
+<span class="c1">#</span>
+<span class="c1"># cat /sys/class/video4linux/v4l-subdev1/name</span>
+aic-dvp-sd
+<span class="c1"># ls -l /sys/class/video4linux/</span>
+lrwxrwxrwx    <span class="m">1</span> root     root             <span class="m">0</span> Jan  <span class="m">1</span> <span class="m">00</span>:12 v4l-subdev0 -&gt; ../../devices/platform/soc/99223000.twi/i2c-3/3-003c/video4linux/v4l-subdev0
+lrwxrwxrwx    <span class="m">1</span> root     root             <span class="m">0</span> Jan  <span class="m">1</span> <span class="m">00</span>:12 v4l-subdev1 -&gt; ../../devices/platform/soc/98830000.dvp/video4linux/v4l-subdev1
+lrwxrwxrwx    <span class="m">1</span> root     root             <span class="m">0</span> Jan  <span class="m">1</span> <span class="m">00</span>:12 video0 -&gt; ../../devices/platform/soc/98830000.dvp/video4linux/video0
+</pre></div>
+</div>
+</div>
+<div class="section" id="v4l2debug">
+<h3><span class="section-number">6.4.3.2.2. </span>打开V4L2的debug开关<a class="headerlink" href="#v4l2debug" title="永久链接至标题">¶</a></h3>
+<p>在V4L2子系统中，用dprintk(level)接口来控制调试信息，大于代码中的dprintk(level)调用时的level就可以打印出信息。dprintk()一般用到两个debug level：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>显示ioctl名称</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>显示API的传入参数</p></td>
+</tr>
+</tbody>
+</table>
+<p>向对应的Sysfs节点写入一个整数值，可以修改该debug level：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> 0x3 &gt; /sys/module/videobuf2_v4l2/parameters/debug
+<span class="nb">echo</span> 0x3 &gt; /sys/module/videobuf2_common/parameters/debug
+<span class="nb">echo</span> 0x3 &gt; /sys/devices/platform/soc/18830000.dvp/video4linux/v4l-subdev1/dev_debug
+<span class="nb">echo</span> 0x3 &gt; /sys/devices/platform/soc/18830000.dvp/video4linux/video0/dev_debug
+</pre></div>
+</div>
+</div>
+<div class="section" id="dvp-buf">
+<span id="ref-to-dvp-sysfs"></span><h3><span class="section-number">6.4.3.2.3. </span>查看 DVP 的 Buf 队列情况<a class="headerlink" href="#dvp-buf" title="永久链接至标题">¶</a></h3>
+<p>DVP驱动中实现了一个sysfs节点buflist，查看当前三个Qbuf、DQbuf、DVP驱动中的buf list状态：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># cat /sys/devices/platform/soc/18830000.dvp/buflist</span>
+In dvp-&gt;buf_list, the current buf <span class="k">in</span> list:
+<span class="o">[</span><span class="m">0</span><span class="o">]</span>: empty
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>: empty
+<span class="o">[</span><span class="m">2</span><span class="o">]</span>: empty
+
+In V4L2 Q-buf list:
+<span class="o">[</span><span class="m">0</span><span class="o">]</span>: empty
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>: empty
+<span class="o">[</span><span class="m">2</span><span class="o">]</span>: empty
+
+In V4L2 DQ-buf list:
+<span class="o">[</span><span class="m">0</span><span class="o">]</span>, state: Done
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>, state: Done
+<span class="o">[</span><span class="m">2</span><span class="o">]</span>, state: Done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.4.3.3. </span>V4L2 相关的其他工具<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>V4l2-ctl，v4l2的瑞士军刀</p></li>
+<li><p>V4l2兼容性测试</p></li>
+<li><p>V4l2-dbg，</p></li>
+<li><p>qv4l2，QT测试程序</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>TODO：以上工具的使用方法待验证和整理</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="4_test_guide.html" class="btn btn-neutral float-right" title="6.4.4. 测试指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="2_config_guide.html" class="btn btn-neutral float-left" title="6.4.2. 参数配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

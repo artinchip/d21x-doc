@@ -1,0 +1,797 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.11.1. 模块介绍 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.11.2. 使用指南" href="2_config_guide.html" />
+    <link rel="prev" title="7.11. UART 使用指南" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.11. UART 使用指南</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.11.1. 模块介绍</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.11.1.1. 术语定义</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.11.1.2. 模块简介</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.11.1.3. 通信协议</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">7.11.1.4. 参数信息</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">7.11.1.5. 常用接口</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ttl">7.11.1.5.1. TTL</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rs232">7.11.1.5.2. RS232</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rs422">7.11.1.5.3. RS422</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rs485">7.11.1.5.4. RS485</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">7.11.1.6. 插头</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id8">7.11.1.6.1. 公母之分</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#db-9">7.11.1.6.2. DB-9接口</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id9">7.11.1.7. 流控</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id10">7.11.1.7.1. 硬件流控</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">7.11.1.7.2. 软件流控</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#raw">7.11.1.8. RAW模式</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id12">7.11.1.9. 模块特性</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.11.2. 使用指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.11.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.11.4. 测试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="5_design_guide.html">7.11.5. 源码说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.11.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.11. </span>UART 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.11.1. </span>模块介绍</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.11.1. </span>模块介绍<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.11.1.1. </span>术语定义<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 37%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>术语</p></th>
+<th class="head"><p>定义</p></th>
+<th class="head"><p>注释说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>UART</p></td>
+<td><p>Universal Asynchronous Receiver/Transmitter</p></td>
+<td><p>通用异步收发传输器</p></td>
+</tr>
+<tr class="row-odd"><td><p>TTL</p></td>
+<td><p>Transistor-Transistor Logic</p></td>
+<td><p>逻辑门电路</p></td>
+</tr>
+<tr class="row-even"><td><p>DCD</p></td>
+<td><p>Data Carrier Detect</p></td>
+<td><p>载波侦听</p></td>
+</tr>
+<tr class="row-odd"><td><p>DTR</p></td>
+<td><p>Data Terminal Ready</p></td>
+<td><p>数据终端准备好</p></td>
+</tr>
+<tr class="row-even"><td><p>DSR</p></td>
+<td><p>Data Set Ready</p></td>
+<td><p>数据准备好</p></td>
+</tr>
+<tr class="row-odd"><td><p>RTS</p></td>
+<td><p>Request To Send</p></td>
+<td><p>请求发送</p></td>
+</tr>
+<tr class="row-even"><td><p>CTS</p></td>
+<td><p>Clear To Send</p></td>
+<td><p>清除发送</p></td>
+</tr>
+<tr class="row-odd"><td><p>RI</p></td>
+<td><p>Ring Indicator</p></td>
+<td><p>响铃指示</p></td>
+</tr>
+<tr class="row-even"><td><p>THR</p></td>
+<td><p>Transmit Holding Register</p></td>
+<td><p>发送保持寄存器</p></td>
+</tr>
+<tr class="row-odd"><td><p>RBR</p></td>
+<td><p>Receive Buffer Register</p></td>
+<td><p>接收缓冲寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>ACPI</p></td>
+<td><p>Advanced Configuration and Power Interface</p></td>
+<td><p>高阶配置和电源接口</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.11.1.2. </span>模块简介<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>通用异步收发传输器（Universal Asynchronous Receiver/Transmitter)，通常称作 UART，是一种通用串行数据总线。</p>
+<p>串行通信是指利用一条传输线将数据一位位地顺序传送，通信线路非常简单。</p>
+<p>UART 为双向通信，可以实现全双工传输和接收。在嵌入式设计中，UART 用于主机与辅助设备通信，如汽车音响与外接AP之间的通信，也用于 PC 机通信包括与监控调试器和其它器件，如 EEPROM 通信。</p>
+<p>在 UART 上追加同步方式的序列信号变换电路的产品，被称为 USART(Universal Synchronous Asynchronous Receiver Transmitter)</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.11.1.3. </span>通信协议<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>UART 作为异步串行通信协议的一种，工作原理是将传输数据的每个字符一位接一位地传输。其协议中添加了一些特殊的表示位：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>起始位 Start bit</dt><dd><p>先发出一个逻辑“0”的信号，表示传输字符的开始</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>数据位 Data bits</dt><dd><p>紧接着起始位之后。数据位的个数可以是4、5、6、7、8等，构成一个字符。通常采用 ASCII 码。从最低位开始传送，靠时钟定位。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>奇偶校验位 Parity</dt><dd><p>数据位加上这一位后，使得“1”的位数应为偶数(偶校验)或奇数(奇校验)，以此来校验数据传送的正确性。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>停止位 Stop bits</dt><dd><p>它是一个字符数据的结束标志。可以是1位、1.5位、2位的高电平。 由于数据是在传输线上定时的，并且每一个设备有其自己的时钟，很可能在通信中两台设备间出现了小小的不同步。因此停止位不仅仅是表示传输的结束，并且提供计算机校正时钟同步的机会。停止位的位数越多，时钟同步的容忍程度越大，但是数据传输率会越慢</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>流控 Flow contorl</dt><dd><p>管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失，我们会在一些上位机上看到 RTS /CTS、DTR /DSR和 XON /XOFF的选项，这是对流控制的选项</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>空闲位</dt><dd><p>处于逻辑“1”状态，表示当前线路上没有数据传送，该位为协议位，自动产生</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>波特率 BaudRate</dt><dd><p>是衡量数据传送速率的指标。表示每秒钟传送的bit数。比如波特率 115200，表示传输速率是 115200 bps</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">7.11.1.4. </span>参数信息<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在 UART 进行通信的时候，双方需要协商相关参数，否则无法进行信息解析，因此在通信之初，需要对所使用的工具设置上述的所有参数</p>
+<div class="figure align-center">
+<img alt="../../../_images/uart-param1.jpg" src="../../../_images/uart-param1.jpg" />
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">7.11.1.5. </span>常用接口<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>串口、COM 口是指的物理接口形式(硬件)。</p></li>
+<li><p>TTL、RS-232、RS-485 是指的电平标准(电信号)。</p></li>
+</ul>
+<div class="section" id="ttl">
+<h3><span class="section-number">7.11.1.5.1. </span>TTL<a class="headerlink" href="#ttl" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>TTL标准是低电平（0V）为0，高电平（+5V）为1。</p></li>
+<li><p>TTL 接口需要对端接口也为 TTL，但诸如 PC 等设备无 TTL 接口的UART口，一般转 TTL 为 USB 等 PC 更通用的接口。</p></li>
+<li><p>TTL 接口为全双工，连接设备的时候一般只接 GND/RX/TX。不会接Vcc或者 +3.3v 的电源线，避免与目标设备上的供电冲突，但 GND 可以保证源设备和目标设备供地，有助于信号稳定。</p></li>
+<li><p>信号线采用交叉的方式，即源端的 RX 连接目标设备的 TX，源端的 TX 连接目标设备的 RX。</p></li>
+</ul>
+</div>
+<div class="section" id="rs232">
+<h3><span class="section-number">7.11.1.5.2. </span>RS232<a class="headerlink" href="#rs232" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>RS232 标准是正电平（+3V~+15V）为0，负电平（-13V~-15V）为1。</p></li>
+<li><p>RS232 接口在总线上只允许连接1个收发器，单站能力。</p></li>
+<li><p>RS232 传输线采用屏蔽双绞线，最高传输距离一般为 15M，最大速率为 20Kbps。</p></li>
+<li><p>RS232 接口为全双工，连接设备的时候一般只接 GND/RX/TX。</p></li>
+<li><p>信号线也采用交叉的方式，即源端的RX连接目标设备的 TX，源端的 TX 连接目标设备的 RX。</p></li>
+</ul>
+</div>
+<div class="section" id="rs422">
+<h3><span class="section-number">7.11.1.5.3. </span>RS422<a class="headerlink" href="#rs422" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>RS422 标准采用差分信号负逻辑，逻辑“1”以两线间的电压差为+（2—6）V表示；逻辑“0”以两线间的电压差为-（2—6）V表示。接口信号电平比 RS232 降低了，就不易损坏接口电路的芯片，且该电平与 TTL 电平兼容，可方便与TTL电路连接。</p></li>
+<li><p>RS422 接口在总线上是允许连接多达128个收发器，多站能力。</p></li>
+<li><p>RS422 的数据最高传输速率为 10Mbps，100米长双绞线的最大速度为 1Mb/s。</p></li>
+<li><p>RS422 采用平衡发送和差分接收，因此具有抑制共模干扰的能力。RS422 接口的最大传输距离标准值为4000英尺（约1219米），实际上可达3000米。</p></li>
+<li><p>RS422 是全双工，连接设备的时候一般接 RX+/RX-/TX+/TX-/GND。</p></li>
+<li><p>信号线也采用交叉的方式，即源端的 RX-/RX+ 连接目标设备的 TX-/TX+，源端的 TX-/TX+ 连接目标设备的 RX-/RX+。</p></li>
+</ul>
+</div>
+<div class="section" id="rs485">
+<h3><span class="section-number">7.11.1.5.4. </span>RS485<a class="headerlink" href="#rs485" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>RS485 的电气性能和 RS422 完全一样，主要区别是 RS485 是半双工。连接设备的时候一般接 A-/A+/GND，DB9 接口定义了两组，同时必须使用同一组的+/-。</p></li>
+<li><p>信号线也采用交叉的方式，即源端的 A- 连接目标设备的A-，源端的 A+ 连接目标设备的 A+。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.11.1.6. </span>插头<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id8">
+<h3><span class="section-number">7.11.1.6.1. </span>公母之分<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>针形的为公头，孔形的为母头</p></li>
+<li><p>PC 串口一般为公头，设备的一般为母头</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/port-male1.jpg" src="../../../_images/port-male1.jpg" />
+</div>
+</div>
+<div class="section" id="db-9">
+<h3><span class="section-number">7.11.1.6.2. </span>DB-9接口<a class="headerlink" href="#db-9" title="永久链接至标题">¶</a></h3>
+<p>RS232DB9 的信号分分四组：</p>
+<ul class="simple">
+<li><p>DCD/RI：电气 Ready 参数</p></li>
+<li><p>DTR/DSR：模块 Ready 参数</p></li>
+<li><p>RTS/CTS：流控参数</p></li>
+<li><p>RXD/TXD：数据收发</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 9%" />
+<col style="width: 23%" />
+<col style="width: 9%" />
+<col style="width: 21%" />
+<col style="width: 9%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>针序</p></th>
+<th class="head"><p>RS232</p></th>
+<th class="head"><p>说明</p></th>
+<th class="head"><p>RS422</p></th>
+<th class="head"><p>说明</p></th>
+<th class="head"><p>RS485</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>DCD</p></td>
+<td><p>数据载波检测</p></td>
+<td><p>RXD-</p></td>
+<td><p>接收</p></td>
+<td><p>A-</p></td>
+<td><p>组1</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>RXD</p></td>
+<td><p>接收数据</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>TXD</p></td>
+<td><p>发送数据</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>DTR</p></td>
+<td><p>数据终端准备好</p></td>
+<td><p>TXD+</p></td>
+<td><p>发送</p></td>
+<td><p>A+</p></td>
+<td><p>组2</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>GND</p></td>
+<td><p>信号地</p></td>
+<td><p>GND</p></td>
+<td><p>信号地</p></td>
+<td><p>GND</p></td>
+<td><p>信号地</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>DSR</p></td>
+<td><p>数据准备好</p></td>
+<td><p>RXD+</p></td>
+<td><p>接收</p></td>
+<td><p>A+</p></td>
+<td><p>组1</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>RTS</p></td>
+<td><p>请求发送</p></td>
+<td><p>RTS</p></td>
+<td><p>请求发送</p></td>
+<td><p>RTS</p></td>
+<td><p>请求发送</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>CTS</p></td>
+<td><p>清除发送</p></td>
+<td><p>CTS</p></td>
+<td><p>清除发送</p></td>
+<td><p>CTS</p></td>
+<td><p>清除发送</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>RI</p></td>
+<td><p>响铃指示</p></td>
+<td><p>TXD-</p></td>
+<td><p>发送</p></td>
+<td><p>A-</p></td>
+<td><p>组2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">7.11.1.7. </span>流控<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>这里讲到的 “流”，指的是数据流；在数据通信中，流控制是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失。</p>
+<p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。</p>
+<p>计算机中常用的两种流控制分别是硬件流控制（RTS /CTS、DTR /DSR等）和软件流控制（XON /XOFF）。</p>
+<div class="section" id="id10">
+<h3><span class="section-number">7.11.1.7.1. </span>硬件流控<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>RTS/CTS 属于硬件握手的一种，最初是设计为电传打字机和调制解调器半双工协作通信的，每次它只能一方调制解调器发送数据。终端必须发送请求发送信号然后等到调制解调器回应清除发送信号。</p>
+<div class="figure align-center">
+<img alt="../../../_images/flowctrol1.jpg" src="../../../_images/flowctrol1.jpg" />
+</div>
+<p>A 端的 DTR（数据设备就绪）发出信号， 当 B 端准备好后，B 端的 DTR（数据设备就绪）向 A端的 DSR（通讯设备就绪）发出信号。 接下来就可以通过 RTS（请求发送）和 DTR（允许发送）来控制通信。</p>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">7.11.1.7.2. </span>软件流控<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>软件流控制（Software flow control）是在计算机数据链路中的一种流控制方法，特别适用于 RS232 串口通信；它是采用特殊字符来传输带内信令，特殊编码字符称作 XOFF 与 XON（分别表示 “transmit off” 与 “transmit on”）。因此，也被称作 “XON /XOFF流控制”。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 22%" />
+<col style="width: 16%" />
+<col style="width: 20%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>码的名字</p></th>
+<th class="head"><p>含义</p></th>
+<th class="head"><p>ASCII</p></th>
+<th class="head"><p>十进制</p></th>
+<th class="head"><p>十六进制</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>XOFF</p></td>
+<td><p>暂停传输</p></td>
+<td><p>DC3</p></td>
+<td><p>19</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-odd"><td><p>XON</p></td>
+<td><p>恢复传输</p></td>
+<td><p>DC1</p></td>
+<td><p>17</p></td>
+<td><p>11</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="raw">
+<h2><span class="section-number">7.11.1.8. </span>RAW模式<a class="headerlink" href="#raw" title="永久链接至标题">¶</a></h2>
+<p>UART 作为tty设备工作的时候，有两种工作方式：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Canonical Input</dt><dd><p>RX端接收到数据之后不会直接反馈给用户态的read函数，而是要一直等到一个回车，意即对一些特殊字符进行语意解析</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Raw Input</dt><dd><p>RX端接收到什么直接返回到用户空间的read函数里面</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>两种工作模式均为kernel层逻辑，和驱动/硬件无关，对于普通的uart应用，建议Canonical方式，对于RS485应用，建议使用Raw方式，二者通过termios的lflag参数的ICANON 位进行区分。</p>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">7.11.1.9. </span>模块特性<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>兼容工业标准16550 UART</p></li>
+<li><p>256x8bit发送与接收FIFO</p></li>
+<li><p>传输速度可达3Mbps</p></li>
+<li><p>支持5-8数据位以及1/1 ½/2停止位</p></li>
+<li><p>支持奇校验，偶校验或者无奇偶校验</p></li>
+<li><p>支持DMA控制器接口</p></li>
+<li><p>支持软件/硬件流控</p></li>
+<li><p>支持IrDA 1.0 SIR</p></li>
+<li><p>支持RS-485/9bit 模式</p></li>
+<li><p>RS-485支持硬件使能</p></li>
+<li><p>Compact-IO 精简2线模式</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="2_config_guide.html" class="btn btn-neutral float-right" title="7.11.2. 使用指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="7.11. UART 使用指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

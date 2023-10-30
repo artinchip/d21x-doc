@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Linux SDK &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="1. 编译准备" href="env/index.html" />
+    <link rel="prev" title="4. 设计自查" href="../hw/checklist.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linux SDK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Linux SDK</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux-sdk">
+<h1>Linux SDK<a class="headerlink" href="#linux-sdk" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="env/index.html">1. 编译准备</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="env/vmware.html">1.1. VMWare 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="env/ubuntu2004.html">1.2. 环境搭建</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/index.html">2. 使用指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_framework_intro.html">2.1. 框架简述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_structure.html">2.2. 基本结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_commands.html">2.3. 重要命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_prebuilt.html">2.4. 预编译包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_fs_image.html">2.5. 系统镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_burn_image.html">2.6. 烧录镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_add_new_board_to_sdk.html">2.7. 添加板子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_add_new_package.html">2.8. 添加新包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_setup_login_message.html">2.9. 设置登录信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_setup_password_login.html">2.10. 设置密码登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/lb_usage_setup_timezone.html">2.11. 设置时区</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boot/index.html">3. U-Boot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="boot/basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/drivers/index.html">3.8. 驱动支持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="boot/pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="system/index.html">4. 系统</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="system/bwm/index.html">4.1. BWM 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/cmu/index.html">4.2. CMU 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/dma/index.html">4.3. DMA 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/rtc/index.html">4.4. RTC 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/tsensor/index.html">4.5. TSensor 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/watchdog/index.html">4.6. Watchdog 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="system/wri/index.html">4.7. WRI 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="memory/index.html">5. 存储</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="memory/sdmc/index.html">5.1. SDMC 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory/spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory/spinor/index.html">5.3. SPI NOR 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory/filesystem/index.html">5.4. 文件系统使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="media/index.html">6. 多媒体</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="media/ge/index.html">6.1. GE 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/ve/index.html">6.2. VE 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/display/index.html">6.3. Display 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/dvp/index.html">6.4. DVP 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/mpp/index.html">6.5. MPP 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/player/index.html">6.6. MPP 播放器使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/gstreamer/index.html">6.7. Gstreamer 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/i2s/index.html">6.8. I2S 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="media/audio/index.html">6.9. AudioCodec 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interface/index.html">7. 接口</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interface/can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface/usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="security/index.html">8. 安全</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="security/enc/index.html">8.1. SPI ENC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security/ce/index.html">8.2. CE 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security/efuse/index.html">8.3. eFuse 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security/hw_authorization/index.html">8.4. 硬件授权认证</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">9. 应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app/ota/index.html">9.1. OTA 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="peripheral/index.html">10. 外设</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="peripheral/tp/index.html">10.1. 触摸屏调试指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peripheral/lcd/index.html">10.2. 显示屏调试指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peripheral/wifi/index.html">10.3. WiFi调试指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peripheral/keyadc/index.html">10.4. 按键矩阵使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bringup/index.html">11. Bringup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bringup/prepare.html">11.1. 准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/storage.html">11.2. 存储配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/console.html">11.3. 调试配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/burn.html">11.4. 刷机</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/chips.html">11.5. IC 配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/display.html">11.6. 屏幕配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bringup/samples.html">11.7. 示例程序</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="env/index.html" class="btn btn-neutral float-right" title="1. 编译准备" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../hw/checklist.html" class="btn btn-neutral float-left" title="4. 设计自查" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

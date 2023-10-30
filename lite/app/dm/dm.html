@@ -1,0 +1,593 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.2. Dynamic Module 使用指南 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="11. BringUp" href="../../bringup/index.html" />
+    <link rel="prev" title="10.1.5. 常见问题" href="../xip/5_faq.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 应用</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../xip/index.html">10.1. XIP 使用指南</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">10.2. Dynamic Module 使用指南</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">10.2.1. 配置和编译</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#kernel">10.2.1.1. kernel</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id2">10.2.1.1.1. 配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">10.2.1.1.2. 符号导出</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#dm-app">10.2.1.2. dm-app</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#sdk">10.2.1.2.1. 生成 sdk</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id4">10.2.1.2.2. 目录结构</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#app">10.2.1.2.3. 编译 app</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">10.2.2. 运行和使用</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#shell">10.2.2.1. shell 调用</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#code">10.2.2.2. code 调用</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">10.2.3. 用户 dm-app</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">10.2.4. 原理说明</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>应用</a> &raquo;</li>
+        
+      <li><span class="section-number">10.2. </span>Dynamic Module 使用指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dynamic-module">
+<h1><span class="section-number">10.2. </span>Dynamic Module 使用指南<a class="headerlink" href="#dynamic-module" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">10.2.1. </span>配置和编译<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>我们简称 Luban-Lite 原生开发的映像为 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> ，使用 <code class="docutils literal notranslate"><span class="pre">Dynamic</span> <span class="pre">Module</span></code> 机制开发的应用为 <code class="docutils literal notranslate"><span class="pre">dm-app</span></code>。</p>
+<div class="section" id="kernel">
+<h3><span class="section-number">10.2.1.1. </span>kernel<a class="headerlink" href="#kernel" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id2">
+<h4><span class="section-number">10.2.1.1.1. </span>配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h4>
+<p>要使用 <code class="docutils literal notranslate"><span class="pre">Dynamic</span> <span class="pre">Module</span></code> 功能，内核需要打开以下两项配置：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Rt-Thread options  ---&gt;
+    RT-Thread Components  ---&gt;
+        C/C++ and POSIX layer  ---&gt;
+            POSIX <span class="p">(</span>Portable Operating System Interface) layer  ---&gt;
+                [*] Enable POSIX file system and I/O
+                [*] Enable dynamic module APIs, dlopen()/dlsym()/dlclose() etc
+</pre></div>
+</div>
+<p>还可以选择 dm-app 动态加载时使用的内存 heap。具体的可选 heap 会随不同平台的配置有所不同：</p>
+<div class="highlight-kconfig notranslate"><div class="highlight"><pre><span></span>Rt-Thread options  ---&gt;
+    RT-Thread Components  ---&gt;
+        C/C++ and POSIX layer  ---&gt;
+            POSIX <span class="p">(</span>Portable Operating System Interface) layer  ---&gt;
+                [*] Enable dynamic module APIs, dlopen()/dlsym()/dlclose() etc
+                    Select dynamic module use mem <span class="p">(</span>Prsam CMA heap)  ---&gt;
+                        <span class="p">(</span>X) Sys Heap
+                        <span class="p">(</span> <span class="p">)</span> Prsam CMA heap
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4><span class="section-number">10.2.1.1.2. </span>符号导出<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<p>kernel 中被 dm-app 访问到的符号需要使用 <code class="docutils literal notranslate"><span class="pre">RTM_EXPORT()</span></code> 宏来进行声明，没有声明的 kernel 函数是不能在 dm-app 中使用的。类似如 linux 中的 <code class="docutils literal notranslate"><span class="pre">EXPORT_SYMBOL()</span></code> 宏。</p>
+<p>例如对于一些标准的 c 库函数，kernel 已经定义好了 <code class="docutils literal notranslate"><span class="pre">RTM_EXPORT()</span></code> 声明，dm-app 可以直接使用：</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-number">列表 10.1 </span><span class="caption-text">luban-lite/kernel/rt-thread/components/libc/posix/libdl/dlsyms.c</span><a class="headerlink" href="#id8" title="永久链接至代码">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strcpy</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strncpy</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strlen</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strcat</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strstr</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strchr</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strcmp</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strtol</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strtoul</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">strncmp</span><span class="p">);</span>
+
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">memcpy</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">memcmp</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">memmove</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">memset</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">memchr</span><span class="p">);</span>
+
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">putchar</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">puts</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">printf</span><span class="p">);</span>
+<span class="n">RTM_EXPORT</span><span class="p">(</span><span class="n">sprintf</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dm-app">
+<h3><span class="section-number">10.2.1.2. </span>dm-app<a class="headerlink" href="#dm-app" title="永久链接至标题">¶</a></h3>
+<p>动态模块 (Dynamic Module) 应用的开发的步骤如下。</p>
+<div class="section" id="sdk">
+<h4><span class="section-number">10.2.1.2.1. </span>生成 sdk<a class="headerlink" href="#sdk" title="永久链接至标题">¶</a></h4>
+<p>dm-app 的开发目录在 <code class="docutils literal notranslate"><span class="pre">luban-lite/packages/artinchip/aic-dm-apps</span></code> ，首先确保 <code class="docutils literal notranslate"><span class="pre">luban-lite/</span></code> 根目录下的 kernel 工程被正确配置且编译通过后，然后生成对应的 dm-app sdk：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> luban-lite/packages/artinchip/aic-dm-apps
+$ scons --target<span class="o">=</span>sdk
+scons: Reading SConscript files ...
+Copy rtconfig.h...
+Copy rtconfig.py...
+Copy rtua.py...
+Copy rt-thread/tools/...
+Copy tools/env/...
+Copy tools/scripts/...
+Copy onestep.sh...
+Copy win_env.bat...
+Copy win_cmd.bat...
+Build <span class="nb">local</span> sdk succeed!
+</pre></div>
+</div>
+<p>dm-app sdk 创建完成以后， <code class="docutils literal notranslate"><span class="pre">aic-dm-apps</span></code> 就可以脱离 <code class="docutils literal notranslate"><span class="pre">luban-lite</span> <span class="pre">sdk</span></code> 进行开发了。 <code class="docutils literal notranslate"><span class="pre">aic-dm-apps</span></code> 文件夹可以被拷贝到任意 Linux/Windows 路径进行开发和编译。</p>
+</div>
+<div class="section" id="id4">
+<h4><span class="section-number">10.2.1.2.2. </span>目录结构<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">aic-dm-apps</span></code> 的目录结构如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aic-dm-apps/
+├── hello                       // hello 实例
+│   ├── hello.mo                // 目标文件
+│   ├── main.c
+│   ├── main.o
+│   └── SConscript
+├── SConstruct                  // scons 入口
+├── toolchain                   // 解压后的工具链
+├── tools                       // 编译需要的支持
+│   ├── env
+│   ├── host
+│   ├── __init__.py
+│   ├── onestep.sh
+│   ├── scripts
+│   ├── sdk
+│   ├── toolchain
+│   ├── ua.def
+│   ├── ua.py
+│   └── ua.pyc
+├── win_cmd.bat
+└── win_env.bat                 // windows 下的命令行环境
+</pre></div>
+</div>
+</div>
+<div class="section" id="app">
+<h4><span class="section-number">10.2.1.2.3. </span>编译 app<a class="headerlink" href="#app" title="永久链接至标题">¶</a></h4>
+<p>创建完 dm-app sdk 就可以编译 dm-app 了。如果是 windows 双击 <code class="docutils literal notranslate"><span class="pre">win_env.bat</span></code> 打开命令行运行环境，linux 直接使用 shell 命令行即可。具体步骤如下：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> luban-lite/packages/artinchip/aic-dm-apps
+$ scons --app<span class="o">=</span>hello             // 编译
+scons: Reading SConscript files ...
+scons: <span class="k">done</span> reading SConscript files.
+scons: Building targets ...
+CC hello/main.o
+LINK hello/hello.mo
+riscv-none-embed-strip -R .hash hello/hello.mo
+riscv-none-embed-size hello/hello.mo
+text           data     bss     dec     hex filename
+    <span class="m">295</span>         <span class="m">160</span>       <span class="m">4</span>     <span class="m">459</span>     1cb hello/hello.mo
+scons: <span class="k">done</span> building targets.
+$ ls hello/hello.mo             // 查看目标文件
+$ scons --app<span class="o">=</span>hello -c          // 清理
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">10.2.2. </span>运行和使用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>对于 dm-app 实例 hello 生成的目标文件 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code> ，有几种方式可以运行。</p>
+<div class="section" id="shell">
+<h3><span class="section-number">10.2.2.1. </span>shell 调用<a class="headerlink" href="#shell" title="永久链接至标题">¶</a></h3>
+<p>把 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code> 拷贝到单板存储介质的文件系统中，在 shell 下直接运行：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>aic/&gt; /sdcard/hello.mo
+      Hello, world
+</pre></div>
+</div>
+</div>
+<div class="section" id="code">
+<h3><span class="section-number">10.2.2.2. </span>code 调用<a class="headerlink" href="#code" title="永久链接至标题">¶</a></h3>
+<p>在 kernel 代码中对 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code> 的调用可以通过以下 api 来进行：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">dlmodule_exec</span><span class="p">()</span>
+<span class="n">dlopen</span><span class="p">()</span><span class="o">/</span><span class="n">dlclose</span><span class="p">()</span><span class="o">/</span><span class="n">dlsym</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">10.2.3. </span>用户 dm-app<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>用户开发自己的 dm-app 可以基于 <code class="docutils literal notranslate"><span class="pre">hello</span></code> 实例来开发，把 <code class="docutils literal notranslate"><span class="pre">hello</span></code> 文件夹复制并改名成自己的应用：</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> luban-lite/packages/artinchip/aic-dm-apps
+$ cp -r hello xxxapp
+$ scons --app<span class="o">=</span>xxxapp            // 编译
+$ ls xxxapp/xxxapp.mo           // 目标文件
+$ scons --app<span class="o">=</span>xxxapp -c         // 清理
+</pre></div>
+</div>
+<p>把用户源文件拷贝到 <code class="docutils literal notranslate"><span class="pre">xxxapp</span></code> 文件夹，编辑 <code class="docutils literal notranslate"><span class="pre">xxxapp/SConscript</span></code> 文件让所有源文件能被 scons 编译。 <code class="docutils literal notranslate"><span class="pre">SConscript</span></code> 的语法和修改方法请参考 Luban-Lite 的相关文档。</p>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">10.2.4. </span>原理说明<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>在 Linux/Windows 等大型系统中应用和驱动是可以独立开发，应用独立编译成 elf/exe 文件，然后在目标系统上执行。毫无疑问这种动态加载的方式是需要开销的，一般嵌入式系统都精简了该功能。但是在实际产品开发的过程中，特别是需要二次开发的场景，独立开发和编译应用程序有强烈需求。</p>
+<p>Luban-Lite 使用动态模块 (Dynamic Module) 机制来支持应用程序独立开发的需求。基本原理如下：</p>
+<div class="figure align-center" id="id9">
+<img alt="../../../_images/dm_design.png" src="../../../_images/dm_design.png" />
+<p class="caption"><span class="caption-number">图 10.82 </span><span class="caption-text">Dynamic Module 实现原理</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>核心就是实现了 ELF 的链接和加载。具体步骤分解如下：</p>
+<ol class="arabic simple">
+<li><p>编译链接：使用 <code class="docutils literal notranslate"><span class="pre">gcc</span></code> 工具链将应用源文件 <code class="docutils literal notranslate"><span class="pre">main.c</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">-fPIC</span> <span class="pre">-shared</span></code> 选项编译链接成 <code class="docutils literal notranslate"><span class="pre">ET_DYN</span></code> 格式的 ELF 文件 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code>。 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code> 是一个标准的 <code class="docutils literal notranslate"><span class="pre">ET_DYN</span></code> 格式ELF 文件，位置无关且可动态链接。注意这里需要使用 <code class="docutils literal notranslate"><span class="pre">riscv-none-embed-gcc</span></code> 工具链，否则会编译不成功。</p></li>
+<li><p>文件加载：在运行的时候，首先会把 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code> 文件的数据段代码段拷贝到内存当中。因为我们编译的是位置无关代码 PIC，代码可以被加载到任意位置，所以可以从 Heap 中动态分配内存再进行代码拷贝。此时代码还是不能运行，因为代码中还存在很多对系统函数的调用，需要重新定位重新链接。</p></li>
+<li><p>动态链接：遍历 <code class="docutils literal notranslate"><span class="pre">hello.mo</span></code> 中的可重定位段，对需要重定位的符号，在内核的导出符号表 <code class="docutils literal notranslate"><span class="pre">rtmsymtab</span></code> 中查询，将查询到的绝对地址回填到可重定位符号的位置。至此完成动态链接，可以跳转到程序入口处执行了。</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../bringup/index.html" class="btn btn-neutral float-right" title="11. BringUp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../xip/5_faq.html" class="btn btn-neutral float-left" title="10.1.5. 常见问题" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

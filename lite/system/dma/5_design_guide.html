@@ -1,0 +1,1152 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>4.2.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="4.2.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="4.2.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">4. 系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cmu/index.html">4.1. CMU 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4.2. DMA 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">4.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">4.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">4.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">4.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.2.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">4.2.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">4.2.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">4.2.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">4.2.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dma-client">4.2.5.3.2. DMA Client 的调用流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">4.2.5.3.3. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">4.2.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#struct-aic-dma-dev">4.2.5.4.1. struct aic_dma_dev</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-aic-dma-chan">4.2.5.4.2. struct aic_dma_chan</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-aic-dma-task">4.2.5.4.3. struct aic_dma_task</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#struct-dma-slave-config">4.2.5.4.4. struct dma_slave_config</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#driver">4.2.5.5. Driver 层接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-slave-config">4.2.5.5.1. dmaengine_slave_config</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-pause">4.2.5.5.2. dmaengine_pause</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-resume">4.2.5.5.3. dmaengine_resume</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-prep-dma-memcpy">4.2.5.5.4. dmaengine_prep_dma_memcpy</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-prep-dma-device">4.2.5.5.5. dmaengine_prep_dma_device</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-prep-dma-cyclic">4.2.5.5.6. dmaengine_prep_dma_cyclic</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dma-async-issue-pending">4.2.5.5.7. dma_async_issue_pending</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-terminate-async">4.2.5.5.8. dmaengine_terminate_async</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#dmaengine-tx-status">4.2.5.5.9. dmaengine_tx_status</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hal">4.2.5.6. HAL 层接口设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#demo">4.2.5.7. Demo</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#mem-to-device">4.2.5.7.1. Mem to Device</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#mem-to-mem">4.2.5.7.2. Mem to Mem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">4.2.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../hrtimer/index.html">4.3. HRTimer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtop/index.html">4.4. MTOP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtc/index.html">4.5. RTC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tsensor/index.html">4.6. TSensor 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">4.7. Watchdog 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">4. </span>系统</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">4.2. </span>DMA 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">4.2.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">4.2.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">4.2.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于 <code class="docutils literal notranslate"><span class="pre">bsp/artinchip/</span></code>：</p>
+<ul class="simple">
+<li><p>bsp/artinchip/drv/dma/drv_dma.c，DMA Driver 层实现</p></li>
+<li><p>bsp/artinchip/include/drv/drv_dma.h，DMA Driver 层接口，提供了类似 Linux 的 DMA Engine 接口</p></li>
+<li><p>bsp/artinchip/hal/dma/hal_dma.c，DMA HAL 层实现</p></li>
+<li><p>bsp/artinchip/include/hal/hal_dma.h，DMA HAL 层接口头文件</p></li>
+<li><p>bsp/artinchip/hal/dma/hal_dma_reg.h，DMA 控制器的寄存器定义</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">4.2.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>RTOS 系统中并没有提供了一个类似 Linux 的 DMA Engine 子系统，为了方便DMA使用者的代码兼容，DMA驱动提供了类似Linux的DMA Engine接口定义。</p>
+<p>DMA 驱动的软件框架如下图：</p>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/sw_system11.png" src="../../../_images/sw_system11.png" />
+<p class="caption"><span class="caption-number">图 4.17 </span><span class="caption-text">DMA 驱动的软件架构图</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>图中可以看到，DMA 驱动不依赖任何 RTOS 的设备驱动模型，所以无论是在 RTOS 环境、还是 baremetal 环境，都是可以直接调用 DMA Engine API 的。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">4.2.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">4.2.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>DMA 驱动的初始化接口通过 <code class="docutils literal notranslate"><span class="pre">INIT_BOARD_EXPORT(drv_dma_init)</span></code> 完成注册，其中主要步骤有：</p>
+<ol class="arabic simple">
+<li><p>初始化模块的clk</p></li>
+<li><p>初始化DMA通道、任务描述符管理信息</p></li>
+<li><p>注册中断</p></li>
+</ol>
+</div>
+<div class="section" id="dma-client">
+<h3><span class="section-number">4.2.5.3.2. </span>DMA Client 的调用流程<a class="headerlink" href="#dma-client" title="永久链接至标题">¶</a></h3>
+<p>作为DMA 用户，调用流程和 Linux 的 DMA Engine 完全相同，如下：</p>
+<div class="figure align-center" id="id9">
+<img alt="../../../_images/client_flow.png" src="../../../_images/client_flow.png" />
+<p class="caption"><span class="caption-number">图 4.18 </span><span class="caption-text">DMA Client调用流程</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>其中有两个操作的概念需要注意：</p>
+<ul class="simple">
+<li><p>submit，是指传输请求提交给了 DMA 驱动的缓存中，还没有开始传输数据</p></li>
+<li><p>issue pending，才会真正启动数据传输动作</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">4.2.5.3.3. </span>中断处理流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>中断处理流程主要是：</p>
+<ol class="arabic simple">
+<li><p>逐个DMA通道的查看完成状态；</p></li>
+<li><p>如果通道有任务传输完成，就调用相应DMA client注册的回调函数。</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">4.2.5.4. </span>数据结构设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="struct-aic-dma-dev">
+<h3><span class="section-number">4.2.5.4.1. </span>struct aic_dma_dev<a class="headerlink" href="#struct-aic-dma-dev" title="永久链接至标题">¶</a></h3>
+<p>属于 HAL 层接口，记录DMA控制器的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_dma_dev</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_task</span> <span class="n">task</span><span class="p">[</span><span class="n">TASK_MAX_NUM</span><span class="p">];</span>
+    <span class="n">s32</span> <span class="n">inited</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">base</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">burst_length</span><span class="p">;</span> <span class="cm">/* burst length capacity */</span>
+    <span class="n">u32</span> <span class="n">addr_widths</span><span class="p">;</span> <span class="cm">/* address width support capacity */</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="n">dma_chan</span><span class="p">[</span><span class="n">AIC_DMA_CH_NUM</span><span class="p">];</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_task</span> <span class="o">*</span><span class="n">freetask</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aic-dma-chan">
+<h3><span class="section-number">4.2.5.4.2. </span>struct aic_dma_chan<a class="headerlink" href="#struct-aic-dma-chan" title="永久链接至标题">¶</a></h3>
+<p>属于 HAL 层接口，记录了一个 DMA 物理通道对应的通道号、寄存器基地址等信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="p">{</span>
+    <span class="n">u8</span> <span class="n">ch_nr</span><span class="p">;</span> <span class="cm">/* drq port number */</span>
+    <span class="n">u8</span> <span class="n">used</span><span class="p">;</span>
+    <span class="n">u8</span> <span class="n">irq_type</span><span class="p">;</span> <span class="cm">/* irq types */</span>
+    <span class="kt">bool</span> <span class="n">cyclic</span><span class="p">;</span> <span class="cm">/* flag to mark if cyclic transfer one package */</span>
+    <span class="kt">bool</span> <span class="n">memset</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">base</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">dma_slave_config</span> <span class="n">cfg</span><span class="p">;</span>
+    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">lock</span><span class="p">;</span>
+    <span class="n">dma_async_callback</span> <span class="n">callback</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">callback_param</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_task</span> <span class="o">*</span> <span class="n">desc</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-aic-dma-task">
+<h3><span class="section-number">4.2.5.4.3. </span>struct aic_dma_task<a class="headerlink" href="#struct-aic-dma-task" title="永久链接至标题">¶</a></h3>
+<p>DMA 控制器支持散列（Scatter Gather）的描述符参数形式，需要提前将参数分组（一个Buffer对应一组散列参数）打包到多个描述符中，这些描述符会组成一个链表，然后将这个链表的第一个描述符的物理地址传给DMA控制器。描述符组成的链表结构如下图：</p>
+<div class="figure align-center" id="id10">
+<img alt="../../../_images/dma_task.png" src="../../../_images/dma_task.png" />
+<p class="caption"><span class="caption-number">图 4.19 </span><span class="caption-text">DMA 描述符链表的结构示意图</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p><code class="docutils literal notranslate"><span class="pre">End</span> <span class="pre">Flag</span></code> 是DMA控制器硬件预先定义好的一个数值：0xfffff800。</p>
+</div>
+<p>DMA 描述符的数据结构定义如下：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_dma_task</span> <span class="p">{</span>
+    <span class="n">u32</span> <span class="n">cfg</span><span class="p">;</span> <span class="cm">/* dma transfer configuration */</span>
+    <span class="n">u32</span> <span class="n">src</span><span class="p">;</span> <span class="cm">/* source address of one transfer package */</span>
+    <span class="n">u32</span> <span class="n">dst</span><span class="p">;</span> <span class="cm">/* distination address of one transfer package */</span>
+    <span class="n">u32</span> <span class="n">len</span><span class="p">;</span> <span class="cm">/* data length of one transfer package */</span>
+    <span class="n">u32</span> <span class="n">delay</span><span class="p">;</span> <span class="cm">/* time delay for period transfer */</span>
+    <span class="n">u32</span> <span class="n">p_next</span><span class="p">;</span> <span class="cm">/* next package for dma controller */</span>
+
+    <span class="n">u32</span> <span class="n">mode</span><span class="p">;</span> <span class="cm">/* the negotiation mode, not used by phsical task list */</span>
+<span class="cp">#if (CACHE_LINE_SIZE == 64)</span>
+    <span class="n">u32</span> <span class="n">pad</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
+<span class="cp">#endif</span>
+    <span class="cm">/*</span>
+<span class="cm">     * virtual list for cpu maintain package list,</span>
+<span class="cm">     * not used by dma controller</span>
+<span class="cm">     */</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_task</span> <span class="o">*</span><span class="n">v_next</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="struct-dma-slave-config">
+<h3><span class="section-number">4.2.5.4.4. </span>struct dma_slave_config<a class="headerlink" href="#struct-dma-slave-config" title="永久链接至标题">¶</a></h3>
+<p>DAM 通道的配置信息，和 Linux DMA Engine 接口的定义保持一致。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">dma_slave_config</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">dma_transfer_direction</span> <span class="n">direction</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">src_addr</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">dst_addr</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">dma_slave_buswidth</span> <span class="n">src_addr_width</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">dma_slave_buswidth</span> <span class="n">dst_addr_width</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">src_maxburst</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">dst_maxburst</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">slave_id</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="driver">
+<h2><span class="section-number">4.2.5.5. </span>Driver 层接口设计<a class="headerlink" href="#driver" title="永久链接至标题">¶</a></h2>
+<p>以下接口是遵循 Linux DMA Engine 子系统的标准接口。</p>
+<div class="section" id="dmaengine-slave-config">
+<h3><span class="section-number">4.2.5.5.1. </span>dmaengine_slave_config<a class="headerlink" href="#dmaengine-slave-config" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int dmaengine_slave_config(struct dma_chan *chan, struct dma_slave_config *config)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>配置指定的DMA物理通道</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chan - 指向一个DMA物理通道</div>
+<div class="line">config - 保存了需要的配置信息</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-pause">
+<h3><span class="section-number">4.2.5.5.2. </span>dmaengine_pause<a class="headerlink" href="#dmaengine-pause" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int dmaengine_pause(struct dma_chan *chan)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>暂停指定通道的传输操作</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>chan - 指向一个DMA物理通道</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-resume">
+<h3><span class="section-number">4.2.5.5.3. </span>dmaengine_resume<a class="headerlink" href="#dmaengine-resume" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int dmaengine_resume(struct dma_chan *chan)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>恢复指定通道的传输操作</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>chan - 指向一个DMA物理通道</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-prep-dma-memcpy">
+<h3><span class="section-number">4.2.5.5.4. </span>dmaengine_prep_dma_memcpy<a class="headerlink" href="#dmaengine-prep-dma-memcpy" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">int dmaengine_prep_dma_memcpy(struct dma_chan *chan,</div>
+<div class="line">uint32_t dest, uint32_t src, uint32_t len)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>memcpy操作的预处理</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chan - 指向一个DMA物理通道</div>
+<div class="line">dest - 目标Buffer的物理地址</div>
+<div class="line">src - 源Buffer的物理地址</div>
+<div class="line">len - 数据长度</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功；&lt;0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-prep-dma-device">
+<h3><span class="section-number">4.2.5.5.5. </span>dmaengine_prep_dma_device<a class="headerlink" href="#dmaengine-prep-dma-device" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">int dmaengine_prep_dma_device(struct dma_chan *chan,</div>
+<div class="line">uint32_t dest, uint32_t src, uint32_t len,</div>
+<div class="line">enum dma_transfer_direction dir)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设备与内存之间传输操作的预处理</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chan - 指向一个DMA物理通道</div>
+<div class="line">dest - 目标Buffer的物理地址</div>
+<div class="line">src - 源Buffer的物理地址</div>
+<div class="line">len - 数据长度</div>
+<div class="line">dir - 传输方向，是 Dev to Mem，还是 Mem to Dev</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功；&lt;0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-prep-dma-cyclic">
+<h3><span class="section-number">4.2.5.5.6. </span>dmaengine_prep_dma_cyclic<a class="headerlink" href="#dmaengine-prep-dma-cyclic" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><div class="line-block">
+<div class="line">int dmaengine_prep_dma_cyclic(struct dma_chan *chan,</div>
+<div class="line">uint32_t buf_addr, uint32_t buf_len, uint32_t period_len,</div>
+<div class="line">enum dma_transfer_direction dir)</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>（设备与内存之间）循环传输操作的预处理</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chan - 指向一个DMA物理通道</div>
+<div class="line">buf_addr - 循环Buffer的起始物理地址</div>
+<div class="line">buf_len - 循环Buffer的总长度</div>
+<div class="line">period_len - 循环的Buffer片段长度</div>
+<div class="line">dir - 传输方向，是 Dev to Mem，还是 Mem to Dev</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功；&lt;0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dma-async-issue-pending">
+<h3><span class="section-number">4.2.5.5.7. </span>dma_async_issue_pending<a class="headerlink" href="#dma-async-issue-pending" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void dma_async_issue_pending(struct dma_chan *chan)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>启动指定通道的数据传输</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>chan - 指向一个DMA物理通道</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-terminate-async">
+<h3><span class="section-number">4.2.5.5.8. </span>dmaengine_terminate_async<a class="headerlink" href="#dmaengine-terminate-async" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int dmaengine_terminate_async(struct dma_chan *chan)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>终止指定通道的数据传输</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>chan - 指向一个DMA物理通道</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dmaengine-tx-status">
+<h3><span class="section-number">4.2.5.5.9. </span>dmaengine_tx_status<a class="headerlink" href="#dmaengine-tx-status" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>enum dma_status dmaengine_tx_status(struct dma_chan *chan, uint32_t *residue)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取指定通道的传输状态</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">chan - 指向一个DMA物理通道</div>
+<div class="line">residue - 还没有传输完成的剩余长度，单位：字节</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>DMA_COMPLETE，传输完成；DMA_IN_PROGRESS，传输中</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hal">
+<h2><span class="section-number">4.2.5.6. </span>HAL 层接口设计<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h2>
+<p>HAL 层的函数接口声明存放在 hal_dma.h 中，主要接口有：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">hal_dma_chan_prep_memset</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">p_dest</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">value</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_prep_memcpy</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">p_dest</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">p_src</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_prep_device</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">p_dest</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">p_src</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">len</span><span class="p">,</span>
+                             <span class="k">enum</span> <span class="n">dma_transfer_direction</span> <span class="n">dir</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_prep_cyclic</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">p_buf_addr</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">buf_len</span><span class="p">,</span>
+                             <span class="kt">uint32_t</span> <span class="n">period_len</span><span class="p">,</span>
+                             <span class="k">enum</span> <span class="n">dma_transfer_direction</span> <span class="n">dir</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_tx_status</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="o">*</span><span class="n">left_size</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_start</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_stop</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_pause</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_resume</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_terminate_all</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_register_cb</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span>
+                             <span class="n">dma_async_callback</span> <span class="n">callback</span><span class="p">,</span>
+                             <span class="kt">void</span> <span class="o">*</span><span class="n">callback_param</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_config</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">,</span>
+                        <span class="k">struct</span> <span class="nc">dma_slave_config</span> <span class="o">*</span><span class="n">config</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_release_dma_chan</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">chan</span><span class="p">);</span>
+<span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span> <span class="n">hal_request_dma_chan</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">hal_dma_chan_dump</span><span class="p">(</span><span class="kt">int</span> <span class="n">ch_nr</span><span class="p">);</span>
+
+<span class="n">irqreturn_t</span> <span class="nf">hal_dma_irq</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="demo">
+<h2><span class="section-number">4.2.5.7. </span>Demo<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h2>
+<div class="section" id="mem-to-device">
+<h3><span class="section-number">4.2.5.7.1. </span>Mem to Device<a class="headerlink" href="#mem-to-device" title="永久链接至标题">¶</a></h3>
+<p>SPI 驱动（详见 bsp/artinchip/hal/qspi/aic_hal_qspi.c）中调用了DMA进行数据传输，其使用过程可以当作Demo参考：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="n">s32</span> <span class="n">qspi_tx_rx_dma</span><span class="p">(</span><span class="n">u32</span> <span class="n">base</span><span class="p">,</span> <span class="n">u8</span> <span class="o">*</span><span class="n">tx</span><span class="p">,</span> <span class="n">u32</span> <span class="n">txlen</span><span class="p">,</span> <span class="n">u8</span> <span class="o">*</span><span class="n">rx</span><span class="p">,</span> <span class="n">u32</span> <span class="n">rxlen</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">u32</span> <span class="n">poll_time</span><span class="p">,</span> <span class="n">single_len</span><span class="p">;</span>
+    <span class="n">s32</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">single_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_dma_chan</span> <span class="o">*</span><span class="n">rx_dma</span><span class="p">,</span> <span class="o">*</span><span class="n">tx_dma</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">dma_slave_config</span> <span class="n">dmacfg</span><span class="p">;</span>
+
+    <span class="n">qspi_reset_fifo</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>
+    <span class="n">tx_dma</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">rx_dma</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tx</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">FCR_BIT_TX_DMA_EN</span><span class="p">,</span> <span class="n">SPI_REG_FCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">qspi_in_single_mode</span><span class="p">(</span><span class="n">base</span><span class="p">))</span>
+            <span class="n">single_len</span> <span class="o">=</span> <span class="n">txlen</span><span class="p">;</span>
+        <span class="n">qspi_set_xfer_cnt</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">txlen</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">single_len</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="n">tx_dma</span> <span class="o">=</span> <span class="n">hal_request_dma_chan</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tx_dma</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">DMA_MEM_TO_DEV</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">src_addr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">tx</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">dst_addr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">SPI_REG_TXD</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">src_addr_width</span> <span class="o">=</span> <span class="n">DMA_SLAVE_BUSWIDTH_4_BYTES</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">dst_addr_width</span> <span class="o">=</span> <span class="n">DMA_SLAVE_BUSWIDTH_4_BYTES</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">src_maxburst</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">dst_maxburst</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">slave_id</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// FIXME: should set id according spi id</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">hal_dma_chan_config</span><span class="p">(</span><span class="n">tx_dma</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dmacfg</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">hal_dma_chan_prep_device</span><span class="p">(</span>
+            <span class="n">tx_dma</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">SPI_REG_TXD</span><span class="p">(</span><span class="n">base</span><span class="p">),</span>
+            <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">tx</span><span class="p">,</span> <span class="n">txlen</span><span class="p">,</span> <span class="n">DMA_MEM_TO_DEV</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">hal_dma_chan_start</span><span class="p">(</span><span class="n">tx_dma</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+
+        <span class="cm">/* Start transfer */</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">TCR_BIT_XCH</span><span class="p">,</span> <span class="n">SPI_REG_TCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+
+        <span class="n">poll_time</span> <span class="o">=</span> <span class="mh">0x7FFFFFFF</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">readl</span><span class="p">(</span><span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">))</span> <span class="o">&amp;</span> <span class="n">ISR_BIT_TC</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">poll_time</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">poll_time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+                <span class="n">spi_clrbits</span><span class="p">(</span><span class="n">FCR_BIT_TX_DMA_EN</span><span class="p">,</span> <span class="n">SPI_REG_FCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+                <span class="n">hal_log_err</span><span class="p">(</span><span class="s">&quot;TX Transfer complete timeout at the end.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_TX_EMP</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_TX_FULL</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_TX_RDY</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_TC</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_clrbits</span><span class="p">(</span><span class="n">FCR_BIT_TX_DMA_EN</span><span class="p">,</span> <span class="n">SPI_REG_FCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">rx</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">FCR_BIT_RX_DMA_EN</span><span class="p">,</span> <span class="n">SPI_REG_FCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">qspi_set_xfer_cnt</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rxlen</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="n">rx_dma</span> <span class="o">=</span> <span class="n">hal_request_dma_chan</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rx_dma</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">DMA_DEV_TO_MEM</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">src_addr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">SPI_REG_RXD</span><span class="p">(</span><span class="n">base</span><span class="p">);</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">dst_addr</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">rx</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">src_addr_width</span> <span class="o">=</span> <span class="n">DMA_SLAVE_BUSWIDTH_4_BYTES</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">dst_addr_width</span> <span class="o">=</span> <span class="n">DMA_SLAVE_BUSWIDTH_4_BYTES</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">src_maxburst</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">dst_maxburst</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">dmacfg</span><span class="p">.</span><span class="n">slave_id</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// FIXME: should set id according spi id</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">hal_dma_chan_config</span><span class="p">(</span><span class="n">rx_dma</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dmacfg</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="n">ret</span> <span class="o">=</span>
+            <span class="n">hal_dma_chan_prep_device</span><span class="p">(</span><span class="n">rx_dma</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">rx</span><span class="p">,</span>
+                                     <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">SPI_REG_RXD</span><span class="p">(</span><span class="n">base</span><span class="p">),</span>
+                                     <span class="n">rxlen</span><span class="p">,</span> <span class="n">DMA_DEV_TO_MEM</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">hal_dma_chan_start</span><span class="p">(</span><span class="n">rx_dma</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+
+        <span class="cm">/* Start transfer */</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">TCR_BIT_XCH</span><span class="p">,</span> <span class="n">SPI_REG_TCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">poll_time</span> <span class="o">=</span> <span class="mh">0x7FFFFFFF</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">readl</span><span class="p">(</span><span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">))</span> <span class="o">&amp;</span> <span class="n">ISR_BIT_TC</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">poll_time</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">poll_time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+                <span class="n">spi_clrbits</span><span class="p">(</span><span class="n">FCR_BIT_TX_DMA_EN</span><span class="p">,</span> <span class="n">SPI_REG_FCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+                <span class="n">hal_log_err</span><span class="p">(</span><span class="s">&quot;RX Transfer complete timeout at the end.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">out</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_TC</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_RX_EMP</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_RX_FULL</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_setbits</span><span class="p">(</span><span class="n">ISR_BIT_RX_RDY</span><span class="p">,</span> <span class="n">SPI_REG_ISR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+        <span class="n">spi_clrbits</span><span class="p">(</span><span class="n">FCR_BIT_TX_DMA_EN</span><span class="p">,</span> <span class="n">SPI_REG_FCR</span><span class="p">(</span><span class="n">base</span><span class="p">));</span>
+    <span class="p">}</span>
+
+<span class="nl">out</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tx_dma</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">hal_dma_chan_stop</span><span class="p">(</span><span class="n">tx_dma</span><span class="p">);</span>
+        <span class="n">hal_release_dma_chan</span><span class="p">(</span><span class="n">tx_dma</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rx_dma</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">hal_dma_chan_stop</span><span class="p">(</span><span class="n">rx_dma</span><span class="p">);</span>
+        <span class="n">hal_release_dma_chan</span><span class="p">(</span><span class="n">rx_dma</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mem-to-mem">
+<h3><span class="section-number">4.2.5.7.2. </span>Mem to Mem<a class="headerlink" href="#mem-to-mem" title="永久链接至标题">¶</a></h3>
+<p>本Demo是 test_dma_memcpy 的源码（bsp/examples/test-dma/test_dma.c），完成一次Mem to Mem的拷贝操作：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="n">dma_test_cb</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;DMA complete, callback....</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">cmd_test_dma_memcpy</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">dma_chan</span> <span class="o">*</span><span class="n">chan</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">test_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">align_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">src</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ret</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="cp">#ifdef RT_USING_POSIX_CLOCK</span>
+    <span class="k">struct</span> <span class="nc">timespec</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Invalid parameter</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">sscanf</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&quot;%u&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">test_len</span><span class="p">);</span>
+
+    <span class="n">test_len</span> <span class="o">=</span> <span class="n">roundup</span><span class="p">(</span><span class="n">test_len</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="n">align_len</span> <span class="o">=</span> <span class="n">roundup</span><span class="p">(</span><span class="n">test_len</span><span class="p">,</span> <span class="n">CACHE_LINE_SIZE</span><span class="p">);</span>
+
+    <span class="n">src</span> <span class="o">=</span> <span class="n">aicos_malloc_align</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">align_len</span><span class="p">,</span> <span class="n">CACHE_LINE_SIZE</span><span class="p">);</span>
+    <span class="n">dest</span> <span class="o">=</span> <span class="n">aicos_malloc_align</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">align_len</span><span class="p">,</span> <span class="n">CACHE_LINE_SIZE</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">src</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">dest</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)){</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Alloc %d mem fail!</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">align_len</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">free_mem</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;DMA memcpy test: src = 0x%lx, dest = 0x%lx, len = 0x%x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+           <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">src</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">dest</span><span class="p">,</span> <span class="n">test_len</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">test_len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">;</span>
+
+<span class="cp">#ifdef RT_USING_POSIX_CLOCK</span>
+    <span class="n">clock_gettime</span><span class="p">(</span><span class="n">CLOCK_REALTIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">);</span>
+<span class="cp">#endif</span>
+
+    <span class="n">chan</span> <span class="o">=</span> <span class="n">dma_request_channel</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chan</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Alloc dma chan fail!</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">free_mem</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">dmaengine_prep_dma_memcpy</span><span class="p">(</span><span class="n">chan</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">dest</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">src</span><span class="p">,</span> <span class="n">test_len</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">){</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;dmaengine_prep_dma_memcpy fail! ret = %d</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">free_chan</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">dmaengine_submit</span><span class="p">(</span><span class="n">chan</span><span class="p">,</span> <span class="n">dma_test_cb</span><span class="p">,</span> <span class="n">chan</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">){</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;dmaengine_submit fail! ret = %d</span><span class="se">\n</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">);</span>
+        <span class="k">goto</span> <span class="n">free_chan</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">dma_async_issue_pending</span><span class="p">(</span><span class="n">chan</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">dmaengine_tx_status</span><span class="p">(</span><span class="n">chan</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="n">DMA_COMPLETE</span><span class="p">);</span>
+    <span class="n">aicos_dcache_invalid_range</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">src</span><span class="p">,</span> <span class="n">align_len</span><span class="p">);</span>
+    <span class="n">aicos_dcache_invalid_range</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="o">*</span><span class="p">)</span><span class="n">dest</span><span class="p">,</span> <span class="n">align_len</span><span class="p">);</span>
+<span class="cp">#ifdef RT_USING_POSIX_CLOCK</span>
+    <span class="n">clock_gettime</span><span class="p">(</span><span class="n">CLOCK_REALTIME</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">);</span>
+<span class="cp">#endif</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">test_len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dest</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;addr 0x%x err: src - 0x%x, dest - 0x%x</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+                   <span class="n">i</span><span class="p">,</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dest</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;DMA test fail!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="nf">printf</span><span class="p">(</span><span class="s">&quot;DMA test succeed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="cp">#ifdef RT_USING_POSIX_CLOCK</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;DMA memcpy %u bytes, speed %.2f MB/s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">align_len</span><span class="p">,</span>
+       <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">align_len</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="n">time_diff</span><span class="p">(</span><span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">end</span><span class="p">));</span>
+<span class="cp">#endif</span>
+
+<span class="nl">free_chan</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">chan</span><span class="p">)</span>
+        <span class="n">dma_release_channel</span><span class="p">(</span><span class="n">chan</span><span class="p">);</span>
+<span class="nl">free_mem</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">aicos_free_align</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="n">aicos_free_align</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dest</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="4.2.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="4.2.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

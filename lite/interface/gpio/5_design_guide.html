@@ -1,0 +1,1062 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.4.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.4.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.4.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">7.2. CIR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.4. GPIO 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.4.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">7.4.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.4.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.4.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.4.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.4.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.4.5.2. 模块架构</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#rtt-pin">7.4.5.2.1. RTT Pin 驱动</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.4.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.4.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#gpio-irq">7.4.5.3.2. GPIO Irq 流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">7.4.5.4. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#driver">7.4.5.4.1. Driver 层接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-mode">7.4.5.4.2. drv_pin_mode</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-write">7.4.5.4.3. drv_pin_write</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-read">7.4.5.4.4. drv_pin_read</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-attach-irq">7.4.5.4.5. drv_pin_attach_irq</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-detach-irq">7.4.5.4.6. drv_pin_detach_irq</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-irq-enable">7.4.5.4.7. drv_pin_irq_enable</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#drv-pin-get">7.4.5.4.8. drv_pin_get</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hal">7.4.5.5. HAL 层接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-set-func">7.4.5.5.1. hal_gpio_set_func</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-get-func">7.4.5.5.2. hal_gpio_get_func</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-direction-input">7.4.5.5.3. hal_gpio_direction_input</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-direction-output">7.4.5.5.4. hal_gpio_direction_output</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-set-bias-pull">7.4.5.5.5. hal_gpio_set_bias_pull</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-set-drive-strength">7.4.5.5.6. hal_gpio_set_drive_strength</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-set-debounce">7.4.5.5.7. hal_gpio_set_debounce</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#hal-gpio-set-irq-mode">7.4.5.5.8. hal_gpio_set_irq_mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.4.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.5. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../psadc/index.html">7.6. PSADC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.7. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.8. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.9. QSPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.10. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.11. MAC 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.4. </span>GPIO 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.4.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.4.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.4.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>GPIO HAL 层相关 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件分别位于 <code class="docutils literal notranslate"><span class="pre">luban-lite\bsp\artinchip\hal\gpio</span></code> 和 <code class="docutils literal notranslate"><span class="pre">luban-lite\bsp\artinchip\include\hal</span></code> 目录。
+Driver 层相关 <code class="docutils literal notranslate"><span class="pre">.c</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.h</span></code> 文件分别位于 <code class="docutils literal notranslate"><span class="pre">luban-lite\bsp\artinchip\drv\gpio</span></code> 和 <code class="docutils literal notranslate"><span class="pre">luban-lite\bsp\artinchip\include\drv</span></code> 目录。
+主要源文件说明如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>aic_hal_gpio.h</p></td>
+<td><p>GPIO hal 层 api 的头文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>aic_hal_gpio.c</p></td>
+<td><p>GPIO hal 层 api 的实现</p></td>
+</tr>
+<tr class="row-even"><td><p>aic_drv_gpio.h</p></td>
+<td><p>GPIO drv 层 api 的头文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>aic_drv_gpio.c</p></td>
+<td><p>GPIO driver 注册以及 gpio drv 层 api 的实现</p></td>
+</tr>
+<tr class="row-even"><td><p>aic_hal_gpio_def_v10.c</p></td>
+<td><p>GPIO V1.0 的配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>aic_hal_gpio_def_v11.c</p></td>
+<td><p>GPIO V1.1 的配置</p></td>
+</tr>
+<tr class="row-even"><td><p>aic_hal_gpio_def_v12.c</p></td>
+<td><p>GPIO V1.2 的配置</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.4.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>GPIO 驱动 Driver 层采用 RT-Thread 的 PIN设备驱动框架，如果只使用HAL层也可以支持 baremetal 方式的应用场景。</p>
+<div class="figure align-center">
+<img alt="../../../_images/sw_system1.png" src="../../../_images/sw_system1.png" />
+</div>
+<ol class="arabic">
+<li><p>GPIO HAL 层。提供了 PinMux 和通用 GPIO 功能寄存器级的功能封装。</p></li>
+<li><p>GPIO Driver 层。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Rt-Thread。通用 GPIO 功能注册成 RTT Pin driver，PinMux 直接以 API 的形式提供。</p></li>
+<li><p>BareMental。客户自定义 Driver 直接调用 GPIO HAL 层 Api。</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<div class="section" id="rtt-pin">
+<h3><span class="section-number">7.4.5.2.1. </span>RTT Pin 驱动<a class="headerlink" href="#rtt-pin" title="永久链接至标题">¶</a></h3>
+<p>Rt-Thread 调用 <code class="docutils literal notranslate"><span class="pre">rt_device_pin_register()</span></code> 把通用 GPIO 功能注册成 Pin Driver，Pin Driver 提供了以下功能：</p>
+<ul class="simple">
+<li><p>模式配置。配置输入、输出模式，输入上下拉配置。</p></li>
+<li><p>读取端口状态。读取输入端口的电平状态。</p></li>
+<li><p>设置端口状态。配置输出端口的电平状态。</p></li>
+<li><p>GPIO 中断配置。注册中断，使能中断。</p></li>
+</ul>
+<p>因为一个系统只允许注册一个 Pin Device，所以在调用的时候除了先使用 <code class="docutils literal notranslate"><span class="pre">rt_device_find()</span></code> 查找 Device 的形式来调用功能，也可以直接使用一组 <code class="docutils literal notranslate"><span class="pre">rt_pin_xxx()</span></code> 的函数直接来调用功能。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.4.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">7.4.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>Rt-Thread 系统初始化时会自动调用 GPIO 驱动初始化函数：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Reset_Handler
+    → entry()
+        → rtthread_startup()
+            → rt_hw_board_init()
+                → rt_components_board_init()
+                    → drv_pin_init()
+</pre></div>
+</div>
+<p>drv_pin_init() 注册了 RTT Pin 驱动：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="k">static</span> <span class="k">struct</span> <span class="nc">rt_pin_ops</span> <span class="n">_drv_pin_ops</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="n">drv_pin_mode</span><span class="p">,</span>
+    <span class="n">drv_pin_write</span><span class="p">,</span>
+    <span class="n">drv_pin_read</span><span class="p">,</span>
+<span class="cp">#ifdef AIC_GPIO_IRQ_DRV_EN</span>
+    <span class="n">drv_pin_attach_irq</span><span class="p">,</span>
+    <span class="n">drv_pin_detach_irq</span><span class="p">,</span>
+    <span class="n">drv_pin_irq_enable</span><span class="p">,</span>
+<span class="cp">#else</span>
+    <span class="n">RT_NULL</span><span class="p">,</span>
+    <span class="n">RT_NULL</span><span class="p">,</span>
+    <span class="n">RT_NULL</span><span class="p">,</span>
+<span class="cp">#endif</span>
+    <span class="n">drv_pin_get</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">drv_pin_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">RT_EOK</span><span class="p">;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">rt_device_pin_register</span><span class="p">(</span><span class="s">&quot;pin&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_drv_pin_ops</span><span class="p">,</span> <span class="n">RT_NULL</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">INIT_BOARD_EXPORT</span><span class="p">(</span><span class="n">drv_pin_init</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gpio-irq">
+<h3><span class="section-number">7.4.5.3.2. </span>GPIO Irq 流程<a class="headerlink" href="#gpio-irq" title="永久链接至标题">¶</a></h3>
+<div class="figure align-center">
+<img alt="../../../_images/gpio_irq.png" src="../../../_images/gpio_irq.png" />
+</div>
+<p>Luban-Lite 对 GPIO Irq 做了一个二级中断的封装：</p>
+<ol class="arabic simple">
+<li><p>一级中断。每个 GPIO Group 共享一个物理中断号，每个 GPIO Group 最多包含 32 个 GPIO Pin 脚。</p></li>
+<li><p>二级中断。每个 GPIO Pin 脚中断也虚拟成标准的 Luban-Lite 中断，但是实际上是 GPIO Group ISR 做了一次中转。</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">7.4.5.4. </span>接口设计<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="driver">
+<h3><span class="section-number">7.4.5.4.1. </span>Driver 层接口设计<a class="headerlink" href="#driver" title="永久链接至标题">¶</a></h3>
+<p>以下接口是 Pin 设备驱动框架的标准接口。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">rt_pin_ops</span>
+<span class="p">{</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_mode</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">mode</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_write</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">value</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_read</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_attach_irq</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_int32_t</span> <span class="n">pin</span><span class="p">,</span>
+                    <span class="n">rt_uint32_t</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">hdr</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">),</span> <span class="kt">void</span> <span class="o">*</span><span class="n">args</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_detach_irq</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_int32_t</span> <span class="n">pin</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_irq_enable</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_device</span> <span class="o">*</span><span class="n">device</span><span class="p">,</span> <span class="n">rt_base_t</span> <span class="n">pin</span><span class="p">,</span> <span class="n">rt_uint32_t</span> <span class="n">enabled</span><span class="p">);</span>
+    <span class="n">rt_base_t</span> <span class="p">(</span><span class="o">*</span><span class="n">pin_get</span><span class="p">)(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="drv-pin-mode">
+<h3><span class="section-number">7.4.5.4.2. </span>drv_pin_mode<a class="headerlink" href="#drv-pin-mode" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void drv_pin_mode(struct rt_device *device, rt_base_t pin, rt_base_t mode)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 模式，包括输入/输出模式、上下拉模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pin：Pin id</div>
+<div class="line">mode: 输入/输出模式、上下拉模式 (PIN_MODE_xxx 格式的宏)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-pin-write">
+<h3><span class="section-number">7.4.5.4.3. </span>drv_pin_write<a class="headerlink" href="#drv-pin-write" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>void drv_pin_write(struct rt_device *device, rt_base_t pin, rt_base_t value)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置输出 Pin 的电平状态</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pin：Pin id</div>
+<div class="line">value: 电平状态 0/1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-pin-read">
+<h3><span class="section-number">7.4.5.4.4. </span>drv_pin_read<a class="headerlink" href="#drv-pin-read" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int drv_pin_read(struct rt_device *device, rt_base_t pin)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置输出 Pin 的电平状态</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>pin：Pin id</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>电平状态 0/1</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-pin-attach-irq">
+<h3><span class="section-number">7.4.5.4.5. </span>drv_pin_attach_irq<a class="headerlink" href="#drv-pin-attach-irq" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_pin_attach_irq(struct rt_device *device, rt_int32_t pin,
+rt_uint32_t mode, void (*hdr)(void *args), void *args)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>Pin 注册中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pin：Pin id</div>
+<div class="line">mode: 中断触发模式，边沿还是电平触发 (PIN_IRQ_MODE_xxx 格式的宏)</div>
+<div class="line">hdr：pin 中断处理函数</div>
+<div class="line">args：中断处理时的自定义参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-pin-detach-irq">
+<h3><span class="section-number">7.4.5.4.6. </span>drv_pin_detach_irq<a class="headerlink" href="#drv-pin-detach-irq" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_pin_detach_irq(struct rt_device *device, rt_int32_t pin)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>Pin 注销中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>pin：Pin id</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-pin-irq-enable">
+<h3><span class="section-number">7.4.5.4.7. </span>drv_pin_irq_enable<a class="headerlink" href="#drv-pin-irq-enable" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t drv_pin_irq_enable(struct rt_device *device, rt_base_t pin, rt_uint32_t enabled)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>使能 Pin 中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">pin：Pin id</div>
+<div class="line">enabled: 1 = en, 0 = dis</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="drv-pin-get">
+<h3><span class="section-number">7.4.5.4.8. </span>drv_pin_get<a class="headerlink" href="#drv-pin-get" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_base_t drv_pin_get(const char *name)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>根据 Pin Name 获取 Pin Id</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>name：Pin Name 字符串 (“PA.1” 类似格式)</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>Pin Id</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hal">
+<h2><span class="section-number">7.4.5.5. </span>HAL 层接口设计<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h2>
+<div class="section" id="hal-gpio-set-func">
+<h3><span class="section-number">7.4.5.5.1. </span>hal_gpio_set_func<a class="headerlink" href="#hal-gpio-set-func" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_set_func(unsigned int group, unsigned int pin, unsigned int func)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 的 Function 模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+<div class="line">func: 0 = 关闭, 1 = 通用 gpio, 2~8 = 专用功能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-get-func">
+<h3><span class="section-number">7.4.5.5.2. </span>hal_gpio_get_func<a class="headerlink" href="#hal-gpio-get-func" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_get_func(unsigned int group, unsigned int pin, unsigned int *pfunc)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取 Pin 的 Function 模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+<div class="line">func: 0 = 关闭, 1 = 通用 gpio, 2~8 = 专用功能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-direction-input">
+<h3><span class="section-number">7.4.5.5.3. </span>hal_gpio_direction_input<a class="headerlink" href="#hal-gpio-direction-input" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_direction_input(unsigned int group, unsigned int pin)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 为输入模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-direction-output">
+<h3><span class="section-number">7.4.5.5.4. </span>hal_gpio_direction_output<a class="headerlink" href="#hal-gpio-direction-output" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_direction_output(unsigned int group, unsigned int pin)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 为输出模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-set-bias-pull">
+<h3><span class="section-number">7.4.5.5.5. </span>hal_gpio_set_bias_pull<a class="headerlink" href="#hal-gpio-set-bias-pull" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_set_bias_pull(unsigned int group, unsigned int pin, unsigned int pull)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 的上下拉模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+<div class="line">pull: 0 = 关闭, 2 = 下拉, 3 = 上拉</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-set-drive-strength">
+<h3><span class="section-number">7.4.5.5.6. </span>hal_gpio_set_drive_strength<a class="headerlink" href="#hal-gpio-set-drive-strength" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_set_drive_strength(unsigned int group, unsigned int pin, unsigned int strength)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 的驱动能力</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+<div class="line">strength: 0 ~ 7</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-set-debounce">
+<h3><span class="section-number">7.4.5.5.7. </span>hal_gpio_set_debounce<a class="headerlink" href="#hal-gpio-set-debounce" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_set_debounce(unsigned int group, unsigned int pin, unsigned int debounce)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 的防抖能力</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+<div class="line">debounce: 0 ~ 0xFFF</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hal-gpio-set-irq-mode">
+<h3><span class="section-number">7.4.5.5.8. </span>hal_gpio_set_irq_mode<a class="headerlink" href="#hal-gpio-set-irq-mode" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>int hal_gpio_set_irq_mode(unsigned int group, unsigned int pin, unsigned int irq_mode)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Pin 的防抖能力</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">group：group id</div>
+<div class="line">pin：offset in group</div>
+<div class="line">irq_mode: 0 = 下降沿，1 = 上升沿，2 = 低电平，3 = 高电平，4 = 双沿</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>操作是否成功 (0=OK, other=Error)</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.4.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="7.4.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

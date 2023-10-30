@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>4.5.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="4.5.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="4.5.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">4. 系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cmu/index.html">4.1. CMU 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dma/index.html">4.2. DMA 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hrtimer/index.html">4.3. HRTimer 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mtop/index.html">4.4. MTOP 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">4.5. RTC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">4.5.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">4.5.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">4.5.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">4.5.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">4.5.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">4.5.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">4.5.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">4.5.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">4.5.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">4.5.5.3.2. 校准算法设计</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">4.5.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#struct-aic-rtc-dev">4.5.5.4.1. struct aic_rtc_dev</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#driver">4.5.5.5. Driver 层接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#rtc-ops-init">4.5.5.5.1. rtc_ops_init</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rtc-ops-get-secs">4.5.5.5.2. rtc_ops_get_secs</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rtc-ops-set-secs">4.5.5.5.3. rtc_ops_set_secs</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rtc-ops-get-alarm">4.5.5.5.4. rtc_ops_get_alarm</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#rtc-ops-set-alarm">4.5.5.5.5. rtc_ops_set_alarm</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#hal">4.5.5.6. HAL 层接口设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#demo">4.5.5.7. Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">4.5.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tsensor/index.html">4.6. TSensor 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../watchdog/index.html">4.7. Watchdog 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">4. </span>系统</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">4.5. </span>RTC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">4.5.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">4.5.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">4.5.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于 <code class="docutils literal notranslate"><span class="pre">bsp/artinchip/</span></code>：</p>
+<ul class="simple">
+<li><p>bsp/artinchip/drv/rtc/drv_rtc.c，RTC Driver 层实现</p></li>
+<li><p>bsp/artinchip/hal/rtc/hal_rtc.c，RTC HAL 层实现</p></li>
+<li><p>bsp/artinchip/include/hal/hal_rtc.h，RTC HAL 层接口头文件</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">4.5.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>RTC 驱动 Driver 层采用 RT-Thread 的SDIO设备驱动框架，如果只使用HAL层也可以支持 baremetal 方式的应用场景。</p>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/sw_system13.png" src="../../../_images/sw_system13.png" />
+<p class="caption"><span class="caption-number">图 4.23 </span><span class="caption-text">RTC 驱动的软件架构图</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>RTC 控制器除了适配到通用的 RTC 时间、闹钟接口，其他非标准的特性有：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Alarm的中断输出：</dt><dd><p>是否有输出完全由板级电路的设计决定，软件上只需要使能中断信号即可。需要在menuconfig中使能AIC_RTC_ALARM_IO_OUTPUT，详见 <a class="reference internal" href="2_config_guide.html#ref-to-lite-rtc-cfg"><span class="std std-ref">驱动配置</span></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>时钟校准：</dt><dd><p>控制器支持±975ppm的校准范围，用户需要实测32K晶振的时钟频率，然后配置给menuconfig中的参数AIC_RTC_CLK_RATE，详见 <a class="reference internal" href="2_config_guide.html#ref-to-lite-rtc-cfg"><span class="std std-ref">驱动配置</span></a>。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SYS_BAK寄存器：</dt><dd><p>RTC控制器提供了128bit的NVMEM寄存器，系统复位时不会丢失数据，目前主要用于记录系统复位状态。 详见 WRI模块的复位原因管理说明。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>8bit寄存器的读写：</dt><dd><p>在驱动设计时将8bit数据的拆解、打包进行封装，可以尽量减少对代码的干扰，封装如下：</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define RTC_WRITEL(val, reg) \</span>
+<span class="cp">    do { \</span>
+<span class="cp">            RTC_WRITE_ENABLE; \</span>
+<span class="cp">            writeb((val) &amp; 0xFF, RTC_BASE + (reg)); \</span>
+<span class="cp">            writeb(((val) &gt;&gt; 8) &amp; 0xFF, RTC_BASE + (reg) + 0x4); \</span>
+<span class="cp">            writeb(((val) &gt;&gt; 16) &amp; 0xFF, RTC_BASE + (reg) + 0x8); \</span>
+<span class="cp">            writeb(((val) &gt;&gt; 24) &amp; 0xFF, RTC_BASE + (reg) + 0xC); \</span>
+<span class="cp">            RTC_WRITE_DISABLE; \</span>
+<span class="cp">    } while (0)</span>
+
+<span class="cp">#define RTC_READL(reg)  (readb(RTC_BASE + reg) \</span>
+<span class="cp">                    | (readb((RTC_BASE + reg) + 0x4) &lt;&lt; 8) \</span>
+<span class="cp">                    | (readb((RTC_BASE + reg) + 0x8) &lt;&lt; 16) \</span>
+<span class="cp">                    | (readb((RTC_BASE + reg) + 0xC) &lt;&lt; 24))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">4.5.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">4.5.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>RTC 驱动的初始化接口通过 <code class="docutils literal notranslate"><span class="pre">INIT_BOARD_EXPORT(drv_rtc_init)</span></code> 完成，主要是通过调用RTC子系统的接口 rt_hw_rtc_register() 注册一个RTC设备。</p>
+<p>RTC 控制器的初始化流程放在 rtc_ops_init() 接口中实现，其中主要步骤有：</p>
+<ol class="arabic simple">
+<li><p>初始化模块的clk</p></li>
+<li><p>注册中断</p></li>
+<li><p>设置校准参数</p></li>
+<li><p>配置Alarm IO的输出信号（如果menuconfig中有配置的话）</p></li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">4.5.5.3.2. </span>校准算法设计<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>校准的算法原理是，将输入的 32KHz 晶振时钟校准到理想的 32KHz，公式如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">calibrate</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">clock</span><span class="o">-</span><span class="n">rate</span> <span class="o">/</span> <span class="mi">32</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="o">=&gt;</span> <span class="n">calibrate</span> <span class="o">=</span> <span class="p">(</span><span class="n">clock</span><span class="o">-</span><span class="n">rate</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">-</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>其中：</p>
+<ul class="simple">
+<li><p>clock-rate: 是用户实测 32K晶振的频率值 * 100，需要配置在 menuconfig 中，详见 <a class="reference internal" href="2_config_guide.html#ref-to-lite-rtc-cfg"><span class="std std-ref">驱动配置</span></a></p></li>
+<li><p>calibrate: 最终要填入RTC控制器的校准值</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>校准值calibrate分正负，正 - 表示32K晶振实际偏快了，负 - 表示32K晶振偏慢了。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">4.5.5.4. </span>数据结构设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="struct-aic-rtc-dev">
+<h3><span class="section-number">4.5.5.4.1. </span>struct aic_rtc_dev<a class="headerlink" href="#struct-aic-rtc-dev" title="永久链接至标题">¶</a></h3>
+<p>属于 HAL 层接口，记录RTC控制器的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_rtc_dev</span> <span class="p">{</span>
+    <span class="n">rtc_callback_t</span> <span class="n">callback</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">clk_rate</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">clk_drv</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">alarm_io</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">cal_fast</span><span class="p">;</span>
+    <span class="n">s32</span> <span class="n">cal_val</span><span class="p">;</span>
+    <span class="n">s32</span> <span class="n">inited</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="driver">
+<h2><span class="section-number">4.5.5.5. </span>Driver 层接口设计<a class="headerlink" href="#driver" title="永久链接至标题">¶</a></h2>
+<p>以下接口是 RTC 设备驱动框架的标准接口。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">rt_rtc_ops</span>
+<span class="p">{</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">init</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">get_secs</span><span class="p">)(</span><span class="kt">time_t</span> <span class="o">*</span><span class="n">sec</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">set_secs</span><span class="p">)(</span><span class="kt">time_t</span> <span class="o">*</span><span class="n">sec</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">get_alarm</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_rtc_wkalarm</span> <span class="o">*</span><span class="n">alarm</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">set_alarm</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">rt_rtc_wkalarm</span> <span class="o">*</span><span class="n">alarm</span><span class="p">);</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">get_timeval</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">timeval</span> <span class="o">*</span><span class="n">tv</span><span class="p">);</span>    <span class="c1">// 暂未实现</span>
+    <span class="n">rt_err_t</span> <span class="p">(</span><span class="o">*</span><span class="n">set_timeval</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">timeval</span> <span class="o">*</span><span class="n">tv</span><span class="p">);</span>    <span class="c1">// 暂未实现</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="section" id="rtc-ops-init">
+<h3><span class="section-number">4.5.5.5.1. </span>rtc_ops_init<a class="headerlink" href="#rtc-ops-init" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t rtc_ops_init(void)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>RTC 控制器的初始化</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rtc-ops-get-secs">
+<h3><span class="section-number">4.5.5.5.2. </span>rtc_ops_get_secs<a class="headerlink" href="#rtc-ops-get-secs" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t rtc_ops_get_secs(time_t *sec)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取当前的 RTC 时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>sec - 用于保存返回的时间信息，单位：秒</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rtc-ops-set-secs">
+<h3><span class="section-number">4.5.5.5.3. </span>rtc_ops_set_secs<a class="headerlink" href="#rtc-ops-set-secs" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t rtc_ops_set_secs(time_t *sec)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置当前的 RTC 时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>sec - 用于保存要设置的时间信息，单位：秒</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rtc-ops-get-alarm">
+<h3><span class="section-number">4.5.5.5.4. </span>rtc_ops_get_alarm<a class="headerlink" href="#rtc-ops-get-alarm" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t rtc_ops_get_alarm(struct rt_rtc_wkalarm *alarm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取当前的 Alarm 信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>alarm - 用于保存返回的alarm信息</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rtc-ops-set-alarm">
+<h3><span class="section-number">4.5.5.5.5. </span>rtc_ops_set_alarm<a class="headerlink" href="#rtc-ops-set-alarm" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>rt_err_t rtc_ops_set_alarm(struct rt_rtc_wkalarm *alarm)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置 Alarm 信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>alarm - 用于保存要设置的 Alarm 信息</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hal">
+<h2><span class="section-number">4.5.5.6. </span>HAL 层接口设计<a class="headerlink" href="#hal" title="永久链接至标题">¶</a></h2>
+<p>HAL 层的函数接口声明存放在 hal_rtc.h 中，主要接口有：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">s32</span> <span class="nf">hal_rtc_init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="n">s32</span> <span class="nf">hal_rtc_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_rtc_read_time</span><span class="p">(</span><span class="n">u32</span> <span class="o">*</span><span class="n">sec</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_rtc_set_time</span><span class="p">(</span><span class="n">u32</span> <span class="n">sec</span><span class="p">);</span>
+<span class="n">s32</span> <span class="nf">hal_rtc_read_alarm</span><span class="p">(</span><span class="n">u32</span> <span class="o">*</span><span class="n">sec</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_rtc_set_alarm</span><span class="p">(</span><span class="n">u32</span> <span class="n">sec</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_rtc_alarm_io_output</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">hal_rtc_32k_clk_output</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="n">irqreturn_t</span> <span class="nf">hal_rtc_irq</span><span class="p">(</span><span class="kt">int</span> <span class="n">irq</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">arg</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">hal_rtc_cali</span><span class="p">(</span><span class="n">s32</span> <span class="n">clk_rate</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">hal_rtc_register_callback</span><span class="p">(</span><span class="n">rtc_callback_t</span> <span class="n">callback</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="demo">
+<h2><span class="section-number">4.5.5.7. </span>Demo<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h2>
+<p>如果要获取 RTC 时间，调用 RT-Thread 的标准时间接口即可，如：
+- time()
+- clock_gettime()
+- gettimeofday()</p>
+<p>本Demo是 test_alarm 的源码（bsp/examples/test-alarm/test_alarm.c），设置一个oneshot类型的 alarm：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="kt">void</span> <span class="n">test_alarm_callback</span><span class="p">(</span><span class="n">rt_alarm_t</span> <span class="n">alarm</span><span class="p">,</span> <span class="kt">time_t</span> <span class="n">timestamp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pr_info</span><span class="p">(</span><span class="s">&quot;Test alarm callback function.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">cmd_test_alarm</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">rt_alarm_setup</span> <span class="n">setup</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">rt_alarm</span> <span class="o">*</span><span class="n">alarm</span> <span class="o">=</span> <span class="n">RT_NULL</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">time_t</span> <span class="n">now</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">tm</span> <span class="n">p_tm</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pr_err</span><span class="p">(</span><span class="s">&quot;Invalid parameter</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">sscanf</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&quot;%u&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">timeout</span><span class="p">);</span>
+
+    <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span> <span class="o">+</span> <span class="n">timeout</span><span class="p">;</span>
+    <span class="n">gmtime_r</span><span class="p">(</span><span class="o">&amp;</span><span class="n">now</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">p_tm</span><span class="p">);</span>
+
+    <span class="n">setup</span><span class="p">.</span><span class="n">wktime</span> <span class="o">=</span> <span class="n">p_tm</span><span class="p">;</span>
+    <span class="n">alarm</span> <span class="o">=</span> <span class="n">rt_alarm_create</span><span class="p">(</span><span class="n">test_alarm_callback</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">setup</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alarm</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">alarm</span><span class="o">-&gt;</span><span class="n">flag</span> <span class="o">=</span> <span class="n">RT_ALARM_ONESHOT</span><span class="p">;</span>
+        <span class="n">rt_alarm_start</span><span class="p">(</span><span class="n">alarm</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="4.5.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="4.5.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.6.2. 启动流程 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.6.3. MMC 加载" href="mmc_load.html" />
+    <link rel="prev" title="3.6.1. RISCV SPL" href="riscv_spl.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3.6. SPL 阶段</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="riscv_spl.html">3.6.1. RISCV SPL</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.6.2. 启动流程</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#uboot">3.6.2.1. uboot 设备驱动框架模型</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">3.6.2.2. uboot 设备驱动框架搭建的过程</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#spl-riscv">3.6.2.3. SPL RISCV 的启动整体流程</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mmc_load.html">3.6.3. MMC 加载</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spinand_load.html">3.6.4. SPI NAND 加载</a></li>
+<li class="toctree-l4"><a class="reference internal" href="spinor_load.html">3.6.5. SPI NOR 加载</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fat32_load.html">3.6.6. SDFAT32 加载</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sign_verify.html">3.6.7. 签名校验</a></li>
+<li class="toctree-l4"><a class="reference internal" href="return_to_brom.html">3.6.8. 返回 BROM</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../u-boot/index.html">3.7. U-Boot 阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers/index.html">3.8. 驱动支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">3.6. </span>SPL 阶段</a> &raquo;</li>
+        
+      <li><span class="section-number">3.6.2. </span>启动流程</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">3.6.2. </span>启动流程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>理解spl的启动流程，关键是设备树，设备驱动模型。关于设备树，请查看设备树相关章节，设备驱动模型的介绍如下：</p>
+<div class="section" id="uboot">
+<h2><span class="section-number">3.6.2.1. </span>uboot 设备驱动框架模型<a class="headerlink" href="#uboot" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><p>uclass &lt;–&gt; uclass_driver &lt;–&gt; udevice &lt;–&gt; driver &lt;–&gt; hardware</p>
+</div></blockquote>
+<p>uclass表示管理某一个类别下的所有device;</p>
+<p>uclass_driver表示对应uclass的ops集合。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">3.6.2.2. </span>uboot 设备驱动框架搭建的过程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>创建udevice</p></li>
+<li><p>应用uclass如果没有则匹配生成uclass</p></li>
+<li><p>udevice和uclass绑定</p></li>
+<li><p>uclass_driver和uclass绑定</p></li>
+<li><p>driver和udevice绑定</p></li>
+<li><p>device_probe执行，会触发uclass_driver调用driver函数</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="spl-riscv">
+<h2><span class="section-number">3.6.2.3. </span>SPL RISCV 的启动整体流程<a class="headerlink" href="#spl-riscv" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">_start</span> <span class="c1">// arch/riscv/cpu/start.S</span>
+<span class="o">|-&gt;</span> <span class="n">save_boot_params</span> <span class="c1">// arch/riscv/mach-artinchip/lowlevel_init.S</span>
+<span class="o">|</span>   <span class="c1">// BROM 跳转到 SPL 执行的时候，传递了一些参数，这里首先需要将这些参数保存起来</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">csrw</span>    <span class="n">MODE_PREFIX</span><span class="p">(</span><span class="n">ie</span><span class="p">),</span> <span class="n">zero</span> <span class="c1">// Disable irq</span>
+<span class="o">|-&gt;</span> <span class="n">li</span>      <span class="n">t1</span><span class="p">,</span> <span class="n">CONFIG_SPL_STACK</span> <span class="c1">// 设置sp寄存器</span>
+<span class="o">|-&gt;</span> <span class="n">jal</span>     <span class="n">board_init_f_alloc_reserve</span> <span class="c1">// common/init/board_init.c</span>
+<span class="o">|</span>   <span class="c1">// 预留初始 HEAP 的空间</span>
+<span class="o">|</span>   <span class="c1">// 预留 GD 全局变量的空间</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">jal</span>     <span class="n">board_init_f_init_reserve</span>
+<span class="o">|</span>   <span class="c1">// common/init/board_init.c, init gd area</span>
+<span class="o">|</span>   <span class="c1">// 此时 gd 在 SPL STACK 中。</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">jal</span>     <span class="n">icache_enable</span> <span class="c1">// arch/riscv/cpu/c906/cache.c 使能指令高速缓存</span>
+<span class="o">|-&gt;</span> <span class="n">jal</span>     <span class="n">dcache_enable</span> <span class="c1">// 使能数据高速缓存</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">jal</span>     <span class="n">debug_uart_init</span> <span class="c1">// drivers/serial/ns16550.c</span>
+<span class="o">|</span> <span class="c1">// 初始化调试串口，如果使能</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">board_init_f</span> <span class="c1">// arch/riscv/lib/spl.c</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spl_early_init</span><span class="p">()</span> <span class="c1">// common/spl/spl.c</span>
+<span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">spl_common_init</span><span class="p">(</span><span class="n">setup_malloc</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="c1">// common/spl/spl.c</span>
+<span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">fdtdec_setup</span><span class="p">();</span>  <span class="c1">// lib/fdtdec.c 获取dtb的地址，并验证合法性</span>
+<span class="o">|</span>           <span class="o">|</span> <span class="c1">// 只对带有“u-boot,dm-pre-reloc”属性节点进行解析，初始化驱动模型的根节点，扫描设备树创建udevice,uclass</span>
+<span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">dm_init_and_scan</span><span class="p">(</span><span class="o">!</span><span class="n">CONFIG_IS_ENABLED</span><span class="p">(</span><span class="n">OF_PLATDATA</span><span class="p">));</span> <span class="c1">// drivers/core/root.c</span>
+<span class="o">|</span>               <span class="o">|-&gt;</span> <span class="n">dm_init</span><span class="p">();</span> <span class="c1">// driver model, initiate virtual root driver</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">INIT_LIST_HEAD</span><span class="p">(</span><span class="n">DM_UCLASS_ROOT_NON_CONST</span><span class="p">);</span> <span class="c1">// 初始化uclass链表</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_bind_by_name</span><span class="p">()</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// 加载&quot;root_driver&quot;name, gd-&gt;dm_root</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">lists_driver_lookup_name</span><span class="p">()</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">ll_entry_start</span><span class="p">(</span><span class="k">struct</span> <span class="nc">driver</span><span class="p">,</span> <span class="n">driver</span><span class="p">);</span> <span class="c1">// 获取driver table起始位置</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">ll_entry_count</span><span class="p">(</span><span class="k">struct</span> <span class="nc">driver</span><span class="p">,</span> <span class="n">driver</span><span class="p">);</span> <span class="c1">// 获取driver table长度</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// drivers/core/lists.c</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// 采用 U_BOOT_DRIVER(name) 声明的 driver，从driver table中获取struct driver数据</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="c1">// 初始化udevice 与对应的uclass,driver绑定</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">();</span> <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uc</span><span class="p">)</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">uclass_find</span><span class="p">(</span><span class="n">id</span><span class="p">);</span> <span class="c1">// 判断对应的uclass是否存在</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">uclass_add</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">ucp</span><span class="p">);</span> <span class="c1">// 如果不存在就创建</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">lists_uclass_lookup</span><span class="p">(</span><span class="n">id</span><span class="p">);</span> <span class="c1">// 获取uclass_driver结构体数据</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_bind_device</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span> <span class="c1">// uclass绑定udevice drivers/core/uclass.c</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>  <span class="c1">// driver绑定udevice</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">parent</span><span class="o">-&gt;</span><span class="n">driver</span><span class="o">-&gt;</span><span class="n">child_post_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uc</span><span class="o">-&gt;</span><span class="n">uc_drv</span><span class="o">-&gt;</span><span class="n">post_bind</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>               <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">device_probe</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">dm_root</span><span class="p">)</span> <span class="c1">// drivers/core/device.c</span>
+<span class="o">|</span>               <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_resolve_seq</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span> <span class="c1">// 通过dtb解析获得设备差异数据</span>
+<span class="o">|</span>               <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_pre_probe_device</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// probe前操作</span>
+<span class="o">|</span>               <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">probe</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// 执行driver的probe操作</span>
+<span class="o">|</span>               <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">uclass_post_probe_device</span><span class="p">(</span><span class="n">dev</span><span class="p">);</span> <span class="c1">// probe后操作</span>
+<span class="o">|</span>               <span class="o">|</span>
+<span class="o">|</span>               <span class="o">|-&gt;</span> <span class="n">dm_scan</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="c1">// 扫描和绑定由 U_BOOT_DEVICE 声明的驱动。</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="c1">// 一般用在 SPL OF_PLATDATA 的情况</span>
+<span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">dm_scan_plat</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">lists_bind_drivers</span><span class="p">(</span><span class="n">DM_ROOT_NON_CONST</span><span class="p">,</span> <span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">bind_drivers_pass</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_bind_by_name</span><span class="p">();</span>
+<span class="o">|</span>                   <span class="o">|</span>
+<span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">dm_extended_scan</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span> <span class="c1">// 扫描设备树并与设备驱动建立联系</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_node</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">dm_root</span><span class="p">,</span> <span class="n">ofnode_root</span><span class="p">(),</span> <span class="n">pre_reloc_only</span><span class="p">);</span> <span class="c1">//扫描设备树并绑定root节点下的设备</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_first_subnode</span><span class="p">(</span><span class="n">parent_node</span><span class="p">)</span> <span class="c1">// 获取设备树的第一个子节点</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_next_subnode</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="c1">// 遍历所有的子节点</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_is_enabled</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="c1">// 判断设备树的子节点是否使能</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">lists_bind_fdt</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">pre_reloc_only</span><span class="p">);</span> <span class="c1">// 绑定设备树节点，创建新的udevicd drivers/core/lists.c</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">ofnode_get_property</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s">&quot;compatible&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">compat_length</span><span class="p">);</span> <span class="c1">// 获取compatible</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">driver_check_compatible</span><span class="p">()</span> <span class="c1">// 和driver比较compatible值</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">device_bind_with_driver_data</span><span class="p">()</span> <span class="c1">// 创建一个设备并绑定到driver drivers/core/device.c</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>               <span class="o">|-&gt;</span> <span class="n">device_bind_common</span><span class="p">()</span> <span class="c1">// 创建初始化udevice 与对应的uclass,driver绑定</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|</span> <span class="c1">// /chosen /clocks /firmware 一些节点本身不是设备，但包含一些设备，遍历其包含的设备</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_ofnode_path</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">ofnode_path</span><span class="p">(</span><span class="n">path</span><span class="p">);</span> <span class="c1">// 找到节点下包含的设备</span>
+<span class="o">|</span>                   <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">dm_scan_fdt_node</span><span class="p">(</span><span class="n">gd</span><span class="o">-&gt;</span><span class="n">dm_root</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>
+<span class="o">|</span>                   <span class="o">|-&gt;</span> <span class="n">dm_scan_other</span><span class="p">(</span><span class="n">pre_reloc_only</span><span class="p">);</span>
+<span class="o">|</span>                   <span class="o">|</span>   <span class="c1">// 扫描使用者自定义的节点 nothing</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">spl_clear_bss</span> <span class="c1">// arch/riscv/cpu/start.S</span>
+<span class="o">|-&gt;</span> <span class="n">spl_relocate_stack_gd</span>   <span class="c1">// 切换stack 和 gd 到dram空间</span>
+<span class="o">|-&gt;</span> <span class="n">board_init_r</span><span class="p">()</span>    <span class="c1">// common/spl/spl.c</span>
+    <span class="o">|-&gt;</span> <span class="n">spl_set_bd</span><span class="p">()</span>  <span class="c1">// board data info</span>
+    <span class="o">|</span>   <span class="c1">// 设置完 bd 之后，才能 enable d-cache</span>
+    <span class="o">|-&gt;</span> <span class="n">mem_malloc_init</span><span class="p">()</span>
+    <span class="o">|</span>   <span class="c1">// init heap</span>
+    <span class="o">|</span>   <span class="c1">//  - CONFIG_SYS_SPL_MALLOC_START</span>
+    <span class="o">|</span>   <span class="c1">//  - CONFIG_SYS_SPL_MALLOC_SIZE&gt;</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">spl_init</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spl_common_init</span>
+    <span class="o">|</span>       <span class="c1">// 由于前面已经调用了 spl_early_init,</span>
+    <span class="o">|</span>       <span class="c1">// 这里不再调用 spl_common_init</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">timer_init</span><span class="p">();</span> <span class="c1">// lib/time.c nothing</span>
+    <span class="o">|-&gt;</span> <span class="n">spl_board_init</span><span class="p">();</span> <span class="c1">// arch/riscv/mach-artinchip/spl.c nothing</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">initr_watchdog</span>  <span class="c1">// enable watchdog，如果使能</span>
+    <span class="o">|-&gt;</span> <span class="n">dram_init_banksize</span><span class="p">();</span> <span class="c1">// 如果使能</span>
+    <span class="o">|-&gt;</span> <span class="n">board_boot_order</span><span class="p">()</span> <span class="c1">// common/spl/spl.c</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spl_boot_device</span><span class="p">();</span> <span class="c1">// arch/riscv/mach-artinchip/spl.c</span>
+    <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">aic_get_boot_device</span><span class="p">();</span> <span class="c1">// arch/riscv/mach-artinchip/boot_param.c</span>
+    <span class="o">|</span>           <span class="c1">// 从 boot param 中获取启动介质信息</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">boot_from_devices</span><span class="p">(</span><span class="n">spl_boot_list</span><span class="p">)</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spl_ll_find_loader</span><span class="p">()</span>  <span class="c1">// 根据boot device找到spl_load_image指针</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="c1">// 这里可能是各种介质的 load image 函数</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="c1">// SPL_LOAD_IMAGE_METHOD() 定义的 Loader</span>
+    <span class="o">|</span>   <span class="o">|</span>       <span class="c1">// 可能是 MMC/SPI/BROM/...</span>
+    <span class="o">|</span>   <span class="o">|</span>
+    <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">spl_load_image</span>  <span class="c1">// 以emmc启动为例</span>
+    <span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">spl_mmc_load_image</span>  <span class="c1">// common/spl/spl_mmc.c</span>
+    <span class="o">|</span>           <span class="o">|-&gt;</span> <span class="n">spl_mmc_load</span> <span class="c1">// 具体可看后面的流程</span>
+    <span class="o">|</span>
+    <span class="o">|-&gt;</span> <span class="n">spl_perform_fixups</span>  <span class="c1">// vendor hook，用于修改device-tree传递参数</span>
+    <span class="o">|-&gt;</span> <span class="n">spl_board_prepare_for_boot</span>  <span class="c1">// vendor hook, 可不实现</span>
+    <span class="o">|-&gt;</span> <span class="n">jump_to_image_no_args</span>   <span class="c1">// 跳转到u-boot执行</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="mmc_load.html" class="btn btn-neutral float-right" title="3.6.3. MMC 加载" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="riscv_spl.html" class="btn btn-neutral float-left" title="3.6.1. RISCV SPL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

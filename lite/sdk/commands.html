@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2.3. 命令详解 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="2.4. SConstruct" href="sconstruct.html" />
+    <link rel="prev" title="2.2. 代码结构" href="sourcecode.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 使用指南</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="architecture.html">2.1. 设计框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sourcecode.html">2.2. 代码结构</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.3. 命令详解</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scons">2.3.1. SCons</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">2.3.1.1. 项目罗列</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">2.3.1.2. 使用项目</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">2.3.1.3. 配置项目</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">2.3.1.4. 构建项目</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">2.3.1.5. 清理项目</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#onestep">2.3.2. OneStep</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#windows">2.3.2.1. Windows</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#linux">2.3.2.2. Linux</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">2.3.2.3. 命令列表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sconstruct.html">2.4. SConstruct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compile.html">2.5. 编译</a></li>
+<li class="toctree-l3"><a class="reference internal" href="burn.html">2.6. 烧录镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gdb.html">2.7. GDB 调试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="driver.html">2.8. 添加驱动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app.html">2.9. 添加应用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">2. </span>使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">2.3. </span>命令详解</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">2.3. </span>命令详解<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="scons">
+<h2><span class="section-number">2.3.1. </span>SCons<a class="headerlink" href="#scons" title="永久链接至标题">¶</a></h2>
+<p>SCons 是跨平台的构建系统，因此在 Windows 和 Linux 上的用法相同，常用的命令有</p>
+<div class="section" id="id2">
+<h3><span class="section-number">2.3.1.1. </span>项目罗列<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>命令： scons –list-def: 罗列 SDK 中发布的项目名称</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scons</span> <span class="o">--</span><span class="nb">list</span><span class="o">-</span><span class="k">def</span>
+<span class="nf">scons</span><span class="p">:</span> <span class="n">Reading</span> <span class="n">SConscript</span> <span class="n">files</span> <span class="o">...</span>
+<span class="n">Built</span><span class="o">-</span><span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
+<span class="mf">0.</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_baremetal_bootloader_defconfig</span> <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_baremetal_bootloader</span>
+<span class="mf">1.</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_baremetal_helloworld_defconfig</span> <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_baremetal_helloworld</span>
+<span class="mf">2.</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span> <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld</span>
+<span class="mf">3.</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nor_baremetal_bootloader_defconfig</span>  <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nor_baremetal_bootloader</span>
+<span class="mf">4.</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nor_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>  <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nor_rt</span><span class="o">-</span><span class="n">thread_helloworld</span>
+<span class="mf">5.</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nand_baremetal_bootloader_defconfig</span>  <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nand_baremetal_bootloader</span>
+<span class="mf">6.</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>  <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld</span>
+<span class="mf">7.</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nor_baremetal_bootloader_defconfig</span>   <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nor_baremetal_bootloader</span>
+<span class="mf">8.</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nor_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>   <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_demo88</span><span class="o">-</span><span class="n">nor_rt</span><span class="o">-</span><span class="n">thread_helloworld</span>
+<span class="mf">9.</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nand_baremetal_bootloader_defconfig</span>    <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nand_baremetal_bootloader</span>
+<span class="mf">10.</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nand_baremetal_helloworld_defconfig</span>   <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nand_baremetal_helloworld</span>
+<span class="mf">11.</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>   <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld</span>
+<span class="mf">12.</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nor_baremetal_bootloader_defconfig</span>    <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nor_baremetal_bootloader</span>
+<span class="mf">13.</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nor_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>    <span class="o">-</span> <span class="n">Build</span> <span class="k">for</span> <span class="n">d21x_per2</span><span class="o">-</span><span class="n">nor_rt</span><span class="o">-</span><span class="n">thread_helloworld</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><span class="section-number">2.3.1.2. </span>使用项目<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>命令：scons –apply-def：设置使用某一个项目， 可以用项目名称，也可以用项目的索引</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scons</span> <span class="o">--</span><span class="n">apply</span><span class="o">-</span><span class="n">def</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">scons</span><span class="p">:</span> <span class="n">Reading</span> <span class="n">SConscript</span> <span class="n">files</span> <span class="o">...</span>
+<span class="n">Load</span> <span class="n">config</span> <span class="kn">from</span> <span class="nn">target</span>\<span class="n">configs</span>\<span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>
+
+<span class="n">scons</span> <span class="o">--</span><span class="n">apply</span><span class="o">-</span><span class="n">def</span><span class="o">=</span><span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>
+<span class="n">scons</span><span class="p">:</span> <span class="n">Reading</span> <span class="n">SConscript</span> <span class="n">files</span> <span class="o">...</span>
+<span class="n">Load</span> <span class="n">config</span> <span class="kn">from</span> <span class="nn">target</span>\<span class="n">configs</span>\<span class="n">d21x_demo100</span><span class="o">-</span><span class="n">nand_rt</span><span class="o">-</span><span class="n">thread_helloworld_defconfig</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">2.3.1.3. </span>配置项目<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>命令：scons –menuconfig：Luban-Lite 使用 menuconfig 界面进行项目的配置工作</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scons</span> <span class="o">--</span><span class="n">menuconfig</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="../../_images/lbl-menuconfig1.png" src="../../_images/lbl-menuconfig1.png" />
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">2.3.1.4. </span>构建项目<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>命令：scons：进行构建，默认是简洁模式，不会输出编译选项等信息， 调试时可以使用 scons –verbose 打印编译器选项等辅助信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scons</span>
+<span class="n">scons</span><span class="p">:</span> <span class="n">Reading</span> <span class="n">SConscript</span> <span class="n">files</span> <span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Extract</span> <span class="n">toolchain</span> <span class="n">Xuantie</span><span class="o">-</span><span class="mi">900</span><span class="o">-</span><span class="n">gcc</span><span class="o">-</span><span class="n">elf</span><span class="o">-</span><span class="n">newlib</span><span class="o">-</span><span class="n">mingw</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">2.3.1.5. </span>清理项目<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>命令：scons –clean：清除上一次编译的临时文件。执行该命令后，下一次编译将能保证所有源文件都会被重新编译</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scons</span> <span class="o">--</span><span class="n">clean</span>
+<span class="n">scons</span> <span class="o">-</span><span class="n">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="onestep">
+<h2><span class="section-number">2.3.2. </span>OneStep<a class="headerlink" href="#onestep" title="永久链接至标题">¶</a></h2>
+<p>OneStep 是 ArtInChip 为了简化 SDK 的使用而开发的一系列易用性命令</p>
+<div class="section" id="windows">
+<h3><span class="section-number">2.3.2.1. </span>Windows<a class="headerlink" href="#windows" title="永久链接至标题">¶</a></h3>
+<p>在 Windows 系统中，OneStep 自动集成到 win_cmd.bat 和 win_env.bat 批处理脚本中</p>
+</div>
+<div class="section" id="linux">
+<h3><span class="section-number">2.3.2.2. </span>Linux<a class="headerlink" href="#linux" title="永久链接至标题">¶</a></h3>
+<p>在 Linux 系统中需要加入到当前路径中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">tools</span><span class="o">/</span><span class="n">onestep</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><span class="section-number">2.3.2.3. </span>命令列表<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Luban</span><span class="o">-</span><span class="n">Lite</span> <span class="n">SDK</span> <span class="n">OneStep</span> <span class="n">commands</span><span class="p">:</span>
+
+<span class="n">h</span>             <span class="p">:</span> <span class="n">Get</span> <span class="n">this</span> <span class="n">help</span><span class="o">.</span>
+<span class="n">lunch</span> <span class="p">[</span><span class="n">No</span><span class="o">.</span><span class="p">]</span>   <span class="p">:</span> <span class="n">Start</span> <span class="k">with</span> <span class="n">selected</span> <span class="n">defconfig</span><span class="p">,</span> <span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">lunch</span> <span class="mi">3</span>
+<span class="n">me</span>            <span class="p">:</span> <span class="n">Config</span> <span class="n">SDK</span> <span class="k">with</span> <span class="n">menuconfig</span>
+<span class="n">m</span>             <span class="p">:</span> <span class="n">Build</span> <span class="nb">all</span> <span class="ow">and</span> <span class="n">generate</span> <span class="n">final</span> <span class="n">image</span>
+<span class="n">c</span>             <span class="p">:</span> <span class="n">Clean</span> <span class="nb">all</span>
+<span class="n">croot</span><span class="o">/</span><span class="n">cr</span>      <span class="p">:</span> <span class="n">cd</span> <span class="n">to</span> <span class="n">SDK</span> <span class="n">root</span> <span class="n">directory</span><span class="o">.</span>
+<span class="n">cout</span><span class="o">/</span><span class="n">co</span>       <span class="p">:</span> <span class="n">cd</span> <span class="n">to</span> <span class="n">build</span> <span class="n">output</span> <span class="n">directory</span><span class="o">.</span>
+<span class="n">cbuild</span><span class="o">/</span><span class="n">cb</span>     <span class="p">:</span> <span class="n">cd</span> <span class="n">to</span> <span class="n">build</span> <span class="n">root</span> <span class="n">directory</span><span class="o">.</span>
+<span class="n">ctarget</span><span class="o">/</span><span class="n">ct</span>    <span class="p">:</span> <span class="n">cd</span> <span class="n">to</span> <span class="n">target</span> <span class="n">board</span> <span class="n">directory</span><span class="o">.</span>
+<span class="nb">list</span>          <span class="p">:</span> <span class="n">List</span> <span class="nb">all</span> <span class="n">SDK</span> <span class="n">defconfig</span><span class="o">.</span>
+<span class="n">i</span>             <span class="p">:</span> <span class="n">Get</span> <span class="n">current</span> <span class="n">project</span><span class="s1">&#39;s information.</span>
+<span class="n">buildall</span>      <span class="p">:</span> <span class="n">Build</span> <span class="nb">all</span> <span class="n">the</span> <span class="o">*</span><span class="n">defconfig</span> <span class="ow">in</span> <span class="n">target</span><span class="o">/</span><span class="n">configs</span>
+<span class="n">rebuildall</span>    <span class="p">:</span> <span class="n">Clean</span> <span class="ow">and</span> <span class="n">build</span> <span class="nb">all</span> <span class="n">the</span> <span class="o">*</span><span class="n">defconfig</span> <span class="ow">in</span> <span class="n">target</span><span class="o">/</span><span class="n">configs</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="sconstruct.html" class="btn btn-neutral float-right" title="2.4. SConstruct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sourcecode.html" class="btn btn-neutral float-left" title="2.2. 代码结构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

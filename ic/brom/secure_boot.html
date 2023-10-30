@@ -1,0 +1,520 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.10. 安全启动 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="7.11. JTAG 解锁" href="jtag_unlock.html" />
+    <link rel="prev" title="7.9. SPI NOR 启动" href="spi_nor_boot.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">6. 安全</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. 启动</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html">7.1. 模块概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_flow.html">7.2. 整体流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_cfg.html">7.3. 启动配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="boot_image_format.html">7.4. 镜像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clock_cfg.html">7.5. 时钟配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmc_boot.html">7.6. SD/eMMC 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sd_fat32_boot.html">7.7. SD FAT32 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nand_boot.html">7.8. SPI NAND 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spi_nor_boot.html">7.9. SPI NOR 启动</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.10. 安全启动</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.10.1. 安全目标</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">7.10.2. 总体流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">7.10.3. 密钥管理</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id5">7.10.3.1. 签名密钥</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#aes">7.10.3.2. AES 密钥</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">7.10.4. 签名验证</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">7.10.5. 防回滚检查</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">7.10.6. 固件解密</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efuse">7.10.7. 安全 eFuse 配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jtag_unlock.html">7.11. JTAG 解锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usb_mode.html">7.12. USB 升级模式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7. </span>启动</a> &raquo;</li>
+        
+      <li><span class="section-number">7.10. </span>安全启动</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.10. </span>安全启动<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.10.1. </span>安全目标<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本方案中安全启动要达成的安全目标如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>防止篡改</p></td>
+<td><p>只有合法的固件才能在安全设备上运行，保护平台和数据。</p></td>
+</tr>
+<tr class="row-even"><td><p>防止抄板</p></td>
+<td><p>固件只能在已授权的平台上运行，防止被复制到其他非授权平台。保护固件。</p></td>
+</tr>
+<tr class="row-odd"><td><p>防止固件版本回滚</p></td>
+<td><p>升级之后，旧版本的固件重新烧录不能运行。防止已知漏洞被利用。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.10.2. </span>总体流程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center" id="id9">
+<img alt="../../_images/secure_boot_flow.png" src="../../_images/secure_boot_flow.png" />
+<p class="caption"><span class="caption-number">图 7.11 </span><span class="caption-text">安全验证流程</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.10.3. </span>密钥管理<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>密钥分为签名密钥和固件加解密的密钥。有部分密钥在出厂阶段烧录在 eFuse 相关密钥区域，
+部分密钥嵌入到启动镜像中，保存在存储介质。</p>
+<div class="section" id="id5">
+<h3><span class="section-number">7.10.3.1. </span>签名密钥<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>当前芯片支持对启动镜像进行签名，固定使用 RSA-2048 进行签名和验证。涉及的密钥和相关数据有：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>RSA-2048 非对称密钥对（公钥和私钥）</p></li>
+<li><p>ROTPK</p></li>
+</ol>
+</div></blockquote>
+<p>RSA 密钥对可由 Openssl 工具生成。RSA 私钥用于对启动镜像进行签名，在生成量产固件时使用，厂商必须严密保管以防泄露；
+RSA 公钥保存为标准的 DER 公钥文件，并且保存在启动镜像中，设备启动过程中 BROM 用其对加载的启动镜像进行签名认证。</p>
+<p>为了保证公钥的真实性，还需要将 RSA 公钥的数据摘要信息（MD5）烧录到eFuse 的 ROTPK 区域，
+BROM 在使用公钥前首先要检查其数据摘要信息与 ROTPK 中的数据摘要信息是否一致。
+ROTPK 需要在出厂时设置写保护，以防被恶意修改。</p>
+</div>
+<div class="section" id="aes">
+<h3><span class="section-number">7.10.3.2. </span>AES 密钥<a class="headerlink" href="#aes" title="永久链接至标题">¶</a></h3>
+<p>当前芯片支持使用 AES-128 算法对启动镜像的可执行代码区域进行加密，其使用的密钥在出厂阶段烧录在
+eFuse 的 SSK 区域。BROM 在启动时会使用SSK 对固件进行解密。</p>
+<p>SSK 区域需要在出厂时设置为仅硬件加解密模块可以读访问，CPU 不可读写，以防被攻击者读取到密钥的信息。</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">7.10.4. </span>签名验证<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>签名验证流程如下：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>将启动镜像加载到芯片内部 RAM 中</p></li>
+<li><p>首先计算公钥数据的数据摘要（MD5），与 ROTPK 中的值进行对比</p></li>
+<li><p>如果公钥有效，则使用公钥对镜像的签名数据进行解密，得到镜像的原始数据摘要</p></li>
+<li><p>重新计算镜像的数据摘要，并与原始数据摘要进行比较</p></li>
+<li><p>结果一致，则签名验证通过</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.10.5. </span>防回滚检查<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>固件防回滚的目的是防止有已知漏洞的固件，被重新烧录到平台上运行，攻击者利用已知漏洞对平台进行攻击。
+D211 的固件防回滚是通过受保护的 eFuse 记录版本号来实现的。在固件升级重启期间，
+BROM 会拿当前固件的版本计数值与 eFuse 中的记录版本计数值进行比较，如果当前版本计数值大于
+eFuse 记录的版本计数值，则更新 eFuse NV Counter，成功则正常启动；如果当前版本计数值小于
+eFuse 记录的版本计数值，则启动失败。</p>
+<p>eFuse NV Counter 总共128 位，最多可记录128个不同的版本计数值。如果 NV Counter 中的所有位都被使用完，
+则只要是版本计数值大于 128 的都可以运行。</p>
+<p>这里的版本计数值与固件版本号是两个独立的值，制作固件的时候指定。
+eFuse NV Counter 仅 BROM 有权限更新，BROM 退出后所有模块只能读取 eFuse NV Counter 的值。</p>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">7.10.6. </span>固件解密<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>固件解密流程如下：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>配置硬件加解密模块（CE），使用 SSK 对代码区域进行 AES-CBC 解密</p></li>
+<li><p>解密是原地进行的，直接覆盖原来的加密数据区域</p></li>
+</ol>
+</div></blockquote>
+<p>在制作固件的时候，在签名和加密功能都打开的情况下，总是想对固件进行加密，再对加密后的结果进行签名。</p>
+</div>
+<div class="section" id="efuse">
+<h2><span class="section-number">7.10.7. </span>安全 eFuse 配置<a class="headerlink" href="#efuse" title="永久链接至标题">¶</a></h2>
+<p>eFuse 中与启动安全相关的区域有：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>SECURE</p></li>
+<li><p>SSK</p></li>
+<li><p>ROTPK</p></li>
+<li><p>NV CNTR</p></li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="jtag_unlock.html" class="btn btn-neutral float-right" title="7.11. JTAG 解锁" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="spi_nor_boot.html" class="btn btn-neutral float-left" title="7.9. SPI NOR 启动" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

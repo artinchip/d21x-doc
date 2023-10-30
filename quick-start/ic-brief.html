@@ -1,0 +1,1213 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1. SoC &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="2. Linux" href="sdk-brief.html" />
+    <link rel="prev" title="快速入门" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../product/index.html">产品简介</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">快速入门</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. SoC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 功能框图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.2. 处理器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.3. 安全</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.4. 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.5. 时钟</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.6. 电源</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.7. 存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">1.8. 多媒体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">1.9. 显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">1.10. 计数器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">1.11. 接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">1.12. 模拟</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sdk-brief.html">2. Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lite-brief.html">3. RTOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="baremetal-brief.html">4. 裸机系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools-brief.html">5. 工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="db-brief.html">6. 开发板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manuals.html">7. 文档</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">快速入门</a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>SoC</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="soc">
+<h1><span class="section-number">1. </span>SoC<a class="headerlink" href="#soc" title="永久链接至标题">¶</a></h1>
+<p>本芯片集成了 C906 RISC-V 处理器，DDR2 512Mb 或 DDR3 1Gb，集成 DE（显示引擎），GE（图像引擎），VE（视频图像解码引擎）， 并具有丰富的屏接口，包括RGB、I8080、QSPI、LVDS、MIPI DSI等。
+针对模拟产品应用，集成了PWMCS子系统，PSADC采样等。</p>
+<div class="section" id="id1">
+<h2><span class="section-number">1.1. </span>功能框图<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center">
+<img alt="../_images/ic_overview_block3.png" src="../_images/ic_overview_block3.png" />
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">1.2. </span>处理器<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 27%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="7"><p>CPU</p></td>
+<td><p>指令集</p></td>
+<td><p>RISC-V</p></td>
+</tr>
+<tr class="row-odd"><td><p>CPU</p></td>
+<td><p>平头哥 C906</p></td>
+</tr>
+<tr class="row-even"><td><p>典型频率</p></td>
+<td><p><a class="reference external" href="mailto:600MHz&#37;&#52;&#48;1&#46;2V">600MHz<span>&#64;</span>1<span>&#46;</span>2V</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>位宽</p></td>
+<td><p>64位</p></td>
+</tr>
+<tr class="row-even"><td><p>Icache</p></td>
+<td><p>32KB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dcache</p></td>
+<td><p>32KB</p></td>
+</tr>
+<tr class="row-even"><td><p>浮点单元</p></td>
+<td><p>单精度，双精度</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>DDR</p></td>
+<td><p>地址空间</p></td>
+<td><p>2GB</p></td>
+</tr>
+<tr class="row-even"><td><p>DDR2</p></td>
+<td><p><a class="reference external" href="mailto:64MB&#37;&#52;&#48;504MHz">64MB<span>&#64;</span>504MHz</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>DDR3</p></td>
+<td><p><a class="reference external" href="mailto:128MB&#37;&#52;&#48;672MHz">128MB<span>&#64;</span>672MHz</a></p></td>
+</tr>
+<tr class="row-even"><td><p>展频</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>片内存储</p></td>
+<td><p>BROM</p></td>
+<td><p>32KB</p></td>
+</tr>
+<tr class="row-even"><td><p>SRAM</p></td>
+<td><p>96KB</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="6"><p>DMA</p></td>
+<td><p>通道数</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>配置方式</p></td>
+<td><p>链表式</p></td>
+</tr>
+<tr class="row-odd"><td><p>状态呈现方式</p></td>
+<td><p>寄存器</p></td>
+</tr>
+<tr class="row-even"><td><p>位宽支持</p></td>
+<td><p>8/16/32/64位</p></td>
+</tr>
+<tr class="row-odd"><td><p>突发长度支持</p></td>
+<td><p>1/4/8/16</p></td>
+</tr>
+<tr class="row-even"><td><p>地址对齐</p></td>
+<td><p>8Bytes对齐</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">1.3. </span>安全<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>CE: Crypto Enginee</p></li>
+<li><p>SPI-ENC: SPI Encrypto</p></li>
+<li><p>SID: Secure ID</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 30%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>CE</p></td>
+<td><p>算法</p></td>
+<td><p>AES,TDES,RSA,MD5,SHA1,TRNG</p></td>
+</tr>
+<tr class="row-odd"><td><p>专用安全SRAM</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td><p>生成安全秘钥</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td><p>多种秘钥输入</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td><p>内部专用DMA</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td><p>多路并行处理</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td rowspan="6"><p>SPI-ENC</p></td>
+<td><p>算法</p></td>
+<td><p>A3S-128-CTR</p></td>
+</tr>
+<tr class="row-odd"><td><p>不同SPI控制器</p></td>
+<td><p>配置连接</p></td>
+</tr>
+<tr class="row-even"><td><p>密钥配置方式</p></td>
+<td><p>eFuse</p></td>
+</tr>
+<tr class="row-odd"><td><p>明文和密文混合传输</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td><p>总线传输带宽开销</p></td>
+<td><p>不影响</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI全双工模式</p></td>
+<td><p>不支持</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>SID</p></td>
+<td><p>ID标识</p></td>
+<td><p>每颗芯片独立ID</p></td>
+</tr>
+<tr class="row-odd"><td><p>量产校准参数</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td><p>加密KEY存储</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td><p>空间大小</p></td>
+<td><p>4Kbit容量，2Kbit内容，双备份存储</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">1.4. </span>启动<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 30%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="5"><p>启动顺序</p></td>
+<td><p>SD Card （SDMC1）</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI NAND</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI NOR</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>eMMC （SDMC0）</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>客制化</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>安全启动</p></td>
+<td><p>固件签名校验</p></td>
+<td><p>RSA-2048</p></td>
+</tr>
+<tr class="row-even"><td><p>加密固件</p></td>
+<td><p>AES-128</p></td>
+</tr>
+<tr class="row-odd"><td><p>固件防回滚</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>刷机模式</p></td>
+<td><p>USB 刷机</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td><p>SD 卡刷机</p></td>
+<td><p>支持</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">1.5. </span>时钟<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 30%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="6"><p>CMU</p></td>
+<td><p>PLL数</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-odd"><td><p>PLL_INT0</p></td>
+<td><p>CPU单独使用</p></td>
+</tr>
+<tr class="row-even"><td><p>PLL_INT1</p></td>
+<td><p>总线，内部模块，及低速接口模块</p></td>
+</tr>
+<tr class="row-odd"><td><p>PLL_FRA0</p></td>
+<td><p>存储接口模块，支持展频</p></td>
+</tr>
+<tr class="row-even"><td><p>PLL_FRA1</p></td>
+<td><p>音频接口模块，支持小数分频</p></td>
+</tr>
+<tr class="row-odd"><td><p>PLL_FRA2</p></td>
+<td><p>屏输出模块使用，支持展频</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">1.6. </span>电源<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 25%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="4"><p>SYSCFG</p></td>
+<td><p>内置LDO数</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>LDO30</p></td>
+<td><p>3.0V x 100mA，系统复位启动、AUDIO ADC供电</p></td>
+</tr>
+<tr class="row-even"><td><p>LDO25</p></td>
+<td><p>2.5V x 50mA，DDR模拟电路、EFUSE供电</p></td>
+</tr>
+<tr class="row-odd"><td><p>LDO1x</p></td>
+<td><p>1.8/1.5V x 500mA，DDR IO供电</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>THS</p></td>
+<td><p>数目</p></td>
+<td><p>2路温度传感器</p></td>
+</tr>
+<tr class="row-odd"><td><p>行为</p></td>
+<td><p>高低温报警</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">1.7. </span>存储<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 20%" />
+<col style="width: 69%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="14"><p>SDMC</p></td>
+<td><p>SDMC0</p></td>
+<td><p>SD 卡 和 eMMC</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDMC1</p></td>
+<td><p>SD 卡</p></td>
+</tr>
+<tr class="row-even"><td><p>SDMC2</p></td>
+<td><p>SDIO</p></td>
+</tr>
+<tr class="row-odd"><td><p>最大频率</p></td>
+<td><p>50MHz</p></td>
+</tr>
+<tr class="row-even"><td><p>总线模式</p></td>
+<td><p>1/4/8线</p></td>
+</tr>
+<tr class="row-odd"><td><p>eMMC版本</p></td>
+<td><p>C5.0</p></td>
+</tr>
+<tr class="row-even"><td><p>SD版本</p></td>
+<td><p>3.01</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDIO</p></td>
+<td><p>3.0</p></td>
+</tr>
+<tr class="row-even"><td><p>eMMC HS-SDR速度</p></td>
+<td><p>100MB/s</p></td>
+</tr>
+<tr class="row-odd"><td><p>eMMC HS-DDR</p></td>
+<td><p>100MB/s</p></td>
+</tr>
+<tr class="row-even"><td><p>工作电压</p></td>
+<td><p>3.3V</p></td>
+</tr>
+<tr class="row-odd"><td><p>DMA</p></td>
+<td><p>内部DMA</p></td>
+</tr>
+<tr class="row-even"><td><p>FIFO深度</p></td>
+<td><p>128 Byte</p></td>
+</tr>
+<tr class="row-odd"><td><p>FIFO位宽</p></td>
+<td><p>32bit</p></td>
+</tr>
+<tr class="row-even"><td rowspan="6"><p>QSPI</p></td>
+<td><p>总线模式</p></td>
+<td><p>四种，mode0，mode1，mode2，mode3</p></td>
+</tr>
+<tr class="row-odd"><td><p>线宽</p></td>
+<td><p>3线或4线</p></td>
+</tr>
+<tr class="row-even"><td><p>FIFO深度</p></td>
+<td><p>64 Byte</p></td>
+</tr>
+<tr class="row-odd"><td><p>接口</p></td>
+<td><p>标准接口，双路输出/双路接口，双路I/O 接口，四路输出/四路输入接口</p></td>
+</tr>
+<tr class="row-even"><td><p>SPI NAND</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPI Nor</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-even"><td><p>NAND</p></td>
+<td colspan="2"><p>不支持</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">1.8. </span>多媒体<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>DE: Display Engine</p></li>
+<li><p>GE: Graphics Engine</p></li>
+<li><p>VE: Video Engine</p></li>
+<li><p>DVP: Digital Video Port</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 22%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="11"><p>DE</p></td>
+<td><p>UI层</p></td>
+<td><p>支持4个矩形窗口</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>UI图层格式</p></td>
+<td><p>ARGB8888 XRGB8888 RGB888</p></td>
+</tr>
+<tr class="row-even"><td><p>ARGB4444 ARGB1555 RGB565</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>Video层</p></td>
+<td><p>ARGB8888 XRGB8888 RGB888 ARGB4444 ARGB1555 RGB565 YUV420P</p></td>
+</tr>
+<tr class="row-even"><td><p>NV12 NV21 YUV420_TILE_64x32 YUV420_TILE_128x16 YUV422P</p></td>
+</tr>
+<tr class="row-odd"><td><p>NV16 NV61 YUYV YVYU UYVY VYUY YUV400 YUV422_TILE_64x32</p></td>
+</tr>
+<tr class="row-even"><td><p>YUV 缩放 1/31.999x ~ 32x</p></td>
+</tr>
+<tr class="row-odd"><td><p>图像大小</p></td>
+<td><p>2048x2048</p></td>
+</tr>
+<tr class="row-even"><td><p>性能</p></td>
+<td><p><a class="reference external" href="mailto:1920x1080&#37;&#52;&#48;60fps">1920x1080<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>滤波算法</p></td>
+<td><p>bilinear和 6x4 taps 16 phases</p></td>
+</tr>
+<tr class="row-even"><td><p>误差扩散Dither</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="8"><p>GE</p></td>
+<td><p>图像大小</p></td>
+<td><p>4096x4096</p></td>
+</tr>
+<tr class="row-even"><td><p>格式转换</p></td>
+<td><p>RGB转YUV，YUV转RGB</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flip</p></td>
+<td><p>水平Flip，垂直Flip</p></td>
+</tr>
+<tr class="row-even"><td><p>Rotate</p></td>
+<td><p>90/180/270 RGB任意角度</p></td>
+</tr>
+<tr class="row-odd"><td><p>缩放</p></td>
+<td><p>1/16x ~ 16x</p></td>
+</tr>
+<tr class="row-even"><td><p>色彩处理</p></td>
+<td><p>Alpha 混合， Color Key</p></td>
+</tr>
+<tr class="row-odd"><td><p>G2D 接口</p></td>
+<td><p>Fill Rectange， BitBlit， StretchBlit</p></td>
+</tr>
+<tr class="row-even"><td><p>误差扩散Dither</p></td>
+<td><p>支持</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>VE</p></td>
+<td rowspan="2"><p>H264</p></td>
+<td><p>BP/MP/HP</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="mailto:1920x1080&#37;&#52;&#48;30fps">1920x1080<span>&#64;</span>30fps</a> 80Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>MJPEG</p></td>
+<td><p>8192x8192 YUV444 支持编码</p></td>
+</tr>
+<tr class="row-even"><td><p>PNG</p></td>
+<td><p>8192x8192</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>DVP</p></td>
+<td><p>录像</p></td>
+<td><p><a class="reference external" href="mailto:1920x1080&#37;&#52;&#48;30fps">1920x1080<span>&#64;</span>30fps</a></p></td>
+</tr>
+<tr class="row-even"><td><p>拍照</p></td>
+<td><p>500万</p></td>
+</tr>
+<tr class="row-odd"><td><p>格式</p></td>
+<td><p>YUV422 BT.656</p></td>
+</tr>
+<tr class="row-even"><td><p>特性</p></td>
+<td><p>支持直通模式 支持针对图像的帧</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="5"><p>Audio</p></td>
+<td><p>AMIC</p></td>
+<td><p>1路</p></td>
+</tr>
+<tr class="row-even"><td><p>DMIC</p></td>
+<td><p>2路</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>特性</p></td>
+<td><p>无DAC设计，采用PWM输出</p></td>
+</tr>
+<tr class="row-even"><td><p>128 x 32 bits FIFO</p></td>
+</tr>
+<tr class="row-odd"><td><p>中断和DMA传输</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>I2S</p></td>
+<td><p>采样精度</p></td>
+<td><p>8bit ~ 32bit</p></td>
+</tr>
+<tr class="row-odd"><td><p>采样率</p></td>
+<td><p>8kHz - 384kHz</p></td>
+</tr>
+<tr class="row-even"><td><p>特性</p></td>
+<td><p>支持主/从模式</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">1.9. </span>显示<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 22%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="13"><p>LCD</p></td>
+<td rowspan="3"><p>PRGB</p></td>
+<td><p>24/18/16bit模式</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="mailto:1920x1080&#37;&#52;&#48;60fps">1920x1080<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-even"><td><p>200MHz pixelclk</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>SRGB</p></td>
+<td><p>8/6bit</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="mailto:480x320&#37;&#52;&#48;60fps">480x320<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>I8080</p></td>
+<td><p>24/18/16/9/8 bit 模式</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="mailto:960x540&#37;&#52;&#48;60fps">960x540<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>SPI</p></td>
+<td><p>3/4/2-sda模式</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="mailto:480x320&#37;&#52;&#48;60fps">480x320<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>特性</p></td>
+<td><p>支持8位色深</p></td>
+</tr>
+<tr class="row-even"><td><p>RGB三组IO可任意交换</p></td>
+</tr>
+<tr class="row-odd"><td><p>RGB组内IO支持高低顺序切换</p></td>
+</tr>
+<tr class="row-even"><td><p>空白区域数据可配置</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="8"><p>LVDS</p></td>
+<td><p>接口</p></td>
+<td><p>Single Link 和 Dual Link</p></td>
+</tr>
+<tr class="row-even"><td><p>分辨率</p></td>
+<td><p><a class="reference external" href="mailto:1920x1080&#37;&#52;&#48;60fps">1920x1080<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>速率</p></td>
+<td><p>240Mbps - 700Mbps</p></td>
+</tr>
+<tr class="row-even"><td><p>模式</p></td>
+<td><p>VESA和JEIDA</p></td>
+</tr>
+<tr class="row-odd"><td><p>带宽</p></td>
+<td><p>18bit 和 24bit</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>特性</p></td>
+<td><p>LVDS_0和LVDS_1互换</p></td>
+</tr>
+<tr class="row-odd"><td><p>LVDS_D0-LVDS_D3,LVDS_CK信号互换</p></td>
+</tr>
+<tr class="row-even"><td><p>LVDS信号极性选择</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="6"><p>MIPI-DSI</p></td>
+<td><p>版本</p></td>
+<td><p>DSI V1.2, D-PHY V1.1</p></td>
+</tr>
+<tr class="row-even"><td><p>数据通道</p></td>
+<td><p>1/2/3/4对</p></td>
+</tr>
+<tr class="row-odd"><td><p>速率</p></td>
+<td><p>1Gbps</p></td>
+</tr>
+<tr class="row-even"><td><p>分辨率</p></td>
+<td><p><a class="reference external" href="mailto:1920x1080&#37;&#52;&#48;60fps">1920x1080<span>&#64;</span>60fps</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>模式</p></td>
+<td><p>Video，Command，Brust</p></td>
+</tr>
+<tr class="row-even"><td><p>格式</p></td>
+<td><p>RGB888, RGB666, RGB565</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">1.10. </span>计数器<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>GTC: General Timer Counter</p></li>
+<li><p>WDOG: Watch Dog</p></li>
+<li><p>RTC: Real Time</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 22%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GTC</p></td>
+<td><p>周期</p></td>
+<td><p>52bits，35年</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>WDOG</p></td>
+<td rowspan="3"><p>特性说明</p></td>
+<td><p>固定32K时钟源输入</p></td>
+</tr>
+<tr class="row-even"><td><p>内部32位计时器，计时单位为1个32K时钟周期</p></td>
+</tr>
+<tr class="row-odd"><td><p>系统复位和中断信号两个信号输出</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>RTC</p></td>
+<td><p>闹钟</p></td>
+<td><p>1路，可软件扩展多路</p></td>
+</tr>
+<tr class="row-odd"><td><p>关机电流</p></td>
+<td><p>3uA，5年待机（150mAH/3uA/24/365）</p></td>
+</tr>
+<tr class="row-even"><td><p>晶振</p></td>
+<td><p>外挂晶振，精度无忧</p></td>
+</tr>
+<tr class="row-odd"><td><p>PWM</p></td>
+<td><p>数目</p></td>
+<td><p>8 x PWM</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">1.11. </span>接口<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 22%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="7"><p>GMAC</p></td>
+<td><p>总数</p></td>
+<td><p>2 x GMAC</p></td>
+</tr>
+<tr class="row-odd"><td><p>工作模式</p></td>
+<td><p>全双工半双工</p></td>
+</tr>
+<tr class="row-even"><td><p>速率</p></td>
+<td><p>1000/100/10Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>接口</p></td>
+<td><p>RGMII/RMII</p></td>
+</tr>
+<tr class="row-even"><td><p>DMA</p></td>
+<td><p>内部DMA</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>特性</p></td>
+<td><p>VLAN哈希过滤</p></td>
+</tr>
+<tr class="row-even"><td><p>接收校验和错误检测</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="5"><p>UART</p></td>
+<td><p>数目</p></td>
+<td><p>8 x UART</p></td>
+</tr>
+<tr class="row-even"><td><p>兼容性</p></td>
+<td><p>工业标准16550</p></td>
+</tr>
+<tr class="row-odd"><td><p>FIFO</p></td>
+<td><p>256 x 8bit</p></td>
+</tr>
+<tr class="row-even"><td><p>最大速率</p></td>
+<td><p>3Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>RS485</p></td>
+<td><p>9bit 模式， 硬件使能</p></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>TWI</p></td>
+<td><p>数目</p></td>
+<td><p>4 x TWI</p></td>
+</tr>
+<tr class="row-odd"><td><p>速率</p></td>
+<td><p>400Kb/s</p></td>
+</tr>
+<tr class="row-even"><td><p>寻址</p></td>
+<td><p>7bit/10bit</p></td>
+</tr>
+<tr class="row-odd"><td><p>模式</p></td>
+<td><p>master 和 slave 模式</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>CIR</p></td>
+<td><p>接收FIFO</p></td>
+<td><p>64 x 8bits</p></td>
+</tr>
+<tr class="row-odd"><td><p>发送FIFO</p></td>
+<td><p>128 Bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>特性</p></td>
+<td><p>全物理层接收</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>PBUS</p></td>
+<td><p>数目</p></td>
+<td><p>2 x PBUS</p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>特性</p></td>
+<td><p>访问配置寄存器和外部设备地址空间</p></td>
+</tr>
+<tr class="row-odd"><td><p>16bit地址和数据总线复用</p></td>
+</tr>
+<tr class="row-even"><td><p>信号时序可灵活配置</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="6"><p>GPIO</p></td>
+<td><p>引脚</p></td>
+<td><p>6组引脚（PA//PB/PC/PD/PE/PF）</p></td>
+</tr>
+<tr class="row-even"><td rowspan="5"><p>特性</p></td>
+<td><p>中断脉宽可配置，时间可配置为10ns~9.83ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>可配置为关闭，通用功能和最多6个专用功能</p></td>
+</tr>
+<tr class="row-even"><td><p>可使能输出，可配置中断触发模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>驱动能力配置，8个档位可选</p></td>
+</tr>
+<tr class="row-even"><td><p>上下拉单独配置</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>USB</p></td>
+<td><p>数目</p></td>
+<td><p>2 x USB</p></td>
+</tr>
+<tr class="row-even"><td><p>协议标准</p></td>
+<td><p>USB 2.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>FIFO</p></td>
+<td><p>4K Byte</p></td>
+</tr>
+<tr class="row-even"><td><p>DMA</p></td>
+<td><p>内部DMA</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">1.12. </span>模拟<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 22%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模块</p></th>
+<th class="head"><p>项目</p></th>
+<th class="head"><p>参数和信息</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>ADCIM</p></td>
+<td rowspan="3"><p>特性</p></td>
+<td><p>16通道可配</p></td>
+</tr>
+<tr class="row-odd"><td><p>低优先级非实时采样，高优先级实时采样</p></td>
+</tr>
+<tr class="row-even"><td><p>支持采样命令FIFO，不支持数据FIFO</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>GPAI</p></td>
+<td rowspan="3"><p>特性</p></td>
+<td><p>支持8个模拟信号输入</p></td>
+</tr>
+<tr class="row-even"><td><p>支持单次采样与周期采样</p></td>
+</tr>
+<tr class="row-odd"><td><p>高电平报警阈值与低电平报警阈值各一个</p></td>
+</tr>
+<tr class="row-even"><td rowspan="6"><p>RTP</p></td>
+<td rowspan="6"><p>特性</p></td>
+<td><p>仅支持4线RTP，  X+/X-/Y+/Y-</p></td>
+</tr>
+<tr class="row-odd"><td><p>最多2点触摸</p></td>
+</tr>
+<tr class="row-even"><td><p>压力感应</p></td>
+</tr>
+<tr class="row-odd"><td><p>采样滤波，滤波参数可配</p></td>
+</tr>
+<tr class="row-even"><td><p>支持触摸检测中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>14*16 FIFO</p></td>
+</tr>
+<tr class="row-even"><td rowspan="6"><p>PSADC</p></td>
+<td rowspan="6"><p>特性</p></td>
+<td><p>支持16个模拟信号输入</p></td>
+</tr>
+<tr class="row-odd"><td><p>支持PWM CVRA/CVRB硬件触发采样</p></td>
+</tr>
+<tr class="row-even"><td><p>支持外部信号触发和软件触发采样</p></td>
+</tr>
+<tr class="row-odd"><td><p>单次采样与周期采样两种采样模式</p></td>
+</tr>
+<tr class="row-even"><td><p>支持双队列模式，和单队列模式</p></td>
+</tr>
+<tr class="row-odd"><td><p>FIFO1 为20*16bits，FIFO2 为12*16bits</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="sdk-brief.html" class="btn btn-neutral float-right" title="2. Linux" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="快速入门" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

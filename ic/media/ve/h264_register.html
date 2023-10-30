@@ -1,0 +1,2862 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>10.3.7. H264寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="10.3.8. PNG寄存器描述" href="png_register.html" />
+    <link rel="prev" title="10.3.6. VE_TOP寄存器" href="ve_top_register.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">10. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../de/index.html">10.1. Display Engine (DE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">10.2. Graphics Engine (GE)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">10.3. Video Engine (VE)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">10.3.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="h264.html">10.3.2. H264模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jpeg.html">10.3.3. JPEG模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="png.html">10.3.4. PNG模块功能说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="register.html">10.3.5. 寄存器地址空间映射</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ve_top_register.html">10.3.6. VE_TOP寄存器</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">10.3.7. H264寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x0100-avc-reset">10.3.7.1. 0x0100 AVC_RESET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0104-avc-sps">10.3.7.2. 0x0104 AVC_SPS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0108-avc-pps">10.3.7.3. 0x0108 AVC_PPS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010c-avc-sh1">10.3.7.4. 0x010C AVC_SH1</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0110-avc-sh2">10.3.7.5. 0x0110 AVC_SH2</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0114-avc-sh-wp">10.3.7.6. 0x0114 AVC_SH_WP</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0118-avc-wp">10.3.7.7. 0x0118 AVC_WP</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x011c-avc-scaling-matrix">10.3.7.8. 0x011C AVC_Scaling_Matrix</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0120-avc-sh-qp">10.3.7.9. 0x0120 AVC_SH_QP</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0124-avc-ctrl">10.3.7.10. 0x0124 AVC_CTRL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0128-avc-status">10.3.7.11. 0x0128 AVC_STATUS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x012c-avc-dec-mb-num">10.3.7.12. 0x012C AVC_DEC_MB_NUM</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0130-avc-data-valid">10.3.7.13. 0x0130 AVC_DATA_VALID</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0134-avc-bitbuf-start-addr">10.3.7.14. 0x0134 AVC_BITBUF_START_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0138-avc-bitbuf-end-addr">10.3.7.15. 0x0138 AVC_BITBUF_END_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x013c-avc-bit-offset">10.3.7.16. 0x013C AVC_BIT_OFFSET</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0140-avc-bit-length">10.3.7.17. 0x0140 AVC_BIT_LENGTH</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0144-avc-ref-list">10.3.7.18. 0x0144 AVC_REF_LIST</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0148-avc-fb-info">10.3.7.19. 0x0148 AVC_FB_INFO</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x014c-avc-fb-info-cont">10.3.7.20. 0x014C AVC_FB_INFO_CONT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0150-avc-col-buf-addr">10.3.7.21. 0x0150 AVC_COL_BUF_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0154-avc-mbinfo-buf-addr">10.3.7.22. 0x0154 AVC_MBINFO_BUF_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01d4-avc-intrap-buf-addr">10.3.7.23. 0x01D4 AVC_INTRAP_BUF_ADDR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x01f8-avc-cycles">10.3.7.24. 0x01F8 AVC_CYCLES</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0210-avc-pic-type-reg">10.3.7.25. 0x0210 AVC_PIC_TYPE_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0214-avc-pic-size-reg">10.3.7.26. 0x0214 AVC_PIC_SIZE_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0240-avc-dblk-en-reg">10.3.7.27. 0x0240 AVC_DBLK_EN_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0244-avc-dblk-y-buf-reg">10.3.7.28. 0x0244 AVC_DBLK_Y_BUF_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0248-avc-dblk-c-buf-reg">10.3.7.29. 0x0248 AVC_DBLK_C_BUF_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024c-avc-dec-config-reg">10.3.7.30. 0x024C AVC_DEC_CONFIG_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0250-avc-dec-frame-idx-reg">10.3.7.31. 0x0250 AVC_DEC_FRAME_IDX_REG</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040c-avc-interp-dma-mode">10.3.7.32. 0x040C AVC_INTERP_DMA_MODE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0480-avc-interp-wp-enable">10.3.7.33. 0x0480 AVC_INTERP_WP_ENABLE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0484-avc-interp-wp-logwd">10.3.7.34. 0x0484 AVC_INTERP_WP_LOGWD</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="png_register.html">10.3.8. PNG寄存器描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pic_register.html">10.3.9. 图像信息寄存器描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jpeg_register.html">10.3.10. JPEG寄存器描述</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lcd/index.html">10.4. LCD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lvds/index.html">10.5. LVDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsi/index.html">10.6. MIPI DSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">10.7. Digital Video Port (DVP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">10.8. AUDIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">10.9. Integrated Interchip Sound (I2S)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">12. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">10. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">10.3. </span>VE</a> &raquo;</li>
+        
+      <li><span class="section-number">10.3.7. </span>H264寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="h264">
+<h1><span class="section-number">10.3.7. </span>H264寄存器描述<a class="headerlink" href="#h264" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x0100-avc-reset">
+<h2><span class="section-number">10.3.7.1. </span>0x0100 AVC_RESET<a class="headerlink" href="#x0100-avc-reset" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC软复位 (AVC RESET)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VE_RESET</div>
+<div class="line">0：软复位完成</div>
+<div class="line">1：软复位进行中</div>
+<div class="line">由软件对本寄存器置位，硬件就会对AVC模块寄存器软复位。由于</div>
+<div class="line">硬件复位需要一定时间，软件配置该寄存器后，需要等到该bit为</div>
+<div class="line">0后，才能继续配置其他寄存器。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0104-avc-sps">
+<h2><span class="section-number">10.3.7.2. </span>0x0104 AVC_SPS<a class="headerlink" href="#x0104-avc-sps" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC序列参数集信息 (AVC Sequence PArameter Set)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">PIC_INIT</div>
+<div class="line">1:VE内部图像初始化，只在图像的第一个slice才需要配置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:23</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>22:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UV_ALTER</div>
+<div class="line">0:U分量存放在V分量之前</div>
+<div class="line">1:V分量存放在U分量之前</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">UV_INTERLEAVE</div>
+<div class="line">0:UV分量不交错</div>
+<div class="line">1:UV分量交错</div>
+<div class="line">控制MC模块是否按交错方式读参考帧数据，</div>
+<div class="line">需要与dblk寄存器0x24C中的交错值一致</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FRAME_MBS_ONLY_FLAG</div>
+<div class="line">0: 编码序列里可能有帧结构、也可能有场结构。</div>
+<div class="line">1: 编码序列的所有编码帧只有帧结构、帧MB。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MB_ADAPTIVE_FRAME_FIELD_FLAG</div>
+<div class="line">0: 不允许编码中出现帧MB与场MB切换。</div>
+<div class="line">1: 允许编码中出现帧MB与场MB切换。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DIRECT_8X8_INFERENCE_FLAG</div>
+<div class="line">指定了B_Skip, B_Direct_16x16 and B_Direct_8x8块的亮度</div>
+<div class="line">运动向量的生成方法。如果frame_mbs_only_flag为0, 则</div>
+<div class="line">direct_8x8_inference_flag 应为1.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">PIC_WIDTH_IN_MBS_MINUS1</div>
+<div class="line">图像编码宽度，单位是MB。如果以像素为单位，实际图像编码</div>
+<div class="line">宽度为PIC_WIDTH_IN_MBS * 16。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>/</p></td>
+<td><p>/</p></td>
+<td><div class="line-block">
+<div class="line">/</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">PIC_HEIGHT_IN_MBS_MINUS1</div>
+<div class="line">图像编码高度，单位是MB。如果以像素为单位，实际图像编码</div>
+<div class="line">高度为PIC_HEIGHT_IN_MBS * 16。</div>
+<div class="line"><br /></div>
+<div class="line">PIC_HEIGHT_IN_MAP_UNITS_MINUS1</div>
+<div class="line">仅对H.264有效, 解码帧/场中slice头中解码出来的图像高度。</div>
+<div class="line">注意：FrameHeightInMbs = (2 – frame_mbs_only_flag) *</div>
+<div class="line">PicHeightInMapUnits</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0108-avc-pps">
+<h2><span class="section-number">10.3.7.3. </span>0x0108 AVC_PPS<a class="headerlink" href="#x0108-avc-pps" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC图像参数集信息 (AVC Picture Parameter Set)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">NUM_REF_IDX_L0_ACTIVE_MINUS1_PIC</div>
+<div class="line">指定参考图像列表0的最大参考index</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">NUM_REF_IDX_L1_ACTIVE_MINUS1_PIC</div>
+<div class="line">指定参考图像列表1的最大参考</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ENTROPY_CODING_MODE_FLAG</div>
+<div class="line">0: Exp-Golomb编码以及CAVLC</div>
+<div class="line">1: CABAC</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WEIGHTED_PRED_FLAG</div>
+<div class="line">0: 加权预测可以不按照P/SP slices的方式进行。</div>
+<div class="line">1: 加权预测需按照P/SP slices的方式进行。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WEIGHTED_BIPRED_IDC</div>
+<div class="line">00: 默认模式</div>
+<div class="line">01: explicit模式</div>
+<div class="line">10: implicit模式</div>
+<div class="line">11: reserved</div>
+<div class="line">仅对B slice有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CONSTRAINED_INTRA_PRED_FLAG</div>
+<div class="line">0: 帧内、帧间预测模式都允许</div>
+<div class="line">1: 固定只能有帧内预测模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TRANSFROM_8X8_MODE_FLAG</div>
+<div class="line">0: 解码过程中不使用8x8变换</div>
+<div class="line">1: 解码过程中可使用8x8变换</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010c-avc-sh1">
+<h2><span class="section-number">10.3.7.4. </span>0x010C AVC_SH1<a class="headerlink" href="#x010c-avc-sh1" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC Slice头信息1 (AVC Slice Header1)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0_0000</p></td>
+<td><div class="line-block">
+<div class="line">FIRST_MB_X</div>
+<div class="line">当前slice第一个宏块在图像中的水平方向坐标值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>22:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0_0000</p></td>
+<td><div class="line-block">
+<div class="line">FIRST_MB_Y</div>
+<div class="line">当前slice第一个宏块在图像中的垂直方向坐标值</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">NAL_REF_FLAG</div>
+<div class="line">0: 当前slice不用作后续参考图</div>
+<div class="line">1: 当前slice可用做后续参考图</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLICE_TYPE</div>
+<div class="line">0000: P slice</div>
+<div class="line">0001: B slice</div>
+<div class="line">0010: I slice</div>
+<div class="line">0011: SP slice</div>
+<div class="line">0100: SI slice</div>
+<div class="line">0101: P slice</div>
+<div class="line">0110: B slice</div>
+<div class="line">0111: I slice</div>
+<div class="line">1000: SP slice</div>
+<div class="line">1001: SI slice</div>
+<div class="line">其它：保留</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIRST_SLICE_IN_PIC</div>
+<div class="line">0: 当前slice不是当前编码图的第一个slice</div>
+<div class="line">1: 当前slice是当前编码图的第一个slice</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">FIELD_PIC_FLAG</div>
+<div class="line">0: 当前slice是帧结构方式编码</div>
+<div class="line">1: 当前slice是场结构方式编码</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BOTTOM_FIELD_FLAG</div>
+<div class="line">0: 当前slice是顶场</div>
+<div class="line">1: 当前slice是底场</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DIRECT_SPATIAL_MV_PRED_FLAG</div>
+<div class="line">0: 采取时间direct模式预测</div>
+<div class="line">1: 采取空间direct模式预测</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CABAC_INIT_IDC</div>
+<div class="line">参数cabac_init_idc的值范围[0,2]。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0110-avc-sh2">
+<h2><span class="section-number">10.3.7.5. </span>0x0110 AVC_SH2<a class="headerlink" href="#x0110-avc-sh2" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC Slice头信息2 (AVC Slice Header2)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:29</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>28:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">NUM_REF_IDX_L0_ACTIVE_MINUS1</div>
+<div class="line">当前slice使用参考图列表0时的最大参考index-1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">NUM_REF_IDX_L1_ACTIVE_MINUS1</div>
+<div class="line">当前slice使用参考图列表1时的最大参考index-1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">NUM_REF_IDX_ACTIVE_OVERRIDE_FLAG</div>
+<div class="line">0: 有效参考图个数不能被重写</div>
+<div class="line">1: 有效参考图个数可被重写</div>
+<div class="line">如果该位为1，则表示参考图个数可能与PPS中设置的不同</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DISABLE_DEBLOCKING_FILTER_IDC</div>
+<div class="line">有效值范围[0,2]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLICE_ALPHA_C0_OFFSET_DIV2</div>
+<div class="line">FilterOffsetA = slice_alpha_c0_offset_div2 &lt;&lt; 1</div>
+<div class="line">有效值范围[-6,+6]</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLICE_BETA_OFFSET_DIV2</div>
+<div class="line">FilterOffsetB = slice_beta_offset_div2 &lt;&lt; 1</div>
+<div class="line">有效值范围[-6,+6]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0114-avc-sh-wp">
+<h2><span class="section-number">10.3.7.6. </span>0x0114 AVC_SH_WP<a class="headerlink" href="#x0114-avc-sh-wp" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC Slice头加权预测参数信息 (AVC Weighted Pred Info)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:28</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">LUMA_LOG2_WEIGHT_DENOM</div>
+<div class="line">所有亮度加权因子的分母，以2为基的对数表示</div>
+<div class="line">有效范围为[0,7]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>26:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">CHROMA_LOG2_WEIGHT_DENOM</div>
+<div class="line">所有色度加权因子的分母，以2为基的对数表示</div>
+<div class="line">有效范围为[0,7]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>23:0</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0118-avc-wp">
+<h2><span class="section-number">10.3.7.7. </span>0x0118 AVC_WP<a class="headerlink" href="#x0118-avc-wp" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 加权预测权重参数 (AVC Weighted Pred Data)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WEIGHT_PRED_SRAM_ADDR</div>
+<div class="line">0x00-0x1F是Luma_L0的地址；</div>
+<div class="line">0x20-0x3F是Chroma_Cb_L0的地址;</div>
+<div class="line">0x40-0x5F是Chroma_Cr_L0的地址；</div>
+<div class="line">0x60-0x7F是Luma_L1的地址；</div>
+<div class="line">0x80-0x9F是Chroma_Cb_L1的地址;</div>
+<div class="line">0xA0-0xBF是Chroma_Cr_L1的地址;</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:17</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>16:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">WEIGHT_PRED_DATA</div>
+<div class="line">[16:8]:weight; [7:0]:offset</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>此寄存器是一个端口寄存器，通过连续配置该寄存器把预测权重参数写入VE中的SRAM。</p>
+<p>一组预测权重参数由8bit的offset和9bit的weight组成。</p>
+<p>先写前向参考L0预测参数，再写后向参考L1预测参数；</p>
+<p>先存Y分量32组参数，再存Cb分量32组参数，最后存Cr分量32组参数</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>bit[7:0]</p></td>
+<td><p>bit[16:8]</p></td>
+</tr>
+<tr class="row-even"><td><p>Luma_offset_L0[0]</p></td>
+<td><p>Luma_weight_L0[0]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Luma_offset_L0[1]</p></td>
+<td><p>Luma_weight_L0[1]</p></td>
+</tr>
+<tr class="row-even"><td><p>……</p></td>
+<td><p>……</p></td>
+</tr>
+<tr class="row-odd"><td><p>Luma_offset_L0[31]</p></td>
+<td><p>Luma_weight_L0[31]</p></td>
+</tr>
+<tr class="row-even"><td><p>Chroma_Cb_offset_L0[0]</p></td>
+<td><p>Chroam_Cb_weight_L0[0]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cb_offset_L0[1]</p></td>
+<td><p>Chroam_Cb_weight_L0[1]</p></td>
+</tr>
+<tr class="row-even"><td><p>……</p></td>
+<td><p>……</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cb_offset_L0[31]</p></td>
+<td><p>Chroam_Cb_weight_L0[31]</p></td>
+</tr>
+<tr class="row-even"><td><p>Chroma_Cr_offset_L0[0]</p></td>
+<td><p>Chroam_Cr_weight_L0[0]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cr_offset_L0[1]</p></td>
+<td><p>Chroam_Cr_weight_L0[1]</p></td>
+</tr>
+<tr class="row-even"><td><p>……</p></td>
+<td><p>……</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cr_offset_L0[31]</p></td>
+<td><p>Chroam_Cr_weight_L0[31]</p></td>
+</tr>
+<tr class="row-even"><td><p>Luma_offset_L1[0]</p></td>
+<td><p>Luma_weight_L1[0]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Luma_offset_L1[1]</p></td>
+<td><p>Luma_weight_L1[1]</p></td>
+</tr>
+<tr class="row-even"><td><p>……      ……</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Luma_offset_L1[31]</p></td>
+<td><p>Luma_weight_L1[31]</p></td>
+</tr>
+<tr class="row-even"><td><p>Chroma_Cb_offset_L1[0]</p></td>
+<td><p>Chroam_Cb_weight_L1[0]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cb_offset_L1[1]</p></td>
+<td><p>Chroam_Cb_weight_L1[1]</p></td>
+</tr>
+<tr class="row-even"><td><p>……</p></td>
+<td><p>……</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cb_offset_L1[31]</p></td>
+<td><p>Chroam_Cb_weight_L1[31]</p></td>
+</tr>
+<tr class="row-even"><td><p>Chroma_Cr_offset_L1[0]</p></td>
+<td><p>Chroam_Cr_weight_L1[0]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cr_offset_L1[1]</p></td>
+<td><p>Chroam_Cr_weight_L1[1]</p></td>
+</tr>
+<tr class="row-even"><td><p>……</p></td>
+<td><p>……</p></td>
+</tr>
+<tr class="row-odd"><td><p>Chroma_Cr_offset_L1[31]</p></td>
+<td><p>Chroam_Cr_weight_L1[31]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x011c-avc-scaling-matrix">
+<h2><span class="section-number">10.3.7.8. </span>0x011C AVC_Scaling_Matrix<a class="headerlink" href="#x011c-avc-scaling-matrix" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 量化矩阵参数 (AVC Scaling Matrix)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SCALING_MATRIX_ACCESS</div>
+<div class="line">1：请求写</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SCALING_WRITE_ENABLE</div>
+<div class="line">1: 写使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SCALING_MATRIX_ADDR</div>
+<div class="line">量化参数地址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">SCALING_MATRIX_VALUE</div>
+<div class="line">量化矩阵参数数值</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>此寄存器是一个端口寄存器，通过连续配置该寄存器把量化参数写入VE中的SRAM。
+当所有数据都写入SRAM后，需要把该寄存器设置为0，关闭access，否则VE内部模块无法读该数据。</p>
+<p>数据排列方式如下：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 57%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>地址范围</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Sl_4x4_intra_Y</p></td>
+<td><div class="line-block">
+<div class="line">0x00-0x0f</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Sl_4x4_intra_Cb</p></td>
+<td><div class="line-block">
+<div class="line">0x10-0x1f</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Sl_4x4_intra_Cr</p></td>
+<td><div class="line-block">
+<div class="line">0x20-0x2f</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Sl_4x4_inter_Y</p></td>
+<td><div class="line-block">
+<div class="line">0x30-0x3f</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Sl_4x4_inter_Cb</p></td>
+<td><div class="line-block">
+<div class="line">0x40-0x4f</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Sl_4x4_inter_Cr</p></td>
+<td><div class="line-block">
+<div class="line">0x50-0x5f</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Sl_8x8_intra_Y</p></td>
+<td><div class="line-block">
+<div class="line">0x60-0x9f</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Sl_8x8_inter_Y</p></td>
+<td><div class="line-block">
+<div class="line">0xA0-0xdf</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0120-avc-sh-qp">
+<h2><span class="section-number">10.3.7.9. </span>0x0120 AVC_SH_QP<a class="headerlink" href="#x0120-avc-sh-qp" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC Slice头量化参数 (AVC Slice Header QP)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:22</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>21:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SECOND_CHROMA_QP_INDEX_OFFSET</div>
+<div class="line">如果语法里不包含该参数，则默认等于CHROMA_QP_INDEX_OFFSET</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">CHROMA_QP_INDEX_OFFSET</div>
+<div class="line">有效值范围[-12,12]</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">SLICE_QPY</div>
+<div class="line">Slice头解码的qp_y, 有效值范围[0,51]</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0124-avc-ctrl">
+<h2><span class="section-number">10.3.7.10. </span>0x0124 AVC_CTRL<a class="headerlink" href="#x0124-avc-ctrl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 控制参数 (AVC Control)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Slice start</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">StartCode_Detect_En</div>
+<div class="line">0: 不检测startcode</div>
+<div class="line">1: 检测startcode</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">EPTB_Detection_Bypass</div>
+<div class="line">0: 检测防竞争字节</div>
+<div class="line">1: 不检测防竞争字节</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BIT_REQ_INT_EN</div>
+<div class="line">0：不使能</div>
+<div class="line">1：使能</div>
+<div class="line">DEC_REQ_INT_EN用于控制VE所需要的原始码流不够需要请求下笔</div>
+<div class="line">数据时是否向CPU发出中断请求。当DEC_REQ_INT_EN为1时，产生</div>
+<div class="line">中断请求，否则不产生中断请求。是否产生中断请求，不影响相</div>
+<div class="line">应状态标志位的产生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEC_ERR_INT_EN</div>
+<div class="line">0：不使能</div>
+<div class="line">1：使能</div>
+<div class="line">DEC_ERR_INT_EN用于控制VE错误解码结束后是否向CPU发出中断请</div>
+<div class="line">求。当DEC_ERR_INT_EN为1时，产生中断请求，否则不产生中断请</div>
+<div class="line">求。是否产生中断请求，不影响相应状态标志位的产生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DEC_FINISH_INT_EN</div>
+<div class="line">0：不使能</div>
+<div class="line">1：使能</div>
+<div class="line">DEC_FINISH_INT_EN用于控制VE正常解码结束后是否向CPU发出中</div>
+<div class="line">断请求。当DEC_FINISH_INT_EN为1时，产生中断请求，否则不产</div>
+<div class="line">生中断请求。是否产生中断请求，不影响相应状态标志位的产生。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0128-avc-status">
+<h2><span class="section-number">10.3.7.11. </span>0x0128 AVC_STATUS<a class="headerlink" href="#x0128-avc-status" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 解码状态 (AVC Satus)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BITSTREAM_ERROR</div>
+<div class="line">码流出错</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">COEFF_ERROR</div>
+<div class="line">宏块DCT系数解析出错</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>29</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MB_HEADER_ERROR</div>
+<div class="line">宏块头解析出错</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>28</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MB_PREFIX_ERROR</div>
+<div class="line">宏块前缀解析出错</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>27:19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VE_Error</div>
+<div class="line">当VE执行当前任务过程中发现码流错误，则停止当前任务并向主</div>
+<div class="line">控发送中断信号后，该位置1。主控向该位写1则清除相应中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BIT_Req</div>
+<div class="line">当VE执行当前任务过程中发现码流不够，且当前正在处理的码流</div>
+<div class="line">不是最后一笔码流，则暂停当前任务并向主控发送中断信号后，</div>
+<div class="line">该位置1。主控向该位写1则清除相应中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">VE_Finish</div>
+<div class="line">当VE完成当前任务并向主控发送中断信号后，该位置1。</div>
+<div class="line">主控向该位写1则清除相应中断。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:9</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Busy</div>
+<div class="line">内部子模块的busy状态。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x012c-avc-dec-mb-num">
+<h2><span class="section-number">10.3.7.12. </span>0x012C AVC_DEC_MB_NUM<a class="headerlink" href="#x012c-avc-dec-mb-num" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 正确解码宏块数 (AVC Correct Decode MB Number)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>23:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">Crt_MB_Number</div>
+<div class="line">表示对一帧/场/GOB来说，被正常解码的MB/MCU数量。</div>
+<div class="line">注:在开始解码一帧/场/GOB之前，软件应对该寄存器清零，</div>
+<div class="line-block">
+<div class="line">除此之外，VE硬件逻辑不会自动清零。</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0130-avc-data-valid">
+<h2><span class="section-number">10.3.7.13. </span>0x0130 AVC_DATA_VALID<a class="headerlink" href="#x0130-avc-data-valid" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>码流数据有有效标记 (Data Valid Flag)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_VALID</div>
+<div class="line">如果该位置1，则表示当前配置的码流数据已经有效写入原始码流</div>
+<div class="line">缓冲区，VE可以预取码流数据到内部的缓冲区，等待启动解码；</div>
+<div class="line">如果该位置0，则表示码流数据还没有正确写入原始码流缓冲区。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_LAST</div>
+<div class="line">该位为1表示当前配置的数据是一个完整解码的最后一笔数据；</div>
+<div class="line">该位为0则表示当前配置的数据不是一个完整解码的最后一笔数</div>
+<div class="line">据，当前解码任务完成后需要硬件保持状态，待下笔数据配置</div>
+<div class="line">后继续完成一个完整解码。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DATA_FIRST</div>
+<div class="line">该位为1表示当前配置的数据是一个完整解码的第一笔数据；</div>
+<div class="line">该位为0则表示当前配置的数据不是一个完整解码的第一笔数</div>
+<div class="line">据，当前解码任务需要承接前一次的解码继续完成一个完整解码。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>注意: 当DATA_FIRST为1，DATA_LAST为0时，软件需要保证BIT_LENGTH大于64bit。</p>
+</div>
+<div class="section" id="x0134-avc-bitbuf-start-addr">
+<h2><span class="section-number">10.3.7.14. </span>0x0134 AVC_BITBUF_START_ADDR<a class="headerlink" href="#x0134-avc-bitbuf-start-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>码流数据起始DRAM地址 (Bit Buffer Start Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00</p></td>
+<td><div class="line-block">
+<div class="line">BITBUF_START_ADDR[31:8]，</div>
+<div class="line">原始码流缓冲区在外部DRAM中的起始位置，低8位固定为0。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">固定为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0138-avc-bitbuf-end-addr">
+<h2><span class="section-number">10.3.7.15. </span>0x0138 AVC_BITBUF_END_ADDR<a class="headerlink" href="#x0138-avc-bitbuf-end-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>码流数据结束DRAM地址 (Bit Buffer End Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x000_0000</p></td>
+<td><div class="line-block">
+<div class="line">BITBUF_END_ADDR[31:8]，</div>
+<div class="line">原始码流缓冲区在外部DRAM中的结束位置</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R</p></td>
+<td><p>0xF</p></td>
+<td><div class="line-block">
+<div class="line">固定为全1</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x013c-avc-bit-offset">
+<h2><span class="section-number">10.3.7.16. </span>0x013C AVC_BIT_OFFSET<a class="headerlink" href="#x013c-avc-bit-offset" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>码流数据偏移 (Bit Stream Offset)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0000_0000</p></td>
+<td><div class="line-block">
+<div class="line">BIT_OFFSET</div>
+<div class="line">当前有效配置数据开始的位置，该位置是相对于</div>
+<div class="line">BITBUF_START_ADDR计算的，以bit为单位。最大128MB，</div>
+<div class="line">也就是说码流缓冲区最大128MB。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0140-avc-bit-length">
+<h2><span class="section-number">10.3.7.17. </span>0x0140 AVC_BIT_LENGTH<a class="headerlink" href="#x0140-avc-bit-length" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>码流数据长度 (Bit Stream Length)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:30</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>29:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0000_0000</p></td>
+<td><div class="line-block">
+<div class="line">BIT_LENGTH</div>
+<div class="line">当前配置的有效数据长度，以位为单位，起始位置为</div>
+<div class="line">BIT_OFFSET。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0144-avc-ref-list">
+<h2><span class="section-number">10.3.7.18. </span>0x0144 AVC_REF_LIST<a class="headerlink" href="#x0144-avc-ref-list" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC参考帧队列信息 (AVC Refrence List)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">REF_IDX_RW</div>
+<div class="line">0：从内部SRAM读数据</div>
+<div class="line">1：写数据到SRAM</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:21</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>20:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">REF_IDX</div>
+<div class="line">参考队列中的索引，取值范围为0-31.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:14</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13:9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_IDX_LIST1</div>
+<div class="line">后向参考帧对应的buf idx</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_INFO_SEL_LIST1</div>
+<div class="line">当前后向参考帧时顶场还是底场；</div>
+<div class="line">0表示顶场，1表示底场</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_IDX_LIST0</div>
+<div class="line">前向参考帧对应的buf idx</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_INFO_SEL_LIST0</div>
+<div class="line">当前前向参考帧时顶场还是底场；</div>
+<div class="line">0表示顶场，1表示底场</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0148-avc-fb-info">
+<h2><span class="section-number">10.3.7.19. </span>0x0148 AVC_FB_INFO<a class="headerlink" href="#x0148-avc-fb-info" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 解码输出图像信息 (AVC FrameBuffer Info)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_INFO_RW</div>
+<div class="line">1：写使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>30:19</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>18:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CONTENT_SELECT</div>
+<div class="line">选择frame buffer的内容,具体见下表</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>15:13</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>12:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_IDX</div>
+<div class="line">当前frame buffer的索引，取值范围0-17</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:5</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CURR_STORAGE_BUF_IDX</div>
+<div class="line">当前解码帧的frame idx</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x014c-avc-fb-info-cont">
+<h2><span class="section-number">10.3.7.20. </span>0x014C AVC_FB_INFO_CONT<a class="headerlink" href="#x014c-avc-fb-info-cont" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 解码输出图像内容 (AVC FrameBuffer Info Content)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUF_INFO_CONTENT</div>
+<div class="line">内容见下表</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>每个帧缓冲区信息包括POC、图像类型、图像数据存放地址、colocated信息存放地址等，如下表所示。
+如果格式中的某些信息不存在，默认为0。相邻两个帧缓冲区信息连续存放，共支持存放18个帧缓冲区信息。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>CONTENT_SELECT</p></th>
+<th class="head"><p>BUF_INFO_CONTENT</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">[31:0]：场格式顶场POC或帧格式POC</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><div class="line-block">
+<div class="line">[31:0]：场格式底场POC</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><div class="line-block">
+<div class="line">[31:10]：reserved</div>
+<div class="line">[9:8]: 图像类型(0: 帧格式;1: 场格式;2: mbaff)</div>
+<div class="line">[7:6]: reserved</div>
+<div class="line">[5:4]: 底场参考帧类型(0: 短期参考帧;1: 长期参考帧;2: 非参考帧)</div>
+<div class="line">[3:2]: reserved</div>
+<div class="line">[1:0]: 顶场参考帧类型(0: 短期参考帧;1: 长期参考帧;2: 非参考帧)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><div class="line-block">
+<div class="line">[31:0]：顶场或帧格式共同位置信息存放的DRAM地址，需1024字节对齐</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><div class="line-block">
+<div class="line">[31:0]：底场共同位置信息存放的DRAM地址，需1024字节对齐</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0150-avc-col-buf-addr">
+<h2><span class="section-number">10.3.7.21. </span>0x0150 AVC_COL_BUF_ADDR<a class="headerlink" href="#x0150-avc-col-buf-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 共同位置宏块信息地址 (Colocated MB Info Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00_0000</p></td>
+<td><div class="line-block">
+<div class="line">MB_COL_BUF_ADDR</div>
+<div class="line">用于存放B slice direct预测时用到的colocated宏块信息。</div>
+<div class="line">需要分配64K byte地址空间</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">Colocated宏块缓冲区DRAM地址低8位，固定为0。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0154-avc-mbinfo-buf-addr">
+<h2><span class="section-number">10.3.7.22. </span>0x0154 AVC_MBINFO_BUF_ADDR<a class="headerlink" href="#x0154-avc-mbinfo-buf-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 宏块信息数据地址 (MB Info Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00_0000</p></td>
+<td><div class="line-block">
+<div class="line">MBINFO_BUF_ADDR</div>
+<div class="line">MB信息缓冲区DRAM地址高24位。此缓冲区位于外部DRAM中，</div>
+<div class="line">适用于H.264等标准，用于存放当前帧的MB头信息。</div>
+<div class="line">需要分配12K byte地址空间。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">MB信息缓冲区DRAM地址低8位，固定为0。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01d4-avc-intrap-buf-addr">
+<h2><span class="section-number">10.3.7.23. </span>0x01D4 AVC_INTRAP_BUF_ADDR<a class="headerlink" href="#x01d4-avc-intrap-buf-addr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 帧内预测数据缓存地址 (AVC Intrapred Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x00_0000</p></td>
+<td><div class="line-block">
+<div class="line">INTRAP_BUF_ADDR</div>
+<div class="line">帧内预测缓冲区DRAM地址高24位。此缓冲区位于外部DRAM中，</div>
+<div class="line">用于存放帧内预测需要的上一个MB行的部分像素数据。</div>
+<div class="line">分配地址空间为（width*2）byte，width表示图像宽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">帧内预测缓冲区DRAM地址低8位，固定为0。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x01f8-avc-cycles">
+<h2><span class="section-number">10.3.7.24. </span>0x01F8 AVC_CYCLES<a class="headerlink" href="#x01f8-avc-cycles" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 解码时钟数 (AVC Cycle)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x000</p></td>
+<td><div class="line-block">
+<div class="line">CYCLES</div>
+<div class="line">获取VE工作cycle数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0210-avc-pic-type-reg">
+<h2><span class="section-number">10.3.7.25. </span>0x0210 AVC_PIC_TYPE_REG<a class="headerlink" href="#x0210-avc-pic-type-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 图像类型 (AVC Picture Type)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Mbaff</div>
+<div class="line">1：当前图像为帧场自适应帧格式</div>
+<div class="line">0：当前图像不是帧场自适应帧格式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Field</div>
+<div class="line">1：当前图像为场格式</div>
+<div class="line">0：当前图像为帧格式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Bottom_field_flag</div>
+<div class="line">1：底场</div>
+<div class="line">0：顶场</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0214-avc-pic-size-reg">
+<h2><span class="section-number">10.3.7.26. </span>0x0214 AVC_PIC_SIZE_REG<a class="headerlink" href="#x0214-avc-pic-size-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 解码输出图像大小 (AVC Picture Size)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:28</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>27:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Pic_xsize</div>
+<div class="line">图像的真实宽度，以像素为单位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>11:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Pic_ysize</div>
+<div class="line">图像的真实高度，以像素为单位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0240-avc-dblk-en-reg">
+<h2><span class="section-number">10.3.7.27. </span>0x0240 AVC_DBLK_EN_REG<a class="headerlink" href="#x0240-avc-dblk-en-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 去块滤波使能 (AVC Deblocking Enable)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Dblk_enable</div>
+<div class="line">1:dblk模块使能</div>
+<div class="line">0:dblk模块不使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0244-avc-dblk-y-buf-reg">
+<h2><span class="section-number">10.3.7.28. </span>0x0244 AVC_DBLK_Y_BUF_REG<a class="headerlink" href="#x0244-avc-dblk-y-buf-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 去块滤波亮度分量缓存地址 (Deblocking Y Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBLK_BUF_Y</div>
+<div class="line">dblk使用的亮度分量临时buffer在DRAM中的基地址</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0248-avc-dblk-c-buf-reg">
+<h2><span class="section-number">10.3.7.29. </span>0x0248 AVC_DBLK_C_BUF_REG<a class="headerlink" href="#x0248-avc-dblk-c-buf-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 去块滤波色度分量缓存地址 (Deblocking C Buffer Address)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DBLK_BUF_C</div>
+<div class="line">dblk使用的色度分量临时buffer在DRAM中的基地址</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024c-avc-dec-config-reg">
+<h2><span class="section-number">10.3.7.30. </span>0x024C AVC_DEC_CONFIG_REG<a class="headerlink" href="#x024c-avc-dec-config-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>解码图像配置 (Decode Picture Configuration)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dec_wr_en,</div>
+<div class="line">写1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dec_luma_only,是否只有亮度分量</div>
+<div class="line">1：只有亮度分量</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">dec_chroma_idc</div>
+<div class="line">颜色格式</div>
+<div class="line">00-YUV420</div>
+<div class="line">01-YUV400</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">uv_alternative</div>
+<div class="line">1:crcb方式存放，先存cr分量再存cb分量</div>
+<div class="line">0:cbcr方式存放</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">uv_interleave</div>
+<div class="line">1:uv交错存放</div>
+<div class="line">0:uv分开存放</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Endian</div>
+<div class="line">1:64 bit大端</div>
+<div class="line">0:64 bit小端</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0250-avc-dec-frame-idx-reg">
+<h2><span class="section-number">10.3.7.31. </span>0x0250 AVC_DEC_FRAME_IDX_REG<a class="headerlink" href="#x0250-avc-dec-frame-idx-reg" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 解码帧索引 (Decode Frame Index)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">Frame_idx</div>
+<div class="line">指定解码输出的frame_idx</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040c-avc-interp-dma-mode">
+<h2><span class="section-number">10.3.7.32. </span>0x040C AVC_INTERP_DMA_MODE<a class="headerlink" href="#x040c-avc-interp-dma-mode" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>AVC 帧间预测DMA方式 (Inter-Pred DMA Mode)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MODE</div>
+<div class="line">配置为0</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0480-avc-interp-wp-enable">
+<h2><span class="section-number">10.3.7.33. </span>0x0480 AVC_INTERP_WP_ENABLE<a class="headerlink" href="#x0480-avc-interp-wp-enable" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>加权预测使能 (Weighted Pred Enable)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:2</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">WEIGHTED_EN</div>
+<div class="line">1：开启加权预测</div>
+<div class="line">0：使用默认加权预测</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">IMPILITED_EN</div>
+<div class="line">1：使用隐式加权预测,B slice并且weighted_bipred_idc为2时</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0484-avc-interp-wp-logwd">
+<h2><span class="section-number">10.3.7.34. </span>0x0484 AVC_INTERP_WP_LOGWD<a class="headerlink" href="#x0484-avc-interp-wp-logwd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>加权预测LOGWD参数 (Weighted Pred LOGWD Parameter)</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><div class="line-block">
+<div class="line"><em>-</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5:3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOGWD_C</div>
+<div class="line">色度分量的加权预测参数LOGWD</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">LOGWD_Y</div>
+<div class="line">亮度分量的加权预测参数LOGWD</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="png_register.html" class="btn btn-neutral float-right" title="10.3.8. PNG寄存器描述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="ve_top_register.html" class="btn btn-neutral float-left" title="10.3.6. VE_TOP寄存器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

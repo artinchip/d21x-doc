@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>3.7.4. 环境变量加载 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="3.7.5. 命令行阶段" href="hush_shell.html" />
+    <link rel="prev" title="3.7.3. 后初始化" href="rear_init.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">3. U-Boot</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basic_intro/index.html">3.1. 基本介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../boot_param_1602/index.html">3.2. 启动参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mem_cache_1602/index.html">3.3. 内存相关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../env_setting/index.html">3.4. 环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dts/index.html">3.5. DTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spl/index.html">3.6. SPL 阶段</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">3.7. U-Boot 阶段</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="front_init.html">3.7.1. 前初始化</a></li>
+<li class="toctree-l4"><a class="reference internal" href="do_reloc.html">3.7.2. 代码重定位</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rear_init.html">3.7.3. 后初始化</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">3.7.4. 环境变量加载</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hush_shell.html">3.7.5. 命令行阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../drivers/index.html">3.8. 驱动支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../partition/index.html">3.9. 分区配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bootkernel/index.html">3.10. 启动内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/index.html">3.11. 打包镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fw_upg/index.html">3.12. 镜像烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../userid/index.html">3.13. UserID 烧录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">3.14. 图像显示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debug/index.html">3.15. 调试配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../opensbi/index.html">3.16. OpenSBI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbp/index.html">3.17. PBP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">3. </span>U-Boot</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">3.7. </span>U-Boot 阶段</a> &raquo;</li>
+        
+      <li><span class="section-number">3.7.4. </span>环境变量加载</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">3.7.4. </span>环境变量加载<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>如前面所述，环境变量的处理有两个阶段：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>环境变量初始</p></li>
+<li><p>环境变量读取</p></li>
+</ol>
+</div></blockquote>
+<p>如下面的调用流程， <code class="docutils literal notranslate"><span class="pre">env_init()</span></code> 在 <code class="docutils literal notranslate"><span class="pre">board_init_f()</span></code> 阶段执行，但具体的加载过程
+在 <code class="docutils literal notranslate"><span class="pre">board_init_r()</span></code> 阶段执行。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">reset</span> <span class="c1">// arch/riscv/cpu/start.S</span>
+<span class="o">|-&gt;</span> <span class="n">save_boot_params</span> <span class="c1">// arch/riscv/mach-artinchip/lowlevel_init.S</span>
+<span class="o">|-&gt;</span> <span class="p">...</span>
+<span class="o">|-&gt;</span> <span class="n">board_init_f</span><span class="p">();</span> <span class="c1">// common/board_f.c</span>
+    <span class="o">|-&gt;</span> <span class="n">setup_reloc</span><span class="p">();</span> <span class="c1">// common/board_f.c</span>
+    <span class="o">|-&gt;</span> <span class="n">jump_to_copy</span><span class="p">();</span> <span class="c1">// common/board_f.c</span>
+        <span class="o">|-&gt;</span> <span class="n">relocate_code</span><span class="p">();</span> <span class="c1">// arch/riscv/cpu/start.S</span>
+            <span class="o">|-&gt;</span> <span class="n">invalidate_icache_all</span><span class="p">()</span>
+            <span class="o">|-&gt;</span> <span class="n">flush_dcache_all</span><span class="p">()</span>
+            <span class="o">|-&gt;</span> <span class="n">board_init_r</span><span class="p">();</span>
+                <span class="o">|</span>   <span class="c1">// 逐个调用 init_sequence_r 里面的函数，其中包括 initr_env</span>
+                <span class="o">|-&gt;</span> <span class="n">initr_env</span><span class="p">();</span> <span class="c1">// common/board_r.c</span>
+                    <span class="o">|-&gt;</span> <span class="n">should_load_env</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span><span class="c1">// common/board_r.c</span>
+                    <span class="o">|</span>   <span class="c1">// 由于没有在 DTS 中进行配置，总是返回 1</span>
+                    <span class="o">|</span>   <span class="c1">// fdtdec_get_config_int(gd-&gt;fdt_blob, &quot;load-environment&quot;, 1);</span>
+                    <span class="o">|-&gt;</span> <span class="n">env_relocate</span><span class="p">();</span> <span class="c1">// env/common.c</span>
+                        <span class="o">|-&gt;</span> <span class="n">env_load</span><span class="p">();</span> <span class="c1">// env/env.c</span>
+</pre></div>
+</div>
+<p>U-Boot 支持在多种存储介质中保存环境变量，并且提供了一个插拔式的机制，用于实现从
+不同的存储介质中加载环境变量内容。</p>
+<p>在添加新的环境变量加载器时，只需要实现对应存储介质的 <code class="docutils literal notranslate"><span class="pre">load</span></code> 和 <code class="docutils literal notranslate"><span class="pre">save</span></code> 函数，
+然后通过宏 <code class="docutils literal notranslate"><span class="pre">U_BOOT_ENV_LOCATION</span></code> 将对应的信息添加到 <code class="docutils literal notranslate"><span class="pre">.u_boot_list_2</span></code> 链接段中。
+比如下面的定义，将生成 <code class="docutils literal notranslate"><span class="pre">.u_boot_list_2_env_driver_2_spinand</span></code> 信息。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">U_BOOT_ENV_LOCATION</span><span class="p">(</span><span class="n">spinand</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">location</span>   <span class="o">=</span> <span class="n">ENVL_SPINAND</span><span class="p">,</span>
+    <span class="n">ENV_NAME</span><span class="p">(</span><span class="s">&quot;SPINAND&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">load</span>       <span class="o">=</span> <span class="n">env_spinand_load</span><span class="p">,</span>
+<span class="cp">#if defined(CMD_SAVEENV)</span>
+    <span class="p">.</span><span class="n">save</span>       <span class="o">=</span> <span class="n">env_save_ptr</span><span class="p">(</span><span class="n">env_spinand_save</span><span class="p">),</span>
+<span class="cp">#endif</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">env_driver_lookup()</span></code> 函数首先通过检查当前的启动设备，然后从 <code class="docutils literal notranslate"><span class="pre">.u_boot_list_2</span></code>
+段中查找对应启动设备的 ENV 加载驱动，最后调用对应的驱动读取并导入环境变量内容。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">env_load</span><span class="p">();</span> <span class="c1">// env/env.c</span>
+<span class="o">|-&gt;</span> <span class="n">env_driver_lookup</span><span class="p">(</span><span class="n">ENVOP_LOAD</span><span class="p">,</span> <span class="n">prio</span><span class="p">);</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">loc</span> <span class="o">=</span> <span class="n">env_get_location</span><span class="p">();</span> <span class="c1">// board/artinchip/d211/env_location.c</span>
+<span class="o">|</span>   <span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">bd</span> <span class="o">=</span> <span class="n">aic_get_boot_device</span><span class="p">();</span> <span class="c1">// 获取当前的启动设备</span>
+<span class="o">|</span>   <span class="o">|</span>
+<span class="o">|</span>   <span class="o">|-&gt;</span> <span class="n">_env_driver_lookup</span><span class="p">(</span><span class="n">loc</span><span class="p">);</span>
+<span class="o">|</span>       <span class="o">|-&gt;</span> <span class="n">drv</span> <span class="o">=</span> <span class="n">ll_entry_start</span><span class="p">();</span>
+<span class="o">|</span>       <span class="c1">// 查找指定存储介质的 env 加载驱动</span>
+<span class="o">|</span>
+<span class="o">|-&gt;</span> <span class="n">drv</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">();</span>
+        <span class="c1">// 此处调用个存储介质的对应函数</span>
+        <span class="n">env_ram_load</span><span class="p">();</span> <span class="c1">// board/artinchip/d211/env_location.c</span>
+        <span class="n">env_spinand_load</span><span class="p">();</span> <span class="c1">// env/spinand.c</span>
+        <span class="n">env_sf_load</span><span class="p">();</span> <span class="c1">// env/sf.c</span>
+        <span class="n">env_mmc_load</span><span class="p">();</span> <span class="c1">// env/mmc.c</span>
+</pre></div>
+</div>
+<p>具体各种存储介质中，环境变量保存的位置可参考 <a class="reference internal" href="../env_setting/index.html#env-store-setting"><span class="std std-ref">存储介质上的保存</span></a> 。</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="hush_shell.html" class="btn btn-neutral float-right" title="3.7.5. 命令行阶段" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="rear_init.html" class="btn btn-neutral float-left" title="3.7.3. 后初始化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

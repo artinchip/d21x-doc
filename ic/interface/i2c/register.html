@@ -1,0 +1,2461 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>12.6.4. 寄存器描述 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="12.7. CAN" href="../can/index.html" />
+    <link rel="prev" title="12.6.2. 功能描述" href="function.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">芯片手册</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../about/index.html">1. 文档说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction/index.html">2. 产品描述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory_maps/index.html">3. 地址映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../pinmux/index.html">4. 引脚复用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cpu_bus/index.html">5. 处理器和总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">6. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../brom/index.html">7. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../clocks_power/index.html">8. 时钟和电源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">9. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">10. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../timers/index.html">11. 计时器</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">12. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../usbdev/index.html">12.1. USB Device (USBDEV)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usbhost/index.html">12.2. USB Host (USBHOST)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">12.3. Media Access Control (MAC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qspi/index.html">12.4. Quad Serial Peripheral Interface (QSPI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">12.5. Universal Asynchronous Receiver/Transmitter (UART)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">12.6. Inter Integrated Circuit (I2C)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="overview.html">12.6.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html">12.6.2. 功能描述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function.html#id4">12.6.3. 编程指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">12.6.4. 寄存器描述</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#x000-i2c-ctl">12.6.4.1. 0x000 I2C_CTL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x004-i2c-tar">12.6.4.2. 0x004 I2C_TAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x008-i2c-sar">12.6.4.3. 0x008 I2C_SAR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x00c-i2c-ack-gen-call">12.6.4.4. 0x00C I2C_ACK_GEN_CALL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x010-i2c-data-cmd">12.6.4.5. 0x010 I2C_DATA_CMD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x020-i2c-ss-scl-hcnt">12.6.4.6. 0x020 I2C_SS_SCL_HCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x024-i2c-ss-scl-lcnt">12.6.4.7. 0x024 I2C_SS_SCL_LCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x028-i2c-fs-scl-hcnt">12.6.4.8. 0x028 I2C_FS_SCL_HCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x02c-i2c-fs-scl-lcnt">12.6.4.9. 0x02C I2C_FS_SCL_LCNT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x030-i2c-sda-hold">12.6.4.10. 0x030 I2C_SDA_HOLD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x034-i2c-sda-setup">12.6.4.11. 0x034 I2C_SDA_SETUP</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x038-i2c-intr-mask">12.6.4.12. 0x038 I2C_INTR_MASK</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x03c-i2c-intr-clr">12.6.4.13. 0x03C I2C_INTR_CLR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x040-i2c-raw-intr-stat">12.6.4.14. 0x040 I2C_RAW_INTR_STAT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x048-i2c-enable">12.6.4.15. 0x048 I2C_ENABLE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x04c-i2c-enable-status">12.6.4.16. 0x04C I2C_ENABLE_STATUS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x050-i2c-status">12.6.4.17. 0x050 I2C_STATUS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x054-i2c-tx-abrt-source">12.6.4.18. 0x054 I2C_TX_ABRT_SOURCE</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x090-i2c-rx-tl">12.6.4.19. 0x090 I2C_RX_TL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x094-i2c-tx-tl">12.6.4.20. 0x094 I2C_TX_TL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x098-i2c-txflr">12.6.4.21. 0x098 I2C_TXFLR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x09c-i2c-rxflr">12.6.4.22. 0x09C I2C_RXFLR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a0-i2c-scl-stuck-timeout">12.6.4.23. 0x0A0 I2C_SCL_STUCK_TIMEOUT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0a4-i2c-sda-stuck-timeout">12.6.4.24. 0x0A4 I2C_SDA_STUCK_TIMEOUT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0b0-i2c-fs-spikelen">12.6.4.25. 0x0B0 I2C_FS_SPIKELEN</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#x0fc-version">12.6.4.26. 0x0FC VERSION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">12.7. Controller Area Network (CAN)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cir/index.html">12.8. Consumer Infrared Radiation (CIR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">12.9. Parallel Bus (PBUS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../gpio/index.html">12.10. General Purpose Input Output (GPIO)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../analog/index.html">13. 模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../svo/index.html">14. 伺服系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../verify/index.html">15. 验证</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">芯片手册</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">12. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">12.6. </span>I2C</a> &raquo;</li>
+        
+      <li><span class="section-number">12.6.4. </span>寄存器描述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">12.6.4. </span>寄存器描述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="x000-i2c-ctl">
+<h2><span class="section-number">12.6.4.1. </span>0x000 I2C_CTL<a class="headerlink" href="#x000-i2c-ctl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000006F</p></th>
+<th class="head"><p>I2C控制（I2C Control）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">BUS_CLEAR_FEATURE_CTL</div>
+<div class="line">总线清除控制</div>
+<div class="line">0: BUS_CLEAR_FEATURE禁止</div>
+<div class="line">1: BUS_CLEAR_FEATURE使能</div>
+<div class="line">此位置1,SDA挂死机制使能以及SCL_STUCK_AT_LOW中断可触发</div>
+<div class="line">仅master模式有效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_FIFO_FULL_HLD_CTL</div>
+<div class="line">RX_FIFO满状态保持总线控制</div>
+<div class="line">仅在Master模式下：</div>
+<div class="line">0: RX_FIFO满状态时数据溢出</div>
+<div class="line">1: RX_FIFO满状态时保持总线</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_EMPTY_CTL</div>
+<div class="line">TX_EMPTY中断控制</div>
+<div class="line">0: TX_EMPTY中断行为0</div>
+<div class="line">1: TX_EMPTY中断行为1</div>
+<div class="line">（详细描述见I2C_INTR_STAT[4]）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STOP_DET_IFADDRESSED</div>
+<div class="line">STOP_DET中断控制</div>
+<div class="line">在slave模式下：</div>
+<div class="line">0: 不管被寻址与否，都发出STOP_DET中断</div>
+<div class="line">1: 仅在被寻址时发出STOP_DET中断</div>
+<div class="line"><strong>注意此位设为1时，且在GEN_CALL下，即使响应也不会发出</strong>
+| <strong>STOP_DET中断</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">RESTART_ENABLE</div>
+<div class="line">重开始使能控制</div>
+<div class="line">0: master RESTART禁止</div>
+<div class="line">1: master RESTART使能</div>
+<div class="line">master发送RESTART信号控制，一些旧slave设备不支持处理</div>
+<div class="line">RESTART信号。当RESTART禁止时，master被禁止执行以下功能：</div>
+<div class="line"><strong>发送START字节</strong></div>
+<div class="line"><strong>使用10bit寻址模式进行读操作</strong></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5:4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">SPEED_MODE_SELECT</div>
+<div class="line">速率模式选择</div>
+<div class="line">1: 标准模式（100Kb/s）</div>
+<div class="line">2: 快速模式（&lt;=400Kb/s）</div>
+<div class="line">此位只能写1或者2</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">10BITADDR_SELECT_SLAVE</div>
+<div class="line">Slave被寻址bit选择</div>
+<div class="line">0: 7bit寻址模式</div>
+<div class="line">1: 10bit寻址模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">10BITADDR_SELECT_MASTER</div>
+<div class="line">Master寻址bit选择</div>
+<div class="line">0: 7bit寻址模式</div>
+<div class="line">1: 10bit寻址模式</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">SLAVE_MODE_DISABLE</div>
+<div class="line">Slave模式使能控制</div>
+<div class="line">0: Slave模式使能</div>
+<div class="line">1: Slave模式禁止</div>
+<div class="line">当I2C_CTL[0]设置为1时，此位也需设置为1;I2C_CTL [0]设
+| 置为0时，此位也设置为0.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">MASTER_MODE_ENABLE</div>
+<div class="line">Master模式使能控制</div>
+<div class="line">0: Master模式禁止</div>
+<div class="line">1: Master模式使能</div>
+<div class="line">当I2C_CTL [1]设置为1时，此位也需设置为1;I2C_CTL [1]
+| 设置为0时，此位也设置为0.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x004-i2c-tar">
+<h2><span class="section-number">12.6.4.2. </span>0x004 I2C_TAR<a class="headerlink" href="#x004-i2c-tar" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000005A</p></th>
+<th class="head"><p>I2C目标设备（I2C Target）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_CALL_CTL</div>
+<div class="line">0: GEN_CALL模式禁止</div>
+<div class="line">1: GEN_CALL模式使能</div>
+<div class="line">此位配1，当bit[10]为0时，master进行广播模式寻址，</div>
+<div class="line">无视bit[9:0]中的目标地址，进行GEN_CALL模式，</div>
+<div class="line">GEN_CALL模式只允许进行写操作，尝试读操作会导致</div>
+<div class="line">TX_ABRT（I2C_INTR_STAT[6]）中断产生；</div>
+<div class="line">当bit[10]为1时，start字节使能时，master先发起start字节，</div>
+<div class="line">再进行目标寻址</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">START_BYTE_CTL</div>
+<div class="line">Start字节控制</div>
+<div class="line">0: start字节禁止</div>
+<div class="line">1: start字节使能</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x5A</p></td>
+<td><div class="line-block">
+<div class="line">I2C_TAR</div>
+<div class="line">目标地址</div>
+<div class="line">Master依此目标地址寻址建立通信。如果I2C_TAR和I2C_SAR相</div>
+<div class="line">同，则存在回环，但是FIFO在master与slave之间共享，因此</div>
+<div class="line">双向传输是不可行的，只能单向传输。Master不能传输数据给</div>
+<div class="line">自己，只能传输给slave。</div>
+<div class="line">当进行GEN_CALL时，无视此地址。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x008-i2c-sar">
+<h2><span class="section-number">12.6.4.3. </span>0x008 I2C_SAR<a class="headerlink" href="#x008-i2c-sar" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000005A</p></th>
+<th class="head"><p>I2C从机地址（I2C Slave Address）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:10</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>9:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x5A</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SAR</div>
+<div class="line">SLAVE模式被寻址的地址</div>
+<div class="line">当为7bit寻址时，只有bit[6:0]有效。此位仅在I2C禁止时</div>
+<div class="line">可写（I2C_ENABLE[0]写0），其他时间写入无效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x00c-i2c-ack-gen-call">
+<h2><span class="section-number">12.6.4.4. </span>0x00C I2C_ACK_GEN_CALL<a class="headerlink" href="#x00c-i2c-ack-gen-call" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>I2C响应广播（I2C Acknowledge General Call）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">ACK_GEN_CALL</div>
+<div class="line">GEN_CALL应答状态</div>
+<div class="line">0：接收到GEN_CALL地址后不应答</div>
+<div class="line">1：接收到GEN_CALL地址后应答</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x010-i2c-data-cmd">
+<h2><span class="section-number">12.6.4.5. </span>0x010 I2C_DATA_CMD<a class="headerlink" href="#x010-i2c-data-cmd" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C数据命令（I2C Data Command）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:11</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RESTART</div>
+<div class="line">重开始行为控制</div>
+<div class="line">0: 如果RESTART_ENABLE(I2C_CTL[6]) 为1，只有当传输方</div>
+<div class="line">向与上一个传输命令的方向不同时，发出RESTART信号；如果</div>
+<div class="line">RESTART_ENABLE (I2C_CTL[6]) 为0，则发送一个STOP信</div>
+<div class="line">号然后接着一个START信号</div>
+<div class="line">1: 如果RESTART_ENABLE(I2C_CTL[6]) 为1，无论当前数</div>
+<div class="line">据传输方向与上一个传输命令的方向是否相同，都会发出</div>
+<div class="line">RESTART信号；如果RESTART_ENABLE (I2C_CTL[6]) 为0，</div>
+<div class="line">则发送一个STOP信号然后接着一个START信号</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STOP</div>
+<div class="line">STOP命令控制</div>
+<div class="line">0: 一个byte传输完后不接着STOP信号</div>
+<div class="line">1: 一个byte传输完后接着STOP信号</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CMD</div>
+<div class="line">操作命令，仅在Master模式下有效</div>
+<div class="line">0: Master写操作命令</div>
+<div class="line">1: Master读操作命令</div>
+<div class="line">注意如果在收到RD_REQ请求后此位写1，则产生TX_ABRT中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">DAT</div>
+<div class="line">数据缓冲区</div>
+<div class="line">发送数据时，数据需写入此位段；接收数据时，数据亦接收</div>
+<div class="line">到此位段。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x020-i2c-ss-scl-hcnt">
+<h2><span class="section-number">12.6.4.6. </span>0x020 I2C_SS_SCL_HCNT<a class="headerlink" href="#x020-i2c-ss-scl-hcnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000060</p></th>
+<th class="head"><p>I2C标准速度时钟高位计数（I2C Standard SCL High Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x60</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SS_SCL_HCNT</div>
+<div class="line">标准速率模式下SCL高电平持续时间计数</div>
+<div class="line">此位仅在I2C禁止时可写（I2C_ENABLE[0]写0），其他时间写入</div>
+<div class="line">无效。最小值为0x60，写入小于0x60的数值无效。对于</div>
+<div class="line">APB_DATA_WIDTH=8的设计，需确定先写入低8位再写高8位。</div>
+<div class="line">计算方法：</div>
+<div class="line">标准速率SCL高电平最小时间：4000ns</div>
+<div class="line">标准速率SCL低电平最小时间：4700ns</div>
+<div class="line">快速SCL高电平最小时间：600ns</div>
+<div class="line">快速SCL低电平最小时间：1300ns</div>
+<div class="line">以快速模式为例</div>
+<div class="line">HCNT=600ns/I2C_clk_period</div>
+<div class="line">LCNT=1300ns/ I2C_clk_period</div>
+<div class="line">I2C_clk_period为I2C模块输入时钟周期</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x024-i2c-ss-scl-lcnt">
+<h2><span class="section-number">12.6.4.7. </span>0x024 I2C_SS_SCL_LCNT<a class="headerlink" href="#x024-i2c-ss-scl-lcnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000070</p></th>
+<th class="head"><p>I2C标准速度时钟低位计数（I2C Standard SCL Low Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x70</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SS_SCL_LCNT</div>
+<div class="line">标准速率模式下SCL低电平持续时间计数</div>
+<div class="line">此位仅在I2C禁止时可写（I2C_ENABLE[0]写0），其他时间写入</div>
+<div class="line">无效。最小值为0x70，写入小于0x70的数值无效。对于</div>
+<div class="line">APB_DATA_WIDTH=8的设计，需确定先写入低8位再写高8位。</div>
+<div class="line">计算方法：</div>
+<div class="line">标准速率SCL高电平最小时间：4000ns</div>
+<div class="line">标准速率SCL低电平最小时间：4700ns</div>
+<div class="line">快速SCL高电平最小时间：600ns</div>
+<div class="line">快速SCL低电平最小时间：1300ns</div>
+<div class="line">以快速模式为例</div>
+<div class="line">HCNT=600ns/I2C_clk_period</div>
+<div class="line">LCNT=1300ns/ I2C_clk_period</div>
+<div class="line">I2C_clk_period为I2C模块输入时钟周期</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x028-i2c-fs-scl-hcnt">
+<h2><span class="section-number">12.6.4.8. </span>0x028 I2C_FS_SCL_HCNT<a class="headerlink" href="#x028-i2c-fs-scl-hcnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000000F</p></th>
+<th class="head"><p>I2C快速时钟高位计数（I2C Fast SCL High Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xF</p></td>
+<td><div class="line-block">
+<div class="line">I2C_FS_SCL_HCNT</div>
+<div class="line">快速模式下SCL高电平持续时间计数</div>
+<div class="line">此位仅在I2C禁止时可写（I2C_ENABLE[0]写0），其他时间写入</div>
+<div class="line">无效。最小值为0xF，写入小于0xF的数值无效。对于</div>
+<div class="line">APB_DATA_WIDTH=8的设计，需确定先写入低8位再写高8位。</div>
+<div class="line">计算方法：</div>
+<div class="line">标准速率SCL高电平最小时间：4000ns</div>
+<div class="line">标准速率SCL低电平最小时间：4700ns</div>
+<div class="line">快速SCL高电平最小时间：600ns</div>
+<div class="line">快速SCL低电平最小时间：1300ns</div>
+<div class="line">以快速模式为例</div>
+<div class="line">HCNT=600ns/I2C_clk_period</div>
+<div class="line">LCNT=1300ns/ I2C_clk_period</div>
+<div class="line">I2C_clk_period为I2C模块输入时钟周期</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x02c-i2c-fs-scl-lcnt">
+<h2><span class="section-number">12.6.4.9. </span>0x02C I2C_FS_SCL_LCNT<a class="headerlink" href="#x02c-i2c-fs-scl-lcnt" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x0000001F</p></th>
+<th class="head"><p>I2C快速时钟低位计数（I2C Fast SCL Low Count）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:16</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1F</p></td>
+<td><div class="line-block">
+<div class="line">I2C_FS_SCL_LCNT</div>
+<div class="line">快速模式下SCL低电平持续时间计数</div>
+<div class="line">此位仅在I2C禁止时可写（I2C_ENABLE[0]写0），其他时间写入</div>
+<div class="line">无效。最小值为0x1F，写入小于0x1F的数值无效。对于</div>
+<div class="line">APB_DATA_WIDTH=8的设计，需确定先写入低8位再写高8位。</div>
+<div class="line">计算方法：</div>
+<div class="line">标准速率SCL高电平最小时间：4000ns</div>
+<div class="line">标准速率SCL低电平最小时间：4700ns</div>
+<div class="line">快速SCL高电平最小时间：600ns</div>
+<div class="line">快速SCL低电平最小时间：1300ns</div>
+<div class="line">以快速模式为例</div>
+<div class="line">HCNT=600ns/I2C_clk_period</div>
+<div class="line">LCNT=1300ns/ I2C_clk_period</div>
+<div class="line">I2C_clk_period为I2C模块输入时钟周期</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x030-i2c-sda-hold">
+<h2><span class="section-number">12.6.4.10. </span>0x030 I2C_SDA_HOLD<a class="headerlink" href="#x030-i2c-sda-hold" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000001</p></th>
+<th class="head"><p>I2C SDA 保持时间（I2C SDA Hold Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:24</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>23:16</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SDA_RX_HOLD</div>
+<div class="line">I2C接收时，设置所需的SDA保持时间，以I2C_clk周期为单位</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SDA_TX_HOLD</div>
+<div class="line">I2C发送时，设置所需的SDA保持时间，以I2C_clk周期为单位</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x034-i2c-sda-setup">
+<h2><span class="section-number">12.6.4.11. </span>0x034 I2C_SDA_SETUP<a class="headerlink" href="#x034-i2c-sda-setup" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000002</p></th>
+<th class="head"><p>I2C SDA 建立时间（I2C SDA Setup Time）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>7:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SDA_SETUP</div>
+<div class="line">SDA设置时间，数值为（该值-1），以I2C_clk周期为单位，如默认值为(2-1)个cycle</div>
+<div class="line">建议如果需要延迟1000ns，则对于10Mhz的I2C，时钟频率此字段设为11，此字段最小值设2</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x038-i2c-intr-mask">
+<h2><span class="section-number">12.6.4.12. </span>0x038 I2C_INTR_MASK<a class="headerlink" href="#x038-i2c-intr-mask" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x000048FF</p></th>
+<th class="head"><p>I2C 中断屏蔽（I2C Interrupt Mask）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_SCL_STUCK_AT_LOW</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">M_MASTER_ON_HOLD</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_GEN_CALL</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">M_START_DET</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">M_STOP_DET</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">M_ACTIVITY</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_RX_DONE</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_TX_ABRT</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_RD_REQ</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_TX_EMPTY</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_RX_FULL</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">M_RX_UNDER</div>
+<div class="line">0: 中断屏蔽</div>
+<div class="line">1: 中断未屏蔽</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x03c-i2c-intr-clr">
+<h2><span class="section-number">12.6.4.13. </span>0x03C I2C_INTR_CLR<a class="headerlink" href="#x03c-i2c-intr-clr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 中断清除（I2C Interrupt Clear）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _SCL_STUCK_AT_LOW</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _GEN_CALL</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">ACK需持续一个SCL周期，在此期间无法对GEN_CALL中断清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _START_DET</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _STOP_DET</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _ACTIVITY</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _RX_DONE</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _TX_ABRT</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _RD_REQ</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4:1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R/W1C</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">CLR _RX_UNDER</div>
+<div class="line">0: 中断未激活</div>
+<div class="line">1: 写1清零</div>
+<div class="line">详细描述见I2C_INTR_STAT</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x040-i2c-raw-intr-stat">
+<h2><span class="section-number">12.6.4.14. </span>0x040 I2C_RAW_INTR_STAT<a class="headerlink" href="#x040-i2c-raw-intr-stat" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 中断状态（I2C Interrupt Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:15</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SCL_STUCK_AT_LOW</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">指示SCL处于低电平的持续时间是否为I2C_SCL_STUCK_TIMEOUT</div>
+<div class="line">设置的时间，需配置I2C_CTL[10]为1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MASTER_ON_HOLD</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">指示Master是否保持总线并且TX FIFO为空,硬件自动清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">GEN_CALL</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">仅在接收到GEN_CALL地址并且回复ACK时触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">START_DET</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">指示master或者slave模式下，是否检测到一个START信号</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">STOP_DET</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">指示master或者slave模式下，是否检测到一个STOP信号。</div>
+<div class="line">在slave模式下：</div>
+<div class="line">当I2C_CON[7]（STOP_DET_IFADDRESSED）设为1,中断STOP_DET</div>
+<div class="line">仅在寻址模式下触发，GEN_CALL模式下不触发；</div>
+<div class="line">当I2C_CON[7]（STOP_DET_IFADDRESSED）设为0，</div>
+<div class="line">中断STOP_DET不管是否被寻址都会触发。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACTIVITY</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">指示I2C捕获活动状态并且一直保持为1直到被清零，清除此位</div>
+<div class="line">有3种方式：</div>
+<div class="line"><strong>关闭I2C</strong></div>
+<div class="line"><strong>I2C_INTR_CLR[8]写1清零</strong></div>
+<div class="line"><strong>系统复位</strong></div>
+<div class="line">一旦此位被设为1，即使I2C处于空闲状态，也会保持直到以上</div>
+<div class="line">其中一种方式清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_DONE</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">当I2C作为Slave发送数据时，若master不再回复一个ACK，则</div>
+<div class="line">此位设为1。此中断在传输的最后一个字节发生，指示传输结束</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_ABRT</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">指示I2C作为发送者无法完成对发送FIFO内容的预期操作。</div>
+<div class="line">Master和Slave模式都可发生此中断。当此中断发生时，</div>
+<div class="line">I2C_TX_ABRT_SOURCE寄存器指示发生停止发送的原因</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RD_REQ</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">当此位设为1时，表明在slave模式下，master设备在尝试读取</div>
+<div class="line">I2C的数据。I2C将总线保持为等待状态，直到此中断被服务，</div>
+<div class="line">这意味这slave已经被master寻址。</div>
+<div class="line">当中断发生时，处理器必须响应此中断，将请求的数据写入</div>
+<div class="line">I2C_DATA_CMD寄存器。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_EMPTY</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">TX_EMPTY_CTL设为0：</div>
+<div class="line">当发送缓冲器小于等于I2C_TX_TL寄存器设定的阈值时，此位</div>
+<div class="line">设为1</div>
+<div class="line">TX_EMPTY_CTL设为1：</div>
+<div class="line">当发送缓冲器小于等于I2C_TX_TL寄存器设定的阈值时，并且</div>
+<div class="line">最新命令的地址/数据从内部的移位寄存器传输完成，此位设为1</div>
+<div class="line">当缓冲器数据量超过I2C_TX_TL寄存器设定值硬件会自动清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_FULL</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">当接收缓冲器达到或超过I2C_RX_TL寄存器设定的阈值时，此位设1。</div>
+<div class="line">当缓冲器深度低于阈值，硬件自动清零。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_UNDER（接收下溢出）</div>
+<div class="line">0: 中断未触发</div>
+<div class="line">1: 中断触发</div>
+<div class="line">如果接收缓冲器为空时，通过I2C_DATA_CMD读取数据则设为1。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x048-i2c-enable">
+<h2><span class="section-number">12.6.4.15. </span>0x048 I2C_ENABLE<a class="headerlink" href="#x048-i2c-enable" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 使能（I2C Enable）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:4</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SDA_STUCK_RECOVERY_ENABLE</div>
+<div class="line">SDA挂死恢复使能控制</div>
+<div class="line">0: master禁止SDA挂死恢复机制</div>
+<div class="line">1: master使能SDA挂死恢复机制</div>
+<div class="line">如果SDA挂死状态由I2C_TX_ABRT_SOURCE[17] 指示的TX_ABORT</div>
+<div class="line">中断，然后此位发起一个恢复机制，即发送9个SCL时钟和一个STOP</div>
+<div class="line">信号释放SDA线，之后此位清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_CMD_BLOCK</div>
+<div class="line">阻止数据传输控制</div>
+<div class="line">0: 一旦TX FIFO上的第一个数据可用，数据自动在总线上传输</div>
+<div class="line">1: 阻止I2C总线上的数据传输，即使TX FIFO有数据要传输</div>
+<div class="line">要阻止master命令的执行，仅当TX FIFO为空并且master处于空闲</div>
+<div class="line">状态时，才设置此位。若此位置1，不会执行TX FIFO中任何其他的</div>
+<div class="line">命令，直到此位置0</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABORT</div>
+<div class="line">传输停止控制</div>
+<div class="line">0: 不发起传输停止或者传输停止已完成</div>
+<div class="line">1: 停止正在进行的操作</div>
+<div class="line">软件设置此位可以停止master模式下的传输。只有在ENABLE设为1</div>
+<div class="line">的情况下才能对此位操作，否则操作无效。一旦ABORT设为1，软件</div>
+<div class="line">则无法清除。响应一个ABORT，控制器在当前传输完成后发出STOP</div>
+<div class="line">信号并且冲刷TX FIFO，然后在完成停止操作后设置TX_ABORT中</div>
+<div class="line">断（I2C_INTR_STAT[6]）</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ENABLE</div>
+<div class="line">I2C使能控制</div>
+<div class="line">0: I2C禁止</div>
+<div class="line">1: I2C使能</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x04c-i2c-enable-status">
+<h2><span class="section-number">12.6.4.16. </span>0x04C I2C_ENABLE_STATUS<a class="headerlink" href="#x04c-i2c-enable-status" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 使能状态（I2C Enable Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLV_RX_DATA_LOST</div>
+<div class="line">Slave接收数据丢失</div>
+<div class="line">0: slave接收数据不丢失</div>
+<div class="line">1: slave接收数据丢失</div>
+<div class="line">指示slave模式接收下是否由于I2C_ENABLE[0]由1设为0导致至少</div>
+<div class="line">一个数据丢失。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLV_DISABLED_WHILE_BUSY</div>
+<div class="line">Slave禁用时状态</div>
+<div class="line">0: slave活跃时禁用</div>
+<div class="line">1: slave空闲时禁用</div>
+<div class="line">指示由于I2C_ENABLE[0]由1设为0时，导致活跃或者潜在的slave</div>
+<div class="line">操作被停止。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">I2C_EN_STATUS</div>
+<div class="line">I2C使能状态</div>
+<div class="line">0: I2C禁止状态</div>
+<div class="line">1: I2C使能状态</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x050-i2c-status">
+<h2><span class="section-number">12.6.4.17. </span>0x050 I2C_STATUS<a class="headerlink" href="#x050-i2c-status" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000006</p></th>
+<th class="head"><p>I2C 状态（I2C Status）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:12</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SDA_STUCK_NOT_RECOVERED</div>
+<div class="line">SDA挂死未恢复</div>
+<div class="line">0: SDA挂死触发恢复机制后未恢复</div>
+<div class="line">1: SDA挂死触发恢复机制后已恢复</div>
+<div class="line">此位仅在master模式有效，slave模式无效</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLV_HOLD_RX_FIFO_FULL</div>
+<div class="line">Slave因RX FIFO为满保持总线</div>
+<div class="line">0: slave未保持总线或者总线保持非因RX FIFO为满</div>
+<div class="line">1: RX FIFO为满，slave保持总线</div>
+<div class="line">指示当RX FIFO为满并且接收额外的字节数据，slave则保持总线</div>
+<div class="line">停止接收。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLV_HOLD_TX_FIFO_EMPTY</div>
+<div class="line">Slave因TX FIFO为空保持总线</div>
+<div class="line">0: slave未保持总线或者总线保持非因TX FIFO为空</div>
+<div class="line">1: TX FIFO为空，slave保持总线</div>
+<div class="line">指示当slave收到读请求而TX FIFO为空，slave则保持总线直到</div>
+<div class="line">TX FIFO有数据响应读请求</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MST_HOLD_RX_FIFO_FULL</div>
+<div class="line">Master因RX FIFO为满保持总线</div>
+<div class="line">0: master未保持总线或者总线保持非因RX FIFO为满</div>
+<div class="line">1: RX FIFO为满，master保持总线</div>
+<div class="line">指示当RX FIFO为满并且接收额外的字节数据，master则保持总</div>
+<div class="line">线停止接收。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MST_HOLD_TX_FIFO_EMPTY</div>
+<div class="line">Master因TX FIFO为空保持总线</div>
+<div class="line">0: master未保持总线或者总线保持非因TX FIFO为空</div>
+<div class="line">1: TX FIFO为空，master保持总线</div>
+<div class="line">指示当TX FIFO为空并且最后一个字节数据没有STOP信号，</div>
+<div class="line">master则保持总线停止发送。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">SLV_ACTIVITY</div>
+<div class="line">Slave状态</div>
+<div class="line">0: slave空闲状态</div>
+<div class="line">1: slave活跃状态</div>
+<div class="line">当slave处于活跃状态，此位置1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">MST_ACTIVITY</div>
+<div class="line">Master状态</div>
+<div class="line">0: master空闲状态</div>
+<div class="line">1: master活跃状态</div>
+<div class="line">当master有限状态机处于活跃状态，此位置1</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RFF（RX FIFO FULL）</div>
+<div class="line">接收FIFO为满状态标志</div>
+<div class="line">0: 接收FIFO非满</div>
+<div class="line">1: 接收FIFO为满</div>
+<div class="line">当接收FIFO包含一个或多个数据时，此位置为0；FIFO为满时为1</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RFNE（RX FIFO NOT EMPTY）</div>
+<div class="line">接收FIFO非空状态标志</div>
+<div class="line">0: 接收FIFO为空</div>
+<div class="line">1: 接收FIFO非空</div>
+<div class="line">当接收FIFO包含一个或多个数据时，此位置1；FIFO为空时清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TFE（TX FIFO EMPTY）</div>
+<div class="line">发送FIFO为空状态标志</div>
+<div class="line">0: 发送FIFO非空</div>
+<div class="line">1: 发送FIFO为空</div>
+<div class="line">当发送FIFO为空时，此位置1；当FIFO包含一个或多个数据时清</div>
+<div class="line">零。此位不请求中断</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>R</p></td>
+<td><p>0x1</p></td>
+<td><div class="line-block">
+<div class="line">TFNF（TX FIFO NOT FULL）</div>
+<div class="line">发送FIFO非满状态标志</div>
+<div class="line">0: 发送FIFO为满</div>
+<div class="line">1: 发送FIFO非满</div>
+<div class="line">当发送FIFO包含一个或多个数据时，此位置1；FIFO为满时清零</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ACTIVITY</div>
+<div class="line">I2C状态</div>
+<div class="line">0: I2C处于空闲状态</div>
+<div class="line">1: I2C处于活跃状态</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x054-i2c-tx-abrt-source">
+<h2><span class="section-number">12.6.4.18. </span>0x054 I2C_TX_ABRT_SOURCE<a class="headerlink" href="#x054-i2c-tx-abrt-source" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 发送停止源（I2C Transport Abort Source）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:23</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_FLUSH_CNT</div>
+<div class="line">此位域指示由于TX_ABRT中断而冲刷的TX FIFO数据命令数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>22:18</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_SDA_STUCK_AT_LOW</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">仅在master模式有效，master检测SDA持续低电平的时间超过</div>
+<div class="line">I2C_SDA_STUCK_TIMEOUT设置的阈值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_USER_ABRT</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">仅在master模式有效，master检测到传输中止</div>
+<div class="line">（I2C_ENABLE[1]）,生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_SLVRD_INTX</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">Slave模式下正在进行发送数据给远程master,此时用户在</div>
+<div class="line">I2C_CMD_DATA[8]写1，则产生停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_SLV_ARBLOST</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示在向远程master传输时，slave丢失总线，同时</div>
+<div class="line">I2C_TX_ABRT_SOURCE[12]设1，生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_SLVFLUSH_TXFIFO</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示slave已接收到读取命令，并且某些数据存在于TX FIFO中，</div>
+<div class="line">因此slave发出TX_ABRT中断以刷新TX FIFO中的旧数据，则生成</div>
+<div class="line">停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_LOST</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示master失去仲裁，或者设置了I2C_TX_ABRT_SOURCE[14],</div>
+<div class="line">则slave失去仲裁，生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_MASTER_DIS</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示用户在master禁用的情况下发起一个master操作，则生成停</div>
+<div class="line">止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_10B_RD_NORSTRT</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示当RESTART禁止时（I2C_CTL[6]设0），master在10bit寻址</div>
+<div class="line">模式发送一个读操作，则生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_SBYTE_NORSTRT</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示在RESTART禁止时（I2C_CTL[6]设0）用户发送一个START字节</div>
+<div class="line">清除此位，需修复造成此位生成停止操作的源，RESTART必须先使</div>
+<div class="line">能（I2C_CTL[6]设1），I2C_TAR[11]或者I2C_TAR[10]必须清除。</div>
+<div class="line">一旦此位的源被修复，此位就可以读取清零。若在修复源之前尝试</div>
+<div class="line">读取此位清零，则此位在一个周期内清除，随后重新赋值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_SBYTE_ACKDET</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示master发送一个START字节并且被应答（错误行为），则生成</div>
+<div class="line">停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_GCALL_READ</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示I2C发送一个GEN_CALL但是紧接着用户进行一个读操作</div>
+<div class="line">（I2C_DATA_CMD[8]写1），则生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_GCALL_NOACK</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">指示master模式发出一个GEN_CALL,而总线上没有slave应答，则</div>
+<div class="line">生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_TXDATA_NOACK</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">仅在master模式，当发送一个地址并且收到应答，接着发送数据而</div>
+<div class="line">没有收到应答，则生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_10ADDR2_NOACK</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">仅在master模式，当10bit寻址模式发送第一个地址并且收到应答，</div>
+<div class="line">接着发送第二个地址而没有收到应答，则生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_10ADDR1_NOACK</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">仅在master模式，当10bit寻址模式发送第一个地址没有收到应答，</div>
+<div class="line">则生成停止操作</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">ABRT_7B_ADDR_NOACK</div>
+<div class="line">0: 不生成停止操作</div>
+<div class="line">1: 生成停止操作</div>
+<div class="line">仅在master模式，当7bit寻址模式发送第一个地址没有收到应答，</div>
+<div class="line">则生成停止操作</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x090-i2c-rx-tl">
+<h2><span class="section-number">12.6.4.19. </span>0x090 I2C_RX_TL<a class="headerlink" href="#x090-i2c-rx-tl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 接收阈值（I2C Receive Threshold）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RX_TL</div>
+<div class="line">接收FIFO阈值深度</div>
+<div class="line">控制触发RX_FULL中断的数据数量，接收数据数量大于等于此值时</div>
+<div class="line">触发。有效范围为0-7，硬件不允许该值设置为大于缓冲寄存器的</div>
+<div class="line">最大深度。值0设置1项的阈值，值7设置8项的阈值</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x094-i2c-tx-tl">
+<h2><span class="section-number">12.6.4.20. </span>0x094 I2C_TX_TL<a class="headerlink" href="#x094-i2c-tx-tl" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 发送阈值（I2C Transport Threshold）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TX_TL</div>
+<div class="line">发送FIFO阈值深度</div>
+<div class="line">控制触发TX_EMPTY中断的数据数量，发送数据数量小于等于此值</div>
+<div class="line">时触发。有效范围为0-7，硬件不允许该值设置为大于缓冲寄存器</div>
+<div class="line">的最大深度。值0设置0项的阈值，值7设置7项的阈值</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x098-i2c-txflr">
+<h2><span class="section-number">12.6.4.21. </span>0x098 I2C_TXFLR<a class="headerlink" href="#x098-i2c-txflr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 发送FIFO水位（I2C Transport FIFO Level）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">TXFLR</div>
+<div class="line">显示发送FIFO数据量</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x09c-i2c-rxflr">
+<h2><span class="section-number">12.6.4.22. </span>0x09C I2C_RXFLR<a class="headerlink" href="#x09c-i2c-rxflr" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000000</p></th>
+<th class="head"><p>I2C 接收FIFO水位（I2C Receive FIFO Level）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:3</p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+<td><p><em>-</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2:0</p></td>
+<td><p>R</p></td>
+<td><p>0x0</p></td>
+<td><div class="line-block">
+<div class="line">RXFLR</div>
+<div class="line">接收FIFO数据量</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a0-i2c-scl-stuck-timeout">
+<h2><span class="section-number">12.6.4.23. </span>0x0A0 I2C_SCL_STUCK_TIMEOUT<a class="headerlink" href="#x0a0-i2c-scl-stuck-timeout" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xFFFFFFFF</p></th>
+<th class="head"><p>I2C SCL挂死超时（I2C_SCL_STUCK_TIMEOUT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xffff_ffff</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SCL_STUCK_TIMEOUT</div>
+<div class="line">SCL挂死时间设置</div>
+<div class="line">如果I2C检测SCL处于低的时间超过此位域设定的时间，则产生</div>
+<div class="line">相应的中断（SCL_STUCK_AT_LOW）。</div>
+<div class="line">仅在I2C禁止时（I2C_ENABLE[0]设为0）可配置，其他时间写</div>
+<div class="line">入无效。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0a4-i2c-sda-stuck-timeout">
+<h2><span class="section-number">12.6.4.24. </span>0x0A4 I2C_SDA_STUCK_TIMEOUT<a class="headerlink" href="#x0a4-i2c-sda-stuck-timeout" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0xFFFFFFFF</p></th>
+<th class="head"><p>I2C SDA挂死超时（I2C_SDA_STUCK_TIMEOUT）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0xffff_ffff</p></td>
+<td><div class="line-block">
+<div class="line">I2C_SDA_STUCK_TIMEOUT</div>
+<div class="line">SCL挂死时间设置</div>
+<div class="line">如果I2C检测SDA处于低的时间超过此位域设定的时间，并且</div>
+<div class="line">I2C_ENABLE[3]设为1，则触发SDA挂死恢复机制</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0b0-i2c-fs-spikelen">
+<h2><span class="section-number">12.6.4.25. </span>0x0B0 I2C_FS_SPIKELEN<a class="headerlink" href="#x0b0-i2c-fs-spikelen" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000002</p></th>
+<th class="head"><p>I2C 快速模式毛刺抑制时长（I2C_FS_SPIKELEN）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>R/W</p></td>
+<td><p>0x2</p></td>
+<td><div class="line-block">
+<div class="line">I2C_FS_SPIKELEN</div>
+<div class="line">I2C FS模式毛刺抑制寄存器</div>
+<div class="line">此位设置SCL与SDA线持续抑制毛刺的最长时间，以I2C_clk周</div>
+<div class="line">期为单位。</div>
+<div class="line">此位只有在I2C_ENABLE[0]设为0时可配置，其他时间配置无</div>
+<div class="line">效。此位最小值为1，硬件会阻止写入小于此值的配置，即写0</div>
+<div class="line">则此位会被设为1</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="x0fc-version">
+<h2><span class="section-number">12.6.4.26. </span>0x0FC VERSION<a class="headerlink" href="#x0fc-version" title="永久链接至标题">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head" colspan="3"><p>默认值：0x00000100</p></th>
+<th class="head"><p>I2C 版本号（VERSION）</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>位域</p></th>
+<th class="head"><p>类型</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>31:0</p></td>
+<td><p>RO</p></td>
+<td><p>0x100</p></td>
+<td><div class="line-block">
+<div class="line">Version(模块版本号)</div>
+<div class="line">采用BCD码显示，V1.00</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../can/index.html" class="btn btn-neutral float-right" title="12.7. CAN" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="function.html" class="btn btn-neutral float-left" title="12.6.2. 功能描述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

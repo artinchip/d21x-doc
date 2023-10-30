@@ -1,0 +1,543 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.2.5.2.1. 硬件框图 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="6.2.5.3.1. mpp_types.h" href="data_structure.html" />
+    <link rel="prev" title="6.2.5.1.1. 源码说明" href="source_document.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../audio/index.html">6.1. Audio 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">6.2. Display 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../01_introduction/index.html">6.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../02_config_guide/index.html">6.2.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../03_debug_guide/index.html">6.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../04_test_guide/index.html">6.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">6.2.5. 设计说明</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="index.html#id2">6.2.5.1. 源码和文档说明</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="index.html#id3">6.2.5.2. 关键流程设计</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">6.2.5.2.1. 硬件框图</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id2">6.2.5.2.2. 软件框图</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id3">6.2.5.2.3. 初始化流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id4">6.2.5.3. 数据结构设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#id5">6.2.5.4. 接口设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="index.html#app-demo">6.2.5.5. APP Demo</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../06_panel_port/index.html">6.2.6. 屏适配指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../07_fb_rotation/index.html">6.2.7. 竖屏横用、横屏竖用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../08_disp_property/index.html">6.2.8. 色彩调整</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../10_faq/index.html">6.2.9. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mpp/index.html">6.7. MPP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../player/index.html">6.8. MPP 播放器使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lvgl/index.html">6.9. LVGL 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6.2. </span>Display 使用指南</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.2.5. </span>设计说明</a> &raquo;</li>
+        
+      <li><span class="section-number">6.2.5.2.1. </span>硬件框图</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.2.5.2.1. </span>硬件框图<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="figure align-center">
+<img alt="../../../../_images/hw_framework.png" src="../../../../_images/hw_framework.png" />
+</div>
+<p>在 Chip 运行过程中，显示接口只能有一个生效，其数据链路是确定的。</p>
+</div>
+<div class="section" id="id2">
+<h1><span class="section-number">6.2.5.2.2. </span>软件框图<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h1>
+<p>在软件 SDK 中，显示引擎，显示接口与 LCD 的关系是 <cite>1 X N X N</cite>。 一个显示引擎需要对接多个显示接口，一个显示接口又要适配多款 LCD，其数据链路是不确定的。</p>
+<div class="figure align-center">
+<img alt="../../../../_images/sw_framework.png" src="../../../../_images/sw_framework.png" />
+</div>
+<p>DE 和 DI 在显示框架上属于同级模块，都是 display subsystem 中的 component，使用 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">platform_driver</span></code> 来表示。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">platform_driver</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">component_type</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">probe</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">remove</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">di_funcs</span> <span class="o">*</span><span class="n">di_funcs</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">de_funcs</span> <span class="o">*</span><span class="n">de_funcs</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>MIPI-DBI 是软件虚拟出来的 device，为 MIPI-DBI 协议提供支持。MIPI-DBI 协议包括 3 种类型：</p>
+<ul class="simple">
+<li><p>Type A: Motorola 6800</p></li>
+<li><p>Type B: Intel 8080</p></li>
+<li><p>Type C: SPI</p></li>
+</ul>
+<p>目前 Artinchip 平台仅支持 Type B 和 Type C</p>
+</div>
+<p>LCD panel 使用 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">aic_panel</span></code> 来表示。严格来说，panel component 不算一个 driver，只是一些屏参数和回调函数的结合。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_panel</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_panel_funcs</span> <span class="o">*</span><span class="n">funcs</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">aic_panel_callbacks</span> <span class="n">callbacks</span><span class="p">;</span>
+    <span class="k">const</span> <span class="k">struct</span> <span class="nc">display_timing</span> <span class="o">*</span><span class="n">timings</span><span class="p">;</span>
+
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="nc">panel_rgb</span>  <span class="o">*</span><span class="n">rgb</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">panel_lvds</span> <span class="o">*</span><span class="n">lvds</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">panel_dsi</span>  <span class="o">*</span><span class="n">dsi</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">panel_dbi</span>  <span class="o">*</span><span class="n">dbi</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="kt">int</span> <span class="n">connector_type</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">aic_panel_funcs</span> <span class="pre">*funcs;</span></code> 由 panel 提供，供 fb 调用的回调</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">aic_panel_callbacks</span> <span class="pre">callbacks;</span></code> 由 DE/DI 提供，供 panel 调用的回调</p></li>
+</ul>
+<p>在 panel 提供的 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">aic_panel_funcs</span></code> 中， 会调用 DE/DI 提供的 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">aic_panel_callbacks</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">callbacks</span></code> 的设计是为了满足 DE、DI、panel 三个硬件模块的初始化时序，包含先后顺序、延迟大小等。时序约束主要来自 panel 侧。</p>
+</div>
+<div class="section" id="id3">
+<h1><span class="section-number">6.2.5.2.3. </span>初始化流程<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h1>
+<p>在 menuconfig 中使能 LVDS 显示接口和 simple panel 后，显示驱动的初始化过程如下：</p>
+<div class="figure align-center">
+<img alt="../../../../_images/probe.png" src="../../../../_images/probe.png" />
+</div>
+<div class="section" id="de-di">
+<h2><span class="section-number">6.2.5.2.3.1. </span>DE 和 DI 匹配<a class="headerlink" href="#de-di" title="永久链接至标题">¶</a></h2>
+<p>DI 在 menuconfig 配置时进行选择，三个显示接口只能使能一个。DE, DI 的 driver 会被存放在一个指针数组中。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">struct</span> <span class="nc">platform_driver</span> <span class="o">*</span><span class="n">drivers</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="cp">#ifdef AIC_DISP_DE_DRV</span>
+    <span class="o">&amp;</span><span class="n">artinchip_de_driver</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_DISP_RGB</span>
+    <span class="o">&amp;</span><span class="n">artinchip_rgb_driver</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_DISP_LVDS</span>
+    <span class="o">&amp;</span><span class="n">artinchip_lvds_driver</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_DISP_MIPI_DSI</span>
+    <span class="o">&amp;</span><span class="n">artinchip_dsi_driver</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_DISP_MIPI_DBI</span>
+    <span class="o">&amp;</span><span class="n">artinchip_dbi_driver</span>
+<span class="cp">#endif</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">component_type</span></code> 来适配 menuconfig 指定的 driver。</p>
+</div>
+<div class="section" id="panel">
+<h2><span class="section-number">6.2.5.2.3.2. </span>panel 的匹配<a class="headerlink" href="#panel" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">panel_com.c</span></code> 维护了一个 panel 的指针数组。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">struct</span> <span class="nc">aic_panel</span> <span class="o">*</span><span class="n">panels</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="cp">#ifdef AIC_DISP_RGB</span>
+    <span class="o">&amp;</span><span class="n">aic_panel_rgb</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_DISP_LVDS</span>
+    <span class="o">&amp;</span><span class="n">aic_panel_lvds</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="cp">#ifdef AIC_PANEL_DSI_XM91080</span>
+    <span class="o">&amp;</span><span class="n">dsi_xm91080</span><span class="p">,</span>
+<span class="cp">#endif</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">aic_panel</span> <span class="pre">*aic_find_panel(u32</span> <span class="pre">connector_type)</span></code> 即可获取一个跟显示接口匹配的 LCD panel。</p>
+<p>在 menuconfig 中选择 panel 时，只能使能其中一个。</p>
+<p><code class="docutils literal notranslate"><span class="pre">panel_simple.c</span></code> 为不需要初始化命令的 LCD 提供 panel，例如：常用的 prgb, lvds 屏幕。</p>
+</div>
+<div class="section" id="backlight">
+<h2><span class="section-number">6.2.5.2.3.3. </span>backlight<a class="headerlink" href="#backlight" title="永久链接至标题">¶</a></h2>
+<p>Luban-lite 提供两种方式控制背光：</p>
+<ul class="simple">
+<li><p>GPIO</p></li>
+<li><p>PWM</p></li>
+</ul>
+<p>在 menuconfig 中配置 backlight，详情参考 <a class="reference internal" href="../02_config_guide/menuconfig/index.html#ref-to-lite-backlight"><span class="std std-ref">背光配置</span></a> 章节。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="data_structure.html" class="btn btn-neutral float-right" title="6.2.5.3.1. mpp_types.h" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="source_document.html" class="btn btn-neutral float-left" title="6.2.5.1.1. 源码说明" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

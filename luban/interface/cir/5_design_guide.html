@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>7.2.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="7.2.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="7.2.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">7. 接口</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../can/index.html">7.1. CAN 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">7.2. CIR 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">7.2.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_configure.html">7.2.2. CIR配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">7.2.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">7.2.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">7.2.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">7.2.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">7.2.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">7.2.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">7.2.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">7.2.5.3.2. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id7">7.2.5.4. 数据结构设计</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id8">7.2.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#aic-set-rx-carrier-range">7.2.5.5.1. aic_set_rx_carrier_range</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-set-tx-duty-cycle">7.2.5.5.2. aic_set_tx_duty_cycle</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-set-tx-carrier">7.2.5.5.3. aic_set_tx_carrier</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#aic-tx-ir">7.2.5.5.4. aic_tx_ir</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">7.2.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gpai/index.html">7.3. GPAI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2c/index.html">7.4. I2C 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mac/index.html">7.5. MAC 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pbus/index.html">7.6. PBus 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pinctrl/index.html">7.7. PINCTRL 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pwm/index.html">7.8. PWM 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rtp/index.html">7.9. RTP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spi/index.html">7.10. SPI 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uart/index.html">7.11. UART 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usb/index.html">7.12. USB 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">7. </span>接口</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">7.2. </span>CIR 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">7.2.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">7.2.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">7.2.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>CIR模块的源码位于：linux-5.10/drivers/media/rc/artinchip-cir.c</p>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">7.2.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>linux内核中rc的基本框架如下图所示：</p>
+<div class="figure align-center">
+<img alt="../../../_images/rc_arch1.png" src="../../../_images/rc_arch1.png" />
+</div>
+<p>红外信号的编码和解码工作由内核负责完成。在完成编码后，应用层需要发送的信号被编码为一系列的带有宽度的高低电平（pulse/space），CIR driver在发送端就是需要将这一系列的pulse/space写入发送FIFO，发送出去。在接收红外信号时，CIR driver需要将接收到的一系列高低电平送入到rc core进行解码，最终将解码得到的scancode和keycode反馈到输入子系统，最终送给app程序完成红外信号的接收。所以，CIR驱动的主要任务有：</p>
+<ol class="arabic simple">
+<li><p>将编码得到的高低电平信号以游码的形式写入TX-FIFO，发送红外信号</p></li>
+<li><p>将CIR模块接收的RX-FIFO中的游码正确表示为高低电平的形式，相邻的高电平或低电平需要进行合并。</p></li>
+<li><p>根据用户空间传递的红外参数，对CIR的底层寄存器进行配置，如配置载波频率，配置占空比等</p></li>
+</ol>
+<p>由于红外信号的数据量都很少，所以在红外信号的发送端，一般是利用循环将所有的数据一次性全部发送出去，而不会采用中断或DMA的方式。在红外信号的接收端，一般是采用中断的方式进行数据的接收，在接收完成后，调用相应的解码函数进行解码。CIR模块可以支持任何的红外协议，对不同红外协议的支持可以通过对载波配置寄存器的设置来实现。CIR驱动中默认配置的是支持NEC协议。</p>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">7.2.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">7.2.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>CIR模块的初始化流程如下：</p>
+<ol class="arabic simple">
+<li><p>释放clock和reset信号</p></li>
+<li><p>调用rc_allocate_device为rc_dev结构体分配空间</p></li>
+<li><p>设置载波的占空比为33%。读取dts中linux,rc-map-name的属性值。若为空，则默认使用内核中的空表</p></li>
+<li><p>注册红外设备</p></li>
+<li><p>读取dts中的rx-level属性值，设置RX空闲时的状态</p></li>
+<li><p>设置噪声阈值，激活阈值，空闲阈值等底层配置</p></li>
+<li><p>设置载波配置寄存器，驱动中默认配置的是38K载波(NEC协议)</p></li>
+<li><p>使能CIR中断，发送器，接收器</p></li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">7.2.5.3.2. </span>中断处理流程<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>CIR模块使能RX的溢出中断、RXFIFO可用中断、接收完成中断。</p>
+<p>中断执行流程如下：</p>
+<ol class="arabic simple">
+<li><p>读取中断状态寄存器和接收状态寄存器</p></li>
+<li><p>清空所有中断标志位</p></li>
+<li><p>若为RXFIFO可用中断或接收完成中断，判断RXFIFO是否为空，非空则读取RXFIFO中数据个数，并逐个从RXFIFO中读取数据。若不是这两个中断，则跳转到5</p></li>
+<li><p>将每次从RXFIFO中读出的游码解析为正确的高低电平宽度，并调用ir_raw_event_store_with_filter将解析后的数据存储到kfifo中</p></li>
+<li><p>若为接收溢出中断，则调用ir_raw_event_reset，清空kfifo中的数据</p></li>
+<li><p>若为接收完成中断，此处以完成对所有数据的接收，调用ir_raw_event_handle开始解码</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><span class="section-number">7.2.5.4. </span>数据结构设计<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_ir</span> <span class="p">{</span>
+    <span class="n">spinlock_t</span>      <span class="n">ir_lock</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">rc_dev</span>   <span class="o">*</span><span class="n">rc</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">__iomem</span>    <span class="o">*</span><span class="n">base</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span>      <span class="o">*</span><span class="n">clk</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">reset_control</span> <span class="o">*</span><span class="n">rst</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span>      <span class="o">*</span><span class="n">map_name</span><span class="p">;</span>        <span class="cm">/*CIR模块使用的keycode-scancode映射表*/</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>    <span class="n">tx_duty</span><span class="p">;</span>      <span class="cm">/*发送红外信号时的占空比*/</span>
+    <span class="kt">int</span>             <span class="n">irq</span><span class="p">;</span>
+    <span class="n">u32</span>             <span class="n">rx_level</span><span class="p">;</span>             <span class="cm">/*指示空闲状态下RX的电平状态*/</span>
+    <span class="n">u8</span>              <span class="n">rx_flag</span><span class="p">;</span>              <span class="cm">/*指示RXFIFO中是否已接收到数据*/</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">7.2.5.5. </span>接口设计<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="aic-set-rx-carrier-range">
+<h3><span class="section-number">7.2.5.5.1. </span>aic_set_rx_carrier_range<a class="headerlink" href="#aic-set-rx-carrier-range" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_set_rx_carrier_range(struct rc_dev *rcdev, u32 min, u32 max)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置CIR模块接收器的采样频率</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">rcdev：指向红外设备的指针</div>
+<div class="line">min：设置的采样频率最小值</div>
+<div class="line">max：设置的采样频率最大值</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>执行成功返回0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-set-tx-duty-cycle">
+<h3><span class="section-number">7.2.5.5.2. </span>aic_set_tx_duty_cycle<a class="headerlink" href="#aic-set-tx-duty-cycle" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_set_tx_duty_cycle(struct rc_dev *rcdev, u32 duty_cycle)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置CIR模块发送红外信号的占空比</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">rcdev：指向红外设备的指针</div>
+<div class="line">duty_cycle：需要设置的占空比</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>执行成功返回0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-set-tx-carrier">
+<h3><span class="section-number">7.2.5.5.3. </span>aic_set_tx_carrier<a class="headerlink" href="#aic-set-tx-carrier" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_set_tx_carrier(struct rc_dev *rcdev, u32 carrier)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置CIR模块发送信号的载波频率</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">rcdev：指向红外设备的指针</div>
+<div class="line">carrier：需要设置的载波频率大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>执行成功返回0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-tx-ir">
+<h3><span class="section-number">7.2.5.5.4. </span>aic_tx_ir<a class="headerlink" href="#aic-tx-ir" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int aic_tx_ir(struct rc_dev *rcdev, unsigned int *txbuf, unsigned int count)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>CIR模块发送红外信号的函数</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">rcdev：指向红外设备的指针</div>
+<div class="line">txbuf：需要发送的红外信号的缓存</div>
+<div class="line">count：需要发送的红外信号在缓存中的个数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>执行成功返回0</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="7.2.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="7.2.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

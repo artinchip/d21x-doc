@@ -1,0 +1,1211 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>5.1.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="5.1.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="5.1.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Linux SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. U-Boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">5. 存储</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">5.1. SDMC 使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">5.1.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">5.1.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">5.1.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">5.1.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">5.1.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">5.1.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">5.1.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">5.1.5.3. 关键流程设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id5">5.1.5.3.1. 初始化流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id8">5.1.5.3.2. 请求处理流程</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id11">5.1.5.3.3. 中断处理流程</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id12">5.1.5.4. 数据结构设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#enum-artinchip-mmc-state">5.1.5.4.1. enum artinchip_mmc_state</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc">5.1.5.4.2. artinchip_mmc</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-board">5.1.5.4.3. artinchip_mmc_board</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-slot">5.1.5.4.4. artinchip_mmc_slot</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-drv-data">5.1.5.4.5. artinchip_mmc_drv_data</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id13">5.1.5.5. 接口设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-request">5.1.5.5.1. artinchip_mmc_request</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-pre-req">5.1.5.5.2. artinchip_mmc_pre_req</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-post-req">5.1.5.5.3. artinchip_mmc_post_req</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-set-ios">5.1.5.5.4. artinchip_mmc_set_ios</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-get-cd">5.1.5.5.5. artinchip_mmc_get_cd</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-hw-reset">5.1.5.5.6. artinchip_mmc_hw_reset</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-enable-sdio-irq">5.1.5.5.7. artinchip_mmc_enable_sdio_irq</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-ack-sdio-irq">5.1.5.5.8. artinchip_mmc_ack_sdio_irq</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-execute-tuning">5.1.5.5.9. artinchip_mmc_execute_tuning</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-card-busy">5.1.5.5.10. artinchip_mmc_card_busy</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-switch-voltage">5.1.5.5.11. artinchip_mmc_switch_voltage</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#artinchip-mmc-init-card">5.1.5.5.12. artinchip_mmc_init_card</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">5.1.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../spinand/index.html">5.2. SPI NAND 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spinor/index.html">5.3. SPI NOR 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filesystem/index.html">5.4. 文件系统使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">9. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">10. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. Bringup</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../lite/index.html">RTOS SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Linux SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">5. </span>存储</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">5.1. </span>SDMC 使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">5.1.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">5.1.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">5.1.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>源代码位于 drivers/mmc/host/：</p>
+<ul class="simple">
+<li><p>artinchip-mmc.c，SDMC驱动实现</p></li>
+<li><p>artinchip-mmc.h，SDMC的寄存器、数据结构定义</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">5.1.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Linux中提供了MMC子系统，该子系统负责抽象一个块设备提供给通用块层使用，从整个软件的角度来看，架构如下：</p>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/sw_system18.png" src="../../../_images/sw_system18.png" />
+<p class="caption"><span class="caption-number">图 5.18 </span><span class="caption-text">Linux MMC子系统架构图</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+</div>
+<p>其中：</p>
+<ol class="arabic simple">
+<li><p>对用户而言，MMC card层提供了一种块设备，和其他块设备使用方法类似</p></li>
+<li><dl class="simple">
+<dt>MMC子系统的核心层的功能有：</dt><dd><ul class="simple">
+<li><p>对上层请求的处理，其中包括将请求转化为符合MMC协议的逻辑实现</p></li>
+<li><p>对控制器驱动进行管理</p></li>
+<li><p>将外部MMC设备抽象并进行管理</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>AIC SDMC控制器驱动：负责通过对寄存器的操作实现MMC子系统传来的请求</p></li>
+</ol>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">5.1.5.3. </span>关键流程设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h3><span class="section-number">5.1.5.3.1. </span>初始化流程<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>MMC子系统的初始化包括MMC块设备、MMC子系统、MMC控制器驱动、card设备等几条线，初始化顺序：</p>
+<ul class="simple">
+<li><p>最先进行的是MMC核心初始化</p></li>
+<li><p>MC控制器驱动初始化完成后才会对card设备进行初始化</p></li>
+<li><p>MMC块设备初始化没有严格的先后顺序</p></li>
+</ul>
+<div class="section" id="mmc">
+<h4><span class="section-number">5.1.5.3.1.1. </span>MMC 块设备驱动初始化<a class="headerlink" href="#mmc" title="永久链接至标题">¶</a></h4>
+<p>MMC在使用中，会将其抽象成一个块设备挂载到通用块层当中，通过module_init(mmc_blk_init)完成注册和初始化的操作，主要步骤如下：</p>
+<ol class="arabic simple">
+<li><p>注册总线（bus_register）</p></li>
+<li><p>将块设备名”mmc”和主设备注册到块层中（register_blkdev）</p></li>
+<li><p>将mmc_driver设备驱动注册到驱动模型中（mmc_register_driver）</p></li>
+<li><p>块设备的初始化及磁盘分区的注册（mmc_blk_probe）</p></li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h4><span class="section-number">5.1.5.3.1.2. </span>MMC 子系统核心初始化<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p>MMC子系统的核心层负责处理block下达的请求，其中关于MMC协议的逻辑主要在此实现，通过subsys_initcall(mmc_init)完成初始化，其步骤如下：</p>
+<ol class="arabic simple">
+<li><p>MMC类型总线注册，（mmc_register_bus）</p></li>
+<li><p>为控制器设备注册一个类，（mmc_register_host_class）</p></li>
+<li><p>SDIO类型总线类型注册，（sdio_register_b）</p></li>
+</ol>
+</div>
+<div class="section" id="card">
+<h4><span class="section-number">5.1.5.3.1.3. </span>card 设备注册与初始化<a class="headerlink" href="#card" title="永久链接至标题">¶</a></h4>
+<p>MMC驱动的访问对象为外设，在子系统中会将外设抽象成一个card设备，在每次探测外设的时候都会判断该设备是否需要被注册，所以card设备注册介绍分为探测时机和注册过程两部分：</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>探测时机：</dt><dd><ul class="simple">
+<li><p>mmc控制器启动时</p></li>
+<li><p>热插拔时</p></li>
+<li><p>mmc控制器从suspend转为resume时</p></li>
+<li><p>上述三种情况均会进行一次探测，都会调用到函数mmc_detect_change</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>注册过程：</dt><dd><p>在探测时调用的函数mmc_detect_change，该函数会调用card设备的注册函数mmc_rescan，以SD卡为例,其注册和初始化过程如下：</p>
+<ul class="simple">
+<li><p>判断当前卡是否被注册</p></li>
+<li><p>若卡已经注册，则确认卡是否存在，存在则提前跳出，若不存在则释放相关资源</p></li>
+<li><p>若卡未注册，则启动控制器进行卡的初始化步骤</p></li>
+<li><p>为控制器绑定具体总线的操作函数（mmc_attach_bus(host, &amp;mmc_sd_ops)）</p></li>
+<li><p>适配卡的工作电压（mmc_select_voltage）</p></li>
+<li><p>根据MMC协议初始化卡，使卡进入传输模式化（mmc_sd_init_card）</p></li>
+<li><p>注册卡设备（mmc_add_card）</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="id7">
+<h4><span class="section-number">5.1.5.3.1.4. </span>控制器驱动注册与初始化<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
+<p>MMC控制器驱动通过对控制器进行操作完成核心层的请求，控制器驱动也是实现和外设进行通信的软件最底层驱动，该层驱动根据厂商不同而不同，D211的SDMC模块的控制器驱动通过
+module_platform_driver(artinchip_mmc_aic_pltfm_driver)实现，其主要步骤如下：</p>
+<ol class="arabic simple">
+<li><p>使能时钟（artinchip_mmc_clk_enable）</p></li>
+<li><p>初始化计时机制，该机制实现发送命令和数据传输的timeout机制（timer_setup）</p></li>
+<li><p>初始化保护锁（spin_lock_init）</p></li>
+<li><p>初始化tasklet，在驱动中很多流程的处理会在tasklet中（tasklet_init）</p></li>
+<li><p>初始化DMA（artinchip_mmc_init_dma）</p></li>
+<li><p>中断初始化和注册（devm_request_irq）</p></li>
+<li><p>注册具体的控制器（mmc_alloc_host + mmc_add_host）</p></li>
+<li><p>初始化具体控制器，包括接口函数、工作电压、传输能力等</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><span class="section-number">5.1.5.3.2. </span>请求处理流程<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>对于应用程序，通过读写的接口访问文件系统，文件系统访问块设备，MMC设备在内核中被注册为一个块设备，当读写的操作传入到MMC块设备后，通过MMC子系统处理相关操作，对于MMC子系统其处理皆以请求的方式实现。</p>
+<div class="section" id="id9">
+<h4><span class="section-number">5.1.5.3.2.1. </span>块层以上系统读写调用流程<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h4>
+<p>在块层以上，通常是用户空间调用读写接口访问MMC设备，主要流程如下：</p>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/blkdev_access_flow.png" src="../../../_images/blkdev_access_flow.png" />
+<p class="caption"><span class="caption-number">图 5.19 </span><span class="caption-text">通用块设备的访问流程</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple">
+<li><p>在用户空间，应用程序调用read/write接口</p></li>
+<li><p>然后通过虚拟文件系统</p></li>
+<li><p>调用通用块层的接口对块设备进行IO请求</p></li>
+<li><p>IO调度层负责使用特定算法对这些请求进行调度</p></li>
+<li><p>块设备驱动层调用具体的块设备接口访问设备</p></li>
+</ol>
+</div>
+<div class="section" id="id10">
+<h4><span class="section-number">5.1.5.3.2.2. </span>MMC 子系统请求处理流程<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h4>
+<p>MMC子系统被抽象成一个块设备，通用块层将IO请求调用到具体的块设备驱动层，在MMC块设备驱动中的请求处理流程如下：</p>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/mmc_request_flow.png" src="../../../_images/mmc_request_flow.png" />
+<p class="caption"><span class="caption-number">图 5.20 </span><span class="caption-text">MMC数据请求的处理流程</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple">
+<li><p>由于会有多个请求，在block中以队列的形式处理，在请求到达时，唤醒mmc_queue_thread</p></li>
+<li><p>调用block的请求处理，发出request</p></li>
+<li><p>block的request会由core来实现</p></li>
+<li><p>core层会根据当前host驱动调用对应host的ops中的request接口去操作controller</p></li>
+</ol>
+<p>函数调用关系：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mmc_wait_for_req
+|--__mmc_start_req
+|--init_completion
+            |--mmc_start_request
+                |--mmc_mrq_prep
+                |--__mmc_start_request
+                    |--trace_mmc_request_start
+                    |--host-&gt;ops-&gt;request （即artinchip_mmc_request）
+</pre></div>
+</div>
+</div>
+<div class="section" id="host">
+<h4><span class="section-number">5.1.5.3.2.3. </span>Host 层驱动请求处理流程<a class="headerlink" href="#host" title="永久链接至标题">¶</a></h4>
+<p>在访问MMC外设时，都是通过发送CMD的方式，在host层驱动中需要通过操作controller去实现core层的request，主要流程如下：</p>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/host_request_flow.png" src="../../../_images/host_request_flow.png" />
+<p class="caption"><span class="caption-number">图 5.21 </span><span class="caption-text">Host 层驱动的请求处理流程</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+<ol class="arabic simple">
+<li><p>检测卡设备，需要判断当前卡设备是否被拔出</p></li>
+<li><p>判断传输状态，如果当前传输状态不是idle，那么将会将该请求放在请求队列里</p></li>
+<li><p>处理data，如果当前请求需要处理数据，则将数据先行处理，如果不需要处理数据则跳过</p></li>
+<li><p>发送CMD，解析请求中的CMD和参数，将其写入寄存器，然后触发CMD的发送</p></li>
+<li><p>中断处理，在发送完CMD后，后续的工作需要等待中断的触发，在中断处理中会对外设返回的数据和状态进行处理</p></li>
+<li><p>如果需要，发送stop命令，结束该次传输</p></li>
+</ol>
+<p>Host层函数调用关系：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">artinchip_mmc_request</span>
+<span class="o">|--</span><span class="n">artinchip_mmc_get_cd</span>
+<span class="o">|--</span><span class="n">artinchip_mmc_queue_request</span>
+<span class="o">|--</span><span class="n">artinchip_mmc_start_request</span>
+        <span class="o">|--</span><span class="n">artinchip_mmc_prepare_command</span>
+        <span class="o">|--</span><span class="n">artinchip_mmc_submit_data</span>
+        <span class="o">|--</span><span class="n">artinchip_mmc_start_command</span>
+        <span class="o">|--</span><span class="n">artinchip_mmc_prep_stop_abort</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3><span class="section-number">5.1.5.3.3. </span>中断处理流程<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>在触发中断后，需要根据目前的中断状态进行处理，其中主要为错误处理和传输处理，这些处理主要在tasklet中，并且基于一些状态变量来控制处理的流程。</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>状态变量。在流程的控制上，主要通过几个状态变量来控制：</dt><dd><ul class="simple">
+<li><p>host-&gt;state：表示当前的操作状态，例如发送数据，发送CMD等等</p></li>
+<li><p>host-&gt;pending_events：当前中断发生的状态</p></li>
+<li><p>host-&gt;completed_events：当前完成的状态，例如CMD完成，DATA完成等</p></li>
+<li><p>host-&gt;cmd_status：发送CMD时中断的状态</p></li>
+<li><p>host-&gt;data_status：传输数据时中断的状态</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>传输处理</dt><dd><ul class="simple">
+<li><p>当CMD发送完成中断触发后，会在tasklet中调用函数artinchip_mmc_command_complete，该函数中会读取外部SD设备返回给控制器的response数据，再根据当前的CMD状态对CMD的结果进行赋值</p></li>
+<li><p>如果使用的是PIO的方式，当TX/RX FIFO请求中断响应后，会调用对应的函数对FIFO进行读写操作。</p></li>
+<li><p>若是采用DMA的方式，则在中断函数中读取内部DMA状态，然后释放DMA传输的资源，再根据DMA的状态，在tsaklet中调用artinchip_mmc_data_complete函数，该函数会根据目前的数据传输情况对传输结果进行赋值</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>错误处理。目前SDMC支持的错误中断类型有</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>CMD错误中断：</dt><dd><p>当出现CMD错误中断后，在中断处理函数中，会将当前中断寄存器的状态保存，然后设置cmd的状态为已经完成，最后在artinchip_mmc_command_complete函数中将CMD的结果进行赋值。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>DATA错误中断：</dt><dd><p>当出现DATA中断后，在中断处理函数中会将当前的中断状态保存，然后设置data的状态为DATA错误，然后切入到tasklet函数中，在该函数中，根据DATA错误的状态，停止dma，如果有需求，就发送stop命令</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">5.1.5.4. </span>数据结构设计<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<div class="section" id="enum-artinchip-mmc-state">
+<h3><span class="section-number">5.1.5.4.1. </span>enum artinchip_mmc_state<a class="headerlink" href="#enum-artinchip-mmc-state" title="永久链接至标题">¶</a></h3>
+<p>定义了SDMC控制器的几个状态：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">artinchip_mmc_state</span> <span class="p">{</span>
+    <span class="n">STATE_IDLE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">STATE_SENDING_CMD</span><span class="p">,</span>
+    <span class="n">STATE_SENDING_DATA</span><span class="p">,</span>
+    <span class="n">STATE_DATA_BUSY</span><span class="p">,</span>
+    <span class="n">STATE_SENDING_STOP</span><span class="p">,</span>
+    <span class="n">STATE_DATA_ERROR</span><span class="p">,</span>
+    <span class="n">STATE_SENDING_CMD11</span><span class="p">,</span>
+    <span class="n">STATE_WAITING_CMD11_DONE</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="artinchip-mmc">
+<h3><span class="section-number">5.1.5.4.2. </span>artinchip_mmc<a class="headerlink" href="#artinchip-mmc" title="永久链接至标题">¶</a></h3>
+<p>记录了SDMC控制器的设备信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">artinchip_mmc</span> <span class="p">{</span>
+    <span class="n">spinlock_t</span>      <span class="n">lock</span><span class="p">;</span>
+    <span class="n">spinlock_t</span>      <span class="n">irq_lock</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">__iomem</span>        <span class="o">*</span><span class="n">regs</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">__iomem</span>        <span class="o">*</span><span class="n">fifo_reg</span><span class="p">;</span>
+    <span class="kt">bool</span>            <span class="n">wm_aligned</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">scatterlist</span>  <span class="o">*</span><span class="n">sg</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">sg_mapping_iter</span>  <span class="n">sg_miter</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">mmc_request</span>  <span class="o">*</span><span class="n">mrq</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mmc_command</span>  <span class="o">*</span><span class="n">cmd</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mmc_data</span>     <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">mmc_command</span>  <span class="n">stop_abort</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>        <span class="n">prev_blksz</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span>       <span class="n">timing</span><span class="p">;</span>
+
+    <span class="cm">/* DMA interface members*/</span>
+    <span class="kt">bool</span>            <span class="n">use_dma</span><span class="p">;</span>
+    <span class="kt">bool</span>            <span class="n">using_dma</span><span class="p">;</span>
+
+    <span class="n">dma_addr_t</span>      <span class="n">sg_dma</span><span class="p">;</span>
+    <span class="kt">void</span>            <span class="o">*</span><span class="n">sg_cpu</span><span class="p">;</span>
+    <span class="k">const</span> <span class="k">struct</span> <span class="nc">artinchip_mmc_dma_ops</span>  <span class="o">*</span><span class="n">dma_ops</span><span class="p">;</span>
+    <span class="cm">/* For idmac */</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>        <span class="n">ring_size</span><span class="p">;</span>
+
+    <span class="cm">/* Registers&#39;s physical base address */</span>
+    <span class="n">resource_size_t</span>     <span class="n">phy_regs</span><span class="p">;</span>
+
+    <span class="n">u32</span>         <span class="n">cmd_status</span><span class="p">;</span>
+    <span class="n">u32</span>         <span class="n">data_status</span><span class="p">;</span>
+    <span class="n">u32</span>         <span class="n">stop_cmdr</span><span class="p">;</span>
+    <span class="n">u32</span>         <span class="n">dir_status</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">tasklet_struct</span>   <span class="n">tasklet</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span>       <span class="n">pending_events</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span>       <span class="n">completed_events</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">artinchip_mmc_state</span>    <span class="n">state</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">list_head</span>    <span class="n">queue</span><span class="p">;</span>
+
+    <span class="n">u32</span>         <span class="n">bus_hz</span><span class="p">;</span>
+    <span class="n">u32</span>         <span class="n">current_speed</span><span class="p">;</span>
+    <span class="n">u32</span>         <span class="n">fifoth_val</span><span class="p">;</span>
+    <span class="n">u16</span>         <span class="n">verid</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">device</span>       <span class="o">*</span><span class="n">dev</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">artinchip_mmc_board</span>  <span class="o">*</span><span class="n">pdata</span><span class="p">;</span>
+    <span class="k">const</span> <span class="k">struct</span> <span class="nc">artinchip_mmc_drv_data</span> <span class="o">*</span><span class="n">drv_data</span><span class="p">;</span>
+    <span class="kt">void</span>            <span class="o">*</span><span class="n">priv</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span>      <span class="o">*</span><span class="n">biu_clk</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">clk</span>      <span class="o">*</span><span class="n">ciu_clk</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">artinchip_mmc_slot</span>   <span class="o">*</span><span class="n">slot</span><span class="p">;</span>
+
+    <span class="cm">/* FIFO push and pull */</span>
+    <span class="kt">int</span>         <span class="n">fifo_depth</span><span class="p">;</span>
+    <span class="kt">int</span>         <span class="n">data_shift</span><span class="p">;</span>
+    <span class="n">u8</span>          <span class="n">part_buf_start</span><span class="p">;</span>
+    <span class="n">u8</span>          <span class="n">part_buf_count</span><span class="p">;</span>
+    <span class="k">enum</span> <span class="n">data_width</span> <span class="n">data_width</span><span class="p">;</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="n">u16</span>     <span class="n">part_buf16</span><span class="p">;</span>
+        <span class="n">u32</span>     <span class="n">part_buf32</span><span class="p">;</span>
+        <span class="n">u64</span>     <span class="n">part_buf</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="kt">bool</span>            <span class="n">vqmmc_enabled</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span>       <span class="n">irq_flags</span><span class="p">;</span> <span class="cm">/* IRQ flags */</span>
+    <span class="kt">int</span>         <span class="n">irq</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">timer_list</span>       <span class="n">cmd11_timer</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">timer_list</span>       <span class="n">cto_timer</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">timer_list</span>       <span class="n">dto_timer</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="artinchip-mmc-board">
+<h3><span class="section-number">5.1.5.4.3. </span>artinchip_mmc_board<a class="headerlink" href="#artinchip-mmc-board" title="永久链接至标题">¶</a></h3>
+<p>记录了Board相关的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">artinchip_mmc_board</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bus_hz</span><span class="p">;</span> <span class="cm">/* Clock speed at the cclk_in pad */</span>
+
+    <span class="n">u32</span> <span class="n">caps</span><span class="p">;</span>   <span class="cm">/* Capabilities */</span>
+    <span class="n">u32</span> <span class="n">caps2</span><span class="p">;</span>  <span class="cm">/* More capabilities */</span>
+    <span class="n">u32</span> <span class="n">pm_caps</span><span class="p">;</span>    <span class="cm">/* PM capabilities */</span>
+    <span class="cm">/*</span>
+<span class="cm">     * Override fifo depth. If 0, autodetect it from the FIFOTH register,</span>
+<span class="cm">     * but note that this may not be reliable after a bootloader has used</span>
+<span class="cm">     * it.</span>
+<span class="cm">     */</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fifo_depth</span><span class="p">;</span>
+
+    <span class="cm">/* delay in mS before detecting cards after interrupt */</span>
+    <span class="n">u32</span> <span class="n">detect_delay_ms</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">reset_control</span> <span class="o">*</span><span class="n">rstc</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">artinchip_mmc_dma_ops</span> <span class="o">*</span><span class="n">dma_ops</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">dma_pdata</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="artinchip-mmc-slot">
+<h3><span class="section-number">5.1.5.4.4. </span>artinchip_mmc_slot<a class="headerlink" href="#artinchip-mmc-slot" title="永久链接至标题">¶</a></h3>
+<p>记录了slot相关的配置信息：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">artinchip_mmc_slot</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">mmc_host</span>     <span class="o">*</span><span class="n">mmc</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">artinchip_mmc</span>        <span class="o">*</span><span class="n">host</span><span class="p">;</span>
+
+    <span class="n">u32</span>         <span class="n">ctype</span><span class="p">;</span>
+
+    <span class="k">struct</span> <span class="nc">mmc_request</span>  <span class="o">*</span><span class="n">mrq</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">list_head</span>    <span class="n">queue_node</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="kt">int</span>        <span class="n">clock</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span>        <span class="n">__clk_old</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="kt">long</span>       <span class="n">flags</span><span class="p">;</span>
+<span class="cp">#define ARTINCHIP_MMC_CARD_PRESENT  0</span>
+<span class="cp">#define ARTINCHIP_MMC_CARD_NEED_INIT    1</span>
+<span class="cp">#define ARTINCHIP_MMC_CARD_NO_LOW_PWR   2</span>
+<span class="cp">#define ARTINCHIP_MMC_CARD_NO_USE_HOLD 3</span>
+<span class="cp">#define ARTINCHIP_MMC_CARD_NEEDS_POLL   4</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="artinchip-mmc-drv-data">
+<h3><span class="section-number">5.1.5.4.5. </span>artinchip_mmc_drv_data<a class="headerlink" href="#artinchip-mmc-drv-data" title="永久链接至标题">¶</a></h3>
+<p>记录了AIC SDMC驱动的特有数据：</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">artinchip_mmc_drv_data</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span>   <span class="o">*</span><span class="n">caps</span><span class="p">;</span>
+    <span class="n">u32</span>     <span class="n">num_caps</span><span class="p">;</span>
+    <span class="kt">int</span>     <span class="p">(</span><span class="o">*</span><span class="n">init</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">artinchip_mmc</span> <span class="o">*</span><span class="n">host</span><span class="p">);</span>
+    <span class="kt">int</span>     <span class="p">(</span><span class="o">*</span><span class="n">parse_dt</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">artinchip_mmc</span> <span class="o">*</span><span class="n">host</span><span class="p">);</span>
+    <span class="kt">int</span>     <span class="p">(</span><span class="o">*</span><span class="n">execute_tuning</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">artinchip_mmc_slot</span> <span class="o">*</span><span class="n">slot</span><span class="p">,</span> <span class="n">u32</span> <span class="n">opcode</span><span class="p">);</span>
+    <span class="kt">int</span>     <span class="p">(</span><span class="o">*</span><span class="n">switch_voltage</span><span class="p">)(</span><span class="k">struct</span> <span class="nc">mmc_host</span> <span class="o">*</span><span class="n">mmc</span><span class="p">,</span>
+                      <span class="k">struct</span> <span class="nc">mmc_ios</span> <span class="o">*</span><span class="n">ios</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2><span class="section-number">5.1.5.5. </span>接口设计<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<p>以下接口皆为MMC子系统所需要的标准接口，通过mmc_host_ops注册到MMC子系统。</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span> <span class="k">const</span> <span class="k">struct</span> <span class="nc">mmc_host_ops</span> <span class="n">artinchip_mmc_ops</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">.</span><span class="n">request</span>        <span class="o">=</span> <span class="n">artinchip_mmc_request</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">pre_req</span>        <span class="o">=</span> <span class="n">artinchip_mmc_pre_req</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">post_req</span>       <span class="o">=</span> <span class="n">artinchip_mmc_post_req</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">set_ios</span>        <span class="o">=</span> <span class="n">artinchip_mmc_set_ios</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">get_ro</span>         <span class="o">=</span> <span class="n">artinchip_mmc_get_ro</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">get_cd</span>         <span class="o">=</span> <span class="n">artinchip_mmc_get_cd</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">hw_reset</span>               <span class="o">=</span> <span class="n">artinchip_mmc_hw_reset</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">enable_sdio_irq</span>    <span class="o">=</span> <span class="n">artinchip_mmc_enable_sdio_irq</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">ack_sdio_irq</span>       <span class="o">=</span> <span class="n">artinchip_mmc_ack_sdio_irq</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">execute_tuning</span>     <span class="o">=</span> <span class="n">artinchip_mmc_execute_tuning</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">card_busy</span>      <span class="o">=</span> <span class="n">artinchip_mmc_card_busy</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">start_signal_voltage_switch</span> <span class="o">=</span> <span class="n">artinchip_mmc_switch_voltage</span><span class="p">,</span>
+    <span class="p">.</span><span class="n">init_card</span>      <span class="o">=</span> <span class="n">artinchip_mmc_init_card</span><span class="p">,</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="section" id="artinchip-mmc-request">
+<h3><span class="section-number">5.1.5.5.1. </span>artinchip_mmc_request<a class="headerlink" href="#artinchip-mmc-request" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_request(struct mmc_host *mmc, struct mmc_request *mrq)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>读取当前的RTC时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>功能说明</p></td>
+<td><p>操作寄存器实现request</p></td>
+</tr>
+<tr class="row-even"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">mrq：请求的参数和资源</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-even"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-pre-req">
+<h3><span class="section-number">5.1.5.5.2. </span>artinchip_mmc_pre_req<a class="headerlink" href="#artinchip-mmc-pre-req" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_pre_req(struct mmc_host *mmc, struct mmc_request *mrq)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>准备下一个request</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">mrq：请求的参数和资源</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在准备下一个请求前，一般需要调用artinchip_mmc_post_request</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-post-req">
+<h3><span class="section-number">5.1.5.5.3. </span>artinchip_mmc_post_req<a class="headerlink" href="#artinchip-mmc-post-req" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_post_req(struct mmc_host *mmc, struct mmc_request *mrq, int err)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>送出一个request</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">mrq：请求的参数和资源</div>
+<div class="line">err：如果非零，需要清理掉pre_req()中申请的资源</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-set-ios">
+<h3><span class="section-number">5.1.5.5.4. </span>artinchip_mmc_set_ios<a class="headerlink" href="#artinchip-mmc-set-ios" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>对设备的位宽、DDR模式、clock、power模式等进行配置</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">ios：配置参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-get-cd">
+<h3><span class="section-number">5.1.5.5.5. </span>artinchip_mmc_get_cd<a class="headerlink" href="#artinchip-mmc-get-cd" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int artinchip_mmc_get_cd(struct mmc_host *mmc)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>探测外部SD设备</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>mmc: MMC设备指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>执行成功则返回1</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-hw-reset">
+<h3><span class="section-number">5.1.5.5.6. </span>artinchip_mmc_hw_reset<a class="headerlink" href="#artinchip-mmc-hw-reset" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_hw_reset(struct mmc_host *mmc)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>对MMC控制器、DMA等进行一次reset</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>mmc: MMC设备指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-enable-sdio-irq">
+<h3><span class="section-number">5.1.5.5.7. </span>artinchip_mmc_enable_sdio_irq<a class="headerlink" href="#artinchip-mmc-enable-sdio-irq" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_enable_sdio_irq(struct mmc_host *mmc, int enb)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>使能或者关闭MMC控制器的中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">enb：使能开关</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-ack-sdio-irq">
+<h3><span class="section-number">5.1.5.5.8. </span>artinchip_mmc_ack_sdio_irq<a class="headerlink" href="#artinchip-mmc-ack-sdio-irq" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 86%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_ack_sdio_irq(struct mmc_host *mmc)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>打开MMC控制器的中断</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>mmc: MMC设备指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-execute-tuning">
+<h3><span class="section-number">5.1.5.5.9. </span>artinchip_mmc_execute_tuning<a class="headerlink" href="#artinchip-mmc-execute-tuning" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int artinchip_mmc_execute_tuning(struct mmc_host *mmc, u32 opcode)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>MMC的tuning功能接口</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">opcode：tuning命令码</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-card-busy">
+<h3><span class="section-number">5.1.5.5.10. </span>artinchip_mmc_card_busy<a class="headerlink" href="#artinchip-mmc-card-busy" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int artinchip_mmc_card_busy(struct mmc_host *mmc)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>查看MMC设备是否处于Busy状态</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>mmc: MMC设备指针</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>若处于idle状态返回0，busy则返回1</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-switch-voltage">
+<h3><span class="section-number">5.1.5.5.11. </span>artinchip_mmc_switch_voltage<a class="headerlink" href="#artinchip-mmc-switch-voltage" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static int artinchip_mmc_switch_voltage(struct mmc_host *mmc, struct mmc_ios *ios)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置MMC设备的工作电压</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">ios：设置参数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>0，成功； &lt; 0，失败</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="artinchip-mmc-init-card">
+<h3><span class="section-number">5.1.5.5.12. </span>artinchip_mmc_init_card<a class="headerlink" href="#artinchip-mmc-init-card" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>static void artinchip_mmc_init_card(struct mmc_host *mmc, struct mmc_card *card)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>初始化外部mmc设备</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">mmc: MMC设备指针</div>
+<div class="line">card：card设备指针</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>无</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="5.1.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="5.1.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

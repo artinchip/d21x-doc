@@ -1,0 +1,1893 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>6.8.5. 设计说明 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="6.8.6. 常见问题" href="6_faq.html" />
+    <link rel="prev" title="6.8.4. 测试指南" href="4_test_guide.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../env/index.html">1. 编译准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">6. 多媒体</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../audio/index.html">6.1. Audio 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../display/index.html">6.2. Display 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dvp/index.html">6.3. DVP 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ge/index.html">6.4. GE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../i2s/index.html">6.5. I2S 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ve/index.html">6.6. VE 使用指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mpp/index.html">6.7. MPP 使用指南</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">6.8. MPP 播放器使用指南</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="1_introduction.html">6.8.1. 模块介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="2_config_guide.html">6.8.2. 参数配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="3_debug_guide.html">6.8.3. 调试指南</a></li>
+<li class="toctree-l4"><a class="reference internal" href="4_test_guide.html">6.8.4. 测试指南</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">6.8.5. 设计说明</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id2">6.8.5.1. 源码说明</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">6.8.5.2. 模块架构</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#player-interface">6.8.5.3. player interface 的设计</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id4">6.8.5.3.1. 状态机设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id5">6.8.5.3.2. 数据结构设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id6">6.8.5.3.3. 接口设计</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#app-demo">6.8.5.3.4. APP Demo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="6_faq.html">6.8.6. 常见问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lvgl/index.html">6.9. LVGL 使用指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="../index.html"><span class="section-number">6. </span>多媒体</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">6.8. </span>MPP 播放器使用指南</a> &raquo;</li>
+        
+      <li><span class="section-number">6.8.5. </span>设计说明</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1><span class="section-number">6.8.5. </span>设计说明<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2><span class="section-number">6.8.5.1. </span>源码说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本模块源码位于 source/artinchip/aic-mpp/middle_media 下,目录结构如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aic-mpp
+        |--middle-media
+                |-base
+                |       |-inlcude
+                |       |       |-aic_message.h       //定义公共消息接口
+                |       |       |-aic_parser.h        //定义parser 接口
+                |       |       |-aic_stream.h        //定义stream接口
+                |       |       |-aic_render.h        //定义视频渲染接口
+                |       |       |-aic_audio_render.h  //定义音频渲染接口
+                |       |
+                |       |-message    //消息接口具体实现
+                |       |-parser     //parser接口具体实现
+                |       |-stream     //stream接口具体实现
+                |       |-render     //音视频渲染接口具体实现
+                |
+                |-audio_decoder  //音频软件解码器，无硬件音频解码器。
+                |
+                |-openmax        //播放器组件
+                |       |-component
+                |       |       |-OMX_AdecComponent.c          //音频解码组件,输入编码音频数据,输出解码后的pcm数据
+                |       |       |-OMX_AudioRenderComponent.c   //音频渲染组件，将解码后音频送到音频设备播放
+                |       |       |-OMX_ClockComponent.c         //时钟组件，为音视频同步服务
+                |       |       |-OMX_DemuxerComponent.c       //解封装组件,识别文件的封装格式,从文件中解析出音视频packet
+                |       |       |-OMX_VdecComponent.c          //视频解码组件，输入编码视频数据，输出解码后的视频图像
+                |       |       |-OMX_VideoRenderComponent.c   //视频渲染组件，将解码后图像显示在屏幕上
+                |       |
+                |       |-inlcude
+                |               |-*.h  //openmax头文件
+                |
+                |-player
+                        |-inlcude
+                        |       |-aic_player.h  //palyer接口定义
+                        |
+                        |aic_player.c      //player接口实现
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">6.8.5.2. </span>模块架构<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>player 在系统架构中的层次如下图</p>
+<div class="figure align-center">
+<img alt="../../../_images/player_system.png" src="../../../_images/player_system.png" />
+</div>
+<ul class="simple">
+<li><p>player 是中间件，向 App 提供 player 接口</p>
+<ul>
+<li><p>player 视频解码调用 mpp_decoder</p></li>
+<li><p>player 音频解码调用 audio_decoder</p></li>
+<li><p>player 视频渲染操作 DE driver 提供的接口</p></li>
+<li><p>player 音频渲染操作 Sound driver 提供的接口</p></li>
+<li><p>player 内部实现解封装的功能</p></li>
+</ul>
+</li>
+<li><p>audio_decoder(音频解码器)</p>
+<ul>
+<li><p>audio_decoder 是纯软件解码，目前移植了第三方的 libmad 和 faad ，支持 MP3 和 AAC 解码。</p></li>
+</ul>
+</li>
+</ul>
+<p>player 模块架构如下图,分为3层</p>
+<ul class="simple">
+<li><p>第1层,player interface ,向上提供 player 接口,向下调用 OpenMAX 组件实现 player 功能。</p></li>
+<li><p>第2层,OpenMAX Component,提供统一的组件操作接口。每个组件完成特定的功能,比如视频解码,视频渲染等。</p></li>
+<li><p>第3层,Base，提供 parser，stream，message，render 接口和实现。</p>
+<ul>
+<li><p>parser 提供解封装的功能，比如MP4封装</p></li>
+<li><p>stream 提供解析流协议的功能，本地文件也看作是一种流协议，目前也只支持本地文件</p></li>
+<li><p>message 为组件传递消息提供支持</p></li>
+<li><p>render 提供底层音视频渲染的功能</p></li>
+<li><p>目前支持 MP4 和 MP3 封装的本地文件，后续扩展其他流协议和封装格式，通过增加相应的 parser 和 stream 实现</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/player_framework.png" src="../../../_images/player_framework.png" />
+</div>
+</div>
+<div class="section" id="player-interface">
+<h2><span class="section-number">6.8.5.3. </span>player interface 的设计<a class="headerlink" href="#player-interface" title="永久链接至标题">¶</a></h2>
+<blockquote>
+<div><p>这一层是对外提供的接口，用户只与这一层交互即可。</p>
+</div></blockquote>
+<div class="section" id="id4">
+<h3><span class="section-number">6.8.5.3.1. </span>状态机设计<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<blockquote>
+<div><p>player interface 基于状态机设计,状态转换如图</p>
+<div class="figure align-center">
+<img alt="../../../_images/player_state_machine.png" src="../../../_images/player_state_machine.png" />
+</div>
+</div></blockquote>
+<p>状态机说明:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>IDLE</dt><dd><p>闲置状态,刚创建完 player 处于此状态,此状态只能通过 aic_player_set_uri 转换为 INITIALIZED</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>INITIALIZED</dt><dd><p>初始化完成状态,和 IDLE 状态相比,仅仅是多了媒体数据源的信息</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PREPARING</dt><dd><p>在 INITIALIZED 状态调用异步 aic_player_prepare_async 到达此状态,这一状态主要是打开媒体文件并解析它,解析成功之后,自动转换为 PREPARED 状态,通过事件 AIC_PLAYER_EVENT_DEMUXER_FORMAT_DETECTED 告知 app</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PREPARED</dt><dd><p>在 INITIALIZED 状态调用同步 aic_player_prepare_sync 到达此状态,这一状态主要是打开媒体文件并解析它,解析完成后转换到 PREPARED 状态</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>STARTED</dt><dd><p>在 PREPARED 状态调用 aic_player_start 到达此状态,这一状态主要是根据解析出的文件创建音视频解码线程和音视频显示线程,可以随时进行播放了</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PLAYING</dt><dd><p>在 STARTED 或 PAUSED 状态调用 aic_player_play 到达此状态,开始播放媒体</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>PAUSED</dt><dd><p>在 PLAYING 状态调用 aic_player_pause 到达此状态,暂停播放媒体</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>COMPLETED</dt><dd><p>媒体播放完毕后,自动转换为 COMPLETED 状态,并以事件 AIC_PLAYER_EVENT_PLAY_END 告知app</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>STOPPED</dt><dd><p>无论处于任何状态都可以调用 aic_player_stop 回到 STOPPED 状态。切换文件时，无论是否播放结束，要先调用 aic_player_stop 停止当前文件的播放。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>END</dt><dd><p>这里 END 表示释放掉播放器所有的资源，不是播放器的内部状态。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">6.8.5.3.2. </span>数据结构设计<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 事件回调函数</span>
+<span class="k">typedef</span> <span class="nf">s32</span> <span class="p">(</span><span class="o">*</span><span class="n">event_handler</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">app_data</span><span class="p">,</span><span class="n">s32</span> <span class="n">event</span><span class="p">,</span><span class="n">s32</span> <span class="n">data1</span><span class="p">,</span><span class="n">s32</span> <span class="n">data2</span><span class="p">);</span>
+
+<span class="c1">// 事件</span>
+<span class="k">enum</span> <span class="n">aic_player_event</span> <span class="p">{</span>
+        <span class="n">AIC_PLAYER_EVENT_PLAY_END</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1">// 文件播放结束</span>
+        <span class="n">AIC_PLAYER_EVENT_PLAY_TIME</span><span class="p">,</span>             <span class="c1">//播放时刻,pts = data1&lt;&lt;32|data2</span>
+        <span class="n">AIC_PLAYER_EVENT_DEMUXER_FORMAT_DETECTED</span><span class="p">,</span><span class="c1">//文件解析成功</span>
+        <span class="n">AIC_PLAYER_EVENT_DEMUXER_FORMAT_NOT_DETECTED</span><span class="c1">//文件解析失败</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_video_stream</span> <span class="p">{</span>
+        <span class="n">s32</span>   <span class="n">width</span><span class="p">;</span>
+        <span class="n">s32</span>   <span class="n">height</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">aic_audio_stream</span> <span class="p">{</span>
+        <span class="n">s32</span> <span class="n">nb_channel</span><span class="p">;</span>
+        <span class="n">s32</span> <span class="n">bits_per_sample</span><span class="p">;</span>
+        <span class="n">s32</span> <span class="n">sample_rate</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="c1">// 媒体信息</span>
+<span class="k">struct</span> <span class="nc">av_media_info</span> <span class="p">{</span>
+        <span class="n">s64</span>  <span class="n">file_size</span><span class="p">;</span>
+        <span class="n">s64</span>  <span class="n">duration</span><span class="p">;</span>
+        <span class="n">u8</span>   <span class="n">has_video</span><span class="p">;</span>
+        <span class="n">u8</span>   <span class="n">has_audio</span><span class="p">;</span>
+        <span class="n">u8</span>   <span class="n">seek_able</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">aic_video_stream</span> <span class="n">video_stream</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">aic_audio_stream</span> <span class="n">audio_stream</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">6.8.5.3.3. </span>接口设计<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">aic_player_create</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">uri</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_destroy</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_set_uri</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="n">uri</span><span class="p">);</span>
+
+<span class="c1">// 异步解析媒体文件</span>
+<span class="n">s32</span> <span class="nf">aic_player_prepare_async</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="c1">// 同步解析媒体文件，媒体文件比较大时，解析文件比较耗时，程序会一直阻塞在这个函数中，所以提供了上面的异步接口，</span>
+<span class="c1">// 异步接口中，创建一个线程去解析文件，所以异步接口会立刻返回，但是文件并没有解析完。无论解析成功还是失败，player</span>
+<span class="c1">// 内部会通过事件回调函数 event_handler 通知 app。</span>
+<span class="n">s32</span> <span class="nf">aic_player_prepare_sync</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_start</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_play</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_pause</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_stop</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_get_media_info</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="k">struct</span> <span class="nc">av_media_info</span> <span class="o">*</span><span class="n">media_info</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_set_event_callback</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span> <span class="n">app_data</span><span class="p">,</span><span class="n">event_handler</span> <span class="n">event_handle</span> <span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_get_screen_size</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="k">struct</span> <span class="nc">mpp_size</span> <span class="o">*</span><span class="n">screen_size</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_set_disp_rect</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="k">struct</span> <span class="nc">mpp_rect</span> <span class="o">*</span><span class="n">disp_rect</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_get_disp_rect</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="k">struct</span> <span class="nc">mpp_rect</span> <span class="o">*</span><span class="n">disp_rect</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_set_mute</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_set_volum</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="n">s32</span> <span class="n">vol</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_get_volum</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="n">s32</span> <span class="o">*</span><span class="n">vol</span><span class="p">);</span>
+
+<span class="n">s64</span> <span class="nf">aic_player_get_play_time</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_seek</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span> <span class="n">u64</span> <span class="n">seek_time</span><span class="p">);</span>
+
+<span class="c1">//rotation_angle 可以取的值 MPP_ROTATION_0，MPP_ROTATION_90，MPP_ROTATION_180，MPP_ROTATION_270</span>
+<span class="n">s32</span> <span class="nf">aic_player_set_rotation</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rotation_angle</span><span class="p">);</span>
+
+<span class="n">s32</span> <span class="nf">aic_player_get_rotation</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="aic-player-create">
+<h4><span class="section-number">6.8.5.3.3.1. </span>aic_player_create<a class="headerlink" href="#aic-player-create" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>struct aic_player *aic_player_create(char *uri)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>创建 player 对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">uri：媒体文件路径</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><p>palyer 对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-destroy">
+<h4><span class="section-number">6.8.5.3.3.2. </span>aic_player_destroy<a class="headerlink" href="#aic-player-destroy" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32  aic_player_destroy(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>销毁 player 对象</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 IDLE 和 STOPPED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-set-uri">
+<h4><span class="section-number">6.8.5.3.3.3. </span>aic_player_set_uri<a class="headerlink" href="#aic-player-set-uri" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_set_uri(struct aic_player *player,char *uri)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置媒体文件路径</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，uri：媒体文件路径</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 IDLE 和 STOPPED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-prepare-async">
+<h4><span class="section-number">6.8.5.3.3.4. </span>aic_player_prepare_async<a class="headerlink" href="#aic-player-prepare-async" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_prepare_async(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>异步解析媒体文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>player：player 对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：解析命令发送成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 INITIALIZED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-prepare-sync">
+<h4><span class="section-number">6.8.5.3.3.5. </span>aic_player_prepare_sync<a class="headerlink" href="#aic-player-prepare-sync" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_prepare_sync(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>同步解析媒体文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>player：player 对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：解析文件成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 INITIALIZED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-start">
+<h4><span class="section-number">6.8.5.3.3.6. </span>aic_player_start<a class="headerlink" href="#aic-player-start" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_start(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>启动播放器，创建音视频解码线程和音视频渲染线程</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>player：player 对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 PREPARED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-play">
+<h4><span class="section-number">6.8.5.3.3.7. </span>aic_player_play<a class="headerlink" href="#aic-player-play" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_play(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>播放媒体文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>player：player 对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-pause">
+<h4><span class="section-number">6.8.5.3.3.8. </span>aic_player_pause<a class="headerlink" href="#aic-player-pause" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_pause(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>暂停播放媒体文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>player：player 对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 PLAYING 和 PAUSED 状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-stop">
+<h4><span class="section-number">6.8.5.3.3.9. </span>aic_player_stop<a class="headerlink" href="#aic-player-stop" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_stop(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>停止播放，释放音视频解码线程和音视频显示线程</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><p>player：player 对象</p></td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>任意状态可以调用该函数来停止播放器。切换文件时一定要调用aic_player_stop。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-get-media-info">
+<h4><span class="section-number">6.8.5.3.3.10. </span>aic_player_get_media_info<a class="headerlink" href="#aic-player-get-media-info" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_get_media_info(struct aic_player *player, struct av_media_info *media_info)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取媒体信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，media_info：媒体信息</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 PREPARED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-set-event-callback">
+<h4><span class="section-number">6.8.5.3.3.11. </span>aic_player_set_event_callback<a class="headerlink" href="#aic-player-set-event-callback" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_set_event_callback(struct aic_player *player, event_handler event_handle)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取媒体信息</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，event_handle：监听事件函数</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>一定要注册，播放结束通过回调函数通知</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-get-screen-size">
+<h4><span class="section-number">6.8.5.3.3.12. </span>aic_player_get_screen_size<a class="headerlink" href="#aic-player-get-screen-size" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_get_screen_size(struct aic_player *player, struct mpp_size *screen_size)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取屏幕大小</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，screen_size：屏幕大小</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态均起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-set-disp-rect">
+<h4><span class="section-number">6.8.5.3.3.13. </span>aic_player_set_disp_rect<a class="headerlink" href="#aic-player-set-disp-rect" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_set_disp_rect(struct aic_player *player, struct mpp_rect *disp_rect)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置显示区域</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，disp_rect：显示区域</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-get-disp-rect">
+<h4><span class="section-number">6.8.5.3.3.14. </span>aic_player_get_disp_rect<a class="headerlink" href="#aic-player-get-disp-rect" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_get_disp_rect(struct aic_player *player, struct mpp_rect *disp_rect)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置显示区域</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，disp_rect：显示区域</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-set-mute">
+<h4><span class="section-number">6.8.5.3.3.15. </span>aic_player_set_mute<a class="headerlink" href="#aic-player-set-mute" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_set_mute(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>静音切换</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-set-volum">
+<h4><span class="section-number">6.8.5.3.3.16. </span>aic_player_set_volum<a class="headerlink" href="#aic-player-set-volum" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_set_volum(struct aic_player *player,s32 vol)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置音量</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，vol：音量</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-get-volum">
+<h4><span class="section-number">6.8.5.3.3.17. </span>aic_player_get_volum<a class="headerlink" href="#aic-player-get-volum" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_get_volum(struct aic_player *player,s32 *vol)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取音量</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，vol：音量</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-get-play-time">
+<h4><span class="section-number">6.8.5.3.3.18. </span>aic_player_get_play_time<a class="headerlink" href="#aic-player-get-play-time" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s64 aic_player_get_play_time(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取播放时间</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">&gt;=0：播放时间，&lt;0：获取播放时间的状态不对</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARETED 和 COMPLETED 区间的状态起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-seek">
+<h4><span class="section-number">6.8.5.3.3.19. </span>aic_player_seek<a class="headerlink" href="#aic-player-seek" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_seek(struct aic_player *player, u64 seek_time)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>跳转指定时间点</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，seek_time：跳转的时间点</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 IDLE/INITIALIZED/PREPARING 状态下设置不起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-set-rotation">
+<h4><span class="section-number">6.8.5.3.3.20. </span>aic_player_set_rotation<a class="headerlink" href="#aic-player-set-rotation" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_set_rotation(struct aic_player *player, int rotation_angle)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>设置视频旋转角度</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象，rotation_angle：旋转角度</div>
+<div class="line">rotation_angle 可取值 MPP_ROTATION_0，MPP_ROTATION_90，MPP_ROTATION_180，MPP_ROTATION_270</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">0：成功，其他：失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARTED/PLAYING/PAUSED/COMPLETED 状态下设置起作用</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="aic-player-get-rotation">
+<h4><span class="section-number">6.8.5.3.3.21. </span>aic_player_get_rotation<a class="headerlink" href="#aic-player-get-rotation" title="永久链接至标题">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>函数原型</p></th>
+<th class="head"><p>s32 aic_player_get_rotation(struct aic_player *player)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>功能说明</p></td>
+<td><p>获取视频旋转角度</p></td>
+</tr>
+<tr class="row-odd"><td><p>参数定义</p></td>
+<td><div class="line-block">
+<div class="line">player：player 对象</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>返回值</p></td>
+<td><div class="line-block">
+<div class="line">&gt;=0：旋转角度，&lt;0：获取失败</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>注意事项</p></td>
+<td><p>在 STARTED/PLAYING/PAUSED/COMPLETED 状态下可以获取</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="app-demo">
+<span id="ref-luban-lite-player-demo"></span><h3><span class="section-number">6.8.5.3.4. </span>APP Demo<a class="headerlink" href="#app-demo" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;malloc.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fcntl.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;dirent.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;inttypes.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;getopt.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_dec_type.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_list.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_log.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;mpp_mem.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;aic_message.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;aic_player.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;rthw.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;rtthread.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;shell.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#ifdef LPKG_USING_CPU_USAGE</span>
+<span class="cp">#include</span> <span class="cpf">&quot;cpu_usage.h&quot;</span><span class="cp"></span>
+<span class="cp">#endif</span>
+
+<span class="cp">#define PLAYER_DEMO_FILE_MAX_NUM 128</span>
+<span class="cp">#define PLAYER_DEMO_FILE_PATH_MAX_LEN 256</span>
+<span class="cp">#define BUFFER_LEN 16</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_demuxer_detected_flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="kt">int</span> <span class="n">g_sync_flag</span> <span class="o">=</span> <span class="n">AIC_PLAYER_PREPARE_SYNC</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">av_media_info</span> <span class="n">g_media_info</span><span class="p">;</span>
+<span class="k">struct</span> <span class="nc">file_list</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">file_path</span><span class="p">[</span><span class="n">PLAYER_DEMO_FILE_MAX_NUM</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">file_num</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">print_help</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">prog</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;name: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">prog</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Compile time: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">__TIME__</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Usage: player_demo [options]:</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-i                             input stream file name</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-t                             directory of test files</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-l                             loop time</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-c                             save capture file path,default /sdcard/video/capture.jpg </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-W                             capture widht</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-H                             capture height</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-q                             capture quality</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;</span><span class="se">\t</span><span class="s">-h                             help</span><span class="se">\n\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;Example1(test single file for 1 time): player_demo -i /mnt/video/test.mp4 </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;Example2(test single file for 3 times): player_demo -i /mnt/video/test.mp4 -l 3 </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;Example3(test some files for 1 time ) : player_demo -t /mnt/video </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;Example4(test some files for 3 times ): player_demo -t /mnt/video -l 3 </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;---------------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;-------------------------------control key while playing-------------------------------</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;---------------------------------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;d&#39;): play next </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;u&#39;): play previous </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;p&#39;): pause/play </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;+&#39;): volum+5 </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;-&#39;): volum-5 </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;f&#39;): forward seek +8s </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;b&#39;): back seek -8s </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;z&#39;): seek to begin pos </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;m&#39;:  enter/eixt mute </span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;(&#39;e&#39;): eixt app </span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">read_dir</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">path</span><span class="p">,</span> <span class="k">struct</span> <span class="nc">file_list</span> <span class="o">*</span><span class="n">files</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">file_path_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">dirent</span><span class="o">*</span> <span class="n">dir_file</span><span class="p">;</span>
+        <span class="kt">DIR</span><span class="o">*</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">opendir</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">dir</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;read dir failed&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span><span class="p">((</span><span class="n">dir_file</span> <span class="o">=</span> <span class="n">readdir</span><span class="p">(</span><span class="n">dir</span><span class="p">)))</span> <span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">,</span> <span class="s">&quot;..&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="k">continue</span><span class="p">;</span>
+
+                <span class="n">ptr</span> <span class="o">=</span> <span class="n">strrchr</span><span class="p">(</span><span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">,</span> <span class="sc">&#39;.&#39;</span><span class="p">);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+                        <span class="k">continue</span><span class="p">;</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="s">&quot;.h264&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="s">&quot;.264&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="s">&quot;.mp4&quot;</span><span class="p">)</span> <span class="p">)</span>
+                        <span class="k">continue</span><span class="p">;</span>
+
+                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;name: %s&quot;</span><span class="p">,</span> <span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">);</span>
+
+                <span class="n">file_path_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">file_path_len</span> <span class="o">+=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+                <span class="n">file_path_len</span> <span class="o">+=</span> <span class="mi">1</span> <span class="p">;</span> <span class="c1">// &#39;/&#39;</span>
+                <span class="n">file_path_len</span> <span class="o">+=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;file_path_len:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">file_path_len</span><span class="p">);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">file_path_len</span> <span class="o">&gt;</span> <span class="n">PLAYER_DEMO_FILE_PATH_MAX_LEN</span><span class="mi">-1</span><span class="p">){</span>
+                        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;%s too long </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">);</span>
+                        <span class="k">continue</span> <span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">files</span><span class="o">-&gt;</span><span class="n">file_path</span><span class="p">[</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">mpp_alloc</span><span class="p">(</span><span class="n">file_path_len</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+                <span class="n">files</span><span class="o">-&gt;</span><span class="n">file_path</span><span class="p">[</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">][</span><span class="n">file_path_len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+                <span class="n">strcpy</span><span class="p">(</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_path</span><span class="p">[</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">],</span> <span class="n">path</span><span class="p">);</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_path</span><span class="p">[</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">],</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_path</span><span class="p">[</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">],</span> <span class="n">dir_file</span><span class="o">-&gt;</span><span class="n">d_name</span><span class="p">);</span>
+                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;i: %d, filename: %s&quot;</span><span class="p">,</span> <span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">,</span> <span class="n">files</span><span class="o">-&gt;</span><span class="n">file_path</span><span class="p">[</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span><span class="p">]);</span>
+                <span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span> <span class="o">++</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">files</span><span class="o">-&gt;</span><span class="n">file_num</span> <span class="o">&gt;=</span> <span class="n">PLAYER_DEMO_FILE_MAX_NUM</span><span class="p">)</span>
+                        <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">s32</span> <span class="n">event_handle</span><span class="p">(</span> <span class="kt">void</span><span class="o">*</span> <span class="n">app_data</span><span class="p">,</span><span class="n">s32</span> <span class="n">event</span><span class="p">,</span><span class="n">s32</span> <span class="n">data1</span><span class="p">,</span><span class="n">s32</span> <span class="n">data2</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">switch</span><span class="p">(</span><span class="n">event</span><span class="p">){</span>
+                <span class="k">case</span> <span class="nl">AIC_PLAYER_EVENT_PLAY_END</span><span class="p">:</span>
+                        <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;g_player_end</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="nl">AIC_PLAYER_EVENT_PLAY_TIME</span><span class="p">:</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="nl">AIC_PLAYER_EVENT_DEMUXER_FORMAT_DETECTED</span><span class="p">:</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">AIC_PLAYER_PREPARE_ASYNC</span> <span class="o">==</span> <span class="n">g_sync_flag</span><span class="p">){</span>
+                                <span class="n">g_demuxer_detected_flag</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;AIC_PLAYER_EVENT_DEMUXER_FORMAT_DETECTED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                        <span class="p">}</span>
+                        <span class="k">break</span><span class="p">;</span>
+
+                <span class="k">case</span> <span class="nl">AIC_PLAYER_EVENT_DEMUXER_FORMAT_NOT_DETECTED</span><span class="p">:</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">AIC_PLAYER_PREPARE_ASYNC</span> <span class="o">==</span> <span class="n">g_sync_flag</span><span class="p">){</span>
+                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;AIC_PLAYER_EVENT_DEMUXER_FORMAT_NOT_DETECTED</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;cur file format not detected,play next file!!!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                        <span class="p">}</span>
+
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">default</span><span class="o">:</span>
+                        <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">set_volume</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="kt">int</span> <span class="n">volume</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">volume</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="mi">101</span><span class="p">){</span>
+
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+                <span class="n">volume</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;volume:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">volume</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nf">aic_player_set_volum</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">volume</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">do_seek</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="kt">int</span> <span class="n">forward</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="n">s64</span> <span class="n">pos</span><span class="p">;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">aic_player_get_play_time</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pos</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_get_play_time error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">forward</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+                <span class="n">pos</span> <span class="o">+=</span> <span class="mi">8</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span><span class="c1">//+8s</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                <span class="n">pos</span> <span class="o">-=</span> <span class="mi">8</span><span class="o">*</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">;</span><span class="c1">//-8s</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">pos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">pos</span> <span class="o">&lt;</span> <span class="n">g_media_info</span><span class="p">.</span><span class="n">duration</span><span class="p">){</span>
+
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">g_media_info</span><span class="p">.</span><span class="n">duration</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">aic_player_seek</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">pos</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_seek error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;aic_player_seek ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">static</span> <span class="kt">int</span> <span class="n">start_play</span><span class="p">(</span><span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span><span class="p">,</span><span class="kt">int</span> <span class="n">volume</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="k">static</span> <span class="k">struct</span> <span class="nc">av_media_info</span> <span class="n">media_info</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_size</span> <span class="n">screen_size</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">mpp_rect</span> <span class="n">disp_rect</span><span class="p">;</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_start</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_start error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[%s:%d]aic_player_start ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">__FUNCTION__</span><span class="p">,</span><span class="n">__LINE__</span><span class="p">);</span>
+
+        <span class="n">ret</span> <span class="o">=</span>  <span class="n">aic_player_get_media_info</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="o">&amp;</span><span class="n">media_info</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_get_media_info error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">g_media_info</span> <span class="o">=</span> <span class="n">media_info</span><span class="p">;</span>
+        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;aic_player_get_media_info duration:&quot;</span><span class="n">FMT_x64</span><span class="s">&quot;,file_size:&quot;</span><span class="n">FMT_x64</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">duration</span><span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">file_size</span><span class="p">);</span>
+
+        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;has_audio:%d,has_video:%d,&quot;</span>
+                <span class="s">&quot;width:%d,height:%d,</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="s">&quot;bits_per_sample:%d,nb_channel:%d,sample_rate:%d</span><span class="se">\n</span><span class="s">&quot;</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">has_audio</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">has_video</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">video_stream</span><span class="p">.</span><span class="n">width</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">video_stream</span><span class="p">.</span><span class="n">height</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">audio_stream</span><span class="p">.</span><span class="n">bits_per_sample</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">audio_stream</span><span class="p">.</span><span class="n">nb_channel</span>
+                <span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">audio_stream</span><span class="p">.</span><span class="n">sample_rate</span><span class="p">);</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">media_info</span><span class="p">.</span><span class="n">has_video</span><span class="p">){</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_get_screen_size</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">screen_size</span><span class="p">);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_get_screen_size error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;screen_width:%d,screen_height:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">screen_size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="n">screen_size</span><span class="p">.</span><span class="n">height</span><span class="p">);</span>
+                <span class="n">disp_rect</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">324</span><span class="p">;</span>
+                <span class="n">disp_rect</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+                <span class="n">disp_rect</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+                <span class="n">disp_rect</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_set_disp_rect</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">disp_rect</span><span class="p">);</span><span class="c1">//attention:disp not exceed screen_size</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_set_disp_rect error</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;aic_player_set_disp_rect  ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">media_info</span><span class="p">.</span><span class="n">has_audio</span><span class="p">){</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">set_volume</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">volume</span><span class="p">);</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;set_volume error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                        <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_seek</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">media_info</span><span class="p">.</span><span class="n">duration</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_seek error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;aic_player_seek ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_play</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_play error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;[%s:%d]aic_player_play ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">__FUNCTION__</span><span class="p">,</span><span class="n">__LINE__</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">struct</span> <span class="nc">thread_trace_info</span><span class="p">{</span>
+        <span class="kt">uint32_t</span> <span class="n">enter_run_tick</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">total_run_tick</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="n">thread_name</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="k">struct</span>  <span class="nc">thread_trace_info</span> <span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+
+
+<span class="c1">// count the cpu usage time of each thread</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="n">hook_of_scheduler</span><span class="p">(</span><span class="k">struct</span> <span class="nc">rt_thread</span> <span class="o">*</span><span class="n">from</span><span class="p">,</span><span class="k">struct</span> <span class="nc">rt_thread</span> <span class="o">*</span><span class="n">to</span><span class="p">){</span>
+        <span class="k">static</span> <span class="kt">int</span> <span class="n">show</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">static</span> <span class="kt">uint32_t</span> <span class="n">sys_tick</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">thread_name</span><span class="p">,</span><span class="n">from</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">)){</span>
+                        <span class="kt">uint32_t</span> <span class="n">run_tick</span><span class="p">;</span>
+                        <span class="n">run_tick</span> <span class="o">=</span> <span class="n">rt_tick_get</span><span class="p">()</span> <span class="o">-</span>  <span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">enter_run_tick</span><span class="p">;</span>
+                        <span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">total_run_tick</span> <span class="o">+=</span> <span class="n">run_tick</span><span class="p">;</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">strcmp</span><span class="p">(</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">thread_name</span><span class="p">,</span><span class="n">to</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">)){</span>
+                                <span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">enter_run_tick</span> <span class="o">=</span> <span class="n">rt_tick_get</span><span class="p">();</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">show</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">show</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="o">*</span><span class="mi">1000</span><span class="p">){</span>
+                <span class="n">rt_kprintf</span><span class="p">(</span><span class="s">&quot;[%u:%u:%u:%u:%u:%u:%u]:%u</span><span class="se">\n</span><span class="s">&quot;</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">total_run_tick</span><span class="o">+</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">total_run_tick</span><span class="o">+</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">total_run_tick</span><span class="o">+</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">total_run_tick</span><span class="o">+</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">total_run_tick</span><span class="o">+</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">total_run_tick</span>
+                        <span class="p">,</span><span class="n">rt_tick_get</span><span class="p">()</span> <span class="o">-</span> <span class="n">sys_tick</span><span class="p">);</span>
+
+                <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                        <span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">total_run_tick</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="n">show</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">sys_tick</span> <span class="o">=</span> <span class="n">rt_tick_get</span><span class="p">();</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="n">player_demo_test</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">file_path_len</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">opt</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">loop_time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">file_list</span>  <span class="n">files</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">aic_player</span> <span class="o">*</span><span class="n">player</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">volume</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">aic_capture_info</span>   <span class="n">capture_info</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="n">file_path</span><span class="p">[</span><span class="mi">255</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;/sdcard/video/capture.jpg&quot;</span><span class="p">};</span>
+        <span class="n">rt_device_t</span> <span class="n">dev</span> <span class="o">=</span> <span class="n">RT_NULL</span><span class="p">;</span>
+        <span class="c1">// get serial dev</span>
+        <span class="n">dev</span> <span class="o">=</span> <span class="n">rt_device_find</span><span class="p">(</span><span class="s">&quot;uart0&quot;</span><span class="p">);</span>
+        <span class="c1">//default capture_info</span>
+        <span class="n">capture_info</span><span class="p">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">s8</span> <span class="o">*</span><span class="p">)</span><span class="n">file_path</span><span class="p">;</span>
+        <span class="n">capture_info</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+        <span class="n">capture_info</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+        <span class="n">capture_info</span><span class="p">.</span><span class="n">quality</span> <span class="o">=</span> <span class="mi">90</span><span class="p">;</span>
+        <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">files</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">file_list</span><span class="p">));</span>
+
+        <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">thread_trace_infos</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">thread_trace_info</span><span class="p">));</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="n">sprintf</span><span class="p">(</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">thread_name</span><span class="p">,</span><span class="s">&quot;%s%02d&quot;</span><span class="p">,</span><span class="s">&quot;pth&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">thread_trace_infos</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">thread_name</span><span class="p">);</span>
+        <span class="p">}</span>
+
+
+        <span class="n">rt_scheduler_sethook</span><span class="p">(</span><span class="n">hook_of_scheduler</span><span class="p">);</span>
+
+        <span class="n">optind</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="n">getopt</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="s">&quot;i:t:l:c:W:H:q:h&quot;</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">opt</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">switch</span> <span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="sc">&#39;i&#39;</span><span class="o">:</span>
+                        <span class="n">file_path_len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;file_path_len:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">file_path_len</span><span class="p">);</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">file_path_len</span> <span class="o">&gt;</span> <span class="n">PLAYER_DEMO_FILE_PATH_MAX_LEN</span><span class="mi">-1</span><span class="p">){</span>
+                                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;file_path_len too long </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                <span class="k">goto</span> <span class="n">_EXIT0_</span><span class="p">;</span>
+                        <span class="p">}</span>
+                        <span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">mpp_alloc</span><span class="p">(</span><span class="n">file_path_len</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+                        <span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">file_path_len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+                        <span class="n">strcpy</span><span class="p">(</span><span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">optarg</span><span class="p">);</span>
+                        <span class="n">files</span><span class="p">.</span><span class="n">file_num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;file path: %s&quot;</span><span class="p">,</span> <span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;l&#39;</span><span class="o">:</span>
+                        <span class="n">loop_time</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;t&#39;</span><span class="o">:</span>
+                        <span class="n">read_dir</span><span class="p">(</span><span class="n">optarg</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">files</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span>
+                        <span class="n">memset</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">file_path</span><span class="p">));</span>
+                        <span class="n">strncpy</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">optarg</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="mi">-1</span><span class="p">);</span>
+                        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;file path: %s&quot;</span><span class="p">,</span> <span class="n">file_path</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;W&#39;</span><span class="o">:</span>
+                        <span class="n">capture_info</span><span class="p">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;H&#39;</span><span class="o">:</span>
+                        <span class="n">capture_info</span><span class="p">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;q&#39;</span><span class="o">:</span>
+                        <span class="n">capture_info</span><span class="p">.</span><span class="n">quality</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">optarg</span><span class="p">);</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">&#39;h&#39;</span><span class="o">:</span>
+                        <span class="n">print_help</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                <span class="k">default</span><span class="o">:</span>
+                        <span class="k">goto</span> <span class="n">_EXIT0_</span><span class="p">;</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">files</span><span class="p">.</span><span class="n">file_num</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">print_help</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;files.file_num ==0 !!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">_EXIT0_</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">player</span> <span class="o">=</span> <span class="n">aic_player_create</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">player</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_create fail!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">goto</span> <span class="n">_EXIT0_</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">aic_player_set_event_callback</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">player</span><span class="p">,</span><span class="n">event_handle</span><span class="p">);</span>
+        <span class="n">g_sync_flag</span> <span class="o">=</span> <span class="n">AIC_PLAYER_PREPARE_SYNC</span><span class="p">;</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">loop_time</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="k">for</span><span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">files</span><span class="p">.</span><span class="n">file_num</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+                        <span class="n">aic_player_set_uri</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">g_sync_flag</span> <span class="o">==</span> <span class="n">AIC_PLAYER_PREPARE_ASYNC</span><span class="p">){</span>
+                                <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_prepare_async</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                                <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_prepare_sync</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                        <span class="p">}</span>
+                        <span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="p">){</span>
+                                <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_prepare error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                                <span class="k">goto</span> <span class="n">_NEXT_FILE_</span><span class="p">;</span>
+                        <span class="p">}</span>
+
+                        <span class="k">if</span><span class="p">(</span><span class="n">g_sync_flag</span> <span class="o">==</span> <span class="n">AIC_PLAYER_PREPARE_SYNC</span><span class="p">){</span>
+                                <span class="k">if</span><span class="p">(</span><span class="n">start_play</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">volume</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                                        <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                                        <span class="k">goto</span> <span class="n">_NEXT_FILE_</span><span class="p">;</span>
+                                <span class="p">}</span>
+                        <span class="p">}</span>
+
+                        <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="p">{</span>
+        <span class="nl">_NEXT_FILE_</span><span class="p">:</span>
+                                <span class="k">if</span><span class="p">(</span><span class="n">g_player_end</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+                                        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;play file:%s end!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+                                        <span class="n">ret</span> <span class="o">=</span> <span class="n">aic_player_stop</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                                        <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                                        <span class="k">break</span><span class="p">;</span>
+                                <span class="p">}</span>
+                                <span class="k">if</span><span class="p">(</span><span class="n">g_sync_flag</span> <span class="o">==</span> <span class="n">AIC_PLAYER_PREPARE_ASYNC</span> <span class="o">&amp;&amp;</span> <span class="n">g_demuxer_detected_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+                                        <span class="n">g_demuxer_detected_flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                                        <span class="k">if</span><span class="p">(</span><span class="n">start_play</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">volume</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                                                <span class="n">g_player_end</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                                                <span class="k">goto</span> <span class="n">_NEXT_FILE_</span><span class="p">;</span>
+                                        <span class="p">}</span>
+                                <span class="p">}</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="n">rt_device_read</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="mi">-1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ch</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                                        <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="mh">0x20</span><span class="p">){</span><span class="c1">// pause</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********enter pause ***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="n">aic_player_pause</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;d&#39;</span><span class="p">){</span><span class="c1">//stop cur, star next</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********enter down ***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="n">aic_player_stop</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                                                <span class="k">break</span><span class="p">;</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;u&#39;</span><span class="p">){</span><span class="c1">//stop cur, star pre</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********enter up j:%d***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">j</span><span class="p">);</span>
+                                                <span class="n">aic_player_stop</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                                                <span class="n">j</span> <span class="o">-=</span> <span class="mi">2</span><span class="p">;</span>
+                                                <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="mi">-1</span><span class="p">)</span><span class="o">?</span><span class="p">(</span><span class="mi">-1</span><span class="p">)</span><span class="o">:</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+                                                <span class="k">break</span><span class="p">;</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">){</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********enter volume--**************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="n">volume</span> <span class="o">-=</span> <span class="mi">5</span><span class="p">;</span>
+                                                <span class="n">set_volume</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">volume</span><span class="p">);</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;+&#39;</span><span class="p">){</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********enter volume++***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="n">volume</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+                                                <span class="n">set_volume</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="n">volume</span><span class="p">);</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;m&#39;</span><span class="p">){</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********enter/exit mute***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                        <span class="n">aic_player_set_mute</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;c&#39;</span><span class="p">){</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********capture***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="k">if</span><span class="p">(</span><span class="n">aic_player_capture</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="o">&amp;</span><span class="n">capture_info</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+                                                        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********aic_player_capture ok***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                                                        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;*********aic_player_capture fail ***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="p">}</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;f&#39;</span><span class="p">){</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********forward***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="n">do_seek</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="c1">//+8s</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;b&#39;</span><span class="p">){</span>
+                                                <span class="n">logd</span><span class="p">(</span><span class="s">&quot;*********back***************</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="n">do_seek</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="c1">//-8s</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;z&#39;</span><span class="p">){</span><span class="c1">//seek to start</span>
+                                                <span class="k">if</span><span class="p">(</span><span class="n">aic_player_seek</span><span class="p">(</span><span class="n">player</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+                                                        <span class="n">loge</span><span class="p">(</span><span class="s">&quot;aic_player_seek error!!!!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                                                        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;aic_player_seek ok</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                                                <span class="p">}</span>
+                                        <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;e&#39;</span><span class="p">)</span> <span class="p">{</span>
+                                                <span class="n">aic_player_stop</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+                                                <span class="k">goto</span> <span class="n">_EXIT0_</span><span class="p">;</span>
+                                        <span class="p">}</span>
+                                <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                                <span class="cp">#ifdef LPKG_USING_CPU_USAGE</span>
+                                <span class="p">{</span>
+                                        <span class="k">static</span> <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                                        <span class="kt">char</span> <span class="n">data_str</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+                                        <span class="kt">float</span> <span class="n">value</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="p">;</span>
+                                        <span class="k">if</span><span class="p">(</span><span class="n">index</span><span class="o">++</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">){</span>
+                                                <span class="n">value</span> <span class="o">=</span> <span class="n">cpu_load_average</span><span class="p">();</span>
+                                                <span class="n">sprintf</span><span class="p">(</span><span class="n">data_str</span><span class="p">,</span> <span class="s">&quot;%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+                                                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;cpu_loading:%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">data_str</span><span class="p">);</span>
+                                        <span class="p">}</span>
+
+                                <span class="p">}</span>
+                                <span class="cp">#endif</span>
+                                        <span class="n">usleep</span><span class="p">(</span><span class="mi">1000</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
+                                <span class="p">}</span>
+                        <span class="p">}</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+<span class="nl">_EXIT0_</span><span class="p">:</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+                <span class="n">aic_player_destroy</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="n">files</span><span class="p">.</span><span class="n">file_num</span> <span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+                        <span class="n">mpp_free</span><span class="p">(</span><span class="n">files</span><span class="p">.</span><span class="n">file_path</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">logd</span><span class="p">(</span><span class="s">&quot;player_demo exit</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">MSH_CMD_EXPORT_ALIAS</span><span class="p">(</span><span class="n">player_demo_test</span><span class="p">,</span><span class="n">player_demo</span><span class="p">,</span> <span class="n">player</span> <span class="n">demo</span>      <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="6_faq.html" class="btn btn-neutral float-right" title="6.8.6. 常见问题" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="4_test_guide.html" class="btn btn-neutral float-left" title="6.8.4. 测试指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

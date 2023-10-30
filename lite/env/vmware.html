@@ -1,0 +1,543 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>1.1. VMWare 安装 &mdash; AIC文档中心 v1.0 文档</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/aic_logo.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="1.2. Ubuntu" href="ubuntu2004.html" />
+    <link rel="prev" title="1. 编译准备" href="index.html" />
+    <script>
+        $(function () {
+/**
+            var $body = $(".rst-content");
+            $body.attr("oncontextmenu", "return false"); 
+            $body.attr("ondragstart", "return false");
+            $body.attr("onselectstart", "return false");
+            $body.attr("onbeforecopy", "return false");
+
+            if (document.selection) {
+                $body.attr("onselect", "document.selection.empty()");
+                $body.attr("oncopy", "document.selection.empty()");
+                $body.attr("onmouseup", "document.selection.empty()");
+            } else {
+                $body.attr("onselect", "document.getSelection().removeAllRanges()");
+                $body.attr("oncopy", "document.getSelection().removeAllRanges()");
+                $body.attr("onmouseup", "document.getSelection().removeAllRanges()");
+            }
+
+            $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > ul").wrap("<div></div>");
+
+            $(document).keydown(function (e) {
+                var $div = $(".wy-menu-vertical .toctree-l4.current .current.toctree-l5 > div");
+                var scrollLeft = $div.scrollLeft();
+                var step = 50;
+                var code = e.keyCode;
+                switch (code) {
+                    case 37:
+                        $div.scrollLeft(scrollLeft - step);
+                        break;
+                    case 39:
+                        $div.scrollLeft(scrollLeft + step);
+                        break;
+                    case 65:
+                    case 67:
+                    case 83:
+                    case 86:
+                        var ctrlKey = navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey;
+                        if (ctrlKey) {
+                            e.preventDefault();
+                            window.event.returnValue = false;
+                        }
+                        break;
+                    case 123:
+                        e.preventDefault();
+                        window.event.returnValue = false;
+                        break;
+                }
+	    });  **/
+
+            watermark({
+                watermark_id: ".wy-nav-content",
+                watermark_txt: "ArtInChip",
+                watermark_font: "微软雅黑",
+                watermark_fontsize: "100px",
+                watermark_width: 600,
+                watermark_height: 300,
+                watermark_alpha: 0.1,
+                watermark_rows: 0,
+                watermark_y: 100,
+                watermark_x_space: 0,
+                watermark_y_space: 100
+            });
+
+        });
+
+        function watermark(settings) {
+            var defaultSettings = {
+                watermark_id: "body",
+                watermark_txt: "text",
+                watermark_x: 20,
+                watermark_y: 20,
+                watermark_rows: 20,
+                watermark_cols: 20,
+                watermark_x_space: 100,
+                watermark_y_space: 50,
+                watermark_color: '#aaa',
+                watermark_alpha: 0.4,
+                watermark_fontsize: '15px',
+                watermark_font: 'Times New Roman',
+                watermark_width: 210,
+                watermark_height: 80,
+                watermark_angle: 20
+            };
+
+            for (key in settings) {
+                defaultSettings[key] = settings[key];
+            }
+
+            var oTemp = document.createDocumentFragment();
+
+            var $container = $(defaultSettings.watermark_id);
+
+            var page_width = $container.width();
+            var col_width = defaultSettings.watermark_width + defaultSettings.watermark_x_space;
+            defaultSettings.watermark_cols = page_width / col_width;
+
+            var page_height = $container.height();
+            var row_height = defaultSettings.watermark_height + defaultSettings.watermark_y_space;
+            defaultSettings.watermark_rows = page_height / row_height;
+
+            var x, y;
+            for (var i = 0; i < defaultSettings.watermark_rows; i++) {
+                y = defaultSettings.watermark_y + (defaultSettings.watermark_y_space + defaultSettings.watermark_height) * i;
+                for (var j = 0; j < defaultSettings.watermark_cols; j++) {
+                    x = defaultSettings.watermark_x + (defaultSettings.watermark_width + defaultSettings.watermark_x_space) * j;
+                    var mask_div = document.createElement('div');
+                    mask_div.id = 'mask_div' + i + j;
+                    mask_div.className = 'mask_div';
+                    mask_div.appendChild(document.createTextNode(defaultSettings.watermark_txt));
+
+                    mask_div.style.webkitTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.MozTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.msTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.OTransform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.transform = "rotate(-" + defaultSettings.watermark_angle + "deg)";
+                    mask_div.style.visibility = "";
+                    mask_div.style.position = "absolute";
+                    mask_div.style.left = x + 'px';
+                    mask_div.style.top = y + 'px';
+                    mask_div.style.overflow = "hidden";
+                    mask_div.style.zIndex = "9999";
+
+                    mask_div.style.pointerEvents = 'none';
+                    mask_div.style.opacity = defaultSettings.watermark_alpha;
+                    mask_div.style.fontSize = defaultSettings.watermark_fontsize;
+                    mask_div.style.fontFamily = defaultSettings.watermark_font;
+                    mask_div.style.color = defaultSettings.watermark_color;
+                    mask_div.style.textAlign = "center";
+                    mask_div.style.width = defaultSettings.watermark_width + 'px';
+                    mask_div.style.height = defaultSettings.watermark_height + 'px';
+                    mask_div.style.display = "block";
+                    oTemp.appendChild(mask_div);
+                };
+            };
+            $container.append(oTemp);
+        }
+    </script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> AIC文档中心
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../product/index.html">产品简介</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">快速入门</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../datasheet/index.html">数据手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ic/index.html">芯片手册</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hw/index.html">硬件指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../luban/index.html">Linux SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">RTOS SDK</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 编译准备</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. VMWare 安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.1.1. 概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.1.2. 创建虚拟机</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id3">1.1.2.1. 自定义安装</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">1.1.2.2. 手动安装操作系统</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">1.1.2.3. 虚拟机文件存储</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id6">1.1.2.4. 资源设置</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu">1.1.3. 安装 Ubuntu</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id7">1.1.3.1. 全新安装</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id8">1.1.3.1.1. 设置 Ubuntu 文件路径</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id9">1.1.3.1.2. 启动 Ubuntu 安装</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#id10">1.1.3.2. 加载虚拟机</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">1.1.4. 配置虚拟机</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#vmware-tools">1.1.4.1. VMWare Tools</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id12">1.1.4.2. 文件共享</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#id13">1.1.4.2.1. VMWare 端配置</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#id14">1.1.4.2.2. Ubuntu 端配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.1.5. 结束语</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu2004.html">1.2. Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="windows.html">1.3. Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eclipse.html">1.4. Eclipse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vscode.html">1.5. VSCode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk/index.html">2. 使用指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../boot/index.html">3. 启动引导</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../system/index.html">4. 系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory/index.html">5. 存储</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../media/index.html">6. 多媒体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interface/index.html">7. 接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../security/index.html">8. 安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../peripheral/index.html">9. 外设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app/index.html">10. 应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bringup/index.html">11. BringUp</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baremetal/index.html">Baremetal</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">工具指南</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../3rdapp/index.html">三方应用</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../aboutus/index.html">关于我们</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">AIC文档中心</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">RTOS SDK</a> &raquo;</li>
+        
+          <li><a href="index.html"><span class="section-number">1. </span>编译准备</a> &raquo;</li>
+        
+      <li><span class="section-number">1.1. </span>VMWare 安装</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vmware">
+<span id="ref-luban-lite-env-vmware"></span><h1><span class="section-number">1.1. </span>VMWare 安装<a class="headerlink" href="#vmware" title="永久链接至标题">¶</a></h1>
+<p>如果你希望在虚拟机上进行 Luban 的开发工作，可以参考本文。</p>
+<div class="section" id="id1">
+<h2><span class="section-number">1.1.1. </span>概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>虚拟机（Virtual Machine）指通过软件模拟的具有完整硬件系统功能的、运行在一个完全隔离环境中的完整计算机系统，是 Windows 系统上运行 Linux 软件的一种通用的解决方案。</p>
+<p>常用的 Windows 上的虚拟机有：VWMWare，VirtualBox 等，本文以 VMWare 为例讲解如何在 Windows 系统上搭建 Luban 编译环境，虚拟机需要额外的系统资源资源进行软件模拟工作，
+因此在虚拟机上进行Luban 系统的开发和编译工作将需要更久的时间，也会偶尔造成系统使用的卡顿。</p>
+<p>VMWare 为收费软件，本文以试用版本（VMware® Workstation 16 Pro）为例讲解。</p>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">1.1.2. </span>创建虚拟机<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3><span class="section-number">1.1.2.1. </span>自定义安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>在新建虚拟机的向导页选择自定义安装，因为VMWare 需要进行很多和平台相关联的定制性工作。</p>
+<div class="figure align-center">
+<img alt="../../_images/vmware-11.jpg" src="../../_images/vmware-11.jpg" />
+</div>
+</div>
+<div class="section" id="id4">
+<h3><span class="section-number">1.1.2.2. </span>手动安装操作系统<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在操作系统安装界面选择“稍后安装操作系统”，因为VMWare 在自动安装操作系统的时候会顺带安装自带的 VMware tools， 但该 tools 以 iso 方式存在，需要虚拟光驱方式挂载出来才能安装，
+该挂载任务只能在系统启动后手动执行，所以自动安装往往会卡在 VMWare tools 的安装处而导致无法安装成功。</p>
+<div class="figure align-center">
+<img alt="../../_images/vmware-21.jpg" src="../../_images/vmware-21.jpg" />
+</div>
+</div>
+<div class="section" id="id5">
+<h3><span class="section-number">1.1.2.3. </span>虚拟机文件存储<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>虚拟机文件将占用超过20G的磁盘空间，并且随着新软件的安装占用空间将继续增大，所以文件的存储需要预留足够的的空间。</p>
+<p>虚拟机文件将被拆分为很多个 2G 的小文件存储，为了管理方便，建议创建一单独的目录存储这些文件。</p>
+<div class="figure align-center">
+<img alt="../../_images/vmware-31.jpg" src="../../_images/vmware-31.jpg" />
+</div>
+</div>
+<div class="section" id="id6">
+<h3><span class="section-number">1.1.2.4. </span>资源设置<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>在软件的安装过程种，需要设置一下可能会影响虚拟机使用体验的参数，建议的参数如下图：</p>
+<div class="figure align-center">
+<img alt="../../_images/vmware-41.jpg" src="../../_images/vmware-41.jpg" />
+</div>
+</div>
+</div>
+<div class="section" id="ubuntu">
+<h2><span class="section-number">1.1.3. </span>安装 Ubuntu<a class="headerlink" href="#ubuntu" title="永久链接至标题">¶</a></h2>
+<p>本章节介绍在上述虚拟机上安装 Ubuntu20.04 的方法，其他版本的 Ubuntu 可能会有不一样的问题，可以自行百度解决.</p>
+<div class="section" id="id7">
+<h3><span class="section-number">1.1.3.1. </span>全新安装<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id8">
+<h4><span class="section-number">1.1.3.1.1. </span>设置 Ubuntu 文件路径<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><p>打开的VMWare</p></li>
+<li><p>选择“我的计算机”中的 Luban 虚拟机</p></li>
+<li><p>在“设备”中点击 “CD/DVD”</p></li>
+<li><p>选中使用 ISO 映像文件</p></li>
+<li><p>通过“浏览”选中 “Ubuntu-20.04.3-desktop-amd64.iso”</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/vmware-51.jpg" src="../../_images/vmware-51.jpg" />
+</div>
+</div>
+<div class="section" id="id9">
+<h4><span class="section-number">1.1.3.1.2. </span>启动 Ubuntu 安装<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h4>
+<p>上述设置完成后，相当于光驱中已经放置了 Ubuntu-20.04 的光盘，并设置了开机光驱引导，因此开启此虚拟机，则会自动启动 Ubuntu 的安装，Ubuntu 的安装
+没有特殊步骤，对于一些设置项目的选择的问题可以直接通过百度查找解决方案。</p>
+<p>安装完毕后取消“使用 ISO 映像文件”，选择“使用物理驱动器”，然后重新启动虚拟机，则切换到硬盘启动加载刚刚安装好的 Ubuntu 系统。</p>
+<div class="figure align-center">
+<img alt="../../_images/vmware-61.jpg" src="../../_images/vmware-61.jpg" />
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><span class="section-number">1.1.3.2. </span>加载虚拟机<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>如果有获取 ArtInChip 发布的可直接工作的虚拟机镜像，则直接打开即可，步骤为 文件-&gt;打开-&gt;luban-ubuntu 20.04.vmx</p>
+<p>通过导入虚拟机镜像的方式加载虚拟机后，要重新配置一下使用到的资源，如 CPU，Memory，磁盘等。</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">1.1.4. </span>配置虚拟机<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<p>Ubuntu 系统安装完成后，还需要一些配置性的工作，以使其使用更方便。</p>
+<div class="section" id="vmware-tools">
+<h3><span class="section-number">1.1.4.1. </span>VMWare Tools<a class="headerlink" href="#vmware-tools" title="永久链接至标题">¶</a></h3>
+<p>VMWare Tools 是 VMWare 提供的一个工具包，除了一些自带的工具外还可以设置共享，窗口大小等，所以必须要安装。</p>
+<ul class="simple">
+<li><p>在 VMWare 的“虚拟机”菜单中点击“安装 vmware tools”</p></li>
+<li><p>Ubuntu 系统中，打开“文件浏览器”工具，会发现挂载的 “VMWare Tools” 光驱</p></li>
+<li><p>打开 “VMWare Tools”，复制 VMwareTools-xxx.gz 文件到系统某一目录</p></li>
+<li><p>解压 VMwareTools-xxx.gz，运行安装脚本： “sudo perl vmware-install.pl”</p></li>
+<li><p>根据提示和安装脚本进行交互，确认相关设置OK，如果遇到错误，再次执行即可，兼容性错误 VMWare 一直修复，所以也就一直存在</p></li>
+<li><p>最后 VMWareTools 输出 “enjoy the vmware team”， 说明安装成功</p></li>
+<li><p>在 VMWare 的“查看”菜单中选择“自动调整大小”，“自动适应客户机”</p></li>
+<li><p>重启 Ubuntu 后，屏幕大小可调，则说明 VMWareTools 安装成功</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/vmware-71.jpg" src="../../_images/vmware-71.jpg" />
+</div>
+</div>
+<div class="section" id="id12">
+<h3><span class="section-number">1.1.4.2. </span>文件共享<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>虚拟机中的文件和 Windows 中的文件共享是我们使用虚拟机进行开发的基础，是两个环境之间的文件进行交换的最简便的方式。</p>
+<div class="section" id="id13">
+<h4><span class="section-number">1.1.4.2.1. </span>VMWare 端配置<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h4>
+<ul class="simple">
+<li><p>在 VMWare 的“虚拟机”打开“设置”项</p></li>
+<li><p>在“选项”页中选择“共享文件夹”</p></li>
+<li><p>修改为“总是启用”</p></li>
+<li><p>选择 Windows 上要用于共享的文件夹，并命名</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../_images/vmware-81.jpg" src="../../_images/vmware-81.jpg" />
+</div>
+</div>
+<div class="section" id="id14">
+<h4><span class="section-number">1.1.4.2.2. </span>Ubuntu 端配置<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h4>
+<p>如果 VMWare Tools 的安装中的正确打开了文件共享，则在 “/mnt/hgfs/” 将挂载出共享的目录。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h2><span class="section-number">1.1.5. </span>结束语<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<p>上述安装配置完成后，打开的系统就是一个拥有了完整功能的 Ubuntu20.04 系统，可以参考“<a class="reference internal" href="ubuntu2004.html#ref-luban-lite-env-ubuntu"><span class="std std-ref">Ubuntu</span></a>” 准备 Luban 的编译工作</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ubuntu2004.html" class="btn btn-neutral float-right" title="1.2. Ubuntu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="1. 编译准备" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2023 广州匠芯创科技有限公司.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
